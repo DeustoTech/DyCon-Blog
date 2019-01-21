@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+
+
+
+	<link rel='shortcut icon' type='image/png' href='/DyConBlog/favicon.png' />
+
+    <title>The optimal control on the Kuramoto adaptive coupling model - DyCon Blog</title>
+
+    <link rel="canonical" href="https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0008">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/clean-blog.css">
+
+	<!-- Adjust Colors -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/colorscheme.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  	<link href="https://fonts.googleapis.com/css?family=Lusitana" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<!-- Math Jax -->
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']]
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    /*CommonHTML: {
+      scale: 300
+    }*/
+	});
+	</script>
+
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+    <script src="https://DeustoTech.github.io/DyConBlog/js/clean-blog.min.js "></script>
+    
+ 	<!-- 404  JavaScript -->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/DyConBlog/">
+                 <img src="https://DeustoTech.github.io//DyConBlog/assets/logo_DyConToolbox_v001.png" >
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyConBlog/">Home</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/DyConBlog/projects/about">About</a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/DyConBlog/projects/posts">Posts</a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/DyConBlog/projects/search">Search</a>
+                </li>
+                
+                
+                
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header">
+    <div class="container" style="padding-top: 70px;">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyConBlog/topic/Tp02"></a> :</small></h2>
+                    <h1>The optimal control on the Kuramoto adaptive coupling model</h1>
+
+					<span class="meta">Posted by:
+					
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyConBlog/author/DongnamK">Dongnam Ko</a></span></span>
+					
+					</span>
+					<div class="shadowbox">
+						<p>To start this tutorial, write the following command in the MATLAB console
+							<pre class="highlight"><code><span class="nb">open OptimalControlKuramotoAdatative</span></code></pre>
+						</p>
+					</div>
+
+
+                </div>
+            </div>
+		</div>
+
+
+	</div>
+</header>
+
+
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+
+<article>
+    <div id="content" class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<p>In this tutorial, we present how to use OptimalControl environment to control a consensus system that models the complex emergent dynamics over a given network. The control basically minimize the cost functional which contains the running cost and desired final state.</p>
+
+<h2 id="model">Model</h2>
+
+<p>The Kuramoto model describes the phases $\theta_i$ of active oscillators, which is described by the following dynamics:</p>
+
+<script type="math/tex; mode=display">\dot \theta_i = \omega_i + \frac{\kappa}{N}\sum_{j=1}^N \sin(\theta_j-\theta_i),\quad i =1,\cdots,N.</script>
+
+<p>Here the first constant terms $\omega_i$ denote the natural oscillatory behaviors, and the interactions are nonlinearly affected by the relative phases. The amplitude of interactions is determined by the coupling strength, $\kappa$.</p>
+
+<p>We control the system to achevie the synchronization of frequencies.</p>
+
+<script type="math/tex; mode=display">\dot \theta_i = \omega_i + \frac{\kappa+u}{N}\sum_{j=1}^N K_{ij} \sin(\theta_j-\theta_i),\quad i =1,\cdots,N,</script>
+
+<p>where the control is on the coupling strength. This is a nonlinear version of bi-linear control problem for the Kuramoto interactions.</p>
+
+<p>We first define the system of ODEs in terms of symbolic variables.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
+<span class="nb">clc</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>  <span class="c1">%% [m]: number of oscillators.</span>
+
+<span class="n">syms</span> <span class="n">t</span><span class="p">;</span>
+<span class="n">symTh</span> <span class="o">=</span> <span class="n">sym</span><span class="p">(</span><span class="s1">'y'</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">%% [y]: phases of oscillators, $\theta_i$.</span>
+<span class="n">symOm</span> <span class="o">=</span> <span class="n">sym</span><span class="p">(</span><span class="s1">'om'</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">%% [om]: natural frequencies of osc., $\omega_i$.</span>
+<span class="n">symK</span> <span class="o">=</span> <span class="n">sym</span><span class="p">(</span><span class="s1">'K'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span> <span class="c1">%% [K]: the coupling network matrix, $\kappa$.</span>
+<span class="n">symU</span> <span class="o">=</span> <span class="n">sym</span><span class="p">(</span><span class="s1">'u'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span> <span class="c1">%% [u]: the control functions along time, $u(t)$.</span>
+
+<span class="n">syms</span> <span class="n">Vsys</span><span class="p">;</span>   <span class="c1">%% [Vsys]: the vector fields of ODEs.</span>
+<span class="n">symThth</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">symTh</span><span class="p">,[</span><span class="mi">1</span> <span class="n">m</span><span class="p">]);</span>
+<span class="n">Vsys</span> <span class="o">=</span> <span class="n">symOm</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">((</span><span class="n">symK</span><span class="o">+</span><span class="n">symU</span><span class="p">)</span><span class="o">.*</span><span class="nb">sin</span><span class="p">(</span><span class="n">symThth</span><span class="o">.'</span> <span class="o">-</span> <span class="n">symThth</span><span class="p">),</span><span class="mi">2</span><span class="p">);</span>   <span class="c1">%% Kuramoto interaction terms.</span>
+</code></pre></div></div>
+
+<p>The parameter $\omega_i$ and $\kappa$ should be specified for the calculations. We normalize the coupling strength to 1 and give random values for the natural frequencies.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">K_init</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>                       <span class="c1">%% Coupling strength is normalized to 1.</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>                              <span class="c1">%% We give enough time for the frequency synchronization.</span>
+</code></pre></div></div>
+
+<p>Practically, any $K$ with positive elements can make the limit point to be 0, e.g., K=[1,1,1].</p>
+
+<p>The initial condition is chosen on $[-0.55\pi,0.55\pi]$ by</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  %% ini = 0.55*pi()*(2*(rand(m,1)-0.5));
+</code></pre></div></div>
+
+<p>which is stored in the functions folder, ‘functions/ini.mat’.</p>
+
+<p>random data</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% Om_init = normrnd(0,0.1,m,1);</span>
+<span class="c1">%% Om_init = Om_init - mean(Om_init);  %% Natural frequencies are chosen by</span>
+<span class="c1">%%                                     %% the normal distribution with mean 0 and std 0.1.</span>
+<span class="c1">%%</span>
+<span class="c1">%% Th_init = normrnd(0,pi()/4,m,1);    %% Initial phases follows the normal distribution with mean 0 and std pi/4.</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">load</span><span class="p">(</span><span class="s1">'functions/random_init.mat'</span><span class="p">,</span><span class="s1">'Om_init'</span><span class="p">,</span><span class="s1">'Th_init'</span><span class="p">);</span> <span class="c1">%% Safe data</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">symF</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Vsys</span><span class="p">,[</span><span class="n">symOm</span><span class="p">;</span><span class="n">symK</span><span class="p">],[</span><span class="n">Om_init</span><span class="p">;</span><span class="n">K_init</span><span class="p">]);</span>
+<span class="n">odeEqn</span> <span class="o">=</span> <span class="n">ode</span><span class="p">(</span><span class="n">symF</span><span class="p">,</span><span class="n">symTh</span><span class="p">,</span><span class="n">symU</span><span class="p">,</span><span class="s1">'Y0'</span><span class="p">,</span><span class="n">Th_init</span><span class="p">,</span><span class="s1">'T'</span><span class="p">,</span><span class="n">T</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We next construct cost functional for the control problem.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">symPsi</span> <span class="o">=</span> <span class="nb">norm</span><span class="p">(</span><span class="n">symThth</span><span class="o">.</span><span class="s1">' - symThth,'</span><span class="n">fro</span><span class="o">'</span><span class="p">);</span>
+<span class="n">symL_1</span> <span class="o">=</span> <span class="mf">0.001</span><span class="o">*</span><span class="p">(</span><span class="n">symU</span><span class="o">.'*</span><span class="n">symU</span><span class="p">);</span>              <span class="c1">%% Set the L^2 regulation for the control $u(t)$.</span>
+<span class="c1">%%</span>
+<span class="n">Jfun_1</span> <span class="o">=</span> <span class="n">Functional</span><span class="p">(</span><span class="n">symPsi</span><span class="p">,</span><span class="n">symL_1</span><span class="p">,</span><span class="n">symTh</span><span class="p">,</span><span class="n">symU</span><span class="p">,</span><span class="s1">'T'</span><span class="p">,</span><span class="n">T</span><span class="p">);</span>
+<span class="c1">%%</span>
+<span class="n">iCP_1</span> <span class="o">=</span> <span class="n">ControlProblem</span><span class="p">(</span><span class="n">odeEqn</span><span class="p">,</span><span class="n">Jfun_1</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="solve-gradient-descent">Solve Gradient descent</h2>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tic</span>
+<span class="n">GradientMethod</span><span class="p">(</span><span class="n">iCP_1</span><span class="p">)</span>
+<span class="nb">toc</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Elapsed time is 3.465842 seconds.
+
+</code></pre></div></div>
+
+<h2 id="visualization">Visualization</h2>
+
+<p>First, we present the dynamics without control,</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">solve</span><span class="p">(</span><span class="n">odeEqn</span><span class="p">)</span>
+<span class="nb">figure</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">odeEqn</span><span class="o">.</span><span class="n">tline</span><span class="o">'</span><span class="p">,</span><span class="n">odeEqn</span><span class="o">.</span><span class="n">Y</span><span class="p">(:,:))</span>
+<span class="nb">legend</span><span class="p">(</span><span class="err">"</span><span class="p">\</span><span class="n">theta_</span><span class="err">"</span><span class="o">+</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">m</span><span class="p">])</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [rad]'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'The dynamics without control'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/Tp02/T0008/copiaRM_01.png" alt="" /></p>
+
+<p>and see the controled dynamics.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odec_1</span> <span class="o">=</span> <span class="n">iCP_1</span><span class="o">.</span><span class="n">ode</span><span class="p">;</span>
+<span class="nb">clf</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">odec_1</span><span class="o">.</span><span class="n">tline</span><span class="o">'</span><span class="p">,</span><span class="n">odec_1</span><span class="o">.</span><span class="n">Y</span><span class="p">(:,:))</span>
+<span class="c1">%%plot(odec.tline',odec.Y(:,1),'Color','red')</span>
+<span class="c1">%%line(odec.tline',odec.Y(:,2),'Color','green')</span>
+<span class="nb">legend</span><span class="p">(</span><span class="err">"</span><span class="p">\</span><span class="n">theta_</span><span class="err">"</span><span class="o">+</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">m</span><span class="p">])</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [rad]'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'The dynamics under control'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/Tp02/T0008/copiaRM_02.png" alt="" /></p>
+
+<p>We also can plot the control function along time.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<span class="n">Ufinal_1</span> <span class="o">=</span> <span class="n">iCP_1</span><span class="o">.</span><span class="n">Uhistory</span><span class="p">{</span><span class="n">iCP_1</span><span class="o">.</span><span class="n">iter</span><span class="o">+</span><span class="mi">1</span><span class="p">};</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">odec_1</span><span class="o">.</span><span class="n">tline</span><span class="o">'</span><span class="p">,</span><span class="n">Ufinal_1</span><span class="p">)</span>
+<span class="nb">legend</span><span class="p">(</span><span class="err">"</span><span class="nb">norm</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="o">=</span> <span class="err">"</span><span class="o">+</span><span class="nb">norm</span><span class="p">(</span><span class="n">Ufinal_1</span><span class="p">))</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'u(t)'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'The control function'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/Tp02/T0008/copiaRM_03.png" alt="" /></p>
+
+<h2 id="optimal-control-problem-with-different-cost-regulations">Optimal control problem with different cost regulations</h2>
+
+<p>In this part, we change the regulation into L^1-norm and see the difference.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">symL_2</span> <span class="o">=</span> <span class="mf">0.001</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">symU</span><span class="p">);</span>
+<span class="n">Jfun_2</span> <span class="o">=</span> <span class="n">Functional</span><span class="p">(</span><span class="n">symPsi</span><span class="p">,</span><span class="n">symL_2</span><span class="p">,</span><span class="n">symTh</span><span class="p">,</span><span class="n">symU</span><span class="p">,</span><span class="s1">'T'</span><span class="p">,</span><span class="n">T</span><span class="p">);</span>
+<span class="n">iCP_2</span> <span class="o">=</span> <span class="n">ControlProblem</span><span class="p">(</span><span class="n">odeEqn</span><span class="p">,</span><span class="n">Jfun_2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="calculations-and-visualization">Calculations and visualization</h2>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tic</span>
+<span class="n">GradientMethod</span><span class="p">(</span><span class="n">iCP_2</span><span class="p">)</span>
+<span class="nb">toc</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Elapsed time is 4.337772 seconds.
+
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odec_2</span> <span class="o">=</span> <span class="n">iCP_2</span><span class="o">.</span><span class="n">ode</span><span class="p">;</span>
+<span class="nb">clf</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">odec_2</span><span class="o">.</span><span class="n">tline</span><span class="o">'</span><span class="p">,</span><span class="n">odec_2</span><span class="o">.</span><span class="n">Y</span><span class="p">(:,:))</span>
+<span class="c1">%% plot(odec.tline',odec.Y(:,1),'Color','red')</span>
+<span class="c1">%% line(odec.tline',odec.Y(:,2),'Color','green')</span>
+<span class="nb">legend</span><span class="p">(</span><span class="err">"</span><span class="p">\</span><span class="n">theta_</span><span class="err">"</span><span class="o">+</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">m</span><span class="p">])</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [rad]'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'The dynamics under control with different regulation'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/Tp02/T0008/copiaRM_04.png" alt="" /></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Ufinal_2</span> <span class="o">=</span> <span class="n">iCP_2</span><span class="o">.</span><span class="n">Uhistory</span><span class="p">{</span><span class="n">iCP_2</span><span class="o">.</span><span class="n">iter</span><span class="o">+</span><span class="mi">1</span><span class="p">};</span>
+<span class="nb">clf</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">odec_1</span><span class="o">.</span><span class="n">tline</span><span class="o">'</span><span class="p">,</span><span class="n">Ufinal_1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">line</span><span class="p">(</span><span class="n">odec_2</span><span class="o">.</span><span class="n">tline</span><span class="s1">',Ufinal_2+1,'</span><span class="n">Color</span><span class="s1">','</span><span class="n">red</span><span class="o">'</span><span class="p">)</span>
+
+<span class="n">Thfinal_1</span> <span class="o">=</span> <span class="n">odec_1</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="k">end</span><span class="p">,:);</span>
+<span class="n">Thfinal_2</span> <span class="o">=</span> <span class="n">odec_2</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="k">end</span><span class="p">,:);</span>
+<span class="n">Psi_1</span> <span class="o">=</span> <span class="nb">norm</span><span class="p">(</span><span class="n">Thfinal_1</span><span class="o">.</span><span class="s1">' - Thfinal_1,'</span><span class="n">fro</span><span class="o">'</span><span class="p">);</span>
+<span class="n">Psi_2</span> <span class="o">=</span> <span class="nb">norm</span><span class="p">(</span><span class="n">Thfinal_2</span><span class="o">.</span><span class="s1">' - Thfinal_2,'</span><span class="n">fro</span><span class="o">'</span><span class="p">);</span>
+
+<span class="nb">legend</span><span class="p">(</span><span class="err">"</span><span class="p">\</span><span class="n">kappa</span><span class="o">+</span><span class="n">u</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="n">with</span> <span class="n">L</span><span class="o">^</span><span class="mi">2</span><span class="o">-</span><span class="nb">norm</span><span class="p">;</span> <span class="n">Terminal</span> <span class="n">cost</span> <span class="o">=</span> <span class="err">"</span><span class="o">+</span><span class="n">Psi_1</span><span class="p">,</span><span class="err">"</span><span class="p">\</span><span class="n">kappa</span><span class="o">+</span><span class="n">u</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="n">with</span> <span class="n">L</span><span class="o">^</span><span class="mi">1</span><span class="o">-</span><span class="nb">norm</span><span class="p">;</span> <span class="n">Terminal</span> <span class="n">cost</span> <span class="o">=</span> <span class="err">"</span><span class="o">+</span><span class="n">Psi_2</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'The coupling strength (\kappa+u(t))'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'The comparison between two different control cost functionals'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/Tp02/T0008/copiaRM_05.png" alt="" /></p>
+
+<p>As one can expected from the regulation functions, the control function from $L^2$-norm acting more smoothly from 0 to the largest value. The function from $L^2$-norm draws more straight lines.</p>
+
+
+
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <ul class="list-inline text-center">
+          <li>
+            <img style="width: 200px;" src="/DyConBlog/img/logos/logo_DyCon.png " alt="">
+          </li>
+          <li>
+            <img style="width: 250px;" src="/DyConBlog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+
+</html>

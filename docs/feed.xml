@@ -1,0 +1,2071 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DyCon Blog</title>
+    <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
+    <link>https://DeustoTech.github.io/DyConBlog/</link>
+    <atom:link href="https://DeustoTech.github.io/DyConBlog/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Mon, 21 Jan 2019 09:58:54 +0100</pubDate>
+    <lastBuildDate>Mon, 21 Jan 2019 09:58:54 +0100</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>The optimal control on the Kuramoto adaptive coupling model</title>
+        <description>In this tutorial, we present how to use OptimalControl environment to control a consensus system that models the complex emergent dynamics over a given network. The control basically minimize the cost functional which contains the running cost and desired final state.
+
+Model
+
+The Kuramoto model describes the phases $\theta_i$ of active oscillators, which is described by the following dynamics:
+
+
+
+Here the first constant terms $\omega_i$ denote the natural oscillatory behaviors, and the interactions are nonlinearly affected by the relative phases. The amplitude of interactions is determined by the coupling strength, $\kappa$.
+
+We control the system to achevie the synchronization of frequencies.
+
+
+
+where the control is on the coupling strength. This is a nonlinear version of bi-linear control problem for the Kuramoto interactions.
+
+We first define the system of ODEs in terms of symbolic variables.
+
+clear all
+clc
+
+
+m = 5;  %% [m]: number of oscillators.
+
+syms t;
+symTh = sym('y', [m,1]);  %% [y]: phases of oscillators, $\theta_i$.
+symOm = sym('om', [m,1]);  %% [om]: natural frequencies of osc., $\omega_i$.
+symK = sym('K',[1,1]); %% [K]: the coupling network matrix, $\kappa$.
+symU = sym('u',[1,1]); %% [u]: the control functions along time, $u(t)$.
+
+syms Vsys;   %% [Vsys]: the vector fields of ODEs.
+symThth = repmat(symTh,[1 m]);
+Vsys = symOm + (1./m)*sum((symK+symU).*sin(symThth.' - symThth),2);   %% Kuramoto interaction terms.
+
+
+The parameter $\omega_i$ and $\kappa$ should be specified for the calculations. We normalize the coupling strength to 1 and give random values for the natural frequencies.
+
+K_init = 1.0;                       %% Coupling strength is normalized to 1.
+T = 5;                              %% We give enough time for the frequency synchronization.
+
+
+Practically, any $K$ with positive elements can make the limit point to be 0, e.g., K=[1,1,1].
+
+The initial condition is chosen on $[-0.55\pi,0.55\pi]$ by
+
+  %% ini = 0.55*pi()*(2*(rand(m,1)-0.5));
+
+
+which is stored in the functions folder, ‘functions/ini.mat’.
+
+random data
+
+%% Om_init = normrnd(0,0.1,m,1);
+%% Om_init = Om_init - mean(Om_init);  %% Natural frequencies are chosen by
+%%                                     %% the normal distribution with mean 0 and std 0.1.
+%%
+%% Th_init = normrnd(0,pi()/4,m,1);    %% Initial phases follows the normal distribution with mean 0 and std pi/4.
+
+
+load('functions/random_init.mat','Om_init','Th_init'); %% Safe data
+
+
+symF = subs(Vsys,[symOm;symK],[Om_init;K_init]);
+odeEqn = ode(symF,symTh,symU,'Y0',Th_init,'T',T);
+
+
+We next construct cost functional for the control problem.
+
+symPsi = norm(symThth.' - symThth,'fro');
+symL_1 = 0.001*(symU.'*symU);              %% Set the L^2 regulation for the control $u(t)$.
+%%
+Jfun_1 = Functional(symPsi,symL_1,symTh,symU,'T',T);
+%%
+iCP_1 = ControlProblem(odeEqn,Jfun_1);
+
+
+Solve Gradient descent
+
+tic
+GradientMethod(iCP_1)
+toc
+
+
+Elapsed time is 3.465842 seconds.
+
+
+
+Visualization
+
+First, we present the dynamics without control,
+
+solve(odeEqn)
+figure
+plot(odeEqn.tline',odeEqn.Y(:,:))
+legend(&quot;\theta_&quot;+[1:m])
+ylabel('Phases [rad]')
+xlabel('Time [sec]')
+title('The dynamics without control')
+
+
+
+
+and see the controled dynamics.
+
+odec_1 = iCP_1.ode;
+clf
+plot(odec_1.tline',odec_1.Y(:,:))
+%%plot(odec.tline',odec.Y(:,1),'Color','red')
+%%line(odec.tline',odec.Y(:,2),'Color','green')
+legend(&quot;\theta_&quot;+[1:m])
+ylabel('Phases [rad]')
+xlabel('Time [sec]')
+title('The dynamics under control')
+
+
+
+
+We also can plot the control function along time.
+
+clf
+Ufinal_1 = iCP_1.Uhistory{iCP_1.iter+1};
+plot(odec_1.tline',Ufinal_1)
+legend(&quot;norm(u(t)) = &quot;+norm(Ufinal_1))
+ylabel('u(t)')
+xlabel('Time [sec]')
+title('The control function')
+
+
+
+
+Optimal control problem with different cost regulations
+
+In this part, we change the regulation into L^1-norm and see the difference.
+
+symL_2 = 0.001*abs(1+symU);
+Jfun_2 = Functional(symPsi,symL_2,symTh,symU,'T',T);
+iCP_2 = ControlProblem(odeEqn,Jfun_2);
+
+
+Calculations and visualization
+
+tic
+GradientMethod(iCP_2)
+toc
+
+
+Elapsed time is 4.337772 seconds.
+
+
+
+odec_2 = iCP_2.ode;
+clf
+plot(odec_2.tline',odec_2.Y(:,:))
+%% plot(odec.tline',odec.Y(:,1),'Color','red')
+%% line(odec.tline',odec.Y(:,2),'Color','green')
+legend(&quot;\theta_&quot;+[1:m])
+ylabel('Phases [rad]')
+xlabel('Time [sec]')
+title('The dynamics under control with different regulation')
+
+
+
+
+Ufinal_2 = iCP_2.Uhistory{iCP_2.iter+1};
+clf
+plot(odec_1.tline',Ufinal_1+1)
+line(odec_2.tline',Ufinal_2+1,'Color','red')
+
+Thfinal_1 = odec_1.Y(end,:);
+Thfinal_2 = odec_2.Y(end,:);
+Psi_1 = norm(Thfinal_1.' - Thfinal_1,'fro');
+Psi_2 = norm(Thfinal_2.' - Thfinal_2,'fro');
+
+legend(&quot;\kappa+u(t) with L^2-norm; Terminal cost = &quot;+Psi_1,&quot;\kappa+u(t) with L^1-norm; Terminal cost = &quot;+Psi_2)
+ylabel('The coupling strength (\kappa+u(t))')
+xlabel('Time [sec]')
+title('The comparison between two different control cost functionals')
+
+
+
+
+As one can expected from the regulation functions, the control function from $L^2$-norm acting more smoothly from 0 to the largest value. The function from $L^2$-norm draws more straight lines.
+
+</description>
+        <pubDate>Fri, 11 Jan 2019 00:00:00 +0100</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0008</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0008</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp02</category>
+        
+      </item>
+    
+      <item>
+        <title>Exploration in the Chebfun Toolbox</title>
+        <description>Hadrien Montanelli, December 2014
+
+(Chebfun example ode-nonlin/FourierCollocationNonLin) [Tags: #nonlinearODE, #periodic]
+
+LW = 'linewidth'; dom = [0 2*pi];
+
+
+Chebfun uses Fourier collocation to solve linear, nonlinear and systems of ODEs with periodic boundary conditions. Consider the nonlinear ODE
+
+
+
+on $[0, 2\pi]$, with periodic boundary conditions. For nonlinear ODEs, we need to specify an intial guess; let us try $\cos(x)$. We can solve the ODE in Chebfun as follows.
+
+f = chebfun(@(x) cos(4*x), dom);
+N = chebop(@(u) diff(u) - u.*cos(u), dom);
+N.bc = 'periodic';
+N.init = chebfun(@(x) cos(x), dom);
+u = N \ f
+
+
+
+u =
+
+   chebfun column (1 smooth piece)
+       interval       length     endpoint values trig
+[       0,     6.3]       73    -0.058   -0.058 
+vertical scale = 0.24 
+
+
+
+
+Let us plot the initial guess in dashed blue, and the solution in blue.
+
+figure, plot(N.init, '--b', LW, 2)
+hold on, plot(u, 'b', LW, 2)
+
+
+
+
+The solution $u(x)$ satisfies the ODE to high accuracy:
+
+norm(N*u - f, inf)
+
+
+
+ans =
+
+   3.6338e-13
+
+
+
+
+If we start with another initial guess, we might obtain another solution. Let us try $\sin(x)^2$, plot it in dashed green, and plot the solution in green.
+
+N.init = chebfun(@(x) sin(x).^2, dom);
+v = N \ f
+hold on, plot(N.init, '--g', LW, 2)
+hold on, plot(v, 'g', LW, 2)
+
+
+
+v =
+
+   chebfun column (1 smooth piece)
+       interval       length     endpoint values trig
+[       0,     6.3]       81       1.6      1.6 
+vertical scale = 1.8 
+
+
+
+
+
+
+The solution $v(x)$ satisfies the ODE to high accuracy too:
+
+norm(N*v - f, inf)
+
+
+
+ans =
+
+   2.8800e-12
+
+
+
+
+For nonlinear ODEs, the relationships between intial guesses and solutions are difficult to analyse. In this example, we chose two different guesses, and this led to two different solutions.
+
+</description>
+        <pubDate>Thu, 20 Dec 2018 00:00:00 +0100</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0006</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0006</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp07</category>
+        
+      </item>
+    
+      <item>
+        <title>Computation of a control for a semilinear semi-discrete heat equation and analogies with a collective behavior model</title>
+        <description>Semi-linear semi-discrete heat equation and collective behavior
+
+In this tutorial we will apply the DyCon toolbox to find a control to the semi-discrete semi-linear heat equation.
+
+
+
+where $N^2A$ is the discretization of the Laplacian in 1d in $N$ nodes. We are looking for a control that after time $T$ steers the system near zero. In order to do so we will frame the problem as a minimization of a functional and we will apply gradient descent to find it. Note that the convexity of the fuctional is not proven, therefore, we will obtain a local minima for the functional. The functional considered will be:
+
+
+
+where by $\vert\cdot\vert_{L^2}$ we understand the discrete $L^2$ norm.
+
+Once this control is computed for a certain N, we will think on a dynamical system that models an opinion dynamics with $N$ agents communicating through a chain.
+
+\begin{equation}\label{m1}y_t-\frac{1}{N}Ay=G(y)+Bv\end{equation}
+
+The goal will be to compute also the control $v$ thinking model \eqref{m1} as if it was a semidiscretization of a heat equation with diffusivity $\frac{1}{N^3}$. Furthermore we will also compute the control for model \eqref{m1} with the non-linearity being non-homogeneous on $N$ and a time horizon being $T_N=N^3T$.
+
+Definition of the time
+
+syms t
+%% Discretization of the space
+N = 11;
+xi = 0; xf = 1;
+xline = linspace(xi,xf,N);
+
+
+Interior Control region between 0.5 and 0.8
+
+w1=0.5;
+w2=0.8;
+
+
+Here we count how many elements in the discretization should be placed inside the control region
+
+count=1;
+for i=1:N
+    if (double(i-1))/double(N) &amp;gt; w1
+        if (i-1)/double(N) &amp;lt; w2
+            count=count+1;
+        end
+    end
+end
+
+
+we define symbolically the vectors of the state and the control
+
+symY = SymsVector('y',N);
+symU = SymsVector('u',count);
+
+
+We create the functional that we want to minimize Our goal is to set the system to zero penalizing the norm of the control by a parameter $\beta$ that will be small.
+
+YT = 0*xline';
+symPsi  = (YT - symY).'*(YT - symY);
+beta=0.0000001;
+symL    = beta*(symU.'*symU)*(abs(w1-w2))/count;
+Jfun = Functional(symPsi,symL,symY,symU);
+
+
+We create the ODE object Our ODE object will have the semi-discretization of the semilinear heat equation. We set also initial conditions, define the non linearity and the interaction of the control to the dynamics.
+
+Initial condition
+
+Y0 = 2*sin(pi*xline)';
+
+
+Diffusion part: the discretization of the 1d Laplacian
+
+A=(N^2)*(full(gallery('tridiag',N,1,-2,1)));
+
+
+We define the matrix B that will be the effect of the interior control to the dynamics
+
+B = zeros(N,count);
+count2=1;
+for i=1:N
+    if (i-1)/double(N) &amp;gt;= w1
+        if (i-1)/double(N) &amp;lt; w2
+            B(i,count2)=1;
+            count2=count2+1;
+        end
+    end
+end
+
+
+Definition of the non-linearity 
+
+syms x;
+syms G(x);
+syms U(x);
+syms DG(x);
+U(x)=-5*exp(-x^2);
+G(x)=diff(U,x);
+formula=G(x);
+G = symfun(formula,x)
+
+
+ 
+G(x) =
+ 
+10*x*exp(-x^2)
+ 
+
+
+
+and we define the part of the dynamics corresponding to the nonlinearity
+
+vectorF = arrayfun( @(x)G(x),symY);
+
+
+Putting all the things together
+
+Fsym  = A*symY + vectorF + B*symU;
+
+
+Creation of the ODE object Time horizon
+
+T = 1;
+
+
+We create the ODE-object and we change the resolution to $dt=0.01$ in order to see the variation in a small time scale. We will get the values of the solution in steps of size odeEqn.dt, if we do not care about modifying this parameter in the object, we might get the solution in certain time steps that will hide part of the dynamics.
+
+odeEqn = ode(Fsym,symY,symU,'Y0',Y0,'T',T);
+odeEqn.dt=0.01;
+
+
+We solve the equation and we plot the free solution applying solve to odeEqn and we plot the free solution.
+
+solve(odeEqn)
+
+
+figure;
+SIZ=size(odeEqn.Y);
+time=linspace(0,T,SIZ(1));
+space=linspace(1,N,N);
+[TIME,SPACE]=meshgrid(time,space);
+surf(TIME',SPACE',odeEqn.Y,'EdgeColor','none');
+title('Free Dynamics')
+ylabel('space discretization')
+xlabel('Time')
+
+
+
+
+We create the object that collects the formulation of an optimal control problem  by means of the object that describes the dynamics odeEqn, the functional to minimize Jfun and the time horizon T
+
+iCP1 = ControlProblem(odeEqn,Jfun,'T',T);
+
+
+We apply the steepest descent method to obtain a local minimum (our functional might not be convex).
+
+tol = 0.1;
+maxiter = 30;
+DescentParameters = {'MiddleStepControl',true,'InitialLengthStep',4.0};
+GradientParameters = {'tol',tol,'DescentParameters',DescentParameters,'maxiter',maxiter};
+GradientMethod(iCP1,GradientParameters{:})
+
+
+figure;
+SIZ=size(iCP1.ode.Y);
+time=linspace(0,T,SIZ(1));
+space=linspace(1,N,N);
+[TIME,SPACE]=meshgrid(time,space);
+surf(TIME',SPACE',iCP1.ode.Y,'EdgeColor','none')
+title('Controlled Dynamics')
+ylabel('space discretization')
+xlabel('Time')
+
+
+
+
+The control function inside the control region
+
+figure;
+SIZ=size(iCP1.UOptimal);
+time=linspace(0,T,SIZ(1));
+space=linspace(1,SIZ(2)-1,SIZ(2)-1);
+[TIME,SPACE]=meshgrid(time,space);
+surf(TIME',SPACE',iCP1.UOptimal(:,1:SIZ(2)-1),'EdgeColor','none')
+title('Control')
+ylabel('space discretization')
+xlabel('Time')
+
+
+
+
+figure;
+line(xline,YT,'Color','red')
+line(xline,odeEqn.Y(end,:),'Color','blue')
+line(xline,iCP1.ode.Y(end,:),'Color','green')
+legend('Target','Free Dynamics','controlled dynamics')
+
+
+
+
+Now we apply the same procedure for the collective behavior dynamics.
+
+We will employ a function that does the algorithm explained before for the semilinear heat equation having the chance to set a diffusivity constant.
+
+We set the parameters for the function
+
+beta=0.0000001;
+y0=@(x)2*sin(pi*x);
+syms x
+syms G(x);
+syms U(x);
+syms DG(x);
+U(x)=-5*exp(-x^2);
+G(x)=diff(U,x);
+T=1;
+N=11;
+
+
+For the simulation of the model in collective behavior we will employ a diffusivity $D=\frac{1}{N^3}$.
+
+[a,b,c,d]=SLSD1doptimalnullcontrol(N,1/(N^3),G,T,beta,[0.5,0.8],y0);
+
+
+
+
+figure;
+surf(a.time,a.space,a.value,'EdgeColor','none');
+title('Free Dynamics')
+ylabel('space discretization')
+xlabel('Time')
+
+
+
+
+figure;
+surf(b.time,b.space,b.value,'EdgeColor','none')
+title('Controlled Dynamics')
+ylabel('space discretization')
+xlabel('Time')
+
+
+
+
+figure;
+surf(c.time,c.space,c.value,'EdgeColor','none')
+title('Control')
+ylabel('space discretization')
+xlabel('Time')
+
+
+
+
+figure;
+line(xline,d.y1,'Color','red')
+line(xline,d.y2,'Color','blue')
+line(xline,d.y3,'Color','green')
+legend('Target','Free Dynamics','controlled dynamics')
+
+
+
+
+Now we will change also the time horizon and we will incorporate a non-homogeneous non-linearity, we will just divide the non-linearity $G$ by $N^3$
+
+[a,b,c,d]=SLSD1doptimalnullcontrol(N,1/(N^2),G/(N^2),N^2*T,beta,[0.5,0.8],y0);
+
+
+
+
+figure;
+surf(a.time,a.space,a.value,'EdgeColor','none');
+title('Free Dynamics')
+ylabel('space discretization')
+xlabel('Time')
+
+
+
+
+figure;
+surf(b.time,b.space,b.value,'EdgeColor','none')
+title('Controlled Dynamics')
+ylabel('space discretization')
+xlabel('Time')
+
+
+
+
+figure;
+surf(c.time(:,1:SIZ(2)-1),c.space(:,1:SIZ(2)-1),c.value(:,1:SIZ(2)-1),'EdgeColor','none')
+title('Control')
+ylabel('space discretization')
+xlabel('Time')
+
+
+
+
+figure;
+line(xline,d.y1,'Color','red')
+line(xline,d.y2,'Color','blue')
+line(xline,d.y3,'Color','green')
+legend('Target','Free Dynamics','controlled dynamics')
+
+
+
+
+</description>
+        <pubDate>Tue, 18 Dec 2018 00:00:00 +0100</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0004</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0004</guid>
+        
+        <category>PDE</category>
+        
+        <category>Lo</category>
+        
+        <category>SemiLinear</category>
+        
+        <category>Todo</category>
+        
+        <category>Optimal Control</category>
+        
+        <category>Consensus</category>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp02</category>
+        
+      </item>
+    
+      <item>
+        <title>Two Grids Filter Method for RPS Semi-Discretization</title>
+        <description>This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation
+
+Solving 1-d wave equation with RPS semi-discretization method Considering 1-d wave equation,
+
+
+
+When $(u_0,u_1) \in H_0^1(0,1)\times L^2(0,1)$, it admits a unique solution $u(x,t) \in C^0([0,T],H_0^1(0,1)) \cap C^1([0,T],L^2(0,1))$. 	The energy of solution to \eqref{wave} $E(t)$
+
+
+
+is time conserved .
+
+With Hilbert Uniqueness Method, the exact controllability of \eqref{wave} is  equal to the observability of the adjoint \eqref{wave}, Observability of \eqref{wave} reads as: Given $T\geq 2$, there exist a positive constant $C(T)\geq 0$ such that
+
+
+
+holds for every solution $u(x,t)$ to adjoint system \eqref{wave}
+
+RPS semi-discretization of  weak variation formulation  of \eqref{wave} is written as
+
+
+
+where $M_{i,j}:=\int_{-\infty}^{+\infty}\phi_i\phi_j dx$ and $R_{i,j}=\int_{-\infty}^{+\infty}\frac{d}{dx}\phi_i\frac{d}{dx}\phi_j dx $ and  the corresponding $\hat{A}(\omega)$ defined as
+
+
+
+As for this problem, the rps basis $\phi_i(x)$ corresponding  $x_i$ is defined by
+
+
+
+Set up uniform fine mesh and coarse mesh
+
+h = 2^(-8); H=2^(-4); Nbasis=2/H-1;
+n = 2/h; N=2/H;
+
+
+Construct the stiffness matrix and massive matrix regarding p1 finite element on fine mesh and coarse mesh respectively
+
+L = sparse([1:n+1,1:n,2:n+1],[1:n+1,2:n+1,1:n],[2*ones(1,n+1),-ones(1,2*n)]);
+LL= sparse([1:N-1,1:N-2,2:N-1],[1:N-1,2:N-1,1:N-2],[2*ones(1,N-1),-ones(1,2*N-4)]);
+M = sparse([1:n-1,1:n-2,2:n-1],[1:n-1,2:n-1,1:n-2],[2/3*h*ones(1,n-1),1/6*h*ones(1,2*n-4)]);
+MM = sparse([1:N-1,1:N-2,2:N-1],[1:N-1,2:N-1,1:N-2],[2/3*H*ones(1,N-1),1/6*H*ones(1,2*N-4)]);
+L=1/h*L;
+LL=1/H*LL;
+
+
+Construct the discrete energy $\vert-div(a\nabla \cdot)\vert$
+
+temp = L(:,2:end-1);
+boundary = L([1,end],2:end-1);
+A = temp'*temp+100*(boundary')*boundary;
+
+
+Matrix corresponding  pointwise constrains
+
+B = eye(n-1,n-1);
+B = B(H/h*[1:Nbasis],:);
+
+
+Solve the rps basis by solving the optimization problems
+
+Psi = zeros(n-1,Nbasis);
+for i = 1:size(B,1)
+ei = zeros(Nbasis,1);
+ei(i,1) = 1;
+Psi(:,i) = A\(B'*((B*inv(A)*B')\ei));
+end
+
+
+plot the basis and log scale of basis
+
+clf
+subplot(1,2,2);
+plot(-1+h:h:1-h,log10(abs(Psi(:,16))));
+subplot(1,2,1);
+plot(-1:h:1,[0;Psi(:,16);0],'b');
+
+
+
+
+Set up the time interval, time step, source term $f=0$
+
+T=1;J=10000;f=zeros(length(A),1);
+
+
+Set up the concentration parameter of inital data $\gamma$, frequency $\xi$ and generate fine grids $x$ and the initial data defined on them
+
+gamma=H^(-1.8); xi=3/4*pi; x=-1+h:h:1-h;
+ui=exp(-gamma*(x).^2/2).*cos(xi*x/H);
+uti=-gamma*(x).*exp(-gamma*(x).^2/2).*cos(xi*x/H)-xi/H.*exp(-gamma*(x).^2/2).*sin(xi*x/H);
+
+
+Solve the wave equation on fine mesh as a approximation of analytical solution, which will be used then as a reference of rps solution
+
+[u,ut] =  ODEsolver(M,L(2:end-1,2:end-1),ui,uti,f,T,J,M);
+[X,Y]=meshgrid(-1+h:h:1-h,0:T/J:T);
+clf, pcolor(X,Y,u') ;shading interp ; colorbar;
+title('finemesh solution')
+
+
+
+
+Solve the wave equation on coarsemesh using RPS method
+
+xc=x(H/h*[1:Nbasis]);
+Mc=Psi'*M*Psi; Lc=Psi'*L(2:end-1,2:end-1)*Psi;
+uci=exp(-gamma*(xc).^2/2).*cos(xi*xc/H);
+utci=-gamma*(xc).*exp(-gamma*(xc).^2/2).*cos(xi*xc/H)-xi/H.*exp(-gamma*(xc).^2/2).*sin(xi*xc/H);
+fc=zeros(length(Lc),1);
+[uc,uct]=ODEsolver(Mc,Lc,uci,utci,fc,T,J,Mc);
+clf, pcolor(X,Y,(Psi*uc)');shading interp ; colorbar;
+title('coarsemesh solution with rps basis')
+
+
+
+
+Solve the wave equation on coarsemesh using p1 fem
+
+[uuc,uuct]=ODEsolver(MM,LL,uci,utci,fc,T,J,MM);
+[XX,YY]=meshgrid(-1+H:H:1-H,0:T/J:T);
+clf, pcolor(XX,YY,uuc'); shading interp ; colorbar;
+title('coarsemesh solution with linear basis')
+
+
+
+
+Plot the disperation relation of RPS-semi descretization
+
+RPS semi-discretization of  weak variation formulation  of \eqref{wave} is written as
+
+
+
+where $M_{i,j}:=\int_{-\infty}^{+\infty}\phi_i\phi_j dx$ and $R_{i,j}=\int_{-\infty}^{+\infty}\frac{d}{dx}\phi_i\frac{d}{dx}\phi_j dx $ and the corresponding $\hat{A}(\omega)$ defined as
+
+
+
+Since there’s no explicit formulation for matrix $M$ and $R$, We can only calculate the fourier symbol of $M$ and $R$ numerically. Assuming the matrix $M$ is symmetric and toplitze and dimension $N$ of $M$ being a odd number, then fourier symbol of $M$   could be written as
+
+
+
+For example, let $M$  be mass matrix corresponding p1 finite element semi-descretization. the fourier symbol of $M$ is
+
+
+
+Construct the discrete $cos(i\omega h)$ with $\omega h$ sampled at 1000 points at interval $[0,2\pi]$
+
+f = cell(N/2);
+f{1} = @(x) 1;
+for i =1:N/2-1
+    f{i+1} = @(x)2*cos(i*x);
+end
+f = flip(f);
+
+Matrix_cos=zeros(N/2,1000);
+for i=1:N/2
+    xx=linspace(0.1,2*pi,1000);
+    Matrix_cos(i,:)=arrayfun(f{i},xx);
+end
+
+
+Calculate the fourier symbol of $M$ and $R$
+
+M_symbol = 1/H*Mc(1/H,1:N/2)*Matrix_cos;
+R_symbol = H*Lc(1/H,1:N/2)*Matrix_cos./xx.^2;
+
+
+Plot the numerical phase velocity for sinusoidal solution and compare it with the ones for FDM and FEM
+
+hold on
+phaseVelocity = R_symbol.^(1/2)./M_symbol.^(1/2);
+clf, plot(xx,phaseVelocity)
+%% for p1 FEM
+hold on
+p1PhaseV = sin(xx/2)./xx*2.*(2/3+1/3*cos(xx)).^(-1/2);
+plot(xx,p1PhaseV)
+%% for FDM
+hold on
+fdmPhaseV = sin(xx/2)./xx*2;
+plot(xx,fdmPhaseV)
+%%
+ax=gca; ax.XTick = ([ 0 1/2*pi 5/6*pi pi 2*pi]);
+ax.XTickLabel =({'0','1/2\pi','5/6*\pi','\pi','2\pi'});
+xlabel('\omega*H')
+legend('RPS','P1 FEM','FDM')
+
+
+
+
+Plot the numerical group velocity for sinusoidal solution and compare it with the ones for FDM and FEM
+
+groupVelocity = diff(phaseVelocity)/((2*pi-0.1)/999).*xx(1:length(xx)-1)+phaseVelocity(1:length(xx)-1);
+clf, plot(xx(1:length(groupVelocity)),groupVelocity)
+%% for p1 FEM
+hold on
+p1GroupV = diff(p1PhaseV)/((2*pi-0.1)/999).*xx(1:length(xx)-1)+p1PhaseV(1:length(xx)-1);
+plot(xx(1:length(xx)-1),p1GroupV)
+%% for FDM
+hold on
+fdmGroupV = diff(fdmPhaseV)/((2*pi-0.1)/999).*xx(1:length(groupVelocity))+fdmPhaseV(1:length(groupVelocity));
+plot(xx(1:length(groupVelocity)),fdmGroupV)
+%% for ecact group velocity
+hold on
+plot(xx, ones(length(xx)),'LineStyle','--')
+%%
+ax=gca;
+ax.XTick=([ 0 1/2*pi 5/6*pi pi 2*pi]);
+ax.XTickLabel =({'0','1/2\pi','5/6*\pi','\pi','2\pi'});
+ax.XLim=[0 pi];
+xlabel('\omega*H')
+legend('RPS','P1 FEM','FDM','exact')
+
+
+
+
+Plot the numerical disperation relation Disperation relation for RPS semi-discretizaton
+
+diperss = phaseVelocity.*xx;
+
+
+clf
+hold on
+plot(xx,diperss)
+%% for P1 FEM
+hold on, plot(xx,2*sin(xx/2).*(2/3+1/3*cos(xx)).^(-1/2));
+%% for FDM
+hold on , plot(xx,2*sin(xx./2))
+%% for exact one
+hold on , plot(xx,xx,'LineStyle','--')
+ax=gca;
+ax.XTick=([ 0 1/2*pi 5/6*pi pi 2*pi]);
+ax.XTickLabel =({'0','1/2\pi','5/6*\pi','\pi','2\pi'});
+ax.XLim=[0 pi];
+xlabel('\omega*H')
+legend('RPS','P1 FEM','FDM','exact')
+
+
+
+
+</description>
+        <pubDate>Tue, 18 Dec 2018 00:00:00 +0100</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp04/T0002-Numerical-homogenizaton</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp04/T0002-Numerical-homogenizaton</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp04</category>
+        
+      </item>
+    
+      <item>
+        <title>Simple application of ControlProblem MATLAB Object</title>
+        <description>
+  
+    
+       PDF version
+       Download Matlab Code
+       Download Scilab Code
+      GITHUB
+    
+  
+
+
+In this work, we address the optimal control of parameter-dependent systems. We introduce the notion of averaged control in which the quantity of interest is the average of the states with respect to the parameter family
+
+
+
+More precisely, we are interested in solving the minimization problem
+
+
+
+where $\mathcal{U}_{ad}$ is the space of admissible controls and $\bar{x}$ the average state target. The optimization problem (\ref{eq:costFunctional}) is subject to the finite dimensional linear control system
+
+
+
+In (\ref{eq:primalODE}), the vector valued function $ x \left( t, \nu \right) \in \mathbb{R}^N$ is the state of the system, $A \left( \nu \right)$ is a $N \times N$-matrix governing its free dynamics and $u=u\left( t \right) \in \mathbb{R}^M $ is a $M$-component control, with $M \leq N$, entering and acting on the system through the control operator $B\left( \nu \right)$, a $N \times M$ parameter-dependent matrix. Moreover, the initial datum $x^0 \in \mathbb{R}^N$ to be controlled is independent of the parameter $\nu$, but the state of the system itself $x \left( t, \nu \right)$ depends on $\nu$. The effective value of the parameter $\nu$ being unknown, we aim at choosing a control that would perform optimally in an averaged sense, this is, rather than controlling specific realizations of the state, the average with respect to $\nu$ is controlled. This allows building a control independent of the parameter and making a robust compromise of all the possible realizations of the system for the various possible values of the unknown parameter $\nu$
+
+We use the classical gradient descent method based on the adjoint methodology, and obtain the corresponding adjoint system for (\ref{eq:primalODE}),
+
+
+To minimize the functional in (\ref{eq:costFunctional}), we take the steepest descent direction given by
+
+
+
+Hence, the new control reads as
+
+
+for some $\gamma$ small enough.
+
+We have also used the conjugate gradient method in order to reach faster the optimal control. In order to be able to apply this method the state vector has been split as
+
+
+
+where $z_u$ is the solution to the controlled system with zero initial condition,
+
+
+
+and $y$ solves the free dynamics problem,
+
+
+
+The functional in \ref{eq:costFunctional} can be expressed as
+
+
+
+We introduce the linear operator
+
+
+
+and its dual counterpart,
+
+
+
+where $p\left(t, \nu\right)$ is solution to
+
+
+
+By doing this we can write the functional gradient as
+
+
+
+After having defined $A_{cg}$ and $b_{cg}$ we can apply the conjugate gradient method to solve the control problem.
+
+Algorithm 1 Optimal control with Conjugate Gradient Method
+Require: $A\left( \nu \right)$, $B\left( \nu \right)$, $x^0$, $u^{\left(0\right)}$, $\beta$, $T$, $\bar{x}$, $tol$
+ 
+$n \gets 0 $
+ compute $\bar{y} \left( T \right)$
+ $b \gets \Lambda^*\left( \bar{x} - \bar{y} \left( T \right) \right)$
+ $z \gets \Lambda u$
+ $g \gets \Lambda^*z + \beta u - b$
+ $h \gets ||g||^2_{L^2\left(\left[0,T\right]\right)}$
+ $h_a \gets h$
+ $r \gets -g$
+While $||r||_{L^2\left(\left[0,T\right]\right)} &amp;gt; tol $ do
+  &amp;emsp; &amp;emsp;    $z \gets \Lambda r$
+  &amp;emsp; &amp;emsp;    $w \gets \Lambda^*z + \beta r$
+  &amp;emsp; &amp;emsp;    $\alpha \gets \frac{h}{\left(r,w\right)_{L^2\left(\left[0,T\right]\right)}}$
+  &amp;emsp; &amp;emsp;    $u \gets u + \alpha r$
+  &amp;emsp; &amp;emsp;    $g \gets g + \alpha w$
+  &amp;emsp; &amp;emsp;    $h_a \gets h$
+  &amp;emsp; &amp;emsp;    $h \gets ||g||^2_{L^2\left(\left[0,T\right]\right)}$
+  &amp;emsp; &amp;emsp;    $\gamma \gets \frac{h}{h_a}$
+  &amp;emsp; &amp;emsp;    $r \gets -g + \gamma r$
+  &amp;emsp; &amp;emsp;    $n \gets n + 1$
+
+[caption id=”figure1a” align=”aligncenter” width=”560”]Figure 1.a: Control system with $N=3$, $M=1$ and target average state $\bar{x}=[0,0,0]^t$. Average state vector components.[/caption]
+
+[caption id=”figure1b” align=”aligncenter” width=”560”]Figure 1.b: Control system with $N=3$, $M=1$ and target average state $\bar{x}=[0,0,0]^t$. Control.[/caption]
+
+[caption id=”figure2” align=”aligncenter” width=”648”]Figure 2: State vector components for every parameter $\nu_i$. One can observe that the final state $x\left(T, \nu_i \right)$ is not close to $\bar{x}=[0,0,0]^t$ in general.[/caption]
+
+Bibliography
+
+[1] E. Zuazua (2014) Averaged Control. Automatica, 50 (12), p. 3077-3087.
+
+Authors: Víctor Hernández-Santamaría, José Vicente Lorenzo, Enrique Zuazua
+March, 2018
+</description>
+        <pubDate>Wed, 12 Dec 2018 00:00:00 +0100</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0001</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0001</guid>
+        
+        <category>DyCon Toolbox</category>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp02</category>
+        
+      </item>
+    
+      <item>
+        <title>Stability analysis of Power Electronic Converters Connected to AC Grids</title>
+        <description>We analyze the stability of a simplified system modeling two converters in parallel connected to an ideal grid (modelled by a voltage source) via line impedances.
+
+
+
+Each of the converters is fed by a DC source and includes an $LC$ circuit at its output to filter the ripple introduced by the converter switching. Similarly, an $LR$ impedance is included after the $LC$ filter to model the characteristics of the line until the point of common connection (PCC). The grid in this case is modelled with an ideal voltage source $v_g$ with a series $LR$ impedance. In this context, $f$ subscript denotes filter and $o$ subscript denotes output of the inverter. The subscript %%g%% denotes that this variable is from the side of the grid.
+
+The dynamics inside the system (e.g. how does the current in an inductor or the voltage in a capacitor evolve over time) is described by several differential equations describing the evolution of the state input vector. The model is then completed with the introduction of algebraic relations which link the previous equations by applying classical laws such as Kirchoff.
+
+All these equations depend on some parameters characteristic of the physical model:
+
+
+  
+    $Rf_{1}$ and $Rf_{2}$: the filter resistors;
+  
+  
+    $Lf_{1}$ and $Lf_{2}$: the inductances of the filter;
+  
+  
+    $Cf_{1}$ and $Cf_{2}$: the capacitances;
+  
+  
+    $Ro_{1}$ and $Ro_{2}$: the output resistors;
+  
+  
+    $Lo_{1}$ and $Lo_{2}$: the output inductances;
+  
+  
+    $Rg$: the grid resistor;
+  
+  
+    $Lg$: the grid inductance.
+  
+
+
+The model is then written in the form $\dot{x} = Ax + Bu$, with
+
+
+
+
+
+and $u = [Vdc_{1} Vdc_{2} V_{g}]$. here we defined
+
+
+
+The stability of the system is discussed by studying the evolution of the eigenvalues of $A$ in dependence of the aforementioned parameters. Due to the size of the system and to the large number of parameters involved, this stability analysis needs to be addressed by means of fine computational tools.
+
+clear
+
+
+Variables composing the state vector
+
+syms Ii1 Vo1 Io1 Ii2 Vo2 Io2 Ig
+
+
+Parameters entering in the model
+
+syms Ro1 Rf1 Lf1 Cf1 Lo1
+syms Ro2 Rf2 Lf2 Cf2 Lo2
+syms Rg Lg L
+%% sustituimos numericamente excepto nRo1 syms m1 m2
+
+
+Out of these parameters, we build the matrices $A$ and $B$ in symbolic form.
+
+A = Amatrix();
+B = Bmatrix();
+
+
+We now want to study the evolution of the eigenvalues with respect to $\mathrm{Ro}_{1}$. Thus, we assign some fix value to all the others parameters
+
+nRf1 = 1; nLf1 = 1; nCf1 = 1; nLo1 = 1;
+nRo2 = 1; nRf2 = 1; nLf2 = 1; nCf2 = 1;
+nLo2 = 1; nRg  = 1; nLg  = 1; nL = 1/nLo1 + 1/nLo2 ;
+
+
+and we build the corresponding matrix $A$, which will depend only on $Ro_{1}$.
+
+symbolic  = [Rf1, Lf1, Cf1, Lo1, ...
+             Ro2,  Rf2, Lf2, Cf2, Lo2, ...
+             Rg,   Lg,  L];
+
+numerical = [nRf1, nLf1, nCf1, nLo1, ...
+             nRo2,  nRf2, nLf2, nCf2, nLo2, ...
+             nRg,   nLg,  nL];
+nA = subs(A,symbolic,numerical)
+
+
+ 
+nA =
+ 
+[ -1,   -1,      0,  0,     0,    0,    0]
+[  1,    0,     -1,  0,     0,    0,    0]
+[  0,  1/2, -Ro1/2,  0,  -1/2,  1/2,  1/2]
+[  0,    0,      0, -1,    -1,    0,    0]
+[  0,    0,      0,  1,     0,   -1,    0]
+[  0, -1/2,  Ro1/2,  0,   1/2, -1/2, -1/2]
+[  0,  1/2, -Ro1/2,  0, Ro1/2, -1/2, -1/2]
+ 
+
+
+
+Then, we convert it from symbolic to function_handle
+
+funRo1 = matlabFunction(eig(nA));
+
+
+Finally, we compute and plot the eigenvalues of this matrix $A$ and we analyze their evolution while varying $Ro_{1}$ in a given range.
+
+nRo1 = -3:0.05:5;
+eigenvalues = cell(1,length(nRo1));
+index = 0;
+for inRo1 = nRo1
+    index = index + 1;
+    %% in each iteration we replace in funRo1 a different value of the parameter
+    eigenvalues{index} = funRo1(inRo1);
+end
+
+
+For each value of $Ro_{1}$, the eigenvalues are stored in a cell. For instance, these are the eigenvalues corresponding to $Ro_{1}=-3$
+
+eigenvalues{1}
+
+
+
+ans =
+
+  -1.0000 + 0.0000i
+   0.0000 + 0.0000i
+  -0.5000 - 0.8660i
+  -0.5000 + 0.8660i
+   0.0000 + 0.0000i
+   0.2500 - 0.6614i
+   0.2500 + 0.6614i
+
+
+
+
+We then use use the Matlab program “EingEvolution” that we specifically degsigned, in order to see the evolution of these eigenvalues. This is done through the command EingEvolution(autovalues,nRo1,'R_{o1}','Gif_evo_eig.gif').
+
+Finally, we can plot the evolution of the eigenvalues as a function of $R_{o_1}$.
+
+
+
+This procedure may be repeated for all the others parameters, thus obtaining a complete stability analysis of our model.
+
+</description>
+        <pubDate>Thu, 15 Nov 2018 00:00:00 +0100</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0001</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0001</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp07</category>
+        
+      </item>
+    
+      <item>
+        <title>Average Control by Stochastic Gradient method</title>
+        <description>In the previous work, the concept of averaged control 1 of parameter-dependent systems is introduced. The optimal control of the following functional is obtained applying the classical gradient descent algorithm
+
+
+
+Subject to the finite dimensional linear control system
+
+
+
+In this tutorial the main goal is to apply the stochastic gradient descent method to obtain the minimun of the same optimal control problem.
+
+In this case, the iterative method is defined as
+
+
+
+where $p \left( t,\nu_{i_k} \right)$ is solution of the following adjoint problem
+
+
+
+The values of parameter $\nu_i$ are
+
+nu = 1:0.1:5;
+
+
+And save in K, the number of values
+
+K = length(nu);
+
+
+We can, define the initial state of all ODE’s
+
+N = 2; %% dimension of vector state
+x0 = ones(N, 1);
+
+
+We take as final target
+
+xt = [0.5;0];
+
+
+Also, we need to define a initial control, that will be evolve
+
+dt = 0.02;
+t0 = 0; T  = 1;
+span = (t0:dt:T);
+%%
+u0 = zeros(length(span),1);
+
+
+Moreover, we can define the matrix A’s and B’s, that determine the linear system
+
+Am = -triu(ones(N));
+
+
+Bm = zeros(N, 1);
+Bm(N) = 1;
+
+
+A = zeros(N,N,K);
+B = zeros(N,1,K);
+for index = 1:K
+    A(:,:,index) = Am + (nu(index) - 1 )*diag(diag(Am));
+    B(:,:,index) = Bm;
+end
+
+
+Then, we solve the problem applying the stochastic gradient descent algorithm
+
+AverageProblemSG = ControlParameterDependent(A,B,x0,u0,span);
+AverageStochasticGradient(AverageProblemSG,xt)
+plot(AverageProblemSG)
+
+
+
+
+Notice that, it is know that the SGD converges in mean 2. Hence, with only one trail of the stochastic algorithm it is possible do not have convergence. To see the convergence it is necessary to run the iterative method different times and to do the mean of all the trayectories
+
+We define the number of trails of the stochastic method, as well as the maximum number of iterations, the tolerance and other auxiliar quantities.
+
+trails = 50;
+MaxIter = 50;
+Tol = 1e-4;
+
+
+AverageProblemSG = ControlParameterDependent.empty;
+J_executionsSG = {};
+error_executionsSG = {};
+index_trail = 0;
+
+
+Now, the main problem is solved for each trail
+
+while index_trail &amp;lt; trails
+
+    index_trail = index_trail + 1;
+    %% Save the object in array
+    AverageProblemSG(index_trail) = ControlParameterDependent(A,B,x0,u0,span);
+    AverageStochasticGradient(AverageProblemSG(index_trail),xt,'MaxIter',MaxIter,'tol',Tol)
+    addtaSG = [AverageProblemSG(index_trail).addata];
+
+    J = addtaSG.Jhistory;
+    J_executionsSG{index_trail} = J;
+
+    error = addtaSG.error_history;
+    error_executionsSG{index_trail} = error;
+end
+
+
+Here, we plot the trails and the mean of all trayectories
+
+figure
+for i=1:trails
+    plot( J_executionsSG{i},'color',[0.4,0.8,0.9])
+    hold on
+end
+title('Cost Function','interpreter','latex')
+xlabel('Epoch','interpreter','latex')
+plot(mean_null(J_executionsSG),'r','LineWidth',1.75)
+
+
+
+
+figure
+for i=1:trails
+    plot( error_executionsSG{i},'color',[0.4,0.8,0.9])
+    hold on
+end
+title('Error','interpreter','latex')
+xlabel('Epoch','interpreter','latex')
+plot(mean_null(error_executionsSG),'r','LineWidth',1.75)
+
+
+
+
+We can observe the convergence of the trayectories
+
+References
+
+
+  
+    
+      E. Zuazua (2014), Averaged Control. Automatica, 50 (12), p. 3077-3087. &amp;#8617;
+    
+    
+      F. Bach and E. Moulines (2011), Non-asymptotic analysis of stochastic approximation algorithms for machine learning, Advances in Neural Information Processing Systems. &amp;#8617;
+    
+  
+
+</description>
+        <pubDate>Tue, 13 Nov 2018 00:00:00 +0100</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp03/T0002</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp03/T0002</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp03</category>
+        
+      </item>
+    
+      <item>
+        <title>The control on the Kuramoto model by handling one oscillator</title>
+        <description>Define vector fields of ODE : Kuramoto control problem whose dynamics is
+
+
+
+where we control the first oscillator,
+
+
+
+in order to change the limit phase value to be 0.
+
+We first define the system of ODEs in terms of symbolic variables.
+
+clear all
+clc
+
+m = 10;  %% [m]: number of oscillators, which we may change later.
+
+th = sym('th', [m,1]);  %% [th_i]: phases of oscillators, $\theta_i$
+om = sym('om', [m,1]);  %% [om_i]: natural frequencies of osc., $\omega_i$
+KK = sym('K',[m,m]); %% [Ki_j]: the coupling network matrix, $K_{i,j}$
+
+syms Nsys;   %% [Nsys]: the vector fields of ODEs
+thth = repmat(th,[1 m]);
+Nsys = om + (1./m)*sum(KK.*sin(thth.' - thth),2);   %% Kuramoto interaction terms
+syms u; %% [u]: One-dimensional control term
+Nsys(1) = Nsys(1) + u;    %% For the first particle, we put the control term
+
+
+%% latex(Nsys)
+
+
+The system is as follows:
+
+
+
+Linearized model and numerical data setting
+
+We now construct the linearized system using Jacobian:
+
+syms F; %% [F]: The system without control
+F = subs(Nsys,u,0);
+
+syms Amat Bmat; %% [Amat, Bmat]: Symbolic versions of the matrix A and B
+th_eq = zeros(m,1); %% Evaluation of Jacobian is at equilibrium, [0;0;0;0].
+Amat = subs(jacobian(F,th),th,th_eq);
+Bmat = diff(subs(Nsys,th,th_eq),u);
+
+
+Construction of numerical matrices $A$ and $B$:
+
+We next set the physical parameters. Natural frequencies, however, we put them zero to apply linear-quadratic control model.
+
+The coupling network matrix is set to be random near ones(m,m):
+
+  KK_init = ones(m,m)+0.2*(2*(rand(m,m)-0.5));
+
+
+and save it in the folder ‘functions/coupling.mat’.
+
+om_init = zeros(m,1);
+load('functions/coupling.mat','KK_init');
+
+A = double(subs(Amat,[om,KK],[om_init,KK_init]));
+B = double(subs(Bmat,[om,KK],[om_init,KK_init]));
+
+
+Construction of the LQR controller and its evaluation
+
+We design the LQR controller and solve it with linearized model.
+
+The cost is only for the symmetric quadrature at $[0,0,0]$ since we want all of them to be 0.
+
+R = 1; Q = diag(ones(m,1));
+[ricsol,cleig,K,report] = care(A,B,Q);
+K %% Present the feedback matrix
+
+
+
+K =
+
+  Columns 1 through 7
+
+    0.6358    0.2930    0.2924    0.2829    0.2604    0.3013    0.2775
+
+  Columns 8 through 10
+
+    0.2777    0.2701    0.2713
+
+
+
+
+Practically, any $K$ with positive elements can make the limit point to be 0, e.g., K=[1,1,1].
+
+The initial condition is chosen on $[-0.55\pi,0.55\pi]$ by
+
+  ini = 0.55*pi()*(2*(rand(m,1)-0.5));
+
+
+which is stored in the functions folder, ‘functions/ini.mat’.
+
+load('functions/ini.mat','ini'); %% Safe data
+
+tspan = [0,10];
+
+
+1) Simulate the nonlinear dynamics without any control: $u = 0$.
+
+syms Isys_ori;
+Isys_ori = subs(F,[om,KK],[om_init,KK_init]);
+Isys_ori_ftn_temp = matlabFunction(Isys_ori,'Vars',{th});
+Isys_ori_ftn = @(t,x) Isys_ori_ftn_temp(x);
+
+[timenc, statenc] = ode45(Isys_ori_ftn,tspan, ini); %% Solve ODE with 'ode45'
+
+
+2) Simulate the linear dynamics with CARE function
+
+f_ctr = @(x) -K*x;
+
+i_linear = @(t,x) A*x + B*f_ctr(x);
+
+[time, state] = ode45(i_linear,tspan, ini);
+
+
+3) Simulate the nonlinear dynamics with the same control
+
+syms Isys;
+Isys = subs(Nsys,[om,KK,u],[om_init,KK_init,(-K*th)]);
+Isys_ftn_temp = matlabFunction(Isys,'Vars',{th});
+Isys_ftn = @(t,x) Isys_ftn_temp(x);
+
+[timen, staten] = ode45(Isys_ftn,tspan, ini);
+
+
+Visualization
+
+plot(timenc, statenc(:,1)/pi(),'-k','LineWidth',2) %% The first oscillator is black-colored.
+hold on
+plot(timenc, statenc(:,2:m)/pi(),'LineWidth',2)
+grid on
+xlabel('Time')
+ylabel('Phases [\pi]') %% The unit is $\pi$.
+title('Figure 1: Phases of the model without control')
+hold off
+
+
+
+
+clf
+plot(time, state(:,1)/pi(),'-k','LineWidth',2)
+hold on
+plot(time, state(:,2:m)/pi(),'LineWidth',2)
+grid on
+xlabel('Time')
+ylabel('Phases [\pi]')
+title('Figure 2: Phases of the linearized model')
+hold off
+
+
+
+
+clf
+plot(timen, staten(:,1)/pi(),'-k','LineWidth',2)
+hold on
+plot(timen, staten(:,2:m)/pi(),'LineWidth',2)
+grid on
+xlabel('Time')
+ylabel('Phases [\pi]')
+title('Figure 3: Phases of the Kuramoto model')
+hold off
+
+
+
+
+In Figure 1, the limit point is not zero since the mean value of initial phases is nonzero.
+
+Figure 2 shows that the first oscillator keeps it phase above zero to make the final phases zero.
+
+The nonlinear model has less decay then the linearized model, but goes to zero in Figure 3.
+
+Failure of LQR control for large initial data
+
+The initial data is from
+
+ini2 = pi()*(2*(rand(m,1)-0.5));
+
+
+which is uniformly distributed on $[-\pi,\pi]$. We expect the limit point to be separated in the real line with differences $2\pi$.
+
+load('functions/ini2.mat','ini2'); %% Separated data
+
+f_ctr = @(x) -K*x;
+
+i_linear = @(t,x) A*x + B*f_ctr(x);
+
+tspan = [0,20];
+[time, state] = ode45(i_linear,tspan, ini2);
+
+syms Isys;
+Isys = subs(Nsys,[om,KK,u],[om_init,KK_init,(-K*th)]);
+Isys_ftn_temp = matlabFunction(Isys,'Vars',{th});
+Isys_ftn = @(t,x) Isys_ftn_temp(x);
+[timen, staten] = ode45(Isys_ftn,tspan, ini2);
+
+figure(4)
+plot(time, state(:,1)/pi(),'-k','LineWidth',2)
+hold on
+plot(time, state(:,2:m)/pi(),'LineWidth',2)
+grid on
+xlabel('Time')
+ylabel('Phases [\pi]')
+title('Figure 4: Phases of the linearized model')
+hold off
+
+figure(5)
+plot(timen, staten(:,1)/pi(),'-k','LineWidth',2)
+hold on
+plot(timen, staten(:,2:m)/pi(),'LineWidth',2)
+grid on
+xlabel('Time')
+ylabel('Phases [\pi]')
+title('Figure 5: Phases of the Kuramoto model')
+hold off
+
+
+
+
+
+
+We can see that $\theta_1$ does not tend to zero in Figure 5 since $K\times\Theta$ is near zero already. Linear feedback control is not enough, or too weak, for this setting.
+
+</description>
+        <pubDate>Mon, 29 Oct 2018 00:00:00 +0100</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0009-Dongnam</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0009-Dongnam</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp06</category>
+        
+      </item>
+    
+      <item>
+        <title>Stabilization of a collective behavior model</title>
+        <description>clc;
+clear;
+
+
+Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.
+
+Consider $N$  agents $y_i$ for $i=1,…,N$, and let $y=(y_1,…,y_N)\in \mathbb{R}^N$.
+
+The model considered is the following:
+
+ where $A$ is a matrix of the form:
+
+
+
+and $\vec{G}:\mathbb{R}^N\to\mathbb{R}^N$ is a non linear function of the form
+
+
+
+where $G$ is a non-linear function, matrix $A$ models the interaction between agents. Agent $i$ changes its state according to the state of agent $i+1$ and $i-1$ in a linear way plus a non-linear effect that depends only on his state.
+
+Note that the manifold
+
+
+
+is invariant under $F$. Indeed, taking $x\in\mathcal{M}_N$ we have that
+
+
+
+Therefore, the mean will follow the following 1-d dynamical system
+
+
+
+Here we will consider that $G(0)=0$ and that $DG(0)&amp;gt;0$, we have an unstable critical point at 0. Let N=20,
+
+N=2;
+A=full(gallery('tridiag',N,1,-2,1));
+A(1,1)=-1;
+A(N,N)=-1;
+
+
+and that
+
+
+
+here $G$ is taken in the following form (and we compute also its derivative).
+
+The non-linearity choosen is:
+
+a=5;
+c=0.20;
+syms G(x);
+syms DG(x);
+G(x) = piecewise(x&amp;lt;=-a, -2*a*a*x*c-2*a*a*a*c, a&amp;lt;=x, -2*a*a*x*c+2*a*a*a*c, -a&amp;lt;x&amp;lt;a, -c*x*(x-a)*(x+a));
+DG(x) = diff(G,x);
+G=@(x)double(G(x));
+DG = @(x)double(DG(x));
+
+close all
+figure(1)
+fplot(G,[-10,10])
+title('Plot of the non-linearity')
+hold off
+grid
+
+
+
+
+The function field assigns an $N$ dimensional vector corresponding to the field for every point in $\mathbb{R}^N$, matrix $A$ and the nonlinear function $G$
+
+F=@(t,y) field(A,G,y)
+
+
+
+F =
+
+  function_handle with value:
+
+    @(t,y)field(A,G,y)
+
+
+
+
+Now its the turn to define our cost functional. Our goal will be to stabilize the system in a critical point inside the manifold $\mathcal{M}_N$. Notice that, in particular $0$ is a critical point.
+
+We will choose the matrix $Q$ in a way that the vector that defines $\mathcal{M}_N$ is an eigenvector of the matrix $Q$, we have seen that the manifold $\mathcal{M}_N$ is invariant under the flow. Our cost functional will take into account if we are not in this manifold.
+
+
+
+We check that its eigenvalues are non-negative
+
+Q=eye(N)-ones([N N])/N;
+EigQ=eig(Q)
+
+
+
+EigQ =
+
+     0
+     1
+
+
+
+
+And we define $R$ being just the identity
+
+R=eye(N);
+
+
+Linearize arround the unstable equilibrium 0 and obtain the linearized system $\dot{y}=Ly$
+
+p=0;
+L=A+DG(p)*eye(N);
+
+
+we set our control matrix B
+
+B=eye(N);
+
+
+One has to check the rank of the controllability matrix to see if we satisfy the Kalman rank condition
+
+Co=ctrb(L,B);
+rank=rank(Co)
+
+
+
+rank =
+
+     2
+
+
+
+
+Once it is done, we are in the position of solving the algebraic Riccati equation
+
+[ricsol,cleig,K,report] = care(L,B,Q);
+
+
+Consider a time span and an initial datum
+
+radius = 6
+ini    = radius*(-0.5+rand(N,1))
+
+
+
+radius =
+
+     6
+
+
+ini =
+
+   -2.2381
+    2.4803
+
+
+
+
+the free dynamics would result
+
+tspan = [0, 2];
+[t,y] = ode45( F, tspan, ini);
+
+figure(2)
+for i=1:N-1
+    plot(t, y(:,i));
+    hold on;
+end
+plot(t, y(:,N))
+title('Free dynamics')
+hold off
+grid
+
+
+
+
+Now the LQ controller with the linear and the non-linear dynamics
+
+u_lq = @(t,x) -K * x;
+
+
+i_linear = @(t,x) L*x + B*u_lq(t,x);
+[time, state] = ode45(i_linear,tspan, ini);
+
+i_nonlinear = @(t,x)[F(t,x)+B*u_lq(t,x)];
+[timen, staten] = ode45(i_nonlinear,tspan, ini);
+
+figure(3)
+for i=1:N-1
+    plot(time, state(:,i),'LineWidth',2);
+    hold on;
+end
+plot(time, state(:,N),'LineWidth',2)
+grid on
+title('LQR regulator on the linearized system')
+hold off
+
+
+
+
+[timen, staten] = ode45(i_nonlinear,tspan, ini);
+
+figure(4)
+for i=1:N-1
+    plot(timen, staten(:,i),'LineWidth',2);
+    hold on;
+end
+plot(timen, staten(:,N),'LineWidth',2)
+grid on
+title('LQR regulator on the non-linear dynamics')
+hold off
+
+
+
+
+</description>
+        <pubDate>Sun, 28 Oct 2018 00:00:00 +0200</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0007-Domenec</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0007-Domenec</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp06</category>
+        
+      </item>
+    
+      <item>
+        <title>Optimal control of a  graph evolving in discrete time</title>
+        <description>In this tutorial we are going to show how to use MATLAB to control a discrete-time dynamical system that models the interactions between the nodes of a graph. The control policy will minimize a discrete linear quadratic regulator.
+
+Let us consider a graph G that consists on $N$ nodes $x_i\in\mathbb{R}$, $i={1,2,…,N}$ that evolve in discrete time steps according to the following equation:
+
+
+
+where $\gamma &amp;gt; 0$ is a coupling parameter.
+
+We can simplify this equation by using the Perron matrix $P$ of the graph, this matrix is defined as $P = I - \gamma L$, where $L$ is the Laplacian of the graph and $I$ is the identity matrix. Let $x$ be $[x_1,…,x_N]^T$, the vector of states of the nodes. Moreover, we may add a control
+
+
+
+to drive the states of the nodes to a desired state.
+
+
+
+were $B$ and $C$ are two fixed matrices and $y\in\mathbb{R}^S$ are the observed states of $1\leq S\leq N$ nodes.
+
+We aim to design a control policy ${u[k]}_{k=0,1,…}$ such that minimizes the following functional $J(x,u)$ while stabilizing the system.
+
+
+
+where $Q$ and $R$ are semidefinite positive and definite positive matrices respectively. We can choose these two matrices in order to penalize aggressive or slow controls. To do so, we will use MATLAB’s control system toolbox.
+
+Finally, we will add a reference term in the control so that we can drive the system into a desired state.
+
+For instance, let us consider the coupling parameter
+
+gamma = 0.1;
+
+
+We define now a connected and bidirected graph G. Let E be the edges of the graph. We will define this set as a 2-column matrix and then we create the graph G.
+
+E = [1, 2; 1, 3; 2, 4; 2, 5; 3, 4; 4, 5; 4, 6; 6, 7; 7, 8];
+E = table(E,'VariableNames',{'EndNodes'});
+G = graph(E);
+
+
+This is our graph
+
+plot(G, 'LineWidth', 2, 'EdgeColor', 'r', 'MarkerSize', 10)
+title('Graph representation', 'FontSize', 16)
+
+
+
+
+N is the size of the graph, that is to say, the number of nodes.
+
+N = numnodes(G);
+
+
+We compute the number of neighbours of each node
+
+connectivities = degree(G);
+
+
+We check whether the graph is connected or not, if not, we must choose a different graph.
+
+if max(conncomp(G)) &amp;gt; 1
+    print('Generate a new graph')
+end
+
+
+In this example the considered graph is connected.
+
+We compute the Perron matrix of $G$.
+
+P = eye(N) - gamma * laplacian(G);
+
+
+We can see that the system tends to reach a consensus, that is to say, if no control is applied to the system, it evolves to a steady state in which all the nodes have the same state.
+
+We define the initial state $x_0$
+
+x_0 = [1, 5, 0, 4, 3, 1, 7, 3]';
+
+
+The mean of $x_0$ is 3
+
+mean(x_0)
+
+
+
+ans =
+
+     3
+
+
+
+
+The states of the nodes will evolve to the mean of the states at the initial time. We let the system evolve for 150 iterations.
+
+itmax = 150;
+x = zeros(N, itmax + 1);
+x(:,1) = x_0;
+for k = 1:itmax
+    x(:,k + 1) = P * x(:,k);
+end
+
+
+clf
+hold on
+for k = 1:N
+    plot(0:itmax,x(k,:),'LineWidth',2)
+end
+legend('Node 1','Node 2','Node 3','Node 4','Node 5','Node 6','Node 7','Node 8')
+title('Graph evolution without control','FontSize',16)
+xlabel('Iterations','FontSize',16)
+ylabel('States of the nodes','FontSize',16)
+
+
+
+
+As stated before, we can see in this figure that the system naturally reaches consensus.
+
+Recall that the system dynamics can be written as
+
+
+
+for any $k =0,1,…$.
+
+We want to find a control $u$ such that the system stabilizes to the zero state.
+
+We proceed to define matrices B and C:
+
+B = eye(N);
+C = eye(N);
+%% We can check whether the system is controllable
+if rank(ctrb(P,B)) &amp;lt; N
+    print('it is not controllable!')
+end
+%% In this case, it is controllable.
+
+
+We choose the matrices $Q$ and $R$ by using Bryson and Ho’s criterium.
+
+Q_diag = 1 / max(x_0.^2) * ones(1, N);
+R_diag = 1 / 5^2 * ones(1, N);
+Q = diag(Q_diag);
+R = diag(R_diag);
+
+
+We can use now the function dlqr (discrete linear quadratic regulator) to find the feedback control $u = -K_{f} x[k]$ that minimizes the functional $J(x,u)$.
+
+[Kf, ~] = dlqr(P, B, Q, R);
+
+
+Now we can stabilize the system by using the feedback control that we have just computed
+
+itmax = 20;
+x = zeros(N, itmax + 1);
+x(:,1) = x_0;
+for k = 1:itmax
+    x(:,k + 1) = (P - B * Kf) * x(:,k);
+end
+
+
+clf
+hold on
+
+for k = 1:N
+    plot(0:itmax,x(k,:),'LineWidth',2)
+end
+legend('Node 1','Node 2','Node 3','Node 4','Node 5','Node 6','Node 7','Node 8')
+title('Graph stabilization','FontSize',16)
+xlabel('Iterations','FontSize',16)
+ylabel('States of the nodes','FontSize',16)
+
+
+
+
+We can see that the system is stabilized fast. One can tune the stabilization speed by choosing matrices $Q$ and $R$ in a smart way.
+
+Now, we are about to add a reference term to the control to drive the system to a desired state. For instance, we can drive the system into the reference state
+
+r = (1:N)';
+
+
+We add a reference term to the control that is proportional to the reference r, $u[k] = -K_{f}x[k] + K_{r}r$. We can use linear algebra to compute the matrix $K_{r}$ in terms of the system matrices.
+
+Kr = -(C * (P - B * Kf - eye(N))^(-1) * B)^(-1);
+
+
+We drive the system to the reference state.
+
+itmax = 20;
+x = zeros(N, itmax + 1);
+x(:,1) = x_0;
+for k = 1:itmax
+    x(:,k + 1) = (P - B * Kf) * x(:,k) + B * Kr * r;
+end
+
+
+clf
+hold on
+for k = 1:N
+    plot(0:itmax,x(k,:),'LineWidth',2)
+end
+legend('Node 1','Node 2','Node 3','Node 4','Node 5','Node 6','Node 7','Node 8')
+title('Controlled graph','FontSize',16)
+xlabel('Iterations','FontSize',16)
+ylabel('States of the nodes','FontSize',16)
+
+
+
+
+Assume now that we can control only the node 1 and we want to drive the node 8 to the reference state r = 1. Can we do it? Let’s see.
+
+B = zeros(N, 1);
+B(1) = 1;
+C = zeros(1, N);
+C(8) = 1;
+if rank(ctrb(P,B)) &amp;lt; N
+    print('it is not controllable!')
+end
+
+
+It is controllable.
+
+Q_diag = 1 / max(x_0.^2) * ones(1, N);
+R_diag = 1 / 5^2;
+Q = diag(Q_diag);
+R = diag(R_diag);
+[Kf, ~] = dlqr(P, B, Q, R);
+Kr = -(C * (P - B * Kf - eye(N))^(-1) * B)^(-1);
+r = 1;
+itmax = 200;
+x = zeros(N, itmax + 1);
+x(:,1) = x_0;
+for k = 1:itmax
+    x(:,k + 1) = (P - B * Kf) * x(:,k) + B * Kr * r;
+end
+
+
+clf
+hold on
+for k = 1:N
+    plot(0:itmax,x(k,:),'LineWidth',2)
+end
+legend('Node 1','Node 2','Node 3','Node 4','Node 5','Node 6','Node 7','Node 8')
+title('Driving node 8 to the state 1','FontSize',16)
+xlabel('Iterations','FontSize',16)
+ylabel('States of the nodes','FontSize',16)
+
+
+
+
+As we can see, the node 8 is driven to the state 1 by achieving consensus in all the states of the graph.
+
+References
+
+</description>
+        <pubDate>Fri, 26 Oct 2018 00:00:00 +0200</pubDate>
+        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0001</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0001</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>Tp06</category>
+        
+      </item>
+    
+  </channel>
+</rss>

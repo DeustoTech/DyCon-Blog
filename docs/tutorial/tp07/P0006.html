@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+
+
+
+	<link rel='shortcut icon' type='image/png' href='/DyConBlog/favicon.png' />
+
+    <title>Exploration in the Chebfun Toolbox - DyCon Blog</title>
+
+    <link rel="canonical" href="https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0006">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/clean-blog.css">
+
+	<!-- Adjust Colors -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/colorscheme.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  	<link href="https://fonts.googleapis.com/css?family=Lusitana" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<!-- Math Jax -->
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']]
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    /*CommonHTML: {
+      scale: 300
+    }*/
+	});
+	</script>
+
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+    <script src="https://DeustoTech.github.io/DyConBlog/js/clean-blog.min.js "></script>
+    
+ 	<!-- 404  JavaScript -->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/DyConBlog/">
+                 <img src="https://DeustoTech.github.io//DyConBlog/assets/logo_DyConToolbox_v001.png" >
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyConBlog/">Home</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/DyConBlog/projects/about">About</a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/DyConBlog/projects/posts">Posts</a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/DyConBlog/projects/search">Search</a>
+                </li>
+                
+                
+                
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header">
+    <div class="container" style="padding-top: 70px;">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyConBlog/topic/Tp07"></a> :</small></h2>
+                    <h1>Exploration in the Chebfun Toolbox</h1>
+
+					<span class="meta">Posted by:
+					
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyConBlog/author/JesusO">Jesus Oroya</a></span></span>
+					
+					</span>
+					<div class="shadowbox">
+						<p>To start this tutorial, write the following command in the MATLAB console
+							<pre class="highlight"><code><span class="nb">open Chebfun_exploration</span></code></pre>
+						</p>
+					</div>
+
+
+                </div>
+            </div>
+		</div>
+
+
+	</div>
+</header>
+
+
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+
+<article>
+    <div id="content" class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<p>Hadrien Montanelli, December 2014</p>
+
+<p>(Chebfun example ode-nonlin/FourierCollocationNonLin) [Tags: #nonlinearODE, #periodic]</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LW</span> <span class="o">=</span> <span class="s1">'linewidth'</span><span class="p">;</span> <span class="n">dom</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>Chebfun uses Fourier collocation to solve linear, nonlinear and systems of ODEs with periodic boundary conditions. Consider the nonlinear ODE</p>
+
+<script type="math/tex; mode=display">u' - u\cos(u) = \cos(4x),</script>
+
+<p>on $[0, 2\pi]$, with periodic boundary conditions. For nonlinear ODEs, we need to specify an intial guess; let us try $\cos(x)$. We can solve the ODE in Chebfun as follows.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="n">chebfun</span><span class="p">(</span><span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nb">cos</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="n">dom</span><span class="p">);</span>
+<span class="n">N</span> <span class="o">=</span> <span class="n">chebop</span><span class="p">(</span><span class="o">@</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="nb">diff</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">-</span> <span class="n">u</span><span class="o">.*</span><span class="nb">cos</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="n">dom</span><span class="p">);</span>
+<span class="n">N</span><span class="o">.</span><span class="n">bc</span> <span class="o">=</span> <span class="s1">'periodic'</span><span class="p">;</span>
+<span class="n">N</span><span class="o">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">chebfun</span><span class="p">(</span><span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nb">cos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">dom</span><span class="p">);</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">N</span> <span class="p">\</span> <span class="n">f</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+u =
+
+   chebfun column (1 smooth piece)
+       interval       length     endpoint values trig
+[       0,     6.3]       73    -0.058   -0.058 
+vertical scale = 0.24 
+
+
+</code></pre></div></div>
+
+<p>Let us plot the initial guess in dashed blue, and the solution in blue.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">,</span> <span class="nb">plot</span><span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="s1">'--b'</span><span class="p">,</span> <span class="n">LW</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">,</span> <span class="nb">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="n">LW</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/Tp07/P0006/copiaRM_01.png" alt="" /></p>
+
+<p>The solution $u(x)$ satisfies the ODE to high accuracy:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">norm</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">u</span> <span class="o">-</span> <span class="n">f</span><span class="p">,</span> <span class="nb">inf</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ans =
+
+   3.6338e-13
+
+
+</code></pre></div></div>
+
+<p>If we start with another initial guess, we might obtain another solution. Let us try $\sin(x)^2$, plot it in dashed green, and plot the solution in green.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span><span class="o">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">chebfun</span><span class="p">(</span><span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nb">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span> <span class="n">dom</span><span class="p">);</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">N</span> <span class="p">\</span> <span class="n">f</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">,</span> <span class="nb">plot</span><span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="s1">'--g'</span><span class="p">,</span> <span class="n">LW</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">,</span> <span class="nb">plot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">'g'</span><span class="p">,</span> <span class="n">LW</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+v =
+
+   chebfun column (1 smooth piece)
+       interval       length     endpoint values trig
+[       0,     6.3]       81       1.6      1.6 
+vertical scale = 1.8 
+
+
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/Tp07/P0006/copiaRM_02.png" alt="" /></p>
+
+<p>The solution $v(x)$ satisfies the ODE to high accuracy too:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">norm</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">v</span> <span class="o">-</span> <span class="n">f</span><span class="p">,</span> <span class="nb">inf</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ans =
+
+   2.8800e-12
+
+
+</code></pre></div></div>
+
+<p>For nonlinear ODEs, the relationships between intial guesses and solutions are difficult to analyse. In this example, we chose two different guesses, and this led to two different solutions.</p>
+
+
+
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <ul class="list-inline text-center">
+          <li>
+            <img style="width: 200px;" src="/DyConBlog/img/logos/logo_DyCon.png " alt="">
+          </li>
+          <li>
+            <img style="width: 250px;" src="/DyConBlog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+# Members
+NoboruS:
+  name: Noboru Sakamoto
+
+UmbertoB:
+  name: Umberto Biccari
+  description: Umberto Biccari is a PhD. Currently he holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (UAM and DeustoTech). In the past, he collaborated within the ERC research project NUMERIWAVES. His current research interests are related to the analysis of Partial Differential Equations, in particular from the point of view of control theory. During the years of his PhD he has been concerned with the study of controllability properties of hyperbolic (waves), parabolic (heat) and dispersive (Schrödinger) PDEs, involving non-local terms, singular inverse-square potentials, variable degenerate coefficients or dynamical boundary conditions. At the moment, he is getting interested in non-local transport problems, derived from models of collection behaviour.
+JesusO:
+  name: Jesus Oroya
+  description: Jesus Oroya is the Software Expert in DyCon Dynamic Control, the Advanced Research Project funded by the European Research Council(ERC). He got a BSc in Physics from the University of the Basque Country, specializing in physical simulation. He has worked at CIC Nanogune for the company SIMUNE, looking for a method of optimization of atomic bases for calculations of electronic structure in the SIESTA code. In 2017, he worked at Accenture, managing and analyzing databases. He has also developed business applications for Liberty Seguros. Currently he is studying a MSc in Computational Engineering and Intelligent Systems in the University of the Basque Country.
+EnriqueZ:
+  name: Enrique Zuazua
+  description: Enrique Zuazua is the Director of the Chair of Computational Mathematics at DeustoTech Laboratory in the University of Deusto, Bilbao (Basque Country-Spain) where he leads the research team funded by the European Research Council Advanced Grant “DYCON Dynamic Control”. He is also a Professor of the Department of Mathematics Universidad Autónoma de Madrid where he holds a Chair in Applied Mathematics since 2001.
+
+AlejandroA:
+  name: Alejandro B. Aceves
+
+MichaelS:
+  name: Michael Schsuter
+
+VictorH:
+  name: Victor Hernández Santamaría
+
+JoseV:
+  name: José Vicente Lorenzo
+
+AnaN:
+  name: Ana Navarro
+  description: Ana Navarro is a PhD. Currently she holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (UAM and DeustoTech). Before that, she had a Predoctoral position at the Instituto Universitario de Matemática Multidisciplinar financed by the Universitat Politècnica de València. Her main research interest is the study from a probabilistic point of view of different problems based on differential equations (ordinary or partial) with uncertainty in its formulation. Now, she is concerned to connect her recent research with Control Theory.
+
+DarioP:
+  name: Dario Pighin
+  description: Dario Pighin is a PhD Student at Universidad Autónoma de Madrid (UAM). He earned both the Bachelor’s Degree and the Master’s Degree in Mathematics at the University of Rome Tor Vergata (Rome 2). Master’s thesis is about the Turnpike Property in Optimal Control Theory. Currently, he is studying for his PhD in Control Theory, under the joint supervision of professor Enrique Zuazua.
+AlejandroC:
+  name: Alejandro Cunillera
+
+BorjanG:
+  name: Borjan Geshkovski
+  description: Borjan Geshkovski is a PhD Student at Universidad Autónoma de Madrid (UAM). He earned a MSc in Mathematics at the University of Bordeaux, during which he did an internship on the topic ”Obstacle problems theory and Applications” within the DyCon team. Currently, he is studying for a PhD in Control Theory under the supervision of Professor Enrique Zuazua.
+
+DomenecR:
+  name: Domenec Ruiz
+  description: Domènec Ruiz is a PhD Student at Universidad Autónoma de Madrid (UAM). He earned a BSc in Mathematics and a BSc in Physics at the Universitat Autònoma de Barcelona. Later he earned and a MSc in Applied Mathematics in an Erasmus Mundus program between the Università degli Studi dell’Aquila (UAQ) and Universität Hamburg (UH). His master thesis was about asymptotic analysis and control of kinetic Cucker-Smale models. Currently, he is studying for a PhD in Control Theory under the supervision of Professor Enrique Zuazua.
+
+CharlotteR:
+  name: Charlotte Rodriguez
+  description: Charlotte Rodriguez is a PhD Student at Friedrich-Alexander-University, Erlangen-Nurnberg, Germany. She finished her Master studies in Mathematics (Analysis, Partial Differential Equations, Probability) at the University of Bordeaux in 2018. Since then she has been working in Mathematical network modelling of nonlinear fluid structure interaction, model reduction and uncertainty quantification (Part of Marie Sklodowska-Curie ITN ConFlex) under the supervision of Prof Gunter Leugering. She was in Bilbao for a 2 month internship under the supervision of Professor Enrique Zuazua, working in Control theory.
+DongnamK:
+  name: Dongnam Ko
+  description: Dongnam Ko is a PhD. Currently he holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (Universidad Autónoma de Madrid and DeustoTech). Before that, he was a Post-Doctoral researcher at the Research Institute of Mathematics, Seoul National University, Korea. His main research interests are the emergent dynamics of coupled particle networks, the Stochastic particle-path analysis on mean-field models and the numerical methods on kinetic dynamics.
+YacoubaS:
+  name: Yacouba Simpore
+
+XinliangL:
+  name: Xinliang Liu
+  description: Xinliang Liu is a PhD Student at Shanghai Jiao Tong University, China. In the same university, he finished his Master studies in Applied Mathematics in 2017, with the thesis ‘A variational framework to identify optimal approximation basis and its application to integral equation’. Hee will be in Bilbao for a 2 month internship under the supervision of Professor Enrique Zuazua, working in Control theory.

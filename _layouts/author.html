@@ -1,0 +1,81 @@
+---
+layout: default
+---
+
+<!-- Post Header -->
+<header class="intro-header">
+    <div class="container" style="padding-top: 70px;">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading" style="padding: 0px 0">
+                    <h1>{{ site.data.members[page.author].name }}</h1>
+                </div>
+            </div>
+		</div>
+
+
+	</div>
+</header>
+
+
+<article>
+    <div id="content" class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>{{site.data.members[page.author].description}}</p>
+
+                <h1>Reports</h1>
+                
+                {% for post in site.posts %}
+                {% if post.layout contains 'report' and post.author contains page.author %}
+                    <div class="shadowbox post-preview">
+                        <a class="display-block" href="{{site.url}}{{site.baseurl}}/{{post.url}}">
+                            <h3 class="post-title"> {{ post.title }} </h3>
+                        </a> 
+                        <p class="post-subtitle">
+                                {{ post.description }}
+                        </p>
+                    </div>     
+                {% endif %}
+                {% endfor %}
+
+                <hr>
+                <h1>Slides</h1>
+                
+                <h1>Methods</h1>
+                {% for post in site.posts %}
+                {% if post.layout contains 'function' and post.data.author contains page.author %}
+                    <div class="shadowbox post-preview">
+                        <a class="display-block" href="{{site.url}}{{site.baseurl}}/{{post.url}}">
+                            <h3 class="post-title"> {{ post.title }} </h3>
+                        </a> 
+                        <p class="post-subtitle">
+                                {{ post.data.description }}
+                        </p>
+                    </div>     
+                {% endif %}
+                {% endfor %}
+
+                <h1>Tutorials</h1>
+                    {% for post in site.posts %}
+                        {% if post.layout contains 'tutorial' and post.author contains page.author %}
+                            <div class="shadowbox post-preview">
+                                <a class="display-block" href="{{site.url}}{{site.baseurl}}/{{post.url}}">
+                                    <h3 class="post-title"> {{ post.title }} </h3>
+                                </a> 
+                                <p class="post-subtitle">
+                                        {{ post.description }}
+                                </p>
+                            </div>     
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<hr>

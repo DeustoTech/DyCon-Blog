@@ -1,0 +1,60 @@
+---
+layout: default
+---
+<!-- Extraemos el json topic segun el titulo de post, para de esta forma tener todas las propiedades de topic -->
+{% assign topic = site.data.WorkPackages[page.title] %}
+<header class="intro-header">
+    <div class="container" style="padding-top: 70px;">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading" style="padding: 0px 0">
+                    <h2><small>Topic of <a href="{{site.url}}/{{site.baseurl}}/projects/tutorials">Tutorials</a>:</small></h2>
+                    <h1>{{ topic.name }} </h1>
+                </div>
+            </div>
+		</div>
+
+
+	</div>
+</header>
+
+<hr>
+
+<!-- Post Content -->
+{% include imagezoom.html %}
+
+<article>
+    <div id="content" class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {{topic.description}}
+                <p>See our tutorials:</p>
+                <!-- Realizamos la query  -->
+                {% assign qposts = site.posts | where:"layout","tutorial"|where:"categories",page.title |sort%}
+                {% for post in qposts %}
+                    <div class="post-preview shadowbox">
+                        <a href="{{ post.url | prepend: site.baseurl }}" class="display-block">
+                        <h3 class="post-title"> {{ post.title }} </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            {{ post.description }}
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            {% for aut in post.author %}
+                            {{site.data.members[aut].name}}
+                            {% endfor %}
+                        </small>
+                    </div>
+                {% endfor %}
+                <hr>
+                <hr>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<hr>
+
+
