@@ -10,23 +10,23 @@
 
 
 
-	<link rel='shortcut icon' type='image/png' href='/DyConBlog/favicon.png' />
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
     <title>Average Control by Stochastic Gradient method - DyCon Blog</title>
 
-    <link rel="canonical" href="https://DeustoTech.github.io/DyConBlog/tutorial/tp03/T0002">
+    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/tutorial/tp03/T0002">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/clean-blog.css">
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/clean-blog.css">
 
 	<!-- Adjust Colors -->
-    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/colorscheme.css">
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/colorscheme.css">
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/syntax.css">
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/syntax.css">
 
     <!-- Custom Fonts -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -68,7 +68,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-    <script src="https://DeustoTech.github.io/DyConBlog/js/clean-blog.min.js "></script>
+    <script src="https://DeustoTech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
     
  	<!-- 404  JavaScript -->
 
@@ -88,8 +88,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/DyConBlog/">
-                 <img src="https://DeustoTech.github.io//DyConBlog/assets/logo_DyConToolbox_v001.png" >
+            <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://DeustoTech.github.io//DyCon-Blog/assets/logo_DyConToolbox_v001.png" >
             </a>
         </div>
 
@@ -97,24 +97,24 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="/DyConBlog/">Home</a>
+                    <a href="/DyCon-Blog/">Home</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/DyConBlog/projects/about">About</a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/DyConBlog/projects/posts">Posts</a>
+                    <a href="/DyCon-Blog/projects/about">About</a>
                 </li>
                 
                 
                 
                 <li>
-                    <a href="/DyConBlog/projects/search">Search</a>
+                    <a href="/DyCon-Blog/projects/posts">Posts</a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/search">Search</a>
                 </li>
                 
                 
@@ -135,14 +135,14 @@
     <div class="container" style="padding-top: 70px;">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyConBlog/topic/Tp03"></a> :</small></h2>
+                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyCon-Blog/topic/Tp03"></a> :</small></h2>
                     <h1>Average Control by Stochastic Gradient method</h1>
 
 					<span class="meta">Posted by:
 					
-						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyConBlog/author/AnaN">Ana Navarro</a></span></span>
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a></span></span>
 					
-						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyConBlog/author/EnriqueZ">Enrique Zuazua</a></span></span>
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a></span></span>
 					
 					</span>
 					<div class="shadowbox">
@@ -215,7 +215,7 @@ img:active{
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<p>In the previous <a href="https://DeustoTech.github.io/DyConBlog/tutorial/tp03/T0002">work</a>, the concept of averaged control <sup id="fnref:fn"><a href="#fn:fn" class="footnote">1</a></sup> of parameter-dependent systems is introduced. The optimal control of the following functional is obtained applying the classical gradient descent algorithm</p>
+				<p>In the previous <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/tp03/T0002">work</a>, the concept of averaged control <sup id="fnref:fn"><a href="#fn:fn" class="footnote">1</a></sup> of parameter-dependent systems is introduced. The optimal control of the following functional is obtained applying the classical gradient descent algorithm</p>
 
 <script type="math/tex; mode=display">\begin{equation*} \min_{u \in L^2(0,T)} \mathcal{J}\left( u\right) = \min_{u \in L^2(0,T)} \frac{1}{2} \left[ \frac{1}{\vert\mathcal{K}\vert} \sum_{\nu \in \mathcal{K}} x \left( T, \nu \right) - \bar{x} \right]^2  + \frac{\beta}{2} \int_0^T u^2 \mathrm{d}t, \quad \beta \in \mathbb{R}^+ \end{equation*}</script>
 
@@ -289,7 +289,7 @@ img:active{
 <span class="nb">plot</span><span class="p">(</span><span class="n">AverageProblemSG</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/TP03/T0002/copiaRM_01.png" alt="" /></p>
+<p><img src="https://DeustoTech.github.io//DyCon-Blog/assets/imgs/TP03/T0002/copiaRM_01.png" alt="" /></p>
 
 <p>Notice that, it is know that the SGD converges in mean <sup id="fnref:fn1"><a href="#fn:fn1" class="footnote">2</a></sup>. Hence, with only one trail of the stochastic algorithm it is possible do not have convergence. To see the convergence it is necessary to run the iterative method different times and to do the mean of all the trayectories</p>
 
@@ -336,7 +336,7 @@ img:active{
 <span class="nb">plot</span><span class="p">(</span><span class="n">mean_null</span><span class="p">(</span><span class="n">J_executionsSG</span><span class="p">),</span><span class="s1">'r'</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mf">1.75</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/TP03/T0002/copiaRM_02.png" alt="" /></p>
+<p><img src="https://DeustoTech.github.io//DyCon-Blog/assets/imgs/TP03/T0002/copiaRM_02.png" alt="" /></p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span>
 <span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">trails</span>
@@ -348,7 +348,7 @@ img:active{
 <span class="nb">plot</span><span class="p">(</span><span class="n">mean_null</span><span class="p">(</span><span class="n">error_executionsSG</span><span class="p">),</span><span class="s1">'r'</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mf">1.75</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/TP03/T0002/copiaRM_03.png" alt="" /></p>
+<p><img src="https://DeustoTech.github.io//DyCon-Blog/assets/imgs/TP03/T0002/copiaRM_03.png" alt="" /></p>
 
 <p>We can observe the convergence of the trayectories</p>
 
@@ -385,10 +385,10 @@ img:active{
       <div class="col-md-10">
         <ul class="list-inline text-center">
           <li>
-            <img style="width: 200px;" src="/DyConBlog/img/logos/logo_DyCon.png " alt="">
+            <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
           </li>
           <li>
-            <img style="width: 250px;" src="/DyConBlog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+            <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
           </li>
         </ul>
       </div>

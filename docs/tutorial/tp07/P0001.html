@@ -10,23 +10,23 @@
 
 
 
-	<link rel='shortcut icon' type='image/png' href='/DyConBlog/favicon.png' />
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
     <title>Stability analysis of Power Electronic Converters Connected to AC Grids - DyCon Blog</title>
 
-    <link rel="canonical" href="https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0001">
+    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/tutorial/tp07/P0001">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/clean-blog.css">
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/clean-blog.css">
 
 	<!-- Adjust Colors -->
-    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/colorscheme.css">
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/colorscheme.css">
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="https://DeustoTech.github.io/DyConBlog/css/syntax.css">
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/syntax.css">
 
     <!-- Custom Fonts -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -68,7 +68,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-    <script src="https://DeustoTech.github.io/DyConBlog/js/clean-blog.min.js "></script>
+    <script src="https://DeustoTech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
     
  	<!-- 404  JavaScript -->
 
@@ -88,8 +88,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/DyConBlog/">
-                 <img src="https://DeustoTech.github.io//DyConBlog/assets/logo_DyConToolbox_v001.png" >
+            <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://DeustoTech.github.io//DyCon-Blog/assets/logo_DyConToolbox_v001.png" >
             </a>
         </div>
 
@@ -97,24 +97,24 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="/DyConBlog/">Home</a>
+                    <a href="/DyCon-Blog/">Home</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/DyConBlog/projects/about">About</a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/DyConBlog/projects/posts">Posts</a>
+                    <a href="/DyCon-Blog/projects/about">About</a>
                 </li>
                 
                 
                 
                 <li>
-                    <a href="/DyConBlog/projects/search">Search</a>
+                    <a href="/DyCon-Blog/projects/posts">Posts</a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/search">Search</a>
                 </li>
                 
                 
@@ -135,14 +135,14 @@
     <div class="container" style="padding-top: 70px;">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyConBlog/topic/Tp07"></a> :</small></h2>
+                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyCon-Blog/topic/Tp07"></a> :</small></h2>
                     <h1>Stability analysis of Power Electronic Converters Connected to AC Grids</h1>
 
 					<span class="meta">Posted by:
 					
-						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyConBlog/author/UmbertoB">Umberto Biccari</a></span></span>
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a></span></span>
 					
-						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyConBlog/author/JesusO">Jesus Oroya</a></span></span>
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a></span></span>
 					
 					</span>
 					<div class="shadowbox">
@@ -217,7 +217,7 @@ img:active{
 
 				<p>We analyze the stability of a simplified system modeling two converters in parallel connected to an ideal grid (modelled by a voltage source) via line impedances.</p>
 
-<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/Tp07/P0001/converters.png" alt="" /></p>
+<p><img src="https://DeustoTech.github.io//DyCon-Blog/assets/imgs/Tp07/P0001/converters.png" alt="" /></p>
 
 <p>Each of the converters is fed by a DC source and includes an $LC$ circuit at its output to filter the ripple introduced by the converter switching. Similarly, an $LR$ impedance is included after the $LC$ filter to model the characteristics of the line until the point of common connection (PCC). The grid in this case is modelled with an ideal voltage source $v_g$ with a series $LR$ impedance. In this context, $f$ subscript denotes filter and $o$ subscript denotes output of the inverter. The subscript %%g%% denotes that this variable is from the side of the grid.</p>
 
@@ -358,7 +358,7 @@ ans =
 
 <p>Finally, we can plot the evolution of the eigenvalues as a function of $R_{o_1}$.</p>
 
-<p><img src="https://DeustoTech.github.io//DyConBlog/assets/imgs/Tp07/P0001/Gif_evo_eig.gif" alt="" /></p>
+<p><img src="https://DeustoTech.github.io//DyCon-Blog/assets/imgs/Tp07/P0001/Gif_evo_eig.gif" alt="" /></p>
 
 <p>This procedure may be repeated for all the others parameters, thus obtaining a complete stability analysis of our model.</p>
 
@@ -383,10 +383,10 @@ ans =
       <div class="col-md-10">
         <ul class="list-inline text-center">
           <li>
-            <img style="width: 200px;" src="/DyConBlog/img/logos/logo_DyCon.png " alt="">
+            <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
           </li>
           <li>
-            <img style="width: 250px;" src="/DyConBlog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+            <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
           </li>
         </ul>
       </div>

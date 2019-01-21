@@ -3,10 +3,10 @@
   <channel>
     <title>DyCon Blog</title>
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
-    <link>https://DeustoTech.github.io/DyConBlog/</link>
-    <atom:link href="https://DeustoTech.github.io/DyConBlog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 21 Jan 2019 09:58:54 +0100</pubDate>
-    <lastBuildDate>Mon, 21 Jan 2019 09:58:54 +0100</lastBuildDate>
+    <link>https://DeustoTech.github.io/DyCon-Blog/</link>
+    <atom:link href="https://DeustoTech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Mon, 21 Jan 2019 10:02:17 +0100</pubDate>
+    <lastBuildDate>Mon, 21 Jan 2019 10:02:17 +0100</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -196,8 +196,8 @@ As one can expected from the regulation functions, the control function from $L^
 
 </description>
         <pubDate>Fri, 11 Jan 2019 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0008</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0008</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp02/T0008</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp02/T0008</guid>
         
         
         <category>tutorial</category>
@@ -298,8 +298,8 @@ For nonlinear ODEs, the relationships between intial guesses and solutions are d
 
 </description>
         <pubDate>Thu, 20 Dec 2018 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0006</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0006</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp07/P0006</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp07/P0006</guid>
         
         
         <category>tutorial</category>
@@ -612,8 +612,8 @@ legend('Target','Free Dynamics','controlled dynamics')
 
 </description>
         <pubDate>Tue, 18 Dec 2018 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0004</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0004</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp02/T0004</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp02/T0004</guid>
         
         <category>PDE</category>
         
@@ -876,8 +876,8 @@ legend('RPS','P1 FEM','FDM','exact')
 
 </description>
         <pubDate>Tue, 18 Dec 2018 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp04/T0002-Numerical-homogenizaton</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp04/T0002-Numerical-homogenizaton</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp04/T0002-Numerical-homogenizaton</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp04/T0002-Numerical-homogenizaton</guid>
         
         
         <category>tutorial</category>
@@ -996,8 +996,8 @@ Authors: Víctor Hernández-Santamaría, José Vicente Lorenzo, Enrique Zuazua
 March, 2018
 </description>
         <pubDate>Wed, 12 Dec 2018 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0001</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp02/T0001</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp02/T0001</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp02/T0001</guid>
         
         <category>DyCon Toolbox</category>
         
@@ -1157,8 +1157,8 @@ This procedure may be repeated for all the others parameters, thus obtaining a c
 
 </description>
         <pubDate>Thu, 15 Nov 2018 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0001</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp07/P0001</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp07/P0001</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp07/P0001</guid>
         
         
         <category>tutorial</category>
@@ -1318,8 +1318,8 @@ References
 
 </description>
         <pubDate>Tue, 13 Nov 2018 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp03/T0002</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp03/T0002</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp03/T0002</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp03/T0002</guid>
         
         
         <category>tutorial</category>
@@ -1563,8 +1563,8 @@ We can see that $\theta_1$ does not tend to zero in Figure 5 since $K\times\Thet
 
 </description>
         <pubDate>Mon, 29 Oct 2018 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0009-Dongnam</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0009-Dongnam</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp06/P0009-Dongnam</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp06/P0009-Dongnam</guid>
         
         
         <category>tutorial</category>
@@ -1792,8 +1792,8 @@ hold off
 
 </description>
         <pubDate>Sun, 28 Oct 2018 00:00:00 +0200</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0007-Domenec</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0007-Domenec</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp06/P0007-Domenec</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp06/P0007-Domenec</guid>
         
         
         <category>tutorial</category>
@@ -2057,8 +2057,8 @@ References
 
 </description>
         <pubDate>Fri, 26 Oct 2018 00:00:00 +0200</pubDate>
-        <link>https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0001</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyConBlog/tutorial/tp06/P0001</guid>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/tp06/P0001</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/tp06/P0001</guid>
         
         
         <category>tutorial</category>
