@@ -9,6 +9,10 @@
 .intro-header .site-heading .subheading {
   padding: 20px;
 }
+.post-photo-graphic {
+  width: 472px;
+  height: 368px;
+}
 .post-title {
   text-align: center;
   padding: 10px;
@@ -84,12 +88,15 @@ hr.small {
   z-index: 3;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+.navbar-brand {
+  padding:0 0 0 10px !important;
+}
 .navbar-custom .navbar-brand {
   font-weight: 800;
 }
 .navbar-custom .navbar-brand > img {
-  padding-bottom: 20px;
-  height: 50px;
+  padding-bottom: 5px;
+  height: 60px;
 }
 .navbar-custom .nav li a {
   text-transform: uppercase;
@@ -528,4 +535,3 @@ hr.style-one {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 4px;
 }
-

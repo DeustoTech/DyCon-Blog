@@ -1,6 +1,6 @@
 WP01:
   name: Control of parameter dependent problems
-  description: <p>In real applications, models are not completely known since relevant parameters (deterministic or stochastic) 
+  description: <p>In real applications, models are not completely known since relevant parameters (deterministic or stochastic)
                are subject to uncertainty and indetermination. Accordingly, for practical purposes, robust analytical and computational methods are needed, allowing to control not only a given realization of the model but also to deal with parameter-dependent families of systems in a stable, robust and computationally efficient way.
                This issue requires the development of specific new analytical and numerical tools and constitutes one of our major objectives. We mainly focus on the deterministic setting, although our techniques can also be adapted to stochastic and random models.</p>
 
@@ -11,6 +11,9 @@ WP01:
                <p>For doing this we view the parameter-dependent family of controls and controlled solutions as a manifold in the product control/state space.</p>
 
                <p>These techniques are applied and tested in some classical benchmark control problems for parabolic and hyperbolic PDEs, but can also be adapted to more challenging problems as the optimal location of controllers and actuators.</p>
+WP01:
+  name: Control of parameter dependent problems
+  path: WP01
 WP02:
   name: Long time horizon control
   path: WP02_Long_time_horizon_control_and_the_turnpike_property
@@ -20,10 +23,10 @@ WP03:
 WP04:
   name: Inverse design of time-irreversible models
   path: WP04_Inverse_design_and_control_in_the_presence_of_singularities
-WP05: 
+WP05:
   name: Memory and hybrid PDE/ODE models
   path: WP05_Models_involving_memory_terms_hybrid_PDE_ODE_systems
-WP06: 
+WP06:
   name: Finite versus infinite-dimensional dynamical systems
   path: WP06_From_finite_to_infinite_dimensional_models
 WP99:

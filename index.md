@@ -6,7 +6,7 @@ layout: default
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
       <div class="site-heading">
-        <img style="padding-top: 100px;" src="{{site.url}}/{{site.baseurl}}/assets/logo_DyConToolbox_v001.png" width="30%" alt="" srcset="">
+        <img style="padding-top: 100px;" src="{{site.url}}/{{site.baseurl}}/assets/logo_DyCon.png" width="30%" alt="" srcset="">
         <hr class="small">
         <span class="subheading">One of the main outputs of the research conducted within DyCon is the development of new computational methods and tools (algorithms, tutorials, sample codes, software and simulations), all of which are being integrated in a computational platform. This page offers a higher layer of the work that is currently taking place inside the DyCon team.
         </span>
@@ -21,8 +21,8 @@ layout: default
     <div class="col-md-10 col-md-offset-1">
         <h1>Recent Post</h1>    
         {% assign qposts = site.posts | where:"layout","tutorial"|sort |reverse%}
-        
-        {% assign MaxPostView = 3 %}
+
+        {% assign MaxPostView = 30 %}
 
         {% for i in (1..MaxPostView) %}
 
@@ -41,7 +41,7 @@ layout: default
                   {% endfor %}
                   - {{post.date|date_to_long_string}}
               </small>
-            
+
           </div>
         {% endfor %}
         <h3><a href="{{site.url}}{{site.baseurl}}/projects/posts">See more ...</a></h3>

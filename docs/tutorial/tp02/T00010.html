@@ -12,9 +12,9 @@
 
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
-    <title>Simple application of ControlProblem MATLAB Object - DyCon Blog</title>
+    <title>Averaged Control - DyCon Blog</title>
 
-    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/tutorial/tp02/T0001">
+    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/tutorial/tp02/T00010">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/bootstrap.min.css">
@@ -89,7 +89,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://DeustoTech.github.io//DyCon-Blog/assets/logo_DyConToolbox_v001.png" >
+                 <img src="https://DeustoTech.github.io//DyCon-Blog//assets/logo_DyCon.png">
             </a>
         </div>
 
@@ -136,7 +136,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyCon-Blog/topic/Tp02"></a> :</small></h2>
-                    <h1>Simple application of ControlProblem MATLAB Object</h1>
+                    <h1>Averaged Control</h1>
 
 					<span class="meta">Posted by:
 					
@@ -145,7 +145,7 @@
 					</span>
 					<div class="shadowbox">
 						<p>To start this tutorial, write the following command in the MATLAB console
-							<pre class="highlight"><code><span class="nb">open T0001_ControlProblemODE</span></code></pre>
+							<pre class="highlight"><code><span class="nb">open </span></code></pre>
 						</p>
 					</div>
 
@@ -228,13 +228,13 @@ img:active{
 
 <script type="math/tex; mode=display">\mathcal{K}= \left\{ \nu_i \in \mathbb{R}, \enspace 1\leq i \leq K \right\}</script>
 
-<p>More precisely, we are interested in solving the minimization problem</p>
+<p>More precisely, we are interested in solving the next minimization problem:</p>
 
 <script type="math/tex; mode=display">\begin{equation} \label{eq:costFunctional}
 \min _{u \in L^2(0,T)} \mathcal{J}\left( u\right) = \min _{u \in L^2(0,T)} \frac{1}{2} \left[ \frac{1}{K} \sum_{\nu \in \mathcal{K}} x \left( T, \nu \right) - \bar{x} \right]^2  + \frac{\beta}{2} \int_0^T u^2 \mathrm{d}t, \quad \beta \in \mathbb{R}^+
 \end{equation}</script>
 
-<p>where $\mathcal{U}_{ad}$ is the space of admissible controls and $\bar{x}$ the average state target. The optimization problem (\ref{eq:costFunctional}) is subject to the finite dimensional linear control system</p>
+<p>Where $\mathcal{U}_{ad}$ is the space of admissible controls and $\bar{x}$ the average state target. The optimization problem (\ref{eq:costFunctional}) is subject to the finite dimensional linear control system</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{align} \label{eq:primalODE}
@@ -350,7 +350,7 @@ J^\prime\left( u \right) \delta u = \left( \underbrace{\left( \Lambda^* \Lambda 
 
 <h6><b>Algorithm 1</b> Optimal control with Conjugate Gradient Method</h6>
 <p><b>Require:</b> $A\left( \nu \right)$, $B\left( \nu \right)$, $x^0$, $u^{\left(0\right)}$, $\beta$, $T$, $\bar{x}$, $tol$</p>
-<ol> 
+<ol>
 <li>$n \gets 0 $</li>
 <li> compute $\bar{y} \left( T \right)$</li>
 <li> $b \gets \Lambda^*\left( \bar{x} - \bar{y} \left( T \right) \right)$</li>
