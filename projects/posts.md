@@ -6,26 +6,18 @@ description: Transmitting the results to other researchers, not specialists in c
 ---
  {::nomarkdown}
 
- <table style="text-align:center;">
-    <tr>
-      <th>Topic</th>
-      <th>Description</th>
-      <th>Nº of Tutorials</th>
 
-    </tr>
     {% for topic in site.data.WorkPackages %}
-    <tr>
-      <th>
-          <a href="{{site.url}}{{site.baseurl}}/WorkPackage/{{topic[0]}}" class="display-block">
-                {%- assign qposts = site.posts | where:"layout","tutorial" -%}
-                {%- assign qposts = qposts | where:"categories",topic[0] -%}
-              {{topic[1].name}}
-          </a>  
-      </th>
-      <th>{{topic[1].little_description}}</th>
-      <th>[<small>{{ qposts | size }}</small>]</th>
-    </tr>
+        {%- assign qposts = site.posts | where:"layout","tutorial" -%}
+        {%- assign qposts = qposts | where:"categories",topic[0] -%}
+        <h3>{{topic[1].name}}</h3>
+        {% for post in qposts %}
+            <div class="shadowbox">
+            <a href="{{site.url}}{{site.baseurl}}{{post.url}}"><h5>{{post.title}}</h5></a>
+            <p>{{post.description}}</p>
+
+            </div>
+        {% endfor %}
     {% endfor %}
-   <table>
 
 {:/nomarkdown} 
