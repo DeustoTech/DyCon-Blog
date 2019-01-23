@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+
+
+
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+    <title>LQR control of a fractional reaction diffusion equation - DyCon Blog</title>
+
+    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp04/P0004">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/clean-blog.css">
+
+	<!-- Adjust Colors -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/colorscheme.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  	<link href="https://fonts.googleapis.com/css?family=Lusitana" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<!-- Math Jax -->
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']]
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    /*CommonHTML: {
+      scale: 300
+    }*/
+	});
+	</script>
+
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+    <script src="https://DeustoTech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+    
+ 	<!-- 404  JavaScript -->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://DeustoTech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Posts</a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/search">Search</a>
+                </li>
+                
+                
+                
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header">
+    <div class="container" style="padding-top: 70px;">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-md-offset-1">
+                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyCon-Blog/topic/WP04"></a> :</small></h2>
+                    <h1>LQR control of a fractional reaction diffusion equation</h1>
+
+					<span class="meta">Posted by:
+					
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a></span></span>
+					
+					</span>
+                </div>
+            </div>
+		</div>
+
+
+	</div>
+</header>
+
+
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+
+<article>
+    <div id="content" class="container">
+        <div class="row">
+            <div class="col-lg-10  col-md-10 col-md-offset-1">
+                
+                        <a href="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/LQR_stabilization_fractional_reaction_diffusion.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                
+
+				<p>We design a LQR controller for stabilyzing the fractional reaction diffusion equation</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases} y_t + (-d_x^2)^s y-\delta y = u\chi_\omega, & (x,t) \in(-L,L)\times(0,T) \\ y = 0, & (x,t)\in [\mathbb{R}\setminus(-L,L)]\times(0,T) \\ y(x,0) = y_0(x), & x\in(-L,L), \end{cases} %]]></script>
+
+<p>where $\delta&gt;0$ is a given constant, $\omega = (a,b)\subset(-L,L)$ and $(-d_x^2)^s$, $s\in(0,1)$ denotes the one-dimensional fractional Laplacian defined as</p>
+
+<script type="math/tex; mode=display">(-d_x^2)^s y(x) = c(s) P.V. \int_{\mathbb{R}} \frac{y(x)-y(z)}{\vertx-z\vert^{1+2s}}dz,</script>
+
+<p>with $c(s)$ an explicit normalization constant.</p>
+
+<p>When considering this equation without the action of the the control $u$, we know that, depending on the value of $\delta$, the corresponding dynamics may become unstable. This is due to the fact that the eignenvalues of the associated elliptic problem are given by $\mu_k=c-\lambda_k$ ($\lambda_k$ being the eigenvalues of the fractional Laplacian on $(-L,L)$ with zero Dirichlet boundary conditions), and they are positive if $c&gt;\lambda_1$ (since, in addition, we know that $\lambda_1&lt;\lambda_k$ for all $K$). We are then intersted in designing a LQR control which is able to stabilyze this solution and prevent its blow-up.</p>
+
+<p>The computation of the LQR control is carried out by means of the following procedure:</p>
+
+<h2 id="step-1-discretization-of-the-equation">STEP 1. Discretization of the equation</h2>
+
+<p>We start by discretizing our original system on a uniform mesh $x_i$, $i=1,\ldots,N$, thus obtaining a N-dimensional system of the type</p>
+
+<script type="math/tex; mode=display">\begin{cases} \dot{y} = Ay+Bu \\ y(0) = y_0 \end{cases}</script>
+
+<p>where:</p>
+
+<ul>
+  <li>
+    <p>with some abuse of notation, we denoted $y\in\mathbb{R}^N$ as the   $N$-dimensional vector whose entries $y_i=y(x_i)$, $i=1,\ldots,N$ are   the evaluation of the function $y$ on the points of the mesh;</p>
+  </li>
+  <li>
+    <p>the matrix $A$ is a discretization of the operator $-(-d_x^2)^s + I$,   $I$ denoting the identity;</p>
+  </li>
+  <li>
+    <p>the matrix $B$ defines the action of the control.</p>
+  </li>
+</ul>
+
+<p>The computation of the matrix requires the discretization of the fractional Laplacian $(-d_x^2)^s$. This is done by employing the function “fl_rigidity”, which implements a finite elements method on a uniform mesh discretizing the space interval $(-L,L)$ (complete details on this method may be found in [1]).</p>
+
+<p>The function “fl_rigidity” works by requiring 3 input parameters:</p>
+
+<ul>
+  <li>
+    <p>s: the order of the fractional Laplacian, which can be any real value      in the interval $(0,1)$;</p>
+  </li>
+  <li>
+    <p>L: any real value, defining the extrema of the space interval $(-L,L)$;</p>
+  </li>
+  <li>
+    <p>N: the number of discretization points in the mesh employed.</p>
+  </li>
+</ul>
+
+<p>The outputs are:</p>
+
+<ul>
+  <li>
+    <p>x: the vector containing the mesh;</p>
+  </li>
+  <li>
+    <p>A: the matrix discretizing the fractional Laplacian.</p>
+  </li>
+</ul>
+
+<p>The matrix B, instead, is constructed by employing the function “construction_matrix_B”, which takes in input</p>
+
+<ul>
+  <li>
+    <p>the vector $x$ containing the mesh;</p>
+  </li>
+  <li>
+    <p>the number of discretization points $N$;</p>
+  </li>
+  <li>
+    <p>the characteristic function of the sub-interval $\omega$.</p>
+  </li>
+</ul>
+
+<h2 id="step-2-definition-of-the-cost-functional-and-computation-of-the-control">STEP 2. Definition of the cost functional and computation of the control</h2>
+
+<p>Once we have the semi-discretization of our original problem, the control we are looking for is computed by minimizing the following cost functional</p>
+
+<script type="math/tex; mode=display">J_{\infty} = \int_{0}^{+\infty} \Big(y^TQy + u^TRu\Big)dt,</script>
+
+<p>where $Q\geq 0$ and $R&gt;0$ are given matrices. Moreover, we know that this control is given in a feedback form by $u^*=-R^{-1}B^TPy$, where $P$ is the solution of the algebraic Riccati equation</p>
+
+<script type="math/tex; mode=display">PA + A^TP-PBB^TP+Q = 0.</script>
+
+<h2 id="implementation">Implementation</h2>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
+<span class="nb">clc</span>
+</code></pre></div></div>
+
+<p>We start by defining the parameter $s\in(0,1)$ (order of the fractional Laplacian), the size of the interval $(-L,L)$, the constant $\delta&gt; \lambda_1$ and the number $N$ of discretization points in our mesh.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">pi</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="mf">0.1</span><span class="p">;</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>and we compute the corresponding approximation of the fractional Laplacian</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">FL</span><span class="p">]</span> <span class="o">=</span> <span class="n">fl_rigidity</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We then use it for building the matrix $A$ describing the dynamics</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="n">A</span> <span class="o">=</span> <span class="o">-</span><span class="n">FL</span><span class="o">+</span><span class="n">D</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Secondly, we use the function “construction_matrix_B” for computing the control operator $B$ on the interval $\omega=(-0.3,0.5)$</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">matrix_B</span> <span class="o">=</span>  <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">construction_matrix_B</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">matrix_B</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Out of the matrices $A$ and $B$, we solve the algebraic Riccati equation by employing the specific function from the control systems toolbox of Matlab. For simplicity, we choose both $R$ and $Q$ as the identity, but other choices are possible in order to improve the efficiency of the method.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="p">[</span><span class="n">P</span><span class="p">,</span><span class="n">cleig</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The output matrix $K=-R^{-1}B^TP$ is used for defining the action of the control and include it in our system</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<span class="n">eq_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Finally, we choose an initial datum</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y0</span> <span class="o">=</span> <span class="nb">cos</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>and we solve our equation with and without control employing the “ode45” function of Matlab. For the equation without control we choose a relatively short time horizon, since we know that the unstable dynamics will rapidly diverge. For the equation with control, instead, we choose a longer time horizon in order to have enough time for stabilyzing the system.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T1</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="n">T2</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
+<span class="n">tspan1</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T1</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
+<span class="n">tspan2</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T2</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
+<span class="n">eq_free</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<span class="p">[</span><span class="n">time1</span><span class="p">,</span> <span class="n">sol_free</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">eq_free</span><span class="p">,</span><span class="n">tspan1</span><span class="p">,</span><span class="n">y0</span><span class="p">);</span>
+<span class="p">[</span><span class="n">time2</span><span class="p">,</span> <span class="n">sol_ctr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">eq_ctr</span><span class="p">,</span><span class="n">tspan2</span><span class="p">,</span><span class="n">y0</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We then plot our results and compare them. Firstly, the free dynamics.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time1</span><span class="p">,</span><span class="n">sol_free</span><span class="p">)</span>
+<span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="n">msol_free</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">sol_free</span><span class="p">)));</span>
+<span class="n">Msol_free</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sol_free</span><span class="p">)));</span>
+<span class="nb">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span> <span class="n">L</span><span class="p">])</span>
+<span class="nb">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T1</span><span class="p">])</span>
+<span class="nb">zticks</span><span class="p">([</span><span class="n">msol_free</span> <span class="n">Msol_free</span><span class="p">])</span>
+<span class="nb">view</span><span class="p">(</span><span class="mi">135</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Free unstable dynamics'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_01.png" alt="" /></p>
+
+<p>We clearly see the growth of the solution, already in the short time horizon [0,4]. When introducing the LQR control, instead, the problem is corrected and the equation is stabilyzed in time $T_2$</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time2</span><span class="p">,</span><span class="n">sol_ctr</span><span class="p">)</span>
+<span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="n">msol_ctr</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">sol_ctr</span><span class="p">)));</span>
+<span class="n">Msol_ctr</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sol_ctr</span><span class="p">)));</span>
+<span class="nb">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="n">L</span><span class="p">])</span>
+<span class="nb">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T2</span><span class="p">])</span>
+<span class="nb">zticks</span><span class="p">([</span><span class="n">msol_ctr</span> <span class="n">Msol_ctr</span><span class="p">])</span>
+<span class="nb">view</span><span class="p">(</span><span class="mi">135</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Controlled dynamics'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_02.png" alt="" /></p>
+
+<h2 id="references">References</h2>
+
+<p>[1] U. Biccari and V. Hernandez-Santamaria, “Controllability of a one-dimensional fractional heat equation: theoretical and nuerical aspects”, IMA J. Math. Control I. (2018).</p>
+
+
+
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <ul class="list-inline text-center">
+          <li>
+            <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+          </li>
+          <li>
+            <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+
+</html>

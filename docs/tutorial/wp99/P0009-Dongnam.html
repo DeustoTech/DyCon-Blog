@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+
+
+
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+    <title>The control on the Kuramoto model by handling one oscillator - DyCon Blog</title>
+
+    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0009-Dongnam">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/clean-blog.css">
+
+	<!-- Adjust Colors -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/colorscheme.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  	<link href="https://fonts.googleapis.com/css?family=Lusitana" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<!-- Math Jax -->
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']]
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    /*CommonHTML: {
+      scale: 300
+    }*/
+	});
+	</script>
+
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+    <script src="https://DeustoTech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+    
+ 	<!-- 404  JavaScript -->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://DeustoTech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Posts</a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/search">Search</a>
+                </li>
+                
+                
+                
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header">
+    <div class="container" style="padding-top: 70px;">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-md-offset-1">
+                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyCon-Blog/topic/WP99"></a> :</small></h2>
+                    <h1>The control on the Kuramoto model by handling one oscillator</h1>
+
+					<span class="meta">Posted by:
+					
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyCon-Blog/author/DongnamK">Dongnam Ko</a></span></span>
+					
+					</span>
+                </div>
+            </div>
+		</div>
+
+
+	</div>
+</header>
+
+
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+
+<article>
+    <div id="content" class="container">
+        <div class="row">
+            <div class="col-lg-10  col-md-10 col-md-offset-1">
+                
+                        <a href="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/DongnamKo_Kuramoto_control_by_one_oscillator.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                
+
+				<p>Define vector fields of ODE : Kuramoto control problem whose dynamics is</p>
+
+<script type="math/tex; mode=display">\dot \theta_i = \omega_i + \frac{1}{N}\sum_{j=1}^N K_{ij} \sin(\theta_j-\theta_i),\quad i \neq 1,</script>
+
+<p>where we control the first oscillator,</p>
+
+<script type="math/tex; mode=display">\dot \theta_1 = u + \omega_1 + \frac{1}{N}\sum_{j=1}^N K_{1j} \sin(\theta_j-\theta_1),</script>
+
+<p>in order to <strong>change the limit phase value to be 0</strong>.</p>
+
+<p>We first define the system of ODEs in terms of symbolic variables.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
+<span class="nb">clc</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>  <span class="c1">%% [m]: number of oscillators, which we may change later.</span>
+
+<span class="n">th</span> <span class="o">=</span> <span class="n">sym</span><span class="p">(</span><span class="s1">'th'</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">%% [th_i]: phases of oscillators, $\theta_i$</span>
+<span class="n">om</span> <span class="o">=</span> <span class="n">sym</span><span class="p">(</span><span class="s1">'om'</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">%% [om_i]: natural frequencies of osc., $\omega_i$</span>
+<span class="n">KK</span> <span class="o">=</span> <span class="n">sym</span><span class="p">(</span><span class="s1">'K'</span><span class="p">,[</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">]);</span> <span class="c1">%% [Ki_j]: the coupling network matrix, $K_{i,j}$</span>
+
+<span class="n">syms</span> <span class="n">Nsys</span><span class="p">;</span>   <span class="c1">%% [Nsys]: the vector fields of ODEs</span>
+<span class="n">thth</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">th</span><span class="p">,[</span><span class="mi">1</span> <span class="n">m</span><span class="p">]);</span>
+<span class="n">Nsys</span> <span class="o">=</span> <span class="n">om</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">KK</span><span class="o">.*</span><span class="nb">sin</span><span class="p">(</span><span class="n">thth</span><span class="o">.'</span> <span class="o">-</span> <span class="n">thth</span><span class="p">),</span><span class="mi">2</span><span class="p">);</span>   <span class="c1">%% Kuramoto interaction terms</span>
+<span class="n">syms</span> <span class="n">u</span><span class="p">;</span> <span class="c1">%% [u]: One-dimensional control term</span>
+<span class="n">Nsys</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">Nsys</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">u</span><span class="p">;</span>    <span class="c1">%% For the first particle, we put the control term</span>
+
+
+<span class="c1">%% latex(Nsys)</span>
+</code></pre></div></div>
+
+<p>The system is as follows:</p>
+
+<p><img src="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/Nsys.png" alt="Variable 'Nsys' with $m=3$" /></p>
+
+<h2 id="linearized-model-and-numerical-data-setting">Linearized model and numerical data setting</h2>
+
+<p>We now construct the linearized system using Jacobian:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">F</span><span class="p">;</span> <span class="c1">%% [F]: The system without control</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Nsys</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="n">syms</span> <span class="n">Amat</span> <span class="n">Bmat</span><span class="p">;</span> <span class="c1">%% [Amat, Bmat]: Symbolic versions of the matrix A and B</span>
+<span class="n">th_eq</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% Evaluation of Jacobian is at equilibrium, [0;0;0;0].</span>
+<span class="n">Amat</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">jacobian</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">th</span><span class="p">),</span><span class="n">th</span><span class="p">,</span><span class="n">th_eq</span><span class="p">);</span>
+<span class="n">Bmat</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">subs</span><span class="p">(</span><span class="n">Nsys</span><span class="p">,</span><span class="n">th</span><span class="p">,</span><span class="n">th_eq</span><span class="p">),</span><span class="n">u</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Construction of numerical matrices $A$ and $B$:</p>
+
+<p>We next set the physical parameters. Natural frequencies, however, we put them zero to apply linear-quadratic control model.</p>
+
+<p>The coupling network matrix is set to be random near ones(m,m):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  KK_init = ones(m,m)+0.2*(2*(rand(m,m)-0.5));
+</code></pre></div></div>
+
+<p>and save it in the folder ‘functions/coupling.mat’.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">om_init</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="nb">load</span><span class="p">(</span><span class="s1">'functions/coupling.mat'</span><span class="p">,</span><span class="s1">'KK_init'</span><span class="p">);</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="nb">double</span><span class="p">(</span><span class="n">subs</span><span class="p">(</span><span class="n">Amat</span><span class="p">,[</span><span class="n">om</span><span class="p">,</span><span class="n">KK</span><span class="p">],[</span><span class="n">om_init</span><span class="p">,</span><span class="n">KK_init</span><span class="p">]));</span>
+<span class="n">B</span> <span class="o">=</span> <span class="nb">double</span><span class="p">(</span><span class="n">subs</span><span class="p">(</span><span class="n">Bmat</span><span class="p">,[</span><span class="n">om</span><span class="p">,</span><span class="n">KK</span><span class="p">],[</span><span class="n">om_init</span><span class="p">,</span><span class="n">KK_init</span><span class="p">]));</span>
+</code></pre></div></div>
+
+<h2 id="construction-of-the-lqr-controller-and-its-evaluation">Construction of the LQR controller and its evaluation</h2>
+
+<p>We design the LQR controller and solve it with linearized model.</p>
+
+<p>The cost is only for the symmetric quadrature at $[0,0,0]$ <strong>since we want all of them to be 0</strong>.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+<span class="p">[</span><span class="n">ricsol</span><span class="p">,</span><span class="n">cleig</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">Q</span><span class="p">);</span>
+<span class="n">K</span> <span class="c1">%% Present the feedback matrix</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+K =
+
+  Columns 1 through 7
+
+    0.6358    0.2930    0.2924    0.2829    0.2604    0.3013    0.2775
+
+  Columns 8 through 10
+
+    0.2777    0.2701    0.2713
+
+
+</code></pre></div></div>
+
+<p>Practically, any $K$ with positive elements can make the limit point to be 0, e.g., K=[1,1,1].</p>
+
+<p>The initial condition is chosen on $[-0.55\pi,0.55\pi]$ by</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ini = 0.55*pi()*(2*(rand(m,1)-0.5));
+</code></pre></div></div>
+
+<p>which is stored in the functions folder, ‘functions/ini.mat’.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">load</span><span class="p">(</span><span class="s1">'functions/ini.mat'</span><span class="p">,</span><span class="s1">'ini'</span><span class="p">);</span> <span class="c1">%% Safe data</span>
+
+<span class="n">tspan</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>1) Simulate the nonlinear dynamics without any control: $u = 0$.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Isys_ori</span><span class="p">;</span>
+<span class="n">Isys_ori</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">F</span><span class="p">,[</span><span class="n">om</span><span class="p">,</span><span class="n">KK</span><span class="p">],[</span><span class="n">om_init</span><span class="p">,</span><span class="n">KK_init</span><span class="p">]);</span>
+<span class="n">Isys_ori_ftn_temp</span> <span class="o">=</span> <span class="n">matlabFunction</span><span class="p">(</span><span class="n">Isys_ori</span><span class="p">,</span><span class="s1">'Vars'</span><span class="p">,{</span><span class="n">th</span><span class="p">});</span>
+<span class="n">Isys_ori_ftn</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">Isys_ori_ftn_temp</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+<span class="p">[</span><span class="n">timenc</span><span class="p">,</span> <span class="n">statenc</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">Isys_ori_ftn</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span> <span class="c1">%% Solve ODE with 'ode45'</span>
+</code></pre></div></div>
+
+<p>2) Simulate the linear dynamics with CARE function</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+
+<span class="n">i_linear</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+<span class="p">[</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_linear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>3) Simulate the nonlinear dynamics with the same control</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Isys</span><span class="p">;</span>
+<span class="n">Isys</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Nsys</span><span class="p">,[</span><span class="n">om</span><span class="p">,</span><span class="n">KK</span><span class="p">,</span><span class="n">u</span><span class="p">],[</span><span class="n">om_init</span><span class="p">,</span><span class="n">KK_init</span><span class="p">,(</span><span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">th</span><span class="p">)]);</span>
+<span class="n">Isys_ftn_temp</span> <span class="o">=</span> <span class="n">matlabFunction</span><span class="p">(</span><span class="n">Isys</span><span class="p">,</span><span class="s1">'Vars'</span><span class="p">,{</span><span class="n">th</span><span class="p">});</span>
+<span class="n">Isys_ftn</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">Isys_ftn_temp</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+<span class="p">[</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">Isys_ftn</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="visualization">Visualization</h2>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">plot</span><span class="p">(</span><span class="n">timenc</span><span class="p">,</span> <span class="n">statenc</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'-k'</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c1">%% The first oscillator is black-colored.</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">timenc</span><span class="p">,</span> <span class="n">statenc</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="n">m</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">grid</span> <span class="n">on</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [\pi]'</span><span class="p">)</span> <span class="c1">%% The unit is $\pi$.</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Figure 1: Phases of the model without control'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/copiaRM_01.png" alt="" /></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'-k'</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="n">m</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">grid</span> <span class="n">on</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [\pi]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Figure 2: Phases of the linearized model'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/copiaRM_02.png" alt="" /></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'-k'</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="n">m</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">grid</span> <span class="n">on</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [\pi]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Figure 3: Phases of the Kuramoto model'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/copiaRM_03.png" alt="" /></p>
+
+<p>In Figure 1, the limit point is not zero since the mean value of initial phases is nonzero.</p>
+
+<p>Figure 2 shows that the first oscillator keeps it phase above zero to make the final phases zero.</p>
+
+<p>The nonlinear model has less decay then the linearized model, but goes to zero in Figure 3.</p>
+
+<h2 id="failure-of-lqr-control-for-large-initial-data">Failure of LQR control for large initial data</h2>
+
+<p>The initial data is from</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ini2</span> <span class="o">=</span> <span class="nb">pi</span><span class="p">()</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mf">0.5</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>which is uniformly distributed on $[-\pi,\pi]$. We expect the limit point to be separated in the real line with differences $2\pi$.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">load</span><span class="p">(</span><span class="s1">'functions/ini2.mat'</span><span class="p">,</span><span class="s1">'ini2'</span><span class="p">);</span> <span class="c1">%% Separated data</span>
+
+<span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+
+<span class="n">i_linear</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+<span class="n">tspan</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">];</span>
+<span class="p">[</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_linear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini2</span><span class="p">);</span>
+
+<span class="n">syms</span> <span class="n">Isys</span><span class="p">;</span>
+<span class="n">Isys</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Nsys</span><span class="p">,[</span><span class="n">om</span><span class="p">,</span><span class="n">KK</span><span class="p">,</span><span class="n">u</span><span class="p">],[</span><span class="n">om_init</span><span class="p">,</span><span class="n">KK_init</span><span class="p">,(</span><span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">th</span><span class="p">)]);</span>
+<span class="n">Isys_ftn_temp</span> <span class="o">=</span> <span class="n">matlabFunction</span><span class="p">(</span><span class="n">Isys</span><span class="p">,</span><span class="s1">'Vars'</span><span class="p">,{</span><span class="n">th</span><span class="p">});</span>
+<span class="n">Isys_ftn</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">Isys_ftn_temp</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="p">[</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">Isys_ftn</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini2</span><span class="p">);</span>
+
+<span class="nb">figure</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'-k'</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="n">m</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">grid</span> <span class="n">on</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [\pi]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Figure 4: Phases of the linearized model'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+
+<span class="nb">figure</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'-k'</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="n">m</span><span class="p">)/</span><span class="nb">pi</span><span class="p">(),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">grid</span> <span class="n">on</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [\pi]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Figure 5: Phases of the Kuramoto model'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+</code></pre></div></div>
+
+<p><img src="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/copiaRM_04.png" alt="" /></p>
+
+<p><img src="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/copiaRM_05.png" alt="" /></p>
+
+<p>We can see that $\theta_1$ does not tend to zero in Figure 5 since $K\times\Theta$ is near zero already. Linear feedback control is not enough, or too weak, for this setting.</p>
+
+
+
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <ul class="list-inline text-center">
+          <li>
+            <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+          </li>
+          <li>
+            <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+
+</html>

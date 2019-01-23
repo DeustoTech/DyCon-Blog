@@ -2,10 +2,13 @@
 layout: project
 category: proyect
 title: Posts
-description: Transmitting the results to other researchers, not specialists in control theory, can be difficult. Even among experts on the subject of sharing software is complicated. Here is a series of tutorials for faithful and easy reproduction of mathematical results.
+description: One of the main outputs of the research conducted within DyCon is the development of new computational methods and tools (algorithms, tutorials, sample codes, software and simulations), all of which are being integrated in a computational platform. This page offers a higher layer of the work that is currently taking place inside the DyCon team.
+
 ---
+
  {::nomarkdown}
 
+All of the content has been classified according to the project’s corresponding working packages:
 
     {% for topic in site.data.WorkPackages %}
         {%- assign qposts = site.posts | where:"layout","tutorial" -%}

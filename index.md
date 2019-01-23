@@ -22,7 +22,7 @@ layout: default
         <h1>Recent Post</h1>    
         {% assign qposts = site.posts | where:"layout","tutorial"|sort |reverse%}
 
-        {% assign MaxPostView = 30 %}
+        {% assign MaxPostView = 3 %}
 
         {% for i in (1..MaxPostView) %}
 
