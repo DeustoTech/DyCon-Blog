@@ -145,8 +145,20 @@ hr.small {
 .post-preview-authors {
   color: grey;
 }
-
+.post-avatar,
+.post-avatar-wp {
+  float: left;
+}
+.post-avatar-wp {
+  width: none !important;
+}
 @media only screen and (max-width: 470px) {
+  .post-avatar-wp {
+    width: 23%;
+  }
+  .post-avatar {
+    width: 15%;
+  }
   .index-img {
     padding-top: 20px;
   }
@@ -181,10 +193,6 @@ hr.small {
     font-size: 1.3em;
     margin-top: 25px;
   }
-  .post-avatar {
-    width: 15%;
-    float: left;
-  }
   .post-info {
     float: right;
   }
@@ -193,7 +201,8 @@ hr.small {
     margin: 10px 0 5px 0;
     border-radius: 3px;
   }
-  .post-avatar img {
+  .post-avatar img,
+  .post-avatar-wp img {
     height: 80px;
     width: 80px;
   }
@@ -232,15 +241,12 @@ hr.small {
     margin: 20px 0 10px 0;
     border-radius: 4px;
   }
-  .post-avatar {
-    width: 15%;
-    float: left;
-  }
   .post-info {
     width: 75%;
     float: right;
   }
-  .post-avatar img {
+  .post-avatar img,
+  .post-avatar-wp img {
     height: 130px;
     width: 130px;
   }

@@ -1,7 +1,6 @@
 ---
 layout: default
 ---
-
 <header class="intro-header">
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
@@ -15,8 +14,6 @@ layout: default
     </div>
   </div>
 </header>
-
-
 <div class="container">
   <div class="col-md-10 col-md-offset-1">
     <h1 class="h1-title">Recent Post</h1>    
