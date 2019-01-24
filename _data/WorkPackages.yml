@@ -18,9 +18,9 @@ WP02:
 WP03:
   name: Control under constraints
 WP04:
-  name: Memory and hybrid PDE/ODE models
-WP05:
   name: Inverse design of time-irreversible models
+WP05:
+  name: Models involving memory terms and hybrid PDE+ODE systems 
 WP06:
   name: Finite versus infinite-dimensional dynamical systems
 WP99:
