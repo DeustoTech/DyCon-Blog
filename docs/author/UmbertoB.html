@@ -46,13 +46,19 @@
 	<script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']]
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
     },
 		TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
     /*CommonHTML: {
       scale: 300
     }*/
@@ -225,11 +231,43 @@
                 
                 
                 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
                 <hr>
                 <h1>Slides</h1>
                 
                 <h1>Methods</h1>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 
@@ -342,6 +380,8 @@
                         
                     
                         
+                    
+                        
                             <div class="shadowbox post-preview">
                                 <a class="display-block" href="https://DeustoTech.github.io/DyCon-Blog//tutorial/wp04/P0004">
                                     <h3 class="post-title"> LQR control of a fractional reaction diffusion equation </h3>
@@ -383,6 +423,20 @@
                                         Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics
                                 </p>
                             </div>     
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
                         
                     
                         

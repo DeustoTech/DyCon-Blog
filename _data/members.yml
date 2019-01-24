@@ -1,7 +1,14 @@
 # Members
 NoboruS:
   name: Noboru Sakamoto
-
+MartinL:
+  name: Martín Lazar
+CesareM:
+  name: Césare Molinari 
+NavidA:
+  name: Navid Allahverdi
+AlejandroP:
+  name: Alejandro Pozo
 UmbertoB:
   name: Umberto Biccari
   description: Umberto Biccari is a PhD. Currently he holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (UAM and DeustoTech). In the past, he collaborated within the ERC research project NUMERIWAVES. His current research interests are related to the analysis of Partial Differential Equations, in particular from the point of view of control theory. During the years of his PhD he has been concerned with the study of controllability properties of hyperbolic (waves), parabolic (heat) and dispersive (Schrödinger) PDEs, involving non-local terms, singular inverse-square potentials, variable degenerate coefficients or dynamical boundary conditions. At the moment, he is getting interested in non-local transport problems, derived from models of collection behaviour.

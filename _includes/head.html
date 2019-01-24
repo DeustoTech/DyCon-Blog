@@ -43,13 +43,19 @@
 	<script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']]
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
     },
 		TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
     /*CommonHTML: {
       scale: 300
     }*/

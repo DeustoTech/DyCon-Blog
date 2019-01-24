@@ -46,13 +46,19 @@
 	<script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']]
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
     },
 		TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
     /*CommonHTML: {
       scale: 300
     }*/
@@ -200,6 +206,61 @@ img:active{
                 <p>See our tutorials:</p>
                 <!-- Realizamos la query  -->
                 
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp02/P0002" class="display-block">
+                        <h3 class="post-title"> Numerical aspects of LTHC of Burgers equation </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            Numerical approximation of the inverse design problem for the Burgers equation
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            Navid Allahverdi
+                            
+                            Alejandro Pozo
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp02/P0004" class="display-block">
+                        <h3 class="post-title"> Long time control and the Turnpike property </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            The turnpike property improves the numerical methods used to solve optimal control problems
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp02/P0001" class="display-block">
+                        <h3 class="post-title"> Turnpike property for functionals involving $L^1−norm$ </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            We want to study the following optimal control problem...
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            Martín Lazar
+                            
+                            Césare Molinari
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
                 
                     <div class="post-preview shadowbox">
                         <a href="/DyCon-Blog/tutorial/wp02/P0003" class="display-block">

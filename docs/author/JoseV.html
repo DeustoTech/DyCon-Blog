@@ -46,13 +46,19 @@
 	<script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']]
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
     },
 		TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
     /*CommonHTML: {
       scale: 300
     }*/
@@ -225,11 +231,43 @@
                 
                 
                 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
                 <hr>
                 <h1>Slides</h1>
                 
                 <h1>Methods</h1>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 
@@ -326,6 +364,31 @@
                     
                         
                     
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            <div class="shadowbox post-preview">
+                                <a class="display-block" href="https://DeustoTech.github.io/DyCon-Blog//tutorial/wp99/P0021">
+                                    <h3 class="post-title"> Optimal Control of the Poisson Equation with OpenFOAM </h3>
+                                </a> 
+                                <p class="post-subtitle">
+                                        In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE).
+                                </p>
+                            </div>     
                         
                     
                         

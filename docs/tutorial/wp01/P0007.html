@@ -46,13 +46,19 @@
 	<script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']]
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
     },
 		TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
     /*CommonHTML: {
       scale: 300
     }*/
@@ -204,7 +210,9 @@ img:active{
         <div class="row">
             <div class="col-lg-10  col-md-10 col-md-offset-1">
                 
-                        <a href="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP01/P0007/Synchronized_oscillators.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                    
+                            <a href="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP01/P0007/Synchronized_oscillators.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                    
                 
 
 				<p>We consider a population of N coupled-phase oscillators, $\theta_i(t)$, $i=1,\ldots,N$ and we want to compute a control such that in time $T$ we reach the state $\theta_i(T)=\ldots =\theta_N(T)=:\bar{\theta}$ in which all the oscillators are sincronized.</p>

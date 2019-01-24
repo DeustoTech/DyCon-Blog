@@ -46,13 +46,19 @@
 	<script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']]
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
     },
 		TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
     /*CommonHTML: {
       scale: 300
     }*/
@@ -200,6 +206,25 @@ img:active{
                 <p>See our tutorials:</p>
                 <!-- Realizamos la query  -->
                 
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp03/P0001" class="display-block">
+                        <h3 class="post-title"> Control of the semi-discrete 1D heat equation under nonnegative control constraint </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            Using IpOpt to get the time-optimal nonnegative control of a semi-discrete 1D heat equation
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            
+                            
+                            
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
                 
                 <hr>
                 <hr>

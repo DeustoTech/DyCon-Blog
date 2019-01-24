@@ -46,13 +46,19 @@
 	<script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']]
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
     },
 		TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
     /*CommonHTML: {
       scale: 300
     }*/
@@ -202,7 +208,9 @@ img:active{
         <div class="row">
             <div class="col-lg-10  col-md-10 col-md-offset-1">
                 
-                        <a href="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/Stability_analysis_of_Power_Electronic.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                    
+                            <a href="https://DeustoTech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/Stability_analysis_of_Power_Electronic.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                    
                 
 
 				<p>We analyze the stability of a simplified system modeling two converters in parallel connected to an ideal grid (modelled by a voltage source) via line impedances.</p>

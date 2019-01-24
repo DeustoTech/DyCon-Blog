@@ -33,10 +33,12 @@ layout: default
     <div id="content" class="container">
         <div class="row">
             <div class="col-lg-10  col-md-10 col-md-offset-1">
-                {% if page.old %}
-                        <a href="{{page.url_zip}}""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
-                {% else %}
-                        <a href="{{site.url}}{{site.baseurl}}/{{page.url_zip}}""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                {% if page.url_zip %}
+                    {% if page.old %}
+                            <a href="{{page.url_zip}}""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                    {% else %}
+                            <a href="{{site.url}}{{site.baseurl}}/{{page.url_zip}}""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                    {% endif %}
                 {% endif %}
 
 				{{ content | markdownify }}

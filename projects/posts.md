@@ -18,7 +18,6 @@ All of the content has been classified according to the project’s correspondin
             <div class="shadowbox">
             <a href="{{site.url}}{{site.baseurl}}{{post.url}}"><h5>{{post.title}}</h5></a>
             <p>{{post.description}}</p>
-
             </div>
         {% endfor %}
     {% endfor %}

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+
+
+
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+    <title>Greedy Control - DyCon Blog</title>
+
+    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/P0003">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/clean-blog.css">
+
+	<!-- Adjust Colors -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/colorscheme.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  	<link href="https://fonts.googleapis.com/css?family=Lusitana" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<!-- Math Jax -->
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
+    /*CommonHTML: {
+      scale: 300
+    }*/
+	});
+	</script>
+
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+    <script src="https://DeustoTech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+    
+ 	<!-- 404  JavaScript -->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://DeustoTech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Posts</a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/search">Search</a>
+                </li>
+                
+                
+                
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header">
+    <div class="container" style="padding-top: 70px;">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-md-offset-1">
+                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyCon-Blog/topic/WP01"></a> :</small></h2>
+                    <h1>Greedy Control</h1>
+
+					<span class="meta">Posted by:
+					
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a></span></span>
+					
+						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a></span></span>
+					
+					</span>
+                </div>
+            </div>
+		</div>
+
+
+	</div>
+</header>
+
+
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+
+<article>
+    <div id="content" class="container">
+        <div class="row">
+            <div class="col-lg-10  col-md-10 col-md-offset-1">
+                
+                    
+                            <a href="https://cmc.deusto.eus/wp-content/uploads/2017/10/1035053.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                    
+                
+
+				<h3>The problem</h3>
+<p><img class="size-full" style="float: right;" src="https://cmc.deusto.eus/wp-content/uploads/2017/02/surrogate.png" alt="Surrogate" width="400" /><strong>Control of a parameter dependent system in a robust manner.</strong>
+Fix a control time $T &gt; 0$, an arbitrary initial data $x^0$, and a final target $x^1 \in R^N$
+Given $\varepsilon &gt; 0$ we aim at determining a family of parameters $\nu_1,…, , \nu_n$ in $\mathcal{N}$ so that the corresponding controls $u_1, …, u_n$ are such that for every $\nu \in \mathcal{N}$ there exists $u^\star_\nu \in {\rm span}{u_1,…, u_n}$ steering the system to the state $x_\nu^\star(T)$ within the $\varepsilon$ distance from the target $x^1$.</p>
+
+<h3>The system</h3>
+<p>A finite dimensional linear control system:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}
+\begin{cases}
+x'(t)=A( \nu)x(t)+Bu(t),\,0 < t < T,\\
+x(0)=x^0
+\end{cases}
+\end{equation} %]]></script>
+
+<ul>
+	<li>$ A( \nu)$ is a $N \times N$−matrix,</li>
+	<li>$B$ is a $N\times M$ control operator, $\,M \leq N$,</li>
+	<li>$\nu$ is a parameter living in a compact set, $\,\mathcal{N}$ of $\mathbb{R}^d$</li>
+</ul>
+<p>Assumptions:</p>
+<ul>
+	<li>the system is (uniform) controllable for all $\nu \in N$,</li>
+	<li>system dimension $\mathcal{N}$ is large</li>
+</ul>
+<h3>The greedy approach</h3>
+<p>$X$ – a Banach space
+$K\subset X$ – a compact subset.
+The method approximates $K$ by a a series of finite dimensional linear spaces $V_n$ (a <strong>linear method</strong>).</p>
+<h5 style="color:green">A general greedy algorithm</h5>
+<ul><li><strong>The first step</strong>
+Choose $x_1 \in K$ such that $$ { {\| x_1 \|}_{X}} = \max_{x \in K} { {\| x \|}_{X}} $$</li>
+<li><strong>The general step</strong>
+Having found $x_1 .. x_n$, denote
+
+$$
+V_n={\rm span} \{x_1, \ldots,x_n\}
+$$
+
+Choose the next element
+
+$$
+x_{n+1}:= \arg\!\max_{x \in K} {\rm dist}(x, V_n)
+$$
+</li>
+<li><strong>The algorithm stops</strong> when $\sigma_n(K):= \max_{x \in K} {\rm dist}(x, V_n) $ becomes less than the given tolerance $\varepsilon$.</li>
+
+
+<strong>The Kolmogorov $n$ width</strong>, $d_n(K) $ measures optimal approximation of $K$ by a $n$-dimensional subspace.
+$$
+d_n(K):=\inf_{\dim Y=n} \sup_{x\in K} \, \inf_{y\in Y} { {\| x-y \|}_{X}}\,.
+$$
+<strong>The greedy approximation rates have same decay as the Kolmogorov widths.</strong>
+
+<img src="http://cmc.deusto.es/wp-content/uploads/2017/02/greedyControlFig1.jpg" alt="Evolution of last 5 system components and the approximate control" width="562" height="446" class="size-full wp-image-349" srcset="https://cmc.deusto.eus/wp-content/uploads/2017/02/greedyControlFig1.jpg 562w, https://cmc.deusto.eus/wp-content/uploads/2017/02/greedyControlFig1-300x238.jpg 300w, https://cmc.deusto.eus/wp-content/uploads/2017/02/greedyControlFig1-242x192.jpg 242w" sizes="(max-width: 562px) 100vw, 562px" />
+
+Figure1: Evolution of a) last 5 system components and  b) the approximate control for $\nu=\pi$.
+
+<h3>Greedy control</h3>
+Each control can be uniquely determined by the relation
+$$
+u_{\bf \nu} = {\bf B}^\ast e^{(T-t){\bf A}_{\bf \nu}^\ast}  \varphi^0_{\bf \nu},
+$$
+where $\varphi^0_{\bf \nu}\in { {\bf R}}^N$ is the unique  minimiser of a  quadratic functional associated to the adjoint problem.
+This minimiser can  be expressed as the solution of the linear system 
+\begin{equation*}
+\label{phi^0}
+\Lambda_{\bf \nu}   \varphi^0_{\bf \nu} = {\sf x}^1 -  e^{T{\bf A}_{\bf \nu}} {\sf x}^0,
+\end{equation*}
+where $\Lambda_{\bf \nu} $  is the controllability Gramian 
+\begin{equation*}
+\Lambda_{\bf \nu}=\int_0^T e^{(T-t){\bf A}_{\bf \nu}}{\bf B}_{\bf \nu} {\bf B}_{\bf \nu}^\ast e^{(T-t){\bf A}_{\bf \nu}^\ast} dt\,.
+\end{equation*}
+
+Perform a greedy algorithm to the manifold $\varphi^0({\cal N})$:
+$$
+\nu \in {\cal N} \to \varphi^0_\nu \in  \bf{R}^N\,.
+$$
+
+The (unknown) quantity ${\rm dist} (\varphi^0_{\bf \nu}, \varphi_i^0)$ to be maximised by the greedy algorithm is replaced by a  <strong>surrogate</strong>:
+
+$$
+\begin{aligned}
+{\rm dist} (\varphi^0_{\bf \nu}, \varphi_i^0)
+&amp;\sim {\rm dist} (\Lambda_{\bf \nu}  \varphi^0_{\bf \nu}, \Lambda_{\bf \nu}  \varphi^0_i) \cr
+&amp;= {\rm dist} ({\sf x}^1 -  e^{T{\bf A}_{\bf \nu}} {\bf x}^0, \Lambda_{\bf \nu}  \varphi^0_i) \,.\cr
+\end{aligned}
+$$
+
+<img src="http://cmc.deusto.es/wp-content/uploads/2017/02/surrogate.png" alt="Surrogate" />
+<strong>The greedy control algorithm  results in an optimal decay of the  approximation rates.</strong>
+<h3>Numerical examples</h3>
+<h5>Wave equation</h5>
+We consider the system (1) with:
+
+$$
+  {\bf A}=\left(\begin{matrix}
+  {\bf 0} &amp; -I\cr
+  { \nu} ( N/2+1)^2 \tilde {\bf A} &amp; {\bf 0}\cr
+  \end{matrix}\right),
+$$
+$$
+    \tilde {\bf A}=\left(\begin{matrix}
+    2 &amp; -1&amp; 0 &amp; \cdots &amp; 0\cr
+    -1&amp;  2 &amp; -1&amp;  \cdots &amp; 0\cr
+    0 &amp; -1&amp;  2 &amp;  \cdots &amp; 0\cr
+    \vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\cr
+        0 &amp;0&amp;  0 &amp; \cdots  &amp;2\cr
+    \end{matrix}\right),
+    \ \
+     {\bf B}=\left(\begin{matrix}
+       0\cr
+       0\cr
+       \vdots\cr
+       0\cr
+       1\cr
+     \end{matrix}\right).
+$$
+The system corresponds to the discretisation of the wave equation problem with the control on the right boundary:
+
+$$
+\begin{equation}
+		\begin{cases}
+     	\partial_{tt} v -  \nu \partial_{xx} v=0 \ \ (t, x) \in \langle 0, T \rangle  \times \langle 0,1 \rangle \\
+     	v(t, 0)=0 \ \ v(t, 1)=u(t) \\
+     	v(0, x)=v_0 \ \ \partial_t v(x, 0)=v_1 
+     	\end{cases}
+\end{equation}
+$$
+We take the following values:
+  $$T=3,\;  N=50,\;
+  v_0=\sin(\pi x), \; v_1=0,\;
+  x^1=0
+  $$
+
+  $$
+  \nu \in [1,10]  = \mathcal{N}
+  $$
+
+The greedy control has been applied with $\varepsilon=0.5$ and the uniform discretisation of ${\cal N}$ in $k=100$ values.
+The offline algorithm stopped after 24 iterations.
+<strong>The 20-D controls manifold is  well approximated by a 10-D subspace:</strong>
+
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/04/wave-online-3D-nu.jpg" alt="Evolution of the solution to the semi-discretised problem" width="562" height="446" class="size-full wp-image-350" /> 
+Figure2: Evolution of the solution to the semi-discretised problem (2) governed by the approximate control $u_\nu^\star$ for $\nu=\pi$.
+
+<h5>Heat equation</h5>
+For  $   {\bf A}=( N+1)^2\tilde{\bf A}    $, with $\tilde{\bf A}$ given by:
+
+$$
+    \tilde {\bf A}=\left(\begin{matrix}
+    2 &amp; -1&amp; 0 &amp; \cdots &amp; 0\cr
+    -1&amp;  2 &amp; -1&amp;  \cdots &amp; 0\cr
+    0 &amp; -1&amp;  2 &amp;  \cdots &amp; 0\cr
+    \vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\cr
+        0 &amp;0&amp;  0 &amp; \cdots  &amp;2\cr
+    \end{matrix}\right)
+$$
+
+and the control operator $ {\bf B}= (0, \ldots,0, ( N+1)^2 )^\top,$ the system (1) corresponds to the space-discretisation of the heat equation problem with $N$ internal grid points and  the control on the right boundary:
+
+$$
+\begin{equation}
+  \begin{cases}
+     \partial_{t} v -  \nu \partial_{xx} v=0 \ \ (t, x) \in \langle 0, T \rangle  \times \langle 0, 1\rangle\\
+     v(t, 0)=0 \ \ v(t, 1)=u_\nu(t),\\
+      v(0, x)=v_0 \\
+    \end{cases}
+\end{equation}
+$$
+
+The parameter $\nu$ represents the diffusion coefficient and is supposed to range within the set $\mathcal{N}=[1,2]$.  
+The system satisfies the Kalman's rank condition for any $\nu\in {\cal N}$ and any target time $T$.     
+We aim to control the system  from the initial state $v_0(x)=\sin(\pi x)$ to zero in time $T=0.1$. 
+The greedy control algorithm has been  applied for the system of dimension $N=50$ with  $\varepsilon=0.0001$, and the uniform discretisation of ${\cal N}$ in $k=100$ values. 
+The algorithm stops after only three iterations.
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/03/heat-online-3D.jpg" alt="Evolution of the solution to the semi-discretised problem for heat equation" width="562" class="size-full wp-image-350" /> Figure3: Evolution of the solution to the semi-discretised problem (3) governed by the approximate control $u_\nu^\star$ for $\nu=\sqrt 2$.
+
+<h5>Authors: <a href="/visitors/#MartinLazar">Martin Lazar</a> &amp; <a href="http://paginaspersonales.deusto.es/enrique.zuazua/">Enrique Zuazua</a></h5>
+<h5>March, 2017</h5>
+
+</ul>
+
+
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <ul class="list-inline text-center">
+          <li>
+            <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+          </li>
+          <li>
+            <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+
+</html>

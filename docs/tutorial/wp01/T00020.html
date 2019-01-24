@@ -46,13 +46,19 @@
 	<script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']]
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
     },
 		TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
     /*CommonHTML: {
       scale: 300
     }*/
@@ -200,7 +206,9 @@ img:active{
         <div class="row">
             <div class="col-lg-10  col-md-10 col-md-offset-1">
                 
-                        <a href="http://cmc.deusto.eus/wp-content/uploads/2018/01/guide6.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                    
+                            <a href="http://cmc.deusto.eus/wp-content/uploads/2018/01/guide6.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                    
                 
 
 				<h5>A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation</h5>

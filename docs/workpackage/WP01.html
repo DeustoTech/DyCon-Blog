@@ -46,13 +46,19 @@
 	<script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']]
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
     },
 		TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
+            equationNumbers: {
+                                autoNumber: "AMS"
+            },
+        Macros:{
+            norm: ["|| #1 ||",1],
+            abs: ["| #1 |",1],
+            hdots: "..."
+            }         
+        },
     /*CommonHTML: {
       scale: 300
     }*/
@@ -200,6 +206,59 @@ img:active{
                 <p>See our tutorials:</p>
                 <!-- Realizamos la query  -->
                 
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp01/P0003" class="display-block">
+                        <h3 class="post-title"> Greedy Control </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            Control of a parameter dependent system in a robust manner
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            Martín Lazar
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp01/P0002" class="display-block">
+                        <h3 class="post-title"> Greedy optimal control for elliptic problems and its application to turnpike problems </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            Victor Hernández Santamaría
+                            
+                            Martín Lazar
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp01/P0001" class="display-block">
+                        <h3 class="post-title"> Greedy algorithm for Parametric Vlasov-Fokker-Planck System </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
                 
                     <div class="post-preview shadowbox">
                         <a href="/DyCon-Blog/tutorial/wp01/P0007" class="display-block">
