@@ -53,10 +53,16 @@
             equationNumbers: {
                                 autoNumber: "AMS"
             },
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
         Macros:{
             norm: ["|| #1 ||",1],
             abs: ["| #1 |",1],
-            hdots: "..."
+            hdots: "...",
+            RR: "\\mathbb{R}",
+            ffl: ["(d_x^2)^{#1}",1],
+            ccs: "c_{1,s}",
+            kernel: ["|x-y|^{#1}",1],
+            ue: ["#1^{\\epsilon}",1]
             }         
         },
     /*CommonHTML: {
@@ -393,11 +399,10 @@ More precisely, given $N_t\in\mathbb{N}^*$, we approximate $y_k(j\tau_k/N_t)$ by
 		& \max_{i\in\{1,\dots,n\}}\left|[y_{N}^{N_t}]_i-u^1\right|\leqslant \varepsilon,\\
 	\end{align} %]]></script>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align}
+<script type="math/tex; mode=display">\begin{align}
 		\label{eq:optD7}
-		& \left( \mathrm{I}_n-\frac{\tau_k}{2N_t}A \right)y_k^{j+1}=\left( \mathrm{I}_n+\frac{\tau_k}{2N_t}A \right)y_k^j (k\in\{0,\dots,N\},\ j\in\{0,\dots,N_t-1\}).
-	\end{align} %]]></script>
+		 \left( \mathrm{I}_n-\frac{\tau_k}{2N_t}A \right)y_k^{j+1}=\left( \mathrm{I}_n+\frac{\tau_k}{2N_t}A \right)y_k^j (k\in\{0,\dots,N\},\ j\in\{0,\dots,N_t-1\}).
+	\end{align}</script>
 
 <p>Note that instead of imposing $[y_{N}^{N_t}]_i=u^1$, we chose to relax this condition in the constraint (\ref{eq:optD6}).
 This choice has been a maid since we do not expect that the numerical solution exactly reaches the target $y^1$. In practice, we will take, $\varepsilon=1/(n\, N_t)$.</p>

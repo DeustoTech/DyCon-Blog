@@ -53,10 +53,16 @@
             equationNumbers: {
                                 autoNumber: "AMS"
             },
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
         Macros:{
             norm: ["|| #1 ||",1],
             abs: ["| #1 |",1],
-            hdots: "..."
+            hdots: "...",
+            RR: "\\mathbb{R}",
+            ffl: ["(d_x^2)^{#1}",1],
+            ccs: "c_{1,s}",
+            kernel: ["|x-y|^{#1}",1],
+            ue: ["#1^{\\epsilon}",1]
             }         
         },
     /*CommonHTML: {
@@ -153,6 +159,20 @@
                 <p></p>
 
                 <h1>Reports</h1>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 
@@ -345,10 +365,22 @@
                 
                 
                 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
                 <h1>Tutorials</h1>
-                    
-                        
                     
                         
                     
@@ -396,6 +428,27 @@
                         
                     
                         
+                    
+                        
+                            <div class="shadowbox post-preview">
+                                <a class="display-block" href="https://DeustoTech.github.io/DyCon-Blog//tutorial/wp05/P0007">
+                                    <h3 class="post-title"> Finite element approximation of the 1-D fractional Poisson equation </h3>
+                                </a> 
+                                <p class="post-subtitle">
+                                        A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control
+                                </p>
+                            </div>     
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
                             <div class="shadowbox post-preview">
                                 <a class="display-block" href="https://DeustoTech.github.io/DyCon-Blog//tutorial/wp01/P0002">
                                     <h3 class="post-title"> Greedy optimal control for elliptic problems and its application to turnpike problems </h3>
@@ -404,6 +457,10 @@
                                         Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data
                                 </p>
                             </div>     
+                        
+                    
+                        
+                    
                         
                     
                         

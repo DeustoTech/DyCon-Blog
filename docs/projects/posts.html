@@ -53,10 +53,16 @@
             equationNumbers: {
                                 autoNumber: "AMS"
             },
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
         Macros:{
             norm: ["|| #1 ||",1],
             abs: ["| #1 |",1],
-            hdots: "..."
+            hdots: "...",
+            RR: "\\mathbb{R}",
+            ffl: ["(d_x^2)^{#1}",1],
+            ccs: "c_{1,s}",
+            kernel: ["|x-y|^{#1}",1],
+            ue: ["#1^{\\epsilon}",1]
             }         
         },
     /*CommonHTML: {
@@ -149,140 +155,886 @@
 <!-- Main Content -->
 <div class="container">
 	<div class="col-md-10 col-md-offset-1">
-		
-All of the content has been classified according to the project’s corresponding working packages:
-
-    <h3>Control of parameter dependent problems</h3>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/T00020"><h5>Wave Control</h5></a>
-            <p>A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.</p>
+		All of the content has been classified according to the project’s corresponding working packages:
+    <h3 class="topic-title">Control of parameter dependent problems</h3>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/T00020"><h5>Wave Control</h5></a>
+        <p>A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/T00020" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Wave Control </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/T00010"><h5>Averaged Control</h5></a>
-            <p>In this work, we address the optimal control of parameter-dependent systems.</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 12 December 2018
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/P0007"><h5>Synchronized Oscillators</h5></a>
-            <p>Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method</p>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/T00010"><h5>Averaged Control</h5></a>
+        <p>In this work, we address the optimal control of parameter-dependent systems.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/T00010" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Averaged Control </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              In this work, we address the optimal control of parameter-dependent systems.
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/P0001"><h5>Greedy algorithm for Parametric Vlasov-Fokker-Planck System</h5></a>
-            <p>Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+              
+              - 12 December 2018
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/P0002"><h5>Greedy optimal control for elliptic problems and its application to turnpike problems</h5></a>
-            <p>Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data</p>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/P0007"><h5>Synchronized Oscillators</h5></a>
+        <p>Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/P0007" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Synchronized Oscillators </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/P0003"><h5>Greedy Control</h5></a>
-            <p>Control of a parameter dependent system in a robust manner</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              
+              - 19 October 2018
             </div>
-        
-    <h3>Long time horizon control</h3>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0003"><h5>Riccati theory in LQ optimization with time-varying target</h5></a>
-            <p>Numerical computation of the optimal control and the optimal state</p>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/P0001"><h5>Greedy algorithm for Parametric Vlasov-Fokker-Planck System</h5></a>
+        <p>Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Greedy algorithm for Parametric Vlasov-Fokker-Planck System </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0001"><h5>Turnpike property for functionals involving $L^1−norm$</h5></a>
-            <p>We want to study the following optimal control problem...</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/YuhuaZ"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 10 January 2018
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0004"><h5>Long time control and the Turnpike property</h5></a>
-            <p>The turnpike property improves the numerical methods used to solve optimal control problems</p>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/P0002"><h5>Greedy optimal control for elliptic problems and its application to turnpike problems</h5></a>
+        <p>Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/P0002" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Greedy optimal control for elliptic problems and its application to turnpike problems </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0002"><h5>Numerical aspects of LTHC of Burgers equation</h5></a>
-            <p>Numerical approximation of the inverse design problem for the Burgers equation</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/VictorH">Victor Hernández Santamaría</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 01 November 2017
             </div>
-        
-    <h3>Control under constraints</h3>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp03/P0001"><h5>Control of the semi-discrete 1D heat equation under nonnegative control constraint</h5></a>
-            <p>Using IpOpt to get the time-optimal nonnegative control of a semi-discrete 1D heat equation</p>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/P0003"><h5>Greedy Control</h5></a>
+        <p>Control of a parameter dependent system in a robust manner</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/P0003" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Greedy Control </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Control of a parameter dependent system in a robust manner
             </div>
-        
-    <h3>Memory and hybrid PDE/ODE models</h3>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp04/P0013-Numerical-homogenizaton"><h5>Two Grids Filter Method for RPS Semi-Discretization</h5></a>
-            <p>This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 01 March 2017
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp04/P0008-Charlotte"><h5>Coupled transport equations and LQR control</h5></a>
-            <p>Numerical computation of a stabilizing control</p>
+          </div>
+        </div>
+      
+    <h3 class="topic-title">Long time horizon control</h3>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0003"><h5>Riccati theory in LQ optimization with time-varying target</h5></a>
+        <p>Numerical computation of the optimal control and the optimal state</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp02/P0003" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Riccati theory in LQ optimization with time-varying target </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Numerical computation of the optimal control and the optimal state
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp04/P0006"><h5>LQR optimal control design for a coupled PDE-ODE system.</h5></a>
-            <p>Stabilization of a coupled PDE-ODE system by means of a feedback LQR control.</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/DarioP">Dario Pighin</a>
+              
+              - 26 October 2018
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp04/P0004"><h5>LQR control of a fractional reaction diffusion equation</h5></a>
-            <p>Design of a LQR controller for the stabilization of a fractional reaction diffusion equation</p>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0001"><h5>Turnpike property for functionals involving $L^1−norm$</h5></a>
+        <p>We want to study the following optimal control problem...</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp02/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Turnpike property for functionals involving $L^1−norm$ </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              We want to study the following optimal control problem...
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp04/P0001"><h5>Rays propagation of a fractional Schrodinger Equation</h5></a>
-            <p>Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/CesareM">Césare Molinari</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 26 October 2018
             </div>
-        
-    <h3>Inverse design of time-irreversible models</h3>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0012"><h5>Rays propagation of a fractional Schrodinger Equation</h5></a>
-            <p>Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics</p>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0004"><h5>Long time control and the Turnpike property</h5></a>
+        <p>The turnpike property improves the numerical methods used to solve optimal control problems</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp02/P0004" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Long time control and the Turnpike property </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              The turnpike property improves the numerical methods used to solve optimal control problems
             </div>
-        
-    <h3>Finite versus infinite-dimensional dynamical systems</h3>
-        
-    <h3>Other Topics</h3>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0011"><h5>Stability analysis of Power Electronic Converters Connected to AC Grids</h5></a>
-            <p>Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters.</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/AitziberI"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 04 May 2017
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0010-Yacouba"><h5>The control on the Kuramoto model by handling one oscillator</h5></a>
-            <p>In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space</p>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0002"><h5>Numerical aspects of LTHC of Burgers equation</h5></a>
+        <p>Numerical approximation of the inverse design problem for the Burgers equation</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp02/P0002" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Numerical aspects of LTHC of Burgers equation </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Numerical approximation of the inverse design problem for the Burgers equation
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0009-Dongnam"><h5>The control on the Kuramoto model by handling one oscillator</h5></a>
-            <p>We design the LQR controller and solve it with linearized model.</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/NavidA">Navid Allahverdi</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroP">Alejandro Pozo</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 04 May 2017
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0014-Domenec"><h5>Stabilization of a collective behavior model</h5></a>
-            <p>Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.</p>
+          </div>
+        </div>
+      
+    <h3 class="topic-title">Control under constraints</h3>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp03/P0001"><h5>Control of the semi-discrete 1D heat equation under nonnegative control constraint</h5></a>
+        <p>Using IpOpt to get the time-optimal nonnegative control of a semi-discrete 1D heat equation</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp03/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Control of the semi-discrete 1D heat equation under nonnegative control constraint </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Using IpOpt to get the time-optimal nonnegative control of a semi-discrete 1D heat equation
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0001"><h5>Optimal control of a  graph evolving in discrete time</h5></a>
-            <p>Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state.</p>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/JeromeL"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EmanuelT"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 05 March 2018
             </div>
-        
-            <div class="shadowbox">
-            <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0021"><h5>Optimal Control of the Poisson Equation with OpenFOAM</h5></a>
-            <p>In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE).</p>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp03/P0002"><h5>IpOpt and AMPL use to solve time optimal control problems</h5></a>
+        <p>How to use IpOpt to solve time optimal control problems</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp03/P0002" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> IpOpt and AMPL use to solve time optimal control problems </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              How to use IpOpt to solve time optimal control problems
             </div>
-        
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/JeromeL"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EmanuelT"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 05 August 2017
+            </div>
+          </div>
+        </div>
+      
+    <h3 class="topic-title">Inverse design of time-irreversible models</h3>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp04/P0002"><h5>2D inverse design of linear transport equations on unstructured grids</h5></a>
+        <p>Various discrete adjoint methodologies are discussed for the inverse design of linear transport equations in 2 space dimensions</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp04/P0002" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> 2D inverse design of linear transport equations on unstructured grids </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Various discrete adjoint methodologies are discussed for the inverse design of linear transport equations in 2 space dimensions
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/MarioM"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 05 November 2017
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp04/P0001"><h5>Conservation laws in the presence of shocks</h5></a>
+        <p>Tracking control of 1D scalar conservation laws in the presence of shocks</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp04/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Conservation laws in the presence of shocks </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Tracking control of 1D scalar conservation laws in the presence of shocks
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/RodrigoL"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 05 June 2017
+            </div>
+          </div>
+        </div>
+      
+    <h3 class="topic-title">Models involving memory terms and hybrid PDE+ODE systems</h3>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton"><h5>Two Grids Filter Method for RPS Semi-Discretization</h5></a>
+        <p>This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Two Grids Filter Method for RPS Semi-Discretization </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/XinliangL">Xinliang Liu</a>
+              
+              - 18 December 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0008-Charlotte"><h5>Coupled transport equations and LQR control</h5></a>
+        <p>Numerical computation of a stabilizing control</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp05/P0008-Charlotte" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Coupled transport equations and LQR control </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Numerical computation of a stabilizing control
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/CharlotteR">Charlotte Rodriguez</a>
+              
+              - 29 October 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0006"><h5>LQR optimal control design for a coupled PDE-ODE system.</h5></a>
+        <p>Stabilization of a coupled PDE-ODE system by means of a feedback LQR control.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp05/P0006" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> LQR optimal control design for a coupled PDE-ODE system. </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Stabilization of a coupled PDE-ODE system by means of a feedback LQR control.
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
+              
+              - 28 October 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0004"><h5>LQR control of a fractional reaction diffusion equation</h5></a>
+        <p>Design of a LQR controller for the stabilization of a fractional reaction diffusion equation</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp05/P0004" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> LQR control of a fractional reaction diffusion equation </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Design of a LQR controller for the stabilization of a fractional reaction diffusion equation
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              
+              - 24 October 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0001"><h5>Rays propagation of a fractional Schrodinger Equation</h5></a>
+        <p>Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp05/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Rays propagation of a fractional Schrodinger Equation </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              
+              - 21 July 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0002"><h5>WKB expansion for a fractional Schrödinger equation with applications to controllability</h5></a>
+        <p>Theoretical and numerical analysis of the propagation of the solutions for a Schrödinger equation with fractional Laplacian, with application to the study of controllability properties.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp05/P0002" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> WKB expansion for a fractional Schrödinger equation with applications to controllability </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Theoretical and numerical analysis of the propagation of the solutions for a Schrödinger equation with fractional Laplacian, with application to the study of controllability properties.
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroA">Alejandro B. Aceves</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 05 April 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0007"><h5>Finite element approximation of the 1-D fractional Poisson equation</h5></a>
+        <p>A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp05/P0007" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Finite element approximation of the 1-D fractional Poisson equation </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/VictorH">Victor Hernández Santamaría</a>
+              
+              - 05 December 2017
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0003"><h5>Solving an optimal control problem arised in ecology with AMPL</h5></a>
+        <p>We present a computational tool to solve optimal control problems for diffusion-reaction systems describing the growth and spread of populations</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp05/P0003" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Solving an optimal control problem arised in ecology with AMPL </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              We present a computational tool to solve optimal control problems for diffusion-reaction systems describing the growth and spread of populations
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/JiaminZ"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 05 December 2017
+            </div>
+          </div>
+        </div>
+      
+    <h3 class="topic-title">Finite versus infinite-dimensional dynamical systems</h3>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp06/P0002"><h5>Optimal control applied to collective behaviour</h5></a>
+        <p>Guidance by repulsion model describing the behaviour of two agents, a driver and an evader</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp06/P0002" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Optimal control applied to collective behaviour </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Guidance by repulsion model describing the behaviour of two agents, a driver and an evader
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/RamonE"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/AitziberI"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 05 November 2017
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp06/P0001"><h5>Kolmogorov equation</h5></a>
+        <p>Various numerical approximation methods are discussed with the aim of recoving the large time asymptotic properties of the hypoelliptic Kolmogorov model</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp06/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Kolmogorov equation </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Various numerical approximation methods are discussed with the aim of recoving the large time asymptotic properties of the hypoelliptic Kolmogorov model
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/MehmetE"></a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 05 November 2017
+            </div>
+          </div>
+        </div>
+      
+    <h3 class="topic-title">Other Topics</h3>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0011"><h5>Stability analysis of Power Electronic Converters Connected to AC Grids</h5></a>
+        <p>Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp99/P0011" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Stability analysis of Power Electronic Converters Connected to AC Grids </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters.
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+              
+              - 15 November 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0010-Yacouba"><h5>The control on the Kuramoto model by handling one oscillator</h5></a>
+        <p>In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp99/P0010-Yacouba" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> The control on the Kuramoto model by handling one oscillator </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a>
+              
+              - 29 October 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0009-Dongnam"><h5>The control on the Kuramoto model by handling one oscillator</h5></a>
+        <p>We design the LQR controller and solve it with linearized model.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp99/P0009-Dongnam" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> The control on the Kuramoto model by handling one oscillator </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              We design the LQR controller and solve it with linearized model.
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/DongnamK">Dongnam Ko</a>
+              
+              - 29 October 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0014-Domenec"><h5>Stabilization of a collective behavior model</h5></a>
+        <p>Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp99/P0014-Domenec" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Stabilization of a collective behavior model </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+              
+              - 28 October 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0001"><h5>Optimal control of a  graph evolving in discrete time</h5></a>
+        <p>Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state.</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp99/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Optimal control of a  graph evolving in discrete time </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state.
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroC">Alejandro Cunillera</a>
+              
+              - 26 October 2018
+            </div>
+          </div>
+        </div>
+      
+        <!--div class="shadowbox">
+        <a href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp99/P0021"><h5>Optimal Control of the Poisson Equation with OpenFOAM</h5></a>
+        <p>In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE).</p>
+        </div-->
+        <div class="post-preview shadowbox">
+          <div class="post-avatar">
+          
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp99/P0021" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Optimal Control of the Poisson Equation with OpenFOAM </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE).
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/VictorH">Victor Hernández Santamaría</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/JoseV">José Vicente Lorenzo</a>
+              
+                  <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              
+              - 01 May 2018
+            </div>
+          </div>
+        </div>
+      
     
-
 
 	</div>
 </div>

@@ -53,10 +53,16 @@
             equationNumbers: {
                                 autoNumber: "AMS"
             },
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
         Macros:{
             norm: ["|| #1 ||",1],
             abs: ["| #1 |",1],
-            hdots: "..."
+            hdots: "...",
+            RR: "\\mathbb{R}",
+            ffl: ["(d_x^2)^{#1}",1],
+            ccs: "c_{1,s}",
+            kernel: ["|x-y|^{#1}",1],
+            ue: ["#1^{\\epsilon}",1]
             }         
         },
     /*CommonHTML: {
@@ -138,7 +144,7 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading" style="padding: 0px 0">
                     <h2><small>Topic of <a href="https://DeustoTech.github.io//DyCon-Blog/projects/tutorials">Tutorials</a>:</small></h2>
-                    <h1>Memory and hybrid PDE/ODE models </h1>
+                    <h1>Inverse design of time-irreversible models </h1>
                 </div>
             </div>
 		</div>
@@ -209,75 +215,34 @@ img:active{
                 
                     <div class="post-preview shadowbox">
                         <a href="/DyCon-Blog/tutorial/wp04/P0001" class="display-block">
-                        <h3 class="post-title"> Rays propagation of a fractional Schrodinger Equation </h3>
+                        <h3 class="post-title"> Conservation laws in the presence of shocks </h3>
                         </a>
                         <p class="post-subtitle">
-                            Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics
+                            Tracking control of 1D scalar conservation laws in the presence of shocks
                         </p>
                         <small style="color:grey">
                             Author(s):
                             
-                            Umberto Biccari
+                            
+                            
+                            Enrique Zuazua
                             
                         </small>
                     </div>
                 
                     <div class="post-preview shadowbox">
-                        <a href="/DyCon-Blog/tutorial/wp04/P0004" class="display-block">
-                        <h3 class="post-title"> LQR control of a fractional reaction diffusion equation </h3>
+                        <a href="/DyCon-Blog/tutorial/wp04/P0002" class="display-block">
+                        <h3 class="post-title"> 2D inverse design of linear transport equations on unstructured grids </h3>
                         </a>
                         <p class="post-subtitle">
-                            Design of a LQR controller for the stabilization of a fractional reaction diffusion equation
+                            Various discrete adjoint methodologies are discussed for the inverse design of linear transport equations in 2 space dimensions
                         </p>
                         <small style="color:grey">
                             Author(s):
                             
-                            Umberto Biccari
                             
-                        </small>
-                    </div>
-                
-                    <div class="post-preview shadowbox">
-                        <a href="/DyCon-Blog/tutorial/wp04/P0006" class="display-block">
-                        <h3 class="post-title"> LQR optimal control design for a coupled PDE-ODE system. </h3>
-                        </a>
-                        <p class="post-subtitle">
-                            Stabilization of a coupled PDE-ODE system by means of a feedback LQR control.
-                        </p>
-                        <small style="color:grey">
-                            Author(s):
                             
-                            Borjan Geshkovski
-                            
-                        </small>
-                    </div>
-                
-                    <div class="post-preview shadowbox">
-                        <a href="/DyCon-Blog/tutorial/wp04/P0008-Charlotte" class="display-block">
-                        <h3 class="post-title"> Coupled transport equations and LQR control </h3>
-                        </a>
-                        <p class="post-subtitle">
-                            Numerical computation of a stabilizing control
-                        </p>
-                        <small style="color:grey">
-                            Author(s):
-                            
-                            Charlotte Rodriguez
-                            
-                        </small>
-                    </div>
-                
-                    <div class="post-preview shadowbox">
-                        <a href="/DyCon-Blog/tutorial/wp04/P0013-Numerical-homogenizaton" class="display-block">
-                        <h3 class="post-title"> Two Grids Filter Method for RPS Semi-Discretization </h3>
-                        </a>
-                        <p class="post-subtitle">
-                            This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.
-                        </p>
-                        <small style="color:grey">
-                            Author(s):
-                            
-                            Xinliang Liu
+                            Enrique Zuazua
                             
                         </small>
                     </div>

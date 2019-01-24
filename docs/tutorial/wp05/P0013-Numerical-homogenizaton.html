@@ -14,7 +14,7 @@
 
     <title>Two Grids Filter Method for RPS Semi-Discretization - DyCon Blog</title>
 
-    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp04/P0013-Numerical-homogenizaton">
+    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/bootstrap.min.css">
@@ -53,10 +53,16 @@
             equationNumbers: {
                                 autoNumber: "AMS"
             },
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
         Macros:{
             norm: ["|| #1 ||",1],
             abs: ["| #1 |",1],
-            hdots: "..."
+            hdots: "...",
+            RR: "\\mathbb{R}",
+            ffl: ["(d_x^2)^{#1}",1],
+            ccs: "c_{1,s}",
+            kernel: ["|x-y|^{#1}",1],
+            ue: ["#1^{\\epsilon}",1]
             }         
         },
     /*CommonHTML: {
@@ -135,7 +141,7 @@
     <div class="container" style="padding-top: 70px;">
         <div class="row">
             <div class="col-lg-10 col-md-10 col-md-offset-1">
-                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyCon-Blog/topic/WP04"></a> :</small></h2>
+                <div class="post-heading" style="padding: 0px 0"><h2><small>MATLAB tutorial of <a href="https://DeustoTech.github.io//DyCon-Blog/topic/WP05"></a> :</small></h2>
                     <h1>Two Grids Filter Method for RPS Semi-Discretization</h1>
 
 					<span class="meta">Posted by:

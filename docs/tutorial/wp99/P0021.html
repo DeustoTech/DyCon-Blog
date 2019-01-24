@@ -53,10 +53,16 @@
             equationNumbers: {
                                 autoNumber: "AMS"
             },
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
         Macros:{
             norm: ["|| #1 ||",1],
             abs: ["| #1 |",1],
-            hdots: "..."
+            hdots: "...",
+            RR: "\\mathbb{R}",
+            ffl: ["(d_x^2)^{#1}",1],
+            ccs: "c_{1,s}",
+            kernel: ["|x-y|^{#1}",1],
+            ue: ["#1^{\\epsilon}",1]
             }         
         },
     /*CommonHTML: {
@@ -348,7 +354,7 @@ J^\prime\left( u \right) \delta u = \left( \underbrace{ \left(  \Lambda^* \Lambd
 
 <h6><b>Algorithm 1</b> Optimal control with Conjugate Gradient Method</h6>
 <p><b>Require:</b> $y_D$, $u^{\left(0\right)}$, $\beta$, $y_d$, $tol$</p>
-<ol> 
+<ol>
 <li> $n \gets 0 $</li>
 <li> compute the control-free solution, $y_f$</li>
 <li> $b \gets \Lambda^*\left( y_d - y_f \right)$</li>
@@ -439,16 +445,16 @@ scalar gamma <span style="color: #000080;">=</span> <span style="color: #0000dd;
 
 <p>The problem setup is called <i>case</i> in OpenFOAM and it is independent from the solver itself. A typical case in OpenFOAM has three folders: <i>0</i>, where the problem fields are stored along with their boundary conditions; <i>constant</i>, that includes the mesh data and the physical properties; and <i>system</i>, with parameters regarding the numerical solution and problem output such as tolerances, linear solvers or write interval. In this example, the case folder is called <i>laplaceAdjointFoamCase</i>.</p>
 
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/sd_J.png" alt="Figure 1.a: Functional value against the number of iterations of the gradient method. Steepest descent method. Steepest descent method" width="560" height="420" class="size-full wp-image-8677" /> 
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/sd_J.png" alt="Figure 1.a: Functional value against the number of iterations of the gradient method. Steepest descent method. Steepest descent method" width="560" height="420" class="size-full wp-image-8677" />
 Figure 1.a: Functional value against the number of iterations of the gradient method. Steepest descent method. Steepest descent method</p>
 
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/cg_J.png" alt="Figure 1.b: Functional value against the number of iterations of the gradient method. Steepest descent method. Conjugate gradient method." width="560" height="420" class="size-full wp-image-8675" /> 
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/cg_J.png" alt="Figure 1.b: Functional value against the number of iterations of the gradient method. Steepest descent method. Conjugate gradient method." width="560" height="420" class="size-full wp-image-8675" />
 Figure 1.b: Functional value against the number of iterations of the gradient method. Steepest descent method. Conjugate gradient method.</p>
 
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/sd_Jy.png" alt="Figure 2.a" width="560" height="420" class="size-full wp-image-8678" /> 
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/sd_Jy.png" alt="Figure 2.a" width="560" height="420" class="size-full wp-image-8678" />
 Figure 2.a: $|| y - y_d ||_{L^2 \left( \Omega \right)}$ against the number of iterations of the gradient method. Steepest descent method.</p>
 
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/cg_Jy.png" alt="Figure 2.b" width="560" height="420" class="size-full wp-image-8676" /> 
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/cg_Jy.png" alt="Figure 2.b" width="560" height="420" class="size-full wp-image-8676" />
 Figure 2.b: $|| y - y_d ||_{L^2 \left( \Omega \right)}$ against the number of iterations of the gradient method. Conjugate gradient method.</p>
 
 <h6>Bibliography</h6>

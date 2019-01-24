@@ -53,10 +53,16 @@
             equationNumbers: {
                                 autoNumber: "AMS"
             },
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
         Macros:{
             norm: ["|| #1 ||",1],
             abs: ["| #1 |",1],
-            hdots: "..."
+            hdots: "...",
+            RR: "\\mathbb{R}",
+            ffl: ["(d_x^2)^{#1}",1],
+            ccs: "c_{1,s}",
+            kernel: ["|x-y|^{#1}",1],
+            ue: ["#1^{\\epsilon}",1]
             }         
         },
     /*CommonHTML: {
@@ -206,6 +212,42 @@ img:active{
                 <p>See our tutorials:</p>
                 <!-- Realizamos la query  -->
                 
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp06/P0001" class="display-block">
+                        <h3 class="post-title"> Kolmogorov equation </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            Various numerical approximation methods are discussed with the aim of recoving the large time asymptotic properties of the hypoelliptic Kolmogorov model
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp06/P0002" class="display-block">
+                        <h3 class="post-title"> Optimal control applied to collective behaviour </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            Guidance by repulsion model describing the behaviour of two agents, a driver and an evader
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            
+                            
+                            
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
                 
                 <hr>
                 <hr>
