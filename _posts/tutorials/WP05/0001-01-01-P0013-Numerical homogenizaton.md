@@ -5,7 +5,7 @@ date: 2018-12-18
 author: [XinliangL]
 layout: tutorial
 matlab: P0002_Numerical_homogenizaton_for_wave_equation
-categories: [tutorial,WP04]
+categories: [tutorial,WP05]
 url_zip: assets/imgs/WP04/P0013-Numerical homogenizaton/P0002_Numerical_homogenizaton_for_wave_equation.zip
 ---
 
