@@ -19,7 +19,7 @@
 }
 .title {
   color: black;
-  padding-top: 40px;
+  padding-top: 20px;
 }
 body {
 font-family: 'Lusitana', serif;
@@ -58,11 +58,6 @@ a:focus {
 a img:hover,
 a img:focus {
 }
-
-/*img {
-  padding-top: 25px;
-  padding-bottom: 25px;
-}*/
 
 img {
   display: block;
@@ -111,13 +106,12 @@ hr.small {
 .MathJax {
   font-size: 2em !important;
 }
+/* Sergio additions */
 
 /* Downloads Page */
 .inst-guide { padding-top: 25px;}
 .rel_date { float: right; }
-.sha256 {
-    display: block;
-}
+.sha256 { display: block;}
 /* Documentation Page */
 .doc-header-title {
   padding: 0px 0 0 0;
@@ -128,6 +122,139 @@ hr.small {
   padding-top: 20px;
   text-align: left;
 }
+.ellipsis-two-lines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  max-height: 3;
+}
+.ellipsis-one-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  max-height: 1.5;
+}
+.post-preview {
+  display: inline-block;
+  width: 100%;
+}
+.post-preview-authors {
+  color: grey;
+}
+
+@media only screen and (max-width: 470px) {
+  .index-img {
+    padding-top: 20px;
+  }
+  .post-info {
+    width: 74%;
+  }
+}
+
+@media only screen and (min-width: 471px) and (max-width: 570px) {
+  .index-img {
+    padding-top: 20px;
+  }
+  .post-info {
+    width: 79%;
+  }
+}
+
+@media only screen and (min-width: 571px) and (max-width: 699px) {
+  .index-img {
+    padding-top: 20px;
+  }
+  .post-info {
+    width: 83%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .h1-title {
+    font-size: 1.5em;
+  }
+  .topic-title {
+    font-size: 1.3em;
+    margin-top: 25px;
+  }
+  .post-avatar {
+    width: 15%;
+    float: left;
+  }
+  .post-info {
+    float: right;
+  }
+  .shadowbox {
+    padding: 10px 6px 6px 8px;
+    margin: 10px 0 5px 0;
+    border-radius: 3px;
+  }
+  .post-avatar img {
+    height: 80px;
+    width: 80px;
+  }
+  .post-preview-title {
+    margin:1px 0 1.5px 0 !important;
+    height: 24px;
+  }
+  .post-preview-title {
+    font-size: .8em !important;
+  }
+  .post-preview-subtitle {
+    line-height: 1.2 !important;
+    padding:3px 0 0 0 !important;
+    height: 41px;
+    font-size: .7em;
+  }
+  .post-preview-authors {
+    height: 15px;
+    font-size: .65em;
+    top: 0;
+    padding-top: 1px;
+  }
+  .see-more {
+    font-size: 1.1em;
+  }
+}
+@media only screen and (min-width: 701px) {
+  .index-img {
+    padding-top: 70px;
+  }
+  .topic-title {
+    margin-top: 40px;
+  }
+  .shadowbox {
+    padding: 15px 20px 11px 20px;
+    margin: 20px 0 10px 0;
+    border-radius: 4px;
+  }
+  .post-avatar {
+    width: 15%;
+    float: left;
+  }
+  .post-info {
+    width: 75%;
+    float: right;
+  }
+  .post-avatar img {
+    height: 130px;
+    width: 130px;
+  }
+  .post-preview-title {
+    margin:2px 0 3px 0 !important;
+    height: 40px;
+  }
+  .post-preview-subtitle {
+    margin:4px 0 4px 0 !important;
+    height: 62px;
+  }
+}
+/* End Sergio additions */
+
 @media only screen and (min-width: 768px) {
   .navbar-custom {
     background: #1279be;
@@ -205,7 +332,6 @@ hr.small {
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
-  margin-bottom: 20px;
 }
 .front-page-start-container {
   padding-top: 20px;
@@ -520,18 +646,12 @@ hr.style-one {
     background-image: linear-gradient(to right, #ccc, #333, #ccc);
 }
 
-
-
 #wrapper {
   height: 250px;
   width: 100%;
   overflow: auto;
 }
 
-
 .shadowbox{
-  padding: 10px 40px 20px 40px;
-  margin: 20px 0 10px 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 4px;
 }

@@ -53,10 +53,16 @@
             equationNumbers: {
                                 autoNumber: "AMS"
             },
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
         Macros:{
             norm: ["|| #1 ||",1],
             abs: ["| #1 |",1],
-            hdots: "..."
+            hdots: "...",
+            RR: "\\mathbb{R}",
+            ffl: ["(d_x^2)^{#1}",1],
+            ccs: "c_{1,s}",
+            kernel: ["|x-y|^{#1}",1],
+            ue: ["#1^{\\epsilon}",1]
             }         
         },
     /*CommonHTML: {
@@ -206,6 +212,25 @@ img:active{
                 <p>See our tutorials:</p>
                 <!-- Realizamos la query  -->
                 
+                
+                    <div class="post-preview shadowbox">
+                        <a href="/DyCon-Blog/tutorial/wp03/P0002" class="display-block">
+                        <h3 class="post-title"> IpOpt and AMPL use to solve time optimal control problems </h3>
+                        </a>
+                        <p class="post-subtitle">
+                            How to use IpOpt to solve time optimal control problems
+                        </p>
+                        <small style="color:grey">
+                            Author(s):
+                            
+                            
+                            
+                            
+                            
+                            Enrique Zuazua
+                            
+                        </small>
+                    </div>
                 
                     <div class="post-preview shadowbox">
                         <a href="/DyCon-Blog/tutorial/wp03/P0001" class="display-block">

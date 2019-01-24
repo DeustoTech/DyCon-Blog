@@ -53,10 +53,16 @@
             equationNumbers: {
                                 autoNumber: "AMS"
             },
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
         Macros:{
             norm: ["|| #1 ||",1],
             abs: ["| #1 |",1],
-            hdots: "..."
+            hdots: "...",
+            RR: "\\mathbb{R}",
+            ffl: ["(d_x^2)^{#1}",1],
+            ccs: "c_{1,s}",
+            kernel: ["|x-y|^{#1}",1],
+            ue: ["#1^{\\epsilon}",1]
             }         
         },
     /*CommonHTML: {
@@ -134,7 +140,7 @@
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
       <div class="site-heading">
-        <img style="padding-top: 100px;" src="https://DeustoTech.github.io//DyCon-Blog/assets/logo_DyCon.png" width="30%" alt="" srcset="" />
+        <img class="index-img" src="https://DeustoTech.github.io//DyCon-Blog/assets/logo_DyCon.png" width="30%" alt="" srcset="" />
         <hr class="small" />
         <span class="subheading">One of the main outputs of the research conducted within DyCon is the development of new computational methods and tools (algorithms, tutorials, sample codes, software and simulations), all of which are being integrated in a computational platform. This page offers a higher layer of the work that is currently taking place inside the DyCon team.
         </span>
@@ -145,73 +151,86 @@
 </header>
 
 <div class="container">
-    <div class="col-md-10 col-md-offset-1">
-        <h1>Recent Post</h1>    
+  <div class="col-md-10 col-md-offset-1">
+    <h1 class="h1-title">Recent Post</h1>    
+    
+    
+    
+      
+      <div class="post-preview shadowbox">
+        <div class="post-avatar">
         
-
+        <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png" />
         
-
-        
-
-          
-          <div class="post-preview shadowbox">
-              <a href="/DyCon-Blog/tutorial/wp01/T00020" class="display-block">
-                  <h4> Wave Control </h4>
-              </a>
-              <p class="post-subtitle">
-                  A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.
-              </p>
-              <small style="color:grey">
-                  Author(s):
-                  
-                      <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
-                  
-                  - 12 December 2018
-              </small>
-
+        </div>
+        <div class="post-info">
+          <a href="/DyCon-Blog/tutorial/wp01/T00020" class="display-block">
+            <h4 class="post-preview-title ellipsis-two-lines"> Wave Control </h4>
+          </a>
+          <div class="post-preview-subtitle ellipsis-two-lines">
+            A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.
           </div>
-        
-
-          
-          <div class="post-preview shadowbox">
-              <a href="/DyCon-Blog/tutorial/wp01/T00010" class="display-block">
-                  <h4> Averaged Control </h4>
-              </a>
-              <p class="post-subtitle">
-                  In this work, we address the optimal control of parameter-dependent systems.
-              </p>
-              <small style="color:grey">
-                  Author(s):
-                  
-                      <a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
-                  
-                  - 12 December 2018
-              </small>
-
+          <div class="post-preview-authors ellipsis-one-line">
+            Author(s):
+            
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+            
+            - 12 December 2018
           </div>
+        </div>
+      </div>
+    
+      
+      <div class="post-preview shadowbox">
+        <div class="post-avatar">
         
-
-          
-          <div class="post-preview shadowbox">
-              <a href="/DyCon-Blog/tutorial/wp99/P0011" class="display-block">
-                  <h4> Stability analysis of Power Electronic Converters Connected to AC Grids </h4>
-              </a>
-              <p class="post-subtitle">
-                  Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters.
-              </p>
-              <small style="color:grey">
-                  Author(s):
-                  
-                      <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
-                  
-                      <a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
-                  
-                  - 15 November 2018
-              </small>
-
+        <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png" />
+        
+        </div>
+        <div class="post-info">
+          <a href="/DyCon-Blog/tutorial/wp01/T00010" class="display-block">
+            <h4 class="post-preview-title ellipsis-two-lines"> Averaged Control </h4>
+          </a>
+          <div class="post-preview-subtitle ellipsis-two-lines">
+            In this work, we address the optimal control of parameter-dependent systems.
           </div>
+          <div class="post-preview-authors ellipsis-one-line">
+            Author(s):
+            
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+            
+            - 12 December 2018
+          </div>
+        </div>
+      </div>
+    
+      
+      <div class="post-preview shadowbox">
+        <div class="post-avatar">
         
-        <h3><a href="https://DeustoTech.github.io/DyCon-Blog/projects/posts">See more ...</a></h3>
+        <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png" />
+        
+        </div>
+        <div class="post-info">
+          <a href="/DyCon-Blog/tutorial/wp99/P0011" class="display-block">
+            <h4 class="post-preview-title ellipsis-two-lines"> Stability analysis of Power Electronic Converters Connected to AC Grids </h4>
+          </a>
+          <div class="post-preview-subtitle ellipsis-two-lines">
+            Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters.
+          </div>
+          <div class="post-preview-authors ellipsis-one-line">
+            Author(s):
+            
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+            
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+            
+            - 15 November 2018
+          </div>
+        </div>
+      </div>
+    
+    <h3 class="see-more"><a href="https://DeustoTech.github.io/DyCon-Blog/projects/posts">See more ...</a></h3>
   </div>
 </div>
 
