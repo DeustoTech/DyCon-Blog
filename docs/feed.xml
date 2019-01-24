@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://DeustoTech.github.io/DyCon-Blog/</link>
     <atom:link href="https://DeustoTech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 24 Jan 2019 14:21:09 +0100</pubDate>
-    <lastBuildDate>Thu, 24 Jan 2019 14:21:09 +0100</lastBuildDate>
+    <pubDate>Thu, 24 Jan 2019 16:20:48 +0100</pubDate>
+    <lastBuildDate>Thu, 24 Jan 2019 16:20:48 +0100</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -253,161 +253,6 @@ legend('RPS','P1 FEM','FDM','exact')
         <category>tutorial</category>
         
         <category>WP05</category>
-        
-      </item>
-    
-      <item>
-        <title>Wave Control</title>
-        <description>A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation
-
-This webpage contains a free software to compute the control of the wave equation with Matlab.
-
-Features
-
-With wave control you can explore the following:
-
-
-Exact control of the 1-d wave equation with finite differences and mixed finite elements when the control acts in one extreme.
-Exact control of the 2-d wave equation with finite differences and mixed finite elements when the control acts in the boundary.
-The stabilization of the 1-D wave equation in an interval with a damping acting on an internal subset, discretized with finite differences and numerical viscosity.
-The stabilization of the 2-D wave equation in a square with a damping acting on an internal set, discretized with finite differences and numerical viscosity.
-
-
-Some views are given below,
-
-Figure 1
-Figure 2
-Figure 3
-Figure 4
-Figure 5
-Figure 6
-
-Authors: C. Castro, M. Cea, S. Micu, A. Munch, M. Negreanu, Enrique Zuazua
-January, 2018
-</description>
-        <pubDate>Wed, 12 Dec 2018 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/T00020</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/T00020</guid>
-        
-        <category>DyCon Toolbox</category>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP01</category>
-        
-      </item>
-    
-      <item>
-        <title>Averaged Control</title>
-        <description>In this work, we address the optimal control of parameter-dependent systems. We introduce the notion of averaged control in which the quantity of interest is the average of the states with respect to the parameter family
-
-
-
-More precisely, we are interested in solving the next minimization problem:
-
-
-
-Where $\mathcal{U}_{ad}$ is the space of admissible controls and $\bar{x}$ the average state target. The optimization problem (\ref{eq:costFunctional}) is subject to the finite dimensional linear control system
-
-
-
-In (\ref{eq:primalODE}), the vector valued function $ x \left( t, \nu \right) \in \mathbb{R}^N$ is the state of the system, $A \left( \nu \right)$ is a $N \times N$-matrix governing its free dynamics and $u=u\left( t \right) \in \mathbb{R}^M $ is a $M$-component control, with $M \leq N$, entering and acting on the system through the control operator $B\left( \nu \right)$, a $N \times M$ parameter-dependent matrix. Moreover, the initial datum $x^0 \in \mathbb{R}^N$ to be controlled is independent of the parameter $\nu$, but the state of the system itself $x \left( t, \nu \right)$ depends on $\nu$. The effective value of the parameter $\nu$ being unknown, we aim at choosing a control that would perform optimally in an averaged sense, this is, rather than controlling specific realizations of the state, the average with respect to $\nu$ is controlled. This allows building a control independent of the parameter and making a robust compromise of all the possible realizations of the system for the various possible values of the unknown parameter $\nu$
-
-We use the classical gradient descent method based on the adjoint methodology, and obtain the corresponding adjoint system for (\ref{eq:primalODE}),
-
-
-
-To minimize the functional in (\ref{eq:costFunctional}), we take the steepest descent direction given by
-
-
-
-Hence, the new control reads as
-
-
-
-for some $\gamma$ small enough.
-
-We have also used the conjugate gradient method in order to reach faster the optimal control. In order to be able to apply this method the state vector has been split as
-
-
-
-where $z_u$ is the solution to the controlled system with zero initial condition,
-
-
-
-and $y$ solves the free dynamics problem,
-
-
-
-The functional in \ref{eq:costFunctional} can be expressed as
-
-
-
-We introduce the linear operator
-
-
-
-and its dual counterpart,
-
-
-
-where $p\left(t, \nu\right)$ is solution to
-
-
-
-By doing this we can write the functional gradient as
-
-
-
-After having defined $A_{cg}$ and $b_{cg}$ we can apply the conjugate gradient method to solve the control problem.
-
-Algorithm 1 Optimal control with Conjugate Gradient Method
-Require: $A\left( \nu \right)$, $B\left( \nu \right)$, $x^0$, $u^{\left(0\right)}$, $\beta$, $T$, $\bar{x}$, $tol$
-
-$n \gets 0 $
- compute $\bar{y} \left( T \right)$
- $b \gets \Lambda^*\left( \bar{x} - \bar{y} \left( T \right) \right)$
- $z \gets \Lambda u$
- $g \gets \Lambda^*z + \beta u - b$
- $h \gets ||g||^2_{L^2\left(\left[0,T\right]\right)}$
- $h_a \gets h$
- $r \gets -g$
-While $||r||_{L^2\left(\left[0,T\right]\right)} &amp;gt; tol $ do
-  &amp;emsp; &amp;emsp;    $z \gets \Lambda r$
-  &amp;emsp; &amp;emsp;    $w \gets \Lambda^*z + \beta r$
-  &amp;emsp; &amp;emsp;    $\alpha \gets \frac{h}{\left(r,w\right)_{L^2\left(\left[0,T\right]\right)}}$
-  &amp;emsp; &amp;emsp;    $u \gets u + \alpha r$
-  &amp;emsp; &amp;emsp;    $g \gets g + \alpha w$
-  &amp;emsp; &amp;emsp;    $h_a \gets h$
-  &amp;emsp; &amp;emsp;    $h \gets ||g||^2_{L^2\left(\left[0,T\right]\right)}$
-  &amp;emsp; &amp;emsp;    $\gamma \gets \frac{h}{h_a}$
-  &amp;emsp; &amp;emsp;    $r \gets -g + \gamma r$
-  &amp;emsp; &amp;emsp;    $n \gets n + 1$
-
-Figure 1.a: Control system with $N=3$, $M=1$ and target average state $\bar{x}=[0,0,0]^t$. Average state vector components.
-
-Figure 1.b: Control system with $N=3$, $M=1$ and target average state $\bar{x}=[0,0,0]^t$. Control.
-
-Figure 2: State vector components for every parameter $\nu_i$. One can observe that the final state $x\left(T, \nu_i \right)$ is not close to $\bar{x}=[0,0,0]^t$ in general.
-
-Bibliography
-
-[1] E. Zuazua (2014) Averaged Control. Automatica, 50 (12), p. 3077-3087.
-
-Authors: Víctor Hernández-Santamaría, José Vicente Lorenzo, Enrique Zuazua
-March, 2018
-</description>
-        <pubDate>Wed, 12 Dec 2018 00:00:00 +0100</pubDate>
-        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/T00010</link>
-        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/wp01/T00010</guid>
-        
-        <category>DyCon Toolbox</category>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP01</category>
         
       </item>
     
@@ -2029,6 +1874,481 @@ References
         <category>tutorial</category>
         
         <category>WP99</category>
+        
+      </item>
+    
+      <item>
+        <title>Riccati theory in LQ optimization with time-varying target</title>
+        <description>In this short tutorial, we explain how to use Riccati’s theory to solve an LQ control problem with targets.
+
+We consider the optimal control problem:
+
+
+
+where:
+
+
+
+In the above control problem, $A \in M_{n \times n}$, $B \in M_{n \times m}$, $C \in M_{r\times n}$ and $D\in M_{r\times n}$. The control $u:[0,T]\longrightarrow R^m$, while the state $x:[0,T]\longrightarrow R^n$. The control target is $q\in C^1([0,T];R^m)$ and the state target is $z\in C^1([0,T];R^n)$. $\beta\geq 0$ and $\gamma\geq 0$ are positive parameters.
+
+By the Direct Methods in the Calculus of Variations and strict convexity, the above problem admits an unique optimal control $u^T$. The corresponding optimal state is denoted by $x^T$.
+
+We compute the optimal pair (optimal control, optimal state) by using the well-known Riccati’s theory (see, for instance, [1, Lemma 2.6] and [2, section 4.3]).
+
+For further details regarding the algorithm, we refer to href=”https://github.com/DeustoTech/RiccatiLQ/blob/master/RiccatiAlgorithm.pdf”&amp;gt;RiccatiAlgorithm&amp;lt;/a
+
+Take
+
+A=[2,-1;-1,2];
+B=[1;0];
+C=eye(2);
+D=zeros(2,2);
+beta=26;
+gamma=0;
+x0=[1.4;1.4];
+q=@(t)0;
+z=@(t)[sin(t);sin(t)];
+T=10;
+Nt=1000;
+
+
+We solve an LQ problem with the above data.
+
+[ uopt, x] = lqtarget( A,B,C,D,beta, gamma, q, z, x0,T,Nt );
+
+
+
+
+
+
+
+
+Since the parameter $\beta$ is large enough and the control acts only on the first component of first equation
+
+
+  
+    the first component of the state is close to the target;
+  
+  
+    the second component of the state is less close to the target;
+  
+  
+    the control is far from its target.
+  
+
+
+The algorithm described in this guide can be employed to test the fulfillment of the turnpike property (see, for instance, 1 and 3). In agreement with the theory, the turnpike effect is evident if:
+
+
+  
+    the targets are constants;
+  
+  
+    $(A,B)$ is controllable;
+  
+  
+    $(A,C)$ is observable, $\beta&amp;gt;0$ and $\gamma=0$;
+  
+  
+    the time horizon $T$ is large enough.
+  
+
+
+References
+
+</description>
+        <pubDate>Fri, 26 Oct 2018 00:00:00 +0200</pubDate>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0003</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0003</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP02</category>
+        
+      </item>
+    
+      <item>
+        <title>Turnpike property for functionals involving $L^1−norm$</title>
+        <description>Introduction
+We introduce the following notation: $L^2=L^2\left(\Omega\right)$, $L^2_T=L^2\left(\Omega\times \left(0,T\right)\right)$,
+
+
+
+and the correspondent norms $\norm{\cdot}=\langle \cdot,\cdot\rangle$ and $\norm{\cdot}_T=\langle \cdot,\cdot\rangle_T$. Moreover, we define the norms
+
+
+
+We want to study the following optimal control problem:
+
+
+
+where $L: \ L^2_T \to L^2_T$ is defined by
+
+
+
+and $y$ is the solution of the PDE given by
+
+
+
+Notice that, by integration by parts, $ L^*\mu=B^\ast p $, where $\varphi$ is solution of the adjoint equation:
+
+
+
+Sparse control: $\alpha_c&amp;gt;0$ ($\alpha_s=0$)
+The stationary problem
+
+
+
+Optimality conditions
+
+
+
+Numerical algorithm
+In order to compute a numerical solution of problem
+
+
+
+after a discretization by finite differences, we use a prox-prox splitting: first write the state as $y=A^{-1}Bu$, then
+
+	 Proximal-point step:
+    
+$$
+\begin{equation*}
+\begin{split}
+\tilde{u}_{k} &amp;amp; =argmin_{u\in L^2} \left\{\frac{\beta}{2}\norm{u}^2 + \frac{\gamma}{2}\norm{A^{-1}Bu-z}^2+ \frac{1}{2\lambda_k}\norm{u-u_k}^2\right\}\\
+&amp;amp; = \left[\left(\beta+\frac{1}{\lambda_k}\right)I+\gamma B^*A^{-*}A^{-1}B\right]^{-1}\left(\frac{1}{\lambda_k}u_k+\gamma B^*A^{-*}z\right).
+\end{split}
+\end{equation*}
+$$
+    
+ Proximal-point step:
+
+$$
+\begin{equation*}
+	\begin{split}
+	u_{k+1}&amp;amp; =argmin_{u\in L^2} \left\{\alpha_c \norm{u}_{1,T} + \frac{1}{2\lambda_k}\norm{u-\tilde{u}_k}_{T}^2\right\}\\
+	&amp;amp; = shrink(\tilde{u}_k,\alpha_c \lambda_k).
+	\end{split}
+	\end{equation*}
+$$
+
+
+Remark: Notice that, when $\alpha_s=0$, the solution of $\left(\mathcal{P}^c_s\right)$ is simply given by
+
+
+
+Evolutionary problem
+
+
+
+Optimality conditions
+Define the classical Lagrangian
+
+
+
+By integration by parts, we have
+
+
+
+Deriving with respect to the three variables $\left(u,y,p\right)$, we obtain the optimality system:
+
+
+
+where the relation between the optimal control and the dual state is given by
+
+
+
+The latter is equivalent to
+
+
+
+where the operator of $soft-shrinkage$ is defined by
+
+
+
+Finally,
+
+
+
+Numerical algorithm
+In order to compute a numerical solution of problem $\left(\mathcal{P}_c\right)$, after a discretization by finite differences, we use a grad-prox splitting:
+
+	 Gradient step:
+$$
+	\begin{equation*}
+	\begin{split}
+	\tilde{u}_{k} &amp;amp; = u_k-\lambda_k \nabla_u \left[\frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2 \right]\left(u_k\right) \\
+	&amp;amp; = u_k-\lambda_k \left[\beta u_k+\gamma L^*\left(Lu_k-z\right)\right]\\
+	&amp;amp; = u_k - \lambda_k\left[\beta u_k+\gamma B^*p_k\right],
+	\end{split}
+	\end{equation*}
+$$
+
+where
+
+$$
+	\begin{equation*}
+	\begin{cases}
+	y_k'+Ay_k=Bu_k &amp;amp; \left(\Omega \times \left(0,T\right)\right)\\
+	y_k=0 &amp;amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
+	y_k(0)=0 &amp;amp; \left(\Omega\right)
+	\end{cases}
+	\end{equation*}
+$$
+
+and
+
+$$
+	\begin{equation*}
+	\begin{cases}
+	-p_k'+A^* p_k =y_k-z &amp;amp; \left(\Omega \times \left(0,T\right)\right)\\
+	p_k=0 &amp;amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
+	p_k(T)=0 &amp;amp; \left(\Omega\right).
+	\end{cases}
+	\end{equation*}
+$$
+
+ Proximal-point step:
+    
+$$
+\begin{equation*}
+\begin{split}
+u_{k+1}&amp;amp; =argmin_{u\in L^2_T} \left\{\alpha_c \norm{u}_{1,T} + \frac{1}{2\lambda_k}\norm{u-\tilde{u}_k}_{T}^2\right\}\\
+	&amp;amp; = shrink(\tilde{u}_k,\alpha_c \lambda_k).
+\end{split}
+\end{equation*}
+$$
+
+
+Remarks: Another possibility is to include the term $\frac{\beta}{2}\norm{u}^2_{T}$ in the proximal step.
+Notice that, for
+
+
+
+then $\nabla f$ is Lipschitz continuous. Indeed, for $u_i\in L^2_T$ ($i=1,2$), then
+
+
+
+where
+
+
+
+and
+
+
+
+By linearity $\delta y=y_2-y_1$ and $\delta p=p_2-p_1$ solve the same equations with right-hand-sides $B(u_2-u_1)$ and $\delta y$, respectively. Then
+
+
+
+where we defined
+
+
+
+In order the prox-grad method to converge, the restriction on the step size is given by
+
+
+
+Sparse state: $\alpha_s&amp;gt;0$ ($\alpha_c=0$)
+
+
+
+The stationary problem
+
+
+
+Optimality conditions
+
+
+
+Finally, we obtain a single equation in the dual variable $p$:
+
+
+
+Numerical algorithm
+In order to compute a numerical solution of problem $\left(\mathcal{P}_s\right)$, after a discretization by finite differences, we use a prox-prox splitting on the Augmented Energy: first write the state as $y=A^{-1}Bu$, then
+
+	 Proximal-point step:
+$$
+	\begin{equation*}
+	\begin{split}
+	u_{k+1} &amp;amp; =argmin_{u\in L^2} \left\{\frac{\beta}{2}\norm{u}^2 + \frac{\gamma}{2}\norm{A^{-1}Bu-z}^2+\frac{\delta}{2\lambda_k}\norm{A^{-1}Bu-y_k}^2 +\frac{1}{2\lambda_k}\norm{u-u_k}^2\right\}\\
+	&amp;amp; = \left[\left(\beta+\frac{1}{\lambda_k}\right)I+\left(\gamma+\frac{\delta}{\lambda_k}\right) B^*A^{-*}A^{-1}B\right]^{-1}\left[\frac{1}{\lambda_k}u_k+ B^*A^{-*}\left(\gamma z+\frac{\delta}{\lambda_k}y_k\right)\right].
+	\end{split}
+	\end{equation*}
+$$
+
+	 Proximal-point step:
+$$
+	\begin{equation*}
+	\begin{split}
+	y_{k+1}&amp;amp; =argmin_{y\in L^2} \left\{
+	\alpha_s \norm{y}_{1} + \frac{\delta}{2\lambda_k}\norm{y-A^{-1}Bu_{k+1}}^2+\frac{1}{2\lambda_k}\norm{y-y_k}_{T}^2\right\}\\
+	&amp;amp; = shrink(\tilde{y}_k,\tilde{\lambda}_k),
+	\end{split}
+	\end{equation*}
+$$
+
+	where we defined
+
+$$
+	\begin{eqnarray*}
+		\tilde{y}_k &amp;amp; = &amp;amp; \frac{y_k+\delta A^{-1}B u_{k+1}}{1+\delta};\\
+		\tilde{\lambda}_k &amp;amp; = &amp;amp; \frac{\alpha_s \lambda_k}{1+\delta}.
+	\end{eqnarray*}
+$$
+
+
+Remark: Notice that again, when $\alpha_s=0$, the solution of $\left(\mathcal{P}_s\right)$ is simply given by
+
+
+
+Evolutionary problem
+Optimality conditions
+Define the classical Lagrangian
+
+
+
+By integration by parts, we have
+
+
+
+Deriving with respect to the three variables $\left(u,y,p\right)$, we obtain the optimality system:
+
+
+
+where the relation between the optimal control and the dual state is given by
+
+
+
+The adjoint equation is equivalent to
+
+
+
+Finally,
+
+
+
+Numerical algorithm
+In order to compute a numerical solution of problem $\left(\mathcal{P}_s\right)$, after a discretization by finite differences, we use a grad-prox splitting on the following Augmented Energy:
+
+
+
+Then,
+
+	 Gradient step:
+$$
+	\begin{equation*}
+	\begin{split}
+	u_{k+1} &amp;amp; = u_k-\lambda_k \nabla_u \left[\frac{\beta}{2}\norm{u}^2_{T}+ \frac{\gamma}{2}\norm{Lu-z}_{T}^2+\frac{\delta}{2\lambda}\norm{Lu-y}_{T}^2 \right]\left(u_k\right) \\
+	&amp;amp; = u_k-\lambda_k \left[\beta u_k+\gamma L^*\left(Lu_k-z\right)+\frac{\delta}{\lambda_k}L^*\left(Lu_k-y_k\right)\right]\\
+	&amp;amp; = \left(1-\beta\lambda_k\right)u_k - B^*p_k,
+	\end{split}
+	\end{equation*}
+$$
+
+where
+
+$$
+	\begin{equation*}
+	\begin{cases}
+	y_{u_k}'+Ay_{u_k}=Bu_k &amp;amp; \left(\Omega \times \left(0,T\right)\right)\\
+	y_{u_k}=0 &amp;amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
+	y_{u_k}(0)=0 &amp;amp; \left(\Omega\right)
+	\end{cases}
+	\end{equation*}
+$$
+
+and
+
+$$
+	\begin{equation*}
+	\begin{cases}
+	-p_k'+A^* p_k =\left(\gamma \lambda_k + \delta\right)y_{u_k}-\gamma \lambda_k z - \delta y_k &amp;amp; \left(\Omega \times \left(0,T\right)\right)\\
+	p_k=0 &amp;amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
+	p_k(T)=0 &amp;amp; \left(\Omega\right).
+	\end{cases}
+	\end{equation*}
+$$
+
+ Proximal-point step:
+
+$$
+	\begin{equation*}
+	\begin{split}
+	y_{k+1}&amp;amp; =argmin_{y\in L^2_T} \left\{\alpha_s \norm{y}_{1,T} + \frac{\delta}{2\lambda_k}\norm{y-Lu_{k+1}}_T^2+\frac{1}{2\lambda_k}\norm{y-y_k}_{T}^2\right\}\\
+	&amp;amp; = shrink(\tilde{y}_k,\tilde{\lambda}_k),
+	\end{split}
+	\end{equation*}
+$$
+
+where we defined
+$$
+	\begin{eqnarray*}
+	\tilde{y}_k &amp;amp; = &amp;amp; \frac{y_k+\delta L u_{k+1}}{1+\delta};\\
+	\tilde{\lambda}_k &amp;amp; = &amp;amp; \frac{\alpha_s \lambda_k}{1+\delta}.
+	\end{eqnarray*}
+$$
+
+Remark: Another possibility is to consider
+$$
+	\begin{equation*}
+	\mathcal{L}_{\lambda}\left(u,y\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T}+ \frac{\gamma}{2}\norm{y-z}_{T}^2+\frac{\delta}{2\lambda}\norm{Lu-y}_{T}^2.
+	\end{equation*}
+$$
+
+Computational experiments
+In the following, we present the setting for the numerical experiments.
+
+	 Spacial domain: $\Omega=\left(0,1\right)$;
+	 Time interval: $\left[0,T\right]$, with $T=1$; 
+	 Weight-parameters: $\alpha_c=[0, 0.01]$, $\alpha_s=[0, 0.65]$, $\beta=0.0001$ and $\gamma=1$;
+	 Trajectory target: $$z(x)=\mathcal{I}_{\left[x_a,x_b\right]},$$ where $x_a=1.7/3$, $x_b=3.5/4$;
+	 Control operator: for $x_1=1/7$ and $x_2=4/5$,
+$$B=\mathcal{I}_{\left[x_1,x_2\right]};$$
+    
+
+	 $A$ is the finite difference discretization of $-\Delta$;
+	 Numerical grid: $N_x=300$ in space, $N_t=100$ in time.
+
+Stationary solutions
+ Figure 1: $\alpha_c=\alpha_s=0$.  
+
+ Figure 2: $\alpha_c=0.01$, $\alpha_s=0$.  
+
+ Figure 3: $\alpha_c=0$, $\alpha_s=0.65$.
+
+Evolutionary problem  
+Optimal control
+Figure 4a: Optimal control for $\alpha_c=\alpha_s=0$. In red, the controllable subdomain; in blue, the stationary optimal controls.
+Figure 4b: Optimal control for $\alpha_c=0.01$, $\alpha_s=0$. In red, the controllable subdomain; in blue, the stationary optimal controls.
+ Figure 4c: Optimal control for $\alpha_c=0$, $\alpha_s=0.65$. In red, the controllable subdomain; in blue, the stationary optimal controls.
+Optimal state
+Figure 5a: Optimal state for $\alpha_c=\alpha_s=0$ . In red, the target $z$; in blue, the stationary optimal states.
+Figure 5b: Optimal state for $\alpha_c=0.01$, $\alpha_s=0$. In red, the target $z$; in blue, the stationary optimal states.
+ Figure 5c: Optimal state for $\alpha_c=0$, $\alpha_s=0.65$. In red, the target $z$; in blue, the stationary optimal states.
+Optimal adjoint
+Figure 6a: Optimal adjoint for $\alpha_c=\alpha_s=0$.
+Figure 6b: Optimal adjoint for $\alpha_c=0.01$, $\alpha_s=0$.
+ Figure 6c: Optimal adjoint for $\alpha_c=0$, $\alpha_s=0.65$.
+
+Bibliography
+[1] Peypouquet, J. Convex optimization in normed spaces: theory, methods and examples. With a foreword by Hedy Attouch. Springer Briefs in Optimization. Springer, Cham, 2015. xiv+124 pp.
+
+Authors: Martin Lazar, Cesare Molinari &amp;amp; Enrique Zuazua
+July, 2017
+    
+
+</description>
+        <pubDate>Fri, 26 Oct 2018 00:00:00 +0200</pubDate>
+        <link>https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0001</link>
+        <guid isPermaLink="true">https://DeustoTech.github.io/DyCon-Blog/tutorial/wp02/P0001</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP02</category>
         
       </item>
     

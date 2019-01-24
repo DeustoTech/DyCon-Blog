@@ -9,7 +9,7 @@ layout: default
             <div class="col-lg-10 col-md-10 col-md-offset-1">
                 <div class="post-heading" style="padding: 0px 0">
                     {%- assign topiclabel = page.categories[1] -%}
-                    <h2><small>MATLAB tutorial of <a href="{{site.url}}/{{site.baseurl}}/topic/{{topiclabel}}">{{site.data.topics[topiclabel].name}}</a> :</small></h2>
+                    <h2><small>Post of <a href="{{site.url}}/{{site.baseurl}}/workpackage/{{topiclabel}}">{{site.data.WorkPackages[topiclabel].name}}</a> :</small></h2>
                     <h1>{{ page.title }}</h1>
 
 					<span class="meta">Posted by:
@@ -34,10 +34,11 @@ layout: default
         <div class="row">
             <div class="col-lg-10  col-md-10 col-md-offset-1">
                 {% if page.url_zip %}
+                    <p></p>
                     {% if page.old %}
                             <a href="{{page.url_zip}}""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
                     {% else %}
-                            <a href="{{site.url}}{{site.baseurl}}/{{page.url_zip}}""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>  
+                            <a href="{{site.url}}{{site.baseurl}}/{{page.url_zip}}""><i class="fa fa-download fa-lg"></i>Download Code</a>  
                     {% endif %}
                 {% endif %}
 

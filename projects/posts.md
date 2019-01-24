@@ -9,10 +9,16 @@ description: One of the main outputs of the research conducted within DyCon is t
  {::nomarkdown}
 All of the content has been classified according to the project’s corresponding working packages:
     {% for topic in site.data.WorkPackages %}
-      {%- assign qposts = site.posts | where:"layout","tutorial" -%}
-      {%- assign qposts = qposts | where:"categories",topic[0] -%}
-      <h3 class="topic-title">{{topic[1].name}}</h3>
-      {% for post in qposts %}
+      {%- assign qposts = site.posts | where:"layout","tutorial"| where:"categories",topic[0] -%}
+      <a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">
+        <h2 class="topic-title">{{topic[1].name}}</h2>
+      </a>  
+      {% assign MaxPostView = 1 %}
+      {% for i in (0..MaxPostView) %}
+        {% assign post = qposts[i] %}
+        {% unless post %}
+          {% continue %}
+        {% endunless %}
         <!--div class="shadowbox">
         <a href="{{site.url}}{{site.baseurl}}{{post.url}}"><h5>{{post.title}}</h5></a>
         <p>{{post.description}}</p>
@@ -42,5 +48,6 @@ All of the content has been classified according to the project’s correspondin
           </div>
         </div>
       {% endfor %}
+    <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more ...</a></h3>
     {% endfor %}
 {:/nomarkdown}

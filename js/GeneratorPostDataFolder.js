@@ -21,21 +21,4 @@ for (author in doc){
     
 }
 
-var doc = yaml.safeLoad(fs.readFileSync('_data/topics.yml', 'utf8'));
-
-for (topic in doc){
-    var path =  '_posts/topics/0001-01-01-' + topic + '.md'
-
-    var content =  '---\n' +
-                   'topic: '+ topic+'\n' +
-                   'layout: topic\n'  +
-                   'categories: topic\n'  +
-                   '---'
-
-    fs.writeFile(path, content , function (err) {
-        if (err) throw err;
-        console.log('Saved!');
-      });
-    
-}
 

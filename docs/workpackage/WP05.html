@@ -12,9 +12,9 @@
 
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
-    <title>WP02 - DyCon Blog</title>
+    <title>WP05 - DyCon Blog</title>
 
-    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/workpackage/WP02">
+    <link rel="canonical" href="https://DeustoTech.github.io/DyCon-Blog/workpackage/WP05">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://DeustoTech.github.io/DyCon-Blog/css/bootstrap.min.css">
@@ -144,7 +144,7 @@
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-heading">
           <h2><small>WorkPackage of <a href="https://DeustoTech.github.io/DyCon-Blog/projects/posts">Post</a>:</small></h2>
-          <h1>Long time horizon control </h1>
+          <h1>Models involving memory terms and hybrid PDE+ODE systems </h1>
         </div>
       </div>
 		</div>
@@ -203,7 +203,7 @@ img:active{
   <div id="content" class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p>Control problems for evolution PDEs are most often considered in <strong>finite time intervals</strong>, without paying attention to the length of the control horizon and how it affects the nature of optimal trajectories and controls. However, the effective available time horizon is one of the critical factors in applications, as it occurs in the design of medical therapies, or in sonic boom minimisation for supersonic aircrafts. Some hyperbolic models fail to be controllable when the time horizon is too short but, even for parabolic models for which control can be achieved in any time horizon, the nature of optimal controls and trajectories depend very sensibly in the length of the control time.</p> <p>Often, for practical applications, and in order to simplify the complexity of the problem under consideration, it is assumed that, if the uncontrolled free dynamics tends to a steady configuration as time tend to infinity, optimal dynamic control strategies will do the same, converging to the optimal steady state ones when the time horizon for control tends to infinity. This is the so-called <strong>turnpike property</strong> that guarantees that, for long time horizons of control, controls and controlled trajectories are exponentially close to the steady-state ones except near the initial and final times. However, this property is rarely proved rigorously.</p> <p>We aim at developing a systematic turnpike theory for evolution PDEs. Our preliminary results show that this not only depends on the model under consideration but also on the cost functional and control target, and that the fulfillment of the turnpike property requires the system under consideration to be controllable or stabilisable. </p> <p>The theory developed so far allows to handle, mostly, linear PDEs, but the problem is widely open in the <strong>nonlinear</strong> frame, where the existing results require smallness conditions on the objectives (probably of a purely technical nature), which restrict the scope of applications. </p> <p>Turnpike theory has also important consequences for the development of <strong>efficient numerical solvers and software</strong>. Indeed, in practice, when the control problem is formulated in long time intervals, standard iterative algorithms based on adjoint methodologies are computationally expensive, relying on the recurrent resolution of the forward state dynamics and the backward adjoint one. The use of the turnpike property, starting from the optimal steady control and state, contributes to achieving faster approximation procedures in long time horizons.</p> <p><strong>Optimal shape and coefficient design</strong> problems constitute also a challenging field in which turnpike theory would be worth to be developed.</p>
+        <p>Control theory for PDEs has been quite exhaustively developed for model problems (heat and wave equations). But other important models in applications, of hybrid nature, remain poorly understood. This is particularly the case for models involving <strong>memory terms in viscoelasticity</strong>.</p> <p>Our recent contributions in this area are inspired in the interpretation of memory models as the <strong>coupling of PDEs with infinite-dimensional ODEs</strong>. The presence of ODE components in the system explains the failure of controllability if the control is confined on a space-support which is time-independent. This motivates the use of our <strong>moving control strategy</strong>, making the control move covering the whole domain, introducing the transport effects that the ODE is lacking.</p> <p>This theory applies to some model examples and an in-depth effort is needed to cope with key issues such as nonlinearity, general relaxation kernels, memory terms in the principal part of the PDE, etc. which are particularly complex for wave models, because of the lack of regularizing effects.</p> <p>Based on our past experience in developing numerical solvers, the numerical counterparts for the control of models with memory terms will also be developed.</p> <p>This topic also opens up the perspective of applications to other areas where ODE-PDE models arise, such as population dynamics.</p>
         <p>See our tutorials:</p>
         <!-- Realizamos la query  -->
         
@@ -215,22 +215,20 @@ img:active{
             
             </div>
             <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp02/P0002" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Numerical aspects of LTHC of Burgers equation </h4>
+              <a href="/DyCon-Blog/tutorial/wp05/P0003" class="display-block">
+                <h4 class="post-preview-title ellipsis-two-lines"> Solving an optimal control problem arised in ecology with AMPL </h4>
               </a>
               <div class="post-preview-subtitle ellipsis-two-lines">
-                Numerical approximation of the inverse design problem for the Burgers equation
+                We present a computational tool to solve optimal control problems for diffusion-reaction systems describing the growth and spread of populations
               </div>
               <div class="post-preview-authors ellipsis-one-line">
                 Author(s):
                 
-                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/NavidA">Navid Allahverdi</a>
-                
-                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroP">Alejandro Pozo</a>
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/JiaminZ"></a>
                 
                     <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
                 
-                - 04 May 2017
+                - 05 December 2017
               </div>
             </div>
           </div>
@@ -242,20 +240,20 @@ img:active{
             
             </div>
             <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp02/P0004" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Long time control and the Turnpike property </h4>
+              <a href="/DyCon-Blog/tutorial/wp05/P0007" class="display-block">
+                <h4 class="post-preview-title ellipsis-two-lines"> Finite element approximation of the 1-D fractional Poisson equation </h4>
               </a>
               <div class="post-preview-subtitle ellipsis-two-lines">
-                The turnpike property improves the numerical methods used to solve optimal control problems
+                A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control
               </div>
               <div class="post-preview-authors ellipsis-one-line">
                 Author(s):
                 
-                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/AitziberI"></a>
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
                 
-                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/VictorH">Victor Hernández Santamaría</a>
                 
-                - 04 May 2017
+                - 05 December 2017
               </div>
             </div>
           </div>
@@ -267,22 +265,22 @@ img:active{
             
             </div>
             <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp02/P0001" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Turnpike property for functionals involving $L^1−norm$ </h4>
+              <a href="/DyCon-Blog/tutorial/wp05/P0002" class="display-block">
+                <h4 class="post-preview-title ellipsis-two-lines"> WKB expansion for a fractional Schrödinger equation with applications to controllability </h4>
               </a>
               <div class="post-preview-subtitle ellipsis-two-lines">
-                We want to study the following optimal control problem...
+                Theoretical and numerical analysis of the propagation of the solutions for a Schrödinger equation with fractional Laplacian, with application to the study of controllability properties.
               </div>
               <div class="post-preview-authors ellipsis-one-line">
                 Author(s):
                 
-                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
                 
-                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/CesareM">Césare Molinari</a>
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroA">Alejandro B. Aceves</a>
                 
                     <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
                 
-                - 26 October 2018
+                - 05 April 2018
               </div>
             </div>
           </div>
@@ -294,18 +292,110 @@ img:active{
             
             </div>
             <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp02/P0003" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Riccati theory in LQ optimization with time-varying target </h4>
+              <a href="/DyCon-Blog/tutorial/wp05/P0001" class="display-block">
+                <h4 class="post-preview-title ellipsis-two-lines"> Rays propagation of a fractional Schrodinger Equation </h4>
               </a>
               <div class="post-preview-subtitle ellipsis-two-lines">
-                Numerical computation of the optimal control and the optimal state
+                Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics
               </div>
               <div class="post-preview-authors ellipsis-one-line">
                 Author(s):
                 
-                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/DarioP">Dario Pighin</a>
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
                 
-                - 26 October 2018
+                - 21 July 2018
+              </div>
+            </div>
+          </div>
+        
+          <div class="post-preview shadowbox">
+            <div class="post-avatar-wp">
+            
+            <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+            
+            </div>
+            <div class="post-info">
+              <a href="/DyCon-Blog/tutorial/wp05/P0004" class="display-block">
+                <h4 class="post-preview-title ellipsis-two-lines"> LQR control of a fractional reaction diffusion equation </h4>
+              </a>
+              <div class="post-preview-subtitle ellipsis-two-lines">
+                Design of a LQR controller for the stabilization of a fractional reaction diffusion equation
+              </div>
+              <div class="post-preview-authors ellipsis-one-line">
+                Author(s):
+                
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+                
+                - 24 October 2018
+              </div>
+            </div>
+          </div>
+        
+          <div class="post-preview shadowbox">
+            <div class="post-avatar-wp">
+            
+            <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+            
+            </div>
+            <div class="post-info">
+              <a href="/DyCon-Blog/tutorial/wp05/P0006" class="display-block">
+                <h4 class="post-preview-title ellipsis-two-lines"> LQR optimal control design for a coupled PDE-ODE system. </h4>
+              </a>
+              <div class="post-preview-subtitle ellipsis-two-lines">
+                Stabilization of a coupled PDE-ODE system by means of a feedback LQR control.
+              </div>
+              <div class="post-preview-authors ellipsis-one-line">
+                Author(s):
+                
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
+                
+                - 28 October 2018
+              </div>
+            </div>
+          </div>
+        
+          <div class="post-preview shadowbox">
+            <div class="post-avatar-wp">
+            
+            <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+            
+            </div>
+            <div class="post-info">
+              <a href="/DyCon-Blog/tutorial/wp05/P0008-Charlotte" class="display-block">
+                <h4 class="post-preview-title ellipsis-two-lines"> Coupled transport equations and LQR control </h4>
+              </a>
+              <div class="post-preview-subtitle ellipsis-two-lines">
+                Numerical computation of a stabilizing control
+              </div>
+              <div class="post-preview-authors ellipsis-one-line">
+                Author(s):
+                
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/CharlotteR">Charlotte Rodriguez</a>
+                
+                - 29 October 2018
+              </div>
+            </div>
+          </div>
+        
+          <div class="post-preview shadowbox">
+            <div class="post-avatar-wp">
+            
+            <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+            
+            </div>
+            <div class="post-info">
+              <a href="/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton" class="display-block">
+                <h4 class="post-preview-title ellipsis-two-lines"> Two Grids Filter Method for RPS Semi-Discretization </h4>
+              </a>
+              <div class="post-preview-subtitle ellipsis-two-lines">
+                This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.
+              </div>
+              <div class="post-preview-authors ellipsis-one-line">
+                Author(s):
+                
+                    <a href="https://DeustoTech.github.io/DyCon-Blog/author/XinliangL">Xinliang Liu</a>
+                
+                - 18 December 2018
               </div>
             </div>
           </div>

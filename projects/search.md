@@ -2,12 +2,17 @@
 layout: project
 category: proyect
 title: Search
-description: Transmitting the results to other researchers, not specialists in control theory, can be difficult. Even among experts on the subject of sharing software is complicated. Here is a series of tutorials for faithful and easy reproduction of mathematical results.
+description: 
 ---
 
 <h3>By Author</h3>
-
-<h3>By Topic</h3>
-
-<h1>Tag Cloud</h1>
+<p>Severals Authors</p>
+ {::nomarkdown}
+    <ul>
+    {% assign authors = site.data.members | sort %}
+    {% for author in authors %}
+      <li><a href="{{site.url}}{{site.baseurl}}/author/{{author[0]}}">{{author[1].name}}</li>
+    {% endfor %}
+    </ul>
+{:/nomarkdown}
 
