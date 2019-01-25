@@ -33,10 +33,10 @@ MichaelS:
   name: Michael Schsuter
   description: <strong>Michael Schuster</strong></a> was a PhD student at the <a href='https;//www.fau.eu' target='_blank'>Friedrich-Alexander University</a> in Erlangen, Germany. He finished his master studies in Industrial Mathematics in 2017 and since then he was working with the controlabillity of hyperbolical systems and optimization with probabilistic constraints. He was in Bilbao for a 3 month internship under the supervision of Professor Enrique Zuazua.
 VictorH:
-  name: Victor Hernández Santamaría
+  name: Victor Hernández
   description: <strong><a href='https;//cmc.deusto.eus/victor-hernandez-santamaria'>Víctor Hernández-Santamaría</a></strong> earned his Ph.D. degree in the department of automatic control in <a href='http;//www.cinvestav.mx/' target='_blank'>CINVESTAV</a> (Mexico), under the supervision of Luz de Teresa (Instituto de Matemáticas, UNAM, México) and Alexander Poznyak (CINVESTAV). His research interests are related to control problems for coupled parabolic equations, especially, those arising in the insensitizing control and hierarchic control problems, both from a theoretical and numerical point of view. He holded a Postdoctoral position at the ERC Advanced Grant project <a href='http;//cmc.deusto.eus/dycon'>DyCon</a> under the supervision of <a href='http;//paginaspersonales.deusto.es/enrique.zuazua/'>Prof. Enrique Zuazua</a>.
 JoseV:
-  name: José Vicente Lorenzo
+  name: José Vicente
   description: <strong><a href='https;//cmc.deusto.eus/jose-vicente-lorenzo/'>José Vicente Lorenzo</a></strong> is a PhD student at <a href='http;//www.uam.es' target='_blank'>Universidad Autónoma de Madrid (UAM)</a>. He finished his MSc Industrial Engineering at the <a href='http;//en.us.es/eng' target='_blank'>University of Seville</a> in 2014. He has worked at <a href='https;//home.cern/' target='_blank'>CERN</a> in Superconducting Magnets group (Geneva, SWITZERLAND) and Spanish organism for Research in Energy and Environment <a href='http;//www.ciemat.es/' target='_blank'>CIEMAT</a>.
 AnaN:
   name: Ana Navarro
@@ -70,3 +70,6 @@ MehmetE:
   description: I am currently associate professor at the Université de Toulon (UTLN) and do my research at the Institut   
                 Mathématiques de Toulon (IMATH) -Équipe de Modélisation Numérique (MN) . My fields of specialization and research interests include Non linear analysis of PDEs, Numerical analysis in fluid mechanics. Before joining the team MN, I was a postdoctoral researcher at the Basque Center for Applied Mathematics, Derio, Spain, directed by/in collaboration with Enrique Zuazua. I obtained my Ph.D in Applied Mathematics at the Laboratoire de Mathématiques-LAMA under the supervision of Christian Bourdarias & Stéphane Gerbi, Université de Savoie, Chambéry, France in 2010. 
                 I deliver Scientific Computing and Numerical Analysis courses at the Ecole d'Ingénieurs de l'Université de Toulon which offers the possibility to get high level skills.
+YuhuaZ:
+  name: Yuhua Zhu
+  description: I'm a fourth-year Ph.D student in Department of Mathematics at University of Wisconsin-Madison. My interests lie in uncertainty quantification in kinetic theory and Machine learning.

@@ -45,7 +45,7 @@ layout: default
               <div class="post-preview-authors ellipsis-one-line">
                 Author(s):
                 {% for aut in post.author %}
-                    <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>
+                    <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>,
                 {% endfor %}
                 - {{post.date|date_to_long_string}}
               </div>

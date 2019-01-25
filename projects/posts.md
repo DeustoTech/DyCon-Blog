@@ -13,40 +13,15 @@ All of the content has been classified according to the project’s correspondin
       <a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">
         <h2 class="topic-title">{{topic[1].name}}</h2>
       </a>  
-      {% assign MaxPostView = 1 %}
-      {% for i in (0..MaxPostView) %}
-        {% assign post = qposts[i] %}
+      {% for post in qposts limit:2 %}
         {% unless post %}
           {% continue %}
         {% endunless %}
-        <!--div class="shadowbox">
-        <a href="{{site.url}}{{site.baseurl}}{{post.url}}"><h5>{{post.title}}</h5></a>
-        <p>{{post.description}}</p>
-        </div-->
-        <div class="post-preview shadowbox">
-          <div class="post-avatar">
-          {% if post.avatar %}
-          <img src="{{ post.avatar }}">
-          {% else %}
-          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
-          {% endif %}
-          </div>
-          <div class="post-info">
-            <a href="{{ post.url | prepend: site.baseurl }}" class="display-block">
-              <h4 class="post-preview-title ellipsis-two-lines"> {{ post.title }} </h4>
-            </a>
-            <div class="post-preview-subtitle ellipsis-two-lines">
-              {{ post.description }}
-            </div>
-            <div class="post-preview-authors ellipsis-one-line">
-              Author(s):
-              {% for aut in post.author %}
-                  <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>
-              {% endfor %}
-              - {{post.date|date_to_long_string}}
-            </div>
-          </div>
-        </div>
+        {% include card.html title       = post.title
+                             url         = post.url 
+                             author      = post.author 
+                             description = post.description
+                             date        = post.date %}
       {% endfor %}
     <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more ...</a></h3>
     {% endfor %}

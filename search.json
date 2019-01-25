@@ -1,0 +1,20 @@
+---
+---
+[
+    {% assign qposts = site.posts| where:"layout","tutorial" %}
+    {% for post in qposts %}
+    {
+      "title"           : "{{ post.title | escape }}",
+      "categories"      : ["{{ post.categories| join: '", "' }}"],
+      "tags"            : "{{ post.tags | join: ', ' }}",
+      "url"             : "{{ post.url }}",
+      "date"            : "{{ post.date | date: "%Y-%m-%d" }}",
+      "author"          : [{% for aut in post.author %}
+                              "{{aut}}"
+                          {%- unless forloop.last -%},{%- endunless -%}
+                          {% endfor %}
+                          ],
+      "description"     : "{{ post.description | strip_html | strip_newlines }}"
+    } {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]

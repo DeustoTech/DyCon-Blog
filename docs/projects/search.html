@@ -155,59 +155,80 @@
 <!-- Main Content -->
 <div class="container">
 	<div class="col-md-10 col-md-offset-1">
-		<h3>By Author</h3>
+		<h3>By Keyword</h3>
+<!-- Html Elements for Search -->
+<div id="search-container">
+<input type="text" id="search-input" placeholder="search..." />
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="https://DeustoTech.github.io/DyCon-Blog/js/simple-jekyll-search.min.js"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  searchResultTemplate: '<div class="post-preview shadowbox"><div class="post-avatar">    <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png"></div><div class="post-info">    <a href="/DyCon-Blog{url}" class="display-block"><h4 class="post-preview-title ellipsis-two-lines"> {title} </h4>    </a>    <div class="post-preview-subtitle ellipsis-two-lines">{description}</div></div></div>',
+  resultsContainer: document.getElementById('results-container'),
+  json: 'https://DeustoTech.github.io/DyCon-Blog/search.json',
+})
+</script>
+
+<h3>By Author</h3>
 <p>Severals Authors</p>
     <ul>
     
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroA">Alejandro B. Aceves</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroA">Alejandro B. Aceves</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroC">Alejandro Cunillera</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroC">Alejandro Cunillera</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroP">Alejandro Pozo</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroP">Alejandro Pozo</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/CesareM">Césare Molinari</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/CesareM">Césare Molinari</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/CharlotteR">Charlotte Rodriguez</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/CharlotteR">Charlotte Rodriguez</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/DarioP">Dario Pighin</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/DarioP">Dario Pighin</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/DongnamK">Dongnam Ko</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/DongnamK">Dongnam Ko</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/JeromeL">Jérôme Lohéac</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/JeromeL">Jérôme Lohéac</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/JoseV">José Vicente Lorenzo</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/JoseV">José Vicente</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/MehmetE">Mehmet Ersoy</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/MehmetE">Mehmet Ersoy</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/MichaelS">Michael Schsuter</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/MichaelS">Michael Schsuter</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/NavidA">Navid Allahverdi</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/NavidA">Navid Allahverdi</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/NoboruS">Noboru Sakamoto</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/VictorH">Victor Hernández Santamaría</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/XinliangL">Xinliang Liu</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/XinliangL">Xinliang Liu</a></li>
     
-      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/YacoubaS">Yacouba Simpore</li>
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a></li>
+    
+      <li><a href="https://DeustoTech.github.io/DyCon-Blog/author/YuhuaZ">Yuhua Zhu</a></li>
     
     </ul>
-
 
 	</div>
 </div>
