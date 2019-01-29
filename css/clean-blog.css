@@ -21,8 +21,11 @@
   color: black;
   padding-top: 20px;
 }
+header {
+  font-family: 'Raleway', sans-serif;
+}
 body {
-font-family: 'Lusitana', serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 15px;
   color: #404040;
 }
@@ -45,7 +48,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Lusitana', serif;
   font-weight: 800;
 }
 a {
@@ -138,6 +140,9 @@ hr.small {
   -webkit-line-clamp: 1;
   max-height: 1.5;
 }
+.subheading, article {
+  text-align: justify;
+}
 .post-preview {
   display: inline-block;
   width: 100%;
@@ -151,6 +156,9 @@ hr.small {
 }
 .post-avatar-wp {
   width: none !important;
+}
+.post-avatar > img {
+  border-radius: 3px;
 }
 @media only screen and (max-width: 470px) {
   .post-avatar-wp {
@@ -357,7 +365,6 @@ hr.small {
   font-size: 16px;
   line-height: 1.1;
   display: block;
-  font-family: 'Lusitana', serif;
   font-weight: 300;
   margin: 20px 0 0;
 }
@@ -583,8 +590,7 @@ img::-moz-selection {
   background: transparent;
 }
 body {
-  webkit-tap-highlight-color: #0085a1;
-  background-color: #FAFAFA;
+  background-color: #f8f8f8;
 }
 
 div.notepad-index-post-tags {
