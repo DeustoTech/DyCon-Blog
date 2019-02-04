@@ -110,6 +110,66 @@ hr.small {
 }
 /* Sergio additions */
 
+.display-inline {
+  display: inline-block;
+}
+
+.photo-author {
+  margin: auto;
+  width: 180px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+.photo-author:hover {
+  border: 1px solid #777;
+}
+.photo-author img {
+  border-radius: 3px 0 3px 0;
+  height: auto;
+}
+
+.author-container {
+  box-sizing: border-box;
+  float: left;
+}
+
+.author-name {
+  padding: 15px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 770px) {
+  .author-container {
+    padding: 10px;
+    width: 49.999999%;
+  }
+}
+
+@media only screen and (min-width: 771px) {
+  .author-container {
+    padding: 15px;
+    width: 33.333333%;
+  }
+}
+
+/* Search Page */
+
+.search-container {
+  height: 35px;
+}
+.search-input {
+  width: 100%;
+  border-color: #d6d7d8;
+  border-radius: 15px;
+  border-width: 1px;
+  padding-left: 10px;
+  margin-top: 10px;
+  outline: none;
+}
+.search-input:focus {
+  border-color: #878787;
+}
+
 /* Downloads Page */
 .inst-guide { padding-top: 25px;}
 .rel_date { float: right; }
