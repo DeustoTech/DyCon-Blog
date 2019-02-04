@@ -2,6 +2,18 @@
     
     
     {
+      "title"           : "An introduction to the moment method for optimal control problems for polynomial ODEs",
+      "categories"      : ["tutorial", "WP99"],
+      "tags"            : "",
+      "url"             : "/tutorial/wp99/P0015-moment",
+      "date"            : "2019-02-04",
+      "author"          : [
+                              "SwannM"
+                          ],
+      "description"     : "The aim of this note is to explain how one can solve an optimal control problem with the moment method"
+    } ,
+  
+    {
       "title"           : "Two Grids Filter Method for RPS Semi-Discretization",
       "categories"      : ["tutorial", "WP05"],
       "tags"            : "",
@@ -388,6 +400,17 @@
                               "EnriqueZ"
                           ],
       "description"     : "Control of a parameter dependent system in a robust manner"
+    } ,
+  
+    {
+      "title"           : "An introduction to the moment method for optimal control problems for polynomial ODEs",
+      "categories"      : ["tutorial", "WP99"],
+      "tags"            : "",
+      "url"             : "/tutorial/wp99/P0015-S",
+      "date"            : "0000-12-31",
+      "author"          : [
+                          ],
+      "description"     : ""
     } 
   
 ]
