@@ -19,7 +19,7 @@ SimpleJekyllSearch({
   searchInput: document.getElementById('search-input'),
   searchResultTemplate: '{% include card.min.html title="{title}" author="{author}" url="{url}" description="{description}"%}',
   resultsContainer: document.getElementById('results-container'),
-  json: "{{site.url}}{{site.baseurl}}/search.json",
+  json: "{{site.baseurl}}/search.json",
 })
 </script>
 
