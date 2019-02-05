@@ -153,10 +153,6 @@ hr.small {
 }
 
 /* Search Page */
-
-.search-container {
-  height: 35px;
-}
 .search-input {
   width: 100%;
   border-color: #d6d7d8;

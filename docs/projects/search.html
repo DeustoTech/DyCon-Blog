@@ -150,9 +150,9 @@
 		<h3>By Keyword</h3>
 <!-- Html Elements for Search -->
 <div class="search-container">
-<input type="text" class="search-input" placeholder="search..." />
-<ul id="results-container"></ul>
+<input type="text" class="search-input" id="search-input" placeholder="search..." />
 </div>
+<ul id="results-container"></ul>
 <!-- Script pointing to search-script.js -->
 <script src="https://DeustoTech.github.io/DyCon-Blog/js/simple-jekyll-search.min.js"></script>
 
@@ -162,242 +162,244 @@ SimpleJekyllSearch({
   searchInput: document.getElementById('search-input'),
   searchResultTemplate: '<div class="post-preview shadowbox"><div class="post-avatar">    <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png"></div><div class="post-info">    <a href="/DyCon-Blog{url}" class="display-block"><h4 class="post-preview-title ellipsis-two-lines"> {title} </h4>    </a>    <div class="post-preview-subtitle ellipsis-two-lines">{description}</div></div></div>',
   resultsContainer: document.getElementById('results-container'),
-  json: "https://DeustoTech.github.io/DyCon-Blog/search.json",
+  json: 'https://DeustoTech.github.io/DyCon-Blog/search.json',
 })
 </script>
 
-<h3>By Author</h3>
+ <div style="display: block;">
+ <h3>By Author</h3>
     <ul>
     
-    <div class="display-inline">
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroA">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Alejandro B. Aceves</div>
+      <div class="display-inline">
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroA">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Alejandro B. Aceves</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroC">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Alejandro Cunillera</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroC">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Alejandro Cunillera</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroP">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Alejandro Pozo</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/AlejandroP">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Alejandro Pozo</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/AnaN">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Ana Navarro</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/AnaN">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Ana Navarro</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/BorjanG">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Borjan Geshkovski</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/BorjanG">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Borjan Geshkovski</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/CesareM">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Césare Molinari</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/CesareM">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Césare Molinari</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/CharlotteR">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Charlotte Rodriguez</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/CharlotteR">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Charlotte Rodriguez</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/DarioP">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Dario Pighin</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/DarioP">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Dario Pighin</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/DomenecR">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Domenec Ruiz</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/DomenecR">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Domenec Ruiz</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/DongnamK">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Dongnam Ko</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/DongnamK">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Dongnam Ko</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Enrique Zuazua</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/EnriqueZ">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Enrique Zuazua</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/JeromeL">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Jérôme Lohéac</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/JeromeL">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Jérôme Lohéac</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Jesus Oroya</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/JesusO">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Jesus Oroya</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/JoseV">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">José Vicente</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/JoseV">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">José Vicente</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/MartinL">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Martín Lazar</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/MartinL">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Martín Lazar</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/MehmetE">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Mehmet Ersoy</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/MehmetE">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Mehmet Ersoy</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/MichaelS">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Michael Schsuter</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/MichaelS">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Michael Schsuter</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/NavidA">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Navid Allahverdi</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/NavidA">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Navid Allahverdi</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/NoboruS">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Noboru Sakamoto</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/NoboruS">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Noboru Sakamoto</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/SwannM">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Swann MARX</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/SwannM">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Swann MARX</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Umberto Biccari</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/UmbertoB">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Umberto Biccari</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/VictorH">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Victor Hernández</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/VictorH">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Victor Hernández</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/XinliangL">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Xinliang Liu</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/XinliangL">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Xinliang Liu</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/YacoubaS">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Yacouba Simpore</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/YacoubaS">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Yacouba Simpore</div>
+              </div>
             </div>
-          </div>
-      
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="https://DeustoTech.github.io/DyCon-Blog/author/YuhuaZ">
-                <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-              </a>
-              <div class="author-name">Yuhua Zhu</div>
+        
+            <div class="author-container">
+              <div class="photo-author">
+                <a href="https://DeustoTech.github.io/DyCon-Blog/author/YuhuaZ">
+                  <img src="https://DeustoTech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                </a>
+                <div class="author-name">Yuhua Zhu</div>
+              </div>
             </div>
-          </div>
-      
-    </div>
+        
+      </div>
     </ul>
+</div>
 
 	</div>
 </div>
