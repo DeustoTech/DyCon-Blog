@@ -13,7 +13,7 @@ scholar:
 
 # Secondary Parameters
 baseurl: "/DyCon-Blog" # the subpath of your site, e.g. /blog
-url: "https://DeustoTech.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://deustotech.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #
 
 destination: docs
