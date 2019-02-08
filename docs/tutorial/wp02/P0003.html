@@ -92,9 +92,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/DyCon-Blog/">
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
                  <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
-            </a>
+            </a> -->
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -214,7 +214,7 @@ img:active{
 
 <p>We consider the optimal control problem:</p>
 
-<script type="math/tex; mode=display">\min_{u\in L^2(0,T;\mathbb{R}^m)}J^{T}(u)=\frac12 \left[ \int_0^T \\vertu(t)-q(t)\\vert^2 dt+\beta\int_0^T \\vertC(x(t)-z(t))\\vert^2 dt+\gamma \\vertD(x(T)-z(T))\\vert^2\right],</script>
+<script type="math/tex; mode=display">\min_{u\in L^2(0,T;\mathbb{R}^m)}J^{T}(u)=\frac12 \left[ \int_0^T  \vert u(t)-q(t) \vert ^2 dt+\beta\int_0^T  \vert C(x(t)-z(t))\vert ^2 dt+\gamma \vert D(x(T)-z(T))\vert ^2\right],</script>
 
 <p>where:</p>
 
@@ -227,7 +227,7 @@ img:active{
 
 <p>We compute the optimal pair (optimal control, optimal state) by using the well-known Riccati’s theory (see, for instance, [1, Lemma 2.6] and [2, section 4.3]).</p>
 
-<p>For further details regarding the algorithm, we refer to <a href="a">href=”https://github.com/DeustoTech/RiccatiLQ/blob/master/RiccatiAlgorithm.pdf”&gt;RiccatiAlgorithm&lt;/a</a></p>
+<p>For further details regarding the algorithm, we refer to <a href="a">href=”https://github.com/DeustoTech/RiccatiLQ/blob/master/RiccatiAlgorithm.pdf”</a> RiccatiAlgorithm <a href="/a">/a</a></p>
 
 <p>Take</p>
 
@@ -269,7 +269,7 @@ img:active{
   </li>
 </ul>
 
-<p>The algorithm described in this guide can be employed to test the fulfillment of the turnpike property (see, for instance, <a href="Alessio Porretta and Enrique Zuazua, *Long time versus steady state optimal control*, SIAM Journal on Control and Optimization, 51 (2013).">1</a> and <a href="Emmanuel Trelat and Enrique Zuazua, *The turnpike property in finite-dimensional nonlinear optimal control*, Journal of Differential Equations, 258 (2015).">3</a>). In agreement with the theory, the turnpike effect is evident if:</p>
+<p>The algorithm described in this guide can be employed to test the fulfillment of the turnpike property (see, for instance, [1] and [3]). In agreement with the theory, the turnpike effect is evident if:</p>
 
 <ul>
   <li>
@@ -286,7 +286,12 @@ img:active{
   </li>
 </ul>
 
-<h2 id="references">References</h2>
+<h1 id="references">References</h1>
+<p>[1] Alessio Porretta and Enrique Zuazua, <em>Long time versus steady state optimal control</em>, SIAM Journal on Control and Optimization, 51 (2013).</p>
+
+<p>[2] Emmanuel Trelat, control optimal: theory &amp; applications , Vuibert, 2008.</p>
+
+<p>[3] Emmanuel Trelat and Enrique Zuazua, <em>The turnpike property in finite-dimensional nonlinear optimal control</em>, Journal of Differential Equations, 258 (2015).</p>
 
 
 

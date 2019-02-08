@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 08 Feb 2019 13:03:28 +0100</pubDate>
-    <lastBuildDate>Fri, 08 Feb 2019 13:03:28 +0100</lastBuildDate>
+    <pubDate>Fri, 08 Feb 2019 16:01:44 +0100</pubDate>
+    <lastBuildDate>Fri, 08 Feb 2019 16:01:44 +0100</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -376,11 +376,6 @@ clf, pcolor(X,Y,u') ;shading interp ; colorbar;
 title('finemesh solution')
 
 
-Undefined function 'ODEsolver' for input arguments of type 'double'.
-
-Error in ./imgs-matlab/copiaRM (line 109)
-[u,ut] =  ODEsolver(M,L(2:end-1,2:end-1),ui,uti,f,T,J,M);
-
 
 
 Solve the wave equation on coarsemesh using RPS method
@@ -395,12 +390,16 @@ clf, pcolor(X,Y,(Psi*uc)');shading interp ; colorbar;
 title('coarsemesh solution with rps basis')
 
 
+
+
 Solve the wave equation on coarsemesh using p1 fem
 
 [uuc,uuct]=ODEsolver(MM,LL,uci,utci,fc,T,J,MM);
 [XX,YY]=meshgrid(-1+H:H:1-H,0:T/J:T);
 clf, pcolor(XX,YY,uuc'); shading interp ; colorbar;
 title('coarsemesh solution with linear basis')
+
+
 
 
 Plot the disperation relation of RPS-semi descretization
@@ -463,6 +462,8 @@ xlabel('\omega*H')
 legend('RPS','P1 FEM','FDM')
 
 
+
+
 Plot the numerical group velocity for sinusoidal solution and compare it with the ones for FDM and FEM
 
 groupVelocity = diff(phaseVelocity)/((2*pi-0.1)/999).*xx(1:length(xx)-1)+phaseVelocity(1:length(xx)-1);
@@ -487,6 +488,8 @@ xlabel('\omega*H')
 legend('RPS','P1 FEM','FDM','exact')
 
 
+
+
 Plot the numerical disperation relation Disperation relation for RPS semi-discretizaton
 
 diperss = phaseVelocity.*xx;
@@ -509,15 +512,17 @@ xlabel('\omega*H')
 legend('RPS','P1 FEM','FDM','exact')
 
 
+
+
 </description>
         <pubDate>Tue, 18 Dec 2018 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0002-Numerical-homogenizaton</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0002-Numerical-homogenizaton</guid>
         
         
         <category>tutorial</category>
         
-        <category>WP05</category>
+        <category>WP04</category>
         
       </item>
     
@@ -2160,7 +2165,7 @@ By the Direct Methods in the Calculus of Variations and strict convexity, the ab
 
 We compute the optimal pair (optimal control, optimal state) by using the well-known Riccati’s theory (see, for instance, [1, Lemma 2.6] and [2, section 4.3]).
 
-For further details regarding the algorithm, we refer to href=”https://github.com/DeustoTech/RiccatiLQ/blob/master/RiccatiAlgorithm.pdf”&amp;gt;RiccatiAlgorithm&amp;lt;/a
+For further details regarding the algorithm, we refer to href=”https://github.com/DeustoTech/RiccatiLQ/blob/master/RiccatiAlgorithm.pdf” RiccatiAlgorithm /a
 
 Take
 
@@ -2202,7 +2207,7 @@ Since the parameter $\beta$ is large enough and the control acts only on the fir
   
 
 
-The algorithm described in this guide can be employed to test the fulfillment of the turnpike property (see, for instance, 1 and 3). In agreement with the theory, the turnpike effect is evident if:
+The algorithm described in this guide can be employed to test the fulfillment of the turnpike property (see, for instance, [1] and [3]). In agreement with the theory, the turnpike effect is evident if:
 
 
   
@@ -2220,6 +2225,11 @@ The algorithm described in this guide can be employed to test the fulfillment of
 
 
 References
+[1] Alessio Porretta and Enrique Zuazua, Long time versus steady state optimal control, SIAM Journal on Control and Optimization, 51 (2013).
+
+[2] Emmanuel Trelat, control optimal: theory &amp;amp; applications , Vuibert, 2008.
+
+[3] Emmanuel Trelat and Enrique Zuazua, The turnpike property in finite-dimensional nonlinear optimal control, Journal of Differential Equations, 258 (2015).
 
 </description>
         <pubDate>Fri, 26 Oct 2018 00:00:00 +0200</pubDate>

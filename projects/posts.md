@@ -21,6 +21,7 @@ All of the content has been classified according to the project’s correspondin
                              url         = post.url 
                              author      = post.author 
                              description = post.description
+                             avatar      = post.avatar
                              date        = post.date %}
       {% endfor %}
     <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more ...</a></h3>

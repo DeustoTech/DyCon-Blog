@@ -185,7 +185,7 @@ hr.small {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   max-height: 3;
 }
 .ellipsis-one-line {
@@ -202,6 +202,7 @@ hr.small {
 .post-preview {
   display: inline-block;
   width: 100%;
+  background: white;
 }
 .post-preview-authors {
   color: grey;
@@ -327,7 +328,7 @@ hr.small {
 
 @media only screen and (min-width: 768px) {
   .navbar-custom {
-    background: #75b7a8;
+    background: #52834f;
     border-bottom: 1px solid transparent;
     border-color: #000000
   }

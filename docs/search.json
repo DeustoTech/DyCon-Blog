@@ -7,16 +7,18 @@
       "url"             : "/tutorial/wp99/P0015-moment",
       "date"            : "2019-02-04",
       "author"          : ["SwannM"],
-      "description"     : "The aim of this note is to explain how one can solve an optimal control problem with the moment method"
+      "description"     : "The aim of this note is to explain how one can solve an optimal control problem with the moment method",
+      "avatar"          : ""
     } ,
   
     {
       "title"           : "Two Grids Filter Method for RPS Semi-Discretization",
-      "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0013-Numerical-homogenizaton",
+      "categories"      : ["tutorial", "WP04"],
+      "url"             : "/tutorial/wp04/P0002-Numerical-homogenizaton",
       "date"            : "2018-12-18",
       "author"          : ["XinliangL"],
-      "description"     : "This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation."
+      "description"     : "This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0002-Numerical%20homogenizaton/copiaRM_02.png"
     } ,
   
     {
@@ -25,7 +27,8 @@
       "url"             : "/tutorial/wp99/P0011",
       "date"            : "2018-11-15",
       "author"          : ["UmbertoB","JesusO"],
-      "description"     : "Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters."
+      "description"     : "Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/converters.png"
     } ,
   
     {
@@ -34,7 +37,8 @@
       "url"             : "/tutorial/wp99/P0010-Yacouba",
       "date"            : "2018-10-29",
       "author"          : ["YacoubaS"],
-      "description"     : "In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space"
+      "description"     : "In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_07.png"
     } ,
   
     {
@@ -43,7 +47,8 @@
       "url"             : "/tutorial/wp99/P0009-Dongnam",
       "date"            : "2018-10-29",
       "author"          : ["DongnamK"],
-      "description"     : "We design the LQR controller and solve it with linearized model."
+      "description"     : "We design the LQR controller and solve it with linearized model.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/copiaRM_05.png"
     } ,
   
     {
@@ -52,7 +57,8 @@
       "url"             : "/tutorial/wp05/P0008-Charlotte",
       "date"            : "2018-10-29",
       "author"          : ["CharlotteR"],
-      "description"     : "Numerical computation of a stabilizing control"
+      "description"     : "Numerical computation of a stabilizing control",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0008-Charlotte/copiaRM_07.png"
     } ,
   
     {
@@ -61,7 +67,8 @@
       "url"             : "/tutorial/wp99/P0014-Domenec",
       "date"            : "2018-10-28",
       "author"          : ["DomenecR"],
-      "description"     : "Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation."
+      "description"     : "Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0014-Domenec/copiaRM_04.png"
     } ,
   
     {
@@ -70,7 +77,8 @@
       "url"             : "/tutorial/wp05/P0006",
       "date"            : "2018-10-28",
       "author"          : ["BorjanG"],
-      "description"     : "Stabilization of a coupled PDE-ODE system by means of a feedback LQR control."
+      "description"     : "Stabilization of a coupled PDE-ODE system by means of a feedback LQR control.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/copiaRM_02.png"
     } ,
   
     {
@@ -79,7 +87,8 @@
       "url"             : "/tutorial/wp99/P0001",
       "date"            : "2018-10-26",
       "author"          : ["AlejandroC"],
-      "description"     : "Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state."
+      "description"     : "Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0001/copiaRM_01.png"
     } ,
   
     {
@@ -88,7 +97,8 @@
       "url"             : "/tutorial/wp02/P0003",
       "date"            : "2018-10-26",
       "author"          : ["DarioP"],
-      "description"     : "Numerical computation of the optimal control and the optimal state"
+      "description"     : "",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_01.png"
     } ,
   
     {
@@ -97,7 +107,8 @@
       "url"             : "/tutorial/wp02/P0001",
       "date"            : "2018-10-26",
       "author"          : ["MartinL","CesareM","EnriqueZ"],
-      "description"     : "We want to study the following optimal control problem..."
+      "description"     : "We want to study the following optimal control problem...",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alphazero_ev.jpg"
     } ,
   
     {
@@ -106,7 +117,8 @@
       "url"             : "/tutorial/wp05/P0004",
       "date"            : "2018-10-24",
       "author"          : ["UmbertoB"],
-      "description"     : "Design of a LQR controller for the stabilization of a fractional reaction diffusion equation"
+      "description"     : "Design of a LQR controller for the stabilization of a fractional reaction diffusion equation",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_01.png"
     } ,
   
     {
@@ -115,7 +127,8 @@
       "url"             : "/tutorial/wp01/P0007",
       "date"            : "2018-10-19",
       "author"          : ["AnaN","JesusO","UmbertoB"],
-      "description"     : "Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method"
+      "description"     : "Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0007/copiaRM_02.png"
     } ,
   
     {
@@ -124,7 +137,8 @@
       "url"             : "/tutorial/wp05/P0001",
       "date"            : "2018-07-21",
       "author"          : ["UmbertoB"],
-      "description"     : "Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics"
+      "description"     : "Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0001/wave.gif"
     } ,
   
     {
@@ -133,7 +147,8 @@
       "url"             : "/tutorial/wp99/P0021",
       "date"            : "2018-05-01",
       "author"          : ["VictorH","JoseV","EnriqueZ"],
-      "description"     : "In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE)."
+      "description"     : "In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE).",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/04/cg_Jy.png"
     } ,
   
     {
@@ -142,7 +157,8 @@
       "url"             : "/tutorial/wp05/P0002",
       "date"            : "2018-04-05",
       "author"          : ["UmbertoB","AlejandroA","EnriqueZ"],
-      "description"     : "Theoretical and numerical analysis of the propagation of the solutions for a Schrödinger equation with fractional Laplacian, with application to the study of controllability properties."
+      "description"     : "Theoretical and numerical analysis of the propagation of the solutions for a Schrödinger equation with fractional Laplacian, with application to the study of controllability properties.",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/04/plot_frac_schrodinger2_09_6.png"
     } ,
   
     {
@@ -151,7 +167,8 @@
       "url"             : "/tutorial/wp01/T00010",
       "date"            : "2018-03-12",
       "author"          : ["VictorH","JoseV","EnriqueZ"],
-      "description"     : "In this work, we address the optimal control of parameter-dependent systems."
+      "description"     : "In this work, we address the optimal control of parameter-dependent systems.",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/03/xav.png"
     } ,
   
     {
@@ -160,7 +177,8 @@
       "url"             : "/tutorial/wp03/P0001",
       "date"            : "2018-03-05",
       "author"          : ["JeromeL","EmanuelT","EnriqueZ"],
-      "description"     : "Using IpOpt to get the time-optimal nonnegative control of a semi-discrete 1D heat equation"
+      "description"     : "Using IpOpt to get the time-optimal nonnegative control of a semi-discrete 1D heat equation",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/03/1209075.jpg"
     } ,
   
     {
@@ -169,7 +187,8 @@
       "url"             : "/tutorial/wp01/T00020",
       "date"            : "2018-01-12",
       "author"          : ["EnriqueZ"],
-      "description"     : "A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation."
+      "description"     : "A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol.jpg"
     } ,
   
     {
@@ -178,7 +197,8 @@
       "url"             : "/tutorial/wp01/P0001",
       "date"            : "2018-01-10",
       "author"          : ["YuhuaZ","EnriqueZ"],
-      "description"     : "Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it."
+      "description"     : "Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_discts.jpg"
     } ,
   
     {
@@ -187,7 +207,8 @@
       "url"             : "/tutorial/wp05/P0007",
       "date"            : "2017-12-05",
       "author"          : ["UmbertoB","VictorH"],
-      "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control"
+      "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFeatImg.jpg"
     } ,
   
     {
@@ -196,7 +217,8 @@
       "url"             : "/tutorial/wp05/P0003",
       "date"            : "2017-12-05",
       "author"          : ["JiaminZ","EnriqueZ"],
-      "description"     : "We present a computational tool to solve optimal control problems for diffusion-reaction systems describing the growth and spread of populations"
+      "description"     : "We present a computational tool to solve optimal control problems for diffusion-reaction systems describing the growth and spread of populations",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/11/ex2_1.png"
     } ,
   
     {
@@ -205,7 +227,8 @@
       "url"             : "/tutorial/wp06/P0002",
       "date"            : "2017-11-05",
       "author"          : ["RamonE","AitziberI","EnriqueZ"],
-      "description"     : "Guidance by repulsion model describing the behaviour of two agents, a driver and an evader"
+      "description"     : "Guidance by repulsion model describing the behaviour of two agents, a driver and an evader",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/03/circunvection.png"
     } ,
   
     {
@@ -214,7 +237,8 @@
       "url"             : "/tutorial/wp06/P0001",
       "date"            : "2017-11-05",
       "author"          : ["MehmetE","EnriqueZ"],
-      "description"     : "Various numerical approximation methods are discussed with the aim of recoving the large time asymptotic properties of the hypoelliptic Kolmogorov model"
+      "description"     : "Various numerical approximation methods are discussed with the aim of recoving the large time asymptotic properties of the hypoelliptic Kolmogorov model",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/11/Kolmogorov2.jpg"
     } ,
   
     {
@@ -223,7 +247,8 @@
       "url"             : "/tutorial/wp04/P0002",
       "date"            : "2017-11-05",
       "author"          : ["MarioM","EnriqueZ"],
-      "description"     : "Various discrete adjoint methodologies are discussed for the inverse design of linear transport equations in 2 space dimensions"
+      "description"     : "Various discrete adjoint methodologies are discussed for the inverse design of linear transport equations in 2 space dimensions",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/01/frontogenesis4-300x300.jpg"
     } ,
   
     {
@@ -232,7 +257,8 @@
       "url"             : "/tutorial/wp01/P0002",
       "date"            : "2017-11-01",
       "author"          : ["VictorH","MartinL","EnriqueZ"],
-      "description"     : "Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data"
+      "description"     : "Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/10/greedy.png"
     } ,
   
     {
@@ -241,7 +267,8 @@
       "url"             : "/tutorial/wp03/P0002",
       "date"            : "2017-08-05",
       "author"          : ["JeromeL","EmanuelT","EnriqueZ"],
-      "description"     : "How to use IpOpt to solve time optimal control problems"
+      "description"     : "How to use IpOpt to solve time optimal control problems",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/03/y1N0.jpg"
     } ,
   
     {
@@ -250,7 +277,8 @@
       "url"             : "/tutorial/wp04/P0001",
       "date"            : "2017-06-05",
       "author"          : ["RodrigoL","EnriqueZ"],
-      "description"     : "Tracking control of 1D scalar conservation laws in the presence of shocks"
+      "description"     : "Tracking control of 1D scalar conservation laws in the presence of shocks",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/03/uk_00_3_E2.png"
     } ,
   
     {
@@ -259,7 +287,8 @@
       "url"             : "/tutorial/wp02/P0004",
       "date"            : "2017-05-04",
       "author"          : ["AitziberI","EnriqueZ"],
-      "description"     : "The turnpike property improves the numerical methods used to solve optimal control problems"
+      "description"     : "The turnpike property improves the numerical methods used to solve optimal control problems",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/03/dibujo4.png"
     } ,
   
     {
@@ -268,7 +297,8 @@
       "url"             : "/tutorial/wp02/P0002",
       "date"            : "2017-05-04",
       "author"          : ["NavidA","AlejandroP","EnriqueZ"],
-      "description"     : "Numerical approximation of the inverse design problem for the Burgers equation"
+      "description"     : "Numerical approximation of the inverse design problem for the Burgers equation",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/05/schemeCompareClip.jpg"
     } ,
   
     {
@@ -277,7 +307,8 @@
       "url"             : "/tutorial/wp01/P0003",
       "date"            : "2017-03-01",
       "author"          : ["MartinL","EnriqueZ"],
-      "description"     : "Control of a parameter dependent system in a robust manner"
+      "description"     : "Control of a parameter dependent system in a robust manner",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/03/heat-online-3D.jpg"
     } 
   
 ]

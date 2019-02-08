@@ -7,7 +7,7 @@ description:
 
 <h3>By Keyword</h3>
 <!-- Html Elements for Search -->
-<div class="search-container">
+<div id="search-container" class="search-container">
 <input type="text" class="search-input" id="search-input" placeholder="search...">
 </div>
 <ul id="results-container"></ul>
@@ -17,7 +17,7 @@ description:
 <script>
 SimpleJekyllSearch({
   searchInput: document.getElementById('search-input'),
-  searchResultTemplate: '{% include card.min.html title="{title}" author="{author}" url="{url}" description="{description}"%}',
+  searchResultTemplate: '{% include card.min.html avatar="{avatar}" title="{title}" author="{author}" url="{url}" description="{description}" %}',
   resultsContainer: document.getElementById('results-container'),
   json: '{{site.url}}{{site.baseurl}}/search.json',
 })

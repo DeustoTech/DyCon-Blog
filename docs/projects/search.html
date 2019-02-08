@@ -92,9 +92,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/DyCon-Blog/">
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
                  <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
-            </a>
+            </a> -->
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -149,7 +149,7 @@
 	<div class="col-md-10 col-md-offset-1">
 		<h3>By Keyword</h3>
 <!-- Html Elements for Search -->
-<div class="search-container">
+<div id="search-container" class="search-container">
 <input type="text" class="search-input" id="search-input" placeholder="search..." />
 </div>
 <ul id="results-container"></ul>
@@ -160,7 +160,7 @@
 <script>
 SimpleJekyllSearch({
   searchInput: document.getElementById('search-input'),
-  searchResultTemplate: '<div class="post-preview shadowbox"><div class="post-avatar">    <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png"></div><div class="post-info">    <a href="/DyCon-Blog{url}" class="display-block"><h4 class="post-preview-title ellipsis-two-lines"> {title} </h4>    </a>    <div class="post-preview-subtitle ellipsis-two-lines">{description}</div></div></div>',
+  searchResultTemplate: '<div class="post-preview shadowbox"><div class="post-avatar">    <img src="{avatar}"></div><div class="post-info">    <a href="/DyCon-Blog{url}" class="display-block"><h4 class="post-preview-title ellipsis-two-lines"> {title} </h4>    </a>    <div class="post-preview-subtitle ellipsis-two-lines">{description}</div></div></div>',
   resultsContainer: document.getElementById('results-container'),
   json: 'https://deustotech.github.io/DyCon-Blog/search.json',
 })

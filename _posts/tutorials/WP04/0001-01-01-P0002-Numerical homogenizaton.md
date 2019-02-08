@@ -5,8 +5,9 @@ date: 2018-12-18
 author: [XinliangL]
 layout: tutorial
 matlab: P0002_Numerical_homogenizaton_for_wave_equation
-categories: [tutorial,WP05]
-url_zip: assets/imgs/WP04/P0013-Numerical homogenizaton/P0002_Numerical_homogenizaton_for_wave_equation.zip
+categories: [tutorial,WP04]
+url_zip: assets/imgs/WP04/P0002-Numerical homogenizaton/P0002_Numerical_homogenizaton_for_wave_equation.zip
+avatar: https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0002-Numerical%20homogenizaton/copiaRM_02.png
 ---
 
 This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation
@@ -114,7 +115,7 @@ plot(-1:h:1,[0;Psi(:,16);0],'b');
 ```
 
 
-![]({{site.url}}{{site.baseurl}}/assets/imgs/WP04/P0013-Numerical homogenizaton/copiaRM_01.png)
+![]({{site.url}}{{site.baseurl}}/assets/imgs/WP04/P0002-Numerical homogenizaton/copiaRM_01.png)
 
 Set up the time interval, time step, source term $f=0$
 
@@ -142,14 +143,7 @@ title('finemesh solution')
 ```
 
 
-```
-Undefined function 'ODEsolver' for input arguments of type 'double'.
-
-Error in ./imgs-matlab/copiaRM (line 109)
-[u,ut] =  ODEsolver(M,L(2:end-1,2:end-1),ui,uti,f,T,J,M);
-
-```
-
+![]({{site.url}}{{site.baseurl}}/assets/imgs/WP04/P0002-Numerical homogenizaton/copiaRM_02.png)
 
 Solve the wave equation on coarsemesh using RPS method
 
@@ -165,6 +159,8 @@ title('coarsemesh solution with rps basis')
 ```
 
 
+![]({{site.url}}{{site.baseurl}}/assets/imgs/WP04/P0002-Numerical homogenizaton/copiaRM_03.png)
+
 Solve the wave equation on coarsemesh using p1 fem
 
 ```matlab
@@ -174,6 +170,8 @@ clf, pcolor(XX,YY,uuc'); shading interp ; colorbar;
 title('coarsemesh solution with linear basis')
 ```
 
+
+![]({{site.url}}{{site.baseurl}}/assets/imgs/WP04/P0002-Numerical homogenizaton/copiaRM_04.png)
 
 **Plot the disperation relation of RPS-semi descretization**
 
@@ -250,6 +248,8 @@ legend('RPS','P1 FEM','FDM')
 ```
 
 
+![]({{site.url}}{{site.baseurl}}/assets/imgs/WP04/P0002-Numerical homogenizaton/copiaRM_05.png)
+
 Plot the numerical group velocity for sinusoidal solution and compare it with the ones for FDM and FEM
 
 ```matlab
@@ -276,6 +276,8 @@ legend('RPS','P1 FEM','FDM','exact')
 ```
 
 
+![]({{site.url}}{{site.baseurl}}/assets/imgs/WP04/P0002-Numerical homogenizaton/copiaRM_06.png)
+
 Plot the numerical disperation relation Disperation relation for RPS semi-discretizaton
 
 ```matlab
@@ -300,4 +302,6 @@ xlabel('\omega*H')
 legend('RPS','P1 FEM','FDM','exact')
 ```
 
+
+![]({{site.url}}{{site.baseurl}}/assets/imgs/WP04/P0002-Numerical homogenizaton/copiaRM_07.png)
 
