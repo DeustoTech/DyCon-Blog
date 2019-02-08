@@ -4,413 +4,280 @@
     {
       "title"           : "An introduction to the moment method for optimal control problems for polynomial ODEs",
       "categories"      : ["tutorial", "WP99"],
-      "tags"            : "",
       "url"             : "/tutorial/wp99/P0015-moment",
       "date"            : "2019-02-04",
-      "author"          : [
-                              "SwannM"
-                          ],
+      "author"          : ["SwannM"],
       "description"     : "The aim of this note is to explain how one can solve an optimal control problem with the moment method"
     } ,
   
     {
       "title"           : "Two Grids Filter Method for RPS Semi-Discretization",
       "categories"      : ["tutorial", "WP05"],
-      "tags"            : "",
       "url"             : "/tutorial/wp05/P0013-Numerical-homogenizaton",
       "date"            : "2018-12-18",
-      "author"          : [
-                              "XinliangL"
-                          ],
+      "author"          : ["XinliangL"],
       "description"     : "This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation."
     } ,
   
     {
       "title"           : "Stability analysis of Power Electronic Converters Connected to AC Grids",
       "categories"      : ["tutorial", "WP99"],
-      "tags"            : "",
       "url"             : "/tutorial/wp99/P0011",
       "date"            : "2018-11-15",
-      "author"          : [
-                              "UmbertoB",
-                              "JesusO"
-                          ],
+      "author"          : ["UmbertoB","JesusO"],
       "description"     : "Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters."
     } ,
   
     {
       "title"           : "The control on the Kuramoto model by handling one oscillator",
       "categories"      : ["tutorial", "WP99"],
-      "tags"            : "",
       "url"             : "/tutorial/wp99/P0010-Yacouba",
       "date"            : "2018-10-29",
-      "author"          : [
-                              "YacoubaS"
-                          ],
+      "author"          : ["YacoubaS"],
       "description"     : "In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space"
     } ,
   
     {
       "title"           : "The control on the Kuramoto model by handling one oscillator",
       "categories"      : ["tutorial", "WP99"],
-      "tags"            : "",
       "url"             : "/tutorial/wp99/P0009-Dongnam",
       "date"            : "2018-10-29",
-      "author"          : [
-                              "DongnamK"
-                          ],
+      "author"          : ["DongnamK"],
       "description"     : "We design the LQR controller and solve it with linearized model."
     } ,
   
     {
       "title"           : "Coupled transport equations and LQR control",
       "categories"      : ["tutorial", "WP05"],
-      "tags"            : "",
       "url"             : "/tutorial/wp05/P0008-Charlotte",
       "date"            : "2018-10-29",
-      "author"          : [
-                              "CharlotteR"
-                          ],
+      "author"          : ["CharlotteR"],
       "description"     : "Numerical computation of a stabilizing control"
     } ,
   
     {
       "title"           : "Stabilization of a collective behavior model",
       "categories"      : ["tutorial", "WP99"],
-      "tags"            : "",
       "url"             : "/tutorial/wp99/P0014-Domenec",
       "date"            : "2018-10-28",
-      "author"          : [
-                              "DomenecR"
-                          ],
+      "author"          : ["DomenecR"],
       "description"     : "Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation."
     } ,
   
     {
       "title"           : "LQR optimal control design for a coupled PDE-ODE system.",
       "categories"      : ["tutorial", "WP05"],
-      "tags"            : "",
       "url"             : "/tutorial/wp05/P0006",
       "date"            : "2018-10-28",
-      "author"          : [
-                              "BorjanG"
-                          ],
+      "author"          : ["BorjanG"],
       "description"     : "Stabilization of a coupled PDE-ODE system by means of a feedback LQR control."
     } ,
   
     {
       "title"           : "Optimal control of a  graph evolving in discrete time",
       "categories"      : ["tutorial", "WP99"],
-      "tags"            : "",
       "url"             : "/tutorial/wp99/P0001",
       "date"            : "2018-10-26",
-      "author"          : [
-                              "AlejandroC"
-                          ],
+      "author"          : ["AlejandroC"],
       "description"     : "Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state."
     } ,
   
     {
       "title"           : "Riccati theory in LQ optimization with time-varying target",
       "categories"      : ["tutorial", "WP02"],
-      "tags"            : "",
       "url"             : "/tutorial/wp02/P0003",
       "date"            : "2018-10-26",
-      "author"          : [
-                              "DarioP"
-                          ],
+      "author"          : ["DarioP"],
       "description"     : "Numerical computation of the optimal control and the optimal state"
     } ,
   
     {
       "title"           : "Turnpike property for functionals involving $L^1−norm$",
       "categories"      : ["tutorial", "WP02"],
-      "tags"            : "",
       "url"             : "/tutorial/wp02/P0001",
       "date"            : "2018-10-26",
-      "author"          : [
-                              "MartinL",
-                              "CesareM",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["MartinL","CesareM","EnriqueZ"],
       "description"     : "We want to study the following optimal control problem..."
     } ,
   
     {
       "title"           : "LQR control of a fractional reaction diffusion equation",
       "categories"      : ["tutorial", "WP05"],
-      "tags"            : "",
       "url"             : "/tutorial/wp05/P0004",
       "date"            : "2018-10-24",
-      "author"          : [
-                              "UmbertoB"
-                          ],
+      "author"          : ["UmbertoB"],
       "description"     : "Design of a LQR controller for the stabilization of a fractional reaction diffusion equation"
     } ,
   
     {
       "title"           : "Synchronized Oscillators",
       "categories"      : ["tutorial", "WP01"],
-      "tags"            : "",
       "url"             : "/tutorial/wp01/P0007",
       "date"            : "2018-10-19",
-      "author"          : [
-                              "AnaN",
-                              "JesusO",
-                              "UmbertoB"
-                          ],
+      "author"          : ["AnaN","JesusO","UmbertoB"],
       "description"     : "Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method"
     } ,
   
     {
       "title"           : "Rays propagation of a fractional Schrodinger Equation",
       "categories"      : ["tutorial", "WP05"],
-      "tags"            : "",
       "url"             : "/tutorial/wp05/P0001",
       "date"            : "2018-07-21",
-      "author"          : [
-                              "UmbertoB"
-                          ],
+      "author"          : ["UmbertoB"],
       "description"     : "Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics"
     } ,
   
     {
       "title"           : "Optimal Control of the Poisson Equation with OpenFOAM",
       "categories"      : ["tutorial", "WP99"],
-      "tags"            : "",
       "url"             : "/tutorial/wp99/P0021",
       "date"            : "2018-05-01",
-      "author"          : [
-                              "VictorH",
-                              "JoseV",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["VictorH","JoseV","EnriqueZ"],
       "description"     : "In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE)."
     } ,
   
     {
       "title"           : "WKB expansion for a fractional Schrödinger equation with applications to controllability",
       "categories"      : ["tutorial", "WP05"],
-      "tags"            : "",
       "url"             : "/tutorial/wp05/P0002",
       "date"            : "2018-04-05",
-      "author"          : [
-                              "UmbertoB",
-                              "AlejandroA",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["UmbertoB","AlejandroA","EnriqueZ"],
       "description"     : "Theoretical and numerical analysis of the propagation of the solutions for a Schrödinger equation with fractional Laplacian, with application to the study of controllability properties."
     } ,
   
     {
       "title"           : "Averaged Control",
       "categories"      : ["tutorial", "WP01"],
-      "tags"            : "",
       "url"             : "/tutorial/wp01/T00010",
       "date"            : "2018-03-12",
-      "author"          : [
-                              "VictorH",
-                              "JoseV",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["VictorH","JoseV","EnriqueZ"],
       "description"     : "In this work, we address the optimal control of parameter-dependent systems."
     } ,
   
     {
       "title"           : "Control of the semi-discrete 1D heat equation under nonnegative control constraint",
       "categories"      : ["tutorial", "WP03"],
-      "tags"            : "",
       "url"             : "/tutorial/wp03/P0001",
       "date"            : "2018-03-05",
-      "author"          : [
-                              "JeromeL",
-                              "EmanuelT",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["JeromeL","EmanuelT","EnriqueZ"],
       "description"     : "Using IpOpt to get the time-optimal nonnegative control of a semi-discrete 1D heat equation"
     } ,
   
     {
       "title"           : "Wave Control",
       "categories"      : ["tutorial", "WP01"],
-      "tags"            : "DyCon Toolbox",
       "url"             : "/tutorial/wp01/T00020",
       "date"            : "2018-01-12",
-      "author"          : [
-                              "EnriqueZ"
-                          ],
+      "author"          : ["EnriqueZ"],
       "description"     : "A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation."
     } ,
   
     {
       "title"           : "Greedy algorithm for Parametric Vlasov-Fokker-Planck System",
       "categories"      : ["tutorial", "WP01"],
-      "tags"            : "",
       "url"             : "/tutorial/wp01/P0001",
       "date"            : "2018-01-10",
-      "author"          : [
-                              "YuhuaZ",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["YuhuaZ","EnriqueZ"],
       "description"     : "Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it."
     } ,
   
     {
       "title"           : "Finite element approximation of the 1-D fractional Poisson equation",
       "categories"      : ["tutorial", "WP05"],
-      "tags"            : "",
       "url"             : "/tutorial/wp05/P0007",
       "date"            : "2017-12-05",
-      "author"          : [
-                              "UmbertoB",
-                              "VictorH"
-                          ],
+      "author"          : ["UmbertoB","VictorH"],
       "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control"
     } ,
   
     {
       "title"           : "Solving an optimal control problem arised in ecology with AMPL",
       "categories"      : ["tutorial", "WP05"],
-      "tags"            : "",
       "url"             : "/tutorial/wp05/P0003",
       "date"            : "2017-12-05",
-      "author"          : [
-                              "JiaminZ",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["JiaminZ","EnriqueZ"],
       "description"     : "We present a computational tool to solve optimal control problems for diffusion-reaction systems describing the growth and spread of populations"
     } ,
   
     {
       "title"           : "Optimal control applied to collective behaviour",
       "categories"      : ["tutorial", "WP06"],
-      "tags"            : "",
       "url"             : "/tutorial/wp06/P0002",
       "date"            : "2017-11-05",
-      "author"          : [
-                              "RamonE",
-                              "AitziberI",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["RamonE","AitziberI","EnriqueZ"],
       "description"     : "Guidance by repulsion model describing the behaviour of two agents, a driver and an evader"
     } ,
   
     {
       "title"           : "Kolmogorov equation",
       "categories"      : ["tutorial", "WP06"],
-      "tags"            : "",
       "url"             : "/tutorial/wp06/P0001",
       "date"            : "2017-11-05",
-      "author"          : [
-                              "MehmetE",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["MehmetE","EnriqueZ"],
       "description"     : "Various numerical approximation methods are discussed with the aim of recoving the large time asymptotic properties of the hypoelliptic Kolmogorov model"
     } ,
   
     {
       "title"           : "2D inverse design of linear transport equations on unstructured grids",
       "categories"      : ["tutorial", "WP04"],
-      "tags"            : "",
       "url"             : "/tutorial/wp04/P0002",
       "date"            : "2017-11-05",
-      "author"          : [
-                              "MarioM",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["MarioM","EnriqueZ"],
       "description"     : "Various discrete adjoint methodologies are discussed for the inverse design of linear transport equations in 2 space dimensions"
     } ,
   
     {
       "title"           : "Greedy optimal control for elliptic problems and its application to turnpike problems",
       "categories"      : ["tutorial", "WP01"],
-      "tags"            : "",
       "url"             : "/tutorial/wp01/P0002",
       "date"            : "2017-11-01",
-      "author"          : [
-                              "VictorH",
-                              "MartinL",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["VictorH","MartinL","EnriqueZ"],
       "description"     : "Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data"
     } ,
   
     {
       "title"           : "IpOpt and AMPL use to solve time optimal control problems",
       "categories"      : ["tutorial", "WP03"],
-      "tags"            : "",
       "url"             : "/tutorial/wp03/P0002",
       "date"            : "2017-08-05",
-      "author"          : [
-                              "JeromeL",
-                              "EmanuelT",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["JeromeL","EmanuelT","EnriqueZ"],
       "description"     : "How to use IpOpt to solve time optimal control problems"
     } ,
   
     {
       "title"           : "Conservation laws in the presence of shocks",
       "categories"      : ["tutorial", "WP04"],
-      "tags"            : "",
       "url"             : "/tutorial/wp04/P0001",
       "date"            : "2017-06-05",
-      "author"          : [
-                              "RodrigoL",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["RodrigoL","EnriqueZ"],
       "description"     : "Tracking control of 1D scalar conservation laws in the presence of shocks"
     } ,
   
     {
       "title"           : "Long time control and the Turnpike property",
       "categories"      : ["tutorial", "WP02"],
-      "tags"            : "",
       "url"             : "/tutorial/wp02/P0004",
       "date"            : "2017-05-04",
-      "author"          : [
-                              "AitziberI",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["AitziberI","EnriqueZ"],
       "description"     : "The turnpike property improves the numerical methods used to solve optimal control problems"
     } ,
   
     {
       "title"           : "Numerical aspects of LTHC of Burgers equation",
       "categories"      : ["tutorial", "WP02"],
-      "tags"            : "",
       "url"             : "/tutorial/wp02/P0002",
       "date"            : "2017-05-04",
-      "author"          : [
-                              "NavidA",
-                              "AlejandroP",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["NavidA","AlejandroP","EnriqueZ"],
       "description"     : "Numerical approximation of the inverse design problem for the Burgers equation"
     } ,
   
     {
       "title"           : "Greedy Control",
       "categories"      : ["tutorial", "WP01"],
-      "tags"            : "",
       "url"             : "/tutorial/wp01/P0003",
       "date"            : "2017-03-01",
-      "author"          : [
-                              "MartinL",
-                              "EnriqueZ"
-                          ],
+      "author"          : ["MartinL","EnriqueZ"],
       "description"     : "Control of a parameter dependent system in a robust manner"
-    } ,
-  
-    {
-      "title"           : "An introduction to the moment method for optimal control problems for polynomial ODEs",
-      "categories"      : ["tutorial", "WP99"],
-      "tags"            : "",
-      "url"             : "/tutorial/wp99/P0015-S",
-      "date"            : "0001-01-01",
-      "author"          : [
-                          ],
-      "description"     : ""
     } 
   
 ]
