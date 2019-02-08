@@ -3,10 +3,10 @@
   <channel>
     <title>DyCon Blog</title>
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
-    <link>http://localhost:4000/DyCon-Blog/</link>
-    <atom:link href="http://localhost:4000/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 08 Feb 2019 13:01:24 +0100</pubDate>
-    <lastBuildDate>Fri, 08 Feb 2019 13:01:24 +0100</lastBuildDate>
+    <link>https://deustotech.github.io/DyCon-Blog/</link>
+    <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Fri, 08 Feb 2019 13:03:28 +0100</pubDate>
+    <lastBuildDate>Fri, 08 Feb 2019 13:03:28 +0100</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -264,8 +264,8 @@ References
 
 </description>
         <pubDate>Mon, 04 Feb 2019 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P0015-moment</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P0015-moment</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0015-moment</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0015-moment</guid>
         
         
         <category>tutorial</category>
@@ -511,8 +511,8 @@ legend('RPS','P1 FEM','FDM','exact')
 
 </description>
         <pubDate>Tue, 18 Dec 2018 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0013-Numerical-homogenizaton</guid>
         
         
         <category>tutorial</category>
@@ -670,8 +670,8 @@ This procedure may be repeated for all the others parameters, thus obtaining a c
 
 </description>
         <pubDate>Thu, 15 Nov 2018 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P0011</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P0011</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0011</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0011</guid>
         
         
         <category>tutorial</category>
@@ -885,8 +885,8 @@ title('stabilized state of the system at time t=10')
 
 </description>
         <pubDate>Mon, 29 Oct 2018 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P0010-Yacouba</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P0010-Yacouba</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0010-Yacouba</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0010-Yacouba</guid>
         
         
         <category>tutorial</category>
@@ -1130,8 +1130,8 @@ We can see that $\theta_1$ does not tend to zero in Figure 5 since $K\times\Thet
 
 </description>
         <pubDate>Mon, 29 Oct 2018 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P0009-Dongnam</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P0009-Dongnam</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0009-Dongnam</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0009-Dongnam</guid>
         
         
         <category>tutorial</category>
@@ -1456,8 +1456,8 @@ References
 
 </description>
         <pubDate>Mon, 29 Oct 2018 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp05/P0008-Charlotte</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp05/P0008-Charlotte</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0008-Charlotte</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0008-Charlotte</guid>
         
         
         <category>tutorial</category>
@@ -1685,8 +1685,8 @@ hold off
 
 </description>
         <pubDate>Sun, 28 Oct 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P0014-Domenec</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P0014-Domenec</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0014-Domenec</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0014-Domenec</guid>
         
         
         <category>tutorial</category>
@@ -1867,8 +1867,8 @@ References:
 
 </description>
         <pubDate>Sun, 28 Oct 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp05/P0006</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp05/P0006</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0006</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0006</guid>
         
         
         <category>tutorial</category>
@@ -2132,8 +2132,8 @@ References
 
 </description>
         <pubDate>Fri, 26 Oct 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P0001</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P0001</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0001</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0001</guid>
         
         
         <category>tutorial</category>
@@ -2223,8 +2223,8 @@ References
 
 </description>
         <pubDate>Fri, 26 Oct 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp02/P0003</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp02/P0003</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0003</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0003</guid>
         
         
         <category>tutorial</category>
