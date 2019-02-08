@@ -12,6 +12,16 @@
     } ,
   
     {
+      "title"           : "Optimal control for inveted pendulum",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0015-Pendulum",
+      "date"            : "2019-02-04",
+      "author"          : ["NoboruS"],
+      "description"     : "Tutorial of optimal control for inveted pendulum with symbolic MATLAB",
+      "avatar"          : ""
+    } ,
+  
+    {
       "title"           : "Two Grids Filter Method for RPS Semi-Discretization",
       "categories"      : ["tutorial", "WP04"],
       "url"             : "/tutorial/wp04/P0002-Numerical-homogenizaton",
