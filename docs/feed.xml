@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 08 Feb 2019 16:27:09 +0100</pubDate>
-    <lastBuildDate>Fri, 08 Feb 2019 16:27:09 +0100</lastBuildDate>
+    <pubDate>Sun, 10 Feb 2019 07:36:52 +0100</pubDate>
+    <lastBuildDate>Sun, 10 Feb 2019 07:36:52 +0100</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -275,7 +275,7 @@ References
       </item>
     
       <item>
-        <title>Optimal control for inveted pendulum</title>
+        <title>Optimal control for inverted pendulum</title>
         <description>This tutorial aims to show how to build equations of motion, control system model and optimally stabilizing controllers for the inverted pendulum. This tutorial is a standard material in control engineering education. We first derive the equations of motion via Lagrange’s method using Symbolic Math Toolbox. Then, a linear control model is derived. The optimal controller is designed using linear quadratic regulator theory. Simulations are carried out for the inverted pendulum nonlinear model. In Appendix, finite horizon linear optimal control is shown by solving a differential Riccati equation.
 
 A schematic of an inverted pendulum is shown below.

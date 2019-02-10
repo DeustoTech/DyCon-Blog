@@ -12,12 +12,12 @@
     } ,
   
     {
-      "title"           : "Optimal control for inveted pendulum",
+      "title"           : "Optimal control for inverted pendulum",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/P0015-Pendulum",
       "date"            : "2019-02-04",
       "author"          : ["NoboruS"],
-      "description"     : "Tutorial of optimal control for inveted pendulum with symbolic MATLAB",
+      "description"     : "Tutorial of optimal control for inverted pendulum with symbolic MATLAB",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/Pendulum_pic.png"
     } ,
   
