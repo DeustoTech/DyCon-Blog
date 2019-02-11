@@ -2,28 +2,26 @@
 layout: project
 category: proyect
 title: Posts
-description: One of the main outputs of the research conducted within DyCon is the development of new computational methods and tools (algorithms, tutorials, sample codes, software and simulations), all of which are being integrated in a computational platform. This page offers a higher layer of the work that is currently taking place inside the DyCon team.
+description: Here you will find the whole list of tutorials and guides created and developed by the researcher's working in the DyCon ERC Project. All of the content has been classified according to the project’s corresponding working packages.
 
 ---
-
- {::nomarkdown}
-All of the content has been classified according to the project’s corresponding working packages:
-    {% for topic in site.data.WorkPackages %}
-      {%- assign qposts = site.posts | where:"layout","tutorial"| where:"categories",topic[0] -%}
-      <a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">
-        <h2 class="topic-title">{{topic[1].name}}</h2>
-      </a>  
-      {% for post in qposts limit:3 %}
-        {% unless post %}
-          {% continue %}
-        {% endunless %}
-        {% include card.html title       = post.title
-                             url         = post.url 
-                             author      = post.author 
-                             description = post.description
-                             avatar      = post.avatar
-                             date        = post.date %}
-      {% endfor %}
-    <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more ...</a></h3>
+{::nomarkdown}
+  {% for topic in site.data.WorkPackages %}
+    {%- assign qposts = site.posts | where:"layout", "tutorial" | where:"categories", topic[0] -%}
+    <a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">
+      <h2 class="topic-title dark-grey">{{topic[1].name}}</h2>
+    </a>  
+    {% for post in qposts limit:3 %}
+      {% unless post %}
+        {% continue %}
+      {% endunless %}
+      {% include card.html title       = post.title
+                           url         = post.url
+                           author      = post.author
+                           description = post.description
+                           avatar      = post.avatar
+                           date        = post.date %}
     {% endfor %}
+  <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more ...</a></h3>
+  {% endfor %}
 {:/nomarkdown}

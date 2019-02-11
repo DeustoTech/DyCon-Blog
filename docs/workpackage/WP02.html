@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,10 @@
   <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
-  <title>WP02 - DyCon Blog</title>
+  <title>
+    WP02 - DyCon Blog
+    
+  </title>
 
   <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/workpackage/WP02">
 
@@ -78,9 +80,7 @@
 
 </head>
 
-
 <body>
-
     <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
@@ -127,17 +127,18 @@
     <!-- /.container -->
 </nav>
 
-
     <!-- Extraemos el json topic segun el titulo de post, para de esta forma tener todas las propiedades de topic -->
 
 <header class="intro-header">
   <div class="container" style="padding-top: 50px;">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-heading">
-          <h2><small>WorkPackage of <a href="https://deustotech.github.io/DyCon-Blog/projects/posts">Post</a>:</small></h2>
-          <h1>Long time horizon control </h1>
-        </div>
+    <div class="col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h2>
+          <small class="light-grey">
+            <a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>	&#8827; Long time horizon control
+          </small>
+        </h2>
+        <h1>Long time horizon control </h1>
       </div>
 		</div>
 	</div>
@@ -193,121 +194,118 @@ img:active{
 </style>
 <article>
   <div id="content" class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p>Control problems for evolution PDEs are most often considered in <strong>finite time intervals</strong>, without paying attention to the length of the control horizon and how it affects the nature of optimal trajectories and controls. However, the effective available time horizon is one of the critical factors in applications, as it occurs in the design of medical therapies, or in sonic boom minimisation for supersonic aircrafts. Some hyperbolic models fail to be controllable when the time horizon is too short but, even for parabolic models for which control can be achieved in any time horizon, the nature of optimal controls and trajectories depend very sensibly in the length of the control time.</p> <p>Often, for practical applications, and in order to simplify the complexity of the problem under consideration, it is assumed that, if the uncontrolled free dynamics tends to a steady configuration as time tend to infinity, optimal dynamic control strategies will do the same, converging to the optimal steady state ones when the time horizon for control tends to infinity. This is the so-called <strong>turnpike property</strong> that guarantees that, for long time horizons of control, controls and controlled trajectories are exponentially close to the steady-state ones except near the initial and final times. However, this property is rarely proved rigorously.</p> <p>We aim at developing a systematic turnpike theory for evolution PDEs. Our preliminary results show that this not only depends on the model under consideration but also on the cost functional and control target, and that the fulfillment of the turnpike property requires the system under consideration to be controllable or stabilisable. </p> <p>The theory developed so far allows to handle, mostly, linear PDEs, but the problem is widely open in the <strong>nonlinear</strong> frame, where the existing results require smallness conditions on the objectives (probably of a purely technical nature), which restrict the scope of applications. </p> <p>Turnpike theory has also important consequences for the development of <strong>efficient numerical solvers and software</strong>. Indeed, in practice, when the control problem is formulated in long time intervals, standard iterative algorithms based on adjoint methodologies are computationally expensive, relying on the recurrent resolution of the forward state dynamics and the backward adjoint one. The use of the turnpike property, starting from the optimal steady control and state, contributes to achieving faster approximation procedures in long time horizons.</p> <p><strong>Optimal shape and coefficient design</strong> problems constitute also a challenging field in which turnpike theory would be worth to be developed.</p>
-        <p>See our tutorials:</p>
-        <!-- Realizamos la query  -->
-        
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2017/05/schemeCompareClip.jpg">
-            
+    <div class="col-md-10 col-md-offset-1">
+      <p>Control problems for evolution PDEs are most often considered in <strong>finite time intervals</strong>, without paying attention to the length of the control horizon and how it affects the nature of optimal trajectories and controls. However, the effective available time horizon is one of the critical factors in applications, as it occurs in the design of medical therapies, or in sonic boom minimisation for supersonic aircrafts. Some hyperbolic models fail to be controllable when the time horizon is too short but, even for parabolic models for which control can be achieved in any time horizon, the nature of optimal controls and trajectories depend very sensibly in the length of the control time.</p> <p>Often, for practical applications, and in order to simplify the complexity of the problem under consideration, it is assumed that, if the uncontrolled free dynamics tends to a steady configuration as time tend to infinity, optimal dynamic control strategies will do the same, converging to the optimal steady state ones when the time horizon for control tends to infinity. This is the so-called <strong>turnpike property</strong> that guarantees that, for long time horizons of control, controls and controlled trajectories are exponentially close to the steady-state ones except near the initial and final times. However, this property is rarely proved rigorously.</p> <p>We aim at developing a systematic turnpike theory for evolution PDEs. Our preliminary results show that this not only depends on the model under consideration but also on the cost functional and control target, and that the fulfillment of the turnpike property requires the system under consideration to be controllable or stabilisable. </p> <p>The theory developed so far allows to handle, mostly, linear PDEs, but the problem is widely open in the <strong>nonlinear</strong> frame, where the existing results require smallness conditions on the objectives (probably of a purely technical nature), which restrict the scope of applications. </p> <p>Turnpike theory has also important consequences for the development of <strong>efficient numerical solvers and software</strong>. Indeed, in practice, when the control problem is formulated in long time intervals, standard iterative algorithms based on adjoint methodologies are computationally expensive, relying on the recurrent resolution of the forward state dynamics and the backward adjoint one. The use of the turnpike property, starting from the optimal steady control and state, contributes to achieving faster approximation procedures in long time horizons.</p> <p><strong>Optimal shape and coefficient design</strong> problems constitute also a challenging field in which turnpike theory would be worth to be developed.</p>
+      <p>See our tutorials:</p>
+      <!-- Realizamos la query  -->
+      
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_01.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp02/P0003" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Riccati theory in LQ optimization with time-varying target </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp02/P0002" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Numerical aspects of LTHC of Burgers equation </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                Numerical approximation of the inverse design problem for the Burgers equation
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/NavidA">Navid Allahverdi</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/AlejandroP">Alejandro Pozo</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 04 May 2017
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/DarioP">Dario Pighin</a>,
+              
+              - 26 October 2018
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2017/03/dibujo4.png">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alphazero_ev.jpg">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp02/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Turnpike property for functionals involving $L^1−norm$ </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              We want to study the following optimal control problem...
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp02/P0004" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Long time control and the Turnpike property </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                The turnpike property improves the numerical methods used to solve optimal control problems
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/AitziberI"></a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 04 May 2017
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/CesareM">Césare Molinari</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 26 October 2018
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alphazero_ev.jpg">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2017/03/dibujo4.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp02/P0004" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Long time control and the Turnpike property </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              The turnpike property improves the numerical methods used to solve optimal control problems
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp02/P0001" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Turnpike property for functionals involving $L^1−norm$ </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                We want to study the following optimal control problem...
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/CesareM">Césare Molinari</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 26 October 2018
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/AitziberI"></a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 04 May 2017
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_01.png">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2017/05/schemeCompareClip.jpg">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp02/P0002" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Numerical aspects of LTHC of Burgers equation </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Numerical approximation of the inverse design problem for the Burgers equation
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp02/P0003" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Riccati theory in LQ optimization with time-varying target </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/DarioP">Dario Pighin</a>,
-                
-                - 26 October 2018
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/NavidA">Navid Allahverdi</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/AlejandroP">Alejandro Pozo</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 04 May 2017
             </div>
           </div>
-        
-      </div>
+        </div>
+      
     </div>
   </div>
 </article>
 <hr>
-
 
     <!-- Footer -->
 <footer>
@@ -315,18 +313,16 @@ img:active{
   <div class="container">
     <div class="row">
       <ul class="list-inline text-center">
-        <li>
-          <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
         </li>
-        <li style=" padding-bottom: 10px;">
-          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
         </li>
       </ul>
     </div>
   </div>
 </footer>
 
-
 </body>
-
 </html>

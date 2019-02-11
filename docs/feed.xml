@@ -5,9 +5,9 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 11 Feb 2019 10:40:37 +0100</pubDate>
-    <lastBuildDate>Mon, 11 Feb 2019 10:40:37 +0100</lastBuildDate>
-    <generator>Jekyll v3.8.5</generator>
+    <pubDate>Mon, 11 Feb 2019 18:43:20 +0100</pubDate>
+    <lastBuildDate>Mon, 11 Feb 2019 18:43:20 +0100</lastBuildDate>
+    <generator>Jekyll v3.8.4</generator>
     
       <item>
         <title>An introduction to the moment method for optimal control problems for polynomial ODEs</title>
@@ -261,7 +261,6 @@ References
 [2] D. Henrion, J.B. Lasserre and J. Löfberg. GloptiPoly 3: moments, optimization and semidefinite programming. Optimization Methods &amp;amp; Software, 24(4-5), 761-779, 2009.
 
 [3] S. Marx, T. Weisser, D. Henrion and J.B. Lasserre. A moment approach for entropy solutions to nonlinear hyperbolic PDEs arXiv preprint arXiv:1807.02306
-
 </description>
         <pubDate>Mon, 04 Feb 2019 00:00:00 +0100</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0015-moment</link>

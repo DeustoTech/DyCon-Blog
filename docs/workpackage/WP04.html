@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,10 @@
   <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
-  <title>WP04 - DyCon Blog</title>
+  <title>
+    WP04 - DyCon Blog
+    
+  </title>
 
   <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/workpackage/WP04">
 
@@ -78,9 +80,7 @@
 
 </head>
 
-
 <body>
-
     <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
@@ -127,17 +127,18 @@
     <!-- /.container -->
 </nav>
 
-
     <!-- Extraemos el json topic segun el titulo de post, para de esta forma tener todas las propiedades de topic -->
 
 <header class="intro-header">
   <div class="container" style="padding-top: 50px;">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-heading">
-          <h2><small>WorkPackage of <a href="https://deustotech.github.io/DyCon-Blog/projects/posts">Post</a>:</small></h2>
-          <h1>Inverse design of time-irreversible models </h1>
-        </div>
+    <div class="col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h2>
+          <small class="light-grey">
+            <a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>	&#8827; Inverse design of time-irreversible models
+          </small>
+        </h2>
+        <h1>Inverse design of time-irreversible models </h1>
       </div>
 		</div>
 	</div>
@@ -193,92 +194,89 @@ img:active{
 </style>
 <article>
   <div id="content" class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p>Some important PDE models in Continuum Physics, such as <strong>hyperbolic conservation laws</strong>, represent a major challenge from a control viewpoint for the following (closely related) reasons. <ol> <li><strong>solutions lack regularity properties</strong> and develop shock discontinuities in finite time, making linearization methods inapplicable</li> <li>the property of <strong>backward uniqueness</strong> is lost in the absence of viscosity effects and the most elementary control problem (but relevant in applications), that of <strong>inverse design</strong>, aimed at identifying the initial source leading to the available measurements at the final time, is severely <strong>ill-posed</strong>.</li> </ol> <p>Similar issues arise in the context of Hamilton-Jacobi equations.</p> <p>The existing methods, both the classical ones based on adjoint methodology or the more recent ones relying on sparsity and l1-minimization, provide numerical approximations of one of the possible initial sources. But these tools are not yet capable to provide all the feasible realizations for strongly time-irreversible systems as hyperbolic conservation laws. This issue is one of our main objectives, because of its implications in a number of key areas, such as management of natural resources.</p> <p>We aim at developing a theory allowing the inverse design in the absence of <strong>backward uniqueness</strong> to be addressed both for linear and nonlinear problems. We shall take advantage of the fact that initial data recovered by backward <strong>weak but not entropic solutions</strong> can lead to the desired target by the forward entropic flow. This leads to the interesting and non-standard question of building numerical schemes to approximate non-entropic weak solutions. This program will also be developed in the context of <strong>Hamilton-Jacobi</strong> equations where, among the wide class of weak solutions, the physical ones are characterized by the viscosity criterion.</p>
-        <p>See our tutorials:</p>
-        <!-- Realizamos la query  -->
-        
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2017/03/uk_00_3_E2.png">
-            
+    <div class="col-md-10 col-md-offset-1">
+      <p>Some important PDE models in Continuum Physics, such as <strong>hyperbolic conservation laws</strong>, represent a major challenge from a control viewpoint for the following (closely related) reasons. <ol> <li><strong>solutions lack regularity properties</strong> and develop shock discontinuities in finite time, making linearization methods inapplicable</li> <li>the property of <strong>backward uniqueness</strong> is lost in the absence of viscosity effects and the most elementary control problem (but relevant in applications), that of <strong>inverse design</strong>, aimed at identifying the initial source leading to the available measurements at the final time, is severely <strong>ill-posed</strong>.</li> </ol> <p>Similar issues arise in the context of Hamilton-Jacobi equations.</p> <p>The existing methods, both the classical ones based on adjoint methodology or the more recent ones relying on sparsity and l1-minimization, provide numerical approximations of one of the possible initial sources. But these tools are not yet capable to provide all the feasible realizations for strongly time-irreversible systems as hyperbolic conservation laws. This issue is one of our main objectives, because of its implications in a number of key areas, such as management of natural resources.</p> <p>We aim at developing a theory allowing the inverse design in the absence of <strong>backward uniqueness</strong> to be addressed both for linear and nonlinear problems. We shall take advantage of the fact that initial data recovered by backward <strong>weak but not entropic solutions</strong> can lead to the desired target by the forward entropic flow. This leads to the interesting and non-standard question of building numerical schemes to approximate non-entropic weak solutions. This program will also be developed in the context of <strong>Hamilton-Jacobi</strong> equations where, among the wide class of weak solutions, the physical ones are characterized by the viscosity criterion.</p>
+      <p>See our tutorials:</p>
+      <!-- Realizamos la query  -->
+      
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0002-Numerical%20homogenizaton/copiaRM_02.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp04/P0002-Numerical-homogenizaton" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Two Grids Filter Method for RPS Semi-Discretization </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp04/P0001" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Conservation laws in the presence of shocks </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                Tracking control of 1D scalar conservation laws in the presence of shocks
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/RodrigoL"></a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 05 June 2017
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/XinliangL">Xinliang Liu</a>,
+              
+              - 18 December 2018
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2017/01/frontogenesis4-300x300.jpg">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2017/01/frontogenesis4-300x300.jpg">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp04/P0002" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> 2D inverse design of linear transport equations on unstructured grids </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Various discrete adjoint methodologies are discussed for the inverse design of linear transport equations in 2 space dimensions
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp04/P0002" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> 2D inverse design of linear transport equations on unstructured grids </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                Various discrete adjoint methodologies are discussed for the inverse design of linear transport equations in 2 space dimensions
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/MarioM"></a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 05 November 2017
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/MarioM"></a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 05 November 2017
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0002-Numerical%20homogenizaton/copiaRM_02.png">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2017/03/uk_00_3_E2.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp04/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Conservation laws in the presence of shocks </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Tracking control of 1D scalar conservation laws in the presence of shocks
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp04/P0002-Numerical-homogenizaton" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Two Grids Filter Method for RPS Semi-Discretization </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/XinliangL">Xinliang Liu</a>,
-                
-                - 18 December 2018
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/RodrigoL"></a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 05 June 2017
             </div>
           </div>
-        
-      </div>
+        </div>
+      
     </div>
   </div>
 </article>
 <hr>
-
 
     <!-- Footer -->
 <footer>
@@ -286,18 +284,16 @@ img:active{
   <div class="container">
     <div class="row">
       <ul class="list-inline text-center">
-        <li>
-          <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
         </li>
-        <li style=" padding-bottom: 10px;">
-          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
         </li>
       </ul>
     </div>
   </div>
 </footer>
 
-
 </body>
-
 </html>

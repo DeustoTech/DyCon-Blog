@@ -83,7 +83,7 @@ hr.small {
   left: 0;
   width: 100%;
   z-index: 3;
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 .navbar-brand {
   padding:0 0 0 10px !important;
@@ -104,14 +104,33 @@ hr.small {
 .display-block {
   display: block;
 }
+
+/* Sergio additions */
+
+.light-grey > a {
+  color: #777;
+  text-decoration: none;
+}
+.dark-grey {
+  color: #404040;
+  text-decoration: none ;
+}
+
+.search-avatar {
+  width: 178px !important;
+  height: 250px !important;
+  object-fit: cover;
+}
+.center {
+  text-align: center;
+}
+.display-inline {
+  display: inline-block;
+}
+
 /* MathJax CSS */
 .MathJax {
   font-size: 2em !important;
-}
-/* Sergio additions */
-
-.display-inline {
-  display: inline-block;
 }
 
 .photo-author {
@@ -426,12 +445,15 @@ hr.small {
   margin: 20px 0 0;
 }
 
+.post-heading {
+  padding: 0 !important;
+}
 .intro-header .post-heading h1 {
   font-size: 35px;
 }
 .intro-header .post-heading .subheading,
 .intro-header .post-heading .meta {
-  line-height: 1.1;
+  line-height: 1.0;
   display: block;
 }
 .intro-header .post-heading .subheading {

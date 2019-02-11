@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,10 @@
   <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
-  <title>LQR controller for stabilizing the linear population dynamics model - DyCon Blog</title>
+  <title>
+    LQR controller for stabilizing the linear population dynamics model - DyCon Blog
+    
+  </title>
 
   <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0010-Yacouba">
 
@@ -78,9 +80,7 @@
 
 </head>
 
-
 <body>
-
     <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
@@ -127,29 +127,30 @@
     <!-- /.container -->
 </nav>
 
-
     <!-- Post Header -->
 <header class="intro-header">
-    <div class="container" style="padding-top: 70px;">
-        <div class="row">
-            <div class="col-lg-10 col-md-10 col-md-offset-1">
-                <div class="post-heading" style="padding: 0px 0"><h2><small>Post of <a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">Other Topics</a> :</small></h2>
-                    <h1>LQR controller for stabilizing the linear population dynamics model</h1>
-
-					<span class="meta">Posted by:
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">
+            Other Topics</a> &#8827;</small>
+          </h2>
+          <h1>LQR controller for stabilizing the linear population dynamics model</h1>
+					<p class="meta">Posted by:
 					
-						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://deustotech.github.io/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a></span></span>
+						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+              <span itemprop="name">
+                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a>
+              </span>
+            </span>
 					
-					</span>
-                </div>
-            </div>
+					</p>
+        </div>
+      </div>
 		</div>
-
-
 	</div>
 </header>
-
-
 <!-- Post Content -->
 <style>
 img {
@@ -198,19 +199,16 @@ img:active{
 }
 }
 </style>
-
 <article>
-    <div id="content" class="container">
-        <div class="row">
-            <div class="col-lg-10  col-md-10 col-md-offset-1">
-                
-                    <p></p>
-                    
-                            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/simpore.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>  
-                    
-                
-
-				<p>In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space</p>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/simpore.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <p>In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space</p>
 
 <script type="math/tex; mode=display">\begin{cases} y_t=y_{xx}-y_a+(\lambda-\mu(a))y+ U\chi_{Q_{\omega}} \text{ in } (0,1)\times (0,A)\times (0,T)\\ y(x,a,0)=y_0(x,a) \text { in } (0,1)\times (0,A)\\ y(0,a,t)=y(1,a,t)=0\text{ in } (0,A)\times(0,T)\\ y(x,0,t)=\int_{0}^{A}\beta(a)y(x,a,t)da,\\ \end{cases}</script>
 
@@ -413,17 +411,12 @@ img:active{
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_07.png" alt="" /></p>
 
 
-
-                <hr>
-
-            </div>
-        </div>
+        <hr>
+      </div>
     </div>
+  </div>
 </article>
-
-
 <hr>
-
 
     <!-- Footer -->
 <footer>
@@ -431,18 +424,16 @@ img:active{
   <div class="container">
     <div class="row">
       <ul class="list-inline text-center">
-        <li>
-          <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
         </li>
-        <li style=" padding-bottom: 10px;">
-          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
         </li>
       </ul>
     </div>
   </div>
 </footer>
 
-
 </body>
-
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,10 @@
   <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
-  <title>2D inverse design of linear transport equations on unstructured grids - DyCon Blog</title>
+  <title>
+    2D inverse design of linear transport equations on unstructured grids - DyCon Blog
+    
+  </title>
 
   <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0002">
 
@@ -78,9 +80,7 @@
 
 </head>
 
-
 <body>
-
     <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
@@ -127,31 +127,36 @@
     <!-- /.container -->
 </nav>
 
-
     <!-- Post Header -->
 <header class="intro-header">
-    <div class="container" style="padding-top: 70px;">
-        <div class="row">
-            <div class="col-lg-10 col-md-10 col-md-offset-1">
-                <div class="post-heading" style="padding: 0px 0"><h2><small>Post of <a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">Inverse design of time-irreversible models</a> :</small></h2>
-                    <h1>2D inverse design of linear transport equations on unstructured grids</h1>
-
-					<span class="meta">Posted by:
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">
+            Inverse design of time-irreversible models</a> &#8827;</small>
+          </h2>
+          <h1>2D inverse design of linear transport equations on unstructured grids</h1>
+					<p class="meta">Posted by:
 					
-						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://deustotech.github.io/DyCon-Blog/author/MarioM"></a></span></span>
+						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+              <span itemprop="name">
+                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/MarioM"></a>
+              </span>
+            </span>
 					
-						• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a></span></span>
+						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+              <span itemprop="name">
+                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              </span>
+            </span>
 					
-					</span>
-                </div>
-            </div>
+					</p>
+        </div>
+      </div>
 		</div>
-
-
 	</div>
 </header>
-
-
 <!-- Post Content -->
 <style>
 img {
@@ -200,14 +205,12 @@ img:active{
 }
 }
 </style>
-
 <article>
-    <div id="content" class="container">
-        <div class="row">
-            <div class="col-lg-10  col-md-10 col-md-offset-1">
-                
-
-				<p><!--h5>Introduction</h5-->
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        <p><!--h5>Introduction</h5-->
 <h4>1. Adjoint estimation: low or high order?</h4>
 <p>Adjoint methods have been systematically associated to the optimal control design [5] and their applications to aerodynamics [1, 4]. During the last decades, several works were oriented to develop a robust control theory based on the concepts of observability, optimality and controllability for linear and non-linear equations and systems of equations [2, 10, 11, 12].</p>
 <p>Since the discrete approach forces to use the discrete adjoint problem of the flow solver to numerically solve the adjoint equation, the continuous approach is adopted due to its valuable flexibility of using different solvers for the flow and adjoint equations. It is well known that problems where high frequencies play an important role such as the control of wave equation [11]</p>
@@ -531,17 +534,12 @@ SOU
 <p>Note that the number of iterations for the <img src="https://cmc.deusto.eus/wp-content/ql-cache/quicklatex.com-5ae14ab8f471a16e2da78cf344191eb8_l3.png" class="ql-img-inline-formula quicklatex-auto-format" alt="&#92;&#110;&#97;&#98;&#108;&#97;&#32;&#74;&#94;&#123;&#83;&#79;&#85;&#125;" title="Rendered by QuickLaTeX.com" height="16" width="56" style="vertical-align: 0px;" /> approach does not reach the maximum number of iterations set at the beginning of the inverse design process because at iteration 45, the functional is not able to diminish its value to the next iteration due to the deterioration of the initial condition by the high frequencies.</p>
 </table></table></p>
 
-
-                <hr>
-
-            </div>
-        </div>
+        <hr>
+      </div>
     </div>
+  </div>
 </article>
-
-
 <hr>
-
 
     <!-- Footer -->
 <footer>
@@ -549,18 +547,16 @@ SOU
   <div class="container">
     <div class="row">
       <ul class="list-inline text-center">
-        <li>
-          <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
         </li>
-        <li style=" padding-bottom: 10px;">
-          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
         </li>
       </ul>
     </div>
   </div>
 </footer>
 
-
 </body>
-
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,10 @@
   <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
-  <title>WP01 - DyCon Blog</title>
+  <title>
+    WP01 - DyCon Blog
+    
+  </title>
 
   <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/workpackage/WP01">
 
@@ -78,9 +80,7 @@
 
 </head>
 
-
 <body>
-
     <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
@@ -127,17 +127,18 @@
     <!-- /.container -->
 </nav>
 
-
     <!-- Extraemos el json topic segun el titulo de post, para de esta forma tener todas las propiedades de topic -->
 
 <header class="intro-header">
   <div class="container" style="padding-top: 50px;">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-heading">
-          <h2><small>WorkPackage of <a href="https://deustotech.github.io/DyCon-Blog/projects/posts">Post</a>:</small></h2>
-          <h1>Control of parameter dependent problems </h1>
-        </div>
+    <div class="col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h2>
+          <small class="light-grey">
+            <a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>	&#8827; Control of parameter dependent problems
+          </small>
+        </h2>
+        <h1>Control of parameter dependent problems </h1>
       </div>
 		</div>
 	</div>
@@ -193,173 +194,170 @@ img:active{
 </style>
 <article>
   <div id="content" class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p>In real applications, models are not completely known since relevant parameters (deterministic or stochastic) are subject to uncertainty and indetermination. Accordingly, for practical purposes, robust analytical and computational methods are needed, allowing to control not only a given realization of the model but also to deal with parameter-dependent families of systems in a stable, robust and computationally efficient way. This issue requires the development of specific new analytical and numerical tools and constitutes one of our major objectives. We mainly focus on the deterministic setting, although our techniques can also be adapted to stochastic and random models.</p> <p>Averaged control is a first important concept that aims to control the averaged dynamics. This is often a challenging issue since the model governing the evolution of the averaged dynamics is usually hard to be determined and may change type with respect to the original parameter-depending dynamics. Furthermore, in some practical applications, averaged control turns out to be insufficient since it does not guarantee to control the variance of the states. New techniques are needed to guarantee the efficient control of the system for all the realizations of the parameter values.</p> <p>We aim to adapt the existing techniques of reduced modelling and nonlinear approximation by exploiting the notion of sparsity, in order to build optimal methods (with respect to the computational cost and complexity) for controlling parameter-dependent PDEs in a robust manner. To this end, we rely on the use of greedy and weak-greedy algorithms to identify the most meaningful realizations of the parameters and L^1 minimisation to search for impulsional controls.</p> <p>For doing this we view the parameter-dependent family of controls and controlled solutions as a manifold in the product control/state space.</p> <p>These techniques are applied and tested in some classical benchmark control problems for parabolic and hyperbolic PDEs, but can also be adapted to more challenging problems as the optimal location of controllers and actuators.</p>
-        <p>See our tutorials:</p>
-        <!-- Realizamos la query  -->
-        
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2017/03/heat-online-3D.jpg">
-            
+    <div class="col-md-10 col-md-offset-1">
+      <p>In real applications, models are not completely known since relevant parameters (deterministic or stochastic) are subject to uncertainty and indetermination. Accordingly, for practical purposes, robust analytical and computational methods are needed, allowing to control not only a given realization of the model but also to deal with parameter-dependent families of systems in a stable, robust and computationally efficient way. This issue requires the development of specific new analytical and numerical tools and constitutes one of our major objectives. We mainly focus on the deterministic setting, although our techniques can also be adapted to stochastic and random models.</p> <p>Averaged control is a first important concept that aims to control the averaged dynamics. This is often a challenging issue since the model governing the evolution of the averaged dynamics is usually hard to be determined and may change type with respect to the original parameter-depending dynamics. Furthermore, in some practical applications, averaged control turns out to be insufficient since it does not guarantee to control the variance of the states. New techniques are needed to guarantee the efficient control of the system for all the realizations of the parameter values.</p> <p>We aim to adapt the existing techniques of reduced modelling and nonlinear approximation by exploiting the notion of sparsity, in order to build optimal methods (with respect to the computational cost and complexity) for controlling parameter-dependent PDEs in a robust manner. To this end, we rely on the use of greedy and weak-greedy algorithms to identify the most meaningful realizations of the parameters and L^1 minimisation to search for impulsional controls.</p> <p>For doing this we view the parameter-dependent family of controls and controlled solutions as a manifold in the product control/state space.</p> <p>These techniques are applied and tested in some classical benchmark control problems for parabolic and hyperbolic PDEs, but can also be adapted to more challenging problems as the optimal location of controllers and actuators.</p>
+      <p>See our tutorials:</p>
+      <!-- Realizamos la query  -->
+      
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0007/copiaRM_02.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/P0007" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Synchronized Oscillators </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp01/P0003" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Greedy Control </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                Control of a parameter dependent system in a robust manner
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 01 March 2017
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+              
+              - 19 October 2018
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2017/10/greedy.png">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2018/03/xav.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/T00010" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Averaged Control </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              In this work, we address the optimal control of parameter-dependent systems.
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp01/P0002" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Greedy optimal control for elliptic problems and its application to turnpike problems </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 01 November 2017
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/JoseV">José Vicente</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 12 March 2018
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_discts.jpg">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol.jpg">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/T00020" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Wave Control </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp01/P0001" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Greedy algorithm for Parametric Vlasov-Fokker-Planck System </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/YuhuaZ">Yuhua Zhu</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 10 January 2018
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 12 January 2018
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol.jpg">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_discts.jpg">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/P0001" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Greedy algorithm for Parametric Vlasov-Fokker-Planck System </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp01/T00020" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Wave Control </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 12 January 2018
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/YuhuaZ">Yuhua Zhu</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 10 January 2018
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://cmc.deusto.eus/wp-content/uploads/2018/03/xav.png">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2017/10/greedy.png">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/P0002" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Greedy optimal control for elliptic problems and its application to turnpike problems </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp01/T00010" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Averaged Control </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                In this work, we address the optimal control of parameter-dependent systems.
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/JoseV">José Vicente</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
-                
-                - 12 March 2018
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 01 November 2017
             </div>
           </div>
-        
-          <div class="post-preview shadowbox">
-            <div class="post-avatar-wp">
-            
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0007/copiaRM_02.png">
-            
+        </div>
+      
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          
+          <img src="https://cmc.deusto.eus/wp-content/uploads/2017/03/heat-online-3D.jpg">
+          
+          </div>
+          <div class="post-info">
+            <a href="/DyCon-Blog/tutorial/wp01/P0003" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> Greedy Control </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              Control of a parameter dependent system in a robust manner
             </div>
-            <div class="post-info">
-              <a href="/DyCon-Blog/tutorial/wp01/P0007" class="display-block">
-                <h4 class="post-preview-title ellipsis-two-lines"> Synchronized Oscillators </h4>
-              </a>
-              <div class="post-preview-subtitle ellipsis-two-lines">
-                Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method
-              </div>
-              <div class="post-preview-authors ellipsis-one-line">
-                Author(s):
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
-                
-                    <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
-                
-                - 19 October 2018
-              </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author(s):
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>,
+              
+                  <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>,
+              
+              - 01 March 2017
             </div>
           </div>
-        
-      </div>
+        </div>
+      
     </div>
   </div>
 </article>
 <hr>
-
 
     <!-- Footer -->
 <footer>
@@ -367,18 +365,16 @@ img:active{
   <div class="container">
     <div class="row">
       <ul class="list-inline text-center">
-        <li>
-          <img style="width: 200px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
         </li>
-        <li style=" padding-bottom: 10px;">
-          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
         </li>
       </ul>
     </div>
   </div>
 </footer>
 
-
 </body>
-
 </html>
