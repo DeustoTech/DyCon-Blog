@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 10 Feb 2019 07:36:52 +0100</pubDate>
-    <lastBuildDate>Sun, 10 Feb 2019 07:36:52 +0100</lastBuildDate>
+    <pubDate>Mon, 11 Feb 2019 10:40:37 +0100</pubDate>
+    <lastBuildDate>Mon, 11 Feb 2019 10:40:37 +0100</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -942,7 +942,7 @@ This procedure may be repeated for all the others parameters, thus obtaining a c
       </item>
     
       <item>
-        <title>The control on the Kuramoto model by handling one oscillator</title>
+        <title>LQR controller for stabilizing the linear population dynamics model</title>
         <description>In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space
 
 

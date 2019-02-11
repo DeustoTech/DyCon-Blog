@@ -42,7 +42,7 @@
     } ,
   
     {
-      "title"           : "The control on the Kuramoto model by handling one oscillator",
+      "title"           : "LQR controller for stabilizing the linear population dynamics model",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/P0010-Yacouba",
       "date"            : "2018-10-29",

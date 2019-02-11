@@ -13,7 +13,7 @@ All of the content has been classified according to the project’s correspondin
       <a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">
         <h2 class="topic-title">{{topic[1].name}}</h2>
       </a>  
-      {% for post in qposts limit:2 %}
+      {% for post in qposts limit:3 %}
         {% unless post %}
           {% continue %}
         {% endunless %}
