@@ -270,7 +270,7 @@ hr.small {
   }
   .topic-title {
     font-size: 1.3em;
-    margin-top: 25px;
+    margin-top: 0px;
   }
   .post-info {
     float: right;
@@ -313,7 +313,7 @@ hr.small {
     padding-top: 70px;
   }
   .topic-title {
-    margin-top: 40px;
+    margin-top: 0px;
   }
   .shadowbox {
     padding: 15px 20px 11px 20px;

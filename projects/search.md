@@ -1,19 +1,18 @@
 ---
 layout: project
 category: proyect
-title: Search
-description:
+title: Web Sitemap
+position: 3
+description: 
 ---
 
-<h3>By Keyword</h3>
-<!-- Html Elements for Search -->
+<!-- <h2>Search by Keyword</h2>
+
 <div id="search-container" class="search-container">
 <input type="text" class="search-input" id="search-input" placeholder="search...">
 </div>
 <ul id="results-container"></ul>
-<!-- Script pointing to search-script.js -->
 <script src="{{site.url}}{{site.baseurl}}/js/simple-jekyll-search.min.js"></script>
-<!-- Configuration -->
 <script>
 SimpleJekyllSearch({
   searchInput: document.getElementById('search-input'),
@@ -21,28 +20,23 @@ SimpleJekyllSearch({
   resultsContainer: document.getElementById('results-container'),
   json: '{{site.url}}{{site.baseurl}}/search.json',
 })
-</script>
- {::nomarkdown}
- <div style="display: block;">
- <h3>By Author</h3>
-    <ul>
-    {% assign authors = site.data.members | sort %}
-      <div class="display-inline">
-        {% for author in authors %}
-          <div class="author-container">
-            <div class="photo-author">
-              <a href="{{site.url}}{{site.baseurl}}/author/{{author[0]}}">
-                {% if author[1].avatar %}
-                  <img src="{{author[1].avatar}}" class="search-avatar">
-                {% else %}
-                  <img src="{{site.url}}{{site.baseurl}}/assets/placeholder-180x250.gif" alt="" width="178" height="250">
-                {% endif %}
-              </a>
-              <div class="author-name">{{author[1].name}}</div>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
+</script> -->
+
+
+{::nomarkdown}
+  {% for topic in site.data.WorkPackages %}
+    {%- assign qposts = site.posts | where:"layout", "tutorial" | where:"categories", topic[0] -%}
+    <a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">
+    {% if topic[1].wp and topic[1].acr %}
+      <h5 class="topic-title dark-grey">{{topic[1].wp}}: {{topic[1].name}} ({{topic[1].acr}})</h5>
+    {% else %}
+      <h5 class="topic-title dark-grey">{{topic[1].name}}</h5>
+    {% endif %}
+    </a> 
+    <ul> 
+    {% for post in qposts  %}
+      <li><a href="{{site.url}}{{site.baseurl}}/{{post.url}}">{{post.title}}</a></li>
+    {% endfor %}
     </ul>
-</div>
+  {% endfor %}
 {:/nomarkdown}

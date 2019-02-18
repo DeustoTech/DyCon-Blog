@@ -1,7 +1,8 @@
 ---
 layout: project
 category: proyect
-title: Posts
+title: Documentation
+position: 1
 description: Here you will find the whole list of tutorials and guides created and developed by the researcher's working in the DyCon ERC Project. All of the content has been classified according to the project’s corresponding working packages.
 
 ---
