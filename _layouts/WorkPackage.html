@@ -12,7 +12,11 @@ layout: default
             <a href="{{site.url}}/{{site.baseurl}}/projects/posts">Work Packages</a>	&#8827; {{ topic.name }}
           </small>
         </h2>
-        <h1>{{ topic.name }} </h1>
+        {% if topic.wp %}
+        <h1>{{topic.wp}}: {{topic.name}}</h1>
+        {% else %}
+        <h1>{{topic.name}}</h1>
+        {% endif %}
       </div>
 		</div>
 	</div>
@@ -23,8 +27,8 @@ layout: default
 <article>
   <div id="content" class="container">
     <div class="col-md-10 col-md-offset-1">
-      {{topic.description}}
-      <p>See our tutorials:</p>
+      <div>{{topic.description}}</div>
+      <h4>Available tutorials:</h4>
       <!-- Realizamos la query  -->
       {% assign qposts = site.posts | where:"layout","tutorial" | where:"categories", page.title | sort | reverse %}
       {% for post in qposts %}
@@ -53,7 +57,7 @@ layout: default
           </div>
         </div>
       {% endfor %}
+      <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/projects/posts">Navigate back to post list</a></h3>
     </div>
   </div>
 </article>
-<hr>

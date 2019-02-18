@@ -9,7 +9,11 @@ description: Here you will find the whole list of tutorials and guides created a
   {% for topic in site.data.WorkPackages %}
     {%- assign qposts = site.posts | where:"layout", "tutorial" | where:"categories", topic[0] -%}
     <a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">
+    {% if topic[1].wp and topic[1].acr %}
+      <h2 class="topic-title dark-grey">{{topic[1].wp}}: {{topic[1].name}} ({{topic[1].acr}})</h2>
+    {% else %}
       <h2 class="topic-title dark-grey">{{topic[1].name}}</h2>
+    {% endif %}
     </a>  
     {% for post in qposts limit:3 %}
       {% unless post %}
@@ -22,6 +26,6 @@ description: Here you will find the whole list of tutorials and guides created a
                            avatar      = post.avatar
                            date        = post.date %}
     {% endfor %}
-  <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more ...</a></h3>
+  <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more of {{topic[1].acr}}...</a></h3>
   {% endfor %}
 {:/nomarkdown}

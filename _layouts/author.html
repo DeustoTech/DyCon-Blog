@@ -2,9 +2,6 @@
 layout: default
 ---
 <!-- Post Header -->
-<head>
-  <title>{{site.data.members[page.author].name}}</title>
-</head>
 <header class="intro-header">
   <div class="container" style="padding-top: 70px;">
     <div class="post-heading">
@@ -12,13 +9,12 @@ layout: default
     </div>
 	</div>
 </header>
-
-
 <article>
   <div id="content" class="container">
     <div class="col-md-10 col-md-offset-1">
-        {{site.data.members[page.author].description}}
-      <p>See our tutorials:</p>
+      <p>{{site.data.members[page.author].description}}</p>
+      <br>
+      <h4>Author's contribution:</h4>
       <!-- Realizamos la query  -->
       {% assign qposts = site.posts | where:"layout","tutorial"|where:"author", page.author | sort | reverse %}
       {% for post in qposts %}

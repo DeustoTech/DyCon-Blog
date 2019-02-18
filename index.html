@@ -24,9 +24,9 @@ layout: default
 </header>
 <div class="container">
   <div class="col-md-10 col-md-offset-1">
-    <h1 class="h1-title">Recent Post</h1>
+    <h1 class="h1-title">Recent Posts</h1>
     {% assign qposts = site.posts | where:"layout","tutorial"|sort |reverse %}
-    {% for post in qposts limit: 6 %}
+    {% for post in qposts limit: 5 %}
         {% include card.html title       = post.title
                              url         = post.url
                              author      = post.author
@@ -34,6 +34,6 @@ layout: default
                              avatar      = post.avatar
                              date        = post.date %}
     {% endfor %}
-    <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/projects/posts">See more ...</a></h3>
+    <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/projects/posts">Check all the documentation</a></h3>
   </div>
 </div>

@@ -3,18 +3,28 @@ WP01:
   path: WP01_Control_of_parameter_dependent_problems
 WP02:
   name: Long time horizon control
+  wp: WP2
+  acr: LTHC
   path: WP02_Long_time_horizon_control_and_the_turnpike_property
 WP03:
   name: Control under constraints
+  wp: WP3
+  acr: CC
   path: WP03_Control_under_constraints
 WP04:
   name: Inverse design of time-irreversible models
+  wp: WP4
+  sinv: SINV
   path: WP04_Inverse_design_and_control_in_the_presence_of_singularities
-WP05: 
+WP05:
   name: Memory and hybrid PDE/ODE models
+  wp: WP5
+  sinv: MHM
   path: WP05_Models_involving_memory_terms_hybrid_PDE_ODE_systems
-WP06: 
+WP06:
   name: Finite versus infinite-dimensional dynamical systems
+  wp: WP6
+  acr: FI
   path: WP06_From_finite_to_infinite_dimensional_models
 WP99:
   name: Other Topics

@@ -128,11 +128,6 @@ hr.small {
   display: inline-block;
 }
 
-/* MathJax CSS */
-.MathJax {
-  font-size: 2em !important;
-}
-
 .photo-author {
   margin: auto;
   width: 180px;
