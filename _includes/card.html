@@ -14,12 +14,11 @@
       {{ include.description }}
     </div>
     <div class="post-preview-authors ellipsis-one-line">
-      Author(s):
+      Author{% if include.author.size > 1 %}s{% endif %}:
       {% assign counter = 0 %}
-      {% assign length = include.author || size %}
       {% for aut in include.author %}
         {% assign counter = counter | plus: 1 %}
-          <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>{% unless length == counter %},{% endunless %}
+          <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>{% unless include.author.size == counter %},{% endunless %}
       {% endfor %}
       - {{include.date|date_to_long_string}}
     </div>

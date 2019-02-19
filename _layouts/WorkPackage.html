@@ -48,9 +48,11 @@ layout: default
               {{ post.description }}
             </div>
             <div class="post-preview-authors ellipsis-one-line">
-              Author(s):
+              Author{% if post.author.size > 1 %}s{% endif %}:
+              {% assign counter = 0 %}
               {% for aut in post.author %}
-                  <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>,
+                {% assign counter = counter | plus: 1 %}
+                  <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>{% unless post.author.size == counter %},{% endunless %}
               {% endfor %}
               - {{post.date|date_to_long_string}}
             </div>
