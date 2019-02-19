@@ -137,26 +137,34 @@
             Models involving memory terms and hybrid PDE+ODE systems</a> &#8827;</small>
           </h2>
           <h1>WKB expansion for a fractional Schrödinger equation with applications to controllability</h1>
-					<p class="meta">Posted by:
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
-              </span>
-            </span>
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/AlejandroA">Alejandro B. Aceves</a>
-              </span>
-            </span>
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
-              </span>
-            </span>
-					
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/AlejandroA">Alejandro B. Aceves</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                  </span>
+                </span>
+              
+              - 05 April 2018
+            </div>
 					</p>
         </div>
       </div>
@@ -224,7 +232,7 @@ img:active{
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{align}\label{main_eq}
-	\mathcal{P}_s u:= \left[i\partial_t + \ffl{s}{}\right]u = 0, &\;\;  (x,t)\in\RR\times(0,+\infty), 
+	\mathcal{P}_s u:= \left[i\partial_t + \ffl{s}{}\right]u = 0, &\;\;  (x,t)\in\RR\times(0,+\infty),
 \end{align} %]]></script>
 
 <p>with highly oscillatory initial datum</p>
@@ -271,7 +279,7 @@ img:active{
 
 <p>The above facts are related to the well-known property that the solutions to wave-like equations propagate along the so-called rays of geometric optics. These rays are nothing more than the projection to the physical time-space of the null bicharacteristic, solutions to the Hamiltonian system associated to the equation.</p>
 
-<p>In our case, since $\mathcal{P}_s=i\partial_t+\ffl{s}{}$ is a pseudo-differential operator with symbol 
+<p>In our case, since $\mathcal{P}_s=i\partial_t+\ffl{s}{}$ is a pseudo-differential operator with symbol
 $ p_s(x,t,\xi,\tau) = \tau - |\xi|^{2s} $ , the Hamiltonian system is given by</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
@@ -294,7 +302,7 @@ $ p_s(x,t,\xi,\tau) = \tau - |\xi|^{2s} $ , the Hamiltonian system is given by</
 \begin{cases}
 x(\sigma) = x_0 \pm 2s|\xi_0|^{2s-1}\sigma
 \\
-t(\sigma) = \sigma 
+t(\sigma) = \sigma
 \\
 \xi(\sigma) = \xi_0
 \\
@@ -317,15 +325,15 @@ t(\sigma) = \sigma
 <p>where the normalization constant $\varepsilon^s$ is chosen asking that the function $\ue{u}$ has $H^s(\RR)$-norm of the order $\mathcal O(1)$. The identification of the $a_j$-s is then carried out imposing</p>
 
 <script type="math/tex; mode=display">\begin{align*}
-	\mathcal{P}_s\ue{u} = O(\varepsilon^{\infty}), 
+	\mathcal{P}_s\ue{u} = O(\varepsilon^{\infty}),
 \end{align*}</script>
 
 <p>thus obtaining a series of PDEs in which it is possible to clearly separate the leading order terms, with respect to $\varepsilon$, from several remainders which will vanish as $\varepsilon\to 0$. This generates a cascade system for the functions $a_j$, which can then be determined as the solution of certain given Partial Differential Equations. In our case, the cascade system is the following one</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{align}\label{cascade_system}
-	
-     
+
+
      \begin{cases}
 		i\partial_\tau a_0 + \mathcal{C}_{\frac s2} \mathcal{D}^{\frac{s}{2}} a_0 = 0  
 		\\
@@ -350,9 +358,9 @@ t(\sigma) = \sigma
 <p>Now, it is possible to show that the quasi-solutions that can be computed by using the ansatz (\ref{ansatz}) are in fact localized along rays. In more detail, we have the following result</p>
 
 <p><strong>Theorem 1.</strong> Let $u_{\textrm{\small in}}\in L^2(\RR)$ and let $\ue{u}$ be constructed employing the expansion (\ref{ansatz}). Then, for any $\varepsilon&gt;0$ we have:</p>
-<ol>	
+<ol>
 <li> The functions $\ue{u}$ are approximate solutions to (\ref{main_eq}):
-	
+
 $$
 \begin{align*}
      \norm{u_0(x)-\ue{u}(x,0)}{L^2(\RR)} = \mathcal{O}(\varepsilon^{\frac{1}{2}}),
@@ -476,9 +484,9 @@ Your browser does not support the video tag.
 <p>In <a href="/wkb-expansion-for-a-fractional-schrodinger-equation-with-applications-to-controllability#video2">Video 2</a>, the simulations have been run with an initial datum with frequency $\xi_0=\pi^2/16$. The plots obtained show a behavior which is totally analogous with what observed in <a href="/wkb-expansion-for-a-fractional-schrodinger-equation-with-applications-to-controllability#video1">Video 1</a>:</p>
 <ul>
 <li> For $s=0.1$, the solutions are once again concentrated along vertical rays, without propagation in time and, therefore, without possibility of being controlled.	</li>
-	
+
 <li> For $s=0.5$, we have propagation with constant velocity, and the ray reaches the boundary in finite time.	</li>
-	
+
 <li> For $s=0.9$ the chaotic comportment is still present.	</li>
 </ul>
 
@@ -525,9 +533,6 @@ Your browser does not support the video tag.
 <p><strong><a name="ref3">[3]</a></strong> Biccari, U., and Aceves, A. B. <a href="https://cmc.deusto.eus/wkb-expansion-for-a-fractional-schr%c2%a8odinger-equation-with-applications-to-controllability/" target="_blank">WKB expansion for a fractional Schröodinger equation with applications to controllability.</a> <em>Submitted. (2018).</em></p>
 
 <p><strong><a name="ref4">[4]</a></strong> Biccari,U., and Hernández-Santamaría, V. <a href="https://cmc.deusto.eus/controllability-of-a-one-dimensional-fractional-heat-equation-theoretical-and-numerical-aspects/" target="_blank">Controllability of a one-dimensional fractional heat equation: theoretical and numerical aspects.</a> <em>HAL Preprint - hal-01562358. (2017).</em></p>
-
-<h5>Authors: <a href="https://cmc.deusto.eus/umberto-biccari/" target="_blank">Umberto Biccari</a>, <a href="https://www.smu.edu/Dedman/FacultyAndStaff/Directory/AcevesAlejandroB" target="_blank">Alejandro B. Aceves</a>, <a href="http://paginaspersonales.deusto.es/enrique.zuazua/" target="_blank">Enrique Zuazua</a></h5>
-<h5>April, 2018</h5>
 
         <hr>
       </div>

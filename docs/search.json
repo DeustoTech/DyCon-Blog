@@ -107,12 +107,12 @@
       "url"             : "/tutorial/wp02/P0003",
       "date"            : "2018-10-26",
       "author"          : ["DarioP"],
-      "description"     : "",
+      "description"     : "In this short tutorial, we explain how to use Riccati’s theory to solve an LQ control problem with targets.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_01.png"
     } ,
   
     {
-      "title"           : "Turnpike property for functionals involving $L^1−norm$",
+      "title"           : "Turnpike property for functionals involving $L^1$−norm",
       "categories"      : ["tutorial", "WP02"],
       "url"             : "/tutorial/wp02/P0001",
       "date"            : "2018-10-26",
@@ -186,7 +186,7 @@
       "categories"      : ["tutorial", "WP03"],
       "url"             : "/tutorial/wp03/P0001",
       "date"            : "2018-03-05",
-      "author"          : ["JeromeL","EmanuelT","EnriqueZ"],
+      "author"          : ["JeromeL","EmmanuelT","EnriqueZ"],
       "description"     : "Using IpOpt to get the time-optimal nonnegative control of a semi-discrete 1D heat equation",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/03/1209075.jpg"
     } ,
@@ -196,7 +196,7 @@
       "categories"      : ["tutorial", "WP01"],
       "url"             : "/tutorial/wp01/T00020",
       "date"            : "2018-01-12",
-      "author"          : ["EnriqueZ"],
+      "author"          : ["CarlosC","MiguelC","SorinM","ArnaudM","MihaelaN","EnriqueZ"],
       "description"     : "A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol.jpg"
     } ,
@@ -276,7 +276,7 @@
       "categories"      : ["tutorial", "WP03"],
       "url"             : "/tutorial/wp03/P0002",
       "date"            : "2017-08-05",
-      "author"          : ["JeromeL","EmanuelT","EnriqueZ"],
+      "author"          : ["JeromeL","EmmanuelT","EnriqueZ"],
       "description"     : "How to use IpOpt to solve time optimal control problems",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/03/y1N0.jpg"
     } ,

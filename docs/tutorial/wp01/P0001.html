@@ -137,20 +137,27 @@
             Control of parameter dependent problems</a> &#8827;</small>
           </h2>
           <h1>Greedy algorithm for Parametric Vlasov-Fokker-Planck System</h1>
-					<p class="meta">Posted by:
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/YuhuaZ">Yuhua Zhu</a>
-              </span>
-            </span>
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
-              </span>
-            </span>
-					
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/YuhuaZ">Yuhua Zhu</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                  </span>
+                </span>
+              
+              - 10 January 2018
+            </div>
 					</p>
         </div>
       </div>
@@ -298,7 +305,7 @@ z_n^\ast = \text{argmax}_{z\in N\backslash\{z_i^\ast \}_{i=1}^{n-1} } || f_0(x,v
 
 <p><strong>Online:</strong> After we obtained the snap shots ${z_i^\ast}_{i=1}^n$,</p>
 
-<p>Step 1: Orthogonalize ${f_i}_{i=1}^n$, 
+<p>Step 1: Orthogonalize ${f_i}_{i=1}^n$,
          and calculate the corresponding</p>
 
 <script type="math/tex; mode=display">{f^T_i = f(T,x,v,z_i)}_{i=1}^n</script>
@@ -345,14 +352,14 @@ a_i = \langle f_0(x,v,z), f_i\rangle,  \hat{f}(x,v, z) = \sum_{i = 1}^na_if^T_i.
 <p>Step 2: After obtaining $z_i^\ast, f_i = f(T,x,v,z_i^\ast)$, $i =1, \dots, n-1$,</p>
 
 <script type="math/tex; mode=display">\begin{equation}
-z_n^\ast = argmax_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1}} [ \min_{\hat{f} = \sum a_if_i,  \sum a_i = 1} 
+z_n^\ast = argmax_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1}} [ \min_{\hat{f} = \sum a_if_i,  \sum a_i = 1}
 || \delta_t\hat{f} + \underbrace{ \sigma_1(z)v\delta_x \hat{f} - \frac{\sigma_2(z)}{\epsilon} \delta_x\phi\delta_v \hat{f} - \frac{\sigma_3(z)}{\epsilon}\delta_v ( v \hat{f} + \delta_v\hat{f} ) }_{A(z)\hat{f} } ||^2 ],
 \label{linear z_star}
 \end{equation}</script>
 
 <p>Step 3: Stops when the above maximum residual smaller than $\epsilon$.</p>
 
-<p><strong>Online:</strong> After we obtained the snap shots ${z_i}_{i=1}^n$, 
+<p><strong>Online:</strong> After we obtained the snap shots ${z_i}_{i=1}^n$,
 and the corresponding $f_i = f(T, x,v,z_i)$,</p>
 
 <script type="math/tex; mode=display">\begin{equation}
@@ -382,21 +389,21 @@ and the corresponding $f_i = f(T, x,v,z_i)$,</p>
 
 <p><strong>Offline:</strong> Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 10000$ in this case.</p>
 
-<p>Step 1: Using Algorithm 1.4 to obtain 50 snap shots out of $N$ 
-        to form a new set $N^\ast$. 
+<p>Step 1: Using Algorithm 1.4 to obtain 50 snap shots out of $N$
+        to form a new set $N^\ast$.
 Step 2: Using Algorithm 1.3 to get snap shot ${ z_i^\ast }_{i=1}^n$</p>
 
 <p><strong>Online:</strong> Same as Algorithm 1.3.</p>
 
-<p><strong>Remark 1.5.</strong> In the experiments, the exact solution $f(T,x,v,z)$ 
-refers to the numerical solution to VFP, that is, $f(T,x,v,z)$ is a 
+<p><strong>Remark 1.5.</strong> In the experiments, the exact solution $f(T,x,v,z)$
+refers to the numerical solution to VFP, that is, $f(T,x,v,z)$ is a
 $N_x\times N_v$ dimensional vector obtained by the following scheme</p>
 
 <script type="math/tex; mode=display">\begin{equation}
 \frac{f^{n+1}_{i,j} - f^n_{i,j}}{\delta_t} +\sigma_1 (v\delta_xf)^n_{i,j} = \frac{\sigma_3}{\epsilon}P(f^{n+1}_{i,j})
 \end{equation}</script>
 
-<p>where $P(f)$ is the discretization of 
+<p>where $P(f)$ is the discretization of
 $\delta_v (M\delta_v (\frac{f}{M}))$,</p>
 
 <script type="math/tex; mode=display">M = \frac{1}{\sqrt{2\pi}}e^{-\frac{|v+\frac{\sigma_2}{\sigma_3}\delta_x\phi|^2}{2}}</script>
@@ -408,12 +415,6 @@ $\delta_v (M\delta_v (\frac{f}{M}))$,</p>
 <p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq3_cts.jpg" alt="figure5" class="size-full wp-image-05" /><i align="aligncenter">Figure 5: Continuous parameter in PDE and initial data</i></p>
 
 <p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq3_discts.jpg" alt="figure6" class="size-full wp-image-06" /><i align="aligncenter">Figure 6: Discontinuous parameter in PDE and initial data</i></p>
-
-<!--h6>Bibliography</h6>
-<strong>[1]</strong> K. Beauchard and E. Zuazua, <a href=""><em><i>Sharp large time asymptotics for partially dissipative hyperbolic systems</i></em></a>, Arch. Ration. Mech. Anal. 199 (2011) 177-7227.
--->
-<h5>Authors: <a href="https://sites.google.com/site/yzhumath/home" target="_blank">Yuhua Zhu</a>, <a href="http://paginaspersonales.deusto.es/enrique.zuazua/" target="_blank">Enrique Zuazua</a></h5>
-<h5>January, 2018</h5>
 
         <hr>
       </div>

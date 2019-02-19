@@ -5,9 +5,9 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 18 Feb 2019 14:46:32 +0100</pubDate>
-    <lastBuildDate>Mon, 18 Feb 2019 14:46:32 +0100</lastBuildDate>
-    <generator>Jekyll v3.8.5</generator>
+    <pubDate>Tue, 19 Feb 2019 17:38:58 +0100</pubDate>
+    <lastBuildDate>Tue, 19 Feb 2019 17:38:58 +0100</lastBuildDate>
+    <generator>Jekyll v3.8.4</generator>
     
       <item>
         <title>An introduction to the moment method for optimal control problems for polynomial ODEs</title>
@@ -313,21 +313,21 @@ Lgr_theta_f = subs(Lgr_theta,[x dx theta dtheta],[x_f dx_f theta_f dtheta_f])
 Lgr_dtheta_f = subs(Lgr_dtheta,[x dx theta dtheta],[x_f dx_f theta_f dtheta_f])
 
 
- 
+
 Lgr_dx_f =
- 
+
 M*diff(x_f(t), t) + m*diff(x_f(t), t) + l*m*cos(theta_f(t))*diff(theta_f(t), t)
- 
- 
+
+
 Lgr_theta_f =
- 
+
 g*l*m*sin(theta_f(t)) - l*m*sin(theta_f(t))*diff(theta_f(t), t)*diff(x_f(t), t)
- 
- 
+
+
 Lgr_dtheta_f =
- 
+
 (4*m*diff(theta_f(t), t)*l^2)/3 + m*cos(theta_f(t))*diff(x_f(t), t)*l
- 
+
 
 
 
@@ -364,22 +364,22 @@ Amat = subs(jacobian(F,X),[x1,x2,x3,x4],[0,0,0,0])
 Bmat = diff(subs(Nsys,[x1,x2,x3,x4],[0,0,0,0]),u)
 
 
- 
+
 Amat =
- 
+
 [ 0, 1,                             0, 0]
 [ 0, 0,            -(3*g*m)/(4*M + m), 0]
 [ 0, 0,                             0, 1]
 [ 0, 0, (3*(M*g + g*m))/(l*(4*M + m)), 0]
- 
- 
+
+
 Bmat =
- 
+
                 0
       4/(4*M + m)
                 0
  -3/(l*(4*M + m))
- 
+
 
 
 
@@ -513,7 +513,6 @@ plot(timen,input_nonlinear,'ro')
 grid on
 legend('input with ARE','input with DRE [10,0]')
 title('input responses with nonlinear model')
-
 
 
 
@@ -2390,6 +2389,8 @@ As we can see, the node 8 is driven to the state 1 by achieving consensus in all
 
 References
 
+[1]: R. Olfati-Saber, J. A. Fax, and R. M. Murray, &quot;Consensus and cooperation in networked multi-agent systems&quot;. Proc. IEEE. vol. 95, pp. 215&amp;#150;233, Jan. 2007.
+[2]: K. J. &amp;Aring;str&amp;ouml;m, and R. M. Murray, &quot;Feedback Systems: An Introduction for Scientists and Engineers&quot;. Princeton University Press, 2008, Princeton, NJ.
 </description>
         <pubDate>Fri, 26 Oct 2018 00:00:00 +0200</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0001</link>

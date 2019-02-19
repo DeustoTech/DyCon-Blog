@@ -137,20 +137,27 @@
             Models involving memory terms and hybrid PDE+ODE systems</a> &#8827;</small>
           </h2>
           <h1>Solving an optimal control problem arised in ecology with AMPL</h1>
-					<p class="meta">Posted by:
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JiaminZ"></a>
-              </span>
-            </span>
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
-              </span>
-            </span>
-					
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JiaminZ">Jiamin Zhu</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                  </span>
+                </span>
+              
+              - 05 December 2017
+            </div>
 					</p>
         </div>
       </div>
@@ -218,14 +225,14 @@ img:active{
 
 <p>We are interested in optimal control problems subject to a class of diffusion-reaction systems that describes the growth and spread of an introduced population of organisms</p>
 
-<script type="math/tex; mode=display">\begin{equation}  \label{pde} 
+<script type="math/tex; mode=display">\begin{equation}  \label{pde}
 y_t - y_{xx} = f(y), \quad x\in \mathbb{R}, \quad t \in \mathbb{R}^+,  
 \end{equation}</script>
 
 <p>where</p>
 
-<script type="math/tex; mode=display">\begin{equation}  \label{fyatet} 
-f(y)=a y(1-y)(\theta-y), 
+<script type="math/tex; mode=display">\begin{equation}  \label{fyatet}
+f(y)=a y(1-y)(\theta-y),
 \end{equation}</script>
 
 <p>is the reaction term that represents local reactions, and $y(t, x) : \mathbb{R}^+ \times \mathbb{R} \rightarrow \mathbb{R}$ is the state of the system. Here $a&lt;0$ and $\theta \in [0,1]$ are two real parameters.</p>
@@ -273,16 +280,16 @@ $a_{min},a_{max}$ are non positive constants, and $\theta_{max},\theta_{min}$ ar
 
 <p>We can now write the discrete version of the cost functional (\ref{costfun}) by</p>
 
-<script type="math/tex; mode=display">\begin{equation} 
-\label{pb_ocp_dist2} 
+<script type="math/tex; mode=display">\begin{equation}
+\label{pb_ocp_dist2}
 J^D(u)=\sum_{j=0}^{N_x}|y_{j}^{N_t}-y^d(x^j)|^2 \Delta x^2+\frac{K}{\Delta t^2}\sum_{k=1}^{N_t}\left(|a^{k}-a^{k-1}|^2+|\theta^{k}-\theta^{k-1}|^2 \right)
 \end{equation}</script>
 
 <p>Then, we need to discretize the state equation (\ref{eqn_difreac}). For the stability of numerical calculations, we use implicit finite difference schemes. Recall that the basic idea of finite difference schemes is to replace derivatives by finite differences. Here, we use Crank-Nicolson Scheme, which is second-order accurate, and thus we approximate equation (\ref{eqn_difreac}) by</p>
 
-<script type="math/tex; mode=display">\begin{equation} 
-\label{pb_disc_cn} 
-\frac{y_j^{k+1} - y_j^k}{\Delta t} = \frac{1}{2} \big( \frac{y_{j+1}^{k+1} - 2 y_{j}^{k+1} + y_{j-1}^{k+1} }{| \Delta x|^2} + \frac{y_{j+1}^{k} - 2 y_{j}^{k+1}+ y_{j-1}^{k+1} }{| \Delta x|^2} \big) + \frac{ f(y_j^{k+1},u^{k+1}) + f(y_j^k,u^k)}{2}, 
+<script type="math/tex; mode=display">\begin{equation}
+\label{pb_disc_cn}
+\frac{y_j^{k+1} - y_j^k}{\Delta t} = \frac{1}{2} \big( \frac{y_{j+1}^{k+1} - 2 y_{j}^{k+1} + y_{j-1}^{k+1} }{| \Delta x|^2} + \frac{y_{j+1}^{k} - 2 y_{j}^{k+1}+ y_{j-1}^{k+1} }{| \Delta x|^2} \big) + \frac{ f(y_j^{k+1},u^{k+1}) + f(y_j^k,u^k)}{2},
 \end{equation}</script>
 
 <p>for $j=1,\cdots,N_{x}-1,\quad k=1,\cdots,N_{t}-1$.</p>
@@ -392,13 +399,13 @@ minimize obj: sum{j in kx} ( ( y[Nt,j] - yobj[j])$\textasciicircum{}2$
 
 <pre>
 <span style="color: green;"># Contraints of the control </span>
-subject to c1: tet[0] - tet0 = 0; 
-subject to c2: a[0] - a0 = 0; 
-subject to c3: tet[Nt] - tetf = 0; 
-subject to c4: a[Nt] - af = 0; 
+subject to c1: tet[0] - tet0 = 0;
+subject to c2: a[0] - a0 = 0;
+subject to c3: tet[Nt] - tetf = 0;
+subject to c4: a[Nt] - af = 0;
 
 <span style="color: green;"># Initial data</span>
-subject to i1 {j in kx}: y[0,j] = y0[j] ; 
+subject to i1 {j in kx}: y[0,j] = y0[j] ;
 
 <span style="color: green;"># Dynamical constraints (Backward ) </span>
 <b>subject</b> to d1 {i in kt diff{Nt}, j in kx diff {0,Nx} }:
@@ -408,13 +415,13 @@ subject to i1 {j in kx}: y[0,j] = y0[j] ;
 &amp;nbsp <b></b>a[i]*y[i,j]*(1 - y[i,j]) *(tet[i]- y[i,j])) = 0;
 
 <span style="color: green;"># Boundary constraints</span>
-subject to b1 {i in kt diff{0} }: y[i,1] - y[i,0] = 0; 
+subject to b1 {i in kt diff{0} }: y[i,1] - y[i,0] = 0;
 subject to b2 {i in kt diff{0} }: y[i,Nx] - y[i,Nx-1] = 0;
 </pre>
 
 <pre>
 <span style="color: green;"># Initialization of state and control variables</span>
-<b>if</b> (Init_Type == 1) then { 
+<b>if</b> (Init_Type == 1) then {
 &amp;nbsp <b>let</b> {j in kt} tet[j] := tetf;
 &amp;nbsp <b>let</b> {j in kt} a[j] := 0;
 &amp;nbsp <b>for</b> {i in kt diff{0},j in kx}{
@@ -423,9 +430,9 @@ subject to b2 {i in kt diff{0} }: y[i,Nx] - y[i,Nx-1] = 0;
 &amp;nbsp <b>}</b>
 <b>};</b>
 <span style="color: green;"># Initialisation avec $\textquotedbl{}init.txt\textquotedbl{} $(only state and control)</span>
-<b>if</b> (Init_Type == 2) then { 
-&amp;nbsp <b>read</b> {i in kt} (a[i],tet[i]) &lt; init.txt; 
- <b>read</b> {i in kt, j in kx} (y[i,j]) &lt; init.txt; 
+<b>if</b> (Init_Type == 2) then {
+&amp;nbsp <b>read</b> {i in kt} (a[i],tet[i]) &lt; init.txt;
+ <b>read</b> {i in kt, j in kx} (y[i,j]) &lt; init.txt;
 <b>};</b>
 </pre>
 
@@ -438,16 +445,16 @@ interior point method. Recall that an interior point method is a linear or nonli
 option solver ipopt;
 
 <span style="color: green;"># solve the problem option </span>
-ipopt_options 'max_iter=1000 
-tol=1e-6'; 
+ipopt_options 'max_iter=1000
+tol=1e-6';
 solve;
 </pre>
 
 <p>To see the optimization result, one can print results into txt files, for example:</p>
 
 <pre><span style="color: green;"># print the solution to out.txt</span>
-<b>option</b> display_precision 6; 
-<b>printf</b>: $\textquotedbl{}obj=\textquotedbl{} &gt;&gt;\textcompwordmark{}$ out.txt; 
+<b>option</b> display_precision 6;
+<b>printf</b>: $\textquotedbl{}obj=\textquotedbl{} &gt;&gt;\textcompwordmark{}$ out.txt;
 <b>printf</b>: $\textquotedbl{} \%24.16e; \textbackslash{}n\textquotedbl{},
 obj &gt;&gt;\textcompwordmark{}$ out.txt;
 </pre>

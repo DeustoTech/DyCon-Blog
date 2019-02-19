@@ -137,14 +137,20 @@
             Other Topics</a> &#8827;</small>
           </h2>
           <h1>Optimal control for inverted pendulum</h1>
-					<p class="meta">Posted by:
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
-              </span>
-            </span>
-					
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
+                  </span>
+                </span>
+              
+              - 04 February 2019
+            </div>
 					</p>
         </div>
       </div>
@@ -246,21 +252,21 @@ img:active{
 <span class="n">Lgr_dtheta_f</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Lgr_dtheta</span><span class="p">,[</span><span class="n">x</span> <span class="n">dx</span> <span class="n">theta</span> <span class="n">dtheta</span><span class="p">],[</span><span class="n">x_f</span> <span class="n">dx_f</span> <span class="n">theta_f</span> <span class="n">dtheta_f</span><span class="p">])</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 Lgr_dx_f =
- 
+
 M*diff(x_f(t), t) + m*diff(x_f(t), t) + l*m*cos(theta_f(t))*diff(theta_f(t), t)
- 
- 
+
+
 Lgr_theta_f =
- 
+
 g*l*m*sin(theta_f(t)) - l*m*sin(theta_f(t))*diff(theta_f(t), t)*diff(x_f(t), t)
- 
- 
+
+
 Lgr_dtheta_f =
- 
+
 (4*m*diff(theta_f(t), t)*l^2)/3 + m*cos(theta_f(t))*diff(x_f(t), t)*l
- 
+
 
 </code></pre></div></div>
 
@@ -297,22 +303,22 @@ Lgr_dtheta_f =
 <span class="n">Bmat</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">subs</span><span class="p">(</span><span class="n">Nsys</span><span class="p">,[</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">,</span><span class="n">x4</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]),</span><span class="n">u</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 Amat =
- 
+
 [ 0, 1,                             0, 0]
 [ 0, 0,            -(3*g*m)/(4*M + m), 0]
 [ 0, 0,                             0, 1]
 [ 0, 0, (3*(M*g + g*m))/(l*(4*M + m)), 0]
- 
- 
+
+
 Bmat =
- 
+
                 0
       4/(4*M + m)
                 0
  -3/(l*(4*M + m))
- 
+
 
 </code></pre></div></div>
 
@@ -449,7 +455,6 @@ ans =
 </code></pre></div></div>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_05.png" alt="" /></p>
-
 
         <hr>
       </div>

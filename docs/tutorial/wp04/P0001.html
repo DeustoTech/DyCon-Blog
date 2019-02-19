@@ -137,20 +137,27 @@
             Inverse design of time-irreversible models</a> &#8827;</small>
           </h2>
           <h1>Conservation laws in the presence of shocks</h1>
-					<p class="meta">Posted by:
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/RodrigoL"></a>
-              </span>
-            </span>
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
-              </span>
-            </span>
-					
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/RodrigoL">Rodrigo Lecaros</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                  </span>
+                </span>
+              
+              - 05 June 2017
+            </div>
 					</p>
         </div>
       </div>
@@ -233,7 +240,7 @@ J(u^{0,min})=\min_{u^0\in\mathcal{U}_{ab}}J(u^0).
 <h5>Sensitivity of the state in the presence of shocks</h5>
 <p>Inspired in several results on the sensitivity of  solutions of conservation laws in the presence of shocks in one-dimension  (see [<a href="#BressanMarson1995">7</a>, <a href="#BardosPironneau2002">4</a>, <a href="#BouchutJames1998">5</a>, <a href="#BouchutJames1999">6</a>, <a href="#Ulbrich2003">17</a>, <a href="#GodlewskiRaviart1999">13</a>]), we focus on the particular case of solutions having a single shock. But the analysis can be extended to consider more general one-dimensional systems of conservation laws with a finite number of noninteracting shocks. We introduce the following hypothesis:</p>
 
-<p><strong>Hypothesis 1.1:</strong> 
+<p><strong>Hypothesis 1.1:</strong>
 <i>Assume that $u(x,t)$ is a weak entropy solution of (\ref{conservativeEquation}) with a discontinuity along a regular curve $\Sigma={(\varphi(t),t),\;t\in(0,T)}$, which is Lipschitz continuous outside $\Sigma$. In particular, it satisfies the Rankine-Hugoniot condition on $\Sigma$</i></p>
 
 <script type="math/tex; mode=display">\varphi'(t)[u]_{\Sigma^t}=[f(u)]_{\Sigma^t}.</script>
@@ -253,11 +260,11 @@ Let $u^0$ be the initial datum,  that we assume to be Lipschitz continuous to bo
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{eqnarray}
 \label{1DlinearizedSystem01}
-\partial_t \delta u+\partial_x(f'(u)\delta u)&=&0,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\text{in } Q_-\cup Q_+\\ 
+\partial_t \delta u+\partial_x(f'(u)\delta u)&=&0,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\text{in } Q_-\cup Q_+\\
 \label{1DlinearizedSystem03}
-\frac{d}{dt}\left([u]_{\Sigma^t}\delta\varphi\right)&=&[f'(u)\delta u]_{\Sigma^t}-[\delta u]_{\Sigma^t}\frac{d}{dt}\varphi,\;\; t\in(0,T)\\ 
+\frac{d}{dt}\left([u]_{\Sigma^t}\delta\varphi\right)&=&[f'(u)\delta u]_{\Sigma^t}-[\delta u]_{\Sigma^t}\frac{d}{dt}\varphi,\;\; t\in(0,T)\\
 \label{1DlinearizedSystem02}
-\delta u(x,0)&=&\delta u^0(x),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\{x<\varphi^0\}\cup\{x>\varphi^0\}\\ 
+\delta u(x,0)&=&\delta u^0(x),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\{x<\varphi^0\}\cup\{x>\varphi^0\}\\
 \label{1DlinearizedSystem04}
 \delta\varphi(0)&=&\delta\varphi^0.
 \end{eqnarray} %]]></script>
@@ -362,7 +369,7 @@ u^0(x)=\left\{
 
 <p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/06/ConservationLawsShocksFig2.jpg" alt="Characteristic lines entering on a shock" width="600" /> Figure 2: Experiment 1. $\log (J)$ versus the number of iterations in the descent algorithm for the discrete  and the alternating descent methods.</p>
 
-<p>In Figures 3 and 4, we present the minimizers  obtained by the methods above, and the associated solutions, Figures 5 and 6. 
+<p>In Figures 3 and 4, we present the minimizers  obtained by the methods above, and the associated solutions, Figures 5 and 6.
 The initial datum $u^0$ obtained by the alternating descent method (Figures 4) is a good  approximation of \ref{E1u0minimoa}. The solution given by  the discrete approach (Figure 3) presents added spurious oscillations. Furthermore, the discrete method is much slower and does not achieve the same level of accuracy since the functional $J_\Delta$ does not decrease so much.</p>
 
 <p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/06/ConservationLawsShocksFig3-6.jpg" alt="Experiment1 iterations and solutions" width="600" /> </p>
@@ -382,8 +389,8 @@ The initial datum $u^0$ obtained by the alternating descent method (Figures 4) i
 
 <p>but this time we compare the performance of both methods starting from different initializations.
 The obtained numerical results are presented in Figure 7.
-We see that, regardless the initialization considered, the alternating descent method performs significantly better. 
-We observe that in the five experiments the alternating descent method perfumes better ensuring the descent of the functional in much fewer iterations and yielding smoother, less oscillatory approximation of the minimizer. 
+We see that, regardless the initialization considered, the alternating descent method performs significantly better.
+We observe that in the five experiments the alternating descent method perfumes better ensuring the descent of the functional in much fewer iterations and yielding smoother, less oscillatory approximation of the minimizer.
 Note also  that the discrete method, rather than yielding discontinuous approximations of the minimizer as the alternating descent method does, it produces an initial datum with a Lipschitz front. Observe that these are  two different configurations that can lead to the same evolution for the Burgers equation after some time, once the front develops the discontinuity. This is in agreement with the fact that the functional to be minimized is only active in the time-interval $T/2 \le t \le T$.</p>
 
 <p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/06/ConservationLawsShocksFig7.jpg" alt="Experiment2 comparision results" width="800" /> </p>
@@ -425,10 +432,6 @@ Note also  that the discrete method, rather than yielding discontinuous approxim
 <p><strong>[17]</strong> S. Ulbrich <a name="Ulbrich2003" href="http://www.sciencedirect.com/science/article/pii/S016769110200275X"><em>Adjoint-based derivative computations for the optimal control of discontinuous solutions of hyperbolic conservation laws.</em></a> Systems Control Lett., 48(3-4):313–328, 2003. Optimization and control of distributed systems.</p>
 
 <p><strong>[18]</strong> X. Wen and S. Jin <a name="MR2378582" href="http://www.global-sci.org/jcm/freedownload/v26_1.pdf"><em>Convergence of an immersed interface upwind scheme for linear advection equations with piecewise constant coefficients I: $L^1$-error estimates.</em></a> J. Comput. Math., 26(1):1–22, 2008.</p>
-
-<h5>Authors: <a href="https://www.researchgate.net/profile/Rodrigo_Lecaros/publications">Rodrigo Lecaros</a> &amp; <a href="http://paginaspersonales.deusto.es/enrique.zuazua/">Enrique Zuazua</a></h5>
-<h5>June, 2017</h5>
-
 
         <hr>
       </div>

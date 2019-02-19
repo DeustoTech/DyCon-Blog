@@ -137,26 +137,34 @@
             Control under constraints</a> &#8827;</small>
           </h2>
           <h1>IpOpt and AMPL use to solve time optimal control problems</h1>
-					<p class="meta">Posted by:
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JeromeL">Jérôme Lohéac</a>
-              </span>
-            </span>
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EmanuelT"></a>
-              </span>
-            </span>
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
-              </span>
-            </span>
-					
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JeromeL">Jérôme Lohéac</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EmmanuelT">Emmanuel Trélat</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                  </span>
+                </span>
+              
+              - 05 August 2017
+            </div>
 					</p>
         </div>
       </div>
@@ -248,7 +256,7 @@ $$
 				\end{array}
 			\end{array}
 		\end{equation}
-		
+
 $$
 
 IpOpt can be used together with <a href="https://www.mathworks.com/products/matlab.html" target="_blank" rel="noopener noreferrer">Matlab</a>, <a href="http://www.freefem.org" target="_blank" rel="noopener noreferrer">FreeFem++</a>...and can be used directly in <strong>.cpp</strong> codes.</li>
@@ -261,7 +269,7 @@ IpOpt can be used together with <a href="https://www.mathworks.com/products/matl
 <span style="color: green;"># The cost function to be minimized</span>
 <b>minimize</b> cost : f(x); 						 
 <span style="color: green;"># The inequality constraints</span>
-<b>subject to</b> inequality_constraints : g(x)&lt;=0; 
+<b>subject to</b> inequality_constraints : g(x)&lt;=0;
 <span style="color: green;"> # The equality constraints</span>
 <b>subject to</b> equality_constraints: h(x)=0; 	
 <span style="color: green;"> # Set IpOpt as solver</span>
@@ -356,7 +364,7 @@ Fix some parameter $N_t\in\mathbb{N}^*$ (the number of time steps) and for $T&gt
 <span style="color: green;"># y(T)=y1</span>
 <b>subject to</b> y_end  : y[Nt]=y1;                            
 <span style="color: green;"># g(y(t))&lt;=0</span>
-<b>subject to</b> state_constraint {i in 1..Nt-1} : g(y[i])&lt;=0; 
+<b>subject to</b> state_constraint {i in 1..Nt-1} : g(y[i])&lt;=0;
 
 <span style="color: green;"># Solve with IpOpt</span>
 <b>option solver</b> ipopt;
@@ -517,7 +525,7 @@ A=N^2\begin{pmatrix}
 <b>printf</b> {i in 0..Nt}: <span style="color: brown;">" %24.16e\n"</span>, v1[i] &gt;&gt; out.txt;
 <b>printf</b> {i in 0..Nt, j in 0..Nx}: <span style="color: brown;">" %24.16e\n"</span>, y[i,j] &gt;&gt; out.txt;
 
-<b>end</b>;	
+<b>end</b>;
 </pre>
 <p>Once the file out.txt is written, it can be for instance read by <a name="scilab">Scilab</a> with the following code</p>
 <pre>fid= <b>mopen</b>(<span style="color: brown;">'out.txt'</span>,<span style="color: brown;">'r'</span>);            <span style="color: green;">// Open out.txt</span>
@@ -614,15 +622,15 @@ Your browser does not support the video tag.
  	<li>AMPL project: <a href="http://ampl.com/products/ampl/" target="_blank">http://ampl.com/products/ampl/</a></li>
  	<li>NEOS solvers: <a href="https://neos-server.org/neos/solvers/" target="_blank">https://neos-server.org/neos/solvers/</a></li>
 </ul>
+
 <h6>References</h6>
+
 <p><strong>[1]</strong> J. T. Betts. <a href="http://epubs.siam.org/doi/book/10.1137/1.9780898718577" name="cite1" target="_blank"><em>Practical methods for optimal control and estimation using nonlinear programming.</em></a> 2nd ed. Philadelphia, PA: Society for Industrial and Applied Mathematics (SIAM),2nd ed. edition, 2010.
 <strong>[2]</strong> R. Fourer, D. M. Gay, and B. W. Kernighan. <a href="http://ampl.com/resources/the-ampl-book/" name="cite2" target="_blank"><em>A modeling language for mathematical programming.</em></a> Manage. Sci., 36(5):519–554, 1990.
 <strong>[3]</strong> J. Lohéac, E. Trélat, and E. Zuazua. <a name="cite3" target="_blank"></a><em>Minimal controllability time for the heat equation under state constraints.</em> In preparation.
 <strong>[4]</strong> E. Trélat. <a href="https://www.ljll.math.upmc.fr/trelat/fichiers/livreopt.pdf" name="cite4" target="_blank"><em>Contrôle optimal. Théorie et applications.</em></a> Paris: Vuibert, 2005.
 <strong>[5]</strong> E. Trélat. <a href="https://www.ljll.math.upmc.fr/trelat/fichiers/contaero.pdf" name="cite5" target="_blank"><em>Optimal control and applications to aerospace: some results and challenges.</em></a> J.Optim. Theory Appl., 154(3):713–758, 2012.
 <strong>[6]</strong> A. Wächter and L. T. Biegler. <a href="http://link.springer.com/article/10.1007/s10107-004-0559-y" name="cite6" target="_blank"><em>On the implementation of an interior-point filter line-search algorithm for large-scale nonlinear programming.</em></a> Math. Program., 106(1 (A)):25–57, 2006.</p>
-<h3>Authors: <a href="/visitors/#JeromeLoheac">Jérôme Lohéac</a>, <a href="https://www.ljll.math.upmc.fr/~trelat/">Emmanuel Trélat</a>  <a href="http://paginaspersonales.deusto.es/enrique.zuazua/">Enrique Zuazua</a></h3>
-<h3>August, 2017</h3>
 
         <hr>
       </div>

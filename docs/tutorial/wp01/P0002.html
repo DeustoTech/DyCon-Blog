@@ -137,26 +137,34 @@
             Control of parameter dependent problems</a> &#8827;</small>
           </h2>
           <h1>Greedy optimal control for elliptic problems and its application to turnpike problems</h1>
-					<p class="meta">Posted by:
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>
-              </span>
-            </span>
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>
-              </span>
-            </span>
-					
-						• <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">
-                <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
-              </span>
-            </span>
-					
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                  </span>
+                </span>
+              
+              - 01 November 2017
+            </div>
 					</p>
         </div>
       </div>
@@ -374,7 +382,7 @@ d_n(\mathcal K):=\inf_{\dim Y=n} \sup_{x\in \mathcal K} \, \inf_{y\in Y}  \|{x-y
 $$
 \begin{equation}
   \label{dist_algo}
-$V_n=\text{span}\{x_1,\ldots,x_n\} \quad\text{and}\quad  \sigma_n(\mathcal K):=\max_{x\in \mathcal K}\text{dist}(x,V_n)$; 
+$V_n=\text{span}\{x_1,\ldots,x_n\} \quad\text{and}\quad  \sigma_n(\mathcal K):=\max_{x\in \mathcal K}\text{dist}(x,V_n)$;
 \end{equation}
 $$
 
@@ -434,7 +442,7 @@ We can summarize the obtained results in the following theorem
      \begin{aligned}
        & \bullet\quad |u_\nu^\star - \bar u_\nu|_{L^2(\Omega)} \leq \varepsilon, \\
        & \bullet \quad | y_\nu^\star - \bar y_\nu|_{\Omega}
-       \leq \left({\varepsilon \over \alpha_1 }\right) 
+       \leq \left({\varepsilon \over \alpha_1 }\right)
  \end{aligned}
    \end{equation*} %]]></script>
 
@@ -476,7 +484,7 @@ y^d(x)=\sin(2\pi x_1).
 <p><strong>Initialize:</strong> Fix the approximation error $\varepsilon&gt;0$.</p>
 <ol>
 <li><strong>STEP 1: (discretisation)</strong></li>
-<li>Choose a finite subset $\tilde{\mathcal K}$ such that 
+<li>Choose a finite subset $\tilde{\mathcal K}$ such that
 
 $$\forall{\nu} \in \mathcal K \quad  dist(\nu, \tilde{\mathcal K}) &lt;\delta$$
 
@@ -516,7 +524,7 @@ $$
 \max_{\tilde\nu \in \tilde{\mathcal K}}   ||\inf_{( p,  y) \in (\overline{\mathcal P}_j, \overline{\mathcal  Y}_j)}
 R_{\tilde \nu}(p,  y) ||_{H^{-1}(\Omega)}
 &lt; \frac{\varepsilon}2.
-\end{equation} 
+\end{equation}
 
 $$
 
@@ -570,7 +578,7 @@ The way the parameters are chosen for this test is illustrated in Figure 1.A. In
 
 <p>In spite of obtaining almost the same solution, the convergence of conjugate gradient method takes 5.4 s compared to 0.488 s in the online greedy part. This fact also shows the computational efficiency of the proposed algorithm.</p>
 
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/10/greedy_control_test1.jpg" alt="greedy_control_test1" width="446" height="446" class="size-full wp-image-01" /><i align="aligncenter">Figure 2.A: Approximated control by greedy methods. The approximated control $x\mapsto \bar u^\star_{\sqrt 2}\,(x)$</i> 
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/10/greedy_control_test1.jpg" alt="greedy_control_test1" width="446" height="446" class="size-full wp-image-01" /><i align="aligncenter">Figure 2.A: Approximated control by greedy methods. The approximated control $x\mapsto \bar u^\star_{\sqrt 2}\,(x)$</i>
 <img src="https://cmc.deusto.eus/wp-content/uploads/2017/10/control_region_test1.jpg" alt="control_region_test1" width="446" height="446" class="size-full wp-image-02" /><i align="aligncenter">Figure 2.B: Approximated control by greedy methods. The control set $\omega$</i></p>
 
 <p>In Figure 3.A, we plot the solution to (4) using the approximated control $u_{\sqrt{2}}^\star$. As for the control, we can compute the difference between the real optimal state against the approximate optimal state $\bar y^\star_{\sqrt 2}$. In this particular test, we obtain the following estimate</p>
@@ -626,7 +634,7 @@ c(x)\equiv-37 \quad{\text{and}}\quad y^d(x)=\sin(\pi x_1)
 \begin{cases}
 y_t-\div(a_\nu \nabla y)+c\, y=1_\omega u, \quad &\text{in } \Omega\times(0,T), \\
 y=0, \quad &\text{on } \partial \Omega\times(0,T), \\
-y(x,0)=y^0(x), \quad &\text{in } \Omega. 
+y(x,0)=y^0(x), \quad &\text{in } \Omega.
 \end{cases}
 \end{equation} %]]></script>
 
@@ -643,7 +651,7 @@ y(x,0)=y^0(x), \quad &\text{in } \Omega.
 <p>In this stage, we are going to use the optimal control $\bar u^\star_{\sqrt 2}$ as a time-independent control for system (18). More precisely, we take</p>
 
 <script type="math/tex; mode=display">\begin{equation}\label{control_exp51}
-u(x,t)=\bar u^\star_{\sqrt 2}(x) \quad\text{for }t\in (0,T). 
+u(x,t)=\bar u^\star_{\sqrt 2}(x) \quad\text{for }t\in (0,T).
 \end{equation}</script>
 
 <p>By plugging such control into equation (18), we obtain the controlled solution displayed in Figure 8. We see that this control steers $y$ away from the initial condition at time $t=0$ and reaches in a short amount of time a region near the optimal steady state $\bar y^\star_{\sqrt{2}}$ (cf. Figure 8.C).</p>
@@ -682,14 +690,10 @@ u(x,t)=\bar u^\star_{\sqrt 2}(x) \quad\text{for }t\in (0,T).
 
 <h3>Bibliography</h3>
 
-<p><strong>[1]</strong> A. Cohen and  R. DeVore <a href="" target="_blank"><em>Approximation of high-dimensional parametric PDEs.</em></a> Acta Numerica, 24, (2015), 1–159.
-<strong>[2]</strong> R. DeVore, (2005) <a href="" target="_blank"><em>The Theoretical Foundation of Reduced Basis Methods.</em></a> preprint.
-<strong>[3]</strong> J.-L Lions. <!--a href="" target="_blank"--><em>Optimal control of systems governed by partial differential equations.</em><!--/a--> Springer-Verlag, 1971.
-<strong>[4]</strong> A. Porretta and E. Zuazua. <a href="http://paginaspersonales.deusto.es/enrique.zuazua/documentos_public/archivos/publicaciones/optimal10.pdf" target="_blank"><em>Long time versus steady state optimal control.</em></a> SIAM Journal on Control and Optimization, 51, 6 (2013), 4242-4273.</p>
-
-<h5>Authors: <a href="/victor-hernandez-santamaria/" target="_blank">Victor Hernández-Santamaría</a>, &amp; <a href="/visitors/#MartinLazar" target="_blank">Martin Lazar</a>, &amp; <a href="http://paginaspersonales.deusto.es/enrique.zuazua/" target="_blank">Enrique Zuazua</a></h5>
-<h5>November, 2017</h5>
-
+<p><strong>[1]</strong> A. Cohen and  R. DeVore <a href="" target="_blank"><em>Approximation of high-dimensional parametric PDEs.</em></a> Acta Numerica, 24, (2015), 1--159.</p>
+<p><strong>[2]</strong> R. DeVore, (2005) <a href="" target="_blank"><em>The Theoretical Foundation of Reduced Basis Methods.</em></a> preprint.</p>
+<p><strong>[3]</strong> J.-L Lions. <!--a href="" target="_blank"--><em>Optimal control of systems governed by partial differential equations.</em><!--/a--> Springer-Verlag, 1971.</p>
+<p><strong>[4]</strong> A. Porretta and E. Zuazua. <a href="http://paginaspersonales.deusto.es/enrique.zuazua/documentos_public/archivos/publicaciones/optimal10.pdf" target="_blank"><em>Long time versus steady state optimal control.</em></a> SIAM Journal on Control and Optimization, 51, 6 (2013), 4242-4273.</p>
 
         <hr>
       </div>
