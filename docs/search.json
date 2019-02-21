@@ -142,6 +142,16 @@
     } ,
   
     {
+      "title"           : "Optimal Shape Design for Poisson Equation in OpenFOAM",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0017",
+      "date"            : "2018-07-23",
+      "author"          : ["JoseV"],
+      "description"     : "TODO.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0017/avatar.PNG"
+    } ,
+  
+    {
       "title"           : "Rays propagation of a fractional Schrodinger Equation",
       "categories"      : ["tutorial", "WP05"],
       "url"             : "/tutorial/wp05/P0001",
@@ -149,6 +159,46 @@
       "author"          : ["UmbertoB"],
       "description"     : "Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0001/wave.gif"
+    } ,
+  
+    {
+      "title"           : "Interior Control of the Poisson Equation with the Conjugate Gradient Method in OpenFOAM",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0020",
+      "date"            : "2018-07-03",
+      "author"          : ["JoseV","VictorH"],
+      "description"     : "TODO.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0020/avatar.png"
+    } ,
+  
+    {
+      "title"           : "Optimal Shape Design in External Flow",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0018",
+      "date"            : "2018-06-30",
+      "author"          : ["JoseV"],
+      "description"     : "TODO.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0018/avatar.png"
+    } ,
+  
+    {
+      "title"           : "Interior Control of the Heat Equation with the Steepest Descent Method and OpenFOAM",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0019",
+      "date"            : "2018-06-29",
+      "author"          : ["JoseV","VictorH"],
+      "description"     : "TODO.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0019/avatar.png"
+    } ,
+  
+    {
+      "title"           : "Radial Basis Functions Interpolation",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0016",
+      "date"            : "2018-06-28",
+      "author"          : ["JoseV"],
+      "description"     : "This is a set of Matlab functions to interpolate scattered data with Radial Basis Functions (RBF).",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0016/avatar.png"
     } ,
   
     {
