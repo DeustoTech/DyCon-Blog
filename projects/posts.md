@@ -3,7 +3,7 @@ layout: project
 category: proyect
 title: Documentation
 position: 1
-description: Here you will find the whole list of tutorials and guides created and developed by the researcher's working in the DyCon ERC Project. All of the content has been classified according to the project’s corresponding working packages.
+description: Here you will find the whole list of guides and tutorials developed by the <a href="/projects/authors" target="_blank">DyCon ERC Project's research team and visitors</a>. All of the content has been classified according to the <a href="https://cmc.deusto.eus/work-packages/" target="_blank">project’s Work Packages</a>.
 
 ---
 {::nomarkdown}
@@ -20,12 +20,14 @@ description: Here you will find the whole list of tutorials and guides created a
       {% unless post %}
         {% continue %}
       {% endunless %}
-      {% include card.html title       = post.title
-                           url         = post.url
-                           author      = post.author
-                           description = post.description
-                           avatar      = post.avatar
-                           date        = post.date %}
+      {% include card.html
+        title       = post.title
+        url         = post.url
+        author      = post.author
+        description = post.description
+        avatar      = post.avatar
+        date        = post.date
+      %}
     {% endfor %}
   <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more of {{topic[1].acr}}...</a></h3>
   {% endfor %}
