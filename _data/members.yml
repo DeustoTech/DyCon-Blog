@@ -1,11 +1,11 @@
 # Members
 NoboruS:
   name: Noboru Sakamoto
-  description: <a name="NoburuSakamoto"></a>Noboru Sakamoto</strong> received the B.Sc. degree in mathematics from Hokkaido University and M.Sc. and Ph.D. degrees in aerospace engineering from Nagoya University, in 1991, 1993, and 1996, respectively. From 1996 until 2015, he held positions in the Graduate School of Engineering in Nagoya University. Currently, he is a Professor with the Science and Engineering of <a href="http;//www.nanzan-u.ac.jp/English/index.html" target="_blank">Nanzan University</a> in Nagoya, Japan. He has held a visiting research position at University of Groningen, The Netherlands, in 2005 and 2006. He received the SICE Best Paper Prizes in 1997, 2006, 2008 and 2011 and SICE Kimura Prize in 20016. His research interests include nonlinear control theory, control of chaotic systems, dynamical system theory and control applications for aerospace engineering.
+  description: <a name="NoburuSakamoto"></a>Noboru Sakamoto</strong> received the B.Sc. degree in mathematics from Hokkaido University and M.Sc. and Ph.D. degrees in aerospace engineering from Nagoya University, in 1991, 1993, and 1996, respectively. From 1996 until 2015, he held positions in the Graduate School of Engineering in Nagoya University. Currently, he is a Professor with the Science and Engineering of <a href="http;//www.nanzan-u.ac.jp/English/index.html" target="_blank">Nanzan University</a> in Nagoya, Japan. He has held a visiting research position at University of Groningen, The Netherlands, in 2005 and 2006. He received the SICE Best Paper Prizes in 1997, 2006, 2008 and 2011 and SICE Kimura Prize in 2016. His research interests include nonlinear control theory, control of chaotic systems, dynamical system theory and control applications for aerospace engineering.
   avatar: https://cmc.deusto.eus/wp-content/uploads/2018/12/equipo_DyCon_002.jpg
 JeromeL:
   name: Jérôme Lohéac
-  description: <strong>Jérôme Lohéac</strong> is a Senior Scientific Researcher at the <a href="http://www.irccyn.ec-nantes.fr/en/">Institut de Recherche en Communications et Cybernétique de Nantes</a>, a scientific institution linked to the <a href='http://www.cnrs.fr/'>CNRS</a> in France. His fields of research are Swimming of microorganisms(1); Time optimal control for PDEs(2); Optimal control of finite dimensional systems with state constraints(3); Controllability of parameter-dependent systems(4).
+  description: <strong>Jérôme Lohéac</strong> is a Senior Scientific Researcher at the <a href="http://www.irccyn.ec-nantes.fr/en/">Institut de Recherche en Communications et Cybernétique de Nantes</a>, a scientific institution linked to the <a href='http://www.cnrs.fr/'>CNRS</a> in France. His fields of research are Swimming of microorganisms(1); Time optimal control for PDEs(2); Optimal control of finite dimensional systems with state constraints(3) and Controllability of parameter-dependent systems(4).
   avatar: https://cmc.deusto.eus/wp-content/uploads/2017/01/Jerome_Loheac150x200.jpg
 MartinL:
   name: Martín Lazar
@@ -29,7 +29,7 @@ UmbertoB:
   avatar: https://cmc.deusto.eus/wp-content/uploads/2018/12/equipo_DyCon_006.jpg
 JesusO:
   name: Jesus Oroya
-  description: <strong>Jesus Oroya</strong> is the Software Expert in <b><a href='cmc.deusto.eus/dycon/'>DyCon; Dynamic Control</a></b>, the Advanced Research Project funded by the <a href='https://erc.europa.eu/'>European Research Council(ERC)</a>. He got a BSc in Physics from the <a href='https://www.ehu.eus/en/web/guest/en-home'>University of the Basque Country</a>, specializing in physical simulation. He has worked at CIC Nanogune for the company SIMUNE, looking for a method of optimization of atomic bases for calculations of electronic structure in the SIESTA code. In 2017, he worked at Accenture, managing and analyzing databases. He has also developed business applications for Liberty Seguros. Currently he is studying a MSc in Computational Engineering and Intelligent Systems in the <a href='https://www.ehu.eus/en/web/guest/en-home'>University of the Basque Country</a>.
+  description: <strong>Jesus Oroya</strong> is the Software Expert in <b><a href='cmc.deusto.eus/dycon/'>DyCon&#58; Dynamic Control</a></b>, the Advanced Research Project funded by the <a href='https://erc.europa.eu/'>European Research Council(ERC)</a>. He got a BSc in Physics from the <a href='https://www.ehu.eus/en/web/guest/en-home'>University of the Basque Country</a>, specializing in physical simulation. He has worked at CIC Nanogune for the company SIMUNE, looking for a method of optimization of atomic bases for calculations of electronic structure in the SIESTA code. In 2017, he worked at Accenture, managing and analyzing databases. He has also developed business applications for Liberty Seguros. Currently he is studying a MSc in Computational Engineering and Intelligent Systems in the <a href='https://www.ehu.eus/en/web/guest/en-home'>University of the Basque Country</a>.
   avatar: https://cmc.deusto.eus/wp-content/uploads/2018/12/equipo_DyCon_005.jpg
 EnriqueZ:
   name: Enrique Zuazua
@@ -49,7 +49,7 @@ VictorH:
   avatar: https://cmc.deusto.eus/wp-content/uploads/2017/01/DSC_1800_Victor25WEB.jpg
 JoseV:
   name: José Vicente
-  description: <strong><a href='https://cmc.deusto.eus/jose-vicente-lorenzo/'>José Vicente Lorenzo</a></strong> is a PhD student at <a href='http://www.uam.es' target='_blank'>Universidad Autónoma de Madrid (UAM)</a>. He finished his MSc Industrial Engineering at the <a href='http://en.us.es/eng' target='_blank'>University of Seville</a> in 2014. He has worked at <a href='https://home.cern/' target='_blank'>CERN</a> in Superconducting Magnets group (Geneva, SWITZERLAND) and Spanish organism for Research in Energy and Environment <a href='http://www.ciemat.es/' target='_blank'>CIEMAT</a>.
+  description: <strong><a href='https://cmc.deusto.eus/jose-vicente-lorenzo/'>José Vicente Lorenzo</a></strong> was a PhD student at <a href='http://www.uam.es' target='_blank'>Universidad Autónoma de Madrid (UAM)</a>. He finished his MSc Industrial Engineering at the <a href='http://en.us.es/eng' target='_blank'>University of Seville</a> in 2014. He has worked at <a href='https://home.cern/' target='_blank'>CERN</a> in Superconducting Magnets group (Geneva, Switzerland) and Spanish organism for Research in Energy and Environment <a href='http://www.ciemat.es/' target='_blank'>CIEMAT</a>.
   avatar: https://cmc.deusto.eus/wp-content/uploads/2017/01/DSC_1826_Jose25WEB.jpg
 AnaN:
   name: Ana Navarro
@@ -81,23 +81,23 @@ DongnamK:
   avatar: https://cmc.deusto.eus/wp-content/uploads/2018/12/equipo_DyCon_007.jpg
 YacoubaS:
   name: Yacouba Simpore
-  description: <strong>Yacouba SIMPORE</strong> is an Associate Professor at the <a href='http://www.univ-ouaga.bf/spip.php?rubrique39' target='_blank'>Université Ouaga 1 Professeur Joseph Ki Zerbo</a>, Ouagadougou, Burkina Faso, where he obtained his PhD in Optimal Control in 2016. He visited the Chair of Computational Mathematics of DeustoTech during 3 months within the Senior Visitor Program of the <strong><a href='devcmc.deusto.es/dycon/'> ERC Advanced Grant DyCon-Dynamic Control</a></strong>.
+  description: <strong>Yacouba SIMPORE</strong> is an Associate Professor at the <a href='http://www.univ-ouaga.bf/spip.php?rubrique39' target='_blank'>Université Ouaga 1 Professeur Joseph Ki Zerbo</a>, Ouagadougou, Burkina Faso, where he obtained his PhD in Optimal Control in 2016. He visited the Chair of Computational Mathematics of DeustoTech during 3 months within the Senior Visitor Program of the <strong><a href='devcmc.deusto.es/dycon/'> ERC Advanced Grant DyCon&#58; Dynamic Control</a></strong>.
   avatar: https://cmc.deusto.eus/wp-content/uploads/2018/12/equipo_DyCon_012.jpg
 XinliangL:
   name: Xinliang Liu
-  description: <strong>Xinliang Liu</strong> is a PhD Student at <a href='https://www.fau.eu/' target='_blank">Shanghai Jiao Tong University</a>, China. In the same university, he finished his Master studies in Applied Mathematics in 2017, with the thesis 'A variational framework to identify optimal approximation basis and its application to integral equation'. Hee will be in Bilbao for a 2 month internship under the supervision of Professor Enrique Zuazua, working in Control theory.
+  description: <strong>Xinliang Liu</strong> is a PhD Student at <a href='https://www.fau.eu/' target='_blank'>Shanghai Jiao Tong University</a>, China. In the same university, he finished his Master studies in Applied Mathematics in 2017, with the thesis 'A variational framework to identify optimal approximation basis and its application to integral equation'. He was in Bilbao for a 2 month internship under the supervision of Professor Enrique Zuazua, working in Control theory.
   avatar: https://cmc.deusto.eus/wp-content/uploads/2018/12/equipo_DyCon_011.jpg
 MehmetE:
   name: Mehmet Ersoy
-  description: Mehmet is currently an associate professor at the Université de Toulon (UTLN) and do my research at the Institut Mathématiques de Toulon (IMATH) -Équipe de Modélisation Numérique (MN) . My fields of specialization and research interests include Non linear analysis of PDEs, Numerical analysis in fluid mechanics. Before joining the team MN, I was a postdoctoral researcher at the Basque Center for Applied Mathematics, Derio, Spain, directed by/in collaboration with Enrique Zuazua. I obtained my Ph.D in Applied Mathematics at the Laboratoire de Mathématiques-LAMA under the supervision of Christian Bourdarias & Stéphane Gerbi, Université de Savoie, Chambéry, France in 2010. I deliver Scientific Computing and Numerical Analysis courses at the Ecole d'Ingénieurs de l'Université de Toulon which offers the possibility to get high level skills.
+  description: Mehmet is currently an associate professor at the Université de Toulon (La Garde, France) and does his research at the Institut Mathématiques de Toulon (IMATH) -Équipe de Modélisation Numérique (MN). His fields of specialization and research interests include Non linear analysis of PDEs and Numerical analysis in fluid mechanics. Before joining the MN team, he was a postdoctoral researcher at the Basque Center for Applied Mathematics, Derio, Spain, directed by/in collaboration with Enrique Zuazua. He obtained his PhD in Applied Mathematics at the Laboratoire de Mathématiques-LAMA under the supervision of Christian Bourdarias & Stéphane Gerbi, Université de Savoie (Chambéry, France) in 2010. He delivers Scientific Computing and Numerical Analysis courses at the Ecole d'Ingénieurs de l'Université de Toulon which offers the possibility to get high level skills.
   avatar: https://cmc.deusto.eus/wp-content/uploads/2019/02/mehmet.jpg
 YuhuaZ:
   name: Yuhua Zhu
-  description: Yuhua is a fourth-year Ph.D student in Department of Mathematics at University of Wisconsin-Madison. My interests lie in uncertainty quantification in kinetic theory and Machine learning.
+  description: Yuhua is a fourth-year Ph.D student in Department of Mathematics at University of Wisconsin-Madison. Her interests lie in uncertainty quantification in kinetic theory and Machine learning.
   avatar: https://cmc.deusto.eus/wp-content/uploads/2017/01/Yuhua201805.jpg
 SwannM:
   name: Swann MARX
-  description: Swann MARX got his PhD in GIPSA-lab (Grenoble, France) under the supervision of Christophe Prieur and Vincent Andrieu. During the PhD he focused on the stabilization of PDEs whose control is subject to some amplitude constraints. Currently he is a post-doctoral researcher at LAAS-CNRS (Toulouse, France), working on polynomial optimization applied to nonlinear hyperbolic PDEs and he will be doing an internship in the DyCon project, under the supervision of Prof. Enrique Zuazua.
+  description: Swann MARX got his PhD in GIPSA-lab (Grenoble, France) under the supervision of Christophe Prieur and Vincent Andrieu. During the PhD he focused on the stabilization of PDEs whose control is subject to some amplitude constraints. Currently he is a post-doctoral researcher at LAAS-CNRS (Toulouse, France), working on polynomial optimization applied to nonlinear hyperbolic PDEs and he did an internship in the DyCon project, under the supervision of Prof. Enrique Zuazua.
   avatar: https://cmc.deusto.eus/wp-content/uploads/2019/01/foto_Swann.jpg
 CarlosC:
   name: Carlos Castro
@@ -105,7 +105,7 @@ CarlosC:
   avatar: https://sites.google.com/site/carloscastroba/_/rsrc/1472851836683/bienvenida/foto.jpg
 MiguelC:
   name: Miguel Cea
-  description: Miguel Cea is a Product Director in INCLAM. Msc. and Postgraduate in Mathematics from the Autonomous University of Madrid, and Ph.D. Candidate in Mathematics on Optimal Design Problems. Extensive experience in mathematical models and numerical methods. Currently, I am the Product Director of SUAT (Unified Early Warning Service), which is defined as a SaaS service that consists of a Web platform that generates alerts and management recommendations in real time based on hydro-meteorological variables.
+  description: Miguel Cea is a Product Director in INCLAM. Msc. and Postgraduate in Mathematics from the Universidad Autónoma de Madrid, and PhD Candidate in Mathematics on Optimal Design Problems. Extensive experience in mathematical models and numerical methods. Currently, he is the Product Director of SUAT (Unified Early Warning Service), which is defined as a SaaS service that consists of a Web platform that generates alerts and management recommendations in real time based on hydro-meteorological variables.
   avatar: https://media.licdn.com/dms/image/C5603AQG99XhgwRBkAw/profile-displayphoto-shrink_800_800/0?e=1556150400&v=beta&t=nZjF68YShAHnGCUIx4R_6WESGnTOABMRd-0sGNKI5SM
 SorinM:
   name: Sorin Micu
@@ -129,15 +129,15 @@ EmmanuelT:
   avatar: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Emmanuel.trelat.jpg/260px-Emmanuel.trelat.jpg
 MarioM:
   name: Mario Morales
-  description: Computational Science and Engineering Division, Oak Ridge National Laboratory (ORNL)
+  description: Computational Science and Engineering Division, Oak Ridge National Laboratory (Tennessee, United states).
   avatar: https://scholar.google.es/citations?view_op=view_photo&user=SV-rSZMAAAAJ&citpid=7
 RodrigoL:
   name: Rodrigo Lecaros
-  description: University of Chile, Centro de Modelamiento Matemático (CMM)
+  description: University of Chile, Centro de Modelamiento Matemático (CMM).
   avatar: https://i1.rgstatic.net/ii/profile.image/272798987845663-1442051755965_Q128/Rodrigo_Lecaros.jpg
 JiaminZ:
   name: Jiamin Zhu
-  description: Jiamin is currently a postdoc in Paris and Madrid, under the direction of Enrique Zuazua and Emmanuel Trélat, under the ANR-ICON Project (Control Interactions, Partial Differential Equations, and Numerical Analysis).
+  description: Jiamin is currently a Post Doctoral researcher in Paris and Madrid, under the direction of Enrique Zuazua and Emmanuel Trélat, under the ANR-ICON Project (Control Interactions, Partial Differential Equations, and Numerical Analysis).
   avatar: https://www.crypto.ethz.ch/~zhu/me.png
 RamonE:
   name: Ramon Escobedo
