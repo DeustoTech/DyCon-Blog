@@ -5,9 +5,15 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
+<<<<<<< Updated upstream
     <pubDate>Tue, 12 Mar 2019 11:05:26 +0100</pubDate>
     <lastBuildDate>Tue, 12 Mar 2019 11:05:26 +0100</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
+=======
+    <pubDate>Mon, 11 Mar 2019 12:33:13 +0100</pubDate>
+    <lastBuildDate>Mon, 11 Mar 2019 12:33:13 +0100</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+>>>>>>> Stashed changes
     
       <item>
         <title>An introduction to the moment method for optimal control problems for polynomial ODEs</title>
