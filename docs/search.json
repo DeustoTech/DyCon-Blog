@@ -143,11 +143,11 @@
   
     {
       "title"           : "Optimal Shape Design for Poisson Equation in OpenFOAM",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0017",
+      "categories"      : ["tutorial", "OT01"],
+      "url"             : "/tutorial/ot01/P0017",
       "date"            : "2018-07-23",
       "author"          : ["JoseV"],
-      "description"     : "TODO.",
+      "description"     : "Optimal Control in OpenFOAM",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0017/avatar.PNG"
     } ,
   
@@ -163,8 +163,8 @@
   
     {
       "title"           : "Interior Control of the Poisson Equation with the Conjugate Gradient Method in OpenFOAM",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0020",
+      "categories"      : ["tutorial", "OT01"],
+      "url"             : "/tutorial/ot01/P0020",
       "date"            : "2018-07-03",
       "author"          : ["JoseV","VictorH"],
       "description"     : "TODO.",
@@ -173,32 +173,12 @@
   
     {
       "title"           : "Optimal Shape Design in External Flow",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0018",
+      "categories"      : ["tutorial", "OT01"],
+      "url"             : "/tutorial/ot01/P0018",
       "date"            : "2018-06-30",
       "author"          : ["JoseV"],
       "description"     : "TODO.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0018/avatar.png"
-    } ,
-  
-    {
-      "title"           : "Interior Control of the Heat Equation with the Steepest Descent Method and OpenFOAM",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0019",
-      "date"            : "2018-06-29",
-      "author"          : ["JoseV","VictorH"],
-      "description"     : "TODO.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0019/avatar.png"
-    } ,
-  
-    {
-      "title"           : "Interior Control of the Poisson Equation with the Steepest Descent Method in OpenFOAM",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0003",
-      "date"            : "2018-06-29",
-      "author"          : ["JoseV","VictorH"],
-      "description"     : "TODO.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0003/avatarWP990003.PNG"
     } ,
   
     {
@@ -209,6 +189,26 @@
       "author"          : ["JoseV"],
       "description"     : "TODO.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0002/avatarWP990002.png"
+    } ,
+  
+    {
+      "title"           : "Interior Control of the Heat Equation with the Steepest Descent Method and OpenFOAM",
+      "categories"      : ["tutorial", "OT01"],
+      "url"             : "/tutorial/ot01/P0019",
+      "date"            : "2018-06-29",
+      "author"          : ["JoseV","VictorH"],
+      "description"     : "TODO.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0019/avatar.png"
+    } ,
+  
+    {
+      "title"           : "Interior Control of the Poisson Equation with the Steepest Descent Method in OpenFOAM",
+      "categories"      : ["tutorial", "OT01"],
+      "url"             : "/tutorial/ot01/P0003",
+      "date"            : "2018-06-29",
+      "author"          : ["JoseV","VictorH"],
+      "description"     : "TODO.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0003/avatarWP990003.PNG"
     } ,
   
     {
@@ -223,8 +223,8 @@
   
     {
       "title"           : "Optimal Control of the Poisson Equation with OpenFOAM",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0021",
+      "categories"      : ["tutorial", "OT01"],
+      "url"             : "/tutorial/ot01/P0021",
       "date"            : "2018-05-01",
       "author"          : ["VictorH","JoseV","EnriqueZ"],
       "description"     : "In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE).",

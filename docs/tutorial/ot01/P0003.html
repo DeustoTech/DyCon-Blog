@@ -8,11 +8,11 @@
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
   <title>
-    Interior Control of the Heat Equation with the Steepest Descent Method and OpenFOAM - DyCon Blog
+    Interior Control of the Poisson Equation with the Steepest Descent Method in OpenFOAM - DyCon Blog
     
   </title>
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0019">
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/ot01/P0003">
 
   <!-- Bootstrap Core CSS -->
   <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
@@ -133,10 +133,10 @@
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
         <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">
-            Other Topics</a> &#8827;</small>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/OT01">
+            Optimal Control in OpenFOAM</a> &#8827;</small>
           </h2>
-          <h1>Interior Control of the Heat Equation with the Steepest Descent Method and OpenFOAM</h1>
+          <h1>Interior Control of the Poisson Equation with the Steepest Descent Method in OpenFOAM</h1>
 					<p class="meta">
             <div class="post-preview-authors ellipsis-one-line">
               Authors:
@@ -218,42 +218,40 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/archive/master.zip""><i class="fa fa-download fa-lg"></i>Download Matlab Code</a>
+            <a href="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/archive/master.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
-        <p>This is an OpenFOAM solver for the distributed control of the heat equation through the minimization problem</p>
+        <p>In this work we solve the optimal control problem</p>
 
 <p align="center">
-  <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cmin_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Ctimes%20%5Cleft%28%200%20%2C%20T%20%5Cright%29%20%5Cright%29%7D%20%5Cmathcal%7BJ%7D%20%5Cleft%28%20u%20%2C%20y%20%5Cleft%28%20u%20%5Cright%29%20%5Cright%29%20%3D%20%26%20%5Cmin_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Ctimes%20%5Cleft%28%200%20%2C%20T%20%5Cright%29%20%5Cright%29%7D%20%5Cfrac%7B%5Cbeta_1%7D%7B2%7D%20%5Cint_0%5ET%20%5Cint_%7B%5COmega%7D%20u%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%20%5C%2C%20%5Cmathrm%7Bd%7Dt%20&plus;%20%5Cfrac%7B%5Cbeta_2%7D%7B2%7D%5Cint_0%5ET%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20y%20-%20y_d%20%5Cright%29%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%20%5C%2C%20%5Cmathrm%7Bd%7Dt%20&plus;%20%5Cfrac%7B%5Cbeta_3%7D%7B2%7D%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20y%5Cleft%28%20%5Ccdot%2C%20T%20%5Cright%29%20-%20Y_d%20%5Cright%29%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%2C%20%5Cquad%20%5Cbeta_1%2C%20%5C%20%5Cbeta_2%2C%20%5C%20%5Cbeta_3%20%5Cin%20%5Cmathbb%7BR%7D%5E&plus;%2C%20%5Cend%7Balign*%7D" />
+  <img src="https://latex.codecogs.com/gif.latex?%5Cmin%20_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Cright%29%7D%20%5Cmathcal%7BJ%7D%5Cleft%28%20u%5Cright%29%20%3D%20%5Cmin%20_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Cright%29%7D%20%5Cfrac%7B1%7D%7B2%7D%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20y%20-%20y_d%20%5Cright%29%20%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%20&plus;%20%5Cfrac%7B%5Cbeta%7D%7B2%7D%20%5Cint_%7B%5COmega%7D%20u%20%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%2C" />
 </p>
 
-<p>subject to the state equation</p>
+<p>where <img src="https://latex.codecogs.com/gif.latex?u" /> is the control variable, <img src="https://latex.codecogs.com/gif.latex?y" /> the state variable and <img src="https://latex.codecogs.com/gif.latex?y_d" /> a target function. The minimization problem is subject to the elliptic partial differential equation</p>
 
 <p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20%5Cpartial_t%20y%20-%20%5CDelta%20y%20%3D%20f%20&plus;%20u%20%26%20%5Ctext%7Bin%20%7D%20Q%20%3D%20%5COmega%20%5Ctimes%20%5Cleft%28%200%2C%20T%20%5Cright%29%2C%5C%5C%20y%20%3D%20y_D%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_D%20%3D%20%5CGamma_D%20%5Ctimes%20%5Cleft%28%200%2C%20T%20%5Cright%29%2C%5C%5C%20%5Cdisplaystyle%20%5Cfrac%7B%5Cpartial%20y%7D%7B%5Cpartial%20n%7D%20%3D%20y_N%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_N%20%3D%20%5CGamma_N%20%5Ctimes%20%5Cleft%28%200%2C%20T%20%5Cright%29%2C%5C%5C%20y%20%5Cleft%28%20%5Ccdot%2C%200%20%5Cright%29%20%3D%20y_0%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5Cend%7Bcases%7D" />
+    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20-%5CDelta%20y%20%3D%20f%20&plus;%20u%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5C%5C%20y%20%3D%200%20%26%20%5Ctext%7Bon%20%7D%20%5CGamma.%20%5Cend%7Bcases%7D" />
 </p>
 
-<p>with <img src="https://latex.codecogs.com/gif.latex?%5CGamma%20%3D%20%5CGamma_D%20%5Ccup%20%5CGamma_N" /> and <img src="https://latex.codecogs.com/gif.latex?%5CGamma_D%20%5Ccap%20%5CGamma_N%3D%20%5Cemptyset" />.</p>
-
-<p>The cost functional gradient is</p>
+<p>We use the steepest descent method based on the adjoint methodology. The corresponding adjoint system writes as</p>
 
 <p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cmathcal%7BJ%7D%5E%5Cprime%20%5Cleft%28%20u%20%5Cright%29%20%3D%20%5Cvarphi%20&plus;%20%5Cbeta_1%20u%2C" />
+    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20-%20%5CDelta%20%5Clambda%20%3D%20y%20-%20y_d%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5C%5C%20%5Clambda%20%3D%200%20%26%20%5Ctext%7Bon%20%7D%20%5CGamma.%20%5Cend%7Bcases%7D" />
 </p>
 
-<p>where <img src="https://latex.codecogs.com/gif.latex?%5Cvarphi" /> solves the adjoint problem</p>
+<p>The directional derivative of the cost function is given by</p>
 
 <p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20-%5Cpartial_t%20%5Cvarphi%20-%20%5CDelta%20%5Cvarphi%20%3D%20%5Cbeta_2%20%5Cleft%28%20y%20-%20y_d%20%5Cright%29%2C%20%26%20%5Ctext%7Bin%20%7D%20Q%2C%20%5C%5C%20%5Cvarphi%5Cleft%28%20%5Ccdot%2C%20T%20%5Cright%29%20%3D%20%5Cbeta_3%20%5Cleft%28%20y%20%5Cleft%28%20%5Ccdot%2C%20T%20%5Cright%29%20-%20Y_d%20%5Cright%29%2C%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5C%5C%20%5Cvarphi%20%3D%200%2C%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_D%2C%20%5C%5C%20%5Cdisplaystyle%20%5Cfrac%7B%5Cpartial%20%5Cvarphi%7D%7B%5Cpartial%20n%7D%20%3D%200%2C%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_N.%20%5Cend%7Bcases%7D" />
+    <img src="https://latex.codecogs.com/gif.latex?%5Cmathcal%7BD%7D_%7B%20%5Cdelta%20u%7D%20%5Cmathcal%7BJ%7D%20%5Cleft%28%20u%20%5Cright%29%20%3D%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20%5Clambda%20&plus;%20%5Cbeta%20u%20%5Cright%29%20%5Cdelta%20u%20%5C%2C%20%5Cmathrm%7Bd%7D%20%5COmega%2C" />
 </p>
 
-<p>In the steepest descent method the cost gradient is used to update the control as</p>
+<p>and the control variable is updated according to</p>
 
 <p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?u%5E%7B%5Cleft%28%20n%20&plus;%201%20%5Cright%29%7D%20%3D%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20-%20%5Cepsilon%20%5Cmathcal%7BJ%7D%5E%5Cprime%20%5Cleft%28%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20%5Cright%29%2C%20%5Cquad%20%5Cepsilon%20%5Cin%20%5Cmathbb%7BR%7D%5E&plus;%2C" />
+    <img src="https://latex.codecogs.com/gif.latex?u%5E%7B%5Cleft%28%20n%20&plus;%201%20%5Cright%29%7D%20%3D%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20-%20%5Cepsilon%20%5Cleft%28%20%5Clambda%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20&plus;%20%5Cbeta%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20%5Cright%29%2C" />
 </p>
 
-<p>with <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon" /> sufficiently small.</p>
+<p>for some value of <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon" />.</p>
 
 <h2 id="getting-started">Getting Started</h2>
 
@@ -275,43 +273,21 @@ img:active{
 
 <h2 id="running-a-case">Running a Case</h2>
 
-<p>In order to run the solver move to the case folder <em>heatAdjoinFoamCase</em> and type in the command line</p>
+<p>In order to run the solver move to the case folder <em>poissonAdjoinFoamCase</em> and type in the command line</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./Allprepare
 
-heatAdjointFoam
+poissonAdjointFoam
 </code></pre></div></div>
 
-<ul>
-  <li>The <em>heatAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions, <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon%3D100" />, and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_1%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_2%20%3D%201" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_3%20%3D%200" />. The target function is <img src="https://latex.codecogs.com/gif.latex?y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</li>
-</ul>
+<p>The <em>poissonAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />. The target function is <img src="https://latex.codecogs.com/gif.latex?y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</p>
 
 <p align="center">
-  <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/J_b2_1_b3_0.png?raw=true" />
+   <a href="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_J.png" target="_blank"><img src="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_J.png?raw=true" /></a>
 </p>
 
 <p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/Jy_b2_1_b3_0.png?raw=true" />
-</p>
-
-<p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/anim_y_b6.gif?raw=true" width="500" height="300" />
-</p>
-
-<ul>
-  <li>The <em>heatAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions, <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon%3D10" />, and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_1%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_2%20%3D%200" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_3%20%3D%201" />. The target function is <img src="https://latex.codecogs.com/gif.latex?Y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</li>
-</ul>
-
-<p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/J_b2_0_b3_1.png?raw=true" />
-</p>
-
-<p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/Jy_b2_0_b3_1.png?raw=true" />
-</p>
-
-<p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/anim_Y_b6.gif?raw=true" width="500" height="300" />
+   <a href="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_Jy.png" target="_blank"><img src="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_Jy.png?raw=true" /></a>
 </p>
 
 <h3 id="warning">Warning</h3>
@@ -330,6 +306,12 @@ heatAdjointFoam
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./filename
 </code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>F. Tröltzsch. <em>Optimal control of partial differential equations: theory, methods, and applications</em>. American Mathematical Soc., 2010.</li>
+</ul>
 
         <hr>
       </div>

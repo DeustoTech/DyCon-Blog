@@ -33,6 +33,9 @@ WP06:
   wp: WP6
   acr: FI
   description: <p>Our team has made several contributions in the description of the limit behaviour, as the mesh sizes tend to zero, of <strong>numerical schemes for wave and Schrödinger equations</strong> from a control theoretical perspective. These results show that, in particular, filtering the high frequency numerical spurious solutions is necessary (and a good remedy) to assure the convergence of numerical schemes from a control perspective. These results also provide insight into the link between <strong>conservative finite</strong> and <strong>infinite-dimensional dynamical systems</strong> and their asymptotic behaviour.</p>
+OT01:
+  name: Optimal Control in OpenFOAM
+  description: <a href="https://www.openfoam.com/" target="_blank">OpenFOAM </a> is a free, open source Computational Fluid Dynamics (CFD) software to solve anything from complex fluid flows involving chemical reactions, turbulence and heat transfer, to acoustics, solid mechanics and electromagnetics. 
 WP99:
   name: Other Topics
   acr: Other Topics

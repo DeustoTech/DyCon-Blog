@@ -4050,210 +4050,6 @@ shapeOptimizationFoam
   <li>F. Feppon, G. Allaire, F. Bordeu, J. Cortial, and C. Dapogny. Shape optimization of a coupled thermal fluid-structure problem in a level set mesh evolution framework, 2018.</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;This is an OpenFOAM solver for the distributed control of the heat equation through the minimization problem&lt;/p&gt;
-</code></pre></div></div>
-
-<p align="center">
-  <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cmin_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Ctimes%20%5Cleft%28%200%20%2C%20T%20%5Cright%29%20%5Cright%29%7D%20%5Cmathcal%7BJ%7D%20%5Cleft%28%20u%20%2C%20y%20%5Cleft%28%20u%20%5Cright%29%20%5Cright%29%20%3D%20%26%20%5Cmin_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Ctimes%20%5Cleft%28%200%20%2C%20T%20%5Cright%29%20%5Cright%29%7D%20%5Cfrac%7B%5Cbeta_1%7D%7B2%7D%20%5Cint_0%5ET%20%5Cint_%7B%5COmega%7D%20u%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%20%5C%2C%20%5Cmathrm%7Bd%7Dt%20&plus;%20%5Cfrac%7B%5Cbeta_2%7D%7B2%7D%5Cint_0%5ET%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20y%20-%20y_d%20%5Cright%29%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%20%5C%2C%20%5Cmathrm%7Bd%7Dt%20&plus;%20%5Cfrac%7B%5Cbeta_3%7D%7B2%7D%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20y%5Cleft%28%20%5Ccdot%2C%20T%20%5Cright%29%20-%20Y_d%20%5Cright%29%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%2C%20%5Cquad%20%5Cbeta_1%2C%20%5C%20%5Cbeta_2%2C%20%5C%20%5Cbeta_3%20%5Cin%20%5Cmathbb%7BR%7D%5E&plus;%2C%20%5Cend%7Balign*%7D" />
-</p>
-
-<p>subject to the state equation</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20%5Cpartial_t%20y%20-%20%5CDelta%20y%20%3D%20f%20&plus;%20u%20%26%20%5Ctext%7Bin%20%7D%20Q%20%3D%20%5COmega%20%5Ctimes%20%5Cleft%28%200%2C%20T%20%5Cright%29%2C%5C%5C%20y%20%3D%20y_D%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_D%20%3D%20%5CGamma_D%20%5Ctimes%20%5Cleft%28%200%2C%20T%20%5Cright%29%2C%5C%5C%20%5Cdisplaystyle%20%5Cfrac%7B%5Cpartial%20y%7D%7B%5Cpartial%20n%7D%20%3D%20y_N%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_N%20%3D%20%5CGamma_N%20%5Ctimes%20%5Cleft%28%200%2C%20T%20%5Cright%29%2C%5C%5C%20y%20%5Cleft%28%20%5Ccdot%2C%200%20%5Cright%29%20%3D%20y_0%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5Cend%7Bcases%7D" />
-</p>
-
-<p>with <img src="https://latex.codecogs.com/gif.latex?%5CGamma%20%3D%20%5CGamma_D%20%5Ccup%20%5CGamma_N" /> and <img src="https://latex.codecogs.com/gif.latex?%5CGamma_D%20%5Ccap%20%5CGamma_N%3D%20%5Cemptyset" />.</p>
-
-<p>The cost functional gradient is</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cmathcal%7BJ%7D%5E%5Cprime%20%5Cleft%28%20u%20%5Cright%29%20%3D%20%5Cvarphi%20&plus;%20%5Cbeta_1%20u%2C" />
-</p>
-
-<p>where <img src="https://latex.codecogs.com/gif.latex?%5Cvarphi" /> solves the adjoint problem</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20-%5Cpartial_t%20%5Cvarphi%20-%20%5CDelta%20%5Cvarphi%20%3D%20%5Cbeta_2%20%5Cleft%28%20y%20-%20y_d%20%5Cright%29%2C%20%26%20%5Ctext%7Bin%20%7D%20Q%2C%20%5C%5C%20%5Cvarphi%5Cleft%28%20%5Ccdot%2C%20T%20%5Cright%29%20%3D%20%5Cbeta_3%20%5Cleft%28%20y%20%5Cleft%28%20%5Ccdot%2C%20T%20%5Cright%29%20-%20Y_d%20%5Cright%29%2C%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5C%5C%20%5Cvarphi%20%3D%200%2C%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_D%2C%20%5C%5C%20%5Cdisplaystyle%20%5Cfrac%7B%5Cpartial%20%5Cvarphi%7D%7B%5Cpartial%20n%7D%20%3D%200%2C%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_N.%20%5Cend%7Bcases%7D" />
-</p>
-
-<p>In the steepest descent method the cost gradient is used to update the control as</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?u%5E%7B%5Cleft%28%20n%20&plus;%201%20%5Cright%29%7D%20%3D%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20-%20%5Cepsilon%20%5Cmathcal%7BJ%7D%5E%5Cprime%20%5Cleft%28%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20%5Cright%29%2C%20%5Cquad%20%5Cepsilon%20%5Cin%20%5Cmathbb%7BR%7D%5E&plus;%2C" />
-</p>
-
-<p>with <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon" /> sufficiently small.</p>
-
-<h2 id="getting-started">Getting Started</h2>
-
-<p>The solver must be compiled in the terminal. It is advisable to first clean previous compilations with</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wclean
-</code></pre></div></div>
-
-<p>and then use</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wmake
-</code></pre></div></div>
-
-<h3 id="prerequisites">Prerequisites</h3>
-
-<p>OpenFOAM C++ library must be installed in order to compile the code.</p>
-
-<p>The OpenFOAM distribution provided by the <a href="https://openfoam.org/">OpenFOAM Foundation</a> was used.</p>
-
-<h2 id="running-a-case">Running a Case</h2>
-
-<p>In order to run the solver move to the case folder <em>heatAdjoinFoamCase</em> and type in the command line</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./Allprepare
-
-heatAdjointFoam
-</code></pre></div></div>
-
-<ul>
-  <li>The <em>heatAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions, <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon%3D100" />, and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_1%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_2%20%3D%201" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_3%20%3D%200" />. The target function is <img src="https://latex.codecogs.com/gif.latex?y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</li>
-</ul>
-
-<p align="center">
-  <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/J_b2_1_b3_0.png?raw=true" />
-</p>
-
-<p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/Jy_b2_1_b3_0.png?raw=true" />
-</p>
-
-<p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/anim_y_b6.gif?raw=true" width="500" height="300" />
-</p>
-
-<ul>
-  <li>The <em>heatAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions, <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon%3D10" />, and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_1%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_2%20%3D%200" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_3%20%3D%201" />. The target function is <img src="https://latex.codecogs.com/gif.latex?Y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</li>
-</ul>
-
-<p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/J_b2_0_b3_1.png?raw=true" />
-</p>
-
-<p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/Jy_b2_0_b3_1.png?raw=true" />
-</p>
-
-<p align="center">
-   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/anim_Y_b6.gif?raw=true" width="500" height="300" />
-</p>
-
-<h3 id="warning">Warning</h3>
-
-<p>It might be needed to use</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i -e 's/\r$//' filename
-</code></pre></div></div>
-
-<p>and</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x filename
-</code></pre></div></div>
-
-<p>in order to be able to execute</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./filename
-</code></pre></div></div>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this work we solve the optimal control problem&lt;/p&gt;
-</code></pre></div></div>
-
-<p align="center">
-  <img src="https://latex.codecogs.com/gif.latex?%5Cmin%20_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Cright%29%7D%20%5Cmathcal%7BJ%7D%5Cleft%28%20u%5Cright%29%20%3D%20%5Cmin%20_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Cright%29%7D%20%5Cfrac%7B1%7D%7B2%7D%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20y%20-%20y_d%20%5Cright%29%20%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%20&plus;%20%5Cfrac%7B%5Cbeta%7D%7B2%7D%20%5Cint_%7B%5COmega%7D%20u%20%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%2C" />
-</p>
-
-<p>where <img src="https://latex.codecogs.com/gif.latex?u" /> is the control variable, <img src="https://latex.codecogs.com/gif.latex?y" /> the state variable and <img src="https://latex.codecogs.com/gif.latex?y_d" /> a target function. The minimization problem is subject to the elliptic partial differential equation</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20-%5CDelta%20y%20%3D%20f%20&plus;%20u%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5C%5C%20y%20%3D%200%20%26%20%5Ctext%7Bon%20%7D%20%5CGamma.%20%5Cend%7Bcases%7D" />
-</p>
-
-<p>We use the steepest descent method based on the adjoint methodology. The corresponding adjoint system writes as</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20-%20%5CDelta%20%5Clambda%20%3D%20y%20-%20y_d%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5C%5C%20%5Clambda%20%3D%200%20%26%20%5Ctext%7Bon%20%7D%20%5CGamma.%20%5Cend%7Bcases%7D" />
-</p>
-
-<p>The directional derivative of the cost function is given by</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cmathcal%7BD%7D_%7B%20%5Cdelta%20u%7D%20%5Cmathcal%7BJ%7D%20%5Cleft%28%20u%20%5Cright%29%20%3D%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20%5Clambda%20&plus;%20%5Cbeta%20u%20%5Cright%29%20%5Cdelta%20u%20%5C%2C%20%5Cmathrm%7Bd%7D%20%5COmega%2C" />
-</p>
-
-<p>and the control variable is updated according to</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?u%5E%7B%5Cleft%28%20n%20&plus;%201%20%5Cright%29%7D%20%3D%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20-%20%5Cepsilon%20%5Cleft%28%20%5Clambda%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20&plus;%20%5Cbeta%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20%5Cright%29%2C" />
-</p>
-
-<p>for some value of <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon" />.</p>
-
-<h2 id="getting-started">Getting Started</h2>
-
-<p>The solver must be compiled in the terminal. It is advisable to first clean previous compilations with</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wclean
-</code></pre></div></div>
-
-<p>and then use</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wmake
-</code></pre></div></div>
-
-<h3 id="prerequisites">Prerequisites</h3>
-
-<p>OpenFOAM C++ library must be installed in order to compile the code.</p>
-
-<p>The OpenFOAM distribution provided by the <a href="https://openfoam.org/">OpenFOAM Foundation</a> was used.</p>
-
-<h2 id="running-a-case">Running a Case</h2>
-
-<p>In order to run the solver move to the case folder <em>poissonAdjoinFoamCase</em> and type in the command line</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./Allprepare
-
-poissonAdjointFoam
-</code></pre></div></div>
-
-<p>The <em>poissonAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />. The target function is <img src="https://latex.codecogs.com/gif.latex?y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</p>
-
-<p align="center">
-   <a href="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_J.png" target="_blank"><img src="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_J.png?raw=true" /></a>
-</p>
-
-<p align="center">
-   <a href="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_Jy.png" target="_blank"><img src="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_Jy.png?raw=true" /></a>
-</p>
-
-<h3 id="warning">Warning</h3>
-
-<p>It might be needed to use</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i -e 's/\r$//' filename
-</code></pre></div></div>
-
-<p>and</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x filename
-</code></pre></div></div>
-
-<p>in order to be able to execute</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./filename
-</code></pre></div></div>
-
-<h2 id="references">References</h2>
-
-<ul>
-  <li>F. Tröltzsch. <em>Optimal control of partial differential equations: theory, methods, and applications</em>. American Mathematical Soc., 2010.</li>
-</ul>
-
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;We study the shape design problem through the minimization of the cost functional&lt;/p&gt;
 </code></pre></div></div>
 
@@ -4644,6 +4440,210 @@ n = 1;
 simulation of sailing boats: Dynamics, fsi, and shape optimization. In <em>Variational Analysis and Aerospace Engineering: Mathematical Challenges for Aerospace Design</em>, pages 339–377. Springer, 2012.</li>
   <li>Thomas W Sederberg and Scott R Parry. Free-form deformation of solid geometric models. <em>ACM SIGGRAPH computer graphics</em>, 20(4):151–160, 1986.</li>
   <li>Michele Andreoli, Janka Ales, and Jean-Antoine Désidéri. <em>Free-form-deformation parameterization for multilevel 3D shape optimization in aerodynamics</em>. PhD thesis, INRIA, 2003.</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;This is an OpenFOAM solver for the distributed control of the heat equation through the minimization problem&lt;/p&gt;
+</code></pre></div></div>
+
+<p align="center">
+  <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cmin_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Ctimes%20%5Cleft%28%200%20%2C%20T%20%5Cright%29%20%5Cright%29%7D%20%5Cmathcal%7BJ%7D%20%5Cleft%28%20u%20%2C%20y%20%5Cleft%28%20u%20%5Cright%29%20%5Cright%29%20%3D%20%26%20%5Cmin_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Ctimes%20%5Cleft%28%200%20%2C%20T%20%5Cright%29%20%5Cright%29%7D%20%5Cfrac%7B%5Cbeta_1%7D%7B2%7D%20%5Cint_0%5ET%20%5Cint_%7B%5COmega%7D%20u%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%20%5C%2C%20%5Cmathrm%7Bd%7Dt%20&plus;%20%5Cfrac%7B%5Cbeta_2%7D%7B2%7D%5Cint_0%5ET%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20y%20-%20y_d%20%5Cright%29%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%20%5C%2C%20%5Cmathrm%7Bd%7Dt%20&plus;%20%5Cfrac%7B%5Cbeta_3%7D%7B2%7D%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20y%5Cleft%28%20%5Ccdot%2C%20T%20%5Cright%29%20-%20Y_d%20%5Cright%29%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%2C%20%5Cquad%20%5Cbeta_1%2C%20%5C%20%5Cbeta_2%2C%20%5C%20%5Cbeta_3%20%5Cin%20%5Cmathbb%7BR%7D%5E&plus;%2C%20%5Cend%7Balign*%7D" />
+</p>
+
+<p>subject to the state equation</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20%5Cpartial_t%20y%20-%20%5CDelta%20y%20%3D%20f%20&plus;%20u%20%26%20%5Ctext%7Bin%20%7D%20Q%20%3D%20%5COmega%20%5Ctimes%20%5Cleft%28%200%2C%20T%20%5Cright%29%2C%5C%5C%20y%20%3D%20y_D%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_D%20%3D%20%5CGamma_D%20%5Ctimes%20%5Cleft%28%200%2C%20T%20%5Cright%29%2C%5C%5C%20%5Cdisplaystyle%20%5Cfrac%7B%5Cpartial%20y%7D%7B%5Cpartial%20n%7D%20%3D%20y_N%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_N%20%3D%20%5CGamma_N%20%5Ctimes%20%5Cleft%28%200%2C%20T%20%5Cright%29%2C%5C%5C%20y%20%5Cleft%28%20%5Ccdot%2C%200%20%5Cright%29%20%3D%20y_0%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5Cend%7Bcases%7D" />
+</p>
+
+<p>with <img src="https://latex.codecogs.com/gif.latex?%5CGamma%20%3D%20%5CGamma_D%20%5Ccup%20%5CGamma_N" /> and <img src="https://latex.codecogs.com/gif.latex?%5CGamma_D%20%5Ccap%20%5CGamma_N%3D%20%5Cemptyset" />.</p>
+
+<p>The cost functional gradient is</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?%5Cmathcal%7BJ%7D%5E%5Cprime%20%5Cleft%28%20u%20%5Cright%29%20%3D%20%5Cvarphi%20&plus;%20%5Cbeta_1%20u%2C" />
+</p>
+
+<p>where <img src="https://latex.codecogs.com/gif.latex?%5Cvarphi" /> solves the adjoint problem</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20-%5Cpartial_t%20%5Cvarphi%20-%20%5CDelta%20%5Cvarphi%20%3D%20%5Cbeta_2%20%5Cleft%28%20y%20-%20y_d%20%5Cright%29%2C%20%26%20%5Ctext%7Bin%20%7D%20Q%2C%20%5C%5C%20%5Cvarphi%5Cleft%28%20%5Ccdot%2C%20T%20%5Cright%29%20%3D%20%5Cbeta_3%20%5Cleft%28%20y%20%5Cleft%28%20%5Ccdot%2C%20T%20%5Cright%29%20-%20Y_d%20%5Cright%29%2C%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5C%5C%20%5Cvarphi%20%3D%200%2C%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_D%2C%20%5C%5C%20%5Cdisplaystyle%20%5Cfrac%7B%5Cpartial%20%5Cvarphi%7D%7B%5Cpartial%20n%7D%20%3D%200%2C%20%26%20%5Ctext%7Bon%20%7D%20%5CSigma_N.%20%5Cend%7Bcases%7D" />
+</p>
+
+<p>In the steepest descent method the cost gradient is used to update the control as</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?u%5E%7B%5Cleft%28%20n%20&plus;%201%20%5Cright%29%7D%20%3D%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20-%20%5Cepsilon%20%5Cmathcal%7BJ%7D%5E%5Cprime%20%5Cleft%28%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20%5Cright%29%2C%20%5Cquad%20%5Cepsilon%20%5Cin%20%5Cmathbb%7BR%7D%5E&plus;%2C" />
+</p>
+
+<p>with <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon" /> sufficiently small.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The solver must be compiled in the terminal. It is advisable to first clean previous compilations with</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wclean
+</code></pre></div></div>
+
+<p>and then use</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wmake
+</code></pre></div></div>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<p>OpenFOAM C++ library must be installed in order to compile the code.</p>
+
+<p>The OpenFOAM distribution provided by the <a href="https://openfoam.org/">OpenFOAM Foundation</a> was used.</p>
+
+<h2 id="running-a-case">Running a Case</h2>
+
+<p>In order to run the solver move to the case folder <em>heatAdjoinFoamCase</em> and type in the command line</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./Allprepare
+
+heatAdjointFoam
+</code></pre></div></div>
+
+<ul>
+  <li>The <em>heatAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions, <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon%3D100" />, and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_1%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_2%20%3D%201" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_3%20%3D%200" />. The target function is <img src="https://latex.codecogs.com/gif.latex?y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</li>
+</ul>
+
+<p align="center">
+  <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/J_b2_1_b3_0.png?raw=true" />
+</p>
+
+<p align="center">
+   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/Jy_b2_1_b3_0.png?raw=true" />
+</p>
+
+<p align="center">
+   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/anim_y_b6.gif?raw=true" width="500" height="300" />
+</p>
+
+<ul>
+  <li>The <em>heatAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions, <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon%3D10" />, and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_1%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_2%20%3D%200" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_3%20%3D%201" />. The target function is <img src="https://latex.codecogs.com/gif.latex?Y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</li>
+</ul>
+
+<p align="center">
+   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/J_b2_0_b3_1.png?raw=true" />
+</p>
+
+<p align="center">
+   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/Jy_b2_0_b3_1.png?raw=true" />
+</p>
+
+<p align="center">
+   <img src="https://github.com/ChairOfComputationalMathematics/heatAdjointFoam/blob/master/heatAdjointFoamCase/anim_Y_b6.gif?raw=true" width="500" height="300" />
+</p>
+
+<h3 id="warning">Warning</h3>
+
+<p>It might be needed to use</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i -e 's/\r$//' filename
+</code></pre></div></div>
+
+<p>and</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x filename
+</code></pre></div></div>
+
+<p>in order to be able to execute</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./filename
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this work we solve the optimal control problem&lt;/p&gt;
+</code></pre></div></div>
+
+<p align="center">
+  <img src="https://latex.codecogs.com/gif.latex?%5Cmin%20_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Cright%29%7D%20%5Cmathcal%7BJ%7D%5Cleft%28%20u%5Cright%29%20%3D%20%5Cmin%20_%7Bu%20%5Cin%20L%5E2%20%5Cleft%28%20%5COmega%20%5Cright%29%7D%20%5Cfrac%7B1%7D%7B2%7D%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20y%20-%20y_d%20%5Cright%29%20%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%20&plus;%20%5Cfrac%7B%5Cbeta%7D%7B2%7D%20%5Cint_%7B%5COmega%7D%20u%20%5E2%20%5Cmathrm%7Bd%7D%20%5COmega%2C" />
+</p>
+
+<p>where <img src="https://latex.codecogs.com/gif.latex?u" /> is the control variable, <img src="https://latex.codecogs.com/gif.latex?y" /> the state variable and <img src="https://latex.codecogs.com/gif.latex?y_d" /> a target function. The minimization problem is subject to the elliptic partial differential equation</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20-%5CDelta%20y%20%3D%20f%20&plus;%20u%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5C%5C%20y%20%3D%200%20%26%20%5Ctext%7Bon%20%7D%20%5CGamma.%20%5Cend%7Bcases%7D" />
+</p>
+
+<p>We use the steepest descent method based on the adjoint methodology. The corresponding adjoint system writes as</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bcases%7D%20-%20%5CDelta%20%5Clambda%20%3D%20y%20-%20y_d%20%26%20%5Ctext%7Bin%20%7D%20%5COmega%2C%20%5C%5C%20%5Clambda%20%3D%200%20%26%20%5Ctext%7Bon%20%7D%20%5CGamma.%20%5Cend%7Bcases%7D" />
+</p>
+
+<p>The directional derivative of the cost function is given by</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?%5Cmathcal%7BD%7D_%7B%20%5Cdelta%20u%7D%20%5Cmathcal%7BJ%7D%20%5Cleft%28%20u%20%5Cright%29%20%3D%20%5Cint_%7B%5COmega%7D%20%5Cleft%28%20%5Clambda%20&plus;%20%5Cbeta%20u%20%5Cright%29%20%5Cdelta%20u%20%5C%2C%20%5Cmathrm%7Bd%7D%20%5COmega%2C" />
+</p>
+
+<p>and the control variable is updated according to</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?u%5E%7B%5Cleft%28%20n%20&plus;%201%20%5Cright%29%7D%20%3D%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20-%20%5Cepsilon%20%5Cleft%28%20%5Clambda%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20&plus;%20%5Cbeta%20u%5E%7B%5Cleft%28%20n%20%5Cright%29%7D%20%5Cright%29%2C" />
+</p>
+
+<p>for some value of <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon" />.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The solver must be compiled in the terminal. It is advisable to first clean previous compilations with</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wclean
+</code></pre></div></div>
+
+<p>and then use</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wmake
+</code></pre></div></div>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<p>OpenFOAM C++ library must be installed in order to compile the code.</p>
+
+<p>The OpenFOAM distribution provided by the <a href="https://openfoam.org/">OpenFOAM Foundation</a> was used.</p>
+
+<h2 id="running-a-case">Running a Case</h2>
+
+<p>In order to run the solver move to the case folder <em>poissonAdjoinFoamCase</em> and type in the command line</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./Allprepare
+
+poissonAdjointFoam
+</code></pre></div></div>
+
+<p>The <em>poissonAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />. The target function is <img src="https://latex.codecogs.com/gif.latex?y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</p>
+
+<p align="center">
+   <a href="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_J.png" target="_blank"><img src="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_J.png?raw=true" /></a>
+</p>
+
+<p align="center">
+   <a href="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_Jy.png" target="_blank"><img src="https://github.com/ChairOfComputationalMathematics/poissonAdjointFoam/blob/master/poissonAdjointFoamCase/sd_Jy.png?raw=true" /></a>
+</p>
+
+<h3 id="warning">Warning</h3>
+
+<p>It might be needed to use</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i -e 's/\r$//' filename
+</code></pre></div></div>
+
+<p>and</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x filename
+</code></pre></div></div>
+
+<p>in order to be able to execute</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./filename
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>F. Tröltzsch. <em>Optimal control of partial differential equations: theory, methods, and applications</em>. American Mathematical Soc., 2010.</li>
 </ul>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;This is a set of Matlab functions to interpolate scattered data with Radial Basis Functions (RBF).&lt;/p&gt;
@@ -8839,43 +8839,24 @@ The algorithm stops after only three iterations.
 
 </ul>
 
-<<<<<<< Updated upstream
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a name="NoburuSakamoto"&gt;&lt;/a&gt;Noboru Sakamoto&lt;/strong&gt; received the B.Sc. degree in mathematics from Hokkaido University and M.Sc. and Ph.D. degrees in aerospace engineering from Nagoya University, in 1991, 1993, and 1996, respectively. From 1996 until 2015, he held positions in the Graduate School of Engineering in Nagoya University. Currently, he is a Professor with the Science and Engineering of &lt;a href="http;//www.nanzan-u.ac.jp/English/index.html" target="_blank"&gt;Nanzan University&lt;/a&gt; in Nagoya, Japan. He has held a visiting research position at University of Groningen, The Netherlands, in 2005 and 2006. He received the SICE Best Paper Prizes in 1997, 2006, 2008 and 2011 and SICE Kimura Prize in 2016. His research interests include nonlinear control theory, control of chaotic systems, dynamical system theory and control applications for aerospace engineering.
 
 &lt;strong&gt;Jérôme Lohéac&lt;/strong&gt; is a Senior Scientific Researcher at the &lt;a href="http://www.irccyn.ec-nantes.fr/en/"&gt;Institut de Recherche en Communications et Cybernétique de Nantes&lt;/a&gt;, a scientific institution linked to the &lt;a href='http://www.cnrs.fr/'&gt;CNRS&lt;/a&gt; in France. His fields of research are Swimming of microorganisms(1); Time optimal control for PDEs(2); Optimal control of finite dimensional systems with state constraints(3) and Controllability of parameter-dependent systems(4).
-=======
-<p><a name="NoburuSakamoto"></a>Noboru Sakamoto&lt;/strong&gt; received the B.Sc. degree in mathematics from Hokkaido University and M.Sc. and Ph.D. degrees in aerospace engineering from Nagoya University, in 1991, 1993, and 1996, respectively. From 1996 until 2015, he held positions in the Graduate School of Engineering in Nagoya University. Currently, he is a Professor with the Science and Engineering of <a href="http;//www.nanzan-u.ac.jp/English/index.html" target="_blank">Nanzan University</a> in Nagoya, Japan. He has held a visiting research position at University of Groningen, The Netherlands, in 2005 and 2006. He received the SICE Best Paper Prizes in 1997, 2006, 2008 and 2011 and SICE Kimura Prize in 20016. His research interests include nonlinear control theory, control of chaotic systems, dynamical system theory and control applications for aerospace engineering.</p>
 
-<p><strong>Jérôme Lohéac</strong> is a Senior Scientific Researcher at the <a href="http://www.irccyn.ec-nantes.fr/en/">Institut de Recherche en Communications et Cybernétique de Nantes</a>, a scientific institution linked to the <a href="http://www.cnrs.fr/">CNRS</a> in France. His fields of research are Swimming of microorganisms(1); Time optimal control for PDEs(2); Optimal control of finite dimensional systems with state constraints(3); Controllability of parameter-dependent systems(4).</p>
->>>>>>> Stashed changes
+&lt;strong&gt;Martin Lazar&lt;/strong&gt; is a Research professor at &lt;a href='http://www.unidu.hr/' target='_blank'&gt;University of Dubrovnik&lt;/a&gt;, Croatia. His fields of research are Control of parameter dependent systems (greedy control, averaged control), optimal control of parabolic problems. Microlocal analysis; PDEs and homogenisation, velocity averaging, microlocal defect functionals (1-scale H-measures, semiclassical measures, H-distributions), and Geophysical fluid dynamics; analytical modelling in oceanography.
 
-<p><strong>Martin Lazar</strong> is a Research professor at <a href="http://www.unidu.hr/" target="_blank">University of Dubrovnik</a>, Croatia. His fields of research are Control of parameter dependent systems (greedy control, averaged control), optimal control of parabolic problems. Microlocal analysis; PDEs and homogenisation, velocity averaging, microlocal defect functionals (1-scale H-measures, semiclassical measures, H-distributions), and Geophysical fluid dynamics; analytical modelling in oceanography.</p>
-
-<<<<<<< Updated upstream
 &lt;strong&gt;Césare Molinari&lt;/strong&gt; was PhD student in Applied Mathematics at &lt;a href='http://www.usm.cl/' target='_blank'&gt;Universidad Técnica Federico Santa María&lt;/a&gt; (Valparaíso, Chile). His scientific interests were related to numerical algorithms for maximal monotone variational inequalities and convex non-differentiable optimization. In this context, his research was focused on the design of the algorithms, on the analysis of the asymptotic properties and of the rate of convergence. This theory finds natural applications in sparse optimal control of PDEs and reconstruction of images. He was doing an internship in Control Theory under the joint supervision of professor Enrique Zuazua.
-=======
-<p><strong>Césare Molinari</strong> was PhD student in Applied Mathematics at <a href="http://www.usm.cl/" target="_blank">Universidad Técnica Federico Santa María</a> (Valparaíso, Chile). His scientific interests were related to numerical algorithms for maximal monotone variational inequalities and convex non-differentiable optimization. In this context, his research was focused on the design of the algorithms, on the analysis of the asymptotic properties and of the rate of convergence. This theory finds natural applications in sparse optimal control of PDE and reconstruction of images. He was doing an internship in Control Theory under the joint supervision of professor Enrique Zuazua.</p>
->>>>>>> Stashed changes
 
-<p>Navid Allahverdi’s work focuses on simulation based engineering and application of scientific computing in engineering design and optimization.</p>
+Navid Allahverdi's work focuses on simulation based engineering and application of scientific computing in engineering design and optimization.
 
-<<<<<<< Updated upstream
 Alejandro Pozo is a Post Doctoral researcher in Mathematics. He has a markedly applied profile, which is why he has oriented his career towards the field of technological innovation. In this sense, he understands that mathematics can add value and contribute significantly to the solution of the most diverse R &amp; D &amp; i problems.
-=======
-<p>Alejandro Pozo is a postdoc in Mathematics. He has a markedly applied profile, which is why he has oriented his career towards the field of technological innovation. In this sense, he understands that mathematics can add value and contribute significantly to the solution of the most diverse R&amp;D&amp;I problems.</p>
->>>>>>> Stashed changes
 
-<p><a href="https://cmc.deusto.eus/umberto-biccari/">Umberto Biccari</a>&lt;/strong&gt; is a PhD. Currently he holds a Postdoctoral position at the ERC Advanced Grant project <a href="cmc.deusto.eus/dycon">DyCon</a> under the supervision of <a href="http://paginaspersonales.deusto.es/enrique.zuazua/">Prof. Enrique Zuazua</a> (<a href="https://www.uam.es/ss/Satellite/es/home.htm" target="_blank">UAM</a> and <a href="http://deustotech.deusto.es/cs/Satellite/ingenieria/es/deustotech" target="_blank">DeustoTech</a>). In the past, he collaborated within the ERC research project <a href="http://www.bcamath.org/projects/NUMERIWAVES/" target="_blank">NUMERIWAVES</a>. His current research interests are related to the analysis of Partial Differential Equations, in particular from the point of view of control theory. During the years of his PhD he has been concerned with the study of controllability properties of hyperbolic (waves), parabolic (heat) and dispersive (Schrödinger) PDEs, involving non-local terms, singular inverse-square potentials, variable degenerate coefficients or dynamical boundary conditions. At the moment, he is getting interested in non-local transport problems, derived from models of collection behaviour.</p>
+&lt;a href='https://cmc.deusto.eus/umberto-biccari/'&gt;Umberto Biccari&lt;/a&gt;&lt;/strong&gt; is a PhD. Currently he holds a Postdoctoral position at the ERC Advanced Grant project &lt;a href='cmc.deusto.eus/dycon'&gt;DyCon&lt;/a&gt; under the supervision of &lt;a href='http://paginaspersonales.deusto.es/enrique.zuazua/'&gt;Prof. Enrique Zuazua&lt;/a&gt; (&lt;a href='https://www.uam.es/ss/Satellite/es/home.htm' target='_blank'&gt;UAM&lt;/a&gt; and &lt;a href='http://deustotech.deusto.es/cs/Satellite/ingenieria/es/deustotech' target='_blank'&gt;DeustoTech&lt;/a&gt;). In the past, he collaborated within the ERC research project &lt;a href='http://www.bcamath.org/projects/NUMERIWAVES/' target='_blank'&gt;NUMERIWAVES&lt;/a&gt;. His current research interests are related to the analysis of Partial Differential Equations, in particular from the point of view of control theory. During the years of his PhD he has been concerned with the study of controllability properties of hyperbolic (waves), parabolic (heat) and dispersive (Schrödinger) PDEs, involving non-local terms, singular inverse-square potentials, variable degenerate coefficients or dynamical boundary conditions. At the moment, he is getting interested in non-local transport problems, derived from models of collection behaviour.
 
-<<<<<<< Updated upstream
 &lt;strong&gt;Jesus Oroya&lt;/strong&gt; is the Software Expert in &lt;b&gt;&lt;a href='cmc.deusto.eus/dycon/'&gt;DyCon&amp;#58; Dynamic Control&lt;/a&gt;&lt;/b&gt;, the Advanced Research Project funded by the &lt;a href='https://erc.europa.eu/'&gt;European Research Council(ERC)&lt;/a&gt;. He got a BSc in Physics from the &lt;a href='https://www.ehu.eus/en/web/guest/en-home'&gt;University of the Basque Country&lt;/a&gt;, specializing in physical simulation. He has worked at CIC Nanogune for the company SIMUNE, looking for a method of optimization of atomic bases for calculations of electronic structure in the SIESTA code. In 2017, he worked at Accenture, managing and analyzing databases. He has also developed business applications for Liberty Seguros. Currently he is studying a MSc in Computational Engineering and Intelligent Systems in the &lt;a href='https://www.ehu.eus/en/web/guest/en-home'&gt;University of the Basque Country&lt;/a&gt;.
-=======
-<p><strong>Jesus Oroya</strong> is the Software Expert in <b><a href="cmc.deusto.eus/dycon/">DyCon; Dynamic Control</a></b>, the Advanced Research Project funded by the <a href="https://erc.europa.eu/">European Research Council(ERC)</a>. He got a BSc in Physics from the <a href="https://www.ehu.eus/en/web/guest/en-home">University of the Basque Country</a>, specializing in physical simulation. He has worked at CIC Nanogune for the company SIMUNE, looking for a method of optimization of atomic bases for calculations of electronic structure in the SIESTA code. In 2017, he worked at Accenture, managing and analyzing databases. He has also developed business applications for Liberty Seguros. Currently he is studying a MSc in Computational Engineering and Intelligent Systems in the <a href="https://www.ehu.eus/en/web/guest/en-home">University of the Basque Country</a>.</p>
->>>>>>> Stashed changes
 
-<p><a href="http://deus.to/zuazua"><strong>Enrique Zuazua</strong></a> is the Director of the Chair of Computational Mathematics at <a class="rsst" href="http://deustotech.deusto.es/" target="_blank">DeustoTech</a> Laboratory in the University of Deusto, Bilbao (Basque Country-Spain) where he leads the research team funded by the European Research Council Advanced Grant “<a class="rsst" href="http://enzuazua.net/dycon/" target="_blank">DYCON; Dynamic Control</a>”. He is also a Professor of the <a class="rsst" href="http://verso.mat.uam.es/web/index.php/es/" target="_blank">Department of Mathematics</a> Universidad Autónoma de Madrid where he holds a Chair in Applied Mathematics since 2001.</p>
+&lt;a href='http://deus.to/zuazua'&gt;&lt;strong&gt;Enrique Zuazua&lt;/strong&gt;&lt;/a&gt; is the Director of the Chair of Computational Mathematics at &lt;a class='rsst' href='http://deustotech.deusto.es/' target='_blank'&gt;DeustoTech&lt;/a&gt; Laboratory in the University of Deusto, Bilbao (Basque Country-Spain) where he leads the research team funded by the European Research Council Advanced Grant “&lt;a class='rsst' href='http://enzuazua.net/dycon/' target='_blank'&gt;DYCON; Dynamic Control&lt;/a&gt;”. He is also a Professor of the &lt;a class='rsst' href='http://verso.mat.uam.es/web/index.php/es/' target='_blank'&gt;Department of Mathematics&lt;/a&gt; Universidad Autónoma de Madrid where he holds a Chair in Applied Mathematics since 2001.
 
-<<<<<<< Updated upstream
 &lt;strong&gt;Alejandro B. Aceves&lt;/strong&gt; is a Professor of Applied Mathematics and Department Chair at the &lt;a href='http://www.smu.edu/dedman' target='_blank'&gt;Southern Methodist University&lt;/a&gt; (Dallas, United States). His research interests are related to Nonlinear Optics and Nonlinear Wave Propagation. Namely, he is now working on modeling of nonlinear optical pulse propagation in waveguide gratings, code development to solve Maxwell's equations in nonlinear dielectrics, noise effect due to manufacturing imperfections in the problem of light localization in nonlinear fiber arrays, modeling of intense laser light propagation in air, studying the spread of diseases, and the effect of thermal baths in dimers and oscillator chains.
 
 &lt;strong&gt;&lt;a href='https://cmc.deusto.eus/victor-hernandez-santamaria'&gt;Víctor Hernández-Santamaría&lt;/a&gt;&lt;/strong&gt; earned his Ph.D. degree in the department of automatic control in &lt;a href='http://www.cinvestav.mx/' target='_blank'&gt;CINVESTAV&lt;/a&gt; (Mexico), under the supervision of Luz de Teresa (Instituto de Matemáticas, UNAM, México) and Alexander Poznyak (CINVESTAV). His research interests are related to control problems for coupled parabolic equations, especially, those arising in the insensitizing control and hierarchic control problems, both from a theoretical and numerical point of view. He holded a Postdoctoral position at the &lt;a href='http://cmc.deusto.eus/dycon'&gt;ERC DyCon Advanced Grant project&lt;/a&gt; under the supervision of &lt;a href='http://paginaspersonales.deusto.es/enrique.zuazua/'&gt;Prof. Enrique Zuazua&lt;/a&gt;.
@@ -8885,31 +8866,15 @@ Alejandro Pozo is a Post Doctoral researcher in Mathematics. He has a markedly a
 &lt;strong&gt;&lt;a href='https://ananavarroquiles.wordpress.com'&gt;Ana Navarro&lt;/a&gt;&lt;/strong&gt; is a PhD. She held a Postdoctoral position at the ERC Advanced Grant project &lt;a href='cmc.deusto.eus/dycon'&gt;DyCon&lt;/a&gt; under the supervision of &lt;a href='http://paginaspersonales.deusto.es/enrique.zuazua/'&gt;Prof. Enrique Zuazua&lt;/a&gt; (&lt;a href='https://www.uam.es/ss/Satellite/es/home.htm' target='_blank'&gt;UAM&lt;/a&gt; and &lt;a href='http://deustotech.deusto.es/cs/Satellite/ingenieria/es/deustotech' target='_blank'&gt;DeustoTech&lt;/a&gt;). Before that, she had a Predoctoral position at the &lt;a href='https://www.upv.es/index-en.html' target='_blank'&gt;Instituto Universitario de Matemática Multidisciplinar&lt;/a&gt;, financed by the &lt;a href='http://www.imm.upv.es' target='_blank'&gt;Universitat Politècnica de València&lt;/a&gt;. Her main research interest is the study from a probabilistic point of view of different problems based on differential equations (ordinary or partial) with uncertainty in its formulation. Now, she is concerned to connect her recent research with Control Theory.
 
 &lt;strong&gt;&lt;a href='https://cmc.deusto.eus/dario-pighin/'&gt;Dario Pighin&lt;/a&gt;&lt;/strong&gt; is a PhD Student at &lt;a href='http://www.uam.es' target='_blank'&gt;Universidad Autónoma de Madrid (UAM)&lt;/a&gt;. He earned both the Bachelor's Degree and the Master's Degree in Mathematics at the &lt;a href='https://web.uniroma2.it/home/newlang/english' target='_blank'&gt;University of Rome Tor Vergata (Rome 2)&lt;/a&gt;. His &lt;a href='https://drive.google.com/file/d/0B1dHVFQGZucNajBwM2JqYkk5SkE/view?usp=sharing' target='_blank'&gt;Master's thesis&lt;/a&gt; is about the Turnpike Property in Optimal Control Theory. Currently, he is studying for his PhD in Control Theory, under the joint supervision of professor Enrique Zuazua.
-=======
-<p><strong>Alejandro B. Aceves</strong> is Professor of Applied Mathematics and Department Chair at the <a href="http://www.smu.edu/dedman" target="_blank">Southern Methodist University</a>. His research interests are related to Nonlinear Optics and Nonlinear Wave Propagation. Namely he is working now on modeling of nonlinear optical pulse propagation in waveguide gratings, code development to solve Maxwell’s equations in nonlinear dielectrics, noise effect due to manufacturing imperfections in the problem of light localization in nonlinear fiber arrays, modeling of intense laser light propagation in air, studying the spread of diseases, and the effect of thermal baths in dimers and oscillator chains.</p>
 
-<p><strong><a href="https://cmc.deusto.eus/victor-hernandez-santamaria">Víctor Hernández-Santamaría</a></strong> earned his Ph.D. degree in the department of automatic control in <a href="http://www.cinvestav.mx/" target="_blank">CINVESTAV</a> (Mexico), under the supervision of Luz de Teresa (Instituto de Matemáticas, UNAM, México) and Alexander Poznyak (CINVESTAV). His research interests are related to control problems for coupled parabolic equations, especially, those arising in the insensitizing control and hierarchic control problems, both from a theoretical and numerical point of view. He holded a Postdoctoral position at the ERC Advanced Grant project <a href="http://cmc.deusto.eus/dycon">DyCon</a> under the supervision of <a href="http://paginaspersonales.deusto.es/enrique.zuazua/">Prof. Enrique Zuazua</a>.</p>
+&lt;strong&gt;Alejandro Cunillera&lt;/strong&gt; was a PhD Student at &lt;a href='http://www.uam.es' target='_blank'&gt;Universidad Autónoma de Madrid (UAM)&lt;/a&gt;. He earned a Bachelor's Degree in Mathematics and Physics at the &lt;a href='https://www.ucm.es/english' target='_blank'&gt;Universidad Complutense de Madrid&lt;/a&gt; and a Master's Degree in Physics of Complex Systems at &lt;a href='https://ifisc.uib-csic.es/en/'&gt;IFISC, Instituto de Física Interdisciplinar y Sistemas Complejos (CSIC-UIB)&lt;/a&gt;.
 
-<p><strong><a href="https://cmc.deusto.eus/jose-vicente-lorenzo/">José Vicente Lorenzo</a></strong> is a PhD student at <a href="http://www.uam.es" target="_blank">Universidad Autónoma de Madrid (UAM)</a>. He finished his MSc Industrial Engineering at the <a href="http://en.us.es/eng" target="_blank">University of Seville</a> in 2014. He has worked at <a href="https://home.cern/" target="_blank">CERN</a> in Superconducting Magnets group (Geneva, SWITZERLAND) and Spanish organism for Research in Energy and Environment <a href="http://www.ciemat.es/" target="_blank">CIEMAT</a>.</p>
-
-<p><strong><a href="https://ananavarroquiles.wordpress.com">Ana Navarro</a></strong> is a PhD. She held a Postdoctoral position at the ERC Advanced Grant project <a href="cmc.deusto.eus/dycon">DyCon</a> under the supervision of <a href="http://paginaspersonales.deusto.es/enrique.zuazua/">Prof. Enrique Zuazua</a> (<a href="https://www.uam.es/ss/Satellite/es/home.htm" target="_blank">UAM</a> and <a href="http://deustotech.deusto.es/cs/Satellite/ingenieria/es/deustotech" target="_blank">DeustoTech</a>). Before that, she had a Predoctoral position at the <a href="https://www.upv.es/index-en.html" target="_blank">Instituto Universitario de Matemática Multidisciplinar</a> financed by the <a href="http://www.imm.upv.es" target="_blank">Universitat Politècnica de València</a>. Her main research interest is the study from a probabilistic point of view of different problems based on differential equations (ordinary or partial) with uncertainty in its formulation. Now, she is concerned to connect her recent research with Control Theory.</p>
-
-<p><strong><a href="https://cmc.deusto.eus/dario-pighin/">Dario Pighin</a></strong> is a PhD Student at <a href="http://www.uam.es" target="_blank">Universidad Autónoma de Madrid (UAM)</a>. He earned both the Bachelor’s Degree and the Master’s Degree in Mathematics at the <a href="https://web.uniroma2.it/home/newlang/english" target="_blank">University of Rome Tor Vergata (Rome 2)</a>. <a href="https://drive.google.com/file/d/0B1dHVFQGZucNajBwM2JqYkk5SkE/view?usp=sharing" target="_blank">Master’s thesis</a> is about the Turnpike Property in Optimal Control Theory. Currently, he is studying for his PhD in Control Theory, under the joint supervision of professor Enrique Zuazua.</p>
->>>>>>> Stashed changes
-
-<p><strong>Alejandro Cunillera</strong> was a PhD Student at <a href="http://www.uam.es" target="_blank">Universidad Autónoma de Madrid (UAM)</a>. He earned a Bachelor’s Degree in Mathematics and Physics at the <a href="https://www.ucm.es/english" target="_blank">Universidad Complutense de Madrid</a> and a Master’s Degree in Physics of Complex Systems at <a href="https://ifisc.uib-csic.es/en/">IFISC, Instituto de Física Interdisciplinar y Sistemas Complejos (CSIC-UIB)</a>.</p>
-
-<<<<<<< Updated upstream
 &lt;strong&gt;Borjan Geshkovski&lt;/strong&gt;&lt;/a&gt; is a PhD student at &lt;a href='http://www.uam.es' target='_blank'&gt;Universidad Autónoma de Madrid (UAM)&lt;/a&gt;. He earned a Master's degree in Mathematics at the &lt;a href='https://www.u-bordeaux.com/' target='_blank'&gt;University of Bordeaux&lt;/a&gt;. He first did an internship on parabolic variational inequalities, optimal control of obstacles and free boundary problems under the supervision of Professor Enrique Zuazua, before joining the team as a PhD student later.
-=======
-<p><strong>Borjan Geshkovski</strong>&lt;/a&gt; was a Master’s student in Mathematics at the <a href="https://www.u-bordeaux.com/" target="_blank">University of Bordeaux</a>. He was currently doing an internship on parabolic variational inequalities, optimal control of obstacles and free boundary problems under the supervision of Professor Enrique Zuazua.</p>
->>>>>>> Stashed changes
 
-<p><strong>Domènec Ruiz</strong> is a PhD Student at <a href="http://www.uam.es" target="_blank">Universidad Autónoma de Madrid (UAM)</a>. He earned a BSc in Mathematics and a BSc in Physics at the <a href="https://www.ucm.es/english" target="_blank">Universitat Autònoma de Barcelona</a>. Later he earned and a MSc in Applied Mathematics in an Erasmus Mundus program between the <a href="http://www.univaq.it/en/index.php?&amp;lang_s=en">Università degli Studi dell’Aquila (UAQ)</a> and <a href="https://www.uni-hamburg.de/en.html">Universität Hamburg (UH)</a>. His master thesis was about asymptotic analysis and control of kinetic Cucker-Smale models. Currently, he is studying for a PhD in Control Theory under the supervision of Professor Enrique Zuazua.</p>
+&lt;strong&gt;Domènec Ruiz&lt;/strong&gt; is a PhD Student at &lt;a href='http://www.uam.es' target='_blank'&gt;Universidad Autónoma de Madrid (UAM)&lt;/a&gt;. He earned a BSc in Mathematics and a BSc in Physics at the &lt;a href='https://www.ucm.es/english' target='_blank'&gt;Universitat Autònoma de Barcelona&lt;/a&gt;. Later he earned and a MSc in Applied Mathematics in an Erasmus Mundus program between the &lt;a href='http://www.univaq.it/en/index.php?&amp;lang_s=en'&gt;Università degli Studi dell'Aquila (UAQ)&lt;/a&gt; and &lt;a href='https://www.uni-hamburg.de/en.html'&gt;Universität Hamburg (UH)&lt;/a&gt;. His master thesis was about asymptotic analysis and control of kinetic Cucker-Smale models. Currently, he is studying for a PhD in Control Theory under the supervision of Professor Enrique Zuazua.
 
-<p><strong>Charlotte Rodriguez</strong> is a PhD Student at <a href="https://www.fau.eu/" target="_blank">Friedrich-Alexander-University</a>, Erlangen-Nurnberg, Germany. She finished her Master studies in Mathematics (Analysis, Partial Differential Equations, Probability) at the <a href="https://www.u-bordeaux.com/">University of Bordeaux</a> in 2018. Since then she has been working in Mathematical network modelling of nonlinear fluid structure interaction, model reduction and uncertainty quantification (Part of Marie Sklodowska-Curie ITN ConFlex) under the supervision of Prof Gunter Leugering. She was in Bilbao for a 2 month internship under the supervision of Professor Enrique Zuazua, working in Control theory.</p>
+&lt;strong&gt;Charlotte Rodriguez&lt;/strong&gt; is a PhD Student at &lt;a href='https://www.fau.eu/' target='_blank'&gt;Friedrich-Alexander-University&lt;/a&gt;, Erlangen-Nurnberg, Germany. She finished her Master studies in Mathematics (Analysis, Partial Differential Equations, Probability) at the &lt;a href='https://www.u-bordeaux.com/'&gt;University of Bordeaux&lt;/a&gt; in 2018. Since then she has been working in Mathematical network modelling of nonlinear fluid structure interaction, model reduction and uncertainty quantification (Part of Marie Sklodowska-Curie ITN ConFlex) under the supervision of Prof Gunter Leugering. She was in Bilbao for a 2 month internship under the supervision of Professor Enrique Zuazua, working in Control theory.
 
-<<<<<<< Updated upstream
 &lt;strong&gt;Dongnam Ko&lt;/strong&gt; is a Postdoctoral researcher at the ERC Advanced Grant project &lt;a href='cmc.deusto.eus/dycon'&gt;DyCon&lt;/a&gt; under the supervision of &lt;a href='http://paginaspersonales.deusto.es/enrique.zuazua/'&gt;Prof. Enrique Zuazua&lt;/a&gt; (&lt;a href='https://www.uam.es/ss/Satellite/es/home.htm' target='_blank'&gt;Universidad Autónoma de Madrid&lt;/a&gt; and &lt;a href='http://deustotech.deusto.es/cs/Satellite/ingenieria/es/deustotech' target='_blank'&gt;DeustoTech&lt;/a&gt;). Before that, he was a Post-Doctoral researcher at the &lt;a href='http://hyke.snu.ac.kr/'&gt;Research Institute of Mathematics&lt;/a&gt;, &lt;a href='http://www.useoul.edu/'&gt;Seoul National University&lt;/a&gt;, Korea. His main research interests are the emergent dynamics of coupled particle networks, the Stochastic particle-path analysis on mean-field models and the numerical methods on kinetic dynamics.
 
 &lt;strong&gt;Yacouba SIMPORE&lt;/strong&gt; is an Associate Professor at the &lt;a href='http://www.univ-ouaga.bf/spip.php?rubrique39' target='_blank'&gt;Université Ouaga 1 Professeur Joseph Ki Zerbo&lt;/a&gt;, Ouagadougou, Burkina Faso, where he obtained his PhD in Optimal Control in 2016. He visited the Chair of Computational Mathematics of DeustoTech during 3 months within the Senior Visitor Program of the &lt;strong&gt;&lt;a href='devcmc.deusto.es/dycon/'&gt; ERC Advanced Grant DyCon&amp;#58; Dynamic Control&lt;/a&gt;&lt;/strong&gt;.
@@ -8925,57 +8890,25 @@ Swann MARX got his PhD in GIPSA-lab (Grenoble, France) under the supervision of 
 Carlos Castro is a professor in the Mathematics and Informatics Department of &lt;a href="http://www.caminos.upm.es/default.asp" target="_blank"&gt;ETSI Caminos, Canales y Puertos, Universidad Politécnica de Madrid&lt;/a&gt; (Spain).
 
 Miguel Cea is a Product Director in INCLAM. Msc. and Postgraduate in Mathematics from the Universidad Autónoma de Madrid, and PhD Candidate in Mathematics on Optimal Design Problems. Extensive experience in mathematical models and numerical methods. Currently, he is the Product Director of SUAT (Unified Early Warning Service), which is defined as a SaaS service that consists of a Web platform that generates alerts and management recommendations in real time based on hydro-meteorological variables.
-=======
-<p><strong>Dongnam Ko</strong> is a PhD. Currently he holds a Postdoctoral position at the ERC Advanced Grant project <a href="cmc.deusto.eus/dycon">DyCon</a> under the supervision of <a href="http://paginaspersonales.deusto.es/enrique.zuazua/">Prof. Enrique Zuazua</a> (<a href="https://www.uam.es/ss/Satellite/es/home.htm" target="_blank">Universidad Autónoma de Madrid</a> and <a href="http://deustotech.deusto.es/cs/Satellite/ingenieria/es/deustotech" target="_blank">DeustoTech</a>). Before that, he was a Post-Doctoral researcher at the <a href="http://hyke.snu.ac.kr/">Research Institute of Mathematics</a>, <a href="http://www.useoul.edu/">Seoul National University</a>, Korea. His main research interests are the emergent dynamics of coupled particle networks, the Stochastic particle-path analysis on mean-field models and the numerical methods on kinetic dynamics.</p>
 
-<p><strong>Yacouba SIMPORE</strong> is an Associate Professor at the <a href="http://www.univ-ouaga.bf/spip.php?rubrique39" target="_blank">Université Ouaga 1 Professeur Joseph Ki Zerbo</a>, Ouagadougou, Burkina Faso, where he obtained his PhD in Optimal Control in 2016. He visited the Chair of Computational Mathematics of DeustoTech during 3 months within the Senior Visitor Program of the <strong><a href="devcmc.deusto.es/dycon/"> ERC Advanced Grant DyCon-Dynamic Control</a></strong>.</p>
+Sorin is a professor at the Department of Mathematics in the Faculty of Sciences at the University of Craiova, Romania. His main research directions are Control and stabilization(1), Partial derivative equations(2) and Numerical analysis(3). The main purpose of his research activity is to show that innovative mathematical reasoning can lead to new perspectives on the studied phenomena and a deeper understanding of more and more complex physical models. His most important scientific contributions include the study of complex systems that couples vibrations of different natures (the so-called hybrid systems) in terms of their spectral properties, controllability, stabilization and existence of periodic solutions.
 
-<p><strong>Xinliang Liu</strong> is a PhD Student at &lt;a href=’https://www.fau.eu/’ target=’_blank”&gt;Shanghai Jiao Tong University&lt;/a&gt;, China. In the same university, he finished his Master studies in Applied Mathematics in 2017, with the thesis ‘A variational framework to identify optimal approximation basis and its application to integral equation’. Hee will be in Bilbao for a 2 month internship under the supervision of Professor Enrique Zuazua, working in Control theory.</p>
-
-<p>Mehmet is currently an associate professor at the Université de Toulon (UTLN) and do my research at the Institut Mathématiques de Toulon (IMATH) -Équipe de Modélisation Numérique (MN) . My fields of specialization and research interests include Non linear analysis of PDEs, Numerical analysis in fluid mechanics. Before joining the team MN, I was a postdoctoral researcher at the Basque Center for Applied Mathematics, Derio, Spain, directed by/in collaboration with Enrique Zuazua. I obtained my Ph.D in Applied Mathematics at the Laboratoire de Mathématiques-LAMA under the supervision of Christian Bourdarias &amp; Stéphane Gerbi, Université de Savoie, Chambéry, France in 2010. I deliver Scientific Computing and Numerical Analysis courses at the Ecole d’Ingénieurs de l’Université de Toulon which offers the possibility to get high level skills.</p>
-
-<p>Yuhua is a fourth-year Ph.D student in Department of Mathematics at University of Wisconsin-Madison. My interests lie in uncertainty quantification in kinetic theory and Machine learning.</p>
-
-<p>Swann MARX got his PhD in GIPSA-lab (Grenoble, France) under the supervision of Christophe Prieur and Vincent Andrieu. During the PhD he focused on the stabilization of PDEs whose control is subject to some amplitude constraints. Currently he is a post-doctoral researcher at LAAS-CNRS (Toulouse, France), working on polynomial optimization applied to nonlinear hyperbolic PDEs and he will be doing an internship in the DyCon project, under the supervision of Prof. Enrique Zuazua.</p>
-
-<p>Carlos Castro is a professor in the Mathematics and Informatics Department, ETSI Caminos, Canales y Puertos, Universidad Politécnica de Madrid.</p>
-
-<p>Miguel Cea is a Product Director in INCLAM. Msc. and Postgraduate in Mathematics from the Autonomous University of Madrid, and Ph.D. Candidate in Mathematics on Optimal Design Problems. Extensive experience in mathematical models and numerical methods. Currently, I am the Product Director of SUAT (Unified Early Warning Service), which is defined as a SaaS service that consists of a Web platform that generates alerts and management recommendations in real time based on hydro-meteorological variables.</p>
->>>>>>> Stashed changes
-
-<p>Sorin is a professor at the Department of Mathematics in the Faculty of Sciences at the University of Craiova, Romania. His main research directions are Control and stabilization(1), Partial derivative equations(2) and Numerical analysis(3). The main purpose of his research activity is to show that innovative mathematical reasoning can lead to new perspectives on the studied phenomena and a deeper understanding of more and more complex physical models. His most important scientific contributions include the study of complex systems that couples vibrations of different natures (the so-called hybrid systems) in terms of their spectral properties, controllability, stabilization and existence of periodic solutions.</p>
-
-<<<<<<< Updated upstream
 &lt;a href="http://math.univ-bpclermont.fr/~munch/" target="_blank"&gt;Arnaud&lt;/a&gt; is a professor at &lt;a href="https://en.uca.fr/english-version/" target="_blank"&gt;Clermont Auvergne University&lt;/a&gt;, Laboratoire de mathématiques Blaise Pascal, Clermont-Ferrand, France.
-=======
-<p><a href="http://math.univ-bpclermont.fr/~munch/" target="_blank">Arnaud</a> is a professor at Clermont Auvergne University, Laboratoire de mathématiques Blaise Pascal, Clermont-Ferrand, France.</p>
->>>>>>> Stashed changes
 
-<p><a href="https://scholar.google.com/citations?user=5EexYDAAAAAJ&amp;hl=es">Mihaela</a> is a professor in Universidad Complutense de Madrid, Spain.</p>
+&lt;a href="https://scholar.google.com/citations?user=5EexYDAAAAAJ&amp;hl=es"&gt;Mihaela&lt;/a&gt; is a professor in Universidad Complutense de Madrid, Spain.
 
-<<<<<<< Updated upstream
 Aitziber Ibáñez was a PhD student at &lt;a href="http://www.uam.es/UAM/Home.htm?language=en" target="_blank"&gt;Universidad Autónoma de Madrid (UAM)&lt;/a&gt;. She finished her Bachelor’s degree in Mathematics at the &lt;a href="https://www.ehu.eus/en/web/guest/en-home" target="_blank"&gt;University of the Basque Country (UPV/EHU)&lt;/a&gt; in June 2009. She studied Master’s degree in Computational Engineering and Intelligent Systems, also in (UPV/EHU).
-=======
-<p>Aitziber Ibáñez was a PhD student at Universidad Autónoma de Madrid (UAM). She finished her Bachelor’s degree in Mathematics at the University of the Basque Country (UPV/EHU) in June 2009. She studied Master’s degree in Computational Engineering and Intelligent Systems, also in (UPV/EHU).</p>
->>>>>>> Stashed changes
 
-<p>Emmanuel Trélat matriculated at École normale supérieure de Cachan (mathematics) in 1995 and obtained the agrégation in 1998. In 2000, he obtained a doctorate under the direction of Bernard Bonnard at the University of Burgundy at Dijon with thesis entitled Étude asymptotique et transcendance de la fonction valeur en contrôle optimal; catégorie log-exp en géométrie sous-Riemannienne dans le cas Martinet (Asymptotic study and transcendence of the value function in optimal control; category log-exp in sub-Riemannian geometry in the Martinet case).[1] In 2001 he was appointed a lecturer at the University of Paris-Sud, where he obtained in 2005 his habilitation Contrôle en dimension finie et infinie (Control in finite and infinite dimension). In 2006 he was appointed a professor at the University of Orleans. Since 2011 he has been a professor at Pierre and Marie Curie University at the Laboratoire Jacques-Louis Lions. Since 2015 he has been director of the Fondation sciences mathématiques de Paris</p>
+Emmanuel Trélat matriculated at École normale supérieure de Cachan (mathematics) in 1995 and obtained the agrégation in 1998. In 2000, he obtained a doctorate under the direction of Bernard Bonnard at the University of Burgundy at Dijon with thesis entitled Étude asymptotique et transcendance de la fonction valeur en contrôle optimal; catégorie log-exp en géométrie sous-Riemannienne dans le cas Martinet (Asymptotic study and transcendence of the value function in optimal control; category log-exp in sub-Riemannian geometry in the Martinet case).[1] In 2001 he was appointed a lecturer at the University of Paris-Sud, where he obtained in 2005 his habilitation Contrôle en dimension finie et infinie (Control in finite and infinite dimension). In 2006 he was appointed a professor at the University of Orleans. Since 2011 he has been a professor at Pierre and Marie Curie University at the Laboratoire Jacques-Louis Lions. Since 2015 he has been director of the Fondation sciences mathématiques de Paris
 
-<<<<<<< Updated upstream
 Computational Science and Engineering Division, Oak Ridge National Laboratory (Tennessee, United states).
 
 University of Chile, Centro de Modelamiento Matemático (CMM).
 
 Jiamin is currently a Post Doctoral researcher in Paris and Madrid, under the direction of Enrique Zuazua and Emmanuel Trélat, under the ANR-ICON Project (Control Interactions, Partial Differential Equations, and Numerical Analysis).
-=======
-<p>Computational Science and Engineering Division, Oak Ridge National Laboratory (ORNL)</p>
 
-<p>University of Chile, Centro de Modelamiento Matemático (CMM)</p>
-
-<p>Jiamin is currently a postdoc in Paris and Madrid, under the direction of Enrique Zuazua and Emmanuel Trélat, under the ANR-ICON Project (Control Interactions, Partial Differential Equations, and Numerical Analysis).</p>
->>>>>>> Stashed changes
-
-<p>Former Marie S. Curie fellow, Research Center on Animal Cognition, Université Paul Sabatier, Toulouse (France).</p>
+Former Marie S. Curie fellow, Research Center on Animal Cognition, Université Paul Sabatier, Toulouse (France).
+</code></pre></div></div>
 
 
     <!-- Footer -->
