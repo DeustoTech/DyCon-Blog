@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Structured deformations of continua",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0018",
+      "date"            : "2019-03-26",
+      "author"          : ["MarcoM","JoseM"],
+      "description"     : "A Multiscale Geometrical Basis for Variational Problems in Mechanics",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0018/p0018_50.png"
+    } ,
+  
+    {
       "title"           : "The Dirichlet-Neumann iteration for two coupled heterogeneous heat equations",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/P0017",
