@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 26 Mar 2019 15:48:34 +0100</pubDate>
-    <lastBuildDate>Tue, 26 Mar 2019 15:48:34 +0100</lastBuildDate>
+    <pubDate>Tue, 26 Mar 2019 15:54:53 +0100</pubDate>
+    <lastBuildDate>Tue, 26 Mar 2019 15:54:53 +0100</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -76,7 +76,8 @@ behaves as desired and approximates  in the sense described in the Approximation
 Since , the limit of  recovers just the difference . A stronger link between these two quantities is evident considering that  is the Riemann sum of the function  on . A depiction of the first elements of the sequence  is provided in the picture below.
 
 
-)
+
+approximation of the broken ramp
 
 References
 
