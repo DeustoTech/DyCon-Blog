@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "The Dirichlet-Neumann iteration for two coupled heterogeneous heat equations",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0017",
+      "date"            : "2019-03-26",
+      "author"          : ["AzaharM"],
+      "description"     : "This tutorial explains how to use the Dirichlet-Neumann method to coordinate the numerical solutions of two linear heat equations with strong jumps in the material coefficients accross a common interface.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0016/2D_FDM.gif"
+    } ,
+  
+    {
       "title"           : "An introduction to the moment method for optimal control problems for polynomial ODEs",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/P0015-moment",
