@@ -5,9 +5,193 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 27 Mar 2019 11:31:35 +0100</pubDate>
-    <lastBuildDate>Wed, 27 Mar 2019 11:31:35 +0100</lastBuildDate>
+    <pubDate>Wed, 03 Apr 2019 14:22:18 +0200</pubDate>
+    <lastBuildDate>Wed, 03 Apr 2019 14:22:18 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>A reaction-diffusion equation with delay</title>
+        <description>The aim of this tutorial is to give a numerical method for solving a partial differential equation with a constant delay.
+
+Introduction
+
+We consider the following one-dimentional reaction-diffusion equation with logistic production and delayed term,
+
+
+
+this equation was suggested in [1] as a model of viral infection spreading in tissues. For the existence of solution and Global stability of the homogeneous in space equilibrium we refer the reader to [2]. Here, $u(x,t)$ is the concentration of virus with respect to the space variable $x$ and time $t$. The parameters $D$ and $r$ are respectively the diffusion coefficient and replication rate constant. The function $f(u_{\tau})$ describes the concentration of immune cells as a function of the virus concentration at time $t-\tau, u_{\tau}(x, t) = u(x, t - \tau)$.
+
+Numerical method
+
+We rewrite the one-dimentional reaction-diffusion equation with a constant time delay described above with Neumann boundary condition:
+
+
+
+where the delay $\tau$ is a positive constant. we use an implicit finite difference approximation for the diffusion term and classical approach of the resolution of delay equations.  let N and M denote the number of space steps and time steps with the notations $\Delta x= L/N$ and $\Delta t= T/M$, respectively.
+
+The discretization of space $x_i$ and time $t_n$ are given by
+
+
+
+
+
+Let $u^n_i$  be the approximation of the function $u$ at $(x,t)=(x_i,t_n)$, moreover,
+
+
+
+We write the scheme of the equation (\ref{equa1}) at the point $u^n_i$,
+
+
+
+Where, $u^{n-k}_i \approx u(x_i,t_n-\tau)$ is the delay variable and $k$ is determined by the equality $\tau= k \Delta t$. For simplicity of notation, we denote by $F^{n-k}_i := f(u^{n-k}_i)$ and $G^{n,k}_i:=r u^n_i( 1-u^n_i -  F^{n-k}_i)$, for $i=0,..,N-1, \quad n=1,..,k$ and $n=0,..,M-1$.
+
+The simplest form of this expression is given as follows
+
+
+
+where $\lambda= D \Delta t /(\Delta x)^2$.
+
+Now, we can write the following semi-linear system with Neumann boundary condition
+
+
+
+First, we fix the parametrs as follows $T=10$, $\tau=1$, $L=1$, $D=1$, $r=1$,
+
+clear ;
+close ;
+clc,
+tic
+T=10;
+M=100;
+L=1;
+epsilon=10^(-6);
+D=0.01;
+r=1;
+to=2;
+N=200;
+dx=L/(N);
+dt=T/M;
+x= (0:N)*dx ;
+lambda=dt*D/(dx^2);
+t=(0:M)*dt;
+
+
+The tridiagonal matrix with Neumann condition
+
+C=eye(N+1);
+D=(2*lambda+1)*C-lambda*diag(ones(1,N),1)-lambda*diag(ones(1,N),-1);
+B=[[-lambda;zeros(N,1)] [zeros(N+1,N-1)] [zeros(N,1);-lambda]];
+A=D+B;
+
+
+The initial function $u_0$
+
+U=zeros(N+1,1);
+
+for i=1:N+1
+    U(i,1)=u0(x(i),0);
+end
+figure (1)
+plot(x,U)
+xlabel('space')
+title('Initial function u_0(x)')
+
+
+
+
+The delay function $f(u_{\tau})$
+
+f=@( t ) 2*t ;
+Q=zeros(N+1,1);
+for i=1:N+1
+ Q(i,1)=f(x(i))   ;
+end
+
+figure (2)
+plot(x,Q)
+xlabel('space')
+title('The function f')
+
+
+
+
+Ut=zeros(N+1,1);
+Fretard=zeros(N+1,1);
+Uf=zeros(N+1,M+1);
+Uf=U;
+
+
+We introduce the following test to get $u(x, t-\tau)$,
+
+fig =        figure;
+ax  = axes('Parent',fig,'XLim',[0 L],'YLim',[0 1.1]);
+ax.XLabel.String = 'space';
+
+%%gif('pdedelay4.gif','frame',fig,'DelayTime',1)
+for n=1:M
+    if (((t(n)-to)&amp;lt;=0)||(abs(t(n)-to)&amp;lt;epsilon))
+        for i=1:N+1
+            Ut(i,1)=u0(x(i),t(n)-to);
+            Fretard(i,1)=f(Ut(i,1));
+        end
+    else
+        s=floor((t(n)-to)/dt)+1;
+        for i=1:N+1
+            Ut(i,1)=Uf(i,s);
+            Fretard(i,1)=f(Ut(i,1));
+        end
+    end
+    Uold=U;
+    Ur=dt*r*Uold.*(1-Uold-Fretard);
+    U=A\(Uold+Ur);
+    %%
+    %% We plot the evolution of solution $u(x,t)$ at
+    %% $t= \Delta t, \tau, 2 \tau, 3\tau, ...$,
+    %% when $\tau=0$, we plot the solution for $t=5, 10, 15, ...$
+    %%
+    if (((t(n+1)==dt)|| (mod(t(n+1),to)==0)) || ((to==0)&amp;amp;&amp;amp;(((mod(t(n+1),5)==0)||(n==M)))))
+
+        ll =line(x,Uold,'Color','r','Parent',ax);
+        ax.Title.String = ['t=',num2str(t(n+1))];
+        pause(1)
+        %%gif;
+        delete(ll)
+    end
+    Uf=[Uf,U];
+end
+
+
+
+
+The solution $u(x,t)$ of PDE with delay
+
+figure(4);
+[X , Y] = meshgrid(x,[t]);
+mesh (X , Y , Uf')
+title('The evolution of solution u(x,t)')
+xlabel('space')
+ylabel('time')
+
+
+
+
+References
+
+[1]  G.Bocharov, A. Meyerhans, N. Bessonov, S. Trofimchuk, V. Volpert. Spatiotemporal dynamics of virus infection spreading in tissues. PlosOne, December 20, 2016.
+
+[2]   T. M. Touaoula, M. N. Frioui, N. Bessonov, V. Volpert Dynamics of solutions of a reaction-diffusion equation with delayed inhibition. Manuscript submitted for publication.
+
+</description>
+        <pubDate>Wed, 03 Apr 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0030</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0030</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
     
       <item>
         <title>Structured deformations of continua</title>
@@ -1962,235 +2146,6 @@ References
         <category>tutorial</category>
         
         <category>WP05</category>
-        
-      </item>
-    
-      <item>
-        <title>Stabilization of a collective behavior model</title>
-        <description>clc;
-clear;
-
-
-Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.
-
-Consider $N$  agents $y_i$ for $i=1,…,N$, and let $y=(y_1,…,y_N)\in \mathbb{R}^N$.
-
-The model considered is the following:
-
- where $A$ is a matrix of the form:
-
-
-
-and $\vec{G}:\mathbb{R}^N\to\mathbb{R}^N$ is a non linear function of the form
-
-
-
-where $G$ is a non-linear function, matrix $A$ models the interaction between agents. Agent $i$ changes its state according to the state of agent $i+1$ and $i-1$ in a linear way plus a non-linear effect that depends only on his state.
-
-Note that the manifold
-
-
-
-is invariant under $F$. Indeed, taking $x\in\mathcal{M}_N$ we have that
-
-
-
-Therefore, the mean will follow the following 1-d dynamical system
-
-
-
-Here we will consider that $G(0)=0$ and that $DG(0)&amp;gt;0$, we have an unstable critical point at 0. Let N=20,
-
-N=2;
-A=full(gallery('tridiag',N,1,-2,1));
-A(1,1)=-1;
-A(N,N)=-1;
-
-
-and that
-
-
-
-here $G$ is taken in the following form (and we compute also its derivative).
-
-The non-linearity choosen is:
-
-a=5;
-c=0.20;
-syms G(x);
-syms DG(x);
-G(x) = piecewise(x&amp;lt;=-a, -2*a*a*x*c-2*a*a*a*c, a&amp;lt;=x, -2*a*a*x*c+2*a*a*a*c, -a&amp;lt;x&amp;lt;a, -c*x*(x-a)*(x+a));
-DG(x) = diff(G,x);
-G=@(x)double(G(x));
-DG = @(x)double(DG(x));
-
-close all
-figure(1)
-fplot(G,[-10,10])
-title('Plot of the non-linearity')
-hold off
-grid
-
-
-
-
-The function field assigns an $N$ dimensional vector corresponding to the field for every point in $\mathbb{R}^N$, matrix $A$ and the nonlinear function $G$
-
-F=@(t,y) field(A,G,y)
-
-
-
-F =
-
-  function_handle with value:
-
-    @(t,y)field(A,G,y)
-
-
-
-
-Now its the turn to define our cost functional. Our goal will be to stabilize the system in a critical point inside the manifold $\mathcal{M}_N$. Notice that, in particular $0$ is a critical point.
-
-We will choose the matrix $Q$ in a way that the vector that defines $\mathcal{M}_N$ is an eigenvector of the matrix $Q$, we have seen that the manifold $\mathcal{M}_N$ is invariant under the flow. Our cost functional will take into account if we are not in this manifold.
-
-
-
-We check that its eigenvalues are non-negative
-
-Q=eye(N)-ones([N N])/N;
-EigQ=eig(Q)
-
-
-
-EigQ =
-
-     0
-     1
-
-
-
-
-And we define $R$ being just the identity
-
-R=eye(N);
-
-
-Linearize arround the unstable equilibrium 0 and obtain the linearized system $\dot{y}=Ly$
-
-p=0;
-L=A+DG(p)*eye(N);
-
-
-we set our control matrix B
-
-B=eye(N);
-
-
-One has to check the rank of the controllability matrix to see if we satisfy the Kalman rank condition
-
-Co=ctrb(L,B);
-rank=rank(Co)
-
-
-
-rank =
-
-     2
-
-
-
-
-Once it is done, we are in the position of solving the algebraic Riccati equation
-
-[ricsol,cleig,K,report] = care(L,B,Q);
-
-
-Consider a time span and an initial datum
-
-radius = 6
-ini    = radius*(-0.5+rand(N,1))
-
-
-
-radius =
-
-     6
-
-
-ini =
-
-   -1.3855
-    1.4941
-
-
-
-
-the free dynamics would result
-
-tspan = [0, 2];
-[t,y] = ode45( F, tspan, ini);
-
-figure(2)
-for i=1:N-1
-    plot(t, y(:,i));
-    hold on;
-end
-plot(t, y(:,N))
-title('Free dynamics')
-hold off
-grid
-
-
-
-
-Now the LQ controller with the linear and the non-linear dynamics
-
-u_lq = @(t,x) -K * x;
-
-
-i_linear = @(t,x) L*x + B*u_lq(t,x);
-[time, state] = ode45(i_linear,tspan, ini);
-
-i_nonlinear = @(t,x)[F(t,x)+B*u_lq(t,x)];
-[timen, staten] = ode45(i_nonlinear,tspan, ini);
-
-figure(3)
-for i=1:N-1
-    plot(time, state(:,i),'LineWidth',2);
-    hold on;
-end
-plot(time, state(:,N),'LineWidth',2)
-grid on
-title('LQR regulator on the linearized system')
-hold off
-
-
-
-
-[timen, staten] = ode45(i_nonlinear,tspan, ini);
-
-figure(4)
-for i=1:N-1
-    plot(timen, staten(:,i),'LineWidth',2);
-    hold on;
-end
-plot(timen, staten(:,N),'LineWidth',2)
-grid on
-title('LQR regulator on the non-linear dynamics')
-hold off
-
-
-
-
-</description>
-        <pubDate>Sun, 28 Oct 2018 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0014-Domenec</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0014-Domenec</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP99</category>
         
       </item>
     
