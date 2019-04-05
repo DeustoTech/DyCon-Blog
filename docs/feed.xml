@@ -5,9 +5,9 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 04 Apr 2019 07:35:57 +0200</pubDate>
-    <lastBuildDate>Thu, 04 Apr 2019 07:35:57 +0200</lastBuildDate>
-    <generator>Jekyll v3.8.5</generator>
+    <pubDate>Fri, 05 Apr 2019 11:43:08 +0200</pubDate>
+    <lastBuildDate>Fri, 05 Apr 2019 11:43:08 +0200</lastBuildDate>
+    <generator>Jekyll v3.8.4</generator>
     
       <item>
         <title>A reaction-diffusion equation with delay</title>
