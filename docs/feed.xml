@@ -5,9 +5,104 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 30 Apr 2019 11:08:24 +0200</pubDate>
-    <lastBuildDate>Tue, 30 Apr 2019 11:08:24 +0200</lastBuildDate>
+    <pubDate>Thu, 02 May 2019 16:14:32 +0200</pubDate>
+    <lastBuildDate>Thu, 02 May 2019 16:14:32 +0200</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
+    
+      <item>
+        <title>Riccati theory in LQ optimization with time-varying target</title>
+        <description>In this short tutorial, we explain how to use Riccati’s theory to solve an LQ control problem with targets.
+
+We consider the optimal control problem:
+
+
+
+where:
+
+
+
+In the above control problem, $A \in M_{n \times n}$, $B \in M_{n \times m}$, $C \in M_{r\times n}$ and $D\in M_{r\times n}$. The control $u:[0,T]\longrightarrow R^m$, while the state $x:[0,T]\longrightarrow R^n$. The control target is $q\in C^1([0,T];R^m)$ and the state target is $z\in C^1([0,T];R^n)$. $\beta\geq 0$ and $\gamma\geq 0$ are positive parameters.
+
+By the Direct Methods in the Calculus of Variations and strict convexity, the above problem admits an unique optimal control $u^T$. The corresponding optimal state is denoted by $x^T$.
+
+We compute the optimal pair (optimal control, optimal state) by using the well-known Riccati’s theory (see, for instance, [1, Lemma 2.6] and [2, section 4.3]).
+
+For further details regarding the algorithm, we refer to href=”https://github.com/DeustoTech/RiccatiLQ/blob/master/RiccatiAlgorithm.pdf” RiccatiAlgorithm /a
+
+Take
+
+A=[2,-1;-1,2];
+B=[1;0];
+C=eye(2);
+D=zeros(2,2);
+beta=26;
+gamma=0;
+x0=[1.4;1.4];
+q=@(t)0;
+z=@(t)[sin(t);sin(t)];
+T=10;
+Nt=1000;
+
+
+We solve an LQ problem with the above data.
+
+[ uopt, x] = lqtarget( A,B,C,D,beta, gamma, q, z, x0,T,Nt );
+
+
+
+
+
+
+
+
+Since the parameter $\beta$ is large enough and the control acts only on the first component of first equation
+
+
+  
+    the first component of the state is close to the target;
+  
+  
+    the second component of the state is less close to the target;
+  
+  
+    the control is far from its target.
+  
+
+
+The algorithm described in this guide can be employed to test the fulfillment of the turnpike property (see, for instance, [1] and [3]). In agreement with the theory, the turnpike effect is evident if:
+
+
+  
+    the targets are constants;
+  
+  
+    $(A,B)$ is controllable;
+  
+  
+    $(A,C)$ is observable, $\beta&amp;gt;0$ and $\gamma=0$;
+  
+  
+    the time horizon $T$ is large enough.
+  
+
+
+References
+[1] Alessio Porretta and Enrique Zuazua, Long time versus steady state optimal control, SIAM Journal on Control and Optimization, 51 (2013).
+
+[2] Emmanuel Trelat, control optimal: theory &amp;amp; applications , Vuibert, 2008.
+
+[3] Emmanuel Trelat and Enrique Zuazua, The turnpike property in finite-dimensional nonlinear optimal control, Journal of Differential Equations, 258 (2015).
+</description>
+        <pubDate>Sun, 21 Apr 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0003</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0003</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP02</category>
+        
+      </item>
     
       <item>
         <title>A reaction-diffusion equation with delay</title>
@@ -1191,9 +1286,8 @@ legend('RPS','P1 FEM','FDM','exact')
 
 
 
-
 </description>
-        <pubDate>Tue, 18 Dec 2018 00:00:00 +0100</pubDate>
+        <pubDate>Mon, 07 Jan 2019 00:00:00 +0100</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0002-Numerical-homogenizaton</link>
         <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0002-Numerical-homogenizaton</guid>
         
@@ -1820,332 +1914,6 @@ We can see that $\theta_1$ does not tend to zero in Figure 5 since $K\times\Thet
         <category>tutorial</category>
         
         <category>WP99</category>
-        
-      </item>
-    
-      <item>
-        <title>Coupled transport equations and LQR control</title>
-        <description>We consider the semilinear hyperbolic system
-
-
-
-where $\lambda &amp;gt; 0$ and $u$ is the control. The stability and boundary stabilization of such 1D hyperbolic systems is studied in [1]. The aim of this tutorial is to semi-discretize in space this system of equations and design a stabilizing control by using the LQR method.
-
-The above system linearized around $(y,v) = (0,0)$ has the form
-
-
-
-We will first use the LQR method to design a stabilizing control for the semi-discretized linear system, and then this control will be applied to the semi-discretized semilinear system.
-
-Space discretization
-
-The intervall $(0,L)$ is divided in $n+1$ subintervals, of size $h_x := \frac{L}{n+1}$, by $n+2$ evenly spaced points $x_k = kh_x$. Hence, $x_0 = 0$ and $x_{n+1} = L$. We set $y_k(t) = y(x_k,t), \quad v_k(t) := v(x_k,t)$ and similarly for the inital conditions $y_k^0(t) = y^0(x_k)$ and $v_k^0(t) := v(x_k)$.
-
-clear; clc;
-L = 1; n = 30;
-x = linspace(0, L, n+2);
-hx = 1/(n+1);
-
-
-The points where y and v are unknown are contained in x1 and x2 respectively, where x1 and x2 are defined below.
-
-x1 = x(2:n+2);
-x2 = x(1:n+1);
-
-
-Finite differences for the space derivative give
-
-
-
-and
-
-
-
-The sign of $\lambda$ in each equation must be taken into account to choose the approximation of $\partial_x y$ and $\partial_x v$.
-
-Let $d = 2(n+1)$ represent the dimension of the state space for the semi-discretized systems. Defining the state variable $z \colon (0,T) \mapsto \mathbb{R}^d$ by
-
-
-
-the semilinear system writes as
-
-
-
-and the linearized system writes as
-
-
-
-d = 2*(n+1);
-
-
-We pick the initial condition
-
-
-
-y0 = sin(pi*x1)';
-v0 = sin(pi*x2)';
-z0 = zeros(d, 1); z0(1:n+1, 1) = y0; z0(n+2:d, 1) = v0;
-
-
-We set values for $\lambda$, $c_1$ and $c_2$:
-
-lambda = 1; c1 = 1; c2 = 1;
-
-
-We consider the time parameters
-
-T = 5;
-nT = 70;
-time = linspace(0, T, nT);
-
-
-The matrix $A$ of size $d \times d$ is given by
-
-
-
-where $A_{11}, A_{12}, A_{21}, A_{22}$, of size $(n+1)\times(n+1)$, are defined by
-
-
-
-and
-
-
-
-They are constructed as follows.
-
-A = zeros(d, d);
-%% Lower and upper extradiagonals:
-ext_down_1 = zeros(1,2*n+1); ext_down_1(1,1:n) = lambda/hx*ones(1,n);
-ext_down_2 = c2*ones(1,n);
-ext_up_1 = zeros(1,2*n+1); ext_up_1(1,(n+2):(2*n+1)) = lambda/hx*ones(1,n);
-ext_up_2 = zeros(1, n+1); ext_up_2(1, 1) = lambda/hx;
-ext_up_3 = c1*ones(1,n);
-%% We assemple:
-A = A - lambda/hx*eye(d); A(n+2, n+2) = A(n+2, n+2) + c2;
-A = A + diag(ext_up_1,1) + diag(ext_up_2, n+1) + diag(ext_up_3,n+2);
-A = A + diag(ext_down_1,-1) + diag(ext_down_2, -n-2);
-
-
-The matrix $B$ is of size $d \times 1$ and is given by
-
-
-
-where $B_1, B_2$, of size $(n+1)\times 1$, are defined by
-
-
-
-B= zeros(d, 1);
-B(n+1, 1) = c1; B(d, 1) = lambda/hx;
-
-
-The LQR method
-
-We check that a LQR control can be computed for the semi-descretize linear system. To begin, we verify that $ (A,BB^\ast) $ is stabilizable (where $B^\ast$ denotes the transpose of $B$), meaning that $\text{rank}((sI-A) BB^\ast) = d$ for any eigenvalue $s$ of $A$ with a nonnegative real part.
-
-disp('Stabilizability of (A, BB*):');
-eA=eig(A);
-not_stabilizable = 0;
-for cpt=1:d
-    if real(eA(cpt))&amp;gt;=0
-        disp(cpt); disp(eA(cpt));
-
-        M = zeros(d, 2*d);
-        M(:, 1:d) = eA(cpt)*eye(d)-A;
-        M(:, d+1:d*2) = B*(B');
-
-        r = rank(M);
-        if (r ~= d)
-            not_stabilizable = not_stabilizable + 1;
-        end
-    end
-end
-if not_stabilizable == 0
-    disp('stabilizable.');
-else
-    disp('not stabilizable.');
-end
-
-
-Stabilizability of (A, BB*):
-    18
-
-    0.3047
-
-stabilizable.
-
-
-
-Then, we verify that the eigenvalues of the Hamiltonian matrix
-
-
-
-are not purely imzginary. Here, $Q$ is a matrix of size $d \times d$ to be chosen.
-
-R = 1; Q = eye(d);
-H = blkdiag(A, -A');
-H(d+1: 2*d, 1:d) = -Q;
-H(1:d, d+1: 2*d) = -B*(B');
-eH = eig(H);
-nb_imaginary_eig_val_hamiltonian = sum(real(eH) == 0);
-disp('Number of eigenvalues of H on the imaginary axis:')
-disp(nb_imaginary_eig_val_hamiltonian);
-
-
-Number of eigenvalues of H on the imaginary axis:
-     0
-
-
-
-
-To finish, we verify that $(Q, A)$ is stabilizable, meaning that the rank of
-
-
-
-is equal to $d$, for any eigenvalue $s$ of $A$ with a nonnegative real part.
-
-disp('Detectability of (Q, A):');
-not_detectable = 0;
-for cpt=1:d
-    if real(eA(cpt))&amp;gt;=0
-        disp(cpt); disp(eA(cpt));
-
-        J = zeros(2*d, d);
-        J(1:d, :) = Q;
-        J(d+1:d*2, :) = eA(cpt)*eye(d)-A;
-
-        r = rank(J);
-        if (r ~= d)
-            not_detectable = not_detectable + 1;
-        end
-    end
-end
-if not_detectable == 0
-    disp('detectable.');
-else
-    disp('not detectable.');
-end
-
-
-Detectability of (Q, A):
-    18
-
-    0.3047
-
-detectable.
-
-
-
-The LQR control is given by the matlab routine care(), as the application $t \mapsto -Kz(t)$. The matrix $K$, of size $m \times d$ is an output of care(), where $m$ is the dimention of the input space and is equal to one.
-
-[ricsol, cleig, K, report] = care(A, B, Q, R);
-f_ctr = @(z) -K*z;
-
-
-Unstable and stabilized system’s solutions
-
-u = 0;
-
-
-We compute the solution to the linear system with a control equal to zero:
-
-F1 = @(t,z) A*z + B*u;
-[t1, Z1] = ode45(F1, time, z0);
-
-
-The corresponding solutions $y$ and $v$ are displayed:
-
-[X,Y] = meshgrid(t1, x1);
-figure; surf(X, Y, Z1(:, 1:n+1)');
-xlabel('time'); ylabel('space'); title('Solution y for unstable linear system');
-
-[X,Y] = meshgrid(t1, x2);
-figure; surf(X, Y, Z1(:, n+2:2*(n+1))');
-xlabel('time'); ylabel('space'); title('Solution v for unstable linear system');
-
-
-
-
-
-
-We compute the solution to the linear system with the feedback control:
-
-F2 = @(t,z) A*z + B*f_ctr(z);
-[t2, Z2] = ode45(F2, time, z0);
-
-
-The corresponding solutions $y$ and $v$ are displayed:
-
-[X,Y] = meshgrid(t2, x1);
-figure; surf(X, Y, Z2(:, 1:n+1)');
-xlabel('time'); ylabel('space'); title('Solution y for stabilized linear system');
-
-[X,Y] = meshgrid(t2, x2);
-figure; surf(X, Y, Z2(:, n+2:2*(n+1))');
-xlabel('time'); ylabel('space'); title('Solution v for stabilized linear system');
-
-
-
-
-
-
-We compute the solution to the semilinear system with the same feedback control as the one found for the linear system:
-
-F3 = @(t,z) A*z + B*f_ctr(z) + [z(1:n,1).*z(n+3:d,1);z(n+1, 1)*f_ctr(z);z(n+2, 1)^2 ; z(1:n,1).*z(n+3:d,1)];
-[t3, Z3] = ode45(F3, time, z0);
-
-
-The corresponding solutions $y$ and $v$ are displayed:
-
-[X,Y] = meshgrid(t3, x1);
-figure; surf(X, Y, Z3(:, 1:n+1)');
-xlabel('time'); ylabel('space'); title('Solution y for stabilized semilinear system');
-
-[X,Y] = meshgrid(t3, x2);
-figure; surf(X, Y, Z3(:, n+2:2*(n+1))');
-xlabel('time'); ylabel('space'); title('Solution v for stabilized semilinear system');
-
-
-
-
-
-
-We compare the euclidean norm of the preceding solutions:
-
-y1_norm = sum(abs(Z1(:, 1:n+1)).^2, 2);
-y2_norm = sum(abs(Z2(:, 1:n+1)).^2, 2);
-v1_norm = sum(abs(Z1(:, n+2:2*(n+1))).^2, 2);
-v2_norm = sum(abs(Z2(:, n+2:2*(n+1))).^2, 2);
-y3_norm = sum(abs(Z3(:, 1:n+1)).^2, 2);
-v3_norm = sum(abs(Z3(:, n+2:2*(n+1))).^2, 2);
-norm1 = (y1_norm + v1_norm).^(1/2);
-norm2 = (y2_norm + v2_norm).^(1/2);
-norm3 = (y3_norm + v3_norm).^(1/2);
-figure;
-plot(t1, norm1, 'lineWidth', 2);
-hold on;
-plot(t2, norm2, 'lineWidth', 2);
-plot(t3, norm3, 'lineWidth', 2);
-legend('zero control, linear syst.', 'feedback control, linear syst.', 'feedback control, semilin. syst.');
-xlabel('time');
-ylabel('euclidean norm of z');
-title('Euclidean norm of solutions across time');
-
-
-
-
-References
-
-[1] Bastin G., J.-M. Coron, Stability and boundary stabilization of 1-D Hyperbolic systems. 2016.
-
-</description>
-        <pubDate>Mon, 29 Oct 2018 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0008-Charlotte</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0008-Charlotte</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP05</category>
         
       </item>
     

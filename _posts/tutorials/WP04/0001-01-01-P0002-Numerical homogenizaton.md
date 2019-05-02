@@ -1,7 +1,7 @@
 ---
-title: Two Grids Filter Method for RPS Semi-Discretization 
+title: Two Grids Filter Method for RPS Semi-Discretization
 description: This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.
-date: 2018-12-18
+date: 2019-01-07
 author: [XinliangL]
 layout: tutorial
 matlab: P0002_Numerical_homogenizaton_for_wave_equation
@@ -304,4 +304,3 @@ legend('RPS','P1 FEM','FDM','exact')
 
 
 ![]({{site.url}}{{site.baseurl}}/assets/imgs/WP04/P0002-Numerical homogenizaton/copiaRM_07.png)
-

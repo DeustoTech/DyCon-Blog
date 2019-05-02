@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Riccati theory in LQ optimization with time-varying target",
+      "categories"      : ["tutorial", "WP02"],
+      "url"             : "/tutorial/wp02/P0003",
+      "date"            : "2019-04-21",
+      "author"          : ["DarioP"],
+      "description"     : "In this short tutorial, we explain how to use Riccati’s theory to solve an LQ control problem with targets.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_01.png"
+    } ,
+  
+    {
       "title"           : "A reaction-diffusion equation with delay",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/P0030",
@@ -55,7 +65,7 @@
       "title"           : "Two Grids Filter Method for RPS Semi-Discretization",
       "categories"      : ["tutorial", "WP04"],
       "url"             : "/tutorial/wp04/P0002-Numerical-homogenizaton",
-      "date"            : "2018-12-18",
+      "date"            : "2019-01-07",
       "author"          : ["XinliangL"],
       "description"     : "This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0002-Numerical%20homogenizaton/copiaRM_02.png"
@@ -129,36 +139,6 @@
       "author"          : ["AlejandroC"],
       "description"     : "Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0001/copiaRM_01.png"
-    } ,
-  
-    {
-      "title"           : "Riccati theory in LQ optimization with time-varying target",
-      "categories"      : ["tutorial", "WP02"],
-      "url"             : "/tutorial/wp02/P0003",
-      "date"            : "2018-10-26",
-      "author"          : ["DarioP"],
-      "description"     : "In this short tutorial, we explain how to use Riccati’s theory to solve an LQ control problem with targets.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_01.png"
-    } ,
-  
-    {
-      "title"           : "Turnpike property for functionals involving $L^1$−norm",
-      "categories"      : ["tutorial", "WP02"],
-      "url"             : "/tutorial/wp02/P0001",
-      "date"            : "2018-10-26",
-      "author"          : ["MartinL","CesareM","EnriqueZ"],
-      "description"     : "We want to study the following optimal control problem...",
-      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alphazero_ev.jpg"
-    } ,
-  
-    {
-      "title"           : "LQR control of a fractional reaction diffusion equation",
-      "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0004",
-      "date"            : "2018-10-24",
-      "author"          : ["UmbertoB"],
-      "description"     : "Design of a LQR controller for the stabilization of a fractional reaction diffusion equation",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_01.png"
     } ,
   
     {
@@ -242,16 +222,6 @@
     } ,
   
     {
-      "title"           : "Radial Basis Functions Interpolation",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0016",
-      "date"            : "2018-06-28",
-      "author"          : ["JoseV"],
-      "description"     : "This is a set of Matlab functions to interpolate scattered data with Radial Basis Functions (RBF).",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0016/avatar.png"
-    } ,
-  
-    {
       "title"           : "Optimal Control of the Poisson Equation with OpenFOAM",
       "categories"      : ["tutorial", "OT01"],
       "url"             : "/tutorial/ot01/P0021",
@@ -295,20 +265,10 @@
       "title"           : "Wave Control",
       "categories"      : ["tutorial", "WP01"],
       "url"             : "/tutorial/wp01/T00020",
-      "date"            : "2018-01-12",
+      "date"            : "2017-12-21",
       "author"          : ["CarlosC","MiguelC","SorinM","ArnaudM","MihaelaN","EnriqueZ"],
       "description"     : "A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol.jpg"
-    } ,
-  
-    {
-      "title"           : "Greedy algorithm for Parametric Vlasov-Fokker-Planck System",
-      "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/P0001",
-      "date"            : "2018-01-10",
-      "author"          : ["YuhuaZ","EnriqueZ"],
-      "description"     : "Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.",
-      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_discts.jpg"
     } ,
   
     {
@@ -329,6 +289,16 @@
       "author"          : ["JiaminZ","EnriqueZ"],
       "description"     : "We present a computational tool to solve optimal control problems for diffusion-reaction systems describing the growth and spread of populations",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/11/ex2_1.png"
+    } ,
+  
+    {
+      "title"           : "Greedy algorithm for Parametric Vlasov-Fokker-Planck System",
+      "categories"      : ["tutorial", "WP01"],
+      "url"             : "/tutorial/wp01/P0001",
+      "date"            : "2017-11-28",
+      "author"          : ["YuhuaZ","EnriqueZ"],
+      "description"     : "Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_discts.jpg"
     } ,
   
     {
@@ -369,6 +339,36 @@
       "author"          : ["VictorH","MartinL","EnriqueZ"],
       "description"     : "Turnpike theory and greedy algorithms, applied to the steady-state elliptic control problem, are combined to obtain a greedy approximation of parabolic optimal control problems, independent of the initial data",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/10/greedy.png"
+    } ,
+  
+    {
+      "title"           : "Turnpike property for functionals involving $L^1$−norm",
+      "categories"      : ["tutorial", "WP02"],
+      "url"             : "/tutorial/wp02/P0001",
+      "date"            : "2017-10-25",
+      "author"          : ["MartinL","CesareM","EnriqueZ"],
+      "description"     : "We want to study the following optimal control problem...",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alphazero_ev.jpg"
+    } ,
+  
+    {
+      "title"           : "Radial Basis Functions Interpolation",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0016",
+      "date"            : "2017-10-11",
+      "author"          : ["JoseV"],
+      "description"     : "This is a set of Matlab functions to interpolate scattered data with Radial Basis Functions (RBF).",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0016/avatar.png"
+    } ,
+  
+    {
+      "title"           : "LQR control of a fractional reaction diffusion equation",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0004",
+      "date"            : "2017-09-18",
+      "author"          : ["UmbertoB"],
+      "description"     : "Design of a LQR controller for the stabilization of a fractional reaction diffusion equation",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_01.png"
     } ,
   
     {

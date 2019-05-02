@@ -189,6 +189,90 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this short tutorial, we explain how to use Riccati’s theory to solve an LQ control problem with targets.&lt;/p&gt;
+</code></pre></div></div>
+
+<p>We consider the optimal control problem:</p>
+
+<script type="math/tex; mode=display">\min_{u\in L^2(0,T;\mathbb{R}^m)}J^{T}(u)=\frac12 \left[ \int_0^T  \vert u(t)-q(t) \vert ^2 dt+\beta\int_0^T  \vert C(x(t)-z(t))\vert ^2 dt+\gamma \vert D(x(T)-z(T))\vert ^2\right],</script>
+
+<p>where:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases} \frac{d}{dt}x(t)+Ax(t)=Bu(t)\hspace{0.6 cm} & t\in (0,T)\\ x(0)=x_0. \end{cases} %]]></script>
+
+<p>In the above control problem, $A \in M_{n \times n}$, $B \in M_{n \times m}$, $C \in M_{r\times n}$ and $D\in M_{r\times n}$. The control $u:[0,T]\longrightarrow R^m$, while the state $x:[0,T]\longrightarrow R^n$. The control target is $q\in C^1([0,T];R^m)$ and the state target is $z\in C^1([0,T];R^n)$. $\beta\geq 0$ and $\gamma\geq 0$ are positive parameters.</p>
+
+<p>By the Direct Methods in the Calculus of Variations and strict convexity, the above problem admits an unique optimal control $u^T$. The corresponding optimal state is denoted by $x^T$.</p>
+
+<p>We compute the optimal pair (optimal control, optimal state) by using the well-known Riccati’s theory (see, for instance, [1, Lemma 2.6] and [2, section 4.3]).</p>
+
+<p>For further details regarding the algorithm, we refer to <a href="a">href=”https://github.com/DeustoTech/RiccatiLQ/blob/master/RiccatiAlgorithm.pdf”</a> RiccatiAlgorithm <a href="/a">/a</a></p>
+
+<p>Take</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">B</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">C</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">D</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">beta</span><span class="o">=</span><span class="mi">26</span><span class="p">;</span>
+<span class="nb">gamma</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="mf">1.4</span><span class="p">;</span><span class="mf">1.4</span><span class="p">];</span>
+<span class="n">q</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="mi">0</span><span class="p">;</span>
+<span class="n">z</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">)[</span><span class="nb">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span><span class="nb">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)];</span>
+<span class="n">T</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
+<span class="n">Nt</span><span class="o">=</span><span class="mi">1000</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>We solve an LQ problem with the above data.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span> <span class="n">uopt</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">lqtarget</span><span class="p">(</span> <span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">,</span><span class="nb">beta</span><span class="p">,</span> <span class="nb">gamma</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span> <span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_01.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_02.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_03.png" alt="" /></p>
+
+<p>Since the parameter $\beta$ is large enough and the control acts only on the first component of first equation</p>
+
+<ul>
+  <li>
+    <p>the first component of the state is close to the target;</p>
+  </li>
+  <li>
+    <p>the second component of the state is less close to the target;</p>
+  </li>
+  <li>
+    <p>the control is far from its target.</p>
+  </li>
+</ul>
+
+<p>The algorithm described in this guide can be employed to test the fulfillment of the turnpike property (see, for instance, [1] and [3]). In agreement with the theory, the turnpike effect is evident if:</p>
+
+<ul>
+  <li>
+    <p>the targets are constants;</p>
+  </li>
+  <li>
+    <p>$(A,B)$ is controllable;</p>
+  </li>
+  <li>
+    <p>$(A,C)$ is observable, $\beta&gt;0$ and $\gamma=0$;</p>
+  </li>
+  <li>
+    <p>the time horizon $T$ is large enough.</p>
+  </li>
+</ul>
+
+<h1 id="references">References</h1>
+<p>[1] Alessio Porretta and Enrique Zuazua, <em>Long time versus steady state optimal control</em>, SIAM Journal on Control and Optimization, 51 (2013).</p>
+
+<p>[2] Emmanuel Trelat, control optimal: theory &amp; applications , Vuibert, 2008.</p>
+
+<p>[3] Emmanuel Trelat and Enrique Zuazua, <em>The turnpike property in finite-dimensional nonlinear optimal control</em>, Journal of Differential Equations, 258 (2015).</p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;The aim of this tutorial is to give a numerical method for solving a partial differential equation with a constant delay.&lt;/p&gt;
 </code></pre></div></div>
 
@@ -2868,799 +2952,6 @@ ans =
 <p>[1]: R. Olfati-Saber, J. A. Fax, and R. M. Murray, "Consensus and cooperation in networked multi-agent systems". Proc. IEEE. vol. 95, pp. 215&#150;233, Jan. 2007.</p>
 <p>[2]: K. J. &Aring;str&ouml;m, and R. M. Murray, "Feedback Systems: An Introduction for Scientists and Engineers". Princeton University Press, 2008, Princeton, NJ.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this short tutorial, we explain how to use Riccati’s theory to solve an LQ control problem with targets.&lt;/p&gt;
-</code></pre></div></div>
-
-<p>We consider the optimal control problem:</p>
-
-<script type="math/tex; mode=display">\min_{u\in L^2(0,T;\mathbb{R}^m)}J^{T}(u)=\frac12 \left[ \int_0^T  \vert u(t)-q(t) \vert ^2 dt+\beta\int_0^T  \vert C(x(t)-z(t))\vert ^2 dt+\gamma \vert D(x(T)-z(T))\vert ^2\right],</script>
-
-<p>where:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases} \frac{d}{dt}x(t)+Ax(t)=Bu(t)\hspace{0.6 cm} & t\in (0,T)\\ x(0)=x_0. \end{cases} %]]></script>
-
-<p>In the above control problem, $A \in M_{n \times n}$, $B \in M_{n \times m}$, $C \in M_{r\times n}$ and $D\in M_{r\times n}$. The control $u:[0,T]\longrightarrow R^m$, while the state $x:[0,T]\longrightarrow R^n$. The control target is $q\in C^1([0,T];R^m)$ and the state target is $z\in C^1([0,T];R^n)$. $\beta\geq 0$ and $\gamma\geq 0$ are positive parameters.</p>
-
-<p>By the Direct Methods in the Calculus of Variations and strict convexity, the above problem admits an unique optimal control $u^T$. The corresponding optimal state is denoted by $x^T$.</p>
-
-<p>We compute the optimal pair (optimal control, optimal state) by using the well-known Riccati’s theory (see, for instance, [1, Lemma 2.6] and [2, section 4.3]).</p>
-
-<p>For further details regarding the algorithm, we refer to <a href="a">href=”https://github.com/DeustoTech/RiccatiLQ/blob/master/RiccatiAlgorithm.pdf”</a> RiccatiAlgorithm <a href="/a">/a</a></p>
-
-<p>Take</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">];</span>
-<span class="n">B</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">0</span><span class="p">];</span>
-<span class="n">C</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-<span class="n">D</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<span class="nb">beta</span><span class="o">=</span><span class="mi">26</span><span class="p">;</span>
-<span class="nb">gamma</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="mf">1.4</span><span class="p">;</span><span class="mf">1.4</span><span class="p">];</span>
-<span class="n">q</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="mi">0</span><span class="p">;</span>
-<span class="n">z</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">)[</span><span class="nb">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span><span class="nb">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)];</span>
-<span class="n">T</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
-<span class="n">Nt</span><span class="o">=</span><span class="mi">1000</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>We solve an LQ problem with the above data.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span> <span class="n">uopt</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">lqtarget</span><span class="p">(</span> <span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">,</span><span class="nb">beta</span><span class="p">,</span> <span class="nb">gamma</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span> <span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_01.png" alt="" /></p>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_02.png" alt="" /></p>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_03.png" alt="" /></p>
-
-<p>Since the parameter $\beta$ is large enough and the control acts only on the first component of first equation</p>
-
-<ul>
-  <li>
-    <p>the first component of the state is close to the target;</p>
-  </li>
-  <li>
-    <p>the second component of the state is less close to the target;</p>
-  </li>
-  <li>
-    <p>the control is far from its target.</p>
-  </li>
-</ul>
-
-<p>The algorithm described in this guide can be employed to test the fulfillment of the turnpike property (see, for instance, [1] and [3]). In agreement with the theory, the turnpike effect is evident if:</p>
-
-<ul>
-  <li>
-    <p>the targets are constants;</p>
-  </li>
-  <li>
-    <p>$(A,B)$ is controllable;</p>
-  </li>
-  <li>
-    <p>$(A,C)$ is observable, $\beta&gt;0$ and $\gamma=0$;</p>
-  </li>
-  <li>
-    <p>the time horizon $T$ is large enough.</p>
-  </li>
-</ul>
-
-<h1 id="references">References</h1>
-<p>[1] Alessio Porretta and Enrique Zuazua, <em>Long time versus steady state optimal control</em>, SIAM Journal on Control and Optimization, 51 (2013).</p>
-
-<p>[2] Emmanuel Trelat, control optimal: theory &amp; applications , Vuibert, 2008.</p>
-
-<p>[3] Emmanuel Trelat and Enrique Zuazua, <em>The turnpike property in finite-dimensional nonlinear optimal control</em>, Journal of Differential Equations, 258 (2015).</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h3&gt;Introduction&lt;/h3&gt;
-</code></pre></div></div>
-<p>We introduce the following notation: $L^2=L^2\left(\Omega\right)$, $L^2_T=L^2\left(\Omega\times \left(0,T\right)\right)$,</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{eqnarray*}
-	\langle u,v \rangle&=&\int_{\Omega}^{} u(x)v(x) \ dx;\\
-	\langle u,v \rangle_T^2&=&\int_{0}^{T} \int_{\Omega}^{} u(x,t)v(x,t) \ dx \ dt
-\end{eqnarray*} %]]></script>
-
-<p>and the correspondent norms $\norm{\cdot}=\langle \cdot,\cdot\rangle$ and $\norm{\cdot}_T=\langle \cdot,\cdot\rangle_T$. Moreover, we define the norms</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{eqnarray*}
-	\norm{v}_{1}&=&\int_{\Omega}^{} \abs{v(x)} \ dx;\\
-	\norm{v}_{1,T}&=&\int_{0}^{T} \int_{\Omega}^{} \abs{v(x,t)} \ dx \ dt.
-\end{eqnarray*} %]]></script>
-
-<p>We want to study the following optimal control problem:</p>
-
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{P}\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left\{J\left(u\right)=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{Lu}_{1,T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right\},
-\end{equation*}</script>
-
-<p>where $L: \ L^2_T \to L^2_T$ is defined by</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{eqnarray*}
-Lu&=&y
-\end{eqnarray*} %]]></script>
-
-<p>and $y$ is the solution of the PDE given by</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
-y'+Ay=Bu & \left(\Omega \times \left(0,T\right)\right)\\
-y=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-y(0)=0 & \left(\Omega\right).
-\end{cases}
-\end{equation*} %]]></script>
-
-<p>Notice that, by integration by parts, $ L^*\mu=B^\ast p $, where $\varphi$ is solution of the adjoint equation:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
--p'+A^* p =\mu & \left(\Omega \times \left(0,T\right)\right)\\
-p=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-p(T)=0 & \left(\Omega\right).
-\end{cases}
-\end{equation*} %]]></script>
-
-<h3>Sparse control: $\alpha_c&gt;0$ ($\alpha_s=0$)</h3>
-<h3>The stationary problem</h3>
-
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{S}\mathcal{P}_c\right) \ \ \ \ \ \ \ \bar{u}\in argmin_{u\in L^2} \left\{J_s\left(u\right)=\alpha_c \norm{u}_{1} + \frac{\beta}{2}\norm{u}^2+ \frac{\gamma}{2}\norm{y-z}^2: \ \ \ Ay=Bu \right\}.
-\end{equation*}</script>
-
-<h4>Optimality conditions</h4>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
-A\bar{y}=B \ shrink(-B^*\bar{p},\frac{\alpha_c}{\beta}) & \left(\Omega\right)\\
-A^*\bar{p}=\gamma\left(\bar{y}-z\right) & \left(\Omega\right)\\
-\bar{y}=0, \ \bar{p}=0 & \left(\partial\Omega\right).
-\end{cases}
-\end{equation*} %]]></script>
-
-<h4>Numerical algorithm</h4>
-<p>In order to compute a numerical solution of problem</p>
-
-<script type="math/tex; mode=display">\left(\mathcal{S}\mathcal{P}_c\right)</script>
-
-<p>after a discretization by finite differences, we use a prox-prox splitting: first write the state as $y=A^{-1}Bu$, then</p>
-<ul>
-	<li> Proximal-point step:</li>
-
-$$
-\begin{equation*}
-\begin{split}
-\tilde{u}_{k} &amp; =argmin_{u\in L^2} \left\{\frac{\beta}{2}\norm{u}^2 + \frac{\gamma}{2}\norm{A^{-1}Bu-z}^2+ \frac{1}{2\lambda_k}\norm{u-u_k}^2\right\}\\
-&amp; = \left[\left(\beta+\frac{1}{\lambda_k}\right)I+\gamma B^*A^{-*}A^{-1}B\right]^{-1}\left(\frac{1}{\lambda_k}u_k+\gamma B^*A^{-*}z\right).
-\end{split}
-\end{equation*}
-$$
-
-<li> Proximal-point step:</li>
-
-$$
-\begin{equation*}
-	\begin{split}
-	u_{k+1}&amp; =argmin_{u\in L^2} \left\{\alpha_c \norm{u}_{1,T} + \frac{1}{2\lambda_k}\norm{u-\tilde{u}_k}_{T}^2\right\}\\
-	&amp; = shrink(\tilde{u}_k,\alpha_c \lambda_k).
-	\end{split}
-	\end{equation*}
-$$
-
-</ul>
-<p><strong>Remark:</strong> Notice that, when $\alpha_s=0$, the solution of $\left(\mathcal{P}^c_s\right)$ is simply given by</p>
-
-<script type="math/tex; mode=display">\bar{u}=\gamma \left[\beta I+\gamma B^*A^{-*}A^{-1}B\right]^{-1}B^*A^{-*}z.</script>
-
-<h3>Evolutionary problem</h3>
-
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{P}_c\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left\{J\left(u\right)=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right\}.
-\end{equation*}</script>
-
-<h4>Optimality conditions</h4>
-<p>Define the classical Lagrangian</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{split}
-\mathcal{L}\left(u,y,p\right)&=J\left(u\right)+\langle p, Bu-y'-Ay\rangle_T.
-\end{split}
-\end{equation*} %]]></script>
-
-<p>By integration by parts, we have</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{split}
-\mathcal{L}\left(u,y,p\right)&=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T}+ \frac{\gamma}{2}\norm{y-z}_{T}^2 + \langle B^*p, u\rangle_T \\
-& \quad + \langle p'-A^*p,y\rangle_T + \langle p(0),y(0)\rangle - \langle p(T),y(T)\rangle.
-\end{split}
-\end{equation*} %]]></script>
-
-<p>Deriving with respect to the three variables $\left(u,y,p\right)$, we obtain the optimality system:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
-\hat{y}'+A\hat{y}=B\hat{u} & \left(\Omega \times \left(0,T\right)\right)\\
--\hat{p}'+A^*\hat{p}=\gamma\left(y-z\right) & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right),
-\end{cases}
-\end{equation*} %]]></script>
-
-<p>where the relation between the optimal control and the dual state is given by</p>
-
-<script type="math/tex; mode=display">\begin{equation*}
-0\in \alpha_c \ \partial \norm{\cdot}_{1,T} \left(\hat{u}\right) + \beta \hat{u} + B^*\hat{p}.
-\end{equation*}</script>
-
-<p>The latter is equivalent to</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{split}
-\hat{u}&=\left(\beta I+\alpha_c \ \partial \norm{\cdot}_{1,T} \right)^{-1}\left(-B^*\hat{p}\right)\\
-&=argmin_{v\in L^2_T} \left\{ \alpha_c \norm{v}_{1,T}+\frac{1}{2\beta}\norm{v+B^*\hat{p}}_T^2 \right\}\\
-&=shrink(-B^*\hat{p},\frac{\alpha_c}{\beta}),
-\end{split}
-\end{equation*} %]]></script>
-
-<p>where the operator of $soft-shrinkage$ is defined by</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-shrink(t,\alpha)=
-\begin{cases}
-t+\alpha & (t<-\alpha)\\
-0 & (-\alpha\leq t \leq \alpha)\\
-t-\alpha & (t>\alpha).
-\end{cases}
-\end{equation*} %]]></script>
-
-<p>Finally,</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
-\hat{y}'+A\hat{y}=B \ shrink(-B^*\hat{p},\frac{\alpha_c}{\beta})& \left(\Omega \times \left(0,T\right)\right)\\
--\hat{p}'+A^*\hat{p}=\gamma\left(y-z\right) & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right).
-\end{cases}
-\end{equation*} %]]></script>
-
-<h4>Numerical algorithm</h4>
-<p>In order to compute a numerical solution of problem $\left(\mathcal{P}_c\right)$, after a discretization by finite differences, we use a grad-prox splitting:</p>
-<ul>
-	<li> Gradient step:</li>
-$$
-	\begin{equation*}
-	\begin{split}
-	\tilde{u}_{k} &amp; = u_k-\lambda_k \nabla_u \left[\frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2 \right]\left(u_k\right) \\
-	&amp; = u_k-\lambda_k \left[\beta u_k+\gamma L^*\left(Lu_k-z\right)\right]\\
-	&amp; = u_k - \lambda_k\left[\beta u_k+\gamma B^*p_k\right],
-	\end{split}
-	\end{equation*}
-$$
-
-where
-
-$$
-	\begin{equation*}
-	\begin{cases}
-	y_k'+Ay_k=Bu_k &amp; \left(\Omega \times \left(0,T\right)\right)\\
-	y_k=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
-	y_k(0)=0 &amp; \left(\Omega\right)
-	\end{cases}
-	\end{equation*}
-$$
-
-and
-
-$$
-	\begin{equation*}
-	\begin{cases}
-	-p_k'+A^* p_k =y_k-z &amp; \left(\Omega \times \left(0,T\right)\right)\\
-	p_k=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
-	p_k(T)=0 &amp; \left(\Omega\right).
-	\end{cases}
-	\end{equation*}
-$$
-
-<li> Proximal-point step:</li>
-
-$$
-\begin{equation*}
-\begin{split}
-u_{k+1}&amp; =argmin_{u\in L^2_T} \left\{\alpha_c \norm{u}_{1,T} + \frac{1}{2\lambda_k}\norm{u-\tilde{u}_k}_{T}^2\right\}\\
-	&amp; = shrink(\tilde{u}_k,\alpha_c \lambda_k).
-\end{split}
-\end{equation*}
-$$
-
-</ul>
-<p><strong>Remarks:</strong> Another possibility is to include the term $\frac{\beta}{2}\norm{u}^2_{T}$ in the proximal step.
-Notice that, for</p>
-
-<script type="math/tex; mode=display">f(u)=\frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2,</script>
-
-<p>then $\nabla f$ is Lipschitz continuous. Indeed, for $u_i\in L^2_T$ ($i=1,2$), then</p>
-
-<script type="math/tex; mode=display">\nabla f (u_i)=\beta u_i+\gamma B^{*}p_i,</script>
-
-<p>where</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
-y_i'+Ay_i=Bu_i & \left(\Omega \times \left(0,T\right)\right)\\
-y_i=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-y_i(0)=0 & \left(\Omega\right)
-\end{cases}
-\end{equation*} %]]></script>
-
-<p>and</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
--p_i'+A^* p_i=y_i-z & \left(\Omega \times \left(0,T\right)\right)\\
-p_i=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-p_i(T)=0 & \left(\Omega\right).
-\end{cases}
-\end{equation*} %]]></script>
-
-<p>By linearity $\delta y=y_2-y_1$ and $\delta p=p_2-p_1$ solve the same equations with right-hand-sides $B(u_2-u_1)$ and $\delta y$, respectively. Then</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{split}
-\norm{\nabla f(u_2)-\nabla f(u_1)}&\leq \beta\norm{u_2-u_1}_T + \gamma \norm{B^*}\norm{\delta p}_T\\
-&\leq \beta\norm{u_2-u_1}_T + \gamma \ C_{adj} \norm{B} \norm{\delta y}_T\\
-& \leq \beta\norm{u_2-u_1}_T + \gamma \ C_{adj} C \ \norm{B} \norm{B(u_2-u_1)}_T\\
-& \leq L \norm{u_2-u_1}_T,
-\end{split}
-\end{equation*} %]]></script>
-
-<p>where we defined</p>
-
-<script type="math/tex; mode=display">L=\beta+\gamma \ C_{adj} C \ \norm{B}^2.</script>
-
-<p>In order the prox-grad method to converge, the restriction on the step size is given by</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-0<\lambda \leq \lambda_k \leq \Lambda <\frac{2}{L}. %]]></script>
-
-<h3>Sparse state: $\alpha_s&gt;0$ ($\alpha_c=0$)</h3>
-
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{P}_s\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left\{J\left(u\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{Lu}_{1,T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right\}.
-\end{equation*}</script>
-
-<h3>The stationary problem</h3>
-
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{S}\mathcal{P}_s\right) \ \ \ \ \ \ \ \bar{u}\in argmin_{u\in L^2} \left\{J_s\left(u\right)=\alpha_c \norm{u}_{1} + \frac{\beta}{2}\norm{u}^2+ \frac{\gamma}{2}\norm{y-z}^2: \ \ \ Ay=Bu \right\}.
-\end{equation*}</script>
-
-<h4>Optimality conditions</h4>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
-A\bar{y}=-\frac{1}{\beta}BB^*\hat{p} & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=shrink(A^*\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}) & \left(\Omega \times \left(0,T\right)\right)\\
-\bar{y}=0, \ \bar{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right).
-\end{cases}
-\end{equation*} %]]></script>
-
-<p>Finally, we obtain a single equation in the dual variable $p$:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
-A \ shrink(A^*\bar{p}+\gamma z,\frac{\alpha_s}{\gamma})=-\frac{1}{\beta}BB^*\bar{p} & \left(\Omega \times \left(0,T\right)\right)\\
-\bar{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right).
-\end{cases}
-\end{equation*} %]]></script>
-
-<h4>Numerical algorithm</h4>
-<p>In order to compute a numerical solution of problem $\left(\mathcal{P}_s\right)$, after a discretization by finite differences, we use a prox-prox splitting on the Augmented Energy: first write the state as $y=A^{-1}Bu$, then</p>
-<ul>
-	<li> Proximal-point step:</li>
-$$
-	\begin{equation*}
-	\begin{split}
-	u_{k+1} &amp; =argmin_{u\in L^2} \left\{\frac{\beta}{2}\norm{u}^2 + \frac{\gamma}{2}\norm{A^{-1}Bu-z}^2+\frac{\delta}{2\lambda_k}\norm{A^{-1}Bu-y_k}^2 +\frac{1}{2\lambda_k}\norm{u-u_k}^2\right\}\\
-	&amp; = \left[\left(\beta+\frac{1}{\lambda_k}\right)I+\left(\gamma+\frac{\delta}{\lambda_k}\right) B^*A^{-*}A^{-1}B\right]^{-1}\left[\frac{1}{\lambda_k}u_k+ B^*A^{-*}\left(\gamma z+\frac{\delta}{\lambda_k}y_k\right)\right].
-	\end{split}
-	\end{equation*}
-$$
-
-	<li> Proximal-point step:</li>
-$$
-	\begin{equation*}
-	\begin{split}
-	y_{k+1}&amp; =argmin_{y\in L^2} \left\{
-	\alpha_s \norm{y}_{1} + \frac{\delta}{2\lambda_k}\norm{y-A^{-1}Bu_{k+1}}^2+\frac{1}{2\lambda_k}\norm{y-y_k}_{T}^2\right\}\\
-	&amp; = shrink(\tilde{y}_k,\tilde{\lambda}_k),
-	\end{split}
-	\end{equation*}
-$$
-
-	where we defined
-
-$$
-	\begin{eqnarray*}
-		\tilde{y}_k &amp; = &amp; \frac{y_k+\delta A^{-1}B u_{k+1}}{1+\delta};\\
-		\tilde{\lambda}_k &amp; = &amp; \frac{\alpha_s \lambda_k}{1+\delta}.
-	\end{eqnarray*}
-$$
-
-</ul>
-<p><strong>Remark:</strong> Notice that again, when $\alpha_s=0$, the solution of $\left(\mathcal{P}_s\right)$ is simply given by</p>
-
-<script type="math/tex; mode=display">\bar{u}=\gamma \left[\beta I+\gamma B^*A^{-*}A^{-1}B\right]^{-1}B^*A^{-*}z.</script>
-
-<h3>Evolutionary problem</h3>
-<h4>Optimality conditions</h4>
-<p>Define the classical Lagrangian</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{split}
-\mathcal{L}\left(u,y,p\right)&=J\left(u\right)+\langle p, Bu-y'-Ay\rangle_T.
-\end{split}
-\end{equation*} %]]></script>
-
-<p>By integration by parts, we have</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{split}
-\mathcal{L}\left(u,y,p\right)&=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T} +  \frac{\gamma}{2}\norm{y-z}_{T}^2 + \langle B^*p, u\rangle_T \\
-& \quad + \langle p'-A^*p,y\rangle_T + \langle p(0),y(0)\rangle - \langle p(T),y(T)\rangle.
-\end{split}
-\end{equation*} %]]></script>
-
-<p>Deriving with respect to the three variables $\left(u,y,p\right)$, we obtain the optimality system:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
-\hat{y}'+A\hat{y}=B\hat{u} & \left(\Omega \times \left(0,T\right)\right)\\
--\hat{p}'+A^*\hat{p}\in\gamma\left(\hat{y}-z\right)+\alpha_s \ \partial \norm{\cdot}_{1,T} \left(\hat{y}\right) & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right),
-\end{cases}
-\end{equation*} %]]></script>
-
-<p>where the relation between the optimal control and the dual state is given by</p>
-
-<script type="math/tex; mode=display">\begin{equation*}
-\hat{u} = -\frac{1}{\beta}B^*\hat{p}.
-\end{equation*}</script>
-
-<p>The adjoint equation is equivalent to</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{split}
-\hat{y}&=\left(\gamma I+\alpha_s \ \partial \norm{\cdot}_{1,T} \right)^{-1}\left(-\hat{p}'+A^*\hat{p}+\gamma z\right)\\
-&=shrink(-\hat{p}'+A^*\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}).
-\end{split}
-\end{equation*} %]]></script>
-
-<p>Finally,</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
-\begin{cases}
-\hat{y}'+A\hat{y}=-\frac{1}{\beta}B B^*\hat{p} & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=shrink(-\hat{p}'+A^*\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}) & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right),
-\end{cases}
-\end{equation*} %]]></script>
-
-<h4>Numerical algorithm</h4>
-<p>In order to compute a numerical solution of problem $\left(\mathcal{P}_s\right)$, after a discretization by finite differences, we use a grad-prox splitting on the following Augmented Energy:</p>
-
-<script type="math/tex; mode=display">\begin{equation*}
-\mathcal{L}_{\lambda}\left(u,y\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T}+ \frac{\gamma}{2}\norm{Lu-z}_{T}^2+\frac{\delta}{2\lambda}\norm{Lu-y}_{T}^2.
-\end{equation*}</script>
-
-<p>Then,</p>
-<ul>
-	<li> Gradient step:</li>
-$$
-	\begin{equation*}
-	\begin{split}
-	u_{k+1} &amp; = u_k-\lambda_k \nabla_u \left[\frac{\beta}{2}\norm{u}^2_{T}+ \frac{\gamma}{2}\norm{Lu-z}_{T}^2+\frac{\delta}{2\lambda}\norm{Lu-y}_{T}^2 \right]\left(u_k\right) \\
-	&amp; = u_k-\lambda_k \left[\beta u_k+\gamma L^*\left(Lu_k-z\right)+\frac{\delta}{\lambda_k}L^*\left(Lu_k-y_k\right)\right]\\
-	&amp; = \left(1-\beta\lambda_k\right)u_k - B^*p_k,
-	\end{split}
-	\end{equation*}
-$$
-
-where
-
-$$
-	\begin{equation*}
-	\begin{cases}
-	y_{u_k}'+Ay_{u_k}=Bu_k &amp; \left(\Omega \times \left(0,T\right)\right)\\
-	y_{u_k}=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
-	y_{u_k}(0)=0 &amp; \left(\Omega\right)
-	\end{cases}
-	\end{equation*}
-$$
-
-and
-
-$$
-	\begin{equation*}
-	\begin{cases}
-	-p_k'+A^* p_k =\left(\gamma \lambda_k + \delta\right)y_{u_k}-\gamma \lambda_k z - \delta y_k &amp; \left(\Omega \times \left(0,T\right)\right)\\
-	p_k=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
-	p_k(T)=0 &amp; \left(\Omega\right).
-	\end{cases}
-	\end{equation*}
-$$
-
-<li> Proximal-point step:</li>
-
-$$
-	\begin{equation*}
-	\begin{split}
-	y_{k+1}&amp; =argmin_{y\in L^2_T} \left\{\alpha_s \norm{y}_{1,T} + \frac{\delta}{2\lambda_k}\norm{y-Lu_{k+1}}_T^2+\frac{1}{2\lambda_k}\norm{y-y_k}_{T}^2\right\}\\
-	&amp; = shrink(\tilde{y}_k,\tilde{\lambda}_k),
-	\end{split}
-	\end{equation*}
-$$
-
-where we defined
-$$
-	\begin{eqnarray*}
-	\tilde{y}_k &amp; = &amp; \frac{y_k+\delta L u_{k+1}}{1+\delta};\\
-	\tilde{\lambda}_k &amp; = &amp; \frac{\alpha_s \lambda_k}{1+\delta}.
-	\end{eqnarray*}
-$$
-<ul>
-<strong>Remark: </strong>Another possibility is to consider
-$$
-	\begin{equation*}
-	\mathcal{L}_{\lambda}\left(u,y\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T}+ \frac{\gamma}{2}\norm{y-z}_{T}^2+\frac{\delta}{2\lambda}\norm{Lu-y}_{T}^2.
-	\end{equation*}
-$$
-
-<h3>Computational experiments</h3>
-In the following, we present the setting for the numerical experiments.
-<ul>
-	<li> Spacial domain: $\Omega=\left(0,1\right)$;</li>
-	<li> Time interval: $\left[0,T\right]$, with $T=1$;</li>
-	<li> Weight-parameters: $\alpha_c=[0, 0.01]$, $\alpha_s=[0, 0.65]$, $\beta=0.0001$ and $\gamma=1$;</li>
-	<li> Trajectory target: $$z(x)=\mathcal{I}_{\left[x_a,x_b\right]},$$ where $x_a=1.7/3$, $x_b=3.5/4$;</li>
-	<li> Control operator: for $x_1=1/7$ and $x_2=4/5$,
-$$B=\mathcal{I}_{\left[x_1,x_2\right]};$$
-    </li>
-
-	<li> $A$ is the finite difference discretization of $-\Delta$;</li>
-	<li> Numerical grid: $N_x=300$ in space, $N_t=100$ in time.</li>
-</ul>
-<h3>Stationary solutions</h3>
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/uy_alphazero_staz.jpg" alt="Figure 1" width="600" /> Figure 1: $\alpha_c=\alpha_s=0$.  
-
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/uy_alpha_staz.jpg" alt="Figure 2" width="600" /> Figure 2: $\alpha_c=0.01$, $\alpha_s=0$.  
-
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/uy_alpha_staz-1.jpg" alt="Figure 3" width="600" /> Figure 3: $\alpha_c=0$, $\alpha_s=0.65$.
-
-<h3>Evolutionary problem</h3>  
-<h4>Optimal control</h4>
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/u_alphazero_ev.jpg" alt="Figure 4 TOP" width="600" />Figure 4a: Optimal control for $\alpha_c=\alpha_s=0$. In red, the controllable subdomain; in blue, the stationary optimal controls.
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/u_alpha_tot.jpg" alt="Figure 4 MIDDLE" width="600" />Figure 4b: Optimal control for $\alpha_c=0.01$, $\alpha_s=0$. In red, the controllable subdomain; in blue, the stationary optimal controls.
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/u_alpha_tot-1.jpg" alt="Figure 4 BOTTOM" width="600" /> Figure 4c: Optimal control for $\alpha_c=0$, $\alpha_s=0.65$. In red, the controllable subdomain; in blue, the stationary optimal controls.
-<h4>Optimal state</h4>
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/y_alphazero_ev.jpg" alt="Figure 5 TOP" width="600" />Figure 5a: Optimal state for $\alpha_c=\alpha_s=0$ . In red, the target $z$; in blue, the stationary optimal states.
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/y_alpha_tot.jpg" alt="Figure 5 MIDDLE" width="600" />Figure 5b: Optimal state for $\alpha_c=0.01$, $\alpha_s=0$. In red, the target $z$; in blue, the stationary optimal states.
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/y_alpha_tot-1.jpg" alt="Figure 5 BOTTOM" width="600" /> Figure 5c: Optimal state for $\alpha_c=0$, $\alpha_s=0.65$. In red, the target $z$; in blue, the stationary optimal states.
-<h4>Optimal adjoint</h4>
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alphazero_ev.jpg" alt="Figure 6 TOP" width="600" />Figure 6a: Optimal adjoint for $\alpha_c=\alpha_s=0$.
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alpha_tot.jpg" alt="Figure 6 MIDDLE" width="600" />Figure 6b: Optimal adjoint for $\alpha_c=0.01$, $\alpha_s=0$.
-<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alpha_tot-1.jpg" alt="Figure 6 BOTTOM" width="600" /> Figure 6c: Optimal adjoint for $\alpha_c=0$, $\alpha_s=0.65$.
-
-<h4>Bibliography</h4>
-<strong>[1]</strong> Peypouquet, J. <a href="http://jpeypou.mat.utfsm.cl/wp-content/uploads/2014/05/Convex-Optimization.pdf"><em>Convex optimization in normed spaces: theory, methods and examples. With a foreword by Hedy Attouch.</em></a> Springer Briefs in Optimization. Springer, Cham, 2015. xiv+124 pp.
-</ul></ul>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;We design a LQR controller for stabilyzing the fractional reaction diffusion equation&lt;/p&gt;
-</code></pre></div></div>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases} y_t + (-d_x^2)^s y-\delta y = u\chi_\omega, & (x,t) \in(-L,L)\times(0,T) \\ y = 0, & (x,t)\in [\mathbb{R}\setminus(-L,L)]\times(0,T) \\ y(x,0) = y_0(x), & x\in(-L,L), \end{cases} %]]></script>
-
-<p>where $\delta&gt;0$ is a given constant, $\omega = (a,b)\subset(-L,L)$ and $(-d_x^2)^s$, $s\in(0,1)$ denotes the one-dimensional fractional Laplacian defined as</p>
-
-<script type="math/tex; mode=display">(-d_x^2)^s y(x) = c(s) P.V. \int_{\mathbb{R}} \frac{y(x)-y(z)}{\vert x-z\vert^{1+2s}}dz,</script>
-
-<p>with $c(s)$ an explicit normalization constant.</p>
-
-<p>When considering this equation without the action of the the control $u$, we know that, depending on the value of $\delta$, the corresponding dynamics may become unstable. This is due to the fact that the eignenvalues of the associated elliptic problem are given by $\mu_k=c-\lambda_k$ ($\lambda_k$ being the eigenvalues of the fractional Laplacian on $(-L,L)$ with zero Dirichlet boundary conditions), and they are positive if $c&gt;\lambda_1$ (since, in addition, we know that $\lambda_1&lt;\lambda_k$ for all $K$). We are then intersted in designing a LQR control which is able to stabilyze this solution and prevent its blow-up.</p>
-
-<p>The computation of the LQR control is carried out by means of the following procedure:</p>
-
-<h2 id="step-1-discretization-of-the-equation">STEP 1. Discretization of the equation</h2>
-
-<p>We start by discretizing our original system on a uniform mesh $x_i$, $i=1,\ldots,N$, thus obtaining a N-dimensional system of the type</p>
-
-<script type="math/tex; mode=display">\begin{cases} \dot{y} = Ay+Bu \\ y(0) = y_0 \end{cases}</script>
-
-<p>where:</p>
-
-<ul>
-  <li>
-    <p>with some abuse of notation, we denoted $y\in\mathbb{R}^N$ as the   $N$-dimensional vector whose entries $y_i=y(x_i)$, $i=1,\ldots,N$ are   the evaluation of the function $y$ on the points of the mesh;</p>
-  </li>
-  <li>
-    <p>the matrix $A$ is a discretization of the operator $-(-d_x^2)^s + I$,   $I$ denoting the identity;</p>
-  </li>
-  <li>
-    <p>the matrix $B$ defines the action of the control.</p>
-  </li>
-</ul>
-
-<p>The computation of the matrix requires the discretization of the fractional Laplacian $(-d_x^2)^s$. This is done by employing the function “fl_rigidity”, which implements a finite elements method on a uniform mesh discretizing the space interval $(-L,L)$ (complete details on this method may be found in [1]).</p>
-
-<p>The function “fl_rigidity” works by requiring 3 input parameters:</p>
-
-<ul>
-  <li>
-    <p>s: the order of the fractional Laplacian, which can be any real value      in the interval $(0,1)$;</p>
-  </li>
-  <li>
-    <p>L: any real value, defining the extrema of the space interval $(-L,L)$;</p>
-  </li>
-  <li>
-    <p>N: the number of discretization points in the mesh employed.</p>
-  </li>
-</ul>
-
-<p>The outputs are:</p>
-
-<ul>
-  <li>
-    <p>x: the vector containing the mesh;</p>
-  </li>
-  <li>
-    <p>A: the matrix discretizing the fractional Laplacian.</p>
-  </li>
-</ul>
-
-<p>The matrix B, instead, is constructed by employing the function “construction_matrix_B”, which takes in input</p>
-
-<ul>
-  <li>
-    <p>the vector $x$ containing the mesh;</p>
-  </li>
-  <li>
-    <p>the number of discretization points $N$;</p>
-  </li>
-  <li>
-    <p>the characteristic function of the sub-interval $\omega$.</p>
-  </li>
-</ul>
-
-<h2 id="step-2-definition-of-the-cost-functional-and-computation-of-the-control">STEP 2. Definition of the cost functional and computation of the control</h2>
-
-<p>Once we have the semi-discretization of our original problem, the control we are looking for is computed by minimizing the following cost functional</p>
-
-<script type="math/tex; mode=display">J_{\infty} = \int_{0}^{+\infty} \Big(y^TQy + u^TRu\Big)dt,</script>
-
-<p>where $Q\geq 0$ and $R&gt;0$ are given matrices. Moreover, we know that this control is given in a feedback form by $u^*=-R^{-1}B^TPy$, where $P$ is the solution of the algebraic Riccati equation</p>
-
-<script type="math/tex; mode=display">PA + A^TP-PBB^TP+Q = 0.</script>
-
-<h2 id="implementation">Implementation</h2>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
-<span class="nb">clc</span>
-</code></pre></div></div>
-
-<p>We start by defining the parameter $s\in(0,1)$ (order of the fractional Laplacian), the size of the interval $(-L,L)$, the constant $\delta&gt; \lambda_1$ and the number $N$ of discretization points in our mesh.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
-<span class="n">L</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">pi</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="mf">0.1</span><span class="p">;</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>and we compute the corresponding approximation of the fractional Laplacian</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">FL</span><span class="p">]</span> <span class="o">=</span> <span class="n">fl_rigidity</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>We then use it for building the matrix $A$ describing the dynamics</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
-<span class="n">A</span> <span class="o">=</span> <span class="o">-</span><span class="n">FL</span><span class="o">+</span><span class="n">D</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Secondly, we use the function “construction_matrix_B” for computing the control operator $B$ on the interval $\omega=(-0.3,0.5)$</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">matrix_B</span> <span class="o">=</span>  <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">construction_matrix_B</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">matrix_B</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>Out of the matrices $A$ and $B$, we solve the algebraic Riccati equation by employing the specific function from the control systems toolbox of Matlab. For simplicity, we choose both $R$ and $Q$ as the identity, but other choices are possible in order to improve the efficiency of the method.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
-<span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
-<span class="p">[</span><span class="n">P</span><span class="p">,</span><span class="n">cleig</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">));</span>
-</code></pre></div></div>
-
-<p>The output matrix $K=-R^{-1}B^TP$ is used for defining the action of the control and include it in our system</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
-<span class="n">eq_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>Finally, we choose an initial datum</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y0</span> <span class="o">=</span> <span class="nb">cos</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>and we solve our equation with and without control employing the “ode45” function of Matlab. For the equation without control we choose a relatively short time horizon, since we know that the unstable dynamics will rapidly diverge. For the equation with control, instead, we choose a longer time horizon in order to have enough time for stabilyzing the system.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T1</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-<span class="n">T2</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
-<span class="n">Nt</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
-<span class="n">tspan1</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T1</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
-<span class="n">tspan2</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T2</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
-<span class="n">eq_free</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
-<span class="p">[</span><span class="n">time1</span><span class="p">,</span> <span class="n">sol_free</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">eq_free</span><span class="p">,</span><span class="n">tspan1</span><span class="p">,</span><span class="n">y0</span><span class="p">);</span>
-<span class="p">[</span><span class="n">time2</span><span class="p">,</span> <span class="n">sol_ctr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">eq_ctr</span><span class="p">,</span><span class="n">tspan2</span><span class="p">,</span><span class="n">y0</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>We then plot our results and compare them. Firstly, the free dynamics.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time1</span><span class="p">,</span><span class="n">sol_free</span><span class="p">)</span>
-<span class="nb">colormap</span> <span class="nb">jet</span>
-<span class="n">msol_free</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">sol_free</span><span class="p">)));</span>
-<span class="n">Msol_free</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sol_free</span><span class="p">)));</span>
-<span class="nb">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span> <span class="n">L</span><span class="p">])</span>
-<span class="nb">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T1</span><span class="p">])</span>
-<span class="nb">zticks</span><span class="p">([</span><span class="n">msol_free</span> <span class="n">Msol_free</span><span class="p">])</span>
-<span class="nb">view</span><span class="p">(</span><span class="mi">135</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
-<span class="nb">title</span><span class="p">(</span><span class="s1">'Free unstable dynamics'</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_01.png" alt="" /></p>
-
-<p>We clearly see the growth of the solution, already in the short time horizon [0,4]. When introducing the LQR control, instead, the problem is corrected and the equation is stabilyzed in time $T_2$</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time2</span><span class="p">,</span><span class="n">sol_ctr</span><span class="p">)</span>
-<span class="nb">colormap</span> <span class="nb">jet</span>
-<span class="n">msol_ctr</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">sol_ctr</span><span class="p">)));</span>
-<span class="n">Msol_ctr</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sol_ctr</span><span class="p">)));</span>
-<span class="nb">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="n">L</span><span class="p">])</span>
-<span class="nb">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T2</span><span class="p">])</span>
-<span class="nb">zticks</span><span class="p">([</span><span class="n">msol_ctr</span> <span class="n">Msol_ctr</span><span class="p">])</span>
-<span class="nb">view</span><span class="p">(</span><span class="mi">135</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
-<span class="nb">title</span><span class="p">(</span><span class="s1">'Controlled dynamics'</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_02.png" alt="" /></p>
-
-<h2 id="references">References</h2>
-
-<p>[1] U. Biccari and V. Hernandez-Santamaria, “Controllability of a one-dimensional fractional heat equation: theoretical and nuerical aspects”, IMA J. Math. Control I. (2018).</p>
-
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;We consider a population of N coupled-phase oscillators, $\theta_i(t)$, $i=1,\ldots,N$ and we want to compute a control such that in time $T$ we reach the state $\theta_i(T)=\ldots =\theta_N(T)=:\bar{\theta}$ in which all the oscillators are sincronized.&lt;/p&gt;
 </code></pre></div></div>
 
@@ -5103,202 +4394,6 @@ poissonAdjointFoam
   <li>F. Tröltzsch. <em>Optimal control of partial differential equations: theory, methods, and applications</em>. American Mathematical Soc., 2010.</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;This is a set of Matlab functions to interpolate scattered data with Radial Basis Functions (RBF).&lt;/p&gt;
-</code></pre></div></div>
-
-<p align="center">
-  <img src="https://latex.codecogs.com/gif.latex?F%20%5Cleft%28%20%5Cmathbf%7Bx%7D%20%5Cright%29%20%3D%20%5Csum_%7Bj%3D1%7D%5EN%20%5Cgamma_j%20%5Cvarphi%20%5Cleft%28%20%5C%7C%20%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bx%7D_%7Bs%2C%20j%7D%20%5C%7C_%7B%5Cmathbb%7BR%7D%5Ed%7D%20%5Cright%29%20&plus;%20p%20%5Cleft%28%20%5Cmathbf%7Bx%7D%20%5Cright%29" />
-</p>
-
-<h2 id="getting-started">Getting Started</h2>
-
-<pre><code class="language-Matlab">y = RBFinterp(xs, ys, x, RBFtype, R)
-</code></pre>
-<p>interpolates to find y, the values of the function y=f(x) at the points x.</p>
-
-<p>Xs must be a matrix of size [N,Dx], with N the number of data points and Dx the dimension of the points in xs and x.</p>
-
-<p>Ys must be a matrix of size [N,Dy], with N the number of known values at points in Xs, and Dy the dimension of the y values.</p>
-
-<p>X must be a matrix of size [M,Dx], with M the number of query points.</p>
-
-<p>RBFtype specifies the radial basis functions (RBF) to be used.</p>
-
-<ul>
-  <li>The available global support RBFs are:
-    <ul>
-      <li>‘R1’    - linear spline</li>
-      <li>‘R3’    - cubic spline</li>
-      <li>‘TPS2’  - thin plate spline</li>
-      <li>‘Q’     - quadric</li>
-      <li>‘MQ’    - multiquadric</li>
-      <li>‘IMQ’   - inverse multiquadric</li>
-      <li>‘IQ’    - inverse quadric</li>
-      <li>‘GS’    - Gauss</li>
-    </ul>
-  </li>
-</ul>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">RBF name</th>
-      <th style="text-align: center">Abbreviation</th>
-      <th style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cvarphi%20%5Cleft%28%20r%20%5Cright%29" /></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">Linear spline</td>
-      <td style="text-align: center">R1</td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cepsilon%20r" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Cubic splie</td>
-      <td style="text-align: center">R3</td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%5E3" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Thin plate spline</td>
-      <td style="text-align: center">TPS2</td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%5E2%20%5Clog%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%24" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Quadric</td>
-      <td style="text-align: center">Q</td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?1%20&plus;%20%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%5E2" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Multiquadric</td>
-      <td style="text-align: center">MQ</td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Csqrt%7B1%20&plus;%20%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%20%5E2%7D" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Inverse multiquadric</td>
-      <td style="text-align: center">IMQ</td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7B%5Csqrt%7B1%20&plus;%20%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%20%5E2%7D%7D" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Inverse quadric</td>
-      <td style="text-align: center">IQ</td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7B%201%20&plus;%20%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%20%5E2%20%7D" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Gauss</td>
-      <td style="text-align: center">GS</td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?e%5E%7B-%5Cleft%28%5Cepsilon%20r%20%5Cright%29%5E2%7D" /></td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li>The available compact support RBFs are (see Wendland H., Konstruktion und Untersuchung radialer Basisfunktionen mit kompaktem Träger. PhD  thesis, Göttingen, Georg-August-Universität zu Göttingen, Diss, 1996):
-    <ul>
-      <li>‘CP_C0’</li>
-      <li>‘CP_C2’</li>
-      <li>‘CP_C4’</li>
-      <li>‘CP_C6’</li>
-      <li>‘CTPS_C0’</li>
-      <li>‘CTPS_C1’</li>
-      <li>‘CTPS_C2a’</li>
-      <li>‘CTPS_C2b’</li>
-    </ul>
-  </li>
-</ul>
-
-<p>Compact support functions have the form</p>
-
-<p align="center">
-	<img src="https://latex.codecogs.com/gif.latex?%5Cvarphi%20%5Cleft%28%20%5Cxi%20%3D%20%5Cfrac%7Br%7D%7BR%7D%20%5Cright%29%20%3D%20%5Cbegin%7Bcases%7D%20f%20%5Cleft%28%20%5Cxi%20%5Cright%29%2C%20%26%200%20%5Cleq%20%5Cxi%20%5Cleq%201%20%5C%5C%200%2C%20%26%20%5Cxi%20%3E%201%20%5Cend%7Bcases%7D" />
-</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">RBF name</th>
-      <th style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cvarphi%20%5Cleft%28%20%5Cxi%20%5Cright%29" /></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCP%20%7D%20%5Cmathcal%7BC%7D%5E0" /></td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E2" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCP%20%7D%20%5Cmathcal%7BC%7D%5E2" /></td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E4%20%5Cleft%28%204%20%5Cxi%20&plus;%201%20%5Cright%29" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCP%20%7D%20%5Cmathcal%7BC%7D%5E4" /></td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E6%20%5Cleft%28%20%5Cfrac%7B35%7D%7B3%7D%20%5Cxi%5E2%20&plus;%206%20%5Cxi%20&plus;%201%20%5Cright%29" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCP%20%7D%20%5Cmathcal%7BC%7D%5E6" /></td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E8%20%5Cleft%28%2032%20%5Cxi%5E3%20&plus;%2025%20%5Cxi%5E2%20&plus;%208%20%5Cxi%20&plus;%201%20%5Cright%29" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCTPS%20%7D%20%5Cmathcal%7BC%7D%5E0" /></td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E5" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCTPS%20%7D%20%5Cmathcal%7BC%7D%5E1" /></td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?1%20&plus;%20%5Cfrac%7B80%7D%7B3%7D%20%5Cxi%5E2%20-%2040%20%5Cxi%5E3%20&plus;%2015%20%5Cxi%5E4%20-%20%5Cfrac%7B8%7D%7B3%7D%20%5Cxi%5E5%20&plus;%2020%20%5Cxi%5E2%20%5Clog%20%5Cxi" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCTPS%20%7D%20%5Cmathcal%7BC%7D%5E2_a" /></td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?1%20-%2030%20%5Cxi%5E2%20-%2010%20%5Cxi%5E3%20&plus;%2045%20%5Cxi%5E4%20-%206%20%5Cxi%5E5%20-%2060%20%5Cxi%5E3%20%5Clog%20%5Cxi" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCTPS%20%7D%20%5Cmathcal%7BC%7D%5E2_b" /></td>
-      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?1%20-%2020%20%5Cxi%5E2%20&plus;%2080%20%5Cxi%5E3%20-%2045%20%5Cxi%5E4%20-%2016%20%5Cxi%5E5%20&plus;%2060%20%5Cxi%5E4%20%5Clog%20%5Cxi" /></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>R is either the support radius for the compact support RBFs or a parameter to make the distance values dimensionless for the global support RBFs.</p>
-
-<pre><code class="language-Matlab">[fPar, M] = RBFparam(xs, ys, RBFtype, R)
-</code></pre>
-
-<p>returns the weights in the RBF summation and the polynomial coefficients in a column vector fPar by solving a linear system</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7BM%7D%20%26%20%5Cmathbf%7BP%7D_s%20%5C%5C%20%5Cmathbf%7BP%7D_s%5ET%20%26%20%5Cmathbf%7B0%7D%20%5Cend%7Bpmatrix%7D%20%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7B%5Cgamma%7D%20%5C%5C%20%5Cmathbf%7B%5Cbeta%7D%20%5Cend%7Bpmatrix%7D%20%3D%20%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7Bf%7D_s%20%5C%5C%20%5Cmathbf%7B0%7D%20%5Cend%7Bpmatrix%7D" />
-</p>
-
-<pre><code class="language-Matlab">[y] = RBFeval(xs, x, fPar, RBFtype, R)
-</code></pre>
-
-<p>returns the values of the interpolation weighted function at points x by performing the matrix-vector product</p>
-
-<p align="center">
-    <img src="https://latex.codecogs.com/gif.latex?%5Cmathbf%7Bf%7D%20%3D%20%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7B%5Chat%7BM%7D%7D%20%26%20%5Cmathbf%7B%5Chat%7BP%7D%7D%20%5Cend%7Bpmatrix%7D%20%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7B%5Cgamma%7D%20%5C%5C%20%5Cmathbf%7B%5Cbeta%7D%20%5Cend%7Bpmatrix%7D" />
-</p>
-
-<h2 id="running-the-example">Running the example</h2>
-
-<p>An example case can be run just by typing in the Matlab command line</p>
-
-<pre><code class="language-Matlab">test
-</code></pre>
-
-<p align="center">
-   <img src="https://raw.githubusercontent.com/ChairOfComputationalMathematics/RBF-interp/master/test.png" />
-</p>
-
-<p align="center">
-   <img src="https://raw.githubusercontent.com/ChairOfComputationalMathematics/RBF-interp/master/test2.png" />
-</p>
-
-<h2 id="references">References</h2>
-
-<ul>
-  <li>Beckert, Armin and Wendland, Holger. Multivariate interpolation for fluid-structure-interaction problems using radial basis functions. <em>Aerospace Science and Technology</em>, 5 (2), p. 125-134, 2001.</li>
-  <li>Wendland, Holger. <em>Konstruktion und Untersuchung radialer Basisfunktionen mit kompaktem Träger}</em>. PhD thesis, Göttingen, Georg-August-Universität zu Göttingen, Diss, 1996.</li>
-  <li>De Boer, A and Van der Schoot, MS and Bijl, Hester. Mesh deformation based on radial basis function interpolation. <em>Computers &amp; structures</em>, 85 (11-14), p. 784-795, 2007.</li>
-  <li>Biancolini, Marco Evangelos. <em>Fast Radial Basis Functions for Engineering Applications</em>. Springer, 2018.</li>
-</ul>
-
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE).&lt;/p&gt;
 </code></pre></div></div>
 
@@ -6326,202 +5421,6 @@ Your browser does not support the video tag.
 <img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol5.jpg" alt="figure5" class="post-photo-graphic" /><br /><i>Figure 5</i>
 <img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol6.jpg" alt="figure6" class="post-photo-graphic" /><br /><i>Figure 6</i></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h5&gt;1. Numerical experiments&lt;/h5&gt;
-</code></pre></div></div>
-
-<p>Consider the one dimensional linear Vlasov-Fokker-Planck (VPFP) as following.</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-\begin{cases}
-	\delta_tf + \sigma_1v\delta_x f - \frac{\sigma_2}{\epsilon} \delta_x\phi\delta_v f =\frac{\sigma_3}{\epsilon}\delta_v\ (v f +\delta_vf\ ),  t>0, x\in[0,2\pi], v\in \mathbb{R}, \label{eq: VPFP}\\
-	f(0, x,v,z) = f_0(x,v,z),  z\in [a,b].
-	\end{cases}
-\end{equation}</script>
-
-<p>In the numerical experiments, <strong>we compare the results from the greedy algorithm with the results from the polynomial interpolation of the quadrature points.</strong> we set $\epsilon = 1, T = 0.5$ for all examples. More specifically, we set</p>
-
-<script type="math/tex; mode=display">\text{error} = \sum_{i=1}^{50}\int{ {( \hat{f}(T, x, v, z_i) - f(T, x,v,z_i) )}^2} dxdv \hat{f}(T, x,v,z_i)</script>
-
-<p>is the approximation solution obtained from either method, $f(T, x,v,z_i)$ is the exact solution. $z_i$ is uniformly chosen from $[a,b]$. ${\textbf{Dimension}}$ refers to the number of snap shots.</p>
-
-<p>Observe Figure 1-6, we found that the Greedy algorithm converges to the solution faster than the other method. Especially, when there is discontinuity,  the polynomial interpolation doesn’t converge as dimension increases, however, the Greedy algorithm still converges and almost keeps the same convergent rate.</p>
-
-<p><strong>Algorithm 1.1. The algorithm for the polynomial interpolation:</strong></p>
-
-<p>For <strong>Dimension</strong> $= n$, ${\alpha_i}_{i=1}^n$ is the n roots of $n$-th order Legendre polynomial, and let</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-	z_i ^\ast= \frac{b-a}{2}\alpha_i + \frac{a+b}{2},  1\leq i \leq n.\label{}
-\end{equation}</script>
-
-<script type="math/tex; mode=display">\begin{equation}
-	f_i = f(T, x,v, z_i ^\ast) \text{ be the exact solution at time T}.\label{}
-\end{equation}</script>
-
-<p>Then by Lagrange interpolation,</p>
-
-<script type="math/tex; mode=display">\begin{align}
-	\hat{f}(T,x,v,z) = \sum_{i=1}^n l_i(z)f_i, l_i = \prod_{j\neq i} \frac{z-z_j ^\ast}{z_i ^\ast - z_j ^\ast}
-\end{align}</script>
-
-<h3>1.1 Linear VFP with parametric initial data</h3>
-<p>In the first experiment, we consider the case where the parameter $z\in[1,5]$ only involved in the initial data,
-<script type="math/tex">\begin{equation}
-\sigma_1 = \sigma_2 = \sigma_3 = 1, \delta _x\phi = \cos(x),   
-\end{equation}</script></p>
-
-<p>Figure 1:</p>
-
-<script type="math/tex; mode=display">\begin{equation} f_0(x,v,z) = \frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z}{10} |^2}{2} ).\end{equation}</script>
-
-<p>Figure 2:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation} f_0(x,v,z) =\left\{
-\begin{array}{rl}
-\frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z}{10} |^2}{2} ), z<3\\
-\frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z+1}{10} |^2}{2} ), z\geq3.
-\end{array}
-\right.\end{equation} %]]></script>
-
-<p><strong>Algorithm 1.2. The algorithm for PDE with only parameter in initial data:</strong>
-<strong>Offline:</strong></p>
-
-<p>Step 1: Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 100$ in this case.</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-z_1^\ast = \text{argmax}_{z\in N} || f_0(x,v,z) || ^2,
-\end{equation}</script>
-
-<p>where $ \vert f \vert^2 = \int f^2 dxdv$.</p>
-
-<p>Step 2: After obtaining $z_i^\ast, f_i = f_0(x,v,z_i^\ast)$, $i =1, \dots, n-1$,</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-z_n^\ast = \text{argmax}_{z\in N\backslash\{z_i^\ast \}_{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z) ||^2,
-\end{equation}</script>
-
-<p>where $P^{n-1} f_0$ is the projection onto the subspace spanned by $f_1, \dots, f_{n-1}$</p>
-
-<p>Step 3: Stops when</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-\max_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z)||^2 \leq \epsilon
-\end{equation}</script>
-
-<p><strong>Online:</strong> After we obtained the snap shots ${z_i^\ast}_{i=1}^n$,</p>
-
-<p>Step 1: Orthogonalize ${f_i}_{i=1}^n$,
-         and calculate the corresponding</p>
-
-<script type="math/tex; mode=display">{f^T_i = f(T,x,v,z_i)}_{i=1}^n</script>
-
-<p>Step 2: for any given $z$, one can approximate $f(T, x,v,z)$ by</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-a_i = \langle f_0(x,v,z), f_i\rangle,  \hat{f}(x,v, z) = \sum_{i = 1}^na_if^T_i.
-\end{equation}</script>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq1_cts.jpg" alt="figure1" class="size-full wp-image-01" /><i align="aligncenter">Figure 1: Continuous initial data</i></p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq1_discts.jpg" alt="figure2" class="size-full wp-image-02" /><i align="aligncenter">Figure 2: Discontinuous initial data</i></p>
-
-<h3>1.2 Linear parametric VFP with deterministic initial data</h3>
-<p>In the second experiment, we consider the case where the parameter $z\in[1,5]$ only involved in the PDE,</p>
-
-<script type="math/tex; mode=display">\begin{equation}
- f_0(x,v,z) = \frac{1}{\sqrt{2\pi}} ( 2+\sin(x) ) \text{exp} ( -\frac{|v+\cos(x)|^2}{2} )
-\end{equation}</script>
-
-<p>Figure 3:</p>
-
-<script type="math/tex; mode=display">\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi = \cos(x)+\frac{z}{10};\end{equation}</script>
-
-<p>Figure 4:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi =\left\{
-\begin{array}{rl}
-& \cos(x)+\frac{z}{10}, z<3\\
-&\cos(x)+\frac{z+1}{10}, z\geq3
-\end{array}
-\right.
-\end{equation} %]]></script>
-
-<p><strong>Algorithm 1.3. The algorithm for PDE with only parameters in PDE:</strong>
-<strong>Offline:</strong> Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 100$ in this case.</p>
-
-<p>Step 1: choose</p>
-
-<script type="math/tex; mode=display">z_1^\ast = argmax_{z \in N} || ( \sigma_1,\sigma_2,\sigma_3 )||^2</script>
-
-<p>Step 2: After obtaining $z_i^\ast, f_i = f(T,x,v,z_i^\ast)$, $i =1, \dots, n-1$,</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-z_n^\ast = argmax_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1}} [ \min_{\hat{f} = \sum a_if_i,  \sum a_i = 1}
-|| \delta_t\hat{f} + \underbrace{ \sigma_1(z)v\delta_x \hat{f} - \frac{\sigma_2(z)}{\epsilon} \delta_x\phi\delta_v \hat{f} - \frac{\sigma_3(z)}{\epsilon}\delta_v ( v \hat{f} + \delta_v\hat{f} ) }_{A(z)\hat{f} } ||^2 ],
-\label{linear z_star}
-\end{equation}</script>
-
-<p>Step 3: Stops when the above maximum residual smaller than $\epsilon$.</p>
-
-<p><strong>Online:</strong> After we obtained the snap shots ${z_i}_{i=1}^n$,
-and the corresponding $f_i = f(T, x,v,z_i)$,</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-\hat{f} = argmin_{\hat{f} = \sum a_if_i,  \sum a_i = 1} || \delta_t\hat{f} + \underbrace{\sigma_1(z)v\delta_x \hat{f} - \frac{\sigma_2(z)}{\epsilon} \delta_x\phi\delta_v \hat{f} - \frac{\sigma_3(z)}{\epsilon}\delta_v (v \hat{f} +\delta_v\hat{f} ) }_{A(z)\hat{f} } ||^2
-\end{equation}</script>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_cts.jpg" alt="figure3" class="size-full wp-image-03" /><i align="aligncenter">Figure 3: Continuous parameter in PDE</i></p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_discts.jpg" alt="figure4" class="size-full wp-image-04" /><i align="aligncenter">Figure 4: Discontinuous parameter in PDE</i></p>
-
-<h3>1.3 Linear parametric VFP with parametric initial data</h3>
-<p>In the third experiment, we consider the case where the parameter $z\in[1,5]$ involved in both the initial data and the PDE</p>
-
-<script type="math/tex; mode=display">\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, f_0(x,v,z) = \frac{1}{\sqrt{2\pi}}(2+\frac{\sin(x)}{z}) \text{exp}(-\frac{|v+\delta_x\phi|^2}{2})
-\end{equation}</script>
-
-<p>Figure 5:</p>
-
-<script type="math/tex; mode=display">\begin{equation}\delta_x\phi = \cos(x) + \frac{z}{10}, \text{for }t\geq 0,\end{equation}</script>
-
-<p>Figure 6:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\delta_x\phi =\left\{\begin{array}{rl}& \cos(x)+\frac{z}{10}, z<3\\&\cos(x)+\frac{z+1}{10}, z\geq3\end{array}\right. \text{for }t\geq 0.\end{equation} %]]></script>
-
-<p><strong>Algorithm 1.4. The algorithm for PDE with parameters in PDE and initial data:</strong></p>
-
-<p><strong>Offline:</strong> Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 10000$ in this case.</p>
-
-<p>Step 1: Using Algorithm 1.4 to obtain 50 snap shots out of $N$
-        to form a new set $N^\ast$.
-Step 2: Using Algorithm 1.3 to get snap shot ${ z_i^\ast }_{i=1}^n$</p>
-
-<p><strong>Online:</strong> Same as Algorithm 1.3.</p>
-
-<p><strong>Remark 1.5.</strong> In the experiments, the exact solution $f(T,x,v,z)$
-refers to the numerical solution to VFP, that is, $f(T,x,v,z)$ is a
-$N_x\times N_v$ dimensional vector obtained by the following scheme</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-\frac{f^{n+1}_{i,j} - f^n_{i,j}}{\delta_t} +\sigma_1 (v\delta_xf)^n_{i,j} = \frac{\sigma_3}{\epsilon}P(f^{n+1}_{i,j})
-\end{equation}</script>
-
-<p>where $P(f)$ is the discretization of
-$\delta_v (M\delta_v (\frac{f}{M}))$,</p>
-
-<script type="math/tex; mode=display">M = \frac{1}{\sqrt{2\pi}}e^{-\frac{|v+\frac{\sigma_2}{\sigma_3}\delta_x\phi|^2}{2}}</script>
-
-<p><strong>Remark 1.6.</strong> For the matlab coding, the algorithm for the examples is in the “graph.m” file of the folder “eq1”, “eq2”, “eq3” respectively.  You can change the coefficients in “sig_1”, “sig_2”, “sig_3”, and the electric field in “fcn_phi_x”, and initial data in “fcn_phi_x_0”, “fcn_rho_0”.</p>
-
-<p>P.S. Remember to change the path of other functions at the beginning of “graph.m”.</p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq3_cts.jpg" alt="figure5" class="size-full wp-image-05" /><i align="aligncenter">Figure 5: Continuous parameter in PDE and initial data</i></p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq3_discts.jpg" alt="figure6" class="size-full wp-image-06" /><i align="aligncenter">Figure 6: Discontinuous parameter in PDE and initial data</i></p>
-
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h3&gt;The problems considered&lt;/h3&gt;
 </code></pre></div></div>
 
@@ -7060,6 +5959,202 @@ solve;
 <b>printf</b>: $\textquotedbl{} \%24.16e; \textbackslash{}n\textquotedbl{},
 obj &gt;&gt;\textcompwordmark{}$ out.txt;
 </pre>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h5&gt;1. Numerical experiments&lt;/h5&gt;
+</code></pre></div></div>
+
+<p>Consider the one dimensional linear Vlasov-Fokker-Planck (VPFP) as following.</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+\begin{cases}
+	\delta_tf + \sigma_1v\delta_x f - \frac{\sigma_2}{\epsilon} \delta_x\phi\delta_v f =\frac{\sigma_3}{\epsilon}\delta_v\ (v f +\delta_vf\ ),  t>0, x\in[0,2\pi], v\in \mathbb{R}, \label{eq: VPFP}\\
+	f(0, x,v,z) = f_0(x,v,z),  z\in [a,b].
+	\end{cases}
+\end{equation}</script>
+
+<p>In the numerical experiments, <strong>we compare the results from the greedy algorithm with the results from the polynomial interpolation of the quadrature points.</strong> we set $\epsilon = 1, T = 0.5$ for all examples. More specifically, we set</p>
+
+<script type="math/tex; mode=display">\text{error} = \sum_{i=1}^{50}\int{ {( \hat{f}(T, x, v, z_i) - f(T, x,v,z_i) )}^2} dxdv \hat{f}(T, x,v,z_i)</script>
+
+<p>is the approximation solution obtained from either method, $f(T, x,v,z_i)$ is the exact solution. $z_i$ is uniformly chosen from $[a,b]$. ${\textbf{Dimension}}$ refers to the number of snap shots.</p>
+
+<p>Observe Figure 1-6, we found that the Greedy algorithm converges to the solution faster than the other method. Especially, when there is discontinuity,  the polynomial interpolation doesn’t converge as dimension increases, however, the Greedy algorithm still converges and almost keeps the same convergent rate.</p>
+
+<p><strong>Algorithm 1.1. The algorithm for the polynomial interpolation:</strong></p>
+
+<p>For <strong>Dimension</strong> $= n$, ${\alpha_i}_{i=1}^n$ is the n roots of $n$-th order Legendre polynomial, and let</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+	z_i ^\ast= \frac{b-a}{2}\alpha_i + \frac{a+b}{2},  1\leq i \leq n.\label{}
+\end{equation}</script>
+
+<script type="math/tex; mode=display">\begin{equation}
+	f_i = f(T, x,v, z_i ^\ast) \text{ be the exact solution at time T}.\label{}
+\end{equation}</script>
+
+<p>Then by Lagrange interpolation,</p>
+
+<script type="math/tex; mode=display">\begin{align}
+	\hat{f}(T,x,v,z) = \sum_{i=1}^n l_i(z)f_i, l_i = \prod_{j\neq i} \frac{z-z_j ^\ast}{z_i ^\ast - z_j ^\ast}
+\end{align}</script>
+
+<h3>1.1 Linear VFP with parametric initial data</h3>
+<p>In the first experiment, we consider the case where the parameter $z\in[1,5]$ only involved in the initial data,
+<script type="math/tex">\begin{equation}
+\sigma_1 = \sigma_2 = \sigma_3 = 1, \delta _x\phi = \cos(x),   
+\end{equation}</script></p>
+
+<p>Figure 1:</p>
+
+<script type="math/tex; mode=display">\begin{equation} f_0(x,v,z) = \frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z}{10} |^2}{2} ).\end{equation}</script>
+
+<p>Figure 2:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} f_0(x,v,z) =\left\{
+\begin{array}{rl}
+\frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z}{10} |^2}{2} ), z<3\\
+\frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z+1}{10} |^2}{2} ), z\geq3.
+\end{array}
+\right.\end{equation} %]]></script>
+
+<p><strong>Algorithm 1.2. The algorithm for PDE with only parameter in initial data:</strong>
+<strong>Offline:</strong></p>
+
+<p>Step 1: Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 100$ in this case.</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+z_1^\ast = \text{argmax}_{z\in N} || f_0(x,v,z) || ^2,
+\end{equation}</script>
+
+<p>where $ \vert f \vert^2 = \int f^2 dxdv$.</p>
+
+<p>Step 2: After obtaining $z_i^\ast, f_i = f_0(x,v,z_i^\ast)$, $i =1, \dots, n-1$,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+z_n^\ast = \text{argmax}_{z\in N\backslash\{z_i^\ast \}_{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z) ||^2,
+\end{equation}</script>
+
+<p>where $P^{n-1} f_0$ is the projection onto the subspace spanned by $f_1, \dots, f_{n-1}$</p>
+
+<p>Step 3: Stops when</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+\max_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z)||^2 \leq \epsilon
+\end{equation}</script>
+
+<p><strong>Online:</strong> After we obtained the snap shots ${z_i^\ast}_{i=1}^n$,</p>
+
+<p>Step 1: Orthogonalize ${f_i}_{i=1}^n$,
+         and calculate the corresponding</p>
+
+<script type="math/tex; mode=display">{f^T_i = f(T,x,v,z_i)}_{i=1}^n</script>
+
+<p>Step 2: for any given $z$, one can approximate $f(T, x,v,z)$ by</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+a_i = \langle f_0(x,v,z), f_i\rangle,  \hat{f}(x,v, z) = \sum_{i = 1}^na_if^T_i.
+\end{equation}</script>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq1_cts.jpg" alt="figure1" class="size-full wp-image-01" /><i align="aligncenter">Figure 1: Continuous initial data</i></p>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq1_discts.jpg" alt="figure2" class="size-full wp-image-02" /><i align="aligncenter">Figure 2: Discontinuous initial data</i></p>
+
+<h3>1.2 Linear parametric VFP with deterministic initial data</h3>
+<p>In the second experiment, we consider the case where the parameter $z\in[1,5]$ only involved in the PDE,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+ f_0(x,v,z) = \frac{1}{\sqrt{2\pi}} ( 2+\sin(x) ) \text{exp} ( -\frac{|v+\cos(x)|^2}{2} )
+\end{equation}</script>
+
+<p>Figure 3:</p>
+
+<script type="math/tex; mode=display">\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi = \cos(x)+\frac{z}{10};\end{equation}</script>
+
+<p>Figure 4:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi =\left\{
+\begin{array}{rl}
+& \cos(x)+\frac{z}{10}, z<3\\
+&\cos(x)+\frac{z+1}{10}, z\geq3
+\end{array}
+\right.
+\end{equation} %]]></script>
+
+<p><strong>Algorithm 1.3. The algorithm for PDE with only parameters in PDE:</strong>
+<strong>Offline:</strong> Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 100$ in this case.</p>
+
+<p>Step 1: choose</p>
+
+<script type="math/tex; mode=display">z_1^\ast = argmax_{z \in N} || ( \sigma_1,\sigma_2,\sigma_3 )||^2</script>
+
+<p>Step 2: After obtaining $z_i^\ast, f_i = f(T,x,v,z_i^\ast)$, $i =1, \dots, n-1$,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+z_n^\ast = argmax_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1}} [ \min_{\hat{f} = \sum a_if_i,  \sum a_i = 1}
+|| \delta_t\hat{f} + \underbrace{ \sigma_1(z)v\delta_x \hat{f} - \frac{\sigma_2(z)}{\epsilon} \delta_x\phi\delta_v \hat{f} - \frac{\sigma_3(z)}{\epsilon}\delta_v ( v \hat{f} + \delta_v\hat{f} ) }_{A(z)\hat{f} } ||^2 ],
+\label{linear z_star}
+\end{equation}</script>
+
+<p>Step 3: Stops when the above maximum residual smaller than $\epsilon$.</p>
+
+<p><strong>Online:</strong> After we obtained the snap shots ${z_i}_{i=1}^n$,
+and the corresponding $f_i = f(T, x,v,z_i)$,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+\hat{f} = argmin_{\hat{f} = \sum a_if_i,  \sum a_i = 1} || \delta_t\hat{f} + \underbrace{\sigma_1(z)v\delta_x \hat{f} - \frac{\sigma_2(z)}{\epsilon} \delta_x\phi\delta_v \hat{f} - \frac{\sigma_3(z)}{\epsilon}\delta_v (v \hat{f} +\delta_v\hat{f} ) }_{A(z)\hat{f} } ||^2
+\end{equation}</script>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_cts.jpg" alt="figure3" class="size-full wp-image-03" /><i align="aligncenter">Figure 3: Continuous parameter in PDE</i></p>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_discts.jpg" alt="figure4" class="size-full wp-image-04" /><i align="aligncenter">Figure 4: Discontinuous parameter in PDE</i></p>
+
+<h3>1.3 Linear parametric VFP with parametric initial data</h3>
+<p>In the third experiment, we consider the case where the parameter $z\in[1,5]$ involved in both the initial data and the PDE</p>
+
+<script type="math/tex; mode=display">\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, f_0(x,v,z) = \frac{1}{\sqrt{2\pi}}(2+\frac{\sin(x)}{z}) \text{exp}(-\frac{|v+\delta_x\phi|^2}{2})
+\end{equation}</script>
+
+<p>Figure 5:</p>
+
+<script type="math/tex; mode=display">\begin{equation}\delta_x\phi = \cos(x) + \frac{z}{10}, \text{for }t\geq 0,\end{equation}</script>
+
+<p>Figure 6:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\delta_x\phi =\left\{\begin{array}{rl}& \cos(x)+\frac{z}{10}, z<3\\&\cos(x)+\frac{z+1}{10}, z\geq3\end{array}\right. \text{for }t\geq 0.\end{equation} %]]></script>
+
+<p><strong>Algorithm 1.4. The algorithm for PDE with parameters in PDE and initial data:</strong></p>
+
+<p><strong>Offline:</strong> Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 10000$ in this case.</p>
+
+<p>Step 1: Using Algorithm 1.4 to obtain 50 snap shots out of $N$
+        to form a new set $N^\ast$.
+Step 2: Using Algorithm 1.3 to get snap shot ${ z_i^\ast }_{i=1}^n$</p>
+
+<p><strong>Online:</strong> Same as Algorithm 1.3.</p>
+
+<p><strong>Remark 1.5.</strong> In the experiments, the exact solution $f(T,x,v,z)$
+refers to the numerical solution to VFP, that is, $f(T,x,v,z)$ is a
+$N_x\times N_v$ dimensional vector obtained by the following scheme</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+\frac{f^{n+1}_{i,j} - f^n_{i,j}}{\delta_t} +\sigma_1 (v\delta_xf)^n_{i,j} = \frac{\sigma_3}{\epsilon}P(f^{n+1}_{i,j})
+\end{equation}</script>
+
+<p>where $P(f)$ is the discretization of
+$\delta_v (M\delta_v (\frac{f}{M}))$,</p>
+
+<script type="math/tex; mode=display">M = \frac{1}{\sqrt{2\pi}}e^{-\frac{|v+\frac{\sigma_2}{\sigma_3}\delta_x\phi|^2}{2}}</script>
+
+<p><strong>Remark 1.6.</strong> For the matlab coding, the algorithm for the examples is in the “graph.m” file of the folder “eq1”, “eq2”, “eq3” respectively.  You can change the coefficients in “sig_1”, “sig_2”, “sig_3”, and the electric field in “fcn_phi_x”, and initial data in “fcn_phi_x_0”, “fcn_rho_0”.</p>
+
+<p>P.S. Remember to change the path of other functions at the beginning of “graph.m”.</p>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq3_cts.jpg" alt="figure5" class="size-full wp-image-05" /><i align="aligncenter">Figure 5: Continuous parameter in PDE and initial data</i></p>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq3_discts.jpg" alt="figure6" class="size-full wp-image-06" /><i align="aligncenter">Figure 6: Discontinuous parameter in PDE and initial data</i></p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h3&gt;Solving the driving problem with a repulsion force&lt;/h3&gt;
 </code></pre></div></div>
@@ -8246,6 +7341,911 @@ u(x,t)=\bar u^\star_{\sqrt 2}(x) \quad\text{for }t\in (0,T).
 <p><strong>[2]</strong> R. DeVore, (2005) <a href="" target="_blank"><em>The Theoretical Foundation of Reduced Basis Methods.</em></a> preprint.</p>
 <p><strong>[3]</strong> J.-L Lions. <!--a href="" target="_blank"--><em>Optimal control of systems governed by partial differential equations.</em><!--/a--> Springer-Verlag, 1971.</p>
 <p><strong>[4]</strong> A. Porretta and E. Zuazua. <a href="http://paginaspersonales.deusto.es/enrique.zuazua/documentos_public/archivos/publicaciones/optimal10.pdf" target="_blank"><em>Long time versus steady state optimal control.</em></a> SIAM Journal on Control and Optimization, 51, 6 (2013), 4242-4273.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h3&gt;Introduction&lt;/h3&gt;
+</code></pre></div></div>
+<p>We introduce the following notation: $L^2=L^2\left(\Omega\right)$, $L^2_T=L^2\left(\Omega\times \left(0,T\right)\right)$,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{eqnarray*}
+	\langle u,v \rangle&=&\int_{\Omega}^{} u(x)v(x) \ dx;\\
+	\langle u,v \rangle_T^2&=&\int_{0}^{T} \int_{\Omega}^{} u(x,t)v(x,t) \ dx \ dt
+\end{eqnarray*} %]]></script>
+
+<p>and the correspondent norms $\norm{\cdot}=\langle \cdot,\cdot\rangle$ and $\norm{\cdot}_T=\langle \cdot,\cdot\rangle_T$. Moreover, we define the norms</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{eqnarray*}
+	\norm{v}_{1}&=&\int_{\Omega}^{} \abs{v(x)} \ dx;\\
+	\norm{v}_{1,T}&=&\int_{0}^{T} \int_{\Omega}^{} \abs{v(x,t)} \ dx \ dt.
+\end{eqnarray*} %]]></script>
+
+<p>We want to study the following optimal control problem:</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\left(\mathcal{P}\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left\{J\left(u\right)=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{Lu}_{1,T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right\},
+\end{equation*}</script>
+
+<p>where $L: \ L^2_T \to L^2_T$ is defined by</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{eqnarray*}
+Lu&=&y
+\end{eqnarray*} %]]></script>
+
+<p>and $y$ is the solution of the PDE given by</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+y'+Ay=Bu & \left(\Omega \times \left(0,T\right)\right)\\
+y=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
+y(0)=0 & \left(\Omega\right).
+\end{cases}
+\end{equation*} %]]></script>
+
+<p>Notice that, by integration by parts, $ L^*\mu=B^\ast p $, where $\varphi$ is solution of the adjoint equation:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+-p'+A^* p =\mu & \left(\Omega \times \left(0,T\right)\right)\\
+p=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
+p(T)=0 & \left(\Omega\right).
+\end{cases}
+\end{equation*} %]]></script>
+
+<h3>Sparse control: $\alpha_c&gt;0$ ($\alpha_s=0$)</h3>
+<h3>The stationary problem</h3>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\left(\mathcal{S}\mathcal{P}_c\right) \ \ \ \ \ \ \ \bar{u}\in argmin_{u\in L^2} \left\{J_s\left(u\right)=\alpha_c \norm{u}_{1} + \frac{\beta}{2}\norm{u}^2+ \frac{\gamma}{2}\norm{y-z}^2: \ \ \ Ay=Bu \right\}.
+\end{equation*}</script>
+
+<h4>Optimality conditions</h4>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+A\bar{y}=B \ shrink(-B^*\bar{p},\frac{\alpha_c}{\beta}) & \left(\Omega\right)\\
+A^*\bar{p}=\gamma\left(\bar{y}-z\right) & \left(\Omega\right)\\
+\bar{y}=0, \ \bar{p}=0 & \left(\partial\Omega\right).
+\end{cases}
+\end{equation*} %]]></script>
+
+<h4>Numerical algorithm</h4>
+<p>In order to compute a numerical solution of problem</p>
+
+<script type="math/tex; mode=display">\left(\mathcal{S}\mathcal{P}_c\right)</script>
+
+<p>after a discretization by finite differences, we use a prox-prox splitting: first write the state as $y=A^{-1}Bu$, then</p>
+<ul>
+	<li> Proximal-point step:</li>
+
+$$
+\begin{equation*}
+\begin{split}
+\tilde{u}_{k} &amp; =argmin_{u\in L^2} \left\{\frac{\beta}{2}\norm{u}^2 + \frac{\gamma}{2}\norm{A^{-1}Bu-z}^2+ \frac{1}{2\lambda_k}\norm{u-u_k}^2\right\}\\
+&amp; = \left[\left(\beta+\frac{1}{\lambda_k}\right)I+\gamma B^*A^{-*}A^{-1}B\right]^{-1}\left(\frac{1}{\lambda_k}u_k+\gamma B^*A^{-*}z\right).
+\end{split}
+\end{equation*}
+$$
+
+<li> Proximal-point step:</li>
+
+$$
+\begin{equation*}
+	\begin{split}
+	u_{k+1}&amp; =argmin_{u\in L^2} \left\{\alpha_c \norm{u}_{1,T} + \frac{1}{2\lambda_k}\norm{u-\tilde{u}_k}_{T}^2\right\}\\
+	&amp; = shrink(\tilde{u}_k,\alpha_c \lambda_k).
+	\end{split}
+	\end{equation*}
+$$
+
+</ul>
+<p><strong>Remark:</strong> Notice that, when $\alpha_s=0$, the solution of $\left(\mathcal{P}^c_s\right)$ is simply given by</p>
+
+<script type="math/tex; mode=display">\bar{u}=\gamma \left[\beta I+\gamma B^*A^{-*}A^{-1}B\right]^{-1}B^*A^{-*}z.</script>
+
+<h3>Evolutionary problem</h3>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\left(\mathcal{P}_c\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left\{J\left(u\right)=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right\}.
+\end{equation*}</script>
+
+<h4>Optimality conditions</h4>
+<p>Define the classical Lagrangian</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{split}
+\mathcal{L}\left(u,y,p\right)&=J\left(u\right)+\langle p, Bu-y'-Ay\rangle_T.
+\end{split}
+\end{equation*} %]]></script>
+
+<p>By integration by parts, we have</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{split}
+\mathcal{L}\left(u,y,p\right)&=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T}+ \frac{\gamma}{2}\norm{y-z}_{T}^2 + \langle B^*p, u\rangle_T \\
+& \quad + \langle p'-A^*p,y\rangle_T + \langle p(0),y(0)\rangle - \langle p(T),y(T)\rangle.
+\end{split}
+\end{equation*} %]]></script>
+
+<p>Deriving with respect to the three variables $\left(u,y,p\right)$, we obtain the optimality system:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+\hat{y}'+A\hat{y}=B\hat{u} & \left(\Omega \times \left(0,T\right)\right)\\
+-\hat{p}'+A^*\hat{p}=\gamma\left(y-z\right) & \left(\Omega \times \left(0,T\right)\right)\\
+\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
+\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right),
+\end{cases}
+\end{equation*} %]]></script>
+
+<p>where the relation between the optimal control and the dual state is given by</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+0\in \alpha_c \ \partial \norm{\cdot}_{1,T} \left(\hat{u}\right) + \beta \hat{u} + B^*\hat{p}.
+\end{equation*}</script>
+
+<p>The latter is equivalent to</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{split}
+\hat{u}&=\left(\beta I+\alpha_c \ \partial \norm{\cdot}_{1,T} \right)^{-1}\left(-B^*\hat{p}\right)\\
+&=argmin_{v\in L^2_T} \left\{ \alpha_c \norm{v}_{1,T}+\frac{1}{2\beta}\norm{v+B^*\hat{p}}_T^2 \right\}\\
+&=shrink(-B^*\hat{p},\frac{\alpha_c}{\beta}),
+\end{split}
+\end{equation*} %]]></script>
+
+<p>where the operator of $soft-shrinkage$ is defined by</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+shrink(t,\alpha)=
+\begin{cases}
+t+\alpha & (t<-\alpha)\\
+0 & (-\alpha\leq t \leq \alpha)\\
+t-\alpha & (t>\alpha).
+\end{cases}
+\end{equation*} %]]></script>
+
+<p>Finally,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+\hat{y}'+A\hat{y}=B \ shrink(-B^*\hat{p},\frac{\alpha_c}{\beta})& \left(\Omega \times \left(0,T\right)\right)\\
+-\hat{p}'+A^*\hat{p}=\gamma\left(y-z\right) & \left(\Omega \times \left(0,T\right)\right)\\
+\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
+\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right).
+\end{cases}
+\end{equation*} %]]></script>
+
+<h4>Numerical algorithm</h4>
+<p>In order to compute a numerical solution of problem $\left(\mathcal{P}_c\right)$, after a discretization by finite differences, we use a grad-prox splitting:</p>
+<ul>
+	<li> Gradient step:</li>
+$$
+	\begin{equation*}
+	\begin{split}
+	\tilde{u}_{k} &amp; = u_k-\lambda_k \nabla_u \left[\frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2 \right]\left(u_k\right) \\
+	&amp; = u_k-\lambda_k \left[\beta u_k+\gamma L^*\left(Lu_k-z\right)\right]\\
+	&amp; = u_k - \lambda_k\left[\beta u_k+\gamma B^*p_k\right],
+	\end{split}
+	\end{equation*}
+$$
+
+where
+
+$$
+	\begin{equation*}
+	\begin{cases}
+	y_k'+Ay_k=Bu_k &amp; \left(\Omega \times \left(0,T\right)\right)\\
+	y_k=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
+	y_k(0)=0 &amp; \left(\Omega\right)
+	\end{cases}
+	\end{equation*}
+$$
+
+and
+
+$$
+	\begin{equation*}
+	\begin{cases}
+	-p_k'+A^* p_k =y_k-z &amp; \left(\Omega \times \left(0,T\right)\right)\\
+	p_k=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
+	p_k(T)=0 &amp; \left(\Omega\right).
+	\end{cases}
+	\end{equation*}
+$$
+
+<li> Proximal-point step:</li>
+
+$$
+\begin{equation*}
+\begin{split}
+u_{k+1}&amp; =argmin_{u\in L^2_T} \left\{\alpha_c \norm{u}_{1,T} + \frac{1}{2\lambda_k}\norm{u-\tilde{u}_k}_{T}^2\right\}\\
+	&amp; = shrink(\tilde{u}_k,\alpha_c \lambda_k).
+\end{split}
+\end{equation*}
+$$
+
+</ul>
+<p><strong>Remarks:</strong> Another possibility is to include the term $\frac{\beta}{2}\norm{u}^2_{T}$ in the proximal step.
+Notice that, for</p>
+
+<script type="math/tex; mode=display">f(u)=\frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2,</script>
+
+<p>then $\nabla f$ is Lipschitz continuous. Indeed, for $u_i\in L^2_T$ ($i=1,2$), then</p>
+
+<script type="math/tex; mode=display">\nabla f (u_i)=\beta u_i+\gamma B^{*}p_i,</script>
+
+<p>where</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+y_i'+Ay_i=Bu_i & \left(\Omega \times \left(0,T\right)\right)\\
+y_i=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
+y_i(0)=0 & \left(\Omega\right)
+\end{cases}
+\end{equation*} %]]></script>
+
+<p>and</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+-p_i'+A^* p_i=y_i-z & \left(\Omega \times \left(0,T\right)\right)\\
+p_i=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
+p_i(T)=0 & \left(\Omega\right).
+\end{cases}
+\end{equation*} %]]></script>
+
+<p>By linearity $\delta y=y_2-y_1$ and $\delta p=p_2-p_1$ solve the same equations with right-hand-sides $B(u_2-u_1)$ and $\delta y$, respectively. Then</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{split}
+\norm{\nabla f(u_2)-\nabla f(u_1)}&\leq \beta\norm{u_2-u_1}_T + \gamma \norm{B^*}\norm{\delta p}_T\\
+&\leq \beta\norm{u_2-u_1}_T + \gamma \ C_{adj} \norm{B} \norm{\delta y}_T\\
+& \leq \beta\norm{u_2-u_1}_T + \gamma \ C_{adj} C \ \norm{B} \norm{B(u_2-u_1)}_T\\
+& \leq L \norm{u_2-u_1}_T,
+\end{split}
+\end{equation*} %]]></script>
+
+<p>where we defined</p>
+
+<script type="math/tex; mode=display">L=\beta+\gamma \ C_{adj} C \ \norm{B}^2.</script>
+
+<p>In order the prox-grad method to converge, the restriction on the step size is given by</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+0<\lambda \leq \lambda_k \leq \Lambda <\frac{2}{L}. %]]></script>
+
+<h3>Sparse state: $\alpha_s&gt;0$ ($\alpha_c=0$)</h3>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\left(\mathcal{P}_s\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left\{J\left(u\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{Lu}_{1,T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right\}.
+\end{equation*}</script>
+
+<h3>The stationary problem</h3>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\left(\mathcal{S}\mathcal{P}_s\right) \ \ \ \ \ \ \ \bar{u}\in argmin_{u\in L^2} \left\{J_s\left(u\right)=\alpha_c \norm{u}_{1} + \frac{\beta}{2}\norm{u}^2+ \frac{\gamma}{2}\norm{y-z}^2: \ \ \ Ay=Bu \right\}.
+\end{equation*}</script>
+
+<h4>Optimality conditions</h4>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+A\bar{y}=-\frac{1}{\beta}BB^*\hat{p} & \left(\Omega \times \left(0,T\right)\right)\\
+\hat{y}=shrink(A^*\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}) & \left(\Omega \times \left(0,T\right)\right)\\
+\bar{y}=0, \ \bar{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right).
+\end{cases}
+\end{equation*} %]]></script>
+
+<p>Finally, we obtain a single equation in the dual variable $p$:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+A \ shrink(A^*\bar{p}+\gamma z,\frac{\alpha_s}{\gamma})=-\frac{1}{\beta}BB^*\bar{p} & \left(\Omega \times \left(0,T\right)\right)\\
+\bar{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right).
+\end{cases}
+\end{equation*} %]]></script>
+
+<h4>Numerical algorithm</h4>
+<p>In order to compute a numerical solution of problem $\left(\mathcal{P}_s\right)$, after a discretization by finite differences, we use a prox-prox splitting on the Augmented Energy: first write the state as $y=A^{-1}Bu$, then</p>
+<ul>
+	<li> Proximal-point step:</li>
+$$
+	\begin{equation*}
+	\begin{split}
+	u_{k+1} &amp; =argmin_{u\in L^2} \left\{\frac{\beta}{2}\norm{u}^2 + \frac{\gamma}{2}\norm{A^{-1}Bu-z}^2+\frac{\delta}{2\lambda_k}\norm{A^{-1}Bu-y_k}^2 +\frac{1}{2\lambda_k}\norm{u-u_k}^2\right\}\\
+	&amp; = \left[\left(\beta+\frac{1}{\lambda_k}\right)I+\left(\gamma+\frac{\delta}{\lambda_k}\right) B^*A^{-*}A^{-1}B\right]^{-1}\left[\frac{1}{\lambda_k}u_k+ B^*A^{-*}\left(\gamma z+\frac{\delta}{\lambda_k}y_k\right)\right].
+	\end{split}
+	\end{equation*}
+$$
+
+	<li> Proximal-point step:</li>
+$$
+	\begin{equation*}
+	\begin{split}
+	y_{k+1}&amp; =argmin_{y\in L^2} \left\{
+	\alpha_s \norm{y}_{1} + \frac{\delta}{2\lambda_k}\norm{y-A^{-1}Bu_{k+1}}^2+\frac{1}{2\lambda_k}\norm{y-y_k}_{T}^2\right\}\\
+	&amp; = shrink(\tilde{y}_k,\tilde{\lambda}_k),
+	\end{split}
+	\end{equation*}
+$$
+
+	where we defined
+
+$$
+	\begin{eqnarray*}
+		\tilde{y}_k &amp; = &amp; \frac{y_k+\delta A^{-1}B u_{k+1}}{1+\delta};\\
+		\tilde{\lambda}_k &amp; = &amp; \frac{\alpha_s \lambda_k}{1+\delta}.
+	\end{eqnarray*}
+$$
+
+</ul>
+<p><strong>Remark:</strong> Notice that again, when $\alpha_s=0$, the solution of $\left(\mathcal{P}_s\right)$ is simply given by</p>
+
+<script type="math/tex; mode=display">\bar{u}=\gamma \left[\beta I+\gamma B^*A^{-*}A^{-1}B\right]^{-1}B^*A^{-*}z.</script>
+
+<h3>Evolutionary problem</h3>
+<h4>Optimality conditions</h4>
+<p>Define the classical Lagrangian</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{split}
+\mathcal{L}\left(u,y,p\right)&=J\left(u\right)+\langle p, Bu-y'-Ay\rangle_T.
+\end{split}
+\end{equation*} %]]></script>
+
+<p>By integration by parts, we have</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{split}
+\mathcal{L}\left(u,y,p\right)&=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T} +  \frac{\gamma}{2}\norm{y-z}_{T}^2 + \langle B^*p, u\rangle_T \\
+& \quad + \langle p'-A^*p,y\rangle_T + \langle p(0),y(0)\rangle - \langle p(T),y(T)\rangle.
+\end{split}
+\end{equation*} %]]></script>
+
+<p>Deriving with respect to the three variables $\left(u,y,p\right)$, we obtain the optimality system:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+\hat{y}'+A\hat{y}=B\hat{u} & \left(\Omega \times \left(0,T\right)\right)\\
+-\hat{p}'+A^*\hat{p}\in\gamma\left(\hat{y}-z\right)+\alpha_s \ \partial \norm{\cdot}_{1,T} \left(\hat{y}\right) & \left(\Omega \times \left(0,T\right)\right)\\
+\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
+\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right),
+\end{cases}
+\end{equation*} %]]></script>
+
+<p>where the relation between the optimal control and the dual state is given by</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\hat{u} = -\frac{1}{\beta}B^*\hat{p}.
+\end{equation*}</script>
+
+<p>The adjoint equation is equivalent to</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{split}
+\hat{y}&=\left(\gamma I+\alpha_s \ \partial \norm{\cdot}_{1,T} \right)^{-1}\left(-\hat{p}'+A^*\hat{p}+\gamma z\right)\\
+&=shrink(-\hat{p}'+A^*\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}).
+\end{split}
+\end{equation*} %]]></script>
+
+<p>Finally,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\begin{cases}
+\hat{y}'+A\hat{y}=-\frac{1}{\beta}B B^*\hat{p} & \left(\Omega \times \left(0,T\right)\right)\\
+\hat{y}=shrink(-\hat{p}'+A^*\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}) & \left(\Omega \times \left(0,T\right)\right)\\
+\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
+\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right),
+\end{cases}
+\end{equation*} %]]></script>
+
+<h4>Numerical algorithm</h4>
+<p>In order to compute a numerical solution of problem $\left(\mathcal{P}_s\right)$, after a discretization by finite differences, we use a grad-prox splitting on the following Augmented Energy:</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\mathcal{L}_{\lambda}\left(u,y\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T}+ \frac{\gamma}{2}\norm{Lu-z}_{T}^2+\frac{\delta}{2\lambda}\norm{Lu-y}_{T}^2.
+\end{equation*}</script>
+
+<p>Then,</p>
+<ul>
+	<li> Gradient step:</li>
+$$
+	\begin{equation*}
+	\begin{split}
+	u_{k+1} &amp; = u_k-\lambda_k \nabla_u \left[\frac{\beta}{2}\norm{u}^2_{T}+ \frac{\gamma}{2}\norm{Lu-z}_{T}^2+\frac{\delta}{2\lambda}\norm{Lu-y}_{T}^2 \right]\left(u_k\right) \\
+	&amp; = u_k-\lambda_k \left[\beta u_k+\gamma L^*\left(Lu_k-z\right)+\frac{\delta}{\lambda_k}L^*\left(Lu_k-y_k\right)\right]\\
+	&amp; = \left(1-\beta\lambda_k\right)u_k - B^*p_k,
+	\end{split}
+	\end{equation*}
+$$
+
+where
+
+$$
+	\begin{equation*}
+	\begin{cases}
+	y_{u_k}'+Ay_{u_k}=Bu_k &amp; \left(\Omega \times \left(0,T\right)\right)\\
+	y_{u_k}=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
+	y_{u_k}(0)=0 &amp; \left(\Omega\right)
+	\end{cases}
+	\end{equation*}
+$$
+
+and
+
+$$
+	\begin{equation*}
+	\begin{cases}
+	-p_k'+A^* p_k =\left(\gamma \lambda_k + \delta\right)y_{u_k}-\gamma \lambda_k z - \delta y_k &amp; \left(\Omega \times \left(0,T\right)\right)\\
+	p_k=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)\\
+	p_k(T)=0 &amp; \left(\Omega\right).
+	\end{cases}
+	\end{equation*}
+$$
+
+<li> Proximal-point step:</li>
+
+$$
+	\begin{equation*}
+	\begin{split}
+	y_{k+1}&amp; =argmin_{y\in L^2_T} \left\{\alpha_s \norm{y}_{1,T} + \frac{\delta}{2\lambda_k}\norm{y-Lu_{k+1}}_T^2+\frac{1}{2\lambda_k}\norm{y-y_k}_{T}^2\right\}\\
+	&amp; = shrink(\tilde{y}_k,\tilde{\lambda}_k),
+	\end{split}
+	\end{equation*}
+$$
+
+where we defined
+$$
+	\begin{eqnarray*}
+	\tilde{y}_k &amp; = &amp; \frac{y_k+\delta L u_{k+1}}{1+\delta};\\
+	\tilde{\lambda}_k &amp; = &amp; \frac{\alpha_s \lambda_k}{1+\delta}.
+	\end{eqnarray*}
+$$
+<ul>
+<strong>Remark: </strong>Another possibility is to consider
+$$
+	\begin{equation*}
+	\mathcal{L}_{\lambda}\left(u,y\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T}+ \frac{\gamma}{2}\norm{y-z}_{T}^2+\frac{\delta}{2\lambda}\norm{Lu-y}_{T}^2.
+	\end{equation*}
+$$
+
+<h3>Computational experiments</h3>
+In the following, we present the setting for the numerical experiments.
+<ul>
+	<li> Spacial domain: $\Omega=\left(0,1\right)$;</li>
+	<li> Time interval: $\left[0,T\right]$, with $T=1$;</li>
+	<li> Weight-parameters: $\alpha_c=[0, 0.01]$, $\alpha_s=[0, 0.65]$, $\beta=0.0001$ and $\gamma=1$;</li>
+	<li> Trajectory target: $$z(x)=\mathcal{I}_{\left[x_a,x_b\right]},$$ where $x_a=1.7/3$, $x_b=3.5/4$;</li>
+	<li> Control operator: for $x_1=1/7$ and $x_2=4/5$,
+$$B=\mathcal{I}_{\left[x_1,x_2\right]};$$
+    </li>
+
+	<li> $A$ is the finite difference discretization of $-\Delta$;</li>
+	<li> Numerical grid: $N_x=300$ in space, $N_t=100$ in time.</li>
+</ul>
+<h3>Stationary solutions</h3>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/uy_alphazero_staz.jpg" alt="Figure 1" width="600" /> Figure 1: $\alpha_c=\alpha_s=0$.  
+
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/uy_alpha_staz.jpg" alt="Figure 2" width="600" /> Figure 2: $\alpha_c=0.01$, $\alpha_s=0$.  
+
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/uy_alpha_staz-1.jpg" alt="Figure 3" width="600" /> Figure 3: $\alpha_c=0$, $\alpha_s=0.65$.
+
+<h3>Evolutionary problem</h3>  
+<h4>Optimal control</h4>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/u_alphazero_ev.jpg" alt="Figure 4 TOP" width="600" />Figure 4a: Optimal control for $\alpha_c=\alpha_s=0$. In red, the controllable subdomain; in blue, the stationary optimal controls.
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/u_alpha_tot.jpg" alt="Figure 4 MIDDLE" width="600" />Figure 4b: Optimal control for $\alpha_c=0.01$, $\alpha_s=0$. In red, the controllable subdomain; in blue, the stationary optimal controls.
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/u_alpha_tot-1.jpg" alt="Figure 4 BOTTOM" width="600" /> Figure 4c: Optimal control for $\alpha_c=0$, $\alpha_s=0.65$. In red, the controllable subdomain; in blue, the stationary optimal controls.
+<h4>Optimal state</h4>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/y_alphazero_ev.jpg" alt="Figure 5 TOP" width="600" />Figure 5a: Optimal state for $\alpha_c=\alpha_s=0$ . In red, the target $z$; in blue, the stationary optimal states.
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/y_alpha_tot.jpg" alt="Figure 5 MIDDLE" width="600" />Figure 5b: Optimal state for $\alpha_c=0.01$, $\alpha_s=0$. In red, the target $z$; in blue, the stationary optimal states.
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/y_alpha_tot-1.jpg" alt="Figure 5 BOTTOM" width="600" /> Figure 5c: Optimal state for $\alpha_c=0$, $\alpha_s=0.65$. In red, the target $z$; in blue, the stationary optimal states.
+<h4>Optimal adjoint</h4>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alphazero_ev.jpg" alt="Figure 6 TOP" width="600" />Figure 6a: Optimal adjoint for $\alpha_c=\alpha_s=0$.
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alpha_tot.jpg" alt="Figure 6 MIDDLE" width="600" />Figure 6b: Optimal adjoint for $\alpha_c=0.01$, $\alpha_s=0$.
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/p_alpha_tot-1.jpg" alt="Figure 6 BOTTOM" width="600" /> Figure 6c: Optimal adjoint for $\alpha_c=0$, $\alpha_s=0.65$.
+
+<h4>Bibliography</h4>
+<strong>[1]</strong> Peypouquet, J. <a href="http://jpeypou.mat.utfsm.cl/wp-content/uploads/2014/05/Convex-Optimization.pdf"><em>Convex optimization in normed spaces: theory, methods and examples. With a foreword by Hedy Attouch.</em></a> Springer Briefs in Optimization. Springer, Cham, 2015. xiv+124 pp.
+</ul></ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;This is a set of Matlab functions to interpolate scattered data with Radial Basis Functions (RBF).&lt;/p&gt;
+</code></pre></div></div>
+
+<p align="center">
+  <img src="https://latex.codecogs.com/gif.latex?F%20%5Cleft%28%20%5Cmathbf%7Bx%7D%20%5Cright%29%20%3D%20%5Csum_%7Bj%3D1%7D%5EN%20%5Cgamma_j%20%5Cvarphi%20%5Cleft%28%20%5C%7C%20%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bx%7D_%7Bs%2C%20j%7D%20%5C%7C_%7B%5Cmathbb%7BR%7D%5Ed%7D%20%5Cright%29%20&plus;%20p%20%5Cleft%28%20%5Cmathbf%7Bx%7D%20%5Cright%29" />
+</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<pre><code class="language-Matlab">y = RBFinterp(xs, ys, x, RBFtype, R)
+</code></pre>
+<p>interpolates to find y, the values of the function y=f(x) at the points x.</p>
+
+<p>Xs must be a matrix of size [N,Dx], with N the number of data points and Dx the dimension of the points in xs and x.</p>
+
+<p>Ys must be a matrix of size [N,Dy], with N the number of known values at points in Xs, and Dy the dimension of the y values.</p>
+
+<p>X must be a matrix of size [M,Dx], with M the number of query points.</p>
+
+<p>RBFtype specifies the radial basis functions (RBF) to be used.</p>
+
+<ul>
+  <li>The available global support RBFs are:
+    <ul>
+      <li>‘R1’    - linear spline</li>
+      <li>‘R3’    - cubic spline</li>
+      <li>‘TPS2’  - thin plate spline</li>
+      <li>‘Q’     - quadric</li>
+      <li>‘MQ’    - multiquadric</li>
+      <li>‘IMQ’   - inverse multiquadric</li>
+      <li>‘IQ’    - inverse quadric</li>
+      <li>‘GS’    - Gauss</li>
+    </ul>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">RBF name</th>
+      <th style="text-align: center">Abbreviation</th>
+      <th style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cvarphi%20%5Cleft%28%20r%20%5Cright%29" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Linear spline</td>
+      <td style="text-align: center">R1</td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cepsilon%20r" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Cubic splie</td>
+      <td style="text-align: center">R3</td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%5E3" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thin plate spline</td>
+      <td style="text-align: center">TPS2</td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%5E2%20%5Clog%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%24" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Quadric</td>
+      <td style="text-align: center">Q</td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?1%20&plus;%20%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%5E2" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Multiquadric</td>
+      <td style="text-align: center">MQ</td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Csqrt%7B1%20&plus;%20%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%20%5E2%7D" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Inverse multiquadric</td>
+      <td style="text-align: center">IMQ</td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7B%5Csqrt%7B1%20&plus;%20%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%20%5E2%7D%7D" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Inverse quadric</td>
+      <td style="text-align: center">IQ</td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7B%201%20&plus;%20%5Cleft%28%20%5Cepsilon%20r%20%5Cright%29%20%5E2%20%7D" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Gauss</td>
+      <td style="text-align: center">GS</td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?e%5E%7B-%5Cleft%28%5Cepsilon%20r%20%5Cright%29%5E2%7D" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>The available compact support RBFs are (see Wendland H., Konstruktion und Untersuchung radialer Basisfunktionen mit kompaktem Träger. PhD  thesis, Göttingen, Georg-August-Universität zu Göttingen, Diss, 1996):
+    <ul>
+      <li>‘CP_C0’</li>
+      <li>‘CP_C2’</li>
+      <li>‘CP_C4’</li>
+      <li>‘CP_C6’</li>
+      <li>‘CTPS_C0’</li>
+      <li>‘CTPS_C1’</li>
+      <li>‘CTPS_C2a’</li>
+      <li>‘CTPS_C2b’</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Compact support functions have the form</p>
+
+<p align="center">
+	<img src="https://latex.codecogs.com/gif.latex?%5Cvarphi%20%5Cleft%28%20%5Cxi%20%3D%20%5Cfrac%7Br%7D%7BR%7D%20%5Cright%29%20%3D%20%5Cbegin%7Bcases%7D%20f%20%5Cleft%28%20%5Cxi%20%5Cright%29%2C%20%26%200%20%5Cleq%20%5Cxi%20%5Cleq%201%20%5C%5C%200%2C%20%26%20%5Cxi%20%3E%201%20%5Cend%7Bcases%7D" />
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">RBF name</th>
+      <th style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cvarphi%20%5Cleft%28%20%5Cxi%20%5Cright%29" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCP%20%7D%20%5Cmathcal%7BC%7D%5E0" /></td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E2" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCP%20%7D%20%5Cmathcal%7BC%7D%5E2" /></td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E4%20%5Cleft%28%204%20%5Cxi%20&plus;%201%20%5Cright%29" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCP%20%7D%20%5Cmathcal%7BC%7D%5E4" /></td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E6%20%5Cleft%28%20%5Cfrac%7B35%7D%7B3%7D%20%5Cxi%5E2%20&plus;%206%20%5Cxi%20&plus;%201%20%5Cright%29" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCP%20%7D%20%5Cmathcal%7BC%7D%5E6" /></td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E8%20%5Cleft%28%2032%20%5Cxi%5E3%20&plus;%2025%20%5Cxi%5E2%20&plus;%208%20%5Cxi%20&plus;%201%20%5Cright%29" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCTPS%20%7D%20%5Cmathcal%7BC%7D%5E0" /></td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Cleft%28%201%20-%20%5Cxi%20%5Cright%29%5E5" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCTPS%20%7D%20%5Cmathcal%7BC%7D%5E1" /></td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?1%20&plus;%20%5Cfrac%7B80%7D%7B3%7D%20%5Cxi%5E2%20-%2040%20%5Cxi%5E3%20&plus;%2015%20%5Cxi%5E4%20-%20%5Cfrac%7B8%7D%7B3%7D%20%5Cxi%5E5%20&plus;%2020%20%5Cxi%5E2%20%5Clog%20%5Cxi" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCTPS%20%7D%20%5Cmathcal%7BC%7D%5E2_a" /></td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?1%20-%2030%20%5Cxi%5E2%20-%2010%20%5Cxi%5E3%20&plus;%2045%20%5Cxi%5E4%20-%206%20%5Cxi%5E5%20-%2060%20%5Cxi%5E3%20%5Clog%20%5Cxi" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?%5Ctext%7BCTPS%20%7D%20%5Cmathcal%7BC%7D%5E2_b" /></td>
+      <td style="text-align: center"><img src="https://latex.codecogs.com/gif.latex?1%20-%2020%20%5Cxi%5E2%20&plus;%2080%20%5Cxi%5E3%20-%2045%20%5Cxi%5E4%20-%2016%20%5Cxi%5E5%20&plus;%2060%20%5Cxi%5E4%20%5Clog%20%5Cxi" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>R is either the support radius for the compact support RBFs or a parameter to make the distance values dimensionless for the global support RBFs.</p>
+
+<pre><code class="language-Matlab">[fPar, M] = RBFparam(xs, ys, RBFtype, R)
+</code></pre>
+
+<p>returns the weights in the RBF summation and the polynomial coefficients in a column vector fPar by solving a linear system</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7BM%7D%20%26%20%5Cmathbf%7BP%7D_s%20%5C%5C%20%5Cmathbf%7BP%7D_s%5ET%20%26%20%5Cmathbf%7B0%7D%20%5Cend%7Bpmatrix%7D%20%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7B%5Cgamma%7D%20%5C%5C%20%5Cmathbf%7B%5Cbeta%7D%20%5Cend%7Bpmatrix%7D%20%3D%20%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7Bf%7D_s%20%5C%5C%20%5Cmathbf%7B0%7D%20%5Cend%7Bpmatrix%7D" />
+</p>
+
+<pre><code class="language-Matlab">[y] = RBFeval(xs, x, fPar, RBFtype, R)
+</code></pre>
+
+<p>returns the values of the interpolation weighted function at points x by performing the matrix-vector product</p>
+
+<p align="center">
+    <img src="https://latex.codecogs.com/gif.latex?%5Cmathbf%7Bf%7D%20%3D%20%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7B%5Chat%7BM%7D%7D%20%26%20%5Cmathbf%7B%5Chat%7BP%7D%7D%20%5Cend%7Bpmatrix%7D%20%5Cbegin%7Bpmatrix%7D%20%5Cmathbf%7B%5Cgamma%7D%20%5C%5C%20%5Cmathbf%7B%5Cbeta%7D%20%5Cend%7Bpmatrix%7D" />
+</p>
+
+<h2 id="running-the-example">Running the example</h2>
+
+<p>An example case can be run just by typing in the Matlab command line</p>
+
+<pre><code class="language-Matlab">test
+</code></pre>
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/ChairOfComputationalMathematics/RBF-interp/master/test.png" />
+</p>
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/ChairOfComputationalMathematics/RBF-interp/master/test2.png" />
+</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>Beckert, Armin and Wendland, Holger. Multivariate interpolation for fluid-structure-interaction problems using radial basis functions. <em>Aerospace Science and Technology</em>, 5 (2), p. 125-134, 2001.</li>
+  <li>Wendland, Holger. <em>Konstruktion und Untersuchung radialer Basisfunktionen mit kompaktem Träger}</em>. PhD thesis, Göttingen, Georg-August-Universität zu Göttingen, Diss, 1996.</li>
+  <li>De Boer, A and Van der Schoot, MS and Bijl, Hester. Mesh deformation based on radial basis function interpolation. <em>Computers &amp; structures</em>, 85 (11-14), p. 784-795, 2007.</li>
+  <li>Biancolini, Marco Evangelos. <em>Fast Radial Basis Functions for Engineering Applications</em>. Springer, 2018.</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;We design a LQR controller for stabilyzing the fractional reaction diffusion equation&lt;/p&gt;
+</code></pre></div></div>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases} y_t + (-d_x^2)^s y-\delta y = u\chi_\omega, & (x,t) \in(-L,L)\times(0,T) \\ y = 0, & (x,t)\in [\mathbb{R}\setminus(-L,L)]\times(0,T) \\ y(x,0) = y_0(x), & x\in(-L,L), \end{cases} %]]></script>
+
+<p>where $\delta&gt;0$ is a given constant, $\omega = (a,b)\subset(-L,L)$ and $(-d_x^2)^s$, $s\in(0,1)$ denotes the one-dimensional fractional Laplacian defined as</p>
+
+<script type="math/tex; mode=display">(-d_x^2)^s y(x) = c(s) P.V. \int_{\mathbb{R}} \frac{y(x)-y(z)}{\vert x-z\vert^{1+2s}}dz,</script>
+
+<p>with $c(s)$ an explicit normalization constant.</p>
+
+<p>When considering this equation without the action of the the control $u$, we know that, depending on the value of $\delta$, the corresponding dynamics may become unstable. This is due to the fact that the eignenvalues of the associated elliptic problem are given by $\mu_k=c-\lambda_k$ ($\lambda_k$ being the eigenvalues of the fractional Laplacian on $(-L,L)$ with zero Dirichlet boundary conditions), and they are positive if $c&gt;\lambda_1$ (since, in addition, we know that $\lambda_1&lt;\lambda_k$ for all $K$). We are then intersted in designing a LQR control which is able to stabilyze this solution and prevent its blow-up.</p>
+
+<p>The computation of the LQR control is carried out by means of the following procedure:</p>
+
+<h2 id="step-1-discretization-of-the-equation">STEP 1. Discretization of the equation</h2>
+
+<p>We start by discretizing our original system on a uniform mesh $x_i$, $i=1,\ldots,N$, thus obtaining a N-dimensional system of the type</p>
+
+<script type="math/tex; mode=display">\begin{cases} \dot{y} = Ay+Bu \\ y(0) = y_0 \end{cases}</script>
+
+<p>where:</p>
+
+<ul>
+  <li>
+    <p>with some abuse of notation, we denoted $y\in\mathbb{R}^N$ as the   $N$-dimensional vector whose entries $y_i=y(x_i)$, $i=1,\ldots,N$ are   the evaluation of the function $y$ on the points of the mesh;</p>
+  </li>
+  <li>
+    <p>the matrix $A$ is a discretization of the operator $-(-d_x^2)^s + I$,   $I$ denoting the identity;</p>
+  </li>
+  <li>
+    <p>the matrix $B$ defines the action of the control.</p>
+  </li>
+</ul>
+
+<p>The computation of the matrix requires the discretization of the fractional Laplacian $(-d_x^2)^s$. This is done by employing the function “fl_rigidity”, which implements a finite elements method on a uniform mesh discretizing the space interval $(-L,L)$ (complete details on this method may be found in [1]).</p>
+
+<p>The function “fl_rigidity” works by requiring 3 input parameters:</p>
+
+<ul>
+  <li>
+    <p>s: the order of the fractional Laplacian, which can be any real value      in the interval $(0,1)$;</p>
+  </li>
+  <li>
+    <p>L: any real value, defining the extrema of the space interval $(-L,L)$;</p>
+  </li>
+  <li>
+    <p>N: the number of discretization points in the mesh employed.</p>
+  </li>
+</ul>
+
+<p>The outputs are:</p>
+
+<ul>
+  <li>
+    <p>x: the vector containing the mesh;</p>
+  </li>
+  <li>
+    <p>A: the matrix discretizing the fractional Laplacian.</p>
+  </li>
+</ul>
+
+<p>The matrix B, instead, is constructed by employing the function “construction_matrix_B”, which takes in input</p>
+
+<ul>
+  <li>
+    <p>the vector $x$ containing the mesh;</p>
+  </li>
+  <li>
+    <p>the number of discretization points $N$;</p>
+  </li>
+  <li>
+    <p>the characteristic function of the sub-interval $\omega$.</p>
+  </li>
+</ul>
+
+<h2 id="step-2-definition-of-the-cost-functional-and-computation-of-the-control">STEP 2. Definition of the cost functional and computation of the control</h2>
+
+<p>Once we have the semi-discretization of our original problem, the control we are looking for is computed by minimizing the following cost functional</p>
+
+<script type="math/tex; mode=display">J_{\infty} = \int_{0}^{+\infty} \Big(y^TQy + u^TRu\Big)dt,</script>
+
+<p>where $Q\geq 0$ and $R&gt;0$ are given matrices. Moreover, we know that this control is given in a feedback form by $u^*=-R^{-1}B^TPy$, where $P$ is the solution of the algebraic Riccati equation</p>
+
+<script type="math/tex; mode=display">PA + A^TP-PBB^TP+Q = 0.</script>
+
+<h2 id="implementation">Implementation</h2>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
+<span class="nb">clc</span>
+</code></pre></div></div>
+
+<p>We start by defining the parameter $s\in(0,1)$ (order of the fractional Laplacian), the size of the interval $(-L,L)$, the constant $\delta&gt; \lambda_1$ and the number $N$ of discretization points in our mesh.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">pi</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="mf">0.1</span><span class="p">;</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>and we compute the corresponding approximation of the fractional Laplacian</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">FL</span><span class="p">]</span> <span class="o">=</span> <span class="n">fl_rigidity</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We then use it for building the matrix $A$ describing the dynamics</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="n">A</span> <span class="o">=</span> <span class="o">-</span><span class="n">FL</span><span class="o">+</span><span class="n">D</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Secondly, we use the function “construction_matrix_B” for computing the control operator $B$ on the interval $\omega=(-0.3,0.5)$</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">matrix_B</span> <span class="o">=</span>  <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">construction_matrix_B</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">matrix_B</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Out of the matrices $A$ and $B$, we solve the algebraic Riccati equation by employing the specific function from the control systems toolbox of Matlab. For simplicity, we choose both $R$ and $Q$ as the identity, but other choices are possible in order to improve the efficiency of the method.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="p">[</span><span class="n">P</span><span class="p">,</span><span class="n">cleig</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The output matrix $K=-R^{-1}B^TP$ is used for defining the action of the control and include it in our system</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<span class="n">eq_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Finally, we choose an initial datum</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y0</span> <span class="o">=</span> <span class="nb">cos</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>and we solve our equation with and without control employing the “ode45” function of Matlab. For the equation without control we choose a relatively short time horizon, since we know that the unstable dynamics will rapidly diverge. For the equation with control, instead, we choose a longer time horizon in order to have enough time for stabilyzing the system.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T1</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="n">T2</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
+<span class="n">tspan1</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T1</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
+<span class="n">tspan2</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T2</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
+<span class="n">eq_free</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<span class="p">[</span><span class="n">time1</span><span class="p">,</span> <span class="n">sol_free</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">eq_free</span><span class="p">,</span><span class="n">tspan1</span><span class="p">,</span><span class="n">y0</span><span class="p">);</span>
+<span class="p">[</span><span class="n">time2</span><span class="p">,</span> <span class="n">sol_ctr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">eq_ctr</span><span class="p">,</span><span class="n">tspan2</span><span class="p">,</span><span class="n">y0</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We then plot our results and compare them. Firstly, the free dynamics.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time1</span><span class="p">,</span><span class="n">sol_free</span><span class="p">)</span>
+<span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="n">msol_free</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">sol_free</span><span class="p">)));</span>
+<span class="n">Msol_free</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sol_free</span><span class="p">)));</span>
+<span class="nb">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span> <span class="n">L</span><span class="p">])</span>
+<span class="nb">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T1</span><span class="p">])</span>
+<span class="nb">zticks</span><span class="p">([</span><span class="n">msol_free</span> <span class="n">Msol_free</span><span class="p">])</span>
+<span class="nb">view</span><span class="p">(</span><span class="mi">135</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Free unstable dynamics'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_01.png" alt="" /></p>
+
+<p>We clearly see the growth of the solution, already in the short time horizon [0,4]. When introducing the LQR control, instead, the problem is corrected and the equation is stabilyzed in time $T_2$</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time2</span><span class="p">,</span><span class="n">sol_ctr</span><span class="p">)</span>
+<span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="n">msol_ctr</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">sol_ctr</span><span class="p">)));</span>
+<span class="n">Msol_ctr</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sol_ctr</span><span class="p">)));</span>
+<span class="nb">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="n">L</span><span class="p">])</span>
+<span class="nb">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T2</span><span class="p">])</span>
+<span class="nb">zticks</span><span class="p">([</span><span class="n">msol_ctr</span> <span class="n">Msol_ctr</span><span class="p">])</span>
+<span class="nb">view</span><span class="p">(</span><span class="mi">135</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Controlled dynamics'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_02.png" alt="" /></p>
+
+<h2 id="references">References</h2>
+
+<p>[1] U. Biccari and V. Hernandez-Santamaria, “Controllability of a one-dimensional fractional heat equation: theoretical and nuerical aspects”, IMA J. Math. Control I. (2018).</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h3&gt;Featured Video&lt;/h3&gt;
 </code></pre></div></div>
