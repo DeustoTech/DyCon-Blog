@@ -13,8 +13,8 @@
   
     {
       "title"           : "A reaction-diffusion equation with delay",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0030",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0030",
       "date"            : "2019-04-03",
       "author"          : ["FriouiM"],
       "description"     : "The aim of this tutorial is to give a numerical method for solving a partial differential equation with a constant delay.",

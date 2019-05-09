@@ -5,9 +5,9 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 02 May 2019 16:14:32 +0200</pubDate>
-    <lastBuildDate>Thu, 02 May 2019 16:14:32 +0200</lastBuildDate>
-    <generator>Jekyll v3.8.4</generator>
+    <pubDate>Thu, 09 May 2019 14:24:27 +0200</pubDate>
+    <lastBuildDate>Thu, 09 May 2019 14:24:27 +0200</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>Riccati theory in LQ optimization with time-varying target</title>
@@ -278,13 +278,13 @@ References
 
 </description>
         <pubDate>Wed, 03 Apr 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0030</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0030</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0030</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0030</guid>
         
         
         <category>tutorial</category>
         
-        <category>WP99</category>
+        <category>WP05</category>
         
       </item>
     
