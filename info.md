@@ -5,7 +5,7 @@ description:
 layout: info
 ---
 
-<p>Number of Post is: {{site.posts|where:"layout","tutorial"|size}} and the number of authors is {{site.data.members|size}}. The number of upcoming posts is {{site.posts|where:"layout","pretutorial"|size}}</p>
+
 
 <h1>Upcoming posts</h1>
 

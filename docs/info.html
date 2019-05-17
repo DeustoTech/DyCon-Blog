@@ -141,6 +141,69 @@
 
 </head>
 
+<head>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['table']});
+    google.charts.setOnLoadCallback(drawTable);
+
+    function drawTable() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Name');
+      data.addColumn('number', 'Nº of Posts');
+      data.addColumn('date', 'Date of Last Post');
+      data.addColumn('string', 'Name of Last Post');
+
+
+      data.addRows([
+        ['Aitziber Ibáñez',  2 , new Date(2017,11,05),'Optimal control applied to collective behaviour'],
+        ['Alejandro B. Aceves',  1 , new Date(2018,04,05),'WKB expansion for a fractional Schrödinger equation with applications to controllability'],
+        ['Alejandro Cunillera',  1 , new Date(2018,10,26),'Optimal control of a  graph evolving in discrete time'],
+        ['Alejandro Pozo',  1 , new Date(2017,05,04),'Numerical aspects of LTHC of Burgers equation'],
+        ['Ana Navarro',  1 , new Date(2018,10,19),'Synchronized Oscillators'],
+        ['Arnaud Diego Münch',  1 , new Date(2017,12,21),'Wave Control'],
+        ['Azahar Monge',  1 , new Date(2019,03,26),'The Dirichlet-Neumann iteration for two coupled heterogeneous heat equations'],
+        ['Borjan Geshkovski',  1 , new Date(2018,10,28),'LQR optimal control design for a coupled PDE-ODE system.'],
+        ['Carlos Castro',  1 , new Date(2017,12,21),'Wave Control'],
+        ['Césare Molinari',  1 , new Date(2017,10,25),'Turnpike property for functionals involving $L^1$−norm'],
+        ['Charlotte Rodriguez',  1 , new Date(2018,10,29),'Coupled transport equations and LQR control'],
+        ['Dario Pighin',  1 , new Date(2019,04,21),'Riccati theory in LQ optimization with time-varying target'],
+        ['Domenec Ruiz',  1 , new Date(2018,10,28),'Stabilization of a collective behavior model'],
+        ['Dongnam Ko',  1 , new Date(2018,10,29),'The control on the Kuramoto model by handling one oscillator'],
+        ['Emmanuel Trélat',  2 , new Date(2018,03,05),'Control of the semi-discrete 1D heat equation under nonnegative control constraint'],
+        ['Enrique Zuazua',  17 , new Date(2018,05,01),'Optimal Control of the Poisson Equation with OpenFOAM'],
+        ['Mohammed Nor Frioui',  1 , new Date(2019,04,03),'A reaction-diffusion equation with delay'],
+        ['Jérôme Lohéac',  2 , new Date(2018,03,05),'Control of the semi-discrete 1D heat equation under nonnegative control constraint'],
+        ['Jesus Oroya',  2 , new Date(2018,11,15),'Stability analysis of Power Electronic Converters Connected to AC Grids'],
+        ['Jiamin Zhu',  1 , new Date(2017,12,05),'Solving an optimal control problem arisen in ecology with AMPL'],
+        ['Jose Matias',  1 , new Date(2019,03,26),'Structured deformations of continua'],
+        ['José Vicente',  9 , new Date(2018,07,23),'Optimal Shape Design for Poisson Equation in OpenFOAM'],
+        ['Marco Morandotti',  1 , new Date(2019,03,26),'Structured deformations of continua'],
+        ['Mario Morales',  1 , new Date(2017,11,05),'2D inverse design of linear transport equations on unstructured grids'],
+        ['Martín Lazar',  3 , new Date(2017,11,01),'Greedy optimal control for elliptic problems and its application to turnpike problems'],
+        ['Mehmet Ersoy',  1 , new Date(2017,11,05),'Kolmogorov equation'],
+        ['Miguel Cea',  1 , new Date(2017,12,21),'Wave Control'],
+        ['Mihaela Negreanu',  1 , new Date(2017,12,21),'Wave Control'],
+        ['Navid Allahverdi',  1 , new Date(2017,05,04),'Numerical aspects of LTHC of Burgers equation'],
+        ['Noboru Sakamoto',  1 , new Date(2019,02,04),'Optimal control for inverted pendulum'],
+        ['Ramon Escobedo',  1 , new Date(2017,11,05),'Optimal control applied to collective behaviour'],
+        ['Rodrigo Lecaros',  1 , new Date(2017,06,05),'Conservation laws in the presence of shocks'],
+        ['Sorin Micu',  1 , new Date(2017,12,21),'Wave Control'],
+        ['Swann MARX',  1 , new Date(2019,02,04),'An introduction to the moment method for optimal control problems for polynomial ODEs'],
+        ['Umberto Biccari',  6 , new Date(2018,11,15),'Stability analysis of Power Electronic Converters Connected to AC Grids'],
+        ['Victor Hernández',  7 , new Date(2018,07,03),'Interior Control of the Poisson Equation with the Conjugate Gradient Method in OpenFOAM'],
+        ['Xinliang Liu',  1 , new Date(2019,01,07),'Two Grids Filter Method for RPS Semi-Discretization'],
+        ['Yacouba Simpore',  1 , new Date(2018,10,29),'LQR controller for stabilizing the linear population dynamics model'],
+        ['Yuhua Zhu',  1 , new Date(2017,11,28),'Greedy algorithm for Parametric Vlasov-Fokker-Planck System'],
+        
+      ]);
+
+      var table = new google.visualization.Table(document.getElementById('table_div'));
+
+      table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+    }
+  </script>
+</head>
 <body>
     <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -188,7 +251,7 @@
     <!-- /.container -->
 </nav>
 
-    <!-- Page Header -->
+<!-- Page Header -->
 <header class="intro-header">
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
@@ -207,9 +270,10 @@
 <!-- Main Content -->
 <div class="container">
 	<div class="col-md-10 col-md-offset-1">
-		<p>Number of Post is: 42 and the number of authors is 39. The number of upcoming posts is 5</p>
+      <p>Number of Post is: 42 and the number of authors is 39. The number of upcoming posts is 5</p>
+      <div id="table_div"></div>
 
-<h1>Upcoming posts</h1>
+      <h1>Upcoming posts</h1>
 
 <h4 class="headline"><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0024">REVISION del post Finite element approximation of the 1-D fractional Poisson equation</a></h4>
 <p>Author:
@@ -935,7 +999,6 @@ Control of a parameter dependent system in a robust manner
 
 	</div>
 </div>
-
     <!-- Footer -->
 <footer>
   <hr>
@@ -955,3 +1018,5 @@ Control of a parameter dependent system in a robust manner
 
 </body>
 </html>
+
+
