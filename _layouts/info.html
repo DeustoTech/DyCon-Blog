@@ -16,7 +16,7 @@
 
 
       data.addRows([
-        {% assign authors = site.data.members | sort %}
+        {% assign authors = site.data.members | sort  %}
         {%- for author in authors -%}     
         {%- assign qpost        = site.posts|where:"layout","tutorial"|where:"author",author[0] -%}
         {%- assign lastpost     = qpost[0].date | date: '%Y,%m,%d' -%}
@@ -56,9 +56,12 @@
 <div class="container">
 	<div class="col-md-10 col-md-offset-1">
       <p>Number of Post is: {{site.posts|where:"layout","tutorial"|size}} and the number of authors is {{site.data.members|size}}. The number of upcoming posts is {{site.posts|where:"layout","pretutorial"|size}}</p>
-      <div id="table_div"></div>
 
       {{ content }}
+      <h1> Resumen por Autor</h1>
+      <hr>
+      <div id="table_div"></div>
+
 	</div>
 </div>
     {% include footer.html %}

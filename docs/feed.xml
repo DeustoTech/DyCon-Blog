@@ -5,9 +5,54 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 17 May 2019 08:33:51 +0200</pubDate>
-    <lastBuildDate>Fri, 17 May 2019 08:33:51 +0200</lastBuildDate>
+    <pubDate>Fri, 17 May 2019 09:31:18 +0200</pubDate>
+    <lastBuildDate>Fri, 17 May 2019 09:31:18 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Rotors imbalance suppression by optimal control</title>
+        <description>asda
+</description>
+        <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0029</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0029</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
+    
+      <item>
+        <title>Controllability to steady states of a reaction diffusion system and emergence of barriers.</title>
+        <description>asda
+</description>
+        <pubDate>Fri, 05 Jul 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
+    
+      <item>
+        <title>Sparse sources identification through adjoint localization algorithm</title>
+        <description>asda
+</description>
+        <pubDate>Fri, 14 Jun 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0027</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0027</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
     
       <item>
         <title>REVISION del post Finite element approximation of the 1-D fractional Poisson equation</title>
@@ -360,510 +405,6 @@ References
         <category>tutorial</category>
         
         <category>WP05</category>
-        
-      </item>
-    
-      <item>
-        <title>Structured deformations of continua</title>
-        <description>A Multiscale Geometrical Basis for Variational Problems in Mechanics
-
-This tutorial introduces the notion of structured deformation and shows an easy one-dimensional example.
-
-In the continuum theories of bodies deformations, it is necessary to account for mechanisms of different nature that happen at different length scales. These include
-
-
-  elastic deformations during which, once the load on the body is released, the original configuration is restored;
-  plastic deformations, which involve a permanent macroscopic deformation after releasing the external load. This permanent macroscopic deformation is explained by means of the reorganisation of atomic bonds;
-  fractures, which involve rupture of the material both at the microscopic and at the macroscopic length scales.
-
-
-Structured deformations [DPO1993] provide a multiscale geometry that captures the contributions at the macroscopic level of both smooth and non-smooth geometrical changes at sub-macroscopic levels. The latter are called disarrangements. 
-To encode information of phenomena happening at different length scales in one mathematical object, a (first-order) structured deformation is defined as a pair , where  is the macroscopic deformation, the tensor field  is a measure of deformations without disarrangements (the smooth microscopic deformation), and  is a measure of deformations due to disarrangements (the smooth microscopic deformation).
-
-One can recover the standard notions of plastic deformation from  and , as well as information on the Burgers vector field associated with closed
-curves in the body and the dislocation density field used in describing geometrical changes in bodies with defects from  and  [O2017].
-
-Structured deformations have been set in an energetic formulation framework [CF1997], therefore rendering them apt to be studied with variational techniques. In this context, considering suitable function spaces was fundamental to give  citizenship in the realm of the calculus of variations. The functional-analytic choice of the space , the set of -valued structured deformations on , was dictated by the necessity of treating the non-smooth behaviours described by the disarrangement tensor . Being able to describe the discontinuities of the deformation suggested that a good space for  be , the space of -valued special functions of bounded variation. Consequently, the matrix-valued field  is assumed to live in , so that
-
-
-
-Aside on  functions
-Functions of bounded variation are integrable functions whose distributional derivative is a finite Radon measure, in symbols
-
-
-
-It is known that the distributional derivative  admits a decomposition into three pieces, namely an absolutely continuous part with respect to the Lebesgue measure , whose density is given by the gradient ; a jump part, which is concentrated on an -dimensional set  and whose density with respect to the Hausdorff measure  is given by  ( being the jump of  across the singular set , and  being the normal vector to ); and a part  which is singular with respect to both  and , called the Cantor part. To summarise,
-
-
-
-Special functions of bounded variations are those whose distributional derivative has no Cantor part,
-
-
-
-so that, for  we have .
-
-
-
-One of the fundamental results contained in the seminal paper [DPO1993] is the Approximation Theorem, stating that any structured deformation  can be approximated by a sequence of simple deformations; in the language of [CF1997], the approximation theorem reads
-
-Approximation Theorem: Given , there exists a sequence  such that
-
-
-
-Given the structure of the distributional derivative, it is not difficult to see that the singular part  of  behaves as below
-
-
-
-stating that the discontinuities of the approximating sequence  converge, in the sense of measures, to a limiting measure which is both diffuse and singular. Therefore, if a structured deformation is such that its disarrangement tensor  is non-trivial, it can be approximated by functions with discontinuities which, in the limit, diffuse in the bulk. This has the effect of making the approximating sequence achieve the given structured deformation  while also achieving . In a sense, the disarrangement tensor  is a measure of how non-classical a deformation is.
-
-An example of a  structured deformation
-In this example, we consider a one-dimensional structured deformation and show how it can be approximated. Let , and let , . This pair  describes the deformation of a material which is stretched macroscopically to twice its size by the , whereas the smooth part of the microscopic deformation has a gradient  equal to the identity.
-
-How is it possible, then, to approximate  with a sequence of deformations which behave microscopically like the identity, but achieve the overall effect to stretch the material? Such an approximating sequence should have jumps to allow the material to deform macroscopically, while keeping a microscopical deformation gradient of . The sequence
-
-
-
-behaves as desired and approximates  in the sense described in the Approximation Theorem above. As a matter of fact,  and  (even) in . We can get more information on how the jumps of  diffuse in the whole interval  by looking at the distributional gradient
-
-
-
-Since , the limit of  recovers just the difference . A stronger link between these two quantities is evident considering that  is the Riemann sum of the function  on . A depiction of the first elements of the sequence  is provided in the picture below.
-
-
-
-approximation of the broken ramp
-
-References
-
-R. Choksi and I. Fonseca: Bulk and Interfacial Energy Densities for Structured Deformations of Continua. Arch. Rational Mech. Anal. 138 (1997), 37-103.
-
-
-G. Del Piero and D. R. Owen: Structured Deformation of Continua. Arch. Rational Mech. Anal. 124 (1993), 99-155.
-
-
-D. R. Owen: Elasticity with Gradient-Disarrangements: A Multiscale Perspective for Strain-Gradient Theories of Elasticity and of Plasticity. J. Elast. 127 (2017), 115-150.
-</description>
-        <pubDate>Tue, 26 Mar 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0018</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0018</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP99</category>
-        
-      </item>
-    
-      <item>
-        <title>The Dirichlet-Neumann iteration for two coupled heterogeneous heat equations</title>
-        <description>The time dependent transmission problem is as follows, where we consider a domain $\Omega \subset \mathbb{R}^2$ which is cut into two subdomains $\Omega_1 \cup \Omega_2 = \Omega$ with transmission conditions at the interface $\Gamma = \Omega_1 \cap \Omega_2$:
-
-
-
-where $\textbf{n}_m$ is the outward normal to $\Omega_m$ for $m=1,2$.
-
-The constants $\lambda_1$ and $\lambda_2$ describe the thermal conductivities of the materials on $\Omega_1$ and $\Omega_2$ respectively. $D_1$ and $D_2$ represent the thermal diffusivities of the materials and they are defined by
-
-
-
-where $\rho_m$ represents the density and $c_{p_m}$ the heat capacity of the material placed in $\Omega_m$, $m=1,2$.
-
-DISCRETIZATION
-
-Let $u_I^{(1)}$ and $u_I^{(2)}$ correspond to the unknowns on $\Omega_1$ and $\Omega_2$ respectively and $u_{\Gamma}$ correspond to the unknows at the interface $\Gamma$, then the compact 2D finite difference (FD) formulation on equidistant meshes of (1) for the vector of unknowns
-
-
-
-will be
-
-
-
-for the mass matrices $M_m$, $M_{\Gamma \Gamma}^{(m)}$, $M_{I \Gamma}^{(m)}$, $M_{\Gamma I}^{(m)}$ and the stiffness matrices
-
-
-
-for $m=1,2$.
-
-Applying the implicit Euler method with time step $\Delta t$ to the system (3), we get for the vector of unknowns
-
-
-
-
-
-DIRICHLET-NEUMANN ITERATION
-
-We now employ a standard Dirichlet-Neumann iteration to solve the discrete system (4), getting in the $k$-th iteration the two equation systems
-
-
-
-
-
-to be solved in succession. Here,
-
-
-
-with some initial condition, here $u_{\Gamma}^{n+1,0} = u_{\Gamma}^{n}$. The iteration is terminated according to the standard criterion
-
-
-
-where $\tau$ is a user defined tolerance.
-
-IMPLEMENTATION
-
-We consider here the thermal interaction between two different materials which physical properties are described by their thermal conductivities and diffusivities $\lambda_1$, $\lambda_2$ and $D_1$, $D_2$ respectively. Furthermore, we consider the non overlapping identical domains $\Omega_1 = [0,1] \times [0,1]$ and $\Omega_2 = [1,2] \times [0,1]$.
-
-The initialization parameters look as follows:
-
-Ns = 50;          %% space discretization points in each dimension
-dx = 1/(Ns+1);    %% mesh size
-tf = 0.5;   t0=0; %% final time - initial time
-Nt = 5;           %% time discretization points
-dt = (tf-t0)/Nt;  %% stepsize
-
-
-D1      = 0.5;    %% thermal diffusivity of material on domain 1
-D2      = 1;      %% thermal diffusivity of material on domain 2
-lambda1 = 0.3;    %% thermal conductivity material on domain 1
-lambda2 = 1;      %% thermal conductivity material on domain 2
-
-
-alpha1  = lambda1/D1;
-alpha2  = lambda2/D2;
-
-
-In addition to the parameters above, other objects need to be specified before starting the iterative procedure. The space grids both in $x$-direction and $y$-direction are given to later plot the numerical solution, also the initial conditions $u_m^0(x)$, $x \in \Omega_m$ and the mass and stiffness matrices coming from the space discretization:
-
-space grid w.r.t component x
-
-xplot = linspace(0,2,2*Ns+3);
-%% space grid w.r.t component y
-yplot = linspace(0,1,Ns+2);
-%%
-%% this functions gives the initial conditions w.r.t. domain 1 (U1_0), domain 2 (U2_0) and interface unknowns (UG_0).
-[U1_0, U2_0, UG_0] = initial_conditions(Ns);
-%%
-%% this function calculates the discretization matrices using finite differences
-[A1,A2,A1g,A2g,Ag1,Ag2,Agg1,Agg2,M1,M2,M1g,M2g,Mg1,Mg2,Mgg1,Mgg2] = compute_matrices(Ns,lambda1,lambda2,alpha1,alpha2);
-
-
-Then, the iterative procedure takes place where the equations (4) and (5) are solved alternatively on $\Omega_1$ and $\Omega_2$ respectively until convergence is achieved at each time step. The implementation is specified below:
-
-UG_old = UG_0; %% UG_0 is fixed over the Dirichlet-Neumann iteration while UG_old is being updated
-figure(1)
-%% gif('2D_FDM.gif','frame',figure(1))
-for k=1:Nt %% time recursion
-    %% initial guess for the stopping criteria of the inner fixed point iteration
-    error = 10;
-    %% Dirichlet-Neumann iteration
-    while(error&amp;gt;1e-10)
-        %% solve problem on domain 1 using Dirichlet BC at the interface
-        U1 = solve_dirichlet(Ns,dt,U1_0,UG_0,A1,M1,A1g,M1g,UG_old);
-        %% solve problem on domain 2 using Neumann BC at the interface
-        [U2, UG_new] = solve_neumann(Ns,dt,U1_0,U2_0,UG_0,A2,M2,Ag2,Mg2,A2g,M2g,Agg1,Agg2,Mgg1,Mgg2,Ag1,Mg1,U1,UG_old);
-        %% calculate value for the stopping criteria (difference between two consecutive iterates at the interface)
-        error = norm(UG_old - UG_new);
-        %% update UG_old
-        UG_old = UG_new;
-
-        %%put together U1,U2 and UG_old for plotting
-        Uplot = zeros(Ns+2,2*Ns+3);
-        Uplot(2:end-1,2:Ns+1) = U1;
-        Uplot(2:end-1,Ns+2) = UG_old;
-        Uplot(2:end-1,Ns+3:end-1) = U2;
-
-%%         figure(1)
-%%         mesh(xplot,yplot,Uplot);
-%%         zlim([-80 40])
-%%         xlabel('x')
-%%         ylabel('y')
-%%         zlabel('u(x,y)')
-%%         title(['Numerical solution at time: t = ',num2str(k*dt)])
-%%         gif
-%%         pause(0.1)
-    end
-    %% update the initial values U1_0, U2_0 and UG_0 to start the next time
-    %% step
-    U1_0 = U1;
-    U2_0 = U2;
-    UG_0 = UG_old;
-end
-
-
-
-
-</description>
-        <pubDate>Tue, 26 Mar 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0017</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0017</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP99</category>
-        
-      </item>
-    
-      <item>
-        <title>An introduction to the moment method for optimal control problems for polynomial ODEs</title>
-        <description>The aim of this note is to explain how one can solve an optimal control problem with the moment method. While the theory is collected in [1], we will explain how one is able to use the Globtipoly toolbox, which is a powerful toolbox able to solve many other problems. This toolbox is available in http://homepages.laas.fr/henrion/software/gloptipoly3/. A more detailed documentation is provided in this link, if you are insterested in other applications than the optimal control problem.
-
-The use of this toolbox needs a proper installation either of Sedumi or the Mosek solvers, which are toolboxes instrumental to solve numerically SDP (Semidefinite Program) problems, i.e. optimization problems expressed with LMI (Linear Matrix Inequalities) constraints.
-
-This note does not aim at explaining all the details of the toolbox Globtipoly, since there exists already the paper [2] which introduces really well the problem. It does not aim neither at introducing in details the moment framework developed by Jean Bernard Lasserre and Didier Henrion, which is much more general than the optimal control problem framework. In this note, we just give a simple example to explain how this method can be used in the context of optimal control (especially for ODEs). Thanks to the recent paper [3], we also think that this framework might also work for optimal control of PDEs.
-
-FRAMEWORK
-
-We focus on the following ordinary differential equations:
-
-
-
-where $x$ belongs to a subset $X$ of $\mathbb{R}^n$ and $u$ to a subset $U$ of $\mathbb{R}^m$. We assume that $f$ is a polynomial of $x$ and $u$. Moreover, we assume that $X$ and $U$ can be written with finitely many polynomial inequalities. The Gloptipoly toolbox allows to solve the following kind of optimal control problem:
-
-
-
-where $X_T$ is also a subset of $\mathbb{R}^n$ defined with finitely many polynomial inequalities and $l$ is also a polynomial in the variables $x$ and $u$.
-
-A SIMPLER EXAMPLE AS A MOTIVATION
-
-We focus on a specific example to make the reading of thenote easier. We have
-
-
-
-$u\in\mathbb{R}$ and:
-
-
-
-It is a simple chain of integrators, really well-known in automatic control theory. As described in [1], the related system can be equivalently rewritten as follows:
-
-
-
-where $g$ is any test function in $C^1(X)$, $\mu_1(x)$ is a measure supported on a compact set $K_1$ representing the constraints on $x$ and $u$, $\mu_2(x)=$ is supported on a given compact set $K_2$ corresponding to performance requirements. For example $K_2 = 0$ indicates that state $x$ must reach the origin.
-
-The approximation provided by Gloptipoly consists in reducing the class of test function $g$ to be polynomials, with maximal degree $d$. This maximal degree $d$ is the parameter of approximation of the program. As proved in [1], the higher the degree $d$ is, the better is the result of the approximation.
-
-Our aim is to find the minimal time so that the trajectories of the system go to $0$. Obviously, this result is already known, but we provide this simple example to make clear the use of the Globtipoly toolbox
-
-IMPLEMENTATION
-
-Before going to the optimal control problem, some (easy) technical lines of command are necessary for Gloptipoly to work.
-
-First, you have to add to the path the toolbox Globtipoly
-
-untar('http://homepages.laas.fr/henrion/software/gloptipoly3/gloptipoly3.tar.gz')
-addpath(genpath('gloptipoly3'))
-
-
-Second, you have also to add to the path the toolbox Sedumi.
-
-unzip('https://github.com/sqlp/sedumi/archive/master.zip')
-addpath(genpath('sedumi-master'))
-
-
-Then, you are ready to define the optimization problem.
-
-x0 = [1; 1]; u0 = 0; %% initial conditions
-d = 6; %% maximum degree of test function.
-
-
-We compute the analytic minimum time. We want to know whether we are able to compute the good one with the toolbox Gloptipoly.
-
-if x0(1) &amp;gt;= -(x0(2)^2-2)/2
-tmin = 1+x0(1)+x0(2)+x0(2)^2/2;
-elseif x0(1) &amp;gt;= -x0(2)^2/2*sign(x0(2))
-tmin = 2*sqrt(x0(1)+x0(2)^2/2)+x0(2);
-else
-tmin = 2*sqrt(-x0(1)+x0(2)^2/2)-x0(2);
-end
-
-
-We define measures for constraints. In other words, we also define the vector field under consideration.
-
-The command mpol in Globtipoly allows to define the variables under consideration. One can then define polynomials with respect to these variables.
-
-The command meas allows to define a measure depending on several variables. Hence, when writing meas([x_1;u_1]), one is defining a measure depending on the variables x_1 and u_1.
-
-mpol x1 2
-mpol u1
-m1 = meas([x1;u1]);
-
-
-We now define a measure associated to $x_2$, which will be related to some performance requirement. Indeed, we will impose that this variable is dissipative.
-
-mpol x2 2
-m2 = meas(x2);
-
-
-We then define the vector field.
-
-f = [x1(2);u1];
-
-
-We now define the test functions as polynomials, with maximal degree $d$. The command mmon in Globtipoly allows to define monomials up to an order $d$.
-
-g1 = mmon(x1,d);
-g2 = mmon(x2,d);
-
-
-It is also necessary to assign the initial conditions, for the states as well for the control.
-
-assign([x1;u1],[x0;u0]);
-g0 = double(g1);
-
-
-We define $K_1$ and $K_2$. The set $K_1$ is defined as: $K_1= \lbrace x_1,u_1 \in \mathbb{R}^2\mid x_1(2)\geq -1,: u_1^2\leq 1\rbrace$ and $K_2$ is defined as: $K_2 =\lbrace x_2\in\mathbb{R}\mid x_2^2\leq 0\rbrace$.
-
-We have also to define the cost function of the problem under consideration. The one we are considering is quite simple and just reduces to being
-
-
-
-In terms of functions, this means that you are minizing $x_1(t)$. This implies in particular that you are looking for the minimal time such that the trajectory $(x_1(t),x_2(t))$ will converge to $(0,0)$.
-
-In other words, we are asking that the mass the measure $\mu_1$ is minimal.
-
-Finally, we define also the differential equation with the polynomials truncated up to the order $d$. The command mom corresponds to the integral of polynomials against the suitable measure. For instance, for mom(g_2), one integrates the the polynomial g_2 against the measure $\mu_2$.
-
-P = msdp(min(mass(m1)),... %%Definition of the cost function
-u1^2 &amp;lt;= 1,... %% Definition of $K_1$
-x1(2) &amp;gt;= -1,... %% Definition of $K_&amp;amp;$
-x2'*x2 &amp;lt;= 0,... %% Definition of $K_2
-mom(g2) - g0 == mom(diff(g1,x1)*f)); %% Definition of the dynamics.
-
-
-GloptiPoly 3.8 of 15 December 2014
-Define moment SDP problem
-  Valid objective function
-  Number of support constraints = 3
-  Number of moment constraints = 28
-Measure 1
-  Degree = 6
-  Variables = 3
-  Moments = 84
-Measure 2
-  Degree = 6
-  Variables = 2
-  Moments = 28
-Relaxation order = 3
-Total number of moments = 112
-Generate moment and support constraints
-Generate moment SDP problem
-
-
-
-The command msdp allows to define the problem and all the constraints. As written in [1], this means that you are transforming the problem on functions into a SDP (Semi-definite programming) problem.
-
-Once you do that, one has to solve this SDP problem. The command msol allows to do that.
-
-[status,obj] = msol(P);
-
-
-GloptiPoly 3.8 of 15 December 2014
-Solve moment SDP problem
-*****************************************************
-Calling SeDuMi
-SeDuMi 1.32 by AdvOL, 2005-2008 and Jos F. Sturm, 1998-2003.
-Alg = 2: xz-corrector, Adaptive Step-Differentiation, theta = 0.250, beta = 0.500
-Put 28 free variables in a quadratic cone
-eqs m = 112, order n = 59, dim = 766, blocks = 7
-nnz(A) = 597 + 0, nnz(ADA) = 10192, nnz(L) = 5152
- it :     b*y       gap    delta  rate   t/tP*  t/tD*   feas cg cg  prec
-  0 :            6.97E-01 0.000
-  1 :  -4.85E+00 2.61E-01 0.000 0.3749 0.9000 0.9000  -0.46  1  1  7.9E+00
-  2 :  -1.58E+01 1.08E-01 0.000 0.4124 0.9000 0.9000  -0.63  1  1  5.7E+00
-  3 :  -1.60E+01 4.52E-02 0.000 0.4189 0.9000 0.9000   0.74  1  1  2.0E+00
-  4 :  -7.27E+00 1.65E-02 0.000 0.3663 0.9000 0.9000   1.88  1  1  4.7E-01
-  5 :  -4.16E+00 5.56E-03 0.000 0.3361 0.9000 0.9000   1.60  1  1  1.3E-01
-  6 :  -3.52E+00 2.17E-03 0.000 0.3912 0.9000 0.9000   1.07  1  1  5.0E-02
-  7 :  -3.37E+00 1.06E-03 0.000 0.4892 0.9000 0.9000   0.88  1  1  2.6E-02
-  8 :  -3.24E+00 4.94E-04 0.000 0.4642 0.9000 0.9000   0.70  1  1  1.5E-02
-  9 :  -3.17E+00 2.14E-04 0.000 0.4334 0.9000 0.9000   0.58  1  1  7.8E-03
- 10 :  -3.12E+00 9.06E-05 0.000 0.4235 0.9000 0.9000   0.46  1  1  4.3E-03
- 11 :  -3.08E+00 4.45E-05 0.000 0.4907 0.9000 0.9000   0.48  1  1  2.6E-03
- 12 :  -3.05E+00 2.39E-05 0.000 0.5378 0.9000 0.9000   0.34  1  1  1.9E-03
- 13 :  -3.02E+00 1.07E-05 0.000 0.4486 0.9000 0.9000   0.46  1  1  1.1E-03
- 14 :  -2.98E+00 5.94E-06 0.000 0.5540 0.9000 0.9000   0.23  1  1  8.3E-04
- 15 :  -2.95E+00 2.34E-06 0.000 0.3932 0.9000 0.9000   0.35  2  1  4.4E-04
- 16 :  -2.91E+00 1.06E-06 0.000 0.4528 0.9000 0.9000   0.22  2  2  3.1E-04
- 17 :  -2.88E+00 2.15E-07 0.000 0.2032 0.9000 0.7324   0.34  2  2  1.8E-04
- 18 :  -2.84E+00 9.48E-08 0.000 0.4410 0.7706 0.9000   0.22  2  2  1.2E-04
- 19 :  -2.82E+00 4.23E-08 0.000 0.4464 0.9000 0.9000   0.34  3  2  7.3E-05
- 20 :  -2.78E+00 1.96E-08 0.000 0.4627 0.9000 0.9000   0.20  5  5  5.2E-05
- 21 :  -2.76E+00 8.49E-09 0.000 0.4334 0.9000 0.9000   0.34  7  7  3.0E-05
- 22 :  -2.73E+00 3.76E-09 0.000 0.4427 0.9000 0.9000   0.19  8  8  2.1E-05
- 23 :  -2.70E+00 1.56E-09 0.000 0.4156 0.9000 0.9000   0.33 12 12  1.2E-05
- 24 :  -2.67E+00 6.45E-10 0.000 0.4129 0.9000 0.9000   0.20 14 14  7.9E-06
- 25 :  -2.66E+00 2.71E-10 0.000 0.4202 0.9000 0.9000   0.35 41 41  4.5E-06
-Run into numerical problems.
-
-iter seconds digits       c*x               b*y
- 25      0.4   Inf -2.6569125651e+00 -2.6557155494e+00
-\vertAx-b\vert =   9.3e-06, [Ay-c]_+ =   1.9E-06, \vertx\vert=  5.2e+03, \verty\vert=  4.9e+04
-
-Detailed timing (sec)
-   Pre          IPM          Post
-6.598E-03    2.390E-01    7.343E-04    
-Max-norms: \vert\vertb\vert\vert=1, \vert\vertc\vert\vert = 1,
-Cholesky \vertadd\vert=1, \vertskip\vert = 7, \vert\vertL.L\vert\vert = 3155.
-*****************************************************
-Check feasibility (eps = 1.0000e-03):
-  Marginally feasible SDP: residual = -5.0513e-07
-Check Euclidean norm of solution (max = 1.0000e+06):
-  Norm = 4.9305e+04
-Check ranks of moments matrices (rel gap svd = 1.0000e-03):
-  Measure 1
-    Rank shift = 1
-    Moment matrix of order  1 has size  4 and rank  4
-    Moment matrix of order  2 has size 10 and rank 10
-    Moment matrix of order  3 has size 20 and rank 20
-  Measure 2
-    Rank shift = 1
-    Moment matrix of order  1 has size  3 and rank  1
-  Rank conditions cannot ensure global optimality
-Try to extract solutions (rel tol basis detection = 1.0000e-06):
-  Measure 1
-    Incomplete basis - no solution extracted
-    Global optimality cannot be ensured
-  Measure 2
-    Maximum relative error = 0.0000e+00
-    1 solution extracted
-Inconsistent number of solutions amongst respective measures
-No globally optimal solution could be extracted
-Global optimality cannot be ensured
-
-
-
-You display the minimal time and the lower bound of the cost functional.
-
-disp(['Minimum time = ' num2str(tmin)]);
-disp(['LMI ' int2str(d) ' lower bound = ' num2str(obj)])
-
-
-Minimum time = 3.5
-LMI 6 lower bound = 2.6557
-
-
-
-For the initial condition x0 = [1 1] the exact minimum time is equal to 3.5. In table 1 of [2], a table is provided where you can see that when increasing $d$ the minimum time becomes closer and closer to the analytic one. We copy it in the note.
-
-Conclusion
-
-As noticed before, this note aimed at providing a quick course on how using the toolbox Gloptipoly toolbox to solve optimal control problem. The document [2] provides more examples, even for other kinds of optimization problem. Hence, we refer the interested reader to this document if he is interested in using this toolbox for other problems. Let us note moreover that this toolbox has been used to solve nonlinear hyperbolic PDEs, in the paper [3].
-
-References
-
-[1] J. B. Lasserre, D. Henrion, C. Prieur, and E. Trélat, Nonlinear optimal control via occupation measures and LMI-relaxations, SIAM J. Control Opt., vol. 47, 4, pp. 1643-1666, 2008.
-
-[2] D. Henrion, J.B. Lasserre and J. Löfberg. GloptiPoly 3: moments, optimization and semidefinite programming. Optimization Methods &amp;amp; Software, 24(4-5), 761-779, 2009.
-
-[3] S. Marx, T. Weisser, D. Henrion and J.B. Lasserre. A moment approach for entropy solutions to nonlinear hyperbolic PDEs arXiv preprint arXiv:1807.02306
-</description>
-        <pubDate>Mon, 04 Feb 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0015-moment</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0015-moment</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP99</category>
         
       </item>
     

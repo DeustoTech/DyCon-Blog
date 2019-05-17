@@ -9,7 +9,7 @@ layout: info
 
 <h1>Upcoming posts</h1>
 
-{% assign qposts = site.posts | where:"layout","pretutorial"|sort |reverse %}
+{% assign qposts = site.posts | where:"layout","pretutorial"|sort %}
 
 {% for post in qposts %}
 
@@ -27,6 +27,11 @@ layout: info
 </div>
 <hr>
 {% endfor %}
+
+
+
+
+
 
 
 <h1>Posts by month</h1>
