@@ -23,7 +23,7 @@
         {%- assign lastpostname = qpost[0].title -%}
 
         {%- assign npost    = qpost|size -%}
-
+        {%- if npost==0 -%}{% continue %}{%- endif -%}
         ['{{author[1].name}}',  {{npost}} , new Date({{lastpost}}),'{{lastpostname}}'],
         {% endfor %}
       ]);
@@ -33,6 +33,44 @@
       table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
     }
   </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['table']});
+  google.charts.setOnLoadCallback(drawTable);
+
+  function drawTable() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Name');
+    data.addColumn('string', 'Author');
+    data.addColumn('date', 'expected date');
+
+    data.addRows([
+    {%- assign qposts = site.posts | where:"layout","pretutorial"|sort -%}
+    {% for post in qposts %}
+      ['{{post.title}}', '{%- for aut in post.author -%}{{site.data.members[aut].name}} * {%- endfor -%}'  , new Date("{{post.date | date: '%Y-%m-%d'}}")],
+    {%- endfor -%}
+    ]);
+
+    var table = new google.visualization.Table(document.getElementById('table_div_upc'));
+
+    table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+  }
+</script>
+
+
+
 </head>
 <body>
     {% include nav.html %}
@@ -56,6 +94,8 @@
 <div class="container">
 	<div class="col-md-10 col-md-offset-1">
       <p>Number of Post is: {{site.posts|where:"layout","tutorial"|size}} and the number of authors is {{site.data.members|size}}. The number of upcoming posts is {{site.posts|where:"layout","pretutorial"|size}}</p>
+      <h1> Upcoming posts </h1>
+      <div id="table_div_upc"></div>
 
       {{ content }}
       <h1> Resumen por Autor</h1>
