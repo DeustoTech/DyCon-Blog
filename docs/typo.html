@@ -216,10 +216,123 @@
 &lt;h2 id="asda"&gt;asda&lt;/h2&gt;
 
 
-&lt;h2 id="asda"&gt;asda&lt;/h2&gt;
+&lt;h3 id="a-coupled-pde-ode-model"&gt;A coupled PDE-ODE model&lt;/h3&gt;
+</code></pre></div></div>
+<p>We consider the following hybrid PDE-ODE model</p>
 
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{
+\begin{array}{ll} 
+    \partial_t \rho(t,x) + \partial_x (f(\rho(t,x)))=0, & (t,x)\in R^+\times R, \quad \quad \quad \quad \text{(1a)} \\ 
+    \rho(0,x)=\rho_{0}(x), & x\in R,\quad \quad \quad \quad \quad \quad \quad \quad \,\text{(1b)}\\
+    \dot y_i(t)=v (\rho(t,y_i(t)+))), & t\in R^+, i=1,\cdots,M,\quad \,   \, \, \,\text{(1c)}\\
+    y_i(0)=y_0^i, & i=1,\cdots,M.\quad \, \quad \quad \quad \quad \text{(1d)}\\
+\end{array}
+\right. %]]></script>
 
-&lt;h2 id="asda"&gt;asda&lt;/h2&gt;
+<p>Above, (1a) and (1b) consists  of  a  scalar  conservation proposed by Lighthill-Whitham-Richards law  modeling  the  evolution  of vehicular traffic. (1c) and (1d) represent the trajectory of autonomous vehicles. <script type="math/tex">\rho</script> stands for the density of cars and  the flux function <script type="math/tex">f</script> is defined by <script type="math/tex">f(\rho)=\rho v(\rho)</script> with the average speed <script type="math/tex">v(\rho)=1-\rho</script>.</p>
+
+<p>We assume that <script type="math/tex">\bar \rho_0</script> is an unknown function and our goal is to find a time <script type="math/tex">T</script> at which it is possible to reconstruct the true density <script type="math/tex">\rho</script> between two autonomous vehicles based only on the measured local density of each autonomous vehicle.</p>
+
+<p>We introduce the two following operators</p>
+<ul>
+  <li><script type="math/tex">S_t(\rho_0)(x)</script> is the solution of (1a) at time <script type="math/tex">t</script> and at the position <script type="math/tex">x</script> with initial density <script type="math/tex">\rho_0</script></li>
+  <li><script type="math/tex">\Gamma(\rho_0)=(\rho(\cdot,y_i(\cdot)\pm))_{i\in\{1,\cdots,M\}}</script> where <script type="math/tex">(\rho,y_i)</script> is the solution of (1) with initial data <script type="math/tex">\rho_0</script>.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0032/shocksurj11.jpg" alt="" /></th>
+      <th style="text-align: center"> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0032/shocksurj22.jpg" alt="" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Figure 1.1 - <script type="math/tex">\rho_0(x)=0.16</script> if <script type="math/tex">% <![CDATA[
+x<1.33 %]]></script> and <script type="math/tex">\rho_0(x)=0.63</script> if <script type="math/tex">x>1.33</script> with two autonomous vehicles positioned at <script type="math/tex">y_0^1=0</script> and <script type="math/tex">y_0^2=3</script>.</td>
+      <td style="text-align: center"> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>Figure 1.2 - <script type="math/tex">\rho_1(x)=0.16</script> if <script type="math/tex">% <![CDATA[
+x<1 %]]></script> and <script type="math/tex">\rho_0(x)=0.47</script> if <script type="math/tex">% <![CDATA[
+1<x<2 %]]></script> and <script type="math/tex">\rho_0(x)=0.63</script> if <script type="math/tex">% <![CDATA[
+2<2 %]]></script> with two connected vehicles positioned at <script type="math/tex">y_0^1=0</script> and <script type="math/tex">y_0^2=3</script></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In Figure 1.1 and Figure 1.2, we construct two initial data <script type="math/tex">\rho_0</script> and <script type="math/tex">\rho_1</script> such that <script type="math/tex">\Gamma(\rho_0)=\Gamma(\rho_1)</script> and for every <script type="math/tex">% <![CDATA[
+t < 2 %]]></script> , for every <script type="math/tex">x\in[y_1(t),y_2(t)]</script> , <script type="math/tex">S_T(\rho_0)(x) \neq S_T(\rho_1))(x)</script>. Thus, there isn’t backward uniqueness from the trajectory of autonomous vehicles.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0032/example2_sol.png" alt="" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Figure 1.3 <script type="math/tex">\rho_0(x)=1</script> if <script type="math/tex">% <![CDATA[
+x<10 %]]></script> and <script type="math/tex">\rho_0(x)=0</script> if <script type="math/tex">x>10</script> with two autonomous vehicles positioned at $x=8$ and $x=12$ respectively</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In Figure Figure 1.3, we cannot reconstruct the traffic state at any time using data collected by the two autonomous vehicles. Some additional conditions on the set of initial densities will be require.</p>
+
+<p><strong>Theorem</strong> Let <script type="math/tex">\bar \rho_0 \in BV(R,[0,1])\cap L^1(R)</script> and we assume that for every <script type="math/tex">x\in R</script>, <script type="math/tex">% <![CDATA[
+0<\rho_{\min}\leq  \bar \rho_0(x) \leq \rho_{\max} %]]></script>.  For every <script type="math/tex">i\in \{1,\cdots,M-1\}</script> there exists <script type="math/tex">T_i>0</script> such that for every <script type="math/tex">\rho_0 \in \Gamma^{-1}(\Gamma(\bar \rho_0))</script> and  for almost every <script type="math/tex">x\in [y_i(T_i),y_{i+1}(T_i)]</script> we have 
+<script type="math/tex">S_{T_i}(\rho_0)(x)= S_{T_i}(\bar \rho_0)(x)</script></p>
+
+<p>The reconstruction time <script type="math/tex">T_i</script> is obtained using the notion of generalized characteristics and <script type="math/tex">T_i</script> has an implicit form.</p>
+
+<h3 id="numerical-simulations">Numerical simulations</h3>
+<p>In  Figure 2.1 and  Figure 2.2, we consider the example of two shocks with a fan of rarefaction shocks between the two shocks. A total of three AVs, denoted  by <script type="math/tex">AV_0</script> , <script type="math/tex">AV_1</script> and <script type="math/tex">AV_2</script> , are used to reconstruct the traffic state resulting in two regions of reconstruction between <script type="math/tex">AV_0</script> and <script type="math/tex">AV_1</script> , and between <script type="math/tex">AV_1</script> and <script type="math/tex">AV_2</script> . Specifically, the initial density <script type="math/tex">\rho_0</script> is defined as follows : $\rho_0(x) = 0.0938 $ for $ x\in (-\infty, 8] $, $\rho_0(x) = 0.9062$ for <script type="math/tex">x\in (8, 10]</script>, <script type="math/tex">\rho_0(x) = 0.2188</script> for $x\in (10, 13]$ and $\rho_0(x) = 0.9062$ for <script type="math/tex">x\in (13, \infty)</script>. <script type="math/tex">AV_0</script> , <script type="math/tex">AV_1</script> , and <script type="math/tex">AV_2</script> start at <script type="math/tex">x=5</script> , <script type="math/tex">x=9</script> , and <script type="math/tex">x=12</script> , respectively. The resulting traffic state solved using wave front tracking over the first 20 seconds is shown in Figure 2.1, while the reconstructed state between the AVs is shown in Figure 2.2. The time at which the reconstruction becomes valid is <script type="math/tex">T_{0} = 6.87</script> between <script type="math/tex">AV_0</script> and <script type="math/tex">AV_1</script>, and <script type="math/tex">T_{1} = 3.39</script> between <script type="math/tex">AV_1</script> and <script type="math/tex">AV_2</script>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0032/paper_example_3_real_sol 2.png" alt="" /></th>
+      <th style="text-align: center"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0032/paper_example_3_reconstruction 2.png" alt="" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Figure 2.1</td>
+      <td style="text-align: center">Figure 2.2</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In  Figure 3.1 and Figure 3.2, one autonomous vehicle, denoted by <script type="math/tex">AV_0</script> , is deployed on a ring. The initial density <script type="math/tex">\rho_0</script> is a <script type="math/tex">10</script>-periodic function  defined as follows:  <script type="math/tex">\rho_0(x) = 0.8125</script> for <script type="math/tex">x\in (0,2)</script> , <script type="math/tex">\rho_0(x) = 0.3125</script> for <script type="math/tex">x\in (2, 10)</script> . Since <script type="math/tex">\rho</script> and <script type="math/tex">y_0</script> are also <script type="math/tex">10</script> periodic functions, both trajectories plotted in red in  Figure 3.2  are  the ones of <script type="math/tex">AV_0</script>. The traffic state on the whole ring can be reconstructed after <script type="math/tex">T_{\max}=15.444</script>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0032/example_ring_sol.png" alt="" /></th>
+      <th style="text-align: center"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0032/example_ring_reconstruction.png" alt="" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Figure 3.1</td>
+      <td style="text-align: center">Figure 3.2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="references">References</h3>
+<p>[1] T.Liard, B. Piccoli, R. Stern, D. Work. <em>Traffic reconstruction using autonomous vehicles</em>; submitted (2019)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2 id="asda"&gt;asda&lt;/h2&gt;
 
 
 &lt;p&gt;In this short tutorial, we explain how to use Riccati’s theory to solve an LQ control problem with targets.&lt;/p&gt;

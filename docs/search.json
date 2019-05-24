@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Reconstruction of traffic state using autonomous vehicles",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/WP99-P0032",
+      "date"            : "2019-05-24",
+      "author"          : ["ThibaultL"],
+      "description"     : "Autonomous Vehicles (briefly AVs) have already been tested on urban and highway networks and,  for the future they may be used to monitor and manage the   vehicular traffic. The impact of autonomous vehicles on vehicular traffic is modeled  by a PDE+ODE models with moving point-flux constraint. The PDE is a nonlinear  hyperbolic conservation laws and the ODE represents the trajectory of autonomous vehicles. We show that the data collected by autonomous vehicles' sensors can be used to reconstruct the traffic state.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0032/paper_example_3_real_sol%202.png"
+    } ,
+  
+    {
       "title"           : "Riccati theory in LQ optimization with time-varying target",
       "categories"      : ["tutorial", "WP02"],
       "url"             : "/tutorial/wp02/P0003",

@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 22 May 2019 08:19:01 +0200</pubDate>
-    <lastBuildDate>Wed, 22 May 2019 08:19:01 +0200</lastBuildDate>
+    <pubDate>Fri, 24 May 2019 15:37:32 +0200</pubDate>
+    <lastBuildDate>Fri, 24 May 2019 15:37:32 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -100,21 +100,6 @@
       </item>
     
       <item>
-        <title>Impact of autonomous vehicles on vehicular traffic: a hybrid PDE+ODE models</title>
-        <description>asda
-</description>
-        <pubDate>Fri, 31 May 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0032</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0032</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP99</category>
-        
-      </item>
-    
-      <item>
         <title>Propagation of one and two-dimensional discrete waves under finite difference approximation</title>
         <description>asda
 </description>
@@ -151,6 +136,119 @@
         <pubDate>Mon, 27 May 2019 00:00:00 +0200</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0026</link>
         <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0026</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
+    
+      <item>
+        <title>Reconstruction of traffic state using autonomous vehicles</title>
+        <description>A coupled PDE-ODE model
+We consider the following hybrid PDE-ODE model
+
+
+
+Above, (1a) and (1b) consists  of  a  scalar  conservation proposed by Lighthill-Whitham-Richards law  modeling  the  evolution  of vehicular traffic. (1c) and (1d) represent the trajectory of autonomous vehicles.  stands for the density of cars and  the flux function  is defined by  with the average speed .
+
+We assume that  is an unknown function and our goal is to find a time  at which it is possible to reconstruct the true density  between two autonomous vehicles based only on the measured local density of each autonomous vehicle.
+
+We introduce the two following operators
+
+   is the solution of (1a) at time  and at the position  with initial density 
+   where  is the solution of (1) with initial data .
+
+
+
+  
+    
+      
+       
+       
+       
+       
+       
+      
+    
+  
+  
+    
+      Figure 1.1 -  if  and  if  with two autonomous vehicles positioned at  and .
+       
+       
+       
+       
+       
+      Figure 1.2 -  if  and  if  and  if  with two connected vehicles positioned at  and 
+    
+  
+
+
+In Figure 1.1 and Figure 1.2, we construct two initial data  and  such that  and for every  , for every  , . Thus, there isn’t backward uniqueness from the trajectory of autonomous vehicles.
+
+
+  
+    
+      
+    
+  
+  
+    
+      Figure 1.3  if  and  if  with two autonomous vehicles positioned at $x=8$ and $x=12$ respectively
+    
+  
+
+
+In Figure Figure 1.3, we cannot reconstruct the traffic state at any time using data collected by the two autonomous vehicles. Some additional conditions on the set of initial densities will be require.
+
+Theorem Let  and we assume that for every , .  For every  there exists  such that for every  and  for almost every  we have 
+
+
+The reconstruction time  is obtained using the notion of generalized characteristics and  has an implicit form.
+
+Numerical simulations
+In  Figure 2.1 and  Figure 2.2, we consider the example of two shocks with a fan of rarefaction shocks between the two shocks. A total of three AVs, denoted  by  ,  and  , are used to reconstruct the traffic state resulting in two regions of reconstruction between  and  , and between  and  . Specifically, the initial density  is defined as follows : $\rho_0(x) = 0.0938 $ for $ x\in (-\infty, 8] $, $\rho_0(x) = 0.9062$ for ,  for $x\in (10, 13]$ and $\rho_0(x) = 0.9062$ for .  ,  , and  start at  ,  , and  , respectively. The resulting traffic state solved using wave front tracking over the first 20 seconds is shown in Figure 2.1, while the reconstructed state between the AVs is shown in Figure 2.2. The time at which the reconstruction becomes valid is  between  and , and  between  and .
+
+
+  
+    
+      
+      
+    
+  
+  
+    
+      Figure 2.1
+      Figure 2.2
+    
+  
+
+
+In  Figure 3.1 and Figure 3.2, one autonomous vehicle, denoted by  , is deployed on a ring. The initial density  is a -periodic function  defined as follows:   for  ,  for  . Since  and  are also  periodic functions, both trajectories plotted in red in  Figure 3.2  are  the ones of . The traffic state on the whole ring can be reconstructed after .
+
+
+  
+    
+      
+      
+    
+  
+  
+    
+      Figure 3.1
+      Figure 3.2
+    
+  
+
+
+References
+[1] T.Liard, B. Piccoli, R. Stern, D. Work. Traffic reconstruction using autonomous vehicles; submitted (2019)
+</description>
+        <pubDate>Fri, 24 May 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0032</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0032</guid>
         
         
         <category>tutorial</category>
