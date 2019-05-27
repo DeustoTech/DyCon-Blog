@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/WP99-P0026",
+      "date"            : "2019-05-27",
+      "author"          : ["DongnamK"],
+      "description"     : "",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0026/ds.gif"
+    } ,
+  
+    {
       "title"           : "Reconstruction of traffic state using autonomous vehicles",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/WP99-P0032",
@@ -73,8 +83,8 @@
   
     {
       "title"           : "Two Grids Filter Method for RPS Semi-Discretization",
-      "categories"      : ["tutorial", "WP04"],
-      "url"             : "/tutorial/wp04/P0002-Numerical-homogenizaton",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0002-Numerical-homogenizaton",
       "date"            : "2019-01-07",
       "author"          : ["XinliangL"],
       "description"     : "This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.",
