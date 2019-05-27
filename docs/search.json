@@ -7,7 +7,7 @@
       "url"             : "/tutorial/wp99/WP99-P0026",
       "date"            : "2019-05-27",
       "author"          : ["DongnamK"],
-      "description"     : "",
+      "description"     : "In this post, we use IpOpt and AMPL to simulate optimal controls on a nonlinear ODE system with unbounded interactions. The restriction and initial guess on the state variables are critical for this problem to operate minimization algorithm. From the data calculated from AMPL, we interpret and visualize it using Matlab.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0026/ds.gif"
     } ,
   
