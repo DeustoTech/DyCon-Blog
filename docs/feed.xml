@@ -3,10 +3,10 @@
   <channel>
     <title>DyCon Blog</title>
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
-    <link>http://localhost:4000/DyCon-Blog/</link>
-    <atom:link href="http://localhost:4000/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 04 Jun 2019 09:50:00 +0200</pubDate>
-    <lastBuildDate>Tue, 04 Jun 2019 09:50:00 +0200</lastBuildDate>
+    <link>https://deustotech.github.io/DyCon-Blog/</link>
+    <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Tue, 04 Jun 2019 09:50:50 +0200</pubDate>
+    <lastBuildDate>Tue, 04 Jun 2019 09:50:50 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -14,8 +14,8 @@
         <description>asda
 </description>
         <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0031</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0031</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0031</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0031</guid>
         
         
         <category>tutorial</category>
@@ -29,8 +29,8 @@
         <description>asda
 </description>
         <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0029</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0029</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0029</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0029</guid>
         
         
         <category>tutorial</category>
@@ -44,8 +44,8 @@
         <description>asda
 </description>
         <pubDate>Fri, 05 Jul 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0028</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0028</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</guid>
         
         
         <category>tutorial</category>
@@ -59,8 +59,8 @@
         <description>asda
 </description>
         <pubDate>Fri, 14 Jun 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0027</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0027</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0027</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0027</guid>
         
         
         <category>tutorial</category>
@@ -74,8 +74,8 @@
         <description>asda
 </description>
         <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0030</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0030</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0030</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0030</guid>
         
         
         <category>tutorial</category>
@@ -89,8 +89,8 @@
         <description>asda
 </description>
         <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0024</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0024</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0024</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0024</guid>
         
         
         <category>tutorial</category>
@@ -104,8 +104,8 @@
         <description>asda
 </description>
         <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0023</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0023</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</guid>
         
         
         <category>tutorial</category>
@@ -296,8 +296,8 @@ References
 
 </description>
         <pubDate>Tue, 04 Jun 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P0025</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P0025</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0025</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0025</guid>
         
         
         <category>tutorial</category>
@@ -561,8 +561,8 @@ constraints. Math. Models Methods Appl. Sci., Vol. 27, No. 9 (2017), pp 1587-164
 Fields, Vol. 8, No. 3,4 (2018), pp. 935-964.
 </description>
         <pubDate>Fri, 31 May 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp03/WP03-P0022</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp03/WP03-P0022</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022</guid>
         
         
         <category>tutorial</category>
@@ -786,8 +786,8 @@ grid on
 
 </description>
         <pubDate>Mon, 27 May 2019 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0026</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0026</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0026</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0026</guid>
         
         
         <category>tutorial</category>
