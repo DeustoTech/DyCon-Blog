@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Controllability of the one-dimensional fractional heat equation under positivity constraints - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/search">Web Sitemap</a>
+                </li>
+                
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP03">
+            Control under constraints</a> &#8827;</small>
+          </h2>
+          <h1>Controllability of the one-dimensional fractional heat equation under positivity constraints</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+                  </span>
+                </span>
+              
+              - 31 May 2019
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        <p>In [2], we analyzed the controllablity properties under non-negative control and state constraints of the following heat-like equation involving the fractional Laplacian on $(-1,1)$</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{frac_heat}
+    \begin{cases}
+        z_t+(-d_x^2)^s z = u\chi_{\omega}, & (x,t)\in (-1,1)\times(0,T)
+        \\
+        z = 0, & (x,t)\in (-1,1)^c\times(0,T)
+        \\
+        z(\cdot,0)=z_0, & x\in (-1,1).
+    \end{cases}
+\end{equation} %]]></script>
+
+<p>In \ref{frac_heat}, $\omega\subset (-1,1)$ is the control region in which the distributed control $u$ acts. Moreover, we denote by $(-d_x^2)^s$ the fractional Laplace operator defined, for all $s\in(0,1)$, as the following singular integral</p>
+
+<script type="math/tex; mode=display">(-d_x^2)^s z(x) := c_s \,P.V.\,\int_{\mathbb{R}} \frac{z(x)-z(y)}{|x-y|^{1+2s}}\,dy,</script>
+
+<p>with $c_s$ an explicit normalization constant given by</p>
+
+<script type="math/tex; mode=display">c_s = \frac{s2^{2s}\Gamma\left(\frac{1+2s}{2}\right)}{\sqrt{\pi}\Gamma(1-s)},</script>
+
+<p>Gamma being the usual Euler Gamma function.</p>
+
+<p>The main result we established are the following results:</p>
+
+<ol>
+  <li>
+    <p>For any $s&gt;1/2$, there exists $T&gt;0$ such that the fractional heat equation \ref{frac_heat} is controllable to positive trajectories by means of a non-negative control $u\in L^\infty(\omega\times(0,T))$. Moreover, if the initial datum $z_0\geq 0$ is non-negative, we also have $z(x,t)\geq 0$ for every $(x,t)\in (-1,1)\times (0,T)$.</p>
+  </li>
+  <li>
+    <p>If we define the minimal controllability time by</p>
+  </li>
+</ol>
+
+<script type="math/tex; mode=display">\begin{align}
+    T_{min}(z_0,\widehat{z}):= \inf\Big\{T>0:\exists\;\; 0\leq u\in L^\infty(\omega\times(0,T)) \\ \hspace{5cm} such\;that\; z(\cdot,0)=z_0\; and\; z(\cdot,T)=\widehat{z}(\cdot,T)\Big\},
+\end{align}</script>
+
+<p>we have $T_{min}&gt;0$.</p>
+
+<ol>
+  <li>For $T = T_{min}$, there exists a non-negative control $u\in \mathcal M(\omega\times(0,T_{min}))$, the space of Radon measures
+on $\omega\times(0,T_{min})$, such that the corresponding solution $z$ of \ref{frac_heat} satisfies $z(x,T) = \widehat{z}(x,T)$ a.e.
+in $(-1,1)$.</li>
+</ol>
+
+<p>These results extend to the fractional case the ones previously obtained by our team in the context of the linear and semi-linear heat equation (see our previous entries in the <strong>DyCon Blog</strong>, <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/https://deustotech.github.io/DyCon-Blog//tutorial/wp03/P0001">WP3_P0001</a> and <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/https://deustotech.github.io/DyCon-Blog//tutorial/wp03/P0002">WP3_P0002</a>).</p>
+
+<p>In this post, we present some numerical development in order to find the minimal controllability time for the discretized
+fractional heat equation with non-negative control constraint and to confirm our theoretical results.</p>
+
+<p>In particular, we will consider the problem of steering the initial datum</p>
+
+<script type="math/tex; mode=display">z_0(x) = \frac 12\cos\left(\frac \pi2 x\right)</script>
+
+<p>to the target trajectroy $\widehat{z}$ solution of \ref{frac_heat} with initial datum</p>
+
+<script type="math/tex; mode=display">\widehat{z}_0(x) = 6\cos\left(\frac \pi2 x\right)</script>
+
+<p>and right-hand side $\widehat{u}\equiv 1$.</p>
+
+<p>We choose $s=0.8$ and $\omega=(-0.3,0.8)\subset (-1,1)$ as the control region. The approximation of the minimal controllability time is obtained by solving the following constrained minimization problem.</p>
+
+<script type="math/tex; mode=display">minimize\;T</script>
+
+<p>subject to</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+T>0
+\\
+z_t+(-d_x^2)^s z=u\chi_\omega, & a.\,e.\;in\; (-1,1)\times(0,T)
+\\
+z(\cdot,0)=z_0\geq 0, & a.\,e.\;in\; (-1,1)
+\\
+z\geq 0, & a.\,e.\;in\; (-1,1)\times(0,T)
+\\
+u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
+\end{cases} %]]></script>
+
+<p>To solve this problem numerically, we employ the expert interior-point optimization routine <a href="https://github.com/coin-or/Ipopt">IpOpt</a> combined with automatic differentiation and the modeling language <a href="https://ampl.com/">AMPL</a>. The interest of using <strong>AMPL</strong> together with <strong>IpOpt</strong> is that the gradient of the cost function and the constraints is automatically generated. Solving problems with <strong>IpOpt</strong> and AMPL can be made online through the <a href="https://neos-server.org/neos/">NEOS</a> solvers.</p>
+
+<p>To perform our simulations, we apply a FE method for the space discretization of the fractional Laplacian (see [1]) on a uniform space-grid</p>
+
+<script type="math/tex; mode=display">x_i = -1 + \frac{2i}{N_x}, \quad i = 1,\ldots,N_x,</script>
+
+<p>with $N_x=20$ . Moreover, we use an explicit Euler scheme for the time integration on the time-grid</p>
+
+<script type="math/tex; mode=display">t_j = \frac{Tj}{N_t}, \quad j = 0,\ldots,N_t,</script>
+
+<p>with $N_t$ satisfying the <strong>Courant-Friedrich-Lewy</strong> condition. In particular, we choose here $N_t=100$.</p>
+
+<p>The AMPL code for solving this minimation problem is included below. In it, the matrices defining the dynamics are computed through specific functions implemented in <strong>Matlab</strong> and are given as parameters.</p>
+
+<p>It is important to remark that we are interested in the controllability to the trajectory $\widehat{z}(\cdot,T)$ but, at the same time, $T$ is a variable in our code since it is the cost functional we aim to minimize. In view of that, our final target changes during the minimization process. Nevertheless this issue can be bypassed by taking advance of the linear nature of our equation and solving the <em>traslated</em> constrained minimization problem consisting in finding the minimial time for steering the inital datum $z_0-\widehat{z}_0$ by employing a control $u\geq\widehat{u}$ ($\widehat{z}_0$ and $\widehat{u}$ are the same given above).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Minimal time for the constrained controllability of the fractional heat equation.
+</span>
+<span class="c1"># 1: define the parameters
+</span>
+<span class="n">param</span> <span class="n">Nx</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>               <span class="c1"># number of spatial discretization points
+</span>
+<span class="n">param</span> <span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>              <span class="c1"># number of time discretization points
+</span>
+<span class="n">param</span> <span class="n">y0</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>            <span class="c1"># initial condition
+</span>
+<span class="n">param</span> <span class="n">y1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                <span class="c1"># target
+</span>
+<span class="n">param</span> <span class="n">dx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="n">Nx</span><span class="p">;</span>             <span class="c1"># Space step
+</span>
+<span class="n">param</span> <span class="n">C</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>                 <span class="c1"># Bound on the controls
+</span>
+<span class="n">param</span> <span class="n">A</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Stiffness or rigidity matrix
+</span>
+<span class="n">param</span> <span class="n">B</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Control matrix
+</span>
+<span class="n">param</span> <span class="n">M</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Mass matrix  
+</span>
+<span class="c1"># 2: define the variables
+</span>
+<span class="n">var</span> <span class="n">y</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># State
+</span><span class="n">var</span> <span class="n">u</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span><span class="o">&gt;=-</span><span class="n">C</span><span class="p">;</span>   <span class="c1"># Control
+</span><span class="n">var</span> <span class="n">T</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span>                            <span class="c1"># Time horizon
+</span><span class="n">var</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="n">Nt</span><span class="p">;</span>                        <span class="c1"># Time step
+</span>
+<span class="c1"># 3: define the data
+</span>
+<span class="n">data</span><span class="p">;</span>
+
+<span class="c1"># Initial datum
+</span>
+<span class="n">param</span> <span class="n">y0</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
+<span class="mi">1</span> <span class="o">-</span><span class="mf">0.000000</span> <span class="o">-</span><span class="mf">0.905270</span> <span class="o">-</span><span class="mf">1.785847</span> <span class="o">-</span><span class="mf">2.617711</span> <span class="o">-</span><span class="mf">3.378170</span> <span class="o">-</span><span class="mf">4.046482</span> <span class="o">-</span><span class="mf">4.604416</span> <span class="o">-</span><span class="mf">5.036753</span> <span class="o">-</span><span class="mf">5.331701</span> <span class="o">-</span><span class="mf">5.481215</span> <span class="o">-</span><span class="mf">5.481215</span> <span class="o">-</span><span class="mf">5.331701</span> <span class="o">-</span><span class="mf">5.036753</span> <span class="o">-</span><span class="mf">4.604416</span> <span class="o">-</span><span class="mf">4.046482</span> <span class="o">-</span><span class="mf">3.378170</span> <span class="o">-</span><span class="mf">2.617711</span> <span class="o">-</span><span class="mf">1.785847</span> <span class="o">-</span><span class="mf">0.905270</span> <span class="o">-</span><span class="mf">0.000000</span><span class="p">;</span>
+
+<span class="c1"># Stiffness or rigidity matrix A
+</span>
+<span class="n">param</span> <span class="n">A</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
+<span class="mi">1</span> <span class="o">-</span><span class="mf">5.551728</span> <span class="mf">2.242487</span> <span class="mf">0.359689</span> <span class="mf">0.077115</span> <span class="mf">0.033148</span> <span class="mf">0.017829</span> <span class="mf">0.010871</span> <span class="mf">0.007193</span> <span class="mf">0.005044</span> <span class="mf">0.003694</span> <span class="mf">0.002798</span> <span class="mf">0.002178</span> <span class="mf">0.001733</span> <span class="mf">0.001405</span> <span class="mf">0.001158</span> <span class="mf">0.000966</span> <span class="mf">0.000816</span> <span class="mf">0.000697</span> <span class="mf">0.000600</span> <span class="mf">0.000521</span>
+<span class="o">...</span>
+<span class="mi">20</span> <span class="mf">0.000521</span> <span class="mf">0.000600</span> <span class="mf">0.000697</span> <span class="mf">0.000816</span> <span class="mf">0.000966</span> <span class="mf">0.001158</span> <span class="mf">0.001405</span> <span class="mf">0.001733</span> <span class="mf">0.002178</span> <span class="mf">0.002798</span> <span class="mf">0.003694</span> <span class="mf">0.005044</span> <span class="mf">0.007193</span> <span class="mf">0.010871</span> <span class="mf">0.017829</span> <span class="mf">0.033148</span> <span class="mf">0.077115</span> <span class="mf">0.359689</span> <span class="mf">2.242487</span> <span class="o">-</span><span class="mf">5.551728</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Control matrix B
+</span>
+<span class="n">param</span> <span class="n">B</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
+<span class="mi">1</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span>
+<span class="o">...</span>
+<span class="mi">20</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Mass matrix M
+</span>
+<span class="n">param</span> <span class="n">M</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
+<span class="mi">1</span> <span class="mf">0.070175</span> <span class="mf">0.017544</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span>
+<span class="o">...</span>
+<span class="mi">20</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.017544</span> <span class="mf">0.070175</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 4: define the cost functional to minimize
+</span>
+<span class="n">minimize</span> <span class="n">cost</span><span class="p">:</span> <span class="n">T</span><span class="p">;</span>
+
+<span class="c1"># 5: define the constraints
+</span>
+<span class="c1"># 5.a: dynamics y' = Ay + Bu, implemented through an Explicit Euler method.
+</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">y_dyn</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">2.</span><span class="o">.</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">}:</span>
+<span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">dt</span><span class="o">*</span><span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]);</span>
+
+<span class="c1"># 5.b: homogeneous Dirichlet boundary conditions in -1 and 1.
+</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">left_boundary</span>  <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">right_boundary</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">Nx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1"># 5.c: initial condition.
+</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">y_init</span> <span class="p">{</span><span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y0</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+<span class="c1"># 5.d: target.
+</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">y_end1</span> <span class="p">{</span><span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">Nt</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y1</span><span class="p">;</span>
+
+<span class="c1"># 6: solve the problem with IpOpt
+</span>
+<span class="n">option</span> <span class="n">solver</span> <span class="n">ipopt</span><span class="p">;</span>
+<span class="n">option</span> <span class="n">ipopt_options</span> <span class="s">"max_iter=100000 linear_solver=mumps hessian_approximation=exact halt_on_ampl_error yes"</span><span class="p">;</span>
+<span class="n">solve</span><span class="p">;</span>
+
+<span class="c1"># 7: print the results.
+</span>
+<span class="n">printf</span><span class="p">:</span> <span class="s">"T  = </span><span class="si">%24.16</span><span class="s">e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">T</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">:</span> <span class="s">"Nx = </span><span class="si">%</span><span class="s">d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">Nx</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">:</span> <span class="s">"Nt = </span><span class="si">%</span><span class="s">d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">Nt</span><span class="p">;</span>
+<span class="n">printf</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="s">" </span><span class="si">%24.16</span><span class="s">e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">];</span>
+<span class="n">printf</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="s">" </span><span class="si">%24.16</span><span class="s">e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">];</span>
+
+<span class="n">end</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Once the minimization is concluded, we save the results in a file “data.txt” and we use <strong>Matlab</strong> to reshape the solution and the control so to obtain two $N_x\times(N_t+1)$ matrices for the plots.</p>
+
+<p>This can be done through the following script:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">close</span> <span class="nb">all</span>
+<span class="c1">% Read the data from the external file data.txt</span>
+
+<span class="n">fid</span><span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="s1">'data.txt'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">);</span>
+<span class="n">C</span> <span class="o">=</span> <span class="nb">fscanf</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span><span class="s1">'%f'</span><span class="p">,</span><span class="n">Inf</span><span class="p">);</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">Nx</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">4</span><span class="p">:(</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">Nx</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">C</span><span class="p">((</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">Nx</span><span class="o">+</span><span class="mi">4</span><span class="p">:</span><span class="k">end</span><span class="p">);</span>
+<span class="nb">fclose</span><span class="p">(</span><span class="n">fid</span><span class="p">);</span>
+
+<span class="c1">% Reshape the state y and the control u into two Nx times Nt+1 matrices</span>
+<span class="n">y</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">u</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>From the reshaped solution and control, we can generate the plots. For instance, the m-file plot_control.m is the one generating <strong>Figure 2</strong> below.</p>
+
+<p>The minimal time that we obtain from our minimization process is $T_{min}\simeq 0,2101$. Our simulations show that in this time horizon the fractional heat equation \ref{frac_heat} is controllable from the initial datum $z_0$ to the desired trajectory $\widehat{z}(\cdot,T)$ by maintaining the positivity of the solution (as it is expected since the initial datum is positive in $(-1,1)$, see <strong>Figure 1</strong>).</p>
+
+<h2><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/evolution_tmin.gif" alt="GitHub Logo" /></h2>
+<p><strong>Figure 1</strong>. Controllability of the fractional heat equation \ref{frac_heat}in the minimal time $T_{min}=0.2101$.</p>
+
+<p>Moreover, as it is observed also in <strong>Figure 2</strong>, the control has an impulsional behavior.</p>
+
+<h2 id="-1"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/deltas.png" alt="GitHub Logo" /></h2>
+<p><strong>Figure 2</strong>. Minimal-time control. In the $(t,x)$ plane in blue the time $t$ varies from $t = 0$ (left) to $t = T_{min}$ (right).</p>
+
+<p>This behavior of the control is not surprising. Indeed, as it was already observed in our previous works [3,4], the minimal-time controls are expected to be atomic measures, in particular linear combinations of Dirac deltas. Our simulations are thus consistent with the aforementioned papers.</p>
+
+<p>The impulsional behavior of the control is then lost when extending the time horizon beyond $T_{min}$. This is shown in <strong>Figure 3</strong>, in which we display the behavior of the control steering the solution of the fractional heat equation \ref{frac_heat} from the initial datum $z_0$ to the target $\widehat{z}(\cdot,T)$ in the time horizon $T=0.4$.</p>
+
+<h2 id="-2"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/disposition_tlarge.png" alt="GitHub Logo" /></h2>
+<p><strong>Figure 3</strong>. Behavior of the control in time $T = 0.4$. The white lines delimit the control region $\omega = (-0.3, 0.8)$. The regions in which the control is active are marked in yellow. The atomic nature is lost.</p>
+
+<p>This control has been computed by employing once again <strong>IpOpt</strong> for solving the following minimization problem:</p>
+
+<script type="math/tex; mode=display">\min\;\|z(\cdot,T)-\widehat{z}(\cdot,T)\|_{L^2(-1,1)}</script>
+
+<p>subject to</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+z_t+(-d_x^2)^s z=u\chi_\omega, & a.\,e.\;in\; (-1,1)\times(0,T)
+\\
+z(x,0)=z_0\geq 0, & a.\,e.\;in\; (-1,1)
+\\
+z(x,t)\geq 0, & a.\,e.\;in\; (-1,1)\times(0,T)
+\\
+u(x,t)\geq 0, & a.\,e.\;in\; \omega\times(0,T).
+\end{cases} %]]></script>
+
+<p>As we can observe, the action of this control is now more distributed in $\omega$. Neverthelss, in accordance with our theoretical results, the equation is still controllable in the prescribed time horizon (see <strong>Figure 4</strong>)</p>
+
+<h2 id="-3"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/evolution_tlarge.gif" alt="GitHub Logo" /></h2>
+<p><strong>Figure 4</strong>. Controllability of the fractional heat equation \ref{frac_heat}in time $T = 0.4$. The atomic behavior of the control is lost.</p>
+
+<p>Finally, we consider the case of a time horizon $T&lt;T_{min}$, in which constrained controllability is expected to fail. This time, we employ a classical conjugate gradient method implemented in the <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Computational Toolbox</a> for solving the above optimization problem.</p>
+
+<p>As before, we apply a FE method for the space discretization of the fractional Laplacian on a uniform space-grid with $N_x=20$ points and we use an explicit Euler scheme for the time integration on a time-grid with $N_t=100$ points. Furthermore, we choose a time horizon $T=0.15$, which is below the minimal controllability time $T_{min}$.</p>
+
+<p>Our simulation then show that the solution of \ref{frac_heat} fails to be controlled. In fact, <strong>Figure 5</strong> shows that the state computed by employing the tools of the <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Computational Toolbox</a> does not totally match the desired target in the time horizon prescribed.</p>
+
+<h2 id="-4"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/evolution_tsmall.gif" alt="GitHub Logo" /></h2>
+<p><strong>Figure 5</strong>. Evolution in the time interval $(0,0.15)$ of the solution of \ref{frac_heat} with $s = 0.8$ under the positivity control constraint $u\geq 0$. The equation is not controllable.</p>
+
+<h2 id="references">References</h2>
+
+<p>[1] U. Biccari and V. Hernández-Santamarı́a, <em>Controllability of a one-dimensional fractional heat equation: theoretical and
+numerical aspects</em>. IMA J. Math. Control. Inf, to appear, 2018.</p>
+
+<p>[2] U. Biccari, M. Warma and E. Zuazua, <em>Controllability of the one-dimensional fractional heat equation under positivity constraints</em>. Submitted.</p>
+
+<p>[3] J. Loheac, E. Trélat, and E. Zuazua, <em>Minimal controllability time for the heat equation under unilateral state or control
+constraints</em>. Math. Models Methods Appl. Sci., Vol. 27, No. 9 (2017), pp 1587-1644.</p>
+
+<p>[4] D. Pighin and E. Zuazua, <em>Controllability under positivity constraints of semilinear heat equations</em>. Math. Control. Relat.
+Fields, Vol. 8, No. 3,4 (2018), pp. 935-964.</p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

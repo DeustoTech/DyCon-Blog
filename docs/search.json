@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Controllability of the one-dimensional fractional heat equation under positivity constraints",
+      "categories"      : ["tutorial", "WP03"],
+      "url"             : "/tutorial/wp03/WP03-P0022",
+      "date"            : "2019-05-31",
+      "author"          : ["UmbertoB"],
+      "description"     : "We analyze the controllability properties under positivity constraints on the control or the state of a one-dimensional heat equation involving the fractional Laplacian $(-\Delta)^s$ ($0 1/2$. Moreover, we show that in this minimal time constrained controllability is achieved by means of a control that belongs to a certain space of Radon measures. We also give some numerical simulations that confirm our theoretical results.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/deltas.png"
+    } ,
+  
+    {
       "title"           : "Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/WP99-P0026",
