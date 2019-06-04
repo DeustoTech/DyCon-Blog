@@ -432,6 +432,16 @@
     } ,
   
     {
+      "title"           : "Numerical aspects of LTHC of Burgers equation",
+      "categories"      : ["tutorial", "WP04"],
+      "url"             : "/tutorial/wp04/WP04-P0002",
+      "date"            : "2017-05-04",
+      "author"          : ["NavidA","AlejandroP","EnriqueZ"],
+      "description"     : "Numerical approximation of the inverse design problem for the Burgers equation",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/05/schemeCompareClip.jpg"
+    } ,
+  
+    {
       "title"           : "Long time control and the Turnpike property",
       "categories"      : ["tutorial", "WP02"],
       "url"             : "/tutorial/wp02/P0004",
@@ -439,16 +449,6 @@
       "author"          : ["AitziberI","EnriqueZ"],
       "description"     : "The turnpike property improves the numerical methods used to solve optimal control problems",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/03/dibujo4.png"
-    } ,
-  
-    {
-      "title"           : "Numerical aspects of LTHC of Burgers equation",
-      "categories"      : ["tutorial", "WP02"],
-      "url"             : "/tutorial/wp02/P0002",
-      "date"            : "2017-05-04",
-      "author"          : ["NavidA","AlejandroP","EnriqueZ"],
-      "description"     : "Numerical approximation of the inverse design problem for the Burgers equation",
-      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/05/schemeCompareClip.jpg"
     } ,
   
     {
