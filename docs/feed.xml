@@ -3,10 +3,10 @@
   <channel>
     <title>DyCon Blog</title>
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
-    <link>https://deustotech.github.io/DyCon-Blog/</link>
-    <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 04 Jun 2019 09:22:44 +0200</pubDate>
-    <lastBuildDate>Tue, 04 Jun 2019 09:22:44 +0200</lastBuildDate>
+    <link>http://localhost:4000/DyCon-Blog/</link>
+    <atom:link href="http://localhost:4000/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Tue, 04 Jun 2019 09:50:00 +0200</pubDate>
+    <lastBuildDate>Tue, 04 Jun 2019 09:50:00 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -14,8 +14,8 @@
         <description>asda
 </description>
         <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0031</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0031</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0031</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0031</guid>
         
         
         <category>tutorial</category>
@@ -29,8 +29,8 @@
         <description>asda
 </description>
         <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0029</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0029</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0029</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0029</guid>
         
         
         <category>tutorial</category>
@@ -44,8 +44,8 @@
         <description>asda
 </description>
         <pubDate>Fri, 05 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0028</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0028</guid>
         
         
         <category>tutorial</category>
@@ -59,8 +59,8 @@
         <description>asda
 </description>
         <pubDate>Fri, 14 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0027</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0027</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0027</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0027</guid>
         
         
         <category>tutorial</category>
@@ -74,8 +74,8 @@
         <description>asda
 </description>
         <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0030</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0030</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0030</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0030</guid>
         
         
         <category>tutorial</category>
@@ -89,8 +89,8 @@
         <description>asda
 </description>
         <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0024</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0024</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0024</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0024</guid>
         
         
         <category>tutorial</category>
@@ -104,8 +104,200 @@
         <description>asda
 </description>
         <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0023</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0023</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
+    
+      <item>
+        <title>A numerical method for solving an age structured virus model</title>
+        <description>The aim of this tutorial is to give a numerical method for solving an age structured virus model.
+
+Introduction
+
+The virus infection mathematical models are proposing and studying for a long time (see for example C.L. Althaus, R.J. DE Boer [1] and F. Brauer, C. Castillo-Chavez [2]. In particular case of an HIV infection model (see for P. W. Nelson and al. [6]), the corresponding model is usually divided into three classes called  uninfected cells, $T$,  infected cells, $i$ and free virus particles, $V$.
+
+
+
+schematic representation of HIV dynamic.
+
+We refer the reader to [4] and [5] for more general class on nonlinear incidence rates that take into account the saturation phenomenon.
+
+We consider an age-structured HIV infection model with a very general nonlinear infection function
+
+
+
+with the boundary and initial conditions
+
+
+
+We denote by
+
+
+
+The number $R_0$ represents the expected number of secondary infections produced by a single infected cell during its lifetime,
+
+
+
+The complete global stability analysis for the system (\ref{A}) has been studied in [4]. The system (\ref{A}) admits at most two equilibrium, from Theorem 3.1 and Theorem 5.2 in [4], we obtain the following result:
+
+
+  
+    If $R_0 \leqslant 1$, the disease free equilibrium $E_0=(\frac{A}{\mu},0,0)$ is globally asymptotically stable.
+  
+  
+    If $R_0&amp;gt;1$, the positive infection equilibrium $E^{\ast}=(T^\ast,i^\ast,V^\ast)$ is globally asymptotically stable.
+  
+
+
+Numerical method
+
+We consider the Beddington-Deangelis function $f$  defined by
+
+
+
+In this case, the basic reproduction number ${\cal R}_0$  is given by
+
+
+
+Where $\pi(a)=\exp^{-\int_{0}^{a} \delta (s) ds}$ and $N=\int_{0}^{\infty} p(a) \pi(a) da$.
+
+The numerical method to solve this system of equation is based on the upwind method for solving hyperbolic partial differential equation, (see [3]) called also the FTBS method (Forward-Time-Backward-Space), has first-order accuracy in both space and time. The CFL condition is necessary for the stability of numerical solutions. The ODEs are solving by explicit Euler method.
+
+we use a grid with points $(x_j,t_n)$ defined by
+
+
+
+with age step $\Delta a$ and time step $\Delta t$. Denoting, respectively, by $T^n$, $i^n_j$ and $V^n$  the numerical approximation of $T(t_n)$, $i(t_n,a_j)$ and $V(t_n)$, moreover,
+
+ we thus obtain the difference scheme of hyperbolic PDE
+
+
+
+with $\lambda = \frac{\Delta t}{\Delta a}$. We fix the following values of parameters
+
+
+
+with the initial conditions
+
+
+
+The functions $p$ is given by
+
+
+
+We change the values of $\tau_1$ in order to have $R_0 \leq 1$ or to have $R_0 &amp;gt; 1$.  If we choose $ \tau_1 = 3 $ then $ R_0 = 0.5417 &amp;lt; 1 $,
+
+ 
+
+And if we choose $ \tau_1 = 0.5 $ then $ R_0 = 1.4216 &amp;gt; 1 $,
+
+ 
+
+clear all,close all
+a1=0;
+a2=60;
+Tf=300;
+I0=@(t)4*exp(-0.3*t);
+T0=20;
+V0=5;
+A0=2; mu=0.02; muc=0.4;
+beta=0.1;
+alpha1=0.1;
+alpha2=0.2;
+delta=0.4;
+fct=@(x,y) (beta*x*y)/(1+alpha1*x+alpha2*y);
+N=199;M=1200;
+h=(a2-a1)/N;
+k=Tf/M;
+a=a1+(1:N)*h;
+ap=[0,a];
+t=0+(0:M)*k;
+lambda=k/h;
+C=eye(N);
+A=(1-lambda)*C+lambda*diag(ones(1,N-1),-1);
+
+
+The reproduction number $R_0$
+
+R0=tauxR(N,h,a,delta,beta,muc,mu,A0,alpha1)
+
+
+
+R0 =
+
+    1.4216
+
+
+
+
+T(1)=T0;
+V(1)=V0;
+U= I0(a(1:N))';  %% initial values
+Up=[fct(T0,V0); U]; %% Initial value + Boundary condition
+Uf=Up;
+
+F=zeros(N,1);
+
+UI=zeros(1,M);;
+
+for j=1:M
+    Uold=U;
+      UI(j)=h*fct(T(j),V(j));
+    for o=1:N
+    UI(j)=UI(j)+h*Uold(o);
+    end
+    B=[lambda*fct(T(j),V(j)) ;zeros(N-1,1)];
+    F=- delta*Uold ;
+    U=A*Uold+B+k*F;
+    val=feval(@int,Uold,N-1,h,a);
+    T(j+1)=T(j)+k*(A0-mu*T(j)-fct(T(j),V(j)));
+    V(j+1)=V(j)+k*(val - muc *V(j));
+    Up=zeros(N+1,1);
+    Up=[fct(T(j+1),V(j+1)); U];
+    Uf=[Uf,Up];
+end
+
+
+ figure(1);
+    [X , Y] = meshgrid( ap ,t);
+ mesh (X , Y , Uf')
+ title('The evolution of solution i(t,a)')
+ xlabel('Age')
+ ylabel('time')
+ figure(2)
+ plot(t,T','b',t,[UI UI(N+2)],'r',t,V','g')
+ legend('S(t)','I(t)=\int i(t,a)da','R(t)')
+ xlabel('Time')
+
+
+
+
+
+
+References
+
+[1]  R. J. De Boer C. L. Althaus. Dynamics of immune escape during hiv/siv infection, PloS Comput. Biol, 2008.
+
+[2] F. Brauer and C. Castillo-Chavez. Mathematical Models in Population Biology and Epidemiology Springer, New York, 2000.
+
+[3] L. Edsberg. Introduction to Computation and Modeling for Differential Equations, 2nd Edition. Wiley, 288 Pages, 2016.
+
+[4] M. N. Frioui S. E. Miri, T. M. Touaoula. Unified lyapunov functional for an age-structured virus model with very general nonlinear infection response. J. Appl. Math. Comput, pages 1–27, 2017.
+
+[5]  T. Kuniya J. Wang, R. Zhang.. Mathematical analysis for an age-structured hiv infection model with saturation infection rate, Elect. J. Diff. Eq, pages 1–19, 2015.
+
+[6]  A. S. Perelson P. W. Nelson. Mathematical analysis of delay differential equation models of hiv-1 infection. Math. Biosc, 179, pages 73–94, 2002.
+
+</description>
+        <pubDate>Tue, 04 Jun 2019 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P0025</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P0025</guid>
         
         
         <category>tutorial</category>
@@ -369,8 +561,8 @@ constraints. Math. Models Methods Appl. Sci., Vol. 27, No. 9 (2017), pp 1587-164
 Fields, Vol. 8, No. 3,4 (2018), pp. 935-964.
 </description>
         <pubDate>Fri, 31 May 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp03/WP03-P0022</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp03/WP03-P0022</guid>
         
         
         <category>tutorial</category>
@@ -594,121 +786,8 @@ grid on
 
 </description>
         <pubDate>Mon, 27 May 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0026</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0026</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP99</category>
-        
-      </item>
-    
-      <item>
-        <title>Reconstruction of traffic state using autonomous vehicles</title>
-        <description>A coupled PDE-ODE model
-We consider the following hybrid PDE-ODE model
-
-
-
-Above, (1a) and (1b) consists  of  a  scalar  conservation proposed by Lighthill-Whitham-Richards law  modeling  the  evolution  of vehicular traffic. (1c) and (1d) represent the trajectory of autonomous vehicles.  stands for the density of cars and  the flux function  is defined by  with the average speed .
-
-We assume that  is an unknown function and our goal is to find a time  at which it is possible to reconstruct the true density  between two autonomous vehicles based only on the measured local density of each autonomous vehicle.
-
-We introduce the two following operators
-
-   is the solution of (1a) at time  and at the position  with initial density 
-   where  is the solution of (1) with initial data .
-
-
-
-  
-    
-      
-       
-       
-       
-       
-       
-      
-    
-  
-  
-    
-      Figure 1.1 -  if  and  if  with two autonomous vehicles positioned at  and .
-       
-       
-       
-       
-       
-      Figure 1.2 -  if  and  if  and  if  with two connected vehicles positioned at  and 
-    
-  
-
-
-In Figure 1.1 and Figure 1.2, we construct two initial data  and  such that  and for every  , for every  , . Thus, there isn’t backward uniqueness from the trajectory of autonomous vehicles.
-
-
-  
-    
-      
-    
-  
-  
-    
-      Figure 1.3  if  and  if  with two autonomous vehicles positioned at $x=8$ and $x=12$ respectively
-    
-  
-
-
-In Figure Figure 1.3, we cannot reconstruct the traffic state at any time using data collected by the two autonomous vehicles. Some additional conditions on the set of initial densities will be require.
-
-Theorem Let  and we assume that for every , .  For every  there exists  such that for every  and  for almost every  we have 
-
-
-The reconstruction time  is obtained using the notion of generalized characteristics and  has an implicit form.
-
-Numerical simulations
-In  Figure 2.1 and  Figure 2.2, we consider the example of two shocks with a fan of rarefaction shocks between the two shocks. A total of three AVs, denoted  by  ,  and  , are used to reconstruct the traffic state resulting in two regions of reconstruction between  and  , and between  and  . Specifically, the initial density  is defined as follows : $\rho_0(x) = 0.0938 $ for $ x\in (-\infty, 8] $, $\rho_0(x) = 0.9062$ for ,  for $x\in (10, 13]$ and $\rho_0(x) = 0.9062$ for .  ,  , and  start at  ,  , and  , respectively. The resulting traffic state solved using wave front tracking over the first 20 seconds is shown in Figure 2.1, while the reconstructed state between the AVs is shown in Figure 2.2. The time at which the reconstruction becomes valid is  between  and , and  between  and .
-
-
-  
-    
-      
-      
-    
-  
-  
-    
-      Figure 2.1
-      Figure 2.2
-    
-  
-
-
-In  Figure 3.1 and Figure 3.2, one autonomous vehicle, denoted by  , is deployed on a ring. The initial density  is a -periodic function  defined as follows:   for  ,  for  . Since  and  are also  periodic functions, both trajectories plotted in red in  Figure 3.2  are  the ones of . The traffic state on the whole ring can be reconstructed after .
-
-
-  
-    
-      
-      
-    
-  
-  
-    
-      Figure 3.1
-      Figure 3.2
-    
-  
-
-
-References
-[1] T.Liard, B. Piccoli, R. Stern, D. Work. Traffic reconstruction using autonomous vehicles; submitted (2019)
-</description>
-        <pubDate>Fri, 24 May 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0032</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0032</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0026</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/WP99-P0026</guid>
         
         
         <category>tutorial</category>

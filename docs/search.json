@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "A numerical method for solving an age structured virus model",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0025",
+      "date"            : "2019-06-04",
+      "author"          : ["FriouiM"],
+      "description"     : "We consider an age-structured HIV infection model with a general nonlinear infection function. The numerical method to solve this system of equation is based on the upwind method for solving hyperbolic partial differential equation and the ODEs are solving by explicit Euler method.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0025/Schema.png"
+    } ,
+  
+    {
       "title"           : "Controllability of the one-dimensional fractional heat equation under positivity constraints",
       "categories"      : ["tutorial", "WP03"],
       "url"             : "/tutorial/wp03/WP03-P0022",

@@ -12,23 +12,23 @@
     
   </title>
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0015-Pendulum">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp99/P0015-Pendulum">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
 
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -130,7 +130,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -159,7 +159,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -198,8 +198,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP99">
             Other Topics</a> &#8827;</small>
           </h2>
           <h1>Optimal control for inverted pendulum</h1>
@@ -211,7 +211,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
                   </span>
                 </span>
               
@@ -277,14 +277,14 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/LQ_control_InvertedPend.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/LQ_control_InvertedPend.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <p>This tutorial aims to show how to build equations of motion, control system model and optimally stabilizing controllers for the inverted pendulum. This tutorial is a standard material in control engineering education. We first derive the equations of motion via Lagrange’s method using Symbolic Math Toolbox. Then, a linear control model is derived. The optimal controller is designed using linear quadratic regulator theory. Simulations are carried out for the inverted pendulum nonlinear model. In Appendix, finite horizon linear optimal control is shown by solving a differential Riccati equation.</p>
 
 <p>A schematic of an inverted pendulum is shown below.</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/Pendulum_pic.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/Pendulum_pic.png" alt="" /></p>
 
 <p>A pendulum is attached with a cart that moves horizontally due to the force $u$ without friction. The pendulum freely rotates around the pivot on the cart. It is assumed that the cart and pendulum move in the vertical plane. The masses of the pendulum and cart are $m$ and $M$, respectively, and the length of the pendulum is $2l$. The position of the cart is denoted by $x$ and the angle of the pendulum from the vertical axis is $\theta$.</p>
 
@@ -430,7 +430,7 @@ Bmat =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Cart position [m]'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_01.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_01.png" alt="" /></p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
 <span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">3</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -441,7 +441,7 @@ Bmat =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Pendulum angle [rad]'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_02.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_02.png" alt="" /></p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
 <span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">input_linear</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -451,7 +451,7 @@ Bmat =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Input response'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_03.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_03.png" alt="" /></p>
 
 <h2 id="appendix-finite-interval-optimal-control-with-dre-">Appendix (finite interval optimal control with DRE )</h2>
 
@@ -510,7 +510,7 @@ ans =
 <span class="nb">hold</span> <span class="n">off</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_04.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_04.png" alt="" /></p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">plot</span><span class="p">(</span><span class="n">timedn</span><span class="p">,</span><span class="n">input_dric</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">hold</span> <span class="n">on</span>
@@ -520,7 +520,7 @@ ans =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'input responses with nonlinear model'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_05.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/copiaRM_05.png" alt="" /></p>
 
         <hr>
       </div>
