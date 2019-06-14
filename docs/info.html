@@ -167,12 +167,13 @@
         ['Alejandro Pozo',  1 , new Date(2017,05,04),'Numerical aspects of LTHC of Burgers equation'],
         ['Ana Navarro',  1 , new Date(2018,10,19),'Synchronized Oscillators'],
         ['Arnaud Diego Münch',  1 , new Date(2017,12,21),'Wave Control'],
-        ['Azahar Monge',  1 , new Date(2019,03,26),'The Dirichlet-Neumann iteration for two coupled heterogeneous heat equations'],
+        ['Azahar Monge',  2 , new Date(2019,06,14),'Sparse sources identification through adjoint localization algorithm'],
         ['Borjan Geshkovski',  1 , new Date(2018,10,28),'LQR optimal control design for a coupled PDE-ODE system.'],
         ['Carlos Castro',  1 , new Date(2017,12,21),'Wave Control'],
         ['Césare Molinari',  1 , new Date(2017,10,25),'Turnpike property for functionals involving $L^1$−norm'],
         ['Charlotte Rodriguez',  1 , new Date(2018,10,29),'Coupled transport equations and LQR control'],
         ['Dario Pighin',  1 , new Date(2019,04,21),'Riccati theory in LQ optimization with time-varying target'],
+        ['Debayan Maity',  1 , new Date(2019,06,07),'Controllability of a Class of Infinite Dimensional Systems with Age Structure'],
         ['Domenec Ruiz',  1 , new Date(2018,10,28),'Stabilization of a collective behavior model'],
         ['Dongnam Ko',  2 , new Date(2019,05,27),'Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL'],
         ['Emmanuel Trélat',  2 , new Date(2018,03,05),'Control of the semi-discrete 1D heat equation under nonnegative control constraint'],
@@ -196,8 +197,8 @@
         ['Sorin Micu',  1 , new Date(2017,12,21),'Wave Control'],
         ['Swann MARX',  1 , new Date(2019,02,04),'An introduction to the moment method for optimal control problems for polynomial ODEs'],
         ['Liard Thibault',  1 , new Date(2019,05,24),'Reconstruction of traffic state using autonomous vehicles'],
-        ['Umberto Biccari',  7 , new Date(2019,05,31),'Controllability of the one-dimensional fractional heat equation under positivity constraints'],
-        ['Victor Hernández',  7 , new Date(2018,07,03),'Interior Control of the Poisson Equation with the Conjugate Gradient Method in OpenFOAM'],
+        ['Umberto Biccari',  7 , new Date(2019,06,07),'Finite Element approximation of the one-dimensional fractional Laplacian'],
+        ['Victor Hernández',  7 , new Date(2019,06,07),'Finite Element approximation of the one-dimensional fractional Laplacian'],
         ['Xinliang Liu',  1 , new Date(2019,01,07),'Two Grids Filter Method for RPS Semi-Discretization'],
         ['Yacouba Simpore',  1 , new Date(2018,10,29),'LQR controller for stabilizing the linear population dynamics model'],
         ['Yuhua Zhu',  1 , new Date(2017,11,28),'Greedy algorithm for Parametric Vlasov-Fokker-Planck System'],
@@ -233,10 +234,8 @@
     data.addColumn('date', 'expected date');
 
     data.addRows([
+      ['Finite element approximation of the 1-D fractional Poisson equation', 'Umberto Biccari *Victor Hernández *'  , new Date("2017-12-05")],
       ['Propagation of one and two-dimensional discrete waves under finite difference approximation', 'Umberto Biccari *Jesus Oroya *'  , new Date("2019-06-07")],
-      ['REVISION del post Finite element approximation of the 1-D fractional Poisson equation', 'Umberto Biccari *'  , new Date("2019-06-07")],
-      ['Controllability of a Class of Infinite Dimensional Systems with Age Structure', 'Debayan Maity *'  , new Date("2019-06-07")],
-      ['Sparse sources identification through adjoint localization algorithm', 'Azahar Monge *'  , new Date("2019-06-14")],
       ['Controllability to steady states of a reaction diffusion system and emergence of barriers.', 'Domenec Ruiz *'  , new Date("2019-07-05")],
       ['Rotors imbalance suppression by optimal control', 'Dario Pighin *'  , new Date("2019-07-08")],
       ['Optimal control of the obstacle problem', 'Borjan Geshkovski *'  , new Date("2019-07-08")],]);
@@ -316,7 +315,7 @@
 <!-- Main Content -->
 <div class="container">
 	<div class="col-md-10 col-md-offset-1">
-      <p>Number of Post is: 46 and the number of authors is 41. The number of upcoming posts is 7</p>
+      <p>Number of Post is: 48 and the number of authors is 41. The number of upcoming posts is 5</p>
       <h1> Upcoming posts </h1>
       <div id="table_div_upc"></div>
 
@@ -324,7 +323,46 @@
 
 <h2>June-2019</h2>
 
-<h4 class="headline">1.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0025">A numerical method for solving an age structured virus model</a></h4>
+<h4 class="headline">1.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0014">Sparse sources identification through adjoint localization algorithm</a></h4>
+<p>Author:
+      
+      
+           
+<a href="https://deustotech.github.io/DyCon-Blog/author/AzaharM">Azahar Monge</a>
+       - 14-June-2019</p>
+<div class="ellipsis-two-lines">
+The aim of this work is to recover the initial sparse sources that lead to a given final measurements using the diffusion equation. It is assumed that the initial condition can be written down as a linear combination of unitary deltas and their weights. In that context, an algorithm that combines the adjoint methodology with least squares is presented. In particular, the adjoint methodology is used to find the localization of the sparse sources and least squares to find the corresponding intensities.
+</div>
+<hr />
+
+<h4 class="headline">2.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0030">Controllability of a Class of Infinite Dimensional Systems with Age Structure</a></h4>
+<p>Author:
+      
+      
+           
+<a href="https://deustotech.github.io/DyCon-Blog/author/DebayanM">Debayan Maity</a>
+       - 07-June-2019</p>
+<div class="ellipsis-two-lines">
+In this tutorial,  we investigate the linear infinite dimensional system obtained by implementing an age structure to a given  linear dynamical system. We show that if the initial system is null controllable in a time small enough, then the age structured system is also null controllable in a time depending on the various involved parameters.
+</div>
+<hr />
+
+<h4 class="headline">3.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/WP99-P0024">Finite Element approximation of the one-dimensional fractional Laplacian</a></h4>
+<p>Authors:
+      
+      
+           
+<a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+      
+           
+<a href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>
+       - 07-June-2019</p>
+<div class="ellipsis-two-lines">
+We describe a FE method for the approximation of the one-dimensional fractional Laplacian $(-d_x^2)^s$ on a uniform mesh discretizing the symmetric interval $(-L,L)$, $L&gt;0$.
+</div>
+<hr />
+
+<h4 class="headline">4.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0025">A numerical method for solving an age structured virus model</a></h4>
 <p>Author:
       
       
@@ -782,22 +820,7 @@ A Matlab guide for the numerical approximation of the exact control and stabiliz
 </div>
 <hr />
 
-<h4 class="headline">2.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0007">Finite element approximation of the 1-D fractional Poisson equation</a></h4>
-<p>Authors:
-      
-      
-           
-<a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
-      
-           
-<a href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>
-       - 05-December-2017</p>
-<div class="ellipsis-two-lines">
-A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control
-</div>
-<hr />
-
-<h4 class="headline">3.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0003">Solving an optimal control problem arisen in ecology with AMPL</a></h4>
+<h4 class="headline">2.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0003">Solving an optimal control problem arisen in ecology with AMPL</a></h4>
 <p>Authors:
       
       

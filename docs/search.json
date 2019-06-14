@@ -2,6 +2,36 @@
     
     
     {
+      "title"           : "Sparse sources identification through adjoint localization algorithm",
+      "categories"      : ["tutorial", "WP04"],
+      "url"             : "/tutorial/wp04/P0014",
+      "date"            : "2019-06-14",
+      "author"          : ["AzaharM"],
+      "description"     : "The aim of this work is to recover the initial sparse sources that lead to a given final measurements using the diffusion equation. It is assumed that the initial condition can be written down as a linear combination of unitary deltas and their weights. In that context, an algorithm that combines the adjoint methodology with least squares is presented. In particular, the adjoint methodology is used to find the localization of the sparse sources and least squares to find the corresponding intensities.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0014/evolution.gif"
+    } ,
+  
+    {
+      "title"           : "Controllability of a Class of Infinite Dimensional Systems with Age Structure",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/WP99-P0030",
+      "date"            : "2019-06-07",
+      "author"          : ["DebayanM"],
+      "description"     : "In this tutorial,  we investigate the linear infinite dimensional system obtained by implementing an age structure to a given  linear dynamical system. We show that if the initial system is null controllable in a time small enough, then the age structured system is also null controllable in a time depending on the various involved parameters.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/finalTh2.jpg"
+    } ,
+  
+    {
+      "title"           : "Finite Element approximation of the one-dimensional fractional Laplacian",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/WP99-P0024",
+      "date"            : "2019-06-07",
+      "author"          : ["UmbertoB","VictorH"],
+      "description"     : "We describe a FE method for the approximation of the one-dimensional fractional Laplacian $(-d_x^2)^s$ on a uniform mesh discretizing the symmetric interval $(-L,L)$, $L>0$.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0024/solution.png"
+    } ,
+  
+    {
       "title"           : "A numerical method for solving an age structured virus model",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/P0025",
@@ -309,16 +339,6 @@
       "author"          : ["CarlosC","MiguelC","SorinM","ArnaudM","MihaelaN","EnriqueZ"],
       "description"     : "A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol.jpg"
-    } ,
-  
-    {
-      "title"           : "Finite element approximation of the 1-D fractional Poisson equation",
-      "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0007",
-      "date"            : "2017-12-05",
-      "author"          : ["UmbertoB","VictorH"],
-      "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control",
-      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFeatImg.jpg"
     } ,
   
     {

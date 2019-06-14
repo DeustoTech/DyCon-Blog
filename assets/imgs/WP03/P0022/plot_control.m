@@ -1,5 +1,5 @@
-close all
-addpath(genpath('/home/djoroya/Documentos/GitHub/DyCon-toolbox'))
+%close all
+%addpath(genpath('/home/djoroya/Documentos/GitHub/DyCon-toolbox'))
 %% 
 % Read the data from the external file data.txt
 

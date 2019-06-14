@@ -203,16 +203,670 @@
 &lt;h2 id="asda"&gt;asda&lt;/h2&gt;
 
 
-&lt;h2 id="asda"&gt;asda&lt;/h2&gt;
+&lt;h2 id="model-problem"&gt;Model Problem&lt;/h2&gt;
+</code></pre></div></div>
 
+<p>We consider the numerical approximation of the inverse problem for the linear advection-diffusion equation,</p>
 
-&lt;h2 id="asda"&gt;asda&lt;/h2&gt;
+<script type="math/tex; mode=display">\begin{equation}\label{modeleq} \begin{cases} \partial_t u - d \Delta u + v \nabla \cdot u = 0, \  \  \textbf{x}  \in \Omega, t \in [0,T],\\ u(\textbf{x},t) = 0,  \  \  \textbf{x}  \in \partial \Omega, t \in [0,T],\\ u(\textbf{x},0) = u_0(\textbf{x}), \  \  \textbf{x}  \in \Omega,\\ \end{cases} \end{equation}</script>
 
+<p>with $d$ being the diffusivity of the material and $v$ the direction of the advection.</p>
 
-&lt;h2 id="asda"&gt;asda&lt;/h2&gt;
+<p>Given a final time $T&gt;0$ and a target function $u^\ast$ the aim is to identify the initial condition $u_0$ such that the solution, at time $t=T$, reaches the target $u^*$ or gets as close as possible to it. We assume that the initial condition $u_0$ is characterized as a combined set of sparse sources. This means that $u_0$ is a linear combination of unitary deltas with certain and possibly different weights, i.e:</p>
 
+<script type="math/tex; mode=display">\begin{align} u_0 = \sum_{i=1}^{l} \alpha_i \delta(x_i). \end{align}</script>
 
-&lt;h2 id="asda"&gt;asda&lt;/h2&gt;
+<p>We formulate the inverse problem using optimal control techniques. In particular, we consider the minimization of the following functional:</p>
+
+<script type="math/tex; mode=display">\begin{align} J(u_0) := J(u(\cdot,0)) = \frac{1}{2} \int_{\Omega} (u(\cdot, T) - u^*)^2 d \Omega + \tau \int_{\Omega} \vert u(\cdot,0) \vert d \Omega. \end{align}</script>
+
+<h2 id="space-and-time-discretization">Space and time discretization</h2>
+
+<p>Letting $\textbf{u} : [0, T] \rightarrow \mathbb{R}^s$ where $s$ is the number of grid points on $\Omega$, we can write a general finite element (FE) discretization of the diffusion–advection equation in \eqref{modeleq} in a compact form as:</p>
+
+<script type="math/tex; mode=display">\begin{align} \textbf{M} \dot{\textbf{u}}(t) + d \textbf{A} \textbf{u}(t) + v \textbf{V} \textbf{u}(t) = 0. \end{align}</script>
+
+<p>In order to get a time discretized version of the previous equation, we apply implicit Euler method with stepsize $\Delta t := T/N$ where $N$ is the total number of time steps. The numerical approximations to the solution are given by the vectors $\textbf{u}^n \approx \textbf{u}(t_n) \in \mathbb{R}^s$ with respect to the index $n=i\Delta t$ for $i=1,2,..,N$. Therefore, the fully discrete version of model equation is as follows,</p>
+
+<script type="math/tex; mode=display">\begin{align} (\textbf{M} + d \Delta t \textbf{A} + v \Delta t \textbf{V}) \textbf{u}^{n+1} = \textbf{M} \textbf{u}^n. \end{align}</script>
+
+<h2 id="adjoint-algorithm-for-sparse-source-identification">Adjoint Algorithm for sparse source identification</h2>
+
+<p>The algorithm to be presented in this work for the sparse source identification of the linear diffusion-advection equation based on the adjoint methodology consists of two steps. Firstly, we use the adjoint methodology to identify the locations of the sources. Secondly, a least squares fitting is applied to find the corresponding intensities of the sources.</p>
+
+<p>We have considered here a two-dimensional example with several sources to be identified in a multi-model environment. This means that the left half ($\Omega_1 = [0,1] \times [0,1]$) and the right half ($\Omega_2 = [1,2] \times [0,1]$) of the domain are modelled with different equations. In particular, the heat equation is used on $\Omega_1$ and the diffusion–advection equation is used on $\Omega_2$.</p>
+
+<p>The initialization parameters look as follows:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span><span class="o">=</span><span class="mi">30</span><span class="p">;</span> <span class="c1">%% space discretization points in y-direction</span>
+<span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="p">/(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% mesh size</span>
+<span class="n">t0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">%% initial time</span>
+<span class="n">tf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span> <span class="c1">%% final time</span>
+<span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span> <span class="c1">%% time discretization points</span>
+<span class="n">dt</span><span class="o">=</span><span class="p">(</span><span class="n">tf</span><span class="o">-</span><span class="n">t0</span><span class="p">)/</span><span class="n">n</span><span class="p">;</span> <span class="c1">%% stepsize</span>
+<span class="n">TOL</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">;</span> <span class="c1">%% stopping tolerance</span>
+
+<span class="n">d1</span><span class="o">=</span><span class="mf">0.05</span><span class="p">;</span> <span class="c1">%% diffusivity of the material on the left sudomain</span>
+<span class="n">d2</span><span class="o">=</span><span class="mf">0.05</span><span class="p">;</span> <span class="c1">%% diffusivity of the material on the left sudomain</span>
+
+<span class="c1">%% advection components</span>
+<span class="n">vx</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="n">vy</span><span class="o">=-</span><span class="mi">3</span><span class="p">;</span>
+
+<span class="n">tau</span><span class="o">=</span><span class="n">dx</span><span class="o">^</span><span class="mi">4</span><span class="p">;</span> <span class="c1">%% regularization parameter</span>
+<span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span> <span class="c1">%% stepsize of the gradient descent method</span>
+</code></pre></div></div>
+
+<p>We now compute the FE discretization matrices $M$, $A$ and $V$ that are respectively the mass matrix, the stiffness matrix and the advection matrix. For the FE discretization we assume equidistant structured meshes. In particular we use triangular elements and the classical pyramidal test functions are employed.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">]</span> <span class="o">=</span> <span class="n">computeFEmatrices</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">d1</span><span class="p">,</span><span class="n">d2</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">);</span> <span class="c1">%% Compute FE discretization matrices</span>
+</code></pre></div></div>
+
+<p>A reference initial condition is chosen and we compute using the FE discretization specified above and implicit Euler in time its corresponding final state at time $T$. This final state will be considered the initial data of the inverse problem to be solved and we name it the target function $u^*$ as mentioned previously.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0_ref</span> <span class="o">=</span> <span class="n">initial_deltas</span><span class="p">(</span><span class="n">N</span><span class="p">);</span> <span class="c1">%% computes reference initial condition</span>
+
+<span class="p">[</span><span class="n">U_target</span><span class="p">,</span><span class="n">u_target</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0_ref</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span> <span class="c1">%% Compute target distribution</span>
+</code></pre></div></div>
+
+<p>We now call the algorithm that estimates the initial condition $u_0$ using as a initial data the target function $u^*$. As mentioned before, this algorithm consists of two steps.</p>
+
+<p>Firstly, the classical adjoint methodology that minimizes the functional $J(u_0)$ subject to the diffusion-advection equation is used. The iterative optimization algorithm employed is the classical gradient descent method. However, although this iterative procedure finds quite accurately the locations of the sources, it does not recover the sparse character of the initial condition. This is not suprising because the recovered initial data comes from solving the adjoint problem which is basically a diffusive process that smoothes out its state. Consequently, a second procedure is needed to project the obtained non sparse initial condition into the set of admissible sparse solutions.</p>
+
+<p>As the initial condition $u_0$ is assumed to be a linear combination between the locations and the intensities, once we have fixed the locations using the adjoint methodology we can solve a least squares problem to get the remaining intensities. We assemble a matrix $\textbf{L} \in \mathbb{R}^{s \times l}$ where at each column we have the forward solution for a single unitary delta placed at each of the locations already identified. We then solve the following linear system of equations for the vector of unknowns $\alpha = (\alpha_1, \alpha_2, …, \alpha_l)^T$:</p>
+
+<script type="math/tex; mode=display">\begin{align} \textbf{L}^T \textbf{L} \alpha = \textbf{L}^T u^*, \end{align}</script>
+
+<p>to find the intensities vector $\alpha$.</p>
+
+<p>Adjoint algorithm for sparse source identification (algorithm 4)</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">SparseIdentification</span><span class="p">(</span><span class="n">u_target</span><span class="p">,</span><span class="n">TOL</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">,</span><span class="n">epsilon</span><span class="p">,</span><span class="n">tau</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Finally, the final state at $T$ is computed using as a initial condition the estimated sparse sources identified with our algorithm.</p>
+
+<p>Compute final state with the recovered initial condition</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">UF</span><span class="p">,</span><span class="n">u_final</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We can see the evolution recovered</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0014/evolution.gif" alt="" /></p>
+
+<p>We now visualize the numerical results. Plots on the left side show the reference initial solution and the given target. Similarly, plots on the right side show the recovered initial condition and the distribution at the final time $T$ produced by the recovered initial sources.</p>
+
+<p>One can observe the difference between the two models (the heat equation on $\Omega_1$ and the diffusion-advection on $\Omega_2$) in the two figures at the bottom where the initial sources on $\Omega_2$ move downwards at the same time as they dissipate while the initial sources on $\Omega_1$ only dissipate without displacement.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component x</span>
+<span class="n">yplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component y</span>
+<span class="c1">%%</span>
+<span class="nb">figure</span><span class="p">(</span><span class="s1">'unit'</span><span class="p">,</span><span class="s1">'norm'</span><span class="p">,</span><span class="s1">'pos'</span><span class="p">,[</span><span class="mf">0.25</span> <span class="mf">0.1</span> <span class="mf">0.5</span> <span class="mf">0.8</span><span class="p">])</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0_ref</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Reference initial state (front view)'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered initial state (front view)'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0_ref</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Reference initial state (above view)'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered initial state (above view)'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U_target</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Given target u^*'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">UF</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered final state'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0014/copiaRM_01.png" alt="" /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;  Infinite dimensional dynamical systems coupling age structuring with diffusion appear naturally in  population dynamics, medicine or epidemiology. A by now classical example is the Lotka-Mckendrick system with spatial diffusion. The  aim of this blog is to study contaollability properties of such age structured models in an unified manner. 
+</code></pre></div></div>
+<p>&lt;/p&gt;</p>
+
+<p>
+Let $A : \mathcal{D}(A) \to X$  be the generator of a $C^0$ semigroup $\mathbb{S}$ on the Hilbert space $X$ and let $U$ be
+another Hilbert space. Both $X$ and $U$ will be identified with their duals. Let $B$ be a (possibly unbounded) linear operator
+from $U$ to $X$, which is supposed to be an admissible control operator for  $\mathbb{S}$.
+In the examples we have in mind, the above spaces and operators describe the dynamics of a system without age structure.
+In particular, $X$ is the state space and $U$ is the control space.
+The corresponding age structured system is obtained by first extending these spaces to
+\begin{equation} \label{input-space}
+\mathcal{X} = L^{2}(0,a_{\dagger}; X), \quad \mathcal{U} = L^{2}(0,a_\dagger;U).
+\end{equation} 
+where $a_\dagger&gt;0$ denotes the maximal age individuals can attain. Let $p(t) \in \chi$ be the distribution density of the
+individuals with respect to age $a\geqslant 0$ and at some time $t \geqslant 0.$  Then the abstract version of the Lotka-McKendrick
+system to be considered in this paper writes:
+ \begin{equation} \label{eq:main}
+\begin{cases}
+\displaystyle \frac{\partial p}{\partial t} + \frac{\partial p}{\partial a} - A p  + \mu(a) p =  \mathcal{\chi}_{(a_{1},a_{2})} B u, &amp; t \geqslant 0, a \in (0,a_\dagger), \\
+\displaystyle p(t,0)  = \displaystyle \int_{0}^{a_\dagger} \beta(s) p(t,s) \; {\rm d}s, &amp; t \geqslant 0, \\
+\displaystyle p(0,a) = p_{0},
+\end{cases}
+\end{equation} 
+where $\mathcal{\chi}$ is the characteristic function of the interval $(a_{1}, a_{2})$ with
+$0 \leqslant a_{1} &lt; a_{2} \leqslant a_\dagger$ and $p_{0}$ is the initial population density.
+In the above system, the positive function $\mu:[0,a_\dagger] \to \mathbb{R}_{+}$ denotes the
+natural mortality rate of individuals of age $a.$ We denote by $\beta: [0,a_\dagger] \to \mathbb{R}_{+}$
+the positive function describing the fertility rate at age $a.$ We assume that the fertility rate $\beta$ a
+nd the mortality rate $\mu$ satisfy the conditions
+<ul style="list-style: none;">
+<li>(H1) $\beta \in L^\infty[0, a_\dagger], \; \beta \geqslant 0$ for almost every $a \in [0,a_\dagger].$</li>
+<li>(H2) $\mu \in L^1_{loc}[0, a_\dagger], \; \mu \geqslant 0$ for almost every $a \in [0,a_\dagger].$</li>
+<li>(H3) $\displaystyle \int_0^{a_\dagger} \mu(a) \ {\rm d} a = \infty.$</li>
+</ul>
+
+Before we state our result, let us introduce the notion of null controllability of the pair $(A,B).$
+<div class="definition">
+We say that a pair $(A,B)$ is null-controllable in time $\tau,$ if for every $z_{0} \in X$ there exists a control $u \in L^{2}(0,\tau,U)$ such that, the solution of the system
+\begin{equation*}
+\dot z(t) = A z(t) + Bu(t) \quad t \in [0,\tau], \qquad z(0) = z_{0},
+\end{equation*}
+satisfies $z(\tau) = 0.$
+</div>
+
+We prove the following result
+<div class="theorem">
+Assume that  $\beta$ and $\mu$ satisfy the conditions (H1)-(H3) above. Moreover,
+suppose that the fertility rate $\beta$ is such that
+\begin{equation} \label{eq:beta}
+\beta(a)= 0 \mbox{ for all } a \in (0,a_{b}),
+\end{equation}
+for some $a_b\in (0,a_\dagger)$ and that $a_1 &lt; a_b$.
+Let us assume that the pair $(A,B)$ is null controllable in arbitrary time. 
+Then for every $\tau &gt; a_{1} + a_{\dagger}-a_{2}$ and for every $p_{0} \in \chi$ there exists  a control $v \in L^{2}(0,\tau;\mathcal{U})$ such that the solution $p$ of \eqref{eq:main} satisfies
+\begin{equation}
+p(\tau,a) = 0 \mbox{ for all }  a \in (0,a_\dagger).
+\end{equation} 
+ </div>
+
+It is well known that null controllability is equivalent to final state observability of the adjoint system
+(see for instance [4, Section 11.2]). The adjoint of the above system reads as
+\begin{equation} \label{eq:adj}
+\begin{cases}
+\displaystyle \frac{\partial q}{\partial t} - \frac{\partial p}{\partial a} - A^* p  + \mu(a) p - \beta(a) q(t,0) =  0, &amp; t \geqslant 0, a \in (0,a_\dagger), \\
+\displaystyle q(t,a_\dagger)  = 0, &amp; t \geqslant 0, \\
+\displaystyle q(0,a) = q_{0},
+\end{cases}
+\end{equation} 
+where $A^*$ is the adjoint of  $A.$  In order to prove Theorem 1, it is enough to prove the following
+<div class="theorem">
+ Let us assume the hypothesis of Theorem 1. Then for every $\tau &gt; a_1 + a_\dagger - a_2$ there exists $k_\tau &gt; 0$ such that
+ the solution $q$ of \eqref{eq:adj} satishfies
+ \begin{equation} \label{eq:est-adj}
+ \int_0^{a_\dagger} \|q(\tau, a)\|^2_X \ da  \leqslant k_\tau^2 \int_0^\tau \int_{a_1}^{a_2} \left\|B^*q(t,a) \right\|^2_U \ da dt, \qquad \qquad (q_0 \in \mathcal{X}).
+ \end{equation}
+ </div>
+Let us give an idea of the proof. We combine characteristics method with final state observability of the pair $(A^*, B^*).$ For siplicity
+in the presentation, let us assume that $\mu = 0,$ $a_1 = 0,$ $a_2 &lt; a_b$ and $\tau = 2a_\dagger.$
+The detail proof of Theorem 1, in a slightly more general case, can be found in [3]. Integrating along the characteristic lines,
+it is not very difficult to see that
+\begin{equation*}
+q(t,a) = \int_{t + a - a_\dagger}^{t} e^{(t-s)A^*} \beta(a+ \tau - s) q(s, 0) \ ds, \qquad t &gt; a_\dagger. 
+\end{equation*}
+Therefore,
+\begin{equation} \label{est0}
+\int_0^{a_\dagger} \|q(\tau, a)\|^2_X \ da \leqslant C \int_{a_\dagger}^\tau \left\|q(t,0) \right\|^2_X \ dt. 
+\end{equation}
+Thus to prove \eqref{eq:est-adj}, we need to estimate the right hand side of the above estimate. We now make use of the condition
+\eqref{eq:beta}.  Note that, due to this condition, $q$ satisfies
+\begin{equation} \label{eq:adj-2}
+\displaystyle \frac{\partial q}{\partial t} - \frac{\partial q}{\partial a} - A^* p  + \mu(a) p =  0,  \quad  t \geqslant 0, a \in (0,a_2).
+\end{equation}
+For a.e. $t \in (a_\dagger, \tau),$ we define $w(s) = q(s, t- s),$ $s \in (t - a_2, t).$ Then $w$ solves
+\begin{equation*}
+\displaystyle \frac{\partial w}{\partial s} - A^* w = 0, \quad s \in (t - a_2, t). 
+\end{equation*}
+Since the pair $(A, B)$ is null controllable in any time, or equivalently the pair $(A^*, B^*)$ is final-state observable in any
+time, there exists a constant
+$C &gt; 0,$ depending only on $a_2, A$ and $B$  such that
+\begin{equation*}
+\left\| w(t) \right\|_{X}^2 \leqslant C \int_{t-a_2}^t \left\| B^* w(s) \right\|^2_U \ ds. 
+\end{equation*}
+Coming back to $q$ and integrating over $[a_\dagger, \tau]$ with respect to $t,$ we have that
+\begin{equation}
+\int_{a_\dagger}^\tau \|q(t,0)\|^2_X \ dt \leqslant \int_{0}^\tau \int_{0}^{a_2} \left\|B^* q(t,a)\right\|^2  \ da dt. 
+\end{equation}
+Combining the above estimate together with \eqref{est0}, we get \eqref{eq:est-adj}. In the two figures below, we ilustrate the
+estimate of $q(t,0)$ and the final-state observability of $q$ in the general case.
+</p>
+
+<table>
+  <tr>
+   <th>
+     <figure>
+  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/trace-bis.jpg" alt="trace" style="width:95%" />
+  <figcaption> Fig.1 - An ilustration of the estimate of $q(t,0).$ We apply final state observability of $(A^*, B^*)$ along
+  the characteristics. Since we want to estimate $q(t,0),$ we consider the trajectory $\gamma(s) = (t-s,s),$
+  $s \leqslant t \leqslant \tau$ (or equivalently the backward characteristics starting from $(t,0).$) </figcaption>
+</figure>
+    </th>
+<th>
+    <figure>
+  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/finalTh2.jpg" alt="final" style="width:85%" />
+  <figcaption> Fig.2 - An illustration of the final-state observability at time $\tau &gt; a_1 + a_\dagger - a_2$: For
+  $ a \in (0,a_2 - \varepsilon)$ (blue region) the backward characteristics starting from $t = \tau$ enters the
+  observation domain.  For $a \in (a_2 - \varepsilon, a_\dagger)$, the backward characteristics (green region)
+  hits the line $a = a_\dagger$, gets renewed by the renewal condition $\beta(a)q(t,0)$ and then enters the observation
+  domain (purple region).</figcaption>
+</figure> 
+ </th>
+ </tr>
+ </table>
+
+<h2 id="Examples">Examples</h2>
+<p>We consider two examples :  1) The classical Lotka-McKendrick system and 2) Lotka-Mckendrick system with diffusion.</p>
+<p>
+ 1) <em> The classical Lotka-McKendrick system </em>: Let us choose $X = \mathbb{R},$ $A=0$ and $B=1.$ Then the system \eqref{eq:main} reduces
+ to  classical Lotka-McKendrick system. By Theorem 1, this system is null controllable in time $\tau &gt; a_1 + a_\dagger - a_2.$ A
+ similar result was obtained in [1]. 
+</p>
+
+<p>
+ 2) <em> The Lotka-McKendrick system with spatial diffusion </em> : Let $\Omega$ be a smooth bounded domain in $\mathbb{R}^3$ and
+ $\omega \subseteq \Omega.$ Let us consider 
+ \begin{equation*}
+ X = L^2(\Omega), \quad A = \Delta , \quad \mathcal{D}(A) =
+ \left\{ f \in H^2(\Omega) \mid \displaystyle \frac{\partial f}{\partial n} = 0\right\}, \quad B = \chi_{\omega}.
+ \end{equation*}
+ This corresponds to the Lotka-McKendrick model with spatial diffusion ([2]). It is known that, the pair $(A, B)$ or equivalently
+ the heat equation with localized interior control, is null controllable in any time. Thus we can apply Theorem 1 to conclude that
+ the system is null controllable in time $\tau &gt; a_1 + a_\dagger - a_2.$
+ </p>
+<p> Several other applications can be found in [3].</p>
+
+<h2 id="references">References</h2>
+<p> [1] D. Maity, <em> On the Null Controllability of the Lotka-Mckendrick System,</em> Submitted. </p>
+<p> [2] D. Maity, M. Tucsnak and E. Zuazua, <em> Controllability and positivity constraints in population dynamics with age
+structuring and diffusion </em>, Journal de Math&eacute;matiques Pures et Appliqu&eacute;s. In press, 10.1016/j.matpur.2018.12.006.</p>
+
+<p> [3] D. Maity, M. Tucsnak and E. Zuazua, <em> Controllability of a Class of Infinite Dimensional
+Systems with Age Structure</em>. Submitted.</p>
+
+<p> [4] M. Tucsnak and G. Weiss, <em> Observation and control for operator semigroups, </em>  
+Birkh&auml;user Advanced Texts: Basler Lehrbu&uuml;cher. [Birkh&auml;user Advanced Texts: Basel Textbooks], Birkh&auml;user Verlag, Basel, 2009. </p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;We describe here a Finite Element algorithm for the approximation of the one-dimensional fractional Laplacian $(-d_x^2)^s$ on the interval $(-L,L)$, $L&amp;gt;0$ and for the numerical resolution of the following fractional Poisson equation&lt;/p&gt;
+</code></pre></div></div>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{Fl_Poisson}
+\begin{cases}
+(-d_x^2)^s u = f, & x\in (-L,L)
+\\
+u = 0, & x\in(-L^L)^c=: \mathbb{R}\setminus (-L,L.)
+\end{cases}
+\end{equation} %]]></script>
+
+<p>This algorithm has also been emploied in [2,3] for the numerical controllability of fractional parabolic problems (see our previous entries in the <strong>DyCon Blog</strong>, <a href="https://deustotech.github.io/DyCon-Blog//tutorial/wp03/P0001">WP3_P0001</a> and <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022">WP3_P0022</a>).</p>
+
+<p>We recall that the fractional Laplacian is defined, for all $s\in(0,1)$ and any function $u$ regular enough, as the following singular integral</p>
+
+<script type="math/tex; mode=display">(-d_x^2)^s u(x) := c_s \,P.V.\,\int_{\mathbb{R}} \frac{u(x)-u(y)}{|x-y|^{1+2s}}\,dy,</script>
+
+<p>with $c_s$ an explicit normalization constant given by</p>
+
+<script type="math/tex; mode=display">c_s = \frac{s2^{2s}\Gamma\left(\frac{1+2s}{2}\right)}{\sqrt{\pi}\Gamma(1-s)},</script>
+
+<p>$\Gamma$ being the usual Euler Gamma function.</p>
+
+<p>The starting point of the FE method is the definition of a bilinear form associated to the fractional Laplace operator $(-d_x^2)^s$ and the introduction of the variational formulation corresponding to the elliptic problem \eqref{Fl_Poisson}.</p>
+
+<p>This variational formulation is given as follows: find $u\in H_0^s(-L,L)$ such that the identity</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{variational}
+a(u,v) = \int_{-L}^L fv\,dx
+\end{equation}</script>
+
+<p>is satisfied for any function $v\in H_0^s(-L,L)$. In \eqref{variational}, with $H_0^s(-L,L)$ we indicate the space</p>
+
+<script type="math/tex; mode=display">H_0^s(-L,L):=\Big\{ u\in H^s(\mathbb{R})\;:\; u=0\;in\; (-L,L)^c\Big\},</script>
+
+<p>$H^s(\mathbb{R})$ being the usual fractional Sobolev space. Moreover, the bilinear form</p>
+
+<script type="math/tex; mode=display">a: H_0^s(-L,L)\times H_0^s(-L,L)\to \mathbb{R}</script>
+
+<p>is defined as</p>
+
+<script type="math/tex; mode=display">a(u,v) = \frac{c_s}{2}\int_{\mathbb{R}}\int_{\mathbb{R}} \frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s}}\,dxdy.</script>
+
+<p>Let us describe how, starting from the above bilinear form, we can obtain our FE approximation. For simplicity, in what follows we will take $L=1$, although the methodology remains the same for any real $L&gt;0$.</p>
+
+<p>Let us take a uniform partition of the interval $(-1,1)$ as follows:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+-1 = x_0<x_1<\ldots <x_i<x_{i+1}<\ldots<x_{N+1}=1\,, %]]></script>
+
+<p>with $x_{i+1}=x_i+h$, $i=0,\ldots N$. We call $\mathfrak{M}$ the mesh composed by the points ${x_i\,:\, i=1,\ldots,N}$, while the set of the boundary points is denoted $\partial\mathfrak{M}:={x_0,x_{N+1}}$.</p>
+
+<p>Now, define $K_i:=[x_i,x_{i+1}]$ and consider the discrete space</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{Vh}
+V_h :=\Big\{v_h\in H_0^s(-1,1)\,\big|\, \left. v_h\,\right|_{K_i}\in \mathcal{P}^1\Big\},
+\end{equation}</script>
+
+<p>where $\mathcal{P}^1$ is the space of the continuous and piece-wise linear functions. Hence, we approximate \eqref{variational} with the following discrete problem: find $u_h\in V_h$ such that</p>
+
+<script type="math/tex; mode=display">\frac{c_s}{2} \int_{\mathbb{R}}\int_{\mathbb{R}}\frac{(u_h(x)-u_h(y))(v_h(x)-v_h(y))}{|x-y|^{1+2s}}\,dxdy = \int_{-1}^1 fv_h\,dx,</script>
+
+<p>for all $v_h\in V_h$. If now we indicate with</p>
+
+<script type="math/tex; mode=display">\big\{\phi_i\big\}_{i=1}^N</script>
+
+<p>a basis of $V_h$, it will be sufficient that the above equality is satisfied for all the functions of the basis, since any element of $V_h$ is a linear combination of them. Therefore the problem takes the following form</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{WFD}
+\frac{c_s}{2} \int_{\mathbb{R}}\int_{\mathbb{R}}\frac{(u_h(x)-u_h(y))(\phi_i(x)-\phi_i(y))}{|x-y|^{1+2s}}\,dxdy = \int_{-1}^1 fv_h\,dx,\;\;\; i=1,\ldots,N.
+\end{equation}</script>
+
+<p>Clearly, since $u_h\in V_h$, we have $u_h(x) = \sum_{j=1}^N u_j\phi_j(x)$, where the coefficients $u_j$ are, a priori, unknown. In this way, \eqref{WFD} is reduced to solve the linear system $\mathcal A_h u=F$, where the stiffness matrix $\mathcal A_h\in \mathbb{R}^{N\times N}$ has components</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{stiffness_nc}
+a_{i,j}=\frac{c_s}{2} \int_{\mathbb{R}}\int_{\mathbb{R}}\frac{(\phi_i(x)-\phi_i(y))(\phi_j(x)-\phi_j(y))}{|x-y|^{1+2s}}\,dxdy,
+\end{equation}</script>
+
+<p>while the vector $F\in\mathbb{R}^N$ is given by $F=(F_1,\ldots,F_N)$ with</p>
+
+<script type="math/tex; mode=display">F_i = \langle f,\phi_i\rangle_{L^2(-1,1)} = \int_{-1}^1 f\phi_i\,dx,\;\;\; i=1,\ldots,N.</script>
+
+<p>Moreover, the basis</p>
+
+<script type="math/tex; mode=display">\big\{\phi_i\big\}_{i=1}^N</script>
+
+<p>that we will employ is the classical one in which each $\phi_i$ is the tent function with $supp(\phi_i)=(x_{i-1},x_{i+1})$ and verifying $\phi_i(x_j)=\delta_{i,j}$. In particular, for $x\in{x_{i-1},x_i,x_{i+1}}$ the $i^{th}$ function of the basis is explicitly defined as (see <strong>Figure 1</strong>)</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{basis_fun}
+\phi_i(x)= 1-\frac{|x-x_i|}{h}.
+\end{equation}</script>
+
+<h2><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0024/basis_function.png" alt="" /></h2>
+<p><strong>Figure 1</strong>. Basis function $\phi_i$ on its support $(x_{i-1},x_{i+1})$.</p>
+
+<p>We now start building the stiffness matrix $\mathcal A_h$ approximating the fractional Laplacian. This will be done in three steps, since the values of the matrix can be computed differentiating among three well defined regions: the upper triangle, corresponding to $j\geq i+2$, the upper diagonal corresponding to $j=i+1$ and the diagonal, corresponding to $j=i$. In each of these regions the intersections among the support of the basis functions are different, thus generating different values of the bilinear form.</p>
+
+<p>We present below an abridged explanation of how to compute the entries of $\mathcal{A}_h$. Complete details may be found in [2].</p>
+
+<h2 id="step-1-jgeq-i2"><strong>Step 1</strong>: $j\geq i+2$</h2>
+
+<p>In this case we have $supp(\phi_i)\cap supp(\phi_j) =\emptyset$ (see also <strong>Figure 2</strong>). Hence, \eqref{stiffness_nc} is reduced to computing only the integral</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{elem_noint_app}
+a_{i,j}=-2 \int_{x_{j-1}}^{x_{j+1}}\int_{x_{i-1}}^{x_{i+1}}\frac{\phi_i(x)\phi_j(y)}{|x-y|^{1+2s}}\,dxdy.
+\end{equation}</script>
+
+<h2 id="-1"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0024/phi1.png" alt="" /></h2>
+<p><strong>Figure 2</strong>. Basis functions $\phi_i(x)$ and $\phi_j(x)$ for $j\geq i + 1$. The supports are disjoint.</p>
+
+<p>Taking into account the definition of the basis function \eqref{basis_fun}, the integral \eqref{elem_noint_app} becomes</p>
+
+<script type="math/tex; mode=display">a_{i,j}=-2 \int_{x_{j-1}}^{x_{j+1}}\int_{x_{i-1}}^{x_{i+1}}\frac{\left(1-\frac{|x-x_i|}{h}\right)\left(1-\frac{|y-x_j|}{h}\right)}{|x-y|^{1+2s}}\,dxdy.</script>
+
+<p>Let us introduce the following change of variables:</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{CV}
+\frac{x-x_i}{h}=\hat{x},\;\;\; \frac{y-x_j}{h}=\hat{y}.
+\end{equation}</script>
+
+<p>Then, rewriting (with some abuse of notations since there is no possibility of confusion) $\hat{x}=x$ and $\hat{y}=y$, we get</p>
+
+<script type="math/tex; mode=display">a_{i,j}=-2h^{1-2s} \int_{-1}^1\int_{-1}^1\frac{(1-|x\,|\,)(1-|y\,|\,)}{|x-y+i-j\,|^{1+2s}}\,dxdy.</script>
+
+<p>This integral can be computed explicitly, and we obtain</p>
+
+<script type="math/tex; mode=display">a_{i,j} = - h^{1-2s}\,\frac{4(k+1)^{3-2s} + 4(k-1)^{3-2s}-6k^{3-2s}-(k+2)^{3-2s}-(k-2)^{3-2s}}{2s(1-2s)(1-s)(3-2s)}.</script>
+
+<p>Notice that, when $s=1/2$, both the numerator and the denominator of the expression above are zero. In this case, the value of $a_{i,j}$ can be obtained by taking the limit $s\to 1/2$ and we get</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+a_{i,j} &= -4 (k+1)^2\log(k+1) -4(k-1)^2\log(k-1)+6k^2\log(k)
+\\[10pt]
+&+(k+2)^2\log(k+2) +\;(k-2)^2\log(k-2)
+\end{array} %]]></script>
+
+<p>if $k\neq 2$ and</p>
+
+<script type="math/tex; mode=display">a_{i,i+2} = 56\ln(2)-36\ln(3).</script>
+
+<h2 id="step-2-j-i1"><strong>Step 2</strong>: $j= i+1$</h2>
+<p>This is the most cumbersome case, since it is the one with the most interactions between the basis functions (see <strong>Figure 3</strong>).</p>
+
+<h2 id="-2"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0024/phi2.png" alt="" /></h2>
+<p><strong>Figure 3</strong>. Basis functions $\phi_i(x)$ and $\phi_{i+1}(x)$. In this case, the intersection of the supports is the interval $[x_i,x_{i+1}]$.</p>
+
+<p>Using the symmetry of the integral with respect to the bisector $y=x$, we have</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{ll}
+a_{i,i+1} &= \displaystyle\int_{\mathbb{R}}\int_{\mathbb{R}}\frac{(\phi_i(x)-\phi_i(y))(\phi_{i+1}(x)-\phi_{i+1}(y))}{|x-y|^{1+2s}}\,dxdy
+\\[15pt]
+&= \displaystyle\int_{x_{i+1}}^{+\infty}\int_{x_{i+1}}^{+\infty} \ldots\,dxdy + 2\int_{x_{i+1}}^{+\infty}\int_{x_i}^{x_{i+1}} \ldots\,dxdy + 2\int_{x_{i+1}}^{+\infty}\int_{-\infty}^{x_i} \ldots\,dxdy
+\\[15pt]
+&\quad + \displaystyle\int_{x_i}^{x_{i+1}}\int_{x_i}^{x_{i+1}} \ldots\,dxdy + 2\int_{x_i}^{x_{i+1}}\int_{-\infty}^{x_i} \ldots\,dxdy + \int_{-\infty}^{x_i}\int_{-\infty}^{x_i} \ldots\,dxdy
+\\[15pt]
+&:= Q_1 + Q_2 + Q_3 + Q_4 + Q_5 + Q_6.
+\end{array} %]]></script>
+
+<p>Also in this case, the terms $Q_i$, $i=1,\ldots,6$, can be computed explicitely, by noticing also the following facts:</p>
+
+<ol>
+  <li>$Q_1=Q_6=0$ since $\phi_i = 0$ on the domain of integration.</li>
+  <li>$Q_2=Q_5$ due to symmetry.</li>
+</ol>
+
+<p>Then, the elements $a_{i,i+1}$ are given by the sum $2Q_2+Q_3+Q_4$ and we have</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+a_{i,i+1} = \begin{cases}
+\displaystyle h^{1-2s}\frac{3^{3-2s}-2^{5-2s}+7}{2s(1-2s)(1-s)(3-2s)}, & \displaystyle s\neq \frac{1}{2}
+\\[15pt]
+9\ln 3-16\ln 2, & \displaystyle s=\frac{1}{2}.
+\end{cases} %]]></script>
+
+<h2 id="step-3-j-i"><strong>Step 3</strong>: $j= i$</h2>
+<p>As a last step, we fill the diagonal of the matrix $\mathcal A_h$, which collects the values corresponding to $\phi_i(x)=\phi_j(x)$ (see <strong>Figure 4</strong>).</p>
+
+<h2 id="-3"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0024/phi4.png" alt="" /></h2>
+<p><strong>Figure 4</strong>. Basis functions $\phi_i(x)=\phi_j(x)$.</p>
+
+<p>In this case, we have</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{ll}
+a_{i,i} &= \displaystyle\int_{\mathbb{R}}\int_{\mathbb{R}}\frac{(\phi_i(x)-\phi_i(y))^2}{|x-y|^{1+2s}}\,dxdy
+\\[15pt]
+& = \displaystyle\int_{x_{i+1}}^{+\infty}\int_{x_{i+1}}^{+\infty} \ldots\,dxdy + 2\int_{x_{i+1}}^{+\infty}\int_{x_{i-1}}^{x_{i+1}} \ldots\,dxdy + \int_{x_{i+1}}^{+\infty}\int_{-\infty}^{x_{i-1}} \ldots\,dxdy 
+\\[15pt]
+& \quad\displaystyle+ \int_{x_{i-1}}^{x_{i+1}}\int_{x_{i-1}}^{x_{i+1}} \ldots\,dxdy + 2\int_{-\infty}^{x_{i-1}}\int_{x_{i-1}}^{x_{i+1}} \ldots\,dxdy + + \int_{-\infty}^{x_{i-1}}\int_{x{i+1}}^{+\infty} \ldots\,dxdy 
+\\[15pt]
+& \quad\displaystyle +  \int_{-\infty}^{x_{i-1}}\int_{-\infty}^{x_{i-1}} \ldots\,dxdy := R_1 + R_2 + R_3 + R_4 + R_5 + R_6 + R_7.
+\end{array} %]]></script>
+
+<p>Once again, the terms $R_i$, $i=1,\ldots,7$ can be computed explicitely, by taking also into account that $R_1=R_3=R_6=R_7=0$ because the corresponding integration domains are all away from the support of the basis functions.</p>
+
+<p>The result of these computations gives the values</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+a_{i,i} = \begin{cases}
+\displaystyle h^{1-2s}\,\frac{2^{3-2s}-4}{s(1-2s)(1-s)(3-2s)}, & \displaystyle s\neq\frac{1}{2}
+\\
+\\
+8\ln 2, & \displaystyle s=\frac{1}{2}.
+\end{cases} %]]></script>
+
+<h2 id="step-4-building-of-mathcal-a_h">Step 4: building of $\mathcal A_h$</h2>
+
+<p>Summarizing, we have the following values for the elements of the stiffness matrix $\mathcal{A}_h$: for $s\neq 1/2$</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+a_{i,j} =  -h^{1-2s} \begin{cases}
+\displaystyle \,\frac{4(k+1)^{3-2s} + 4(k-1)^{3-2s}-6k^{3-2s}-(k+2)^{3-2s}-(k-2)^{3-2s}}{2s(1-2s)(1-s)(3-2s)}, &  \displaystyle k=j-i,\,k\geq 2
+\\
+\\
+\displaystyle\frac{3^{3-2s}-2^{5-2s}+7}{2s(1-2s)(1-s)(3-2s)}, & \displaystyle j=i+1
+\\
+\\
+\displaystyle\frac{2^{3-2s}-4}{s(1-2s)(1-s)(3-2s)}, & \displaystyle j=i.
+\end{cases} %]]></script>
+
+<p>For $s=1/2$, instead, we have</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+a_{i,j} = \begin{cases}
+-4(j-i+1)^2\log(j-i+1)-4(j-i-1)^2\log(j-i-1)
+\\
+\;\;\;+6(j-i)^2\log(j-i)+(j-i+2)^2\log(j-i+2)+(j-i-2)^2\log(j-i-2), &  \displaystyle j> i+2
+\\
+\\
+56\ln(2)-36\ln(3), & \displaystyle j= i+2.
+\\
+\\
+\displaystyle 9\ln 3-16\ln 2, & \displaystyle j=i+1
+\\
+\\
+\displaystyle 8\ln 2, & \displaystyle j=i.
+\end{cases} %]]></script>
+
+<h1 id="numerical-results">Numerical results</h1>
+
+<p>We present the numerical simulations corresponding to the algorithm previously described.</p>
+
+<p>First of all, we test numerically the accuracy of our method for the resolution of the elliptic equation \eqref{Fl_Poisson} by applying it to the following problem</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{poisson}
+\begin{cases}
+(-d_x^2)^s u = 1, & x\in(-1,1)
+\\
+u\equiv 0, & x\in(-1,1)^c.
+\end{cases}
+\end{equation} %]]></script>
+
+<p>In this particular case, the unique solution $u$ can be computed exactly and it is given by</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{real_sol}
+  u(x)=\frac{2^{-2s}\sqrt{\pi}}{\Gamma\left(\frac{1+2s}{2}\right)\Gamma(1+s)}\Big(1-x^{\,2}\Big)^s\cdot\chi_{(-1,1)},  
+\end{equation}</script>
+
+<p>where $\chi_{(-1,1)}$ indicates the characteristic function of the interval $(-1,1)$.</p>
+
+<p>The solution of \eqref{poisson} in the case  $s=0.1$ and $N=50$ is computed with the following script which emploies the function <strong>FEFractionalLaplacian.m</strong> ginving the FE discretization of $(-d_x^2)^s$.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<span class="n">Phi</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="mi">1</span><span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+<span class="n">F</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">xx</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">xx</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
+    <span class="n">F</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
+<span class="k">end</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">FEFractionalLaplacian</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">A</span><span class="p">\</span><span class="n">F</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>In <strong>Figure 5</strong>, we show a comparison for different values of $s$ between the exact solution \eqref{real_sol} and the computed numerical approximation.</p>
+
+<h2 id="-4"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0024/solution.png" alt="" /></h2>
+<p><strong>Figure 5</strong>. Real and numerical solution.</p>
+
+<p>One can notice that when $s=0.1$ (and also for other small values of s), the computed solution is to a certain extent different from the exact solution. Notwithstanding, it is well-known that the notion of trace is not defined for the spaces $H^s(-1,1)$ with $s\leq 1/2$. Hence, it is somehow natural that we cannot expect a point-wise convergence in this case.</p>
+
+<p>Furthermore, the accuracy of our algorithm is validated by a simple error analysis.</p>
+
+<p>The computation of the error in the space $H_0^s(-1,1)$ can be readily done by using the definition of the bilinear form, namely</p>
+
+<script type="math/tex; mode=display">\|u-u_h\|_{H_0^s(-1,1)}^2 =a(u-u_h,u-u_h) =a(u,u-u_h) =\int_{-1}^1f(x)\left(u(x)-u_h(x)\right)dx</script>
+
+<p>where have used the orthogonality condition $a(v_h,u-u_h)=0$ for all $v_h \in V_h$.</p>
+
+<p>For this particular test, since $f\equiv 1$ in $(-1,1)$, the problem is therefore reduced to</p>
+
+<script type="math/tex; mode=display">\|u-u_h\|_{H^s_0(-1,1)}=\left(\int_{-1}^1\left( u(x)-u_h(x) \right)\,dx\right)^{1/2}</script>
+
+<p>where the right-hand side can be easily computed, since we have the closed formula</p>
+
+<script type="math/tex; mode=display">\int_{-1}^1u\,dx= \frac{\pi}{2^{2s}\Gamma(s+\frac{1}{2})\Gamma(s+\frac{3}{2})}</script>
+
+<p>and the term corresponding to $\int_{-1}^1u_h$ can be carried out numerically. Moreover, we have the following convergence result.</p>
+
+<p><strong>Theorem</strong> [2] For the solution $u$ of \eqref{WFD} and its FE approximation $u_h$ given by \eqref{WFD}, if $h$ is sufficiently small, the following estimates hold</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{ll}
+\|u-u_h\|_{H^s_0(-1,1)}\leq \mathcal{C} h^{1/2}|\!\ln h|\,\|f\|_{C^{1/2-s}(-1,1)}, &\text{if}\quad s<1/2,
+\\[15pt]
+\|u-u_h\|_{H^s_0(-1,1)}\leq \mathcal{C} h^{1/2} |\!\ln h|\, \|f\|_{L^\infty(-1,1)},&\text{if}\quad  s=1/2 
+\\[15pt]
+\displaystyle\|u-u_h\|_{H^s_0(-1,1)}\leq \tfrac{\mathcal{C}}{2s-1} h^{1/2} \sqrt{|\!\ln h|}\, \|f\|_{C^\beta(-1,1)},& \text{if} \quad s>1/2,\;\;\beta>0
+\end{array} %]]></script>
+
+<p>where $\mathcal{C}$ is a positive constant not depending on $h$.</p>
+
+<p>In <strong>Figure 6</strong>, we present the computational errors evaluated for different values of $s$ and $h$, which can be obtained with the following function.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="p">[</span><span class="n">h</span><span class="p">,</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_fl</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<span class="n">Phi</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="mi">1</span><span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+<span class="n">F</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">xx</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">xx</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
+    <span class="n">F</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
+<span class="k">end</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">FEFractionalLaplacian</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">A</span><span class="p">\</span><span class="n">F</span><span class="p">;</span>
+<span class="n">val</span> <span class="o">=</span> <span class="nb">pi</span><span class="p">/(</span><span class="mi">2</span><span class="o">^</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">*</span><span class="nb">gamma</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="nb">gamma</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="mf">1.5</span><span class="p">));</span>
+<span class="n">valnum</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">sol</span><span class="p">);</span>
+<span class="n">e</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">val</span><span class="o">-</span><span class="n">valnum</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="-5"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0024/error.png" alt="" /></h2>
+<p><strong>Figure 6</strong>. Computational error in logarithmic scale in terms for different values of $s$.</p>
+
+<p>The rates of convergence shown are of order (in $h$) of $1/2$, and this convergence rate is maintained also for small values of $s$. This confirms the accuracy of our approximation. In particular, the behavior shown in <strong>Figure 6</strong> is not in contrast with the known theoretical results.</p>
+
+<h2 id="references">References</h2>
+
+<p>[1] G. Acosta, F. Bersetche and J. P. Borthagaray, <em>A short FE implementation for a 2d homogeneous Dirichlet problem of a Fractional Laplacian</em>. Comput. Math. Appl., Vol. 74, No. 4 (2017), pp. 784-816.</p>
+
+<p>[2] U. Biccari and V. Hernández-Santamarı́a, <em>Controllability of a one-dimensional fractional heat equation: theoretical and
+numerical aspects</em>. IMA J. Math. Control. Inf, to appear, 2018.</p>
+
+<p>[3] U. Biccari, M. Warma and E. Zuazua, <em>Controllability of the one-dimensional fractional heat equation under positivity constraints</em>. Submitted.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2 id="asda"&gt;asda&lt;/h2&gt;
 
 
 &lt;p&gt;The aim of this tutorial is to give a numerical method for solving an age structured virus model.&lt;/p&gt;

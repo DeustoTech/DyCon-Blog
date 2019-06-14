@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 04 Jun 2019 09:58:42 +0200</pubDate>
-    <lastBuildDate>Tue, 04 Jun 2019 09:58:42 +0200</lastBuildDate>
+    <pubDate>Fri, 14 Jun 2019 15:24:16 +0200</pubDate>
+    <lastBuildDate>Fri, 14 Jun 2019 15:24:16 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -56,22 +56,314 @@
     
       <item>
         <title>Sparse sources identification through adjoint localization algorithm</title>
-        <description>asda
+        <description>Model Problem
+
+We consider the numerical approximation of the inverse problem for the linear advection-diffusion equation,
+
+
+
+with $d$ being the diffusivity of the material and $v$ the direction of the advection.
+
+Given a final time $T&amp;gt;0$ and a target function $u^\ast$ the aim is to identify the initial condition $u_0$ such that the solution, at time $t=T$, reaches the target $u^*$ or gets as close as possible to it. We assume that the initial condition $u_0$ is characterized as a combined set of sparse sources. This means that $u_0$ is a linear combination of unitary deltas with certain and possibly different weights, i.e:
+
+
+
+We formulate the inverse problem using optimal control techniques. In particular, we consider the minimization of the following functional:
+
+
+
+Space and time discretization
+
+Letting $\textbf{u} : [0, T] \rightarrow \mathbb{R}^s$ where $s$ is the number of grid points on $\Omega$, we can write a general finite element (FE) discretization of the diffusion–advection equation in \eqref{modeleq} in a compact form as:
+
+
+
+In order to get a time discretized version of the previous equation, we apply implicit Euler method with stepsize $\Delta t := T/N$ where $N$ is the total number of time steps. The numerical approximations to the solution are given by the vectors $\textbf{u}^n \approx \textbf{u}(t_n) \in \mathbb{R}^s$ with respect to the index $n=i\Delta t$ for $i=1,2,..,N$. Therefore, the fully discrete version of model equation is as follows,
+
+
+
+Adjoint Algorithm for sparse source identification
+
+The algorithm to be presented in this work for the sparse source identification of the linear diffusion-advection equation based on the adjoint methodology consists of two steps. Firstly, we use the adjoint methodology to identify the locations of the sources. Secondly, a least squares fitting is applied to find the corresponding intensities of the sources.
+
+We have considered here a two-dimensional example with several sources to be identified in a multi-model environment. This means that the left half ($\Omega_1 = [0,1] \times [0,1]$) and the right half ($\Omega_2 = [1,2] \times [0,1]$) of the domain are modelled with different equations. In particular, the heat equation is used on $\Omega_1$ and the diffusion–advection equation is used on $\Omega_2$.
+
+The initialization parameters look as follows:
+
+N=30; %% space discretization points in y-direction
+dx=1/(N+1); %% mesh size
+t0=0; %% initial time
+tf=0.1; %% final time
+n=5; %% time discretization points
+dt=(tf-t0)/n; %% stepsize
+TOL=1e-5; %% stopping tolerance
+
+d1=0.05; %% diffusivity of the material on the left sudomain
+d2=0.05; %% diffusivity of the material on the left sudomain
+
+%% advection components
+vx=0;
+vy=-3;
+
+tau=dx^4; %% regularization parameter
+epsilon=0.1; %% stepsize of the gradient descent method
+
+
+We now compute the FE discretization matrices $M$, $A$ and $V$ that are respectively the mass matrix, the stiffness matrix and the advection matrix. For the FE discretization we assume equidistant structured meshes. In particular we use triangular elements and the classical pyramidal test functions are employed.
+
+[M,A,V] = computeFEmatrices(N,d1,d2,vx,vy); %% Compute FE discretization matrices
+
+
+A reference initial condition is chosen and we compute using the FE discretization specified above and implicit Euler in time its corresponding final state at time $T$. This final state will be considered the initial data of the inverse problem to be solved and we name it the target function $u^*$ as mentioned previously.
+
+U0_ref = initial_deltas(N); %% computes reference initial condition
+
+[U_target,u_target] = compute_target(U0_ref,N,n,dt,M,A,V); %% Compute target distribution
+
+
+We now call the algorithm that estimates the initial condition $u_0$ using as a initial data the target function $u^*$. As mentioned before, this algorithm consists of two steps.
+
+Firstly, the classical adjoint methodology that minimizes the functional $J(u_0)$ subject to the diffusion-advection equation is used. The iterative optimization algorithm employed is the classical gradient descent method. However, although this iterative procedure finds quite accurately the locations of the sources, it does not recover the sparse character of the initial condition. This is not suprising because the recovered initial data comes from solving the adjoint problem which is basically a diffusive process that smoothes out its state. Consequently, a second procedure is needed to project the obtained non sparse initial condition into the set of admissible sparse solutions.
+
+As the initial condition $u_0$ is assumed to be a linear combination between the locations and the intensities, once we have fixed the locations using the adjoint methodology we can solve a least squares problem to get the remaining intensities. We assemble a matrix $\textbf{L} \in \mathbb{R}^{s \times l}$ where at each column we have the forward solution for a single unitary delta placed at each of the locations already identified. We then solve the following linear system of equations for the vector of unknowns $\alpha = (\alpha_1, \alpha_2, …, \alpha_l)^T$:
+
+
+
+to find the intensities vector $\alpha$.
+
+Adjoint algorithm for sparse source identification (algorithm 4)
+
+U0 = SparseIdentification(u_target,TOL,dt,n,N,M,A,V,epsilon,tau);
+
+
+Finally, the final state at $T$ is computed using as a initial condition the estimated sparse sources identified with our algorithm.
+
+Compute final state with the recovered initial condition
+
+[UF,u_final] = compute_target(U0,N,n,dt,M,A,V);
+
+
+We can see the evolution recovered
+
+
+
+We now visualize the numerical results. Plots on the left side show the reference initial solution and the given target. Similarly, plots on the right side show the recovered initial condition and the distribution at the final time $T$ produced by the recovered initial sources.
+
+One can observe the difference between the two models (the heat equation on $\Omega_1$ and the diffusion-advection on $\Omega_2$) in the two figures at the bottom where the initial sources on $\Omega_2$ move downwards at the same time as they dissipate while the initial sources on $\Omega_1$ only dissipate without displacement.
+
+xplot = linspace(0,2,2*N+3); %% space grid w.r.t component x
+yplot = linspace(0,1,N+2); %% space grid w.r.t component y
+%%
+figure('unit','norm','pos',[0.25 0.1 0.5 0.8])
+subplot(3,2,1)
+surf(xplot,yplot,U0_ref)
+shading interp;colorbar;colormap jet
+title('Reference initial state (front view)')
+subplot(3,2,2)
+surf(xplot,yplot,U0)
+shading interp;colorbar;colormap jet
+title('Recovered initial state (front view)')
+subplot(3,2,3)
+pcolor(xplot,yplot,U0_ref)
+shading interp;colorbar;colormap jet
+title('Reference initial state (above view)')
+subplot(3,2,4)
+pcolor(xplot,yplot,U0)
+shading interp;colorbar;colormap jet
+title('Recovered initial state (above view)')
+subplot(3,2,5)
+pcolor(xplot,yplot,U_target)
+shading interp;colorbar;colormap jet
+title('Given target u^*')
+subplot(3,2,6)
+pcolor(xplot,yplot,UF)
+shading interp;colorbar;colormap jet
+title('Recovered final state')
+
+
+
 </description>
         <pubDate>Fri, 14 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0027</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0027</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0014</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0014</guid>
         
         
         <category>tutorial</category>
         
-        <category>WP99</category>
+        <category>WP04</category>
         
       </item>
     
       <item>
         <title>Controllability of a Class of Infinite Dimensional Systems with Age Structure</title>
-        <description>asda
+        <description>
+ Infinite dimensional dynamical systems coupling age structuring with diffusion appear naturally in
+ population dynamics, medicine or epidemiology. A by now classical example is the Lotka-Mckendrick system with spatial diffusion. The
+ aim of this blog is to study contaollability properties of such age structured models in an unified manner. 
+ 
+
+
+Let $A : \mathcal{D}(A) \to X$  be the generator of a $C^0$ semigroup $\mathbb{S}$ on the Hilbert space $X$ and let $U$ be
+another Hilbert space. Both $X$ and $U$ will be identified with their duals. Let $B$ be a (possibly unbounded) linear operator
+from $U$ to $X$, which is supposed to be an admissible control operator for  $\mathbb{S}$.
+In the examples we have in mind, the above spaces and operators describe the dynamics of a system without age structure.
+In particular, $X$ is the state space and $U$ is the control space.
+The corresponding age structured system is obtained by first extending these spaces to
+\begin{equation} \label{input-space}
+\mathcal{X} = L^{2}(0,a_{\dagger}; X), \quad \mathcal{U} = L^{2}(0,a_\dagger;U).
+\end{equation} 
+where $a_\dagger&amp;gt;0$ denotes the maximal age individuals can attain. Let $p(t) \in \chi$ be the distribution density of the
+individuals with respect to age $a\geqslant 0$ and at some time $t \geqslant 0.$  Then the abstract version of the Lotka-McKendrick
+system to be considered in this paper writes:
+ \begin{equation} \label{eq:main}
+\begin{cases}
+\displaystyle \frac{\partial p}{\partial t} + \frac{\partial p}{\partial a} - A p  + \mu(a) p =  \mathcal{\chi}_{(a_{1},a_{2})} B u, &amp;amp; t \geqslant 0, a \in (0,a_\dagger), \\
+\displaystyle p(t,0)  = \displaystyle \int_{0}^{a_\dagger} \beta(s) p(t,s) \; {\rm d}s, &amp;amp; t \geqslant 0, \\
+\displaystyle p(0,a) = p_{0},
+\end{cases}
+\end{equation} 
+where $\mathcal{\chi}$ is the characteristic function of the interval $(a_{1}, a_{2})$ with
+$0 \leqslant a_{1} &amp;lt; a_{2} \leqslant a_\dagger$ and $p_{0}$ is the initial population density.
+In the above system, the positive function $\mu:[0,a_\dagger] \to \mathbb{R}_{+}$ denotes the
+natural mortality rate of individuals of age $a.$ We denote by $\beta: [0,a_\dagger] \to \mathbb{R}_{+}$
+the positive function describing the fertility rate at age $a.$ We assume that the fertility rate $\beta$ a
+nd the mortality rate $\mu$ satisfy the conditions
+
+(H1) $\beta \in L^\infty[0, a_\dagger], \; \beta \geqslant 0$ for almost every $a \in [0,a_\dagger].$
+(H2) $\mu \in L^1_{loc}[0, a_\dagger], \; \mu \geqslant 0$ for almost every $a \in [0,a_\dagger].$
+(H3) $\displaystyle \int_0^{a_\dagger} \mu(a) \ {\rm d} a = \infty.$
+
+
+Before we state our result, let us introduce the notion of null controllability of the pair $(A,B).$
+
+We say that a pair $(A,B)$ is null-controllable in time $\tau,$ if for every $z_{0} \in X$ there exists a control $u \in L^{2}(0,\tau,U)$ such that, the solution of the system
+\begin{equation*}
+\dot z(t) = A z(t) + Bu(t) \quad t \in [0,\tau], \qquad z(0) = z_{0},
+\end{equation*}
+satisfies $z(\tau) = 0.$
+
+
+We prove the following result
+
+Assume that  $\beta$ and $\mu$ satisfy the conditions (H1)-(H3) above. Moreover,
+suppose that the fertility rate $\beta$ is such that
+\begin{equation} \label{eq:beta}
+\beta(a)= 0 \mbox{ for all } a \in (0,a_{b}),
+\end{equation}
+for some $a_b\in (0,a_\dagger)$ and that $a_1 &amp;lt; a_b$.
+Let us assume that the pair $(A,B)$ is null controllable in arbitrary time. 
+Then for every $\tau &amp;gt; a_{1} + a_{\dagger}-a_{2}$ and for every $p_{0} \in \chi$ there exists  a control $v \in L^{2}(0,\tau;\mathcal{U})$ such that the solution $p$ of \eqref{eq:main} satisfies
+\begin{equation}
+p(\tau,a) = 0 \mbox{ for all }  a \in (0,a_\dagger).
+\end{equation} 
+ 
+
+It is well known that null controllability is equivalent to final state observability of the adjoint system
+(see for instance [4, Section 11.2]). The adjoint of the above system reads as
+\begin{equation} \label{eq:adj}
+\begin{cases}
+\displaystyle \frac{\partial q}{\partial t} - \frac{\partial p}{\partial a} - A^* p  + \mu(a) p - \beta(a) q(t,0) =  0, &amp;amp; t \geqslant 0, a \in (0,a_\dagger), \\
+\displaystyle q(t,a_\dagger)  = 0, &amp;amp; t \geqslant 0, \\
+\displaystyle q(0,a) = q_{0},
+\end{cases}
+\end{equation} 
+where $A^*$ is the adjoint of  $A.$  In order to prove Theorem 1, it is enough to prove the following
+
+ Let us assume the hypothesis of Theorem 1. Then for every $\tau &amp;gt; a_1 + a_\dagger - a_2$ there exists $k_\tau &amp;gt; 0$ such that
+ the solution $q$ of \eqref{eq:adj} satishfies
+ \begin{equation} \label{eq:est-adj}
+ \int_0^{a_\dagger} \|q(\tau, a)\|^2_X \ da  \leqslant k_\tau^2 \int_0^\tau \int_{a_1}^{a_2} \left\|B^*q(t,a) \right\|^2_U \ da dt, \qquad \qquad (q_0 \in \mathcal{X}).
+ \end{equation}
+ 
+Let us give an idea of the proof. We combine characteristics method with final state observability of the pair $(A^*, B^*).$ For siplicity
+in the presentation, let us assume that $\mu = 0,$ $a_1 = 0,$ $a_2 &amp;lt; a_b$ and $\tau = 2a_\dagger.$
+The detail proof of Theorem 1, in a slightly more general case, can be found in [3]. Integrating along the characteristic lines,
+it is not very difficult to see that
+\begin{equation*}
+q(t,a) = \int_{t + a - a_\dagger}^{t} e^{(t-s)A^*} \beta(a+ \tau - s) q(s, 0) \ ds, \qquad t &amp;gt; a_\dagger. 
+\end{equation*}
+Therefore,
+\begin{equation} \label{est0}
+\int_0^{a_\dagger} \|q(\tau, a)\|^2_X \ da \leqslant C \int_{a_\dagger}^\tau \left\|q(t,0) \right\|^2_X \ dt. 
+\end{equation}
+Thus to prove \eqref{eq:est-adj}, we need to estimate the right hand side of the above estimate. We now make use of the condition
+\eqref{eq:beta}.  Note that, due to this condition, $q$ satisfies
+\begin{equation} \label{eq:adj-2}
+\displaystyle \frac{\partial q}{\partial t} - \frac{\partial q}{\partial a} - A^* p  + \mu(a) p =  0,  \quad  t \geqslant 0, a \in (0,a_2).
+\end{equation}
+For a.e. $t \in (a_\dagger, \tau),$ we define $w(s) = q(s, t- s),$ $s \in (t - a_2, t).$ Then $w$ solves
+\begin{equation*}
+\displaystyle \frac{\partial w}{\partial s} - A^* w = 0, \quad s \in (t - a_2, t). 
+\end{equation*}
+Since the pair $(A, B)$ is null controllable in any time, or equivalently the pair $(A^*, B^*)$ is final-state observable in any
+time, there exists a constant
+$C &amp;gt; 0,$ depending only on $a_2, A$ and $B$  such that
+\begin{equation*}
+\left\| w(t) \right\|_{X}^2 \leqslant C \int_{t-a_2}^t \left\| B^* w(s) \right\|^2_U \ ds. 
+\end{equation*}
+Coming back to $q$ and integrating over $[a_\dagger, \tau]$ with respect to $t,$ we have that
+\begin{equation}
+\int_{a_\dagger}^\tau \|q(t,0)\|^2_X \ dt \leqslant \int_{0}^\tau \int_{0}^{a_2} \left\|B^* q(t,a)\right\|^2  \ da dt. 
+\end{equation}
+Combining the above estimate together with \eqref{est0}, we get \eqref{eq:est-adj}. In the two figures below, we ilustrate the
+estimate of $q(t,0)$ and the final-state observability of $q$ in the general case.
+
+
+
+  
+   
+     
+  
+   Fig.1 - An ilustration of the estimate of $q(t,0).$ We apply final state observability of $(A^*, B^*)$ along
+  the characteristics. Since we want to estimate $q(t,0),$ we consider the trajectory $\gamma(s) = (t-s,s),$
+  $s \leqslant t \leqslant \tau$ (or equivalently the backward characteristics starting from $(t,0).$) 
+
+    
+
+    
+  
+   Fig.2 - An illustration of the final-state observability at time $\tau &amp;gt; a_1 + a_\dagger - a_2$: For
+  $ a \in (0,a_2 - \varepsilon)$ (blue region) the backward characteristics starting from $t = \tau$ enters the
+  observation domain.  For $a \in (a_2 - \varepsilon, a_\dagger)$, the backward characteristics (green region)
+  hits the line $a = a_\dagger$, gets renewed by the renewal condition $\beta(a)q(t,0)$ and then enters the observation
+  domain (purple region).
+ 
+ 
+ 
+ 
+
+Examples
+We consider two examples :  1) The classical Lotka-McKendrick system and 2) Lotka-Mckendrick system with diffusion.
+
+ 1)  The classical Lotka-McKendrick system : Let us choose $X = \mathbb{R},$ $A=0$ and $B=1.$ Then the system \eqref{eq:main} reduces
+ to  classical Lotka-McKendrick system. By Theorem 1, this system is null controllable in time $\tau &amp;gt; a_1 + a_\dagger - a_2.$ A
+ similar result was obtained in [1]. 
+
+
+
+ 2)  The Lotka-McKendrick system with spatial diffusion  : Let $\Omega$ be a smooth bounded domain in $\mathbb{R}^3$ and
+ $\omega \subseteq \Omega.$ Let us consider 
+ \begin{equation*}
+ X = L^2(\Omega), \quad A = \Delta , \quad \mathcal{D}(A) =
+ \left\{ f \in H^2(\Omega) \mid \displaystyle \frac{\partial f}{\partial n} = 0\right\}, \quad B = \chi_{\omega}.
+ \end{equation*}
+ This corresponds to the Lotka-McKendrick model with spatial diffusion ([2]). It is known that, the pair $(A, B)$ or equivalently
+ the heat equation with localized interior control, is null controllable in any time. Thus we can apply Theorem 1 to conclude that
+ the system is null controllable in time $\tau &amp;gt; a_1 + a_\dagger - a_2.$
+ 
+ Several other applications can be found in [3].
+
+References
+ [1] D. Maity,  On the Null Controllability of the Lotka-Mckendrick System, Submitted. 
+ [2] D. Maity, M. Tucsnak and E. Zuazua,  Controllability and positivity constraints in population dynamics with age
+structuring and diffusion , Journal de Math&amp;eacute;matiques Pures et Appliqu&amp;eacute;s. In press, 10.1016/j.matpur.2018.12.006.
+
+ [3] D. Maity, M. Tucsnak and E. Zuazua,  Controllability of a Class of Infinite Dimensional
+Systems with Age Structure. Submitted.
+
+ [4] M. Tucsnak and G. Weiss,  Observation and control for operator semigroups,   
+Birkh&amp;auml;user Advanced Texts: Basler Lehrbu&amp;uuml;cher. [Birkh&amp;auml;user Advanced Texts: Basel Textbooks], Birkh&amp;auml;user Verlag, Basel, 2009. 
+
 </description>
         <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0030</link>
@@ -85,17 +377,288 @@
       </item>
     
       <item>
-        <title>REVISION del post Finite element approximation of the 1-D fractional Poisson equation</title>
-        <description>asda
+        <title>Finite Element approximation of the one-dimensional fractional Laplacian</title>
+        <description>We describe here a Finite Element algorithm for the approximation of the one-dimensional fractional Laplacian $(-d_x^2)^s$ on the interval $(-L,L)$, $L&amp;gt;0$ and for the numerical resolution of the following fractional Poisson equation
+
+
+
+This algorithm has also been emploied in [2,3] for the numerical controllability of fractional parabolic problems (see our previous entries in the DyCon Blog, WP3_P0001 and WP3_P0022).
+
+We recall that the fractional Laplacian is defined, for all $s\in(0,1)$ and any function $u$ regular enough, as the following singular integral
+
+
+
+with $c_s$ an explicit normalization constant given by
+
+
+
+$\Gamma$ being the usual Euler Gamma function.
+
+The starting point of the FE method is the definition of a bilinear form associated to the fractional Laplace operator $(-d_x^2)^s$ and the introduction of the variational formulation corresponding to the elliptic problem \eqref{Fl_Poisson}.
+
+This variational formulation is given as follows: find $u\in H_0^s(-L,L)$ such that the identity
+
+
+
+is satisfied for any function $v\in H_0^s(-L,L)$. In \eqref{variational}, with $H_0^s(-L,L)$ we indicate the space
+
+
+
+$H^s(\mathbb{R})$ being the usual fractional Sobolev space. Moreover, the bilinear form
+
+
+
+is defined as
+
+
+
+Let us describe how, starting from the above bilinear form, we can obtain our FE approximation. For simplicity, in what follows we will take $L=1$, although the methodology remains the same for any real $L&amp;gt;0$.
+
+Let us take a uniform partition of the interval $(-1,1)$ as follows:
+
+
+
+with $x_{i+1}=x_i+h$, $i=0,\ldots N$. We call $\mathfrak{M}$ the mesh composed by the points ${x_i\,:\, i=1,\ldots,N}$, while the set of the boundary points is denoted $\partial\mathfrak{M}:={x_0,x_{N+1}}$.
+
+Now, define $K_i:=[x_i,x_{i+1}]$ and consider the discrete space
+
+
+
+where $\mathcal{P}^1$ is the space of the continuous and piece-wise linear functions. Hence, we approximate \eqref{variational} with the following discrete problem: find $u_h\in V_h$ such that
+
+
+
+for all $v_h\in V_h$. If now we indicate with
+
+
+
+a basis of $V_h$, it will be sufficient that the above equality is satisfied for all the functions of the basis, since any element of $V_h$ is a linear combination of them. Therefore the problem takes the following form
+
+
+
+Clearly, since $u_h\in V_h$, we have $u_h(x) = \sum_{j=1}^N u_j\phi_j(x)$, where the coefficients $u_j$ are, a priori, unknown. In this way, \eqref{WFD} is reduced to solve the linear system $\mathcal A_h u=F$, where the stiffness matrix $\mathcal A_h\in \mathbb{R}^{N\times N}$ has components
+
+
+
+while the vector $F\in\mathbb{R}^N$ is given by $F=(F_1,\ldots,F_N)$ with
+
+
+
+Moreover, the basis
+
+
+
+that we will employ is the classical one in which each $\phi_i$ is the tent function with $supp(\phi_i)=(x_{i-1},x_{i+1})$ and verifying $\phi_i(x_j)=\delta_{i,j}$. In particular, for $x\in{x_{i-1},x_i,x_{i+1}}$ the $i^{th}$ function of the basis is explicitly defined as (see Figure 1)
+
+
+
+
+Figure 1. Basis function $\phi_i$ on its support $(x_{i-1},x_{i+1})$.
+
+We now start building the stiffness matrix $\mathcal A_h$ approximating the fractional Laplacian. This will be done in three steps, since the values of the matrix can be computed differentiating among three well defined regions: the upper triangle, corresponding to $j\geq i+2$, the upper diagonal corresponding to $j=i+1$ and the diagonal, corresponding to $j=i$. In each of these regions the intersections among the support of the basis functions are different, thus generating different values of the bilinear form.
+
+We present below an abridged explanation of how to compute the entries of $\mathcal{A}_h$. Complete details may be found in [2].
+
+Step 1: $j\geq i+2$
+
+In this case we have $supp(\phi_i)\cap supp(\phi_j) =\emptyset$ (see also Figure 2). Hence, \eqref{stiffness_nc} is reduced to computing only the integral
+
+
+
+
+Figure 2. Basis functions $\phi_i(x)$ and $\phi_j(x)$ for $j\geq i + 1$. The supports are disjoint.
+
+Taking into account the definition of the basis function \eqref{basis_fun}, the integral \eqref{elem_noint_app} becomes
+
+
+
+Let us introduce the following change of variables:
+
+
+
+Then, rewriting (with some abuse of notations since there is no possibility of confusion) $\hat{x}=x$ and $\hat{y}=y$, we get
+
+
+
+This integral can be computed explicitly, and we obtain
+
+
+
+Notice that, when $s=1/2$, both the numerator and the denominator of the expression above are zero. In this case, the value of $a_{i,j}$ can be obtained by taking the limit $s\to 1/2$ and we get
+
+
+
+if $k\neq 2$ and
+
+
+
+Step 2: $j= i+1$
+This is the most cumbersome case, since it is the one with the most interactions between the basis functions (see Figure 3).
+
+
+Figure 3. Basis functions $\phi_i(x)$ and $\phi_{i+1}(x)$. In this case, the intersection of the supports is the interval $[x_i,x_{i+1}]$.
+
+Using the symmetry of the integral with respect to the bisector $y=x$, we have
+
+
+
+Also in this case, the terms $Q_i$, $i=1,\ldots,6$, can be computed explicitely, by noticing also the following facts:
+
+
+  $Q_1=Q_6=0$ since $\phi_i = 0$ on the domain of integration.
+  $Q_2=Q_5$ due to symmetry.
+
+
+Then, the elements $a_{i,i+1}$ are given by the sum $2Q_2+Q_3+Q_4$ and we have
+
+
+
+Step 3: $j= i$
+As a last step, we fill the diagonal of the matrix $\mathcal A_h$, which collects the values corresponding to $\phi_i(x)=\phi_j(x)$ (see Figure 4).
+
+
+Figure 4. Basis functions $\phi_i(x)=\phi_j(x)$.
+
+In this case, we have
+
+
+
+Once again, the terms $R_i$, $i=1,\ldots,7$ can be computed explicitely, by taking also into account that $R_1=R_3=R_6=R_7=0$ because the corresponding integration domains are all away from the support of the basis functions.
+
+The result of these computations gives the values
+
+
+
+Step 4: building of $\mathcal A_h$
+
+Summarizing, we have the following values for the elements of the stiffness matrix $\mathcal{A}_h$: for $s\neq 1/2$
+
+
+
+For $s=1/2$, instead, we have
+
+
+
+Numerical results
+
+We present the numerical simulations corresponding to the algorithm previously described.
+
+First of all, we test numerically the accuracy of our method for the resolution of the elliptic equation \eqref{Fl_Poisson} by applying it to the following problem
+
+
+
+In this particular case, the unique solution $u$ can be computed exactly and it is given by
+
+
+
+where $\chi_{(-1,1)}$ indicates the characteristic function of the interval $(-1,1)$.
+
+The solution of \eqref{poisson} in the case  $s=0.1$ and $N=50$ is computed with the following script which emploies the function FEFractionalLaplacian.m ginving the FE discretization of $(-d_x^2)^s$.
+
+s = 0.1;
+N = 50;
+L = 1;
+
+x = linspace(-L,L,N+2);
+x = x(2:end-1);
+h = x(2)-x(1);
+
+f = @(x) 1+0*x;
+Phi = @(x) 1-abs(x);
+
+F = zeros(N,1);
+
+for i=1:N
+    xx = linspace(x(i)-h,x(i)+h,N+1);
+    xx = 0.5*(xx(2:end)+xx(1:end-1));
+    B1 = f(xx).*(Phi((xx-x(i))/h));
+    F(i) = ((2*h)/N)*sum(B1); 
+end
+
+A = FEFractionalLaplacian(s,L,N);
+sol = A\F;
+
+
+In Figure 5, we show a comparison for different values of $s$ between the exact solution \eqref{real_sol} and the computed numerical approximation.
+
+
+Figure 5. Real and numerical solution.
+
+One can notice that when $s=0.1$ (and also for other small values of s), the computed solution is to a certain extent different from the exact solution. Notwithstanding, it is well-known that the notion of trace is not defined for the spaces $H^s(-1,1)$ with $s\leq 1/2$. Hence, it is somehow natural that we cannot expect a point-wise convergence in this case.
+
+Furthermore, the accuracy of our algorithm is validated by a simple error analysis.
+
+The computation of the error in the space $H_0^s(-1,1)$ can be readily done by using the definition of the bilinear form, namely
+
+
+
+where have used the orthogonality condition $a(v_h,u-u_h)=0$ for all $v_h \in V_h$.
+
+For this particular test, since $f\equiv 1$ in $(-1,1)$, the problem is therefore reduced to
+
+
+
+where the right-hand side can be easily computed, since we have the closed formula
+
+
+
+and the term corresponding to $\int_{-1}^1u_h$ can be carried out numerically. Moreover, we have the following convergence result.
+
+Theorem [2] For the solution $u$ of \eqref{WFD} and its FE approximation $u_h$ given by \eqref{WFD}, if $h$ is sufficiently small, the following estimates hold
+
+
+
+where $\mathcal{C}$ is a positive constant not depending on $h$.
+
+In Figure 6, we present the computational errors evaluated for different values of $s$ and $h$, which can be obtained with the following function.
+
+function [h,e] = error_fl(s,N)
+
+x = linspace(-1,1,N+2);
+x = x(2:end-1);
+h = x(2)-x(1);
+
+f = @(x) 1+0*x;
+Phi = @(x) 1-abs(x);
+
+F = zeros(N,1);
+
+for i = 1:N
+    xx = linspace(x(i)-h,x(i)+h,N+1);
+    xx = 0.5*(xx(2:end)+xx(1:end-1));
+    B1 = f(xx).*(Phi((xx-x(i))/h));
+    F(i) = ((2*h)/N)*sum(B1); 
+end
+
+A = FEFractionalLaplacian(s,1,N);
+sol = A\F;
+val = pi/(2^(2*s)*gamma(s+0.5)*gamma(s+1.5));
+valnum = h*sum(sol);
+e = sqrt(val-valnum);
+
+
+
+Figure 6. Computational error in logarithmic scale in terms for different values of $s$.
+
+The rates of convergence shown are of order (in $h$) of $1/2$, and this convergence rate is maintained also for small values of $s$. This confirms the accuracy of our approximation. In particular, the behavior shown in Figure 6 is not in contrast with the known theoretical results.
+
+References
+
+[1] G. Acosta, F. Bersetche and J. P. Borthagaray, A short FE implementation for a 2d homogeneous Dirichlet problem of a Fractional Laplacian. Comput. Math. Appl., Vol. 74, No. 4 (2017), pp. 784-816.
+
+[2] U. Biccari and V. Hernández-Santamarı́a, Controllability of a one-dimensional fractional heat equation: theoretical and
+numerical aspects. IMA J. Math. Control. Inf, to appear, 2018.
+
+[3] U. Biccari, M. Warma and E. Zuazua, Controllability of the one-dimensional fractional heat equation under positivity constraints. Submitted.
 </description>
         <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0024</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0024</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/WP99-P0024</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/WP99-P0024</guid>
         
         
         <category>tutorial</category>
         
-        <category>WP99</category>
+        <category>WP05</category>
         
       </item>
     
