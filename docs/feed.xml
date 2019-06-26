@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 20 Jun 2019 09:35:23 +0200</pubDate>
-    <lastBuildDate>Thu, 20 Jun 2019 09:35:23 +0200</lastBuildDate>
+    <pubDate>Wed, 26 Jun 2019 12:41:40 +0200</pubDate>
+    <lastBuildDate>Wed, 26 Jun 2019 12:41:40 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -46,6 +46,24 @@
         <pubDate>Fri, 05 Jul 2019 00:00:00 +0200</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</link>
         <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
+    
+      <item>
+        <title>Propagation of one and two-dimensional discrete waves under finite difference approximation</title>
+        <description>We display the propagation properties of the numerical versions of one and two-dimensional
+wave equations, semi-discretized in space by finite difference schemes. We focus on high-frequency solutions whose propagation can be described, both at the continuous and semi-discrete level, by micro-local tools. We do it both for uniform and non-uniform numerical grids and also for constant coefficients and variable ones. The energy of continuous and semi-discrete high-frequency solutions propagates along bi-characteristic rays, but their dynamics differ from the continuous to the semi-discrete setting, because of the different nature of the corresponding Hamiltonians. We illustrate through accurate numerical simulations that, in agreement with the micro-local theory, numerical high-frequency solutions can bend in an unexpected manner, as a result of the accumulation of the local effects introduced by the heterogeneity of the numerical grid. These effects are enhanced in the multi-dimensional case where the interaction and combination of such behaviors in the various space directions may produce, for instance, the rodeo effect, i. e. waves that are trapped by the numerical grid in closed loops, without ever getting to the exterior boundary.
+
+
+</description>
+        <pubDate>Wed, 26 Jun 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</guid>
         
         
         <category>tutorial</category>
@@ -659,21 +677,6 @@ numerical aspects. IMA J. Math. Control. Inf, to appear, 2018.
         <category>tutorial</category>
         
         <category>WP05</category>
-        
-      </item>
-    
-      <item>
-        <title>Propagation of one and two-dimensional discrete waves under finite difference approximation</title>
-        <description>asda
-</description>
-        <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP99</category>
         
       </item>
     
