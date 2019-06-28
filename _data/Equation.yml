@@ -1,0 +1,30 @@
+HEAT:
+  name: Heat Equation
+  description: <p>Most of the existing theory of controllability for PDEs has been developed in the absence of <strong>constraints on the controls and states</strong>. Thus, in practice, available results do not guarantee that controlled trajectories fulfil the physical constraints of the processes under consideration. Nevertheless, these constraints, often formulated as unilateral bounds on the control and/or controlled state, play a fundamental role in many applications. This is particularly the case in the context of <strong>diffusion processes</strong> (heat conduction, mathematical biology and population dynamics, etc.) which enjoy the property of <strong>positivity preserving</strong> of the free dynamics, in the absence of control.</p>
+              <p>Recent results by our team allow proving, in a number of relevant situations, including linear and semilinear heat equations, that systems can be controlled under positivity constraints on the control when the control time is long enough. Furthermore, there is a minimal time for this property to hold. In other words, constrained controllability can't be achieved if the time horizon is too short.</p>
+              <p>Our numerical experiments also show that, often, minimal time controls develop a sparsity pattern that is not yet fully understood. </p>
+
+POPULATION:
+  name: Population Dynamics
+COLLECTIVE: 
+  name: Collective Behavior
+
+SCHRODINGER:
+  name: "Schrödinger Equation"
+  description: <p>Most of the existing theory of controllability for PDEs has been developed in the absence of <strong>constraints on the controls and states</strong>. Thus, in practice, available results do not guarantee that controlled trajectories fulfil the physical constraints of the processes under consideration. Nevertheless, these constraints, often formulated as unilateral bounds on the control and/or controlled state, play a fundamental role in many applications. This is particularly the case in the context of <strong>diffusion processes</strong> (heat conduction, mathematical biology and population dynamics, etc.) which enjoy the property of <strong>positivity preserving</strong> of the free dynamics, in the absence of control.</p>
+              <p>Recent results by our team allow proving, in a number of relevant situations, including linear and semilinear heat equations, that systems can be controlled under positivity constraints on the control when the control time is long enough. Furthermore, there is a minimal time for this property to hold. In other words, constrained controllability can't be achieved if the time horizon is too short.</p>
+              <p>Our numerical experiments also show that, often, minimal time controls develop a sparsity pattern that is not yet fully understood. </p>
+BURGERS:
+ name: Burgers Equation
+
+ELLIPTIC:
+  name: Elliptic Equations
+
+WAVES: 
+  name: Wave Equation
+
+LINEAL:
+  name: Dynamical Systems
+
+TRANSPORT-KINETIC:
+  name: Transport and Kinetic Equations

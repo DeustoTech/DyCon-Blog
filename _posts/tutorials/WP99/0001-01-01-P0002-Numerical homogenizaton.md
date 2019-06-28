@@ -8,6 +8,8 @@ matlab: P0002_Numerical_homogenizaton_for_wave_equation
 categories: [tutorial,WP99]
 url_zip: assets/imgs/WP04/P0002-Numerical homogenizaton/P0002_Numerical_homogenizaton_for_wave_equation.zip
 avatar: https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0002-Numerical%20homogenizaton/copiaRM_02.png
+code: MATLAB
+equation: WAVES
 ---
 
 This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation

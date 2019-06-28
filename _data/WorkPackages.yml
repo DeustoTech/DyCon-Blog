@@ -36,6 +36,8 @@ WP06:
 OT01:
   name: Optimal Control in OpenFOAM
   description: <a href="https://www.openfoam.com/" target="_blank">OpenFOAM </a> is a free, open source Computational Fluid Dynamics (CFD) software to solve anything from complex fluid flows involving chemical reactions, turbulence and heat transfer, to acoustics, solid mechanics and electromagnetics. 
+OT02:
+  name: Lineal Quadratic Regulator in MATLAB
 WP99:
   name: Other Topics
   acr: Other Topics

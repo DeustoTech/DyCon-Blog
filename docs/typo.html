@@ -180,9 +180,8 @@
                 </li>
                 
                 <li>
-                    <a href="/DyCon-Blog/projects/search">Web Sitemap</a>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">WebSiteMap</a>
                 </li>
-                
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
                 </li>
@@ -3029,209 +3028,6 @@ ans =
 
 <p>This procedure may be repeated for all the others parameters, thus obtaining a complete stability analysis of our model.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space&lt;/p&gt;
-</code></pre></div></div>
-
-<script type="math/tex; mode=display">\begin{cases} y_t=y_{xx}-y_a+(\lambda-\mu(a))y+ U\chi_{Q_{\omega}} \text{ in } (0,1)\times (0,A)\times (0,T)\\ y(x,a,0)=y_0(x,a) \text { in } (0,1)\times (0,A)\\ y(0,a,t)=y(1,a,t)=0\text{ in } (0,A)\times(0,T)\\ y(x,0,t)=\int_{0}^{A}\beta(a)y(x,a,t)da,\\ \end{cases}</script>
-
-<p>where $\beta$ and $\mu$ are respectively the fertility and mortality rate. The parameter $\lambda&gt;0$ is an immigration term (or unstable term), $Q_{\omega}=(a,b)\times (a_1,a_2)\times (0,T)$ is the control domain with $(a,b)\subset (0,1)$ and $(a_1,a_2)\subset (0,A).$ Here $(a,b)=(0,1)$ and $(a_1,a_2)=(0,A)$ and we take $A=1$.</p>
-
-<p>We need to reduce the PDE to the finite dimensional system of the form <script type="math/tex">\dot{Z}=AZ+BU</script> where $A$ and $B$ are matrices, and</p>
-
-<script type="math/tex; mode=display">\begin{pmatrix} Z(t) \\ U(t) \\ \end{pmatrix}</script>
-
-<p>is the finite dimensional state vector.</p>
-
-<h2 id="implementation">Implementation</h2>
-
-<p>Construction of the matrix A. We suppose that $\lambda=\frac{1}{2}.$</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clc</span><span class="p">;</span> <span class="nb">clear</span><span class="p">;</span>
-<span class="n">m</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span>
-<span class="n">n</span><span class="o">=</span><span class="mi">9</span><span class="o">*</span><span class="n">m</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Matrix of birth Here we suppose that fertility rate $\beta$ equal to:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\beta(a) = \begin{cases} 0 & \text { if } a<1/9 \\ 25\frac{\alpha(a-1/9)^{\gamma-1}e^{-(a-1/9)/v}}{v^{\gamma}\Gamma(\gamma)} &\text{ if } 2/9<a<7/9\\ 0 &\text{ if } a\geq 7/9. \end{cases} %]]></script>
-
-<p>Here $\alpha=7$, $\gamma=5$, $v=3$, $a_1=\frac{A}{9}$</p>
-
-<p>The density of new born individuals will be approximated by:</p>
-
-<script type="math/tex; mode=display">y(x,0,t)=\int_{0}^{1}\beta(a)y(x,a,t)da=(1/n)\sum_{1}^{n}\beta(a_i)y(x,a_i,t)</script>
-
-<p>where $a_i$ is the age discretization.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A1</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
-<span class="n">A2</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="n">m</span><span class="p">:</span><span class="mi">7</span><span class="o">*</span><span class="n">m</span>
-    <span class="n">bj</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="p">(</span><span class="nb">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="mi">9</span><span class="p">)</span><span class="o">^</span><span class="mi">4</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="nb">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="mi">9</span><span class="p">)/</span><span class="mi">3</span><span class="p">)/(</span><span class="mi">3</span><span class="o">^</span><span class="mi">5</span><span class="o">*</span><span class="nb">gamma</span><span class="p">(</span><span class="mi">5</span><span class="p">)));</span>
-    <span class="n">A2</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,(</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="nb">j</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">=</span><span class="n">bj</span><span class="o">*</span><span class="n">A1</span><span class="p">;</span>
-<span class="k">end</span>
-<span class="n">P</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">/</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">A2</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Discrerization of the second derivative in space and the derivative in age.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A3</span><span class="o">=</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="o">-</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="n">n</span><span class="p">);</span>
-<span class="n">B1</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">A3</span><span class="p">;</span>
-<span class="n">A4</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
-<span class="n">A5</span><span class="o">=</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">A6</span><span class="o">=</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">B2</span><span class="o">=</span><span class="n">A4</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="p">/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">))</span><span class="o">*</span><span class="n">A5</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="p">/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">))</span><span class="o">*</span><span class="n">A6</span><span class="p">;</span>
-<span class="n">B3</span><span class="o">=</span><span class="nb">kron</span><span class="p">(</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="n">B2</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>Mortality matrix. The mortality rate $\beta(a)=\dfrac{1}{9(A-a)}$</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">S</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
-    <span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
-        <span class="n">S</span><span class="p">((</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="nb">i</span><span class="p">,(</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="nb">i</span><span class="p">)</span><span class="o">=-</span><span class="mi">1</span><span class="p">/(</span><span class="mi">16</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="p">((</span><span class="nb">j</span><span class="o">*</span><span class="n">n</span><span class="p">)/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))));</span>
-    <span class="k">end</span>
-<span class="k">end</span>
-<span class="n">A</span><span class="o">=</span><span class="n">P</span><span class="o">+</span><span class="n">B1</span><span class="o">+</span><span class="n">B3</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
-</code></pre></div></div>
-
-<h2 id="initial-condition">Initial condition</h2>
-
-<p>We suppose that $y(x,a,0)=e^{-((a-3/10)^2/\sqrt{2}+100(x-4/10))}$</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
-<span class="n">Z0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
-    <span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
-        <span class="n">Z0</span><span class="p">((</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="nb">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mi">5</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="nb">i</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">3</span><span class="p">/</span><span class="mi">10</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">)/</span><span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="nb">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">4</span><span class="p">/</span><span class="mi">10</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">);</span>
-    <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div></div>
-
-<p>Numerical solution without control and visualisation</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">Z</span><span class="p">;</span>
-<span class="p">[</span><span class="n">t1</span><span class="p">,</span><span class="n">Z</span><span class="p">]</span><span class="o">=</span><span class="nb">ode45</span><span class="p">(</span><span class="n">f</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">],</span><span class="n">Z0</span><span class="p">);</span>
-<span class="n">L</span><span class="o">=</span><span class="n">Z</span><span class="p">(</span><span class="mi">256</span><span class="p">,:);</span>
-<span class="n">U</span><span class="o">=</span><span class="n">Z</span><span class="p">(</span><span class="mi">512</span><span class="p">,:);</span>
-<span class="n">W</span><span class="o">=</span><span class="n">Z</span><span class="p">(</span><span class="mi">1025</span><span class="p">,:);</span>
-<span class="n">J</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-<span class="n">X</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-<span class="n">Y</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">W</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-<span class="n">F1</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">Z0</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-<span class="n">V1</span><span class="o">=</span><span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
-<span class="n">V2</span><span class="o">=</span><span class="n">V1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-<span class="p">[</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">]</span><span class="o">=</span><span class="nb">meshgrid</span><span class="p">(</span><span class="n">V2</span><span class="p">,</span><span class="n">V2</span><span class="p">);</span>
-<span class="nb">figure</span><span class="p">;</span>
-<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">F1</span><span class="p">);</span>
-<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
-<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
-<span class="nb">title</span><span class="p">(</span><span class="s1">'initial condition'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_01.png" alt="" /></p>
-
-<p>Here is the state y of the unstable system at time t=2,5.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
-<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">J</span><span class="p">);</span>
-<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
-<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
-<span class="nb">title</span><span class="p">(</span><span class="s1">'state y of the unstable system at timte t=2,5'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_02.png" alt="" /></p>
-
-<p>Here is the state y of the unstable system at time t=5.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
-<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">X</span><span class="p">);</span>
-<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
-<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
-<span class="nb">title</span><span class="p">(</span><span class="s1">'state y of the unstable system at time t=10'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_03.png" alt="" /></p>
-
-<p>Here is the state y of the unstable system at time t=10.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
-<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">Y</span><span class="p">);</span>
-<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
-<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
-<span class="nb">title</span><span class="p">(</span><span class="s1">'state y of the unstable system at time t=10'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_04.png" alt="" /></p>
-
-<p>The control matrix B is constructed as follows:</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>We may now proceed with the optimal control strategy. For a continuous time linear system generated by the matrices $(A,B)$ and an infinite time horizon cost functional defined as</p>
-
-<script type="math/tex; mode=display">J = \int_0^\infty \langle Q z(t), z(t) \rangle + \langle R u(t), u(t)   \rangle dt,</script>
-
-<p>the feedback control law that minimizes the value of the cost is $u = -Kz$, where $K = R^{-1}B*P$ and $P$ is found by solving the continuous time algebraic Ricatti equation</p>
-
-<script type="math/tex; mode=display">A*P+PA-(PB)R^1(B*P)+Q=0.</script>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
-<span class="n">H</span> <span class="o">=</span> <span class="nb">blkdiag</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="o">-</span><span class="n">A</span><span class="o">'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>LQR feedback control-Algebric Ricatti equation</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">ricsol</span><span class="p">,</span> <span class="n">cleig</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">);</span>
-<span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">z</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Numerical solution with LQR feedback control and visualisation</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f_2</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">Z</span><span class="o">+</span><span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">Z</span><span class="p">);</span>
-<span class="p">[</span><span class="n">t2</span><span class="p">,</span><span class="n">Z_ctr</span><span class="p">]</span><span class="o">=</span><span class="nb">ode45</span><span class="p">(</span><span class="n">f_2</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">],</span><span class="n">Z0</span><span class="p">);</span>
-<span class="n">E</span><span class="o">=</span><span class="n">Z_ctr</span><span class="p">(</span><span class="mi">256</span><span class="p">,:);</span>
-<span class="n">O</span><span class="o">=</span><span class="n">Z_ctr</span><span class="p">(</span><span class="mi">512</span><span class="p">,:);</span>
-<span class="n">G</span><span class="o">=</span><span class="n">Z_ctr</span><span class="p">(</span><span class="mi">1025</span><span class="p">,:);</span>
-<span class="n">G1</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-<span class="n">N</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">E</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-<span class="n">M</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>Here is the stabilized state y of the system at the time t=2,5.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
-<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
-<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
-<span class="nb">title</span><span class="p">(</span><span class="s1">'stabilized state of the system at time t=2,5'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_05.png" alt="" /></p>
-
-<p>Here is the stabilized state y of the system at time t=5.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
-<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">M</span><span class="p">);</span>
-<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
-<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
-<span class="nb">title</span><span class="p">(</span><span class="s1">'stabilized state of the system at time t=5'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_06.png" alt="" /></p>
-
-<p>Here is the stabilized state y of the system at time t=10.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
-<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">G1</span><span class="p">);</span>
-<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
-<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
-<span class="nb">title</span><span class="p">(</span><span class="s1">'stabilized state of the system at time t=10'</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_07.png" alt="" /></p>
-
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;Define vector fields of ODE : Kuramoto control problem whose dynamics is&lt;/p&gt;
 </code></pre></div></div>
 
@@ -3463,6 +3259,209 @@ K =
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/copiaRM_05.png" alt="" /></p>
 
 <p>We can see that $\theta_1$ does not tend to zero in Figure 5 since $K\times\Theta$ is near zero already. Linear feedback control is not enough, or too weak, for this setting.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space&lt;/p&gt;
+</code></pre></div></div>
+
+<script type="math/tex; mode=display">\begin{cases} y_t=y_{xx}-y_a+(\lambda-\mu(a))y+ U\chi_{Q_{\omega}} \text{ in } (0,1)\times (0,A)\times (0,T)\\ y(x,a,0)=y_0(x,a) \text { in } (0,1)\times (0,A)\\ y(0,a,t)=y(1,a,t)=0\text{ in } (0,A)\times(0,T)\\ y(x,0,t)=\int_{0}^{A}\beta(a)y(x,a,t)da,\\ \end{cases}</script>
+
+<p>where $\beta$ and $\mu$ are respectively the fertility and mortality rate. The parameter $\lambda&gt;0$ is an immigration term (or unstable term), $Q_{\omega}=(a,b)\times (a_1,a_2)\times (0,T)$ is the control domain with $(a,b)\subset (0,1)$ and $(a_1,a_2)\subset (0,A).$ Here $(a,b)=(0,1)$ and $(a_1,a_2)=(0,A)$ and we take $A=1$.</p>
+
+<p>We need to reduce the PDE to the finite dimensional system of the form <script type="math/tex">\dot{Z}=AZ+BU</script> where $A$ and $B$ are matrices, and</p>
+
+<script type="math/tex; mode=display">\begin{pmatrix} Z(t) \\ U(t) \\ \end{pmatrix}</script>
+
+<p>is the finite dimensional state vector.</p>
+
+<h2 id="implementation">Implementation</h2>
+
+<p>Construction of the matrix A. We suppose that $\lambda=\frac{1}{2}.$</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clc</span><span class="p">;</span> <span class="nb">clear</span><span class="p">;</span>
+<span class="n">m</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span>
+<span class="n">n</span><span class="o">=</span><span class="mi">9</span><span class="o">*</span><span class="n">m</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Matrix of birth Here we suppose that fertility rate $\beta$ equal to:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\beta(a) = \begin{cases} 0 & \text { if } a<1/9 \\ 25\frac{\alpha(a-1/9)^{\gamma-1}e^{-(a-1/9)/v}}{v^{\gamma}\Gamma(\gamma)} &\text{ if } 2/9<a<7/9\\ 0 &\text{ if } a\geq 7/9. \end{cases} %]]></script>
+
+<p>Here $\alpha=7$, $\gamma=5$, $v=3$, $a_1=\frac{A}{9}$</p>
+
+<p>The density of new born individuals will be approximated by:</p>
+
+<script type="math/tex; mode=display">y(x,0,t)=\int_{0}^{1}\beta(a)y(x,a,t)da=(1/n)\sum_{1}^{n}\beta(a_i)y(x,a_i,t)</script>
+
+<p>where $a_i$ is the age discretization.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A1</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+<span class="n">A2</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+<span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="n">m</span><span class="p">:</span><span class="mi">7</span><span class="o">*</span><span class="n">m</span>
+    <span class="n">bj</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="p">(</span><span class="nb">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="mi">9</span><span class="p">)</span><span class="o">^</span><span class="mi">4</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="nb">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="mi">9</span><span class="p">)/</span><span class="mi">3</span><span class="p">)/(</span><span class="mi">3</span><span class="o">^</span><span class="mi">5</span><span class="o">*</span><span class="nb">gamma</span><span class="p">(</span><span class="mi">5</span><span class="p">)));</span>
+    <span class="n">A2</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,(</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="nb">j</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">=</span><span class="n">bj</span><span class="o">*</span><span class="n">A1</span><span class="p">;</span>
+<span class="k">end</span>
+<span class="n">P</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">/</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">A2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Discrerization of the second derivative in space and the derivative in age.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A3</span><span class="o">=</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="o">-</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="n">n</span><span class="p">);</span>
+<span class="n">B1</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">A3</span><span class="p">;</span>
+<span class="n">A4</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+<span class="n">A5</span><span class="o">=</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">A6</span><span class="o">=</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">B2</span><span class="o">=</span><span class="n">A4</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="p">/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">))</span><span class="o">*</span><span class="n">A5</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="p">/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">))</span><span class="o">*</span><span class="n">A6</span><span class="p">;</span>
+<span class="n">B3</span><span class="o">=</span><span class="nb">kron</span><span class="p">(</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="n">B2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Mortality matrix. The mortality rate $\beta(a)=\dfrac{1}{9(A-a)}$</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">S</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+<span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+    <span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+        <span class="n">S</span><span class="p">((</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="nb">i</span><span class="p">,(</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="nb">i</span><span class="p">)</span><span class="o">=-</span><span class="mi">1</span><span class="p">/(</span><span class="mi">16</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="p">((</span><span class="nb">j</span><span class="o">*</span><span class="n">n</span><span class="p">)/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))));</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+<span class="n">A</span><span class="o">=</span><span class="n">P</span><span class="o">+</span><span class="n">B1</span><span class="o">+</span><span class="n">B3</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="initial-condition">Initial condition</h2>
+
+<p>We suppose that $y(x,a,0)=e^{-((a-3/10)^2/\sqrt{2}+100(x-4/10))}$</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
+<span class="n">Z0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+    <span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+        <span class="n">Z0</span><span class="p">((</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="nb">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mi">5</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="nb">i</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">3</span><span class="p">/</span><span class="mi">10</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">)/</span><span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="nb">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">4</span><span class="p">/</span><span class="mi">10</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">);</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>Numerical solution without control and visualisation</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">Z</span><span class="p">;</span>
+<span class="p">[</span><span class="n">t1</span><span class="p">,</span><span class="n">Z</span><span class="p">]</span><span class="o">=</span><span class="nb">ode45</span><span class="p">(</span><span class="n">f</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">],</span><span class="n">Z0</span><span class="p">);</span>
+<span class="n">L</span><span class="o">=</span><span class="n">Z</span><span class="p">(</span><span class="mi">256</span><span class="p">,:);</span>
+<span class="n">U</span><span class="o">=</span><span class="n">Z</span><span class="p">(</span><span class="mi">512</span><span class="p">,:);</span>
+<span class="n">W</span><span class="o">=</span><span class="n">Z</span><span class="p">(</span><span class="mi">1025</span><span class="p">,:);</span>
+<span class="n">J</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<span class="n">X</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<span class="n">Y</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">W</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<span class="n">F1</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">Z0</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<span class="n">V1</span><span class="o">=</span><span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">V2</span><span class="o">=</span><span class="n">V1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">[</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">]</span><span class="o">=</span><span class="nb">meshgrid</span><span class="p">(</span><span class="n">V2</span><span class="p">,</span><span class="n">V2</span><span class="p">);</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">F1</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'initial condition'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_01.png" alt="" /></p>
+
+<p>Here is the state y of the unstable system at time t=2,5.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">J</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'state y of the unstable system at timte t=2,5'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_02.png" alt="" /></p>
+
+<p>Here is the state y of the unstable system at time t=5.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">X</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'state y of the unstable system at time t=10'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_03.png" alt="" /></p>
+
+<p>Here is the state y of the unstable system at time t=10.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">Y</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'state y of the unstable system at time t=10'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_04.png" alt="" /></p>
+
+<p>The control matrix B is constructed as follows:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We may now proceed with the optimal control strategy. For a continuous time linear system generated by the matrices $(A,B)$ and an infinite time horizon cost functional defined as</p>
+
+<script type="math/tex; mode=display">J = \int_0^\infty \langle Q z(t), z(t) \rangle + \langle R u(t), u(t)   \rangle dt,</script>
+
+<p>the feedback control law that minimizes the value of the cost is $u = -Kz$, where $K = R^{-1}B*P$ and $P$ is found by solving the continuous time algebraic Ricatti equation</p>
+
+<script type="math/tex; mode=display">A*P+PA-(PB)R^1(B*P)+Q=0.</script>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+<span class="n">H</span> <span class="o">=</span> <span class="nb">blkdiag</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="o">-</span><span class="n">A</span><span class="o">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>LQR feedback control-Algebric Ricatti equation</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">ricsol</span><span class="p">,</span> <span class="n">cleig</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">);</span>
+<span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">z</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Numerical solution with LQR feedback control and visualisation</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f_2</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">Z</span><span class="o">+</span><span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">Z</span><span class="p">);</span>
+<span class="p">[</span><span class="n">t2</span><span class="p">,</span><span class="n">Z_ctr</span><span class="p">]</span><span class="o">=</span><span class="nb">ode45</span><span class="p">(</span><span class="n">f_2</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">],</span><span class="n">Z0</span><span class="p">);</span>
+<span class="n">E</span><span class="o">=</span><span class="n">Z_ctr</span><span class="p">(</span><span class="mi">256</span><span class="p">,:);</span>
+<span class="n">O</span><span class="o">=</span><span class="n">Z_ctr</span><span class="p">(</span><span class="mi">512</span><span class="p">,:);</span>
+<span class="n">G</span><span class="o">=</span><span class="n">Z_ctr</span><span class="p">(</span><span class="mi">1025</span><span class="p">,:);</span>
+<span class="n">G1</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<span class="n">N</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">E</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<span class="n">M</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Here is the stabilized state y of the system at the time t=2,5.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'stabilized state of the system at time t=2,5'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_05.png" alt="" /></p>
+
+<p>Here is the stabilized state y of the system at time t=5.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">M</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'stabilized state of the system at time t=5'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_06.png" alt="" /></p>
+
+<p>Here is the stabilized state y of the system at time t=10.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span><span class="n">G1</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'age'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'stabilized state of the system at time t=10'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_07.png" alt="" /></p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;We consider the semilinear hyperbolic system&lt;/p&gt;
 </code></pre></div></div>

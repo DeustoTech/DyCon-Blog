@@ -1,0 +1,58 @@
+---
+layout: default
+---
+
+<!-- Page Header -->
+<header class="intro-header">
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="site-heading">
+        <h1 class="title">
+          {{ page.title }}
+        </h1>
+        <hr class="small">
+        <hr>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+	<div class="col-md-10 col-md-offset-1">
+      <ul class="nav nav-tabs">
+
+          {% case page.name %}
+          
+          {% when 'search.byWP.md' %}
+            <li class="active"><a href="{{site.url}}{{site.baseurl}}/projects/search.byWP">by Working Package</a></li>
+            <li ><a href="{{site.url}}{{site.baseurl}}/projects/search.bydate">by Date</a></li>
+            <li><a href="{{site.url}}{{site.baseurl}}/projects/search.bycode">by Code</a></li>
+            <li><a href="{{site.url}}{{site.baseurl}}/projects/search.byequation">by Equation</a></li>
+
+            {% when 'search.bydate.md' %}
+          <li><a href="{{site.url}}{{site.baseurl}}/projects/search.byWP">by Working Package</a></li>
+          <li class="active"><a href="{{site.url}}{{site.baseurl}}/projects/search.bydate">by Date</a></li>
+          <li><a href="{{site.url}}{{site.baseurl}}/projects/search.bycode">by Code</a></li>
+          <li><a href="{{site.url}}{{site.baseurl}}/projects/search.byequation">by Equation</a></li>
+
+
+          {% when 'search.bycode.md' %}
+          <li><a href="{{site.url}}{{site.baseurl}}/projects/search.byWP">by Working Package</a></li>
+          <li ><a href="{{site.url}}{{site.baseurl}}/projects/search.bydate">by Date</a></li>
+          <li class="active"><a href="{{site.url}}{{site.baseurl}}/projects/search.bycode">by Code</a></li>
+          <li><a href="{{site.url}}{{site.baseurl}}/projects/search.byequation">by Equation</a></li>
+
+          {% when 'search.byequation.md' %}
+          <li><a href="{{site.url}}{{site.baseurl}}/projects/search.byWP">by Working Package</a></li>
+          <li ><a href="{{site.url}}{{site.baseurl}}/projects/search.bydate">by Date</a></li>
+          <li><a href="{{site.url}}{{site.baseurl}}/projects/search.bycode">by Code</a></li>
+          <li  class="active"><a href="{{site.url}}{{site.baseurl}}/projects/search.byequation">by Equation</a></li>
+          
+          {% endcase %}
+          
+        </ul>
+        <hr>
+        {{content}}
+  </div>
+</div>

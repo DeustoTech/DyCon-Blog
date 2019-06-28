@@ -23,8 +23,8 @@
   
     {
       "title"           : "Controllability of a Class of Infinite Dimensional Systems with Age Structure",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/WP99-P0030",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/WP99-P0030",
       "date"            : "2019-06-07",
       "author"          : ["DebayanM"],
       "description"     : "In this tutorial,  we investigate the linear infinite dimensional system obtained by implementing an age structure to a given  linear dynamical system. We show that if the initial system is null controllable in a time small enough, then the age structured system is also null controllable in a time depending on the various involved parameters.",
@@ -43,8 +43,8 @@
   
     {
       "title"           : "A numerical method for solving an age structured virus model",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0025",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0025",
       "date"            : "2019-06-04",
       "author"          : ["FriouiM"],
       "description"     : "We consider an age-structured HIV infection model with a general nonlinear infection function. The numerical method to solve this system of equation is based on the upwind method for solving hyperbolic partial differential equation and the ODEs are solving by explicit Euler method.",
@@ -63,8 +63,8 @@
   
     {
       "title"           : "Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/WP99-P0026",
+      "categories"      : ["tutorial", "WP06"],
+      "url"             : "/tutorial/wp06/WP99-P0026",
       "date"            : "2019-05-27",
       "author"          : ["DongnamK"],
       "description"     : "In this post, we use IpOpt and AMPL to simulate optimal controls on a nonlinear ODE system with unbounded interactions. The restriction and initial guess on the state variables are critical for this problem to operate minimization algorithm. From the data calculated from AMPL, we interpret and visualize it using Matlab.",
@@ -73,8 +73,8 @@
   
     {
       "title"           : "Reconstruction of traffic state using autonomous vehicles",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/WP99-P0032",
+      "categories"      : ["tutorial", "WP04"],
+      "url"             : "/tutorial/wp04/WP99-P0032",
       "date"            : "2019-05-24",
       "author"          : ["ThibaultL"],
       "description"     : "Autonomous Vehicles (briefly AVs) have already been tested on urban and highway networks and,  for the future they may be used to monitor and manage the   vehicular traffic. The impact of autonomous vehicles on vehicular traffic is modeled  by a PDE+ODE models with moving point-flux constraint. The PDE is a nonlinear  hyperbolic conservation laws and the ODE represents the trajectory of autonomous vehicles. We show that the data collected by autonomous vehicles' sensors can be used to reconstruct the traffic state.",
@@ -113,8 +113,8 @@
   
     {
       "title"           : "The Dirichlet-Neumann iteration for two coupled heterogeneous heat equations",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0017",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0017",
       "date"            : "2019-03-26",
       "author"          : ["AzaharM"],
       "description"     : "This tutorial explains how to use the Dirichlet-Neumann method to coordinate the numerical solutions of two linear heat equations with strong jumps in the material coefficients accross a common interface.",
@@ -133,8 +133,8 @@
   
     {
       "title"           : "Optimal control for inverted pendulum",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0015-Pendulum",
+      "categories"      : ["tutorial", "OT02"],
+      "url"             : "/tutorial/ot02/P0015-Pendulum",
       "date"            : "2019-02-04",
       "author"          : ["NoboruS"],
       "description"     : "Tutorial of optimal control for inverted pendulum with symbolic MATLAB",
@@ -153,8 +153,8 @@
   
     {
       "title"           : "Stability analysis of Power Electronic Converters Connected to AC Grids",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0011",
+      "categories"      : ["tutorial", "WP01"],
+      "url"             : "/tutorial/wp01/P0011",
       "date"            : "2018-11-15",
       "author"          : ["UmbertoB","JesusO"],
       "description"     : "Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters.",
@@ -162,23 +162,23 @@
     } ,
   
     {
-      "title"           : "LQR controller for stabilizing the linear population dynamics model",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0010-Yacouba",
-      "date"            : "2018-10-29",
-      "author"          : ["YacoubaS"],
-      "description"     : "In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_07.png"
-    } ,
-  
-    {
       "title"           : "The control on the Kuramoto model by handling one oscillator",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0009-Dongnam",
+      "categories"      : ["tutorial", "WP06"],
+      "url"             : "/tutorial/wp06/P0009-Dongnam",
       "date"            : "2018-10-29",
       "author"          : ["DongnamK"],
       "description"     : "We design the LQR controller and solve it with linearized model.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/copiaRM_05.png"
+    } ,
+  
+    {
+      "title"           : "LQR controller for stabilizing the linear population dynamics model",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0010-Yacouba",
+      "date"            : "2018-10-29",
+      "author"          : ["YacoubaS"],
+      "description"     : "In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_07.png"
     } ,
   
     {
@@ -193,8 +193,8 @@
   
     {
       "title"           : "Stabilization of a collective behavior model",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0014-Domenec",
+      "categories"      : ["tutorial", "WP06"],
+      "url"             : "/tutorial/wp06/P0014-Domenec",
       "date"            : "2018-10-28",
       "author"          : ["DomenecR"],
       "description"     : "Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.",
@@ -213,8 +213,8 @@
   
     {
       "title"           : "Optimal control of a  graph evolving in discrete time",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0001",
+      "categories"      : ["tutorial", "OT02"],
+      "url"             : "/tutorial/ot02/P0001",
       "date"            : "2018-10-26",
       "author"          : ["AlejandroC"],
       "description"     : "Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state.",
@@ -243,8 +243,8 @@
   
     {
       "title"           : "Rays propagation of a fractional Schrodinger Equation",
-      "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0001",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0001",
       "date"            : "2018-07-21",
       "author"          : ["UmbertoB"],
       "description"     : "Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics",
@@ -313,8 +313,8 @@
   
     {
       "title"           : "WKB expansion for a fractional Schrödinger equation with applications to controllability",
-      "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0002",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0002-WBK",
       "date"            : "2018-04-05",
       "author"          : ["UmbertoB","AlejandroA","EnriqueZ"],
       "description"     : "Theoretical and numerical analysis of the propagation of the solutions for a Schrödinger equation with fractional Laplacian, with application to the study of controllability properties.",
@@ -433,8 +433,8 @@
   
     {
       "title"           : "LQR control of a fractional reaction diffusion equation",
-      "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0004",
+      "categories"      : ["tutorial", "OT02"],
+      "url"             : "/tutorial/ot02/P0004",
       "date"            : "2017-09-18",
       "author"          : ["UmbertoB"],
       "description"     : "Design of a LQR controller for the stabilization of a fractional reaction diffusion equation",

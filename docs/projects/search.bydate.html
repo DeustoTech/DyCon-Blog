@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Web Sitemap - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/projects/search.bydate">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">WebSiteMap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Page Header -->
+<header class="intro-header">
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="site-heading">
+        <h1 class="title">
+          Web Sitemap
+        </h1>
+        <hr class="small">
+        <hr>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+	<div class="col-md-10 col-md-offset-1">
+      <ul class="nav nav-tabs">
+
+          
+          <li><a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">by Working Package</a></li>
+          <li class="active"><a href="https://deustotech.github.io/DyCon-Blog/projects/search.bydate">by Date</a></li>
+          <li><a href="https://deustotech.github.io/DyCon-Blog/projects/search.bycode">by Code</a></li>
+          <li><a href="https://deustotech.github.io/DyCon-Blog/projects/search.byequation">by Equation</a></li>
+
+
+          
+          
+        </ul>
+        <hr>
+        <ul>
+
+
+
+
+
+
+
+
+</ul>
+<h5>June-2019</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023">Propagation of one and two-dimensional discrete waves under finite difference approximation</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0014">Sparse sources identification through adjoint localization algorithm</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/WP99-P0030">Controllability of a Class of Infinite Dimensional Systems with Age Structure</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/WP99-P0024">Finite Element approximation of the one-dimensional fractional Laplacian</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0025">A numerical method for solving an age structured virus model</a></li>
+
+
+
+
+
+</ul>
+<h5>May-2019</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022">Controllability of the one-dimensional fractional heat equation under positivity constraints</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/WP99-P0026">Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/WP99-P0032">Reconstruction of traffic state using autonomous vehicles</a></li>
+
+
+
+
+
+</ul>
+<h5>April-2019</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0003">Riccati theory in LQ optimization with time-varying target</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0030">A reaction-diffusion equation with delay</a></li>
+
+
+
+
+
+</ul>
+<h5>March-2019</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0018">Structured deformations of continua</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0017">The Dirichlet-Neumann iteration for two coupled heterogeneous heat equations</a></li>
+
+
+
+
+
+</ul>
+<h5>February-2019</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0015-moment">An introduction to the moment method for optimal control problems for polynomial ODEs</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/ot02/P0015-Pendulum">Optimal control for inverted pendulum</a></li>
+
+
+
+
+
+</ul>
+<h5>January-2019</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0002-Numerical-homogenizaton">Two Grids Filter Method for RPS Semi-Discretization</a></li>
+
+
+
+
+
+</ul>
+<h5>November-2018</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0011">Stability analysis of Power Electronic Converters Connected to AC Grids</a></li>
+
+
+
+
+
+</ul>
+<h5>October-2018</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0009-Dongnam">The control on the Kuramoto model by handling one oscillator</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0010-Yacouba">LQR controller for stabilizing the linear population dynamics model</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0008-Charlotte">Coupled transport equations and LQR control</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0014-Domenec">Stabilization of a collective behavior model</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0006">LQR optimal control design for a coupled PDE-ODE system.</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/ot02/P0001">Optimal control of a  graph evolving in discrete time</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0007">Synchronized Oscillators</a></li>
+
+
+
+
+
+</ul>
+<h5>July-2018</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/ot01/P0017">Optimal Shape Design for Poisson Equation in OpenFOAM</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0001">Rays propagation of a fractional Schrodinger Equation</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/ot01/P0020">Interior Control of the Poisson Equation with the Conjugate Gradient Method in OpenFOAM</a></li>
+
+
+
+
+
+</ul>
+<h5>June-2018</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/ot01/P0018">Optimal Shape Design in External Flow</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0002">Optimal Shape Design for Poisson Equation in Matlab</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/ot01/P0019">Interior Control of the Heat Equation with the Steepest Descent Method and OpenFOAM</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/ot01/P0003">Interior Control of the Poisson Equation with the Steepest Descent Method in OpenFOAM</a></li>
+
+
+
+
+
+</ul>
+<h5>May-2018</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/ot01/P0021">Optimal Control of the Poisson Equation with OpenFOAM</a></li>
+
+
+
+
+
+</ul>
+<h5>April-2018</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0002-WBK">WKB expansion for a fractional Schrödinger equation with applications to controllability</a></li>
+
+
+
+
+
+</ul>
+<h5>March-2018</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/T00010">Averaged Control</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0001">Control of the semi-discrete 1D heat equation under nonnegative control constraint</a></li>
+
+
+
+
+
+</ul>
+<h5>December-2017</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/T00020">Wave Control</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0003">Solving an optimal control problem arisen in ecology with AMPL</a></li>
+
+
+
+
+
+</ul>
+<h5>November-2017</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0001">Greedy algorithm for Parametric Vlasov-Fokker-Planck System</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0002">Optimal control applied to collective behaviour</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0001">Kolmogorov equation</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0002">2D inverse design of linear transport equations on unstructured grids</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0002">Greedy optimal control for elliptic problems and its application to turnpike problems</a></li>
+
+
+
+
+
+</ul>
+<h5>October-2017</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0001">Turnpike property for functionals involving $L^1$−norm</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0016">Radial Basis Functions Interpolation</a></li>
+
+
+
+
+
+</ul>
+<h5>September-2017</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/ot02/P0004">LQR control of a fractional reaction diffusion equation</a></li>
+
+
+
+
+
+</ul>
+<h5>August-2017</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0002">IpOpt and AMPL use to solve time optimal control problems</a></li>
+
+
+
+
+
+</ul>
+<h5>June-2017</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0001">Conservation laws in the presence of shocks</a></li>
+
+
+
+
+
+</ul>
+<h5>May-2017</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/WP04-P0002">Numerical aspects of LTHC of Burgers equation</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0004">Long time control and the Turnpike property</a></li>
+
+
+
+
+
+</ul>
+<h5>March-2017</h5>
+<ul>
+
+
+
+
+
+
+<li><a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0003">Greedy Control</a></li>
+
+</ul>
+
+  </div>
+</div>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
