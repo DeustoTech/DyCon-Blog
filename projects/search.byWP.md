@@ -25,9 +25,7 @@ SimpleJekyllSearch({
 
 {::nomarkdown}
   {% for topic in site.data.WorkPackages %}
-    {%- if topic[0] =='OT01'-%}
-      {%- break -%}
-    {%- endif -%}
+
     {%- assign qposts = site.posts | where:"layout", "tutorial" | where:"categories", topic[0] -%}
     <a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">
     {% if topic[1].wp and topic[1].acr %}
