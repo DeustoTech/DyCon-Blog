@@ -5,24 +5,9 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 01 Jul 2019 07:49:34 +0200</pubDate>
-    <lastBuildDate>Mon, 01 Jul 2019 07:49:34 +0200</lastBuildDate>
+    <pubDate>Mon, 08 Jul 2019 11:11:34 +0200</pubDate>
+    <lastBuildDate>Mon, 08 Jul 2019 11:11:34 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
-    
-      <item>
-        <title>Optimal control of the obstacle problem</title>
-        <description>asda
-</description>
-        <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0031</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0031</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP99</category>
-        
-      </item>
     
       <item>
         <title>Rotors imbalance suppression by optimal control</title>
@@ -36,6 +21,256 @@
         <category>tutorial</category>
         
         <category>WP99</category>
+        
+      </item>
+    
+      <item>
+        <title>Optimal control of the obstacle problem</title>
+        <description>
+A sample state of the parabolic obstacle problem.
+
+In this tutorial, we will present how to numerically solve and implement optimal control strategies for the elliptic and parabolic obstacle problems using the FEniCS Finite Element toolbox and the dolfin-adjoint optimization package [1, 2, 3].
+
+Mathematical formulation
+
+Fix $\Omega \subset \mathbb{R}^2$ and an obstacle $\psi \in H^2(\Omega)$.  Denote by $K_\psi$ the convex subset of $H^1_0(\Omega)$ consisting of all functions $\geq \psi(x)$.
+
+The elliptic obstacle problem takes the form: find $y \in K_\psi$ such that
+
+
+
+Here $f \in L^2(\Omega)$ is a given auxiliary forcing (may be $0$) and $u \in L^2(\Omega)$ represents the control.
+
+Similarly, the parabolic problem reads: find $y \in L^2(0, T; K_\psi) \cap H^1(0, T; L^2(\Omega))$ such that
+
+
+
+for $t \in (0, T)$, and $y(0, \cdot) = y_0$. Once again, $f$ designates an auxiliary forcing and $u = u(t,x)$ the control, which may now be time-dependent.
+
+We will be interested in minimizing the tracking-type functional
+
+
+
+over all controls $u$ where $y$ is the associated solution to the elliptic problem and $y_d \in L^2(\Omega)$ is the target, and similarly
+
+
+
+for the parabolic case, where $y_d$ may be a time-dependent target. In both functionals, $\delta&amp;gt;0$ is a small parameter which filters controls of large norm (Tikhonov regularization).
+
+The elliptic problem
+
+
+
+
+Preview of the obtained optimal state and control.
+
+We concentrate a large part of the numerical implementation on the elliptic problem, as it may be transferred to the parabolic problem by time-stepping. Both of the above problems admit a unique solution [4, 5]. Nevertheless, there are some difficulties to be considered when solving the problem numerically, namely because the problems are not differentiable (the solution map for the obstacle problem is only Lipschitz continuous [6]). Following [4], we mend this issues in the next section by penalizing, a common approach for solving variational inequalities.
+
+We use the approximation
+
+
+
+for all $v$ where $\epsilon&amp;gt;0$ is the penalty parameter. It yields solutions which converge to the solution of the variational inequality as $\epsilon\rightarrow 0$ [7]. In fact, this is the de facto strategy for proving the well-posedness of the obstacle problem (in both settings).
+To apply a gradient-based optimisation method, we need differentiabilty, thus the non-smooth max operator is replaced by a differentiable ($C^1$) approximation.
+
+
+
+ Regularization of the penalty function. 
+
+While we may treat complex geometries and obstacles using the FEniCS toolbox, we restrict ourselves to $\Omega = [-2,2]^2$ and the obstacle $\psi(x) = (1-x^2)\chi_{B_1}$ in this tutorial.
+
+
+
+
+The obstacle and the target profile.
+
+In the elliptic case, the target is given by $y_d(x) = \frac12(\cos(x)+\cos(y))$.
+
+Implementation
+
+We begin by importing the necessary libraries. The fenics module contains all of the necessary finite element tools for the space discretization of PDEs. The syntax is symbolic and one uses the pre-defined FEniCS objects, including FunctionSpace (for the finite element space), Function (for the unknown state and control) etc.
+The dolfin_adjoint module contains the library wherein the adjoint optimization methodology is fully automatized (using automatic differentiation) provided the forward model.
+from fenics import *
+from fenics_adjoint import *
+from obstacles import dome
+
+
+We define the smooth approximation of the max.
+def smoothmax(r, eps=1e-4):
+	return conditional(gt(r, eps), r-eps/2, conditional(lt(r, 0), 0, r**2/(2*eps)))
+
+
+We mesh the domain $[-2,2]^2$ in $16384$ elements.
+mesh = RectangleMesh(Point(-2,-2), Point(2,2), 128, 128)
+
+
+$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V = Vh).
+V = FunctionSpace(mesh, &quot;CG&quot;, 1)
+y = Function(V, name=&quot;State&quot;)
+u = Function(V, name=&quot;Control&quot;)
+w = TestFunction(V)
+psi = interpolate(dome(degree=4), V)
+f = Constant(0.1)		
+alpha, eps = 1e-4, 1e-6
+yd = interpolate(Expression(&quot;0.5*(cos(x[0])+cos(x[1]))&quot;, degree=2), V)
+
+
+Using the symbolic expressions of FEniCS, we define the variational formulation of the penalized PDE:
+bc = DirichletBC(V, 0.0, &quot;on_boundary&quot;)
+F = inner(grad(y), grad(w))*dx - 1/eps*inner(smoothmax(-y+psi), w)*dx - inner(f+u, w)*dx
+solve(F == 0, y, bcs=bc)
+
+
+A “tape” of the forward model is built. This tape is used to drive the optimization by repeatedly solving the forward model and the adjoint model for varying control inputs. Since the problem is nonlinear, a Newton method is used by the command solve.
+
+We finish by defining the objective functional to be minimized:
+
+delta = Constant(1e-2)
+j = assemble(0.5*inner(y-yd, y-yd)*dx + delta/2*inner(u, u)*dx)	
+m = Control(u)
+
+
+Writing the state $y$ as the output of the solution map corresponding to the input $m$, one sees that the objective functional depends only on the control:
+J = ReducedFunctional(j, m)									
+
+
+We run the optimization (the default solver is the Broyden–Fletcher–Goldfarb–Shanno (L-BFGS-B), but a wide selection of methods is available):
+u_opt = minimize(J, options={&quot;maxiter&quot;: 15, &quot;gtol&quot;: 1e-6, &quot;ftol&quot;: 1e-100})
+
+
+The tape is modified such that the initial guess for y (to be used in the Newton solver in the forward problem) is set to y_opt.
+y_opt = y.block_variable.saved_output
+Control(y).update(y_opt)
+
+
+We postprocess using Paraview.
+psipvd = File(&quot;elliptic/psi.pvd&quot;)
+ypvd = File(&quot;elliptic/y_opt.pvd&quot;)
+upvd = File(&quot;elliptic/u_opt.pvd&quot;)
+ydpvd = File(&quot;elliptic/yd.pvd&quot;)
+
+ypvd &amp;lt;&amp;lt; y_opt
+upvd &amp;lt;&amp;lt; u_opt
+ydpvd &amp;lt;&amp;lt; yd
+psipvd &amp;lt;&amp;lt; psi
+
+
+The following figures allow us to conclude that the optimal state does indeed satisfy the obstacle constraint.
+
+
+
+
+The algorithm converged after 8 iterations, and the value of the functional at the final iteration is $0.0967$.
+
+The parabolic problem
+
+Implementation
+
+We only sketch the important steps, and the full code may be found in the attached files. The same penalization function is used, thus the penalized problem reduces to a parametrized semilinear heat equation. Following the same meshing and element setting as above, we define the required data and parameters.
+
+data = Expression(&quot;1-(-0.3*t+0.85)*(x[0]*x[0]+x[1]*x[1])&quot;, t = 0, degree = 4)
+T, dt = 2, Constant(0.1)
+
+
+We will store the control as a Python dictionary to keep the time ordered.
+For each time, the control $u(t)$ will be a function.
+
+ctrls, t = OrderedDict(), float(dt)
+while t &amp;lt;= T:
+	ctrls[t] = Function(V)
+	t += float(dt)
+
+
+As the problem is more complex, it is convenient to build a solver for the forward problem. Given a control, we solve the parabolic obstacle problem and also construct the tracking part of the functional using the computed state.
+def solve_parabolic(ctrls, epsilon):
+	...
+	y_n = Expression(&quot;1-0.85*(x[0]*x[0]+x[1]*x[1])&quot;, degree=3)
+	y_n = interpolate(y_n, V)
+
+	F = y*v*dx + nu*dt*dot(grad(y), grad(v))*dx - dt/epsilon*dot(smoothmax(-y+psi), v)*dx - (y_n + dt*(f+0.1))*v*dx
+	bc = DirichletBC(V, 0.0, &quot;on_boundary&quot;)	
+
+	t = float(dt)
+	j = 0.5*float(dt)*assemble((y - yd)**2*dx)
+	...
+	while t &amp;lt;= T:
+		f.assign(ctrls[t])
+		data.t = t
+		yd.assign(interpolate(data, V))
+		solve(F==0, y, bcs=bc)
+		if t &amp;gt; T - float(dt):
+			weight = 0.5
+		else:
+			weight = 1
+		j += weight*float(dt)*assemble((y - yd)**2*dx)
+		vtk_sol &amp;lt;&amp;lt; (y, t)
+		vtk_data &amp;lt;&amp;lt; (yd, t)
+		t += float(dt)
+	return y, yd, j
+
+
+We set the tape.
+epsilon, delta = Constant(1e-4), Constant(1e-2)					
+y, yd, j = solve_parabolic(ctrls, epsilon)
+
+
+We build the objective functional.
+reg_u = delta/2*sum([1/dt*(fb-fa)**2*dx for fb, fa in
+	zip(list(ctrls.values())[1:], list(ctrls.values())[:-1])])
+J = j + assemble(reg_u)
+m = [Control(c) for c in ctrls.values()]
+rf = ReducedFunctional(J, m)
+
+
+We now run the optimization procedure.
+opt_ctrls = minimize(rf)
+
+
+Once the optimal control computed, we solve the forward problem with it to obtain the optimal state.
+dico = OrderedDict()
+s, i = float(dt), 0
+while s &amp;lt;= T:
+	dico[s] = opt_ctrls[i]
+	i+= 1
+	s += float(dt)
+new_y, new_yd, new_j = solve_parabolic(dico, epsilon)
+
+
+
+
+
+ The state and the target, tracked throughout. 
+
+The constraint $y\geq \psi$ is satisfied, which is why the optimal state does not lift off sharply.
+
+References:
+
+[1] The FEniCS Project Version 1.5
+M. S. Alnaes, J. Blechta, J. Hake, A. Johansson, B. Kehlet, A. Logg, C. Richardson, J. Ring, M. E. Rognes and G. N. Wells
+Archive of Numerical Software, vol. 3, 2015.
+
+[2] Patrick E. Farrell, David A. Ham, Simon W. Funke and Marie E. Rognes (2013). Automated derivation of the adjoint of high-level transient finite element programs, SIAM Journal on Scientific Computing 35.4, pp. C369-C393. doi:10.1137/120873558. arXiv:1204.5577
+
+[3] Simon W. Funke and Patrick E. Farrell (2013). A framework for automated PDE-constrained optimisation, submitted. arXiv:1302.3894
+
+[4] M. Hintermüller and I. Kopacka. A smooth penalty approach and a nonlinear multigrid algorithm for elliptic MPECs. Computational Optimization and Applications, 50(1):111–145, 2011. URL: http://dx.doi.org/10.1007/s10589-009-9307-9.
+
+[5] Borjan Geshkovski (2018). Obstacle Problems: Theory and Applications. Master Thesis.
+
+[6] Christopher Meyer, Andreas Rademacher, W. Wollner. Adaptive Optimal Control of the Obstacle Problem.
+SIAM J. Scientific Computing, 2015.
+
+[7] D. Kinderlehrer and G. Stampacchia. An introduction to variational inequalities and their applications. Volume 31 of Classics in Applied Mathematics. SIAM, 2000.
+
+</description>
+        <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0031</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0031</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP03</category>
         
       </item>
     
@@ -56,10 +291,251 @@
     
       <item>
         <title>Propagation of one and two-dimensional discrete waves under finite difference approximation</title>
-        <description>We display the propagation properties of the numerical versions of one and two-dimensional
-wave equations, semi-discretized in space by finite difference schemes. We focus on high-frequency solutions whose propagation can be described, both at the continuous and semi-discrete level, by micro-local tools. We do it both for uniform and non-uniform numerical grids and also for constant coefficients and variable ones. The energy of continuous and semi-discrete high-frequency solutions propagates along bi-characteristic rays, but their dynamics differ from the continuous to the semi-discrete setting, because of the different nature of the corresponding Hamiltonians. We illustrate through accurate numerical simulations that, in agreement with the micro-local theory, numerical high-frequency solutions can bend in an unexpected manner, as a result of the accumulation of the local effects introduced by the heterogeneity of the numerical grid. These effects are enhanced in the multi-dimensional case where the interaction and combination of such behaviors in the various space directions may produce, for instance, the rodeo effect, i. e. waves that are trapped by the numerical grid in closed loops, without ever getting to the exterior boundary.
+        <description>Finite Element approximation of the one-dimensional fractional Laplacian
+
+We describe here a Finite Element algorithm for the approximation of the one-dimensional fractional Laplacian $(-d_x^2)^s$ on the interval $(-L,L)$, $L&amp;gt;0$ and for the numerical resolution of the following fractional Poisson equation
 
 
+
+This algorithm has also been emploied in [2,3] for the numerical controllability of fractional parabolic problems (see our previous entries in the DyCon Blog, WP3_P0001 and WP3_P0022).
+
+We recall that the fractional Laplacian is defined, for all $s\in(0,1)$ and any function $u$ regular enough, as the following singular integral
+
+with $c_s$ an explicit normalization constant given by
+
+$\Gamma$ being the usual Euler Gamma function.
+
+The starting point of the FE method is the definition of a bilinear form associated to the fractional Laplace operator $(-d_x^2)^s$ and the introduction of the variational formulation corresponding to the elliptic problem \eqref{Fl_Poisson}.
+
+This variational formulation is given as follows: find $u\in H_0^s(-L,L)$ such that the identity
+
+
+
+is satisfied for any function $v\in H_0^s(-L,L)$. In \eqref{variational}, with $H_0^s(-L,L)$ we indicate the space
+
+
+
+$H^s(\mathbb{R})$ being the usual fractional Sobolev space. Moreover, the bilinear form 
+
+is defined as
+
+
+Let us describe how, starting from the above bilinear form, we can obtain our FE approximation. For simplicity, in what follows we will take $L=1$, although the methodology remains the same for any real $L&amp;gt;0$.
+
+Let us take a uniform partition of the interval $(-1,1)$ as follows:
+
+
+
+with $x_{i+1}=x_i+h$, $i=0,\ldots N$. We call $\mathfrak{M}$ the mesh composed by the points ${x_i\,:\, i=1,\ldots,N}$, while the set of the boundary points is denoted $\partial\mathfrak{M}:={x_0,x_{N+1}}$.
+
+Now, define $K_i:=[x_i,x_{i+1}]$ and consider the discrete space
+
+
+
+where $\mathcal{P}^1$ is the space of the continuous and piece-wise linear functions. Hence, we approximate \eqref{variational} with the following discrete problem: find $u_h\in V_h$ such that
+
+
+
+for all $v_h\in V_h$. If now we indicate with $\big{\phi_i\big}_{i=1}^N$ a basis of $V_h$, it will be sufficient that the above equality is satisfied for all the functions of the basis, since any element of $V_h$ is a linear combination of them. Therefore the problem takes the following form
+
+
+
+Clearly, since $u_h\in V_h$, we have $u_h(x) = \sum_{j=1}^N u_j\phi_j(x)$, where the coefficients $u_j$ are, a priori, unknown. In this way, \eqref{WFD} is reduced to solve the linear system $\mathcal A_h u=F$, where the stiffness matrix $\mathcal A_h\in \mathbb{R}^{N\times N}$ has components
+
+
+
+while the vector $F\in\mathbb{R}^N$ is given by $F=(F_1,\ldots,F_N)$ with
+
+
+Moreover, the basis $\big{\phi_i\big}{i=1}^N$ that we will employ is the classical one in which each $\phi_i$ is the tent function with $supp(\phi_i)=(x{i-1},x_{i+1})$ and verifying $\phi_i(x_j)=\delta_{i,j}$. In particular, for $x\in{x_{i-1},x_i,x_{i+1}}$ the $i^{th}$ function of the basis is explicitly defined as (see Figure 1)
+
+
+
+
+Figure 1. Basis function $\phi_i$ on its support $(x_{i-1},x_{i+1})$.
+
+We now start building the stiffness matrix $\mathcal A_h$ approximating the fractional Laplacian. This will be done in three steps, since the values of the matrix can be computed differentiating among three well defined regions: the upper triangle, corresponding to $j\geq i+2$, the upper diagonal corresponding to $j=i+1$ and the diagonal, corresponding to $j=i$. In each of these regions the intersections among the support of the basis functions are different, thus generating different values of the bilinear form.
+
+We present below an abridged explanation of how to compute the entries of $\mathcal{A}_h$. Complete details may be found in [2].
+
+Step 1: $j\geq i+2$
+
+In this case we have $supp(\phi_i)\cap supp(\phi_j) =\emptyset$ (see also Figure 2). Hence, \eqref{stiffness_nc} is reduced to computing only the integral
+
+
+
+
+Figure 2. Basis functions $\phi_i(x)$ and $\phi_j(x)$ for $j\geq i + 1$. The supports are disjoint.
+
+Taking into account the definition of the basis function \eqref{basis_fun}, the integral \eqref{elem_noint_app} becomes
+
+
+
+Let us introduce the following change of variables:
+
+
+
+Then, rewriting (with some abuse of notations since there is no possibility of confusion) $\hat{x}=x$ and $\hat{y}=y$, we get
+
+
+
+This integral can be computed explicitly, and we obtain
+
+
+
+Notice that, when $s=1/2$, both the numerator and the denominator of the expression above are zero. In this case, the value of $a_{i,j}$ can be obtained by taking the limit $s\to 1/2$ and we get
+
+
+if $k\neq 2$ and 
+
+
+Step 2: $j= i+1$
+This is the most cumbersome case, since it is the one with the most interactions between the basis functions (see Figure 3).
+
+
+Figure 3. Basis functions $\phi_i(x)$ and $\phi_{i+1}(x)$. In this case, the intersection of the supports is the interval $[x_i,x_{i+1}]$.
+
+Using the symmetry of the integral with respect to the bisector $y=x$, we have
+
+
+
+Also in this case, the terms $Q_i$, $i=1,\ldots,6$, can be computed explicitely, by noticing also the following facts:
+
+
+  $Q_1=Q_6=0$ since $\phi_i = 0$ on the domain of integration.
+  $Q_2=Q_5$ due to symmetry.
+
+
+Then, the elements $a_{i,i+1}$ are given by the sum $2Q_2+Q_3+Q_4$ and we have
+
+
+Step 3: $j= i$
+As a last step, we fill the diagonal of the matrix $\mathcal A_h$, which collects the values corresponding to $\phi_i(x)=\phi_j(x)$ (see Figure 4).
+
+
+Figure 4. Basis functions $\phi_i(x)=\phi_j(x)$.
+
+In this case, we have
+
+
+
+Once again, the terms $R_i$, $i=1,\ldots,7$ can be computed explicitely, by taking also into account that $R_1=R_3=R_6=R_7=0$ because the corresponding integration domains are all away from the support of the basis functions.
+
+The result of these computations gives the values 
+
+
+Step 4: building of $\mathcal A_h$
+
+Summarizing, we have the following values for the elements of the stiffness matrix $\mathcal{A}_h$: for $s\neq 1/2$
+
+
+For $s=1/2$, instead, we have
+
+
+
+Numerical results
+
+We present the numerical simulations corresponding to the algorithm previously described.
+
+First of all, we test numerically the accuracy of our method for the resolution of the elliptic equation \eqref{PE} by applying it to the following problem
+
+
+
+In this particular case, the unique solution $u$ can be computed exactly and it is given by
+
+
+
+where $\chi_{(-1,1)}$ indicates the characteristic function of the interval $(-1,1)$.
+
+The solution of \eqref{poisson} in the case  $s=0.1$ and $N=50$ is computed with the following script which emploies the function FEFractionalLaplacian.m ginving the FE discretization of $(-d_x^2)^s$.
+
+s = 0.1;
+N = 50;
+L = 1;
+
+x = linspace(-L,L,N+2);
+x = x(2:end-1);
+h = x(2)-x(1);
+
+f = @(x) 1+0*x;
+Phi = @(x) 1-abs(x);
+
+F = zeros(N,1);
+
+for i=1:N
+    xx = linspace(x(i)-h,x(i)+h,N+1);
+    xx = 0.5*(xx(2:end)+xx(1:end-1));
+    B1 = f(xx).*(Phi((xx-x(i))/h));
+    F(i) = ((2*h)/N)*sum(B1); 
+end
+
+A = FEFractionalLaplacian(s,L,N);
+sol = A\F;
+
+
+In Figure 5, we show a comparison for different values of $s$ between the exact solution \eqref{real_sol} and the computed numerical approximation.
+
+
+Figure 5. Real and numerical solution.
+
+One can notice that when $s=0.1$ (and also for other small values of s), the computed solution is to a certain extent different from the exact solution. Notwithstanding, it is well-known that the notion of trace is not defined for the spaces $H^s(-1,1)$ with $s\leq 1/2$. Hence, it is somehow natural that we cannot expect a point-wise convergence in this case.
+
+Furthermore, the accuracy of our algorithm is validated by a simple error analysis.
+
+The computation of the error in the space $H_0^s(-1,1)$ can be readily done by using the definition of the bilinear form, namely
+
+where have used the orthogonality condition $a(v_h,u-u_h)=0$ for all $v_h \in V_h$.
+
+For this particular test, since $f\equiv 1$ in $(-1,1)$, the problem is therefore reduced to
+
+where the right-hand side can be easily computed, since we have the closed formula
+
+and the term corresponding to $\int_{-1}^1u_h$ can be carried out numerically. Moreover, we have the following convergence result.
+
+Theorem [2] For the solution $u$ of \eqref{WF} and its FE approximation $u_h$ given by \eqref{WFD}, if $h$ is sufficiently small, the following estimates hold
+
+where $\mathcal{C}$ is a positive constant not depending on $h$.
+
+In Figure 6, we present the computational errors evaluated for different values of $s$ and $h$, which can be obtained with the following function.
+
+function [h,e] = error_fl(s,N)
+
+x = linspace(-1,1,N+2);
+x = x(2:end-1);
+h = x(2)-x(1);
+
+f = @(x) 1+0*x;
+Phi = @(x) 1-abs(x);
+
+F = zeros(N,1);
+
+for i = 1:N
+    xx = linspace(x(i)-h,x(i)+h,N+1);
+    xx = 0.5*(xx(2:end)+xx(1:end-1));
+    B1 = f(xx).*(Phi((xx-x(i))/h));
+    F(i) = ((2*h)/N)*sum(B1); 
+end
+
+A = FEFractionalLaplacian(s,1,N);
+sol = A\F;
+val = pi/(2^(2*s)*gamma(s+0.5)*gamma(s+1.5));
+valnum = h*sum(sol);
+e = sqrt(val-valnum);
+
+
+
+Figure 6. Computational error in logarithmic scale in terms for different values of $s$.
+
+The rates of convergence shown are of order (in $h$) of $1/2$, and this convergence rate is maintained also for small values of $s$. This confirms the accuracy of our approximation. In particular, the behavior shown in Figure 6 is not in contrast with the known theoretical results.
+
+References
+
+[1] G. Acosta, F. Bersetche and J. P. Borthagaray, A short FE implementation for a 2d homogeneous Dirichlet problem of a Fractional Laplacian. Comput. Math. Appl., Vol. 74, No. 4 (2017), pp. 784-816.
+
+[2] U. Biccari and V. Hernández-Santamarı́a, Controllability of a one-dimensional fractional heat equation: theoretical and
+numerical aspects. IMA J. Math. Control. Inf, to appear, 2018.
+
+[3] U. Biccari, M. Warma and E. Zuazua, Controllability of the one-dimensional fractional heat equation under positivity constraints. Submitted.
 </description>
         <pubDate>Wed, 26 Jun 2019 00:00:00 +0200</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</link>

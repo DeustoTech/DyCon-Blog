@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Optimal control of the obstacle problem - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0031">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">WebSiteMap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP03">
+            Control under constraints</a> &#8827;</small>
+          </h2>
+          <h1>Optimal control of the obstacle problem</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
+                  </span>
+                </span>
+              
+              - 08 July 2019
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/OptimalControlObstacleProblem.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/output.gif" alt="" /></p>
+<p><center>A sample state of the parabolic obstacle problem.</center></p>
+
+<p>In this tutorial, we will present how to numerically solve and implement optimal control strategies for the elliptic and parabolic obstacle problems using the <code class="highlighter-rouge">FEniCS</code> Finite Element toolbox and the <code class="highlighter-rouge">dolfin-adjoint</code> optimization package [1, 2, 3].</p>
+
+<h2 id="mathematical-formulation"><em>Mathematical formulation</em></h2>
+
+<p>Fix $\Omega \subset \mathbb{R}^2$ and an obstacle $\psi \in H^2(\Omega)$.  Denote by $K_\psi$ the convex subset of $H^1_0(\Omega)$ consisting of all functions $\geq \psi(x)$.</p>
+
+<p>The elliptic obstacle problem takes the form: find $y \in K_\psi$ such that</p>
+
+<script type="math/tex; mode=display">(\nabla y, \nabla v-y)_{L^2(\Omega)} \geq  (f+u, v-y)_{L^2(\Omega)} \quad \forall v \in K_\psi.</script>
+
+<p>Here $f \in L^2(\Omega)$ is a given auxiliary forcing (may be $0$) and $u \in L^2(\Omega)$ represents the control.</p>
+
+<p>Similarly, the parabolic problem reads: find $y \in L^2(0, T; K_\psi) \cap H^1(0, T; L^2(\Omega))$ such that</p>
+
+<script type="math/tex; mode=display">(y_t(t) v-y(t) )_{L^2(\Omega)}+ (\nabla y(t), \nabla (v-y(t)) )_{L^2(\Omega)} \geq  (f+u(t), v-y(t))_{L^2(\Omega)} \quad \forall v \in K_\psi</script>
+
+<p>for $t \in (0, T)$, and $y(0, \cdot) = y_0$. Once again, $f$ designates an auxiliary forcing and $u = u(t,x)$ the control, which may now be time-dependent.</p>
+
+<p>We will be interested in minimizing the tracking-type functional</p>
+
+<script type="math/tex; mode=display">J(u, y) = \frac12 \| y - y_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|_{L^2(\Omega)}^2</script>
+
+<p>over all controls $u$ where $y$ is the associated solution to the elliptic problem and $y_d \in L^2(\Omega)$ is the target, and similarly</p>
+
+<script type="math/tex; mode=display">J(u, y) = \frac12 \| y-y_d\|_{L^2(0, T; \Omega)}^2 + \frac{\delta}{2} \| u \|_{L^2(0, T; \Omega)}^2</script>
+
+<p>for the parabolic case, where $y_d$ may be a time-dependent target. In both functionals, $\delta&gt;0$ is a small parameter which filters controls of large norm (Tikhonov regularization).</p>
+
+<h2 id="the-elliptic-problem"><em>The elliptic problem</em></h2>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/state.png" alt="" />
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/control.png" alt="" /></p>
+
+<center>Preview of the obtained optimal state and control.</center>
+
+<p>We concentrate a large part of the numerical implementation on the elliptic problem, as it may be transferred to the parabolic problem by time-stepping. Both of the above problems admit a unique solution [4, 5]. Nevertheless, there are some difficulties to be considered when solving the problem numerically, namely because the problems are not differentiable (the solution map for the obstacle problem is only Lipschitz continuous [6]). Following [4], we mend this issues in the next section by penalizing, a common approach for solving variational inequalities.</p>
+
+<p>We use the approximation</p>
+
+<script type="math/tex; mode=display">(\nabla y, \nabla v)_{L^2(\Omega)} + \frac{1}{\epsilon} (\max(y-\psi, 0), v)_{L^2(\Omega)} = (f+u, v)_{L^2(\Omega)}</script>
+
+<p>for all $v$ where $\epsilon&gt;0$ is the penalty parameter. It yields solutions which converge to the solution of the variational inequality as $\epsilon\rightarrow 0$ [7]. In fact, this is the de facto strategy for proving the well-posedness of the obstacle problem (in both settings).
+To apply a gradient-based optimisation method, we need differentiabilty, thus the non-smooth max operator is replaced by a differentiable ($C^1$) approximation.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/plot_max.png" alt="" /></p>
+
+<center> Regularization of the penalty function. </center>
+
+<p>While we may treat complex geometries and obstacles using the <code class="highlighter-rouge">FEniCS</code> toolbox, we restrict ourselves to $\Omega = [-2,2]^2$ and the obstacle $\psi(x) = (1-x^2)\chi_{B_1}$ in this tutorial.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/obstacle.png" alt="" />
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/target.png" alt="" /></p>
+
+<center>The obstacle and the target profile.</center>
+
+<p>In the elliptic case, the target is given by $y_d(x) = \frac12(\cos(x)+\cos(y))$.</p>
+
+<h3 id="implementation">Implementation</h3>
+
+<p>We begin by importing the necessary libraries. The <code class="highlighter-rouge">fenics</code> module contains all of the necessary finite element tools for the space discretization of PDEs. The syntax is symbolic and one uses the pre-defined FEniCS objects, including <code class="highlighter-rouge">FunctionSpace</code> (for the finite element space), <code class="highlighter-rouge">Function</code> (for the unknown state and control) etc.
+The <code class="highlighter-rouge">dolfin_adjoint</code> module contains the library wherein the adjoint optimization methodology is fully automatized (using automatic differentiation) provided the forward model.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fenics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fenics_adjoint</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">obstacles</span> <span class="kn">import</span> <span class="n">dome</span>
+</code></pre></div></div>
+
+<p>We define the smooth approximation of the max.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">smoothmax</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+	<span class="k">return</span> <span class="n">conditional</span><span class="p">(</span><span class="n">gt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="p">),</span> <span class="n">r</span><span class="o">-</span><span class="n">eps</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">conditional</span><span class="p">(</span><span class="n">lt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">eps</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>We mesh the domain $[-2,2]^2$ in $16384$ elements.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mesh</span> <span class="o">=</span> <span class="n">RectangleMesh</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V = Vh).</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">V</span> <span class="o">=</span> <span class="n">FunctionSpace</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="s">"CG"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"State"</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"Control"</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">TestFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">dome</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">V</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>		
+<span class="n">alpha</span><span class="p">,</span> <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-6</span>
+<span class="n">yd</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">Expression</span><span class="p">(</span><span class="s">"0.5*(cos(x[0])+cos(x[1]))"</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">V</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Using the symbolic expressions of <code class="highlighter-rouge">FEniCS</code>, we define the variational formulation of the penalized PDE:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bc</span> <span class="o">=</span> <span class="n">DirichletBC</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s">"on_boundary"</span><span class="p">)</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">inner</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">grad</span><span class="p">(</span><span class="n">w</span><span class="p">))</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">eps</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">smoothmax</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="o">+</span><span class="n">psi</span><span class="p">),</span> <span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="n">inner</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="n">u</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span>
+<span class="n">solve</span><span class="p">(</span><span class="n">F</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bcs</span><span class="o">=</span><span class="n">bc</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>A “tape” of the forward model is built. This tape is used to drive the optimization by repeatedly solving the forward model and the adjoint model for varying control inputs. Since the problem is nonlinear, a Newton method is used by the command <code class="highlighter-rouge">solve</code>.</p>
+
+<p>We finish by defining the objective functional to be minimized:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">delta</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">)</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">assemble</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">yd</span><span class="p">,</span> <span class="n">y</span><span class="o">-</span><span class="n">yd</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">+</span> <span class="n">delta</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>	
+<span class="n">m</span> <span class="o">=</span> <span class="n">Control</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Writing the state $y$ as the output of the solution map corresponding to the input $m$, one sees that the objective functional depends only on the control:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">J</span> <span class="o">=</span> <span class="n">ReducedFunctional</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>									
+</code></pre></div></div>
+
+<p>We run the optimization (the default solver is the Broyden–Fletcher–Goldfarb–Shanno (L-BFGS-B), but a wide selection of methods is available):</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u_opt</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">"maxiter"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s">"gtol"</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="s">"ftol"</span><span class="p">:</span> <span class="mf">1e-100</span><span class="p">})</span>
+</code></pre></div></div>
+
+<p>The tape is modified such that the initial guess for y (to be used in the Newton solver in the forward problem) is set to y_opt.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_opt</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">block_variable</span><span class="o">.</span><span class="n">saved_output</span>
+<span class="n">Control</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_opt</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We postprocess using <code class="highlighter-rouge">Paraview</code>.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">psipvd</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s">"elliptic/psi.pvd"</span><span class="p">)</span>
+<span class="n">ypvd</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s">"elliptic/y_opt.pvd"</span><span class="p">)</span>
+<span class="n">upvd</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s">"elliptic/u_opt.pvd"</span><span class="p">)</span>
+<span class="n">ydpvd</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s">"elliptic/yd.pvd"</span><span class="p">)</span>
+
+<span class="n">ypvd</span> <span class="o">&lt;&lt;</span> <span class="n">y_opt</span>
+<span class="n">upvd</span> <span class="o">&lt;&lt;</span> <span class="n">u_opt</span>
+<span class="n">ydpvd</span> <span class="o">&lt;&lt;</span> <span class="n">yd</span>
+<span class="n">psipvd</span> <span class="o">&lt;&lt;</span> <span class="n">psi</span>
+</code></pre></div></div>
+
+<p>The following figures allow us to conclude that the optimal state does indeed satisfy the obstacle constraint.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/side.png" alt="" />
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/above.png" alt="" /></p>
+
+<p>The algorithm converged after 8 iterations, and the value of the functional at the final iteration is $0.0967$.</p>
+
+<h2 id="the-parabolic-problem"><em>The parabolic problem</em></h2>
+
+<h3 id="implementation-1">Implementation</h3>
+
+<p>We only sketch the important steps, and the full code may be found in the attached files. The same penalization function is used, thus the penalized problem reduces to a parametrized semilinear heat equation. Following the same meshing and element setting as above, we define the required data and parameters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">Expression</span><span class="p">(</span><span class="s">"1-(-0.3*t+0.85)*(x[0]*x[0]+x[1]*x[1])"</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">degree</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">T</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We will store the control as a <code class="highlighter-rouge">Python</code> dictionary to keep the time ordered.
+For each time, the control $u(t)$ will be a function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ctrls</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(),</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">T</span><span class="p">:</span>
+	<span class="n">ctrls</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+	<span class="n">t</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>As the problem is more complex, it is convenient to build a solver for the forward problem. Given a control, we solve the parabolic obstacle problem and also construct the tracking part of the functional using the computed state.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">solve_parabolic</span><span class="p">(</span><span class="n">ctrls</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+	<span class="o">...</span>
+	<span class="n">y_n</span> <span class="o">=</span> <span class="n">Expression</span><span class="p">(</span><span class="s">"1-0.85*(x[0]*x[0]+x[1]*x[1])"</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+	<span class="n">y_n</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">y_n</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+
+	<span class="n">F</span> <span class="o">=</span> <span class="n">y</span><span class="o">*</span><span class="n">v</span><span class="o">*</span><span class="n">dx</span> <span class="o">+</span> <span class="n">nu</span><span class="o">*</span><span class="n">dt</span><span class="o">*</span><span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">grad</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="n">dt</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">dot</span><span class="p">(</span><span class="n">smoothmax</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="o">+</span><span class="n">psi</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="p">(</span><span class="n">y_n</span> <span class="o">+</span> <span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="mf">0.1</span><span class="p">))</span><span class="o">*</span><span class="n">v</span><span class="o">*</span><span class="n">dx</span>
+	<span class="n">bc</span> <span class="o">=</span> <span class="n">DirichletBC</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s">"on_boundary"</span><span class="p">)</span>	
+
+	<span class="n">t</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+	<span class="n">j</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span><span class="o">*</span><span class="n">assemble</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">yd</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
+	<span class="o">...</span>
+	<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">T</span><span class="p">:</span>
+		<span class="n">f</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">ctrls</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+		<span class="n">data</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">t</span>
+		<span class="n">yd</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">interpolate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">V</span><span class="p">))</span>
+		<span class="n">solve</span><span class="p">(</span><span class="n">F</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bcs</span><span class="o">=</span><span class="n">bc</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="n">T</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
+			<span class="n">weight</span> <span class="o">=</span> <span class="mf">0.5</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">weight</span> <span class="o">=</span> <span class="mi">1</span>
+		<span class="n">j</span> <span class="o">+=</span> <span class="n">weight</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span><span class="o">*</span><span class="n">assemble</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">yd</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
+		<span class="n">vtk_sol</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+		<span class="n">vtk_data</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">yd</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+		<span class="n">t</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">y</span><span class="p">,</span> <span class="n">yd</span><span class="p">,</span> <span class="n">j</span>
+</code></pre></div></div>
+
+<p>We set the tape.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">epsilon</span><span class="p">,</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">),</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">)</span>					
+<span class="n">y</span><span class="p">,</span> <span class="n">yd</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">solve_parabolic</span><span class="p">(</span><span class="n">ctrls</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We build the objective functional.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">reg_u</span> <span class="o">=</span> <span class="n">delta</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">fb</span><span class="o">-</span><span class="n">fa</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">dx</span> <span class="k">for</span> <span class="n">fb</span><span class="p">,</span> <span class="n">fa</span> <span class="ow">in</span>
+	<span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">ctrls</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">1</span><span class="p">:],</span> <span class="nb">list</span><span class="p">(</span><span class="n">ctrls</span><span class="o">.</span><span class="n">values</span><span class="p">())[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])])</span>
+<span class="n">J</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="n">assemble</span><span class="p">(</span><span class="n">reg_u</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="n">Control</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ctrls</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">ReducedFunctional</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We now run the optimization procedure.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">opt_ctrls</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">rf</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Once the optimal control computed, we solve the forward problem with it to obtain the optimal state.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dico</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">s</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">s</span> <span class="o">&lt;=</span> <span class="n">T</span><span class="p">:</span>
+	<span class="n">dico</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt_ctrls</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+	<span class="n">i</span><span class="o">+=</span> <span class="mi">1</span>
+	<span class="n">s</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+<span class="n">new_y</span><span class="p">,</span> <span class="n">new_yd</span><span class="p">,</span> <span class="n">new_j</span> <span class="o">=</span> <span class="n">solve_parabolic</span><span class="p">(</span><span class="n">dico</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/surface.gif" alt="" />
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/target.gif" alt="" /></p>
+
+<center> The state and the target, tracked throughout. </center>
+
+<p>The constraint $y\geq \psi$ is satisfied, which is why the optimal state does not lift off sharply.</p>
+
+<h2 id="references">References:</h2>
+
+<p>[1] The FEniCS Project Version 1.5
+M. S. Alnaes, J. Blechta, J. Hake, A. Johansson, B. Kehlet, A. Logg, C. Richardson, J. Ring, M. E. Rognes and G. N. Wells
+Archive of Numerical Software, vol. 3, 2015.</p>
+
+<p>[2] Patrick E. Farrell, David A. Ham, Simon W. Funke and Marie E. Rognes (2013). Automated derivation of the adjoint of high-level transient finite element programs, SIAM Journal on Scientific Computing 35.4, pp. C369-C393. doi:10.1137/120873558. arXiv:1204.5577</p>
+
+<p>[3] Simon W. Funke and Patrick E. Farrell (2013). A framework for automated PDE-constrained optimisation, submitted. arXiv:1302.3894</p>
+
+<p>[4] M. Hintermüller and I. Kopacka. A smooth penalty approach and a nonlinear multigrid algorithm for elliptic MPECs. Computational Optimization and Applications, 50(1):111–145, 2011. URL: http://dx.doi.org/10.1007/s10589-009-9307-9.</p>
+
+<p>[5] Borjan Geshkovski (2018). Obstacle Problems: Theory and Applications. Master Thesis.</p>
+
+<p>[6] Christopher Meyer, Andreas Rademacher, W. Wollner. Adaptive Optimal Control of the Obstacle Problem.
+SIAM J. Scientific Computing, 2015.</p>
+
+<p>[7] D. Kinderlehrer and G. Stampacchia. An introduction to variational inequalities and their applications. Volume 31 of Classics in Applied Mathematics. SIAM, 2000.</p>
+
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
