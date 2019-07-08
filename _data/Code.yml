@@ -12,3 +12,6 @@ MATLAB:
   name: MATLAB
   description: <p>We aim at developing a systematic turnpike theory for evolution PDEs. Our preliminary results show that this not only depends on the model under consideration but also on the cost functional and control target, and that the fulfillment of the turnpike property requires the system under consideration to be controllable or stabilisable. </p>
               <p>The theory developed so far allows to handle, mostly, linear PDEs, but the problem is widely open in the <strong>nonlinear</strong> frame, where the existing results require smallness conditions on the objectives (probably of a purely technical nature), which restrict the scope of applications. </p>
+
+python:
+  name: python

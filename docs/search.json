@@ -8,7 +8,7 @@
       "date"            : "2019-07-08",
       "author"          : ["BorjanG"],
       "description"     : "In this tutorial, we will present and elaborate an optimal control strategy for the obstacle problem in two space dimensions using Python's FEniCS toolbox. Different meshes and obstacles are considered.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/control.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/state.gif"
     } ,
   
     {
