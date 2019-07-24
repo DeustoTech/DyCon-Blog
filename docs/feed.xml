@@ -5,9 +5,216 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 Jul 2019 14:08:58 +0200</pubDate>
-    <lastBuildDate>Wed, 17 Jul 2019 14:08:58 +0200</lastBuildDate>
+    <pubDate>Wed, 24 Jul 2019 12:03:36 +0200</pubDate>
+    <lastBuildDate>Wed, 24 Jul 2019 12:03:36 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Uniform exponential and polynomial stability and approximation in control of a thermoelastic model</title>
+        <description>The main objective of this blog is to explain numerically the difference between exponential and polynomial decay in term of energy and spectral properties. We Show also that system with polynomial decay are very  sensitive to the choice of initial data.
+
+Model Problem
+
+We consider the numerical approximation of the following coupled thermoelastic wave models
+
+
+
+
+
+where $u(x,t)$ is the displacement (longitudinal or transverse, depending upon the application) at position $x$ along a bounded smooth domain $\Omega\subset\mathbb{R}$ and time $t$ , and $\theta(x,t)$ is the temperature deviation from the reference temperature at position $x$ and time $t$, $u_0(x)$, $v_0(x)$ and $\theta_0(x)$ are initial data in a suitable space. The small positive constant $\gamma$ is a thermo-mechanical coupling parameter and is generally small in comparison to 1. System (\ref{eq1}) differs from system $\eqref{eq2}$ at the coupling terms, where we have replaced the strong coupling ($\gamma\theta_x$ and $\gamma u_{tx}$) by a weak coupling ($\gamma\theta$ and $\gamma u_{t}$).
+
+It is well known from literature that system (\ref{eq1}) and (\ref{eq2}) are respectively exponentially and polynomially stable, see [3,7] and [5,6,9].
+
+In this post, we will show by numerical experiments, how the coupling terms affect quantitative and qualitative properties of thermoelastic systems (\ref{eq1}) and (\ref{eq2}). These results could be found in [8,10].
+
+To do this, we consider a semi discretization version of both systems (\ref{eq1}) and (\ref{eq2}), obtained with finite element method, which has the following form
+
+
+
+where for all $n\in\mathbb{N}$, $z_n=(u_n,v_n,\theta_n)^T$ is the semi discrete solution, $z_{n0}$ is the discretized initial data, $A_{i,n}$ the discretized dynamic and the subscript $\cdot_i$ refers to system (\ref{eq1}) and (\ref{eq2}) with
+
+
+
+and $F_{2,n}=I_n$,
+
+
+
+Spectral properties of thermoelastic systems
+
+Figure 1 and Figure 2 show how the coupling terms affect the placement of eigenvalues of the dynamic $A_{n}$. In Figure 1, we see that a uniform distance between the eigenvalues and the imaginary axis is preserved, see Table 1. Another observation is that for fixed $n$, the eigenvalues of higher frequency modes, in particular, the one of the $n^{th}$ mode, are closer to the imaginary axis. Moreover, as the number of modes increases, these eigenvalues bend back towards the vertical line $\lambda=-\frac{\gamma^2}{2}$, a fact which has been already shown in [4]. Therefore, the corresponding spectral element approximation scheme preserves the property of exponential stability.
+
+
+
+ Location of the complex eigenvalues of the matrix $A_{1,n}$ with the finite element method
+
+Nx = 30;
+stabexpsem(Nx);
+
+
+pour n=30, d=8.940629e-04
+pour n=60, d=8.941023e-04
+pour n=90, d=8.941065e-04
+pour n=120, d=8.941075e-04
+
+
+
+
+
+In Figure 2, conversely to Figure 1 where a uniform distance between the eigenvalues and the imaginary axis is preserved, we observe that, as the number of modes increases, an asymptotic behaviour appears in the neighborhood of the imaginary axis at $\pm\infty$. This property is mainly related to systems with polynomial decay, see \cite{BEPS2006}.
+
+ Location of the complex eigenvalues of the matrix $A_{2,n}$ with the finite
+
+Nx = 30;
+stabpolysem(Nx);
+
+
+
+
+Uniform and polynomial decay of the energy
+
+The discrete energy associated to system (\ref{eq3}) is given by
+
+
+
+The discrete energy $E_{1,n}$ associated to system (ref{eq1}) decays exponentially to zero, see Figure 3, in the following sense: $\exists M,\alpha$ positive constants such that
+
+
+
+However, the introduction of the weak coupling term in system (ref{eq1}) has changed the dynamic and consequently the behavior of energy (\ref{eq4}). In this case, we say that system (\ref{eq2}) decays polynomially to zero, see Figure 4, in the following sense: $\exists M,\alpha$ positive constants such that
+
+
+
+ Exponential decay of $E_{1,n}(t)$
+
+ Polynomial decay of $E_{2,n}(t)$
+
+Effect of smoothness of the initial data on the rate of decay of energy
+
+It has been shown theoretically, see [1,2], that the energy associated to system (\ref{eq2}) is very sensitive to the smoothness of its initial data. This fact, has been also observed numerically, see Figure 6. we use
+
+Nx = 100;
+FinalTime = 50;
+dt = 0.5;
+mode = 1;
+Gamma = 0.1;
+n = 100;
+k= 2;
+
+
+and we consider the following initial data
+
+u0=zeros(1,n);
+x = linspace(0,pi,100);
+v0=sqrt(2/pi)*sin(k*x);
+teta0=zeros(1,n);
+
+
+Through Figure 6, we notice that for $j = 1$, the approximate energy $E_{2,n}(t)$ decays to zero as the time $t$ increases. Moreover, we observe that the decay rate depends strongly on $j$. That is, when $j$ increases, initial data are very oscillating. We say in this case that the rate of decay of the discrete energy $E_{2,n}(t)$ is very sensitive to the choice of the initial data. However, the behavior of the energy assosiated to system (\ref{eq1}) remains indifferent to the smoothness of initial data when $n\to\infty$, see Figure 5.
+
+  Exponential decay of $E_{1,n}(t)$
+
+  Polynomial decay of $E_{2,n}(t)$
+
+To obtain the previous figures, one need only to execute the following
+
+script:
+
+[u,v,theta,Et] = data_effect_exp(FinalTime,dt,Nx,mode,Gamma);
+%%
+AniThermalDisplacement(u,v,theta,Et)
+
+
+Operation terminated by user during matlab.graphics.shape.internal.Button
+
+
+In matlab.graphics.controls.AxesToolbarButton
+
+In matlab.ui.controls.ToolbarStateButton
+
+In matlab.graphics.controls.ToolbarController.createToolbarButton
+
+In matlab.graphics.controls.ToolbarController.createToolbarButton
+
+In matlab.graphics.controls.ToolbarController.getDefaultToolbar
+
+In
+matlab.graphics.interaction.internal.UnifiedAxesInteractions.processQueuedDefaultInteractionInitialization
+
+In matlab.graphics.controls.ToolbarController.doPostUpdateFcn
+
+In AniThermalDisplacement (line 99)
+    pause(0.05)
+
+In ./imgs-matlab/copiaRM (line 199)
+AniThermalDisplacement(u,v,theta,Et)
+
+In evalmxdom&amp;gt;instrumentAndRun (line 109)
+text = evalc(evalstr);
+
+In evalmxdom (line 21)
+[data,text,laste] =
+instrumentAndRun(file,cellBoundaries,imageDir,imagePrefix,options);
+
+In publish
+
+In publishreadme (line 78)
+mdfile   = publish(tmpfile, mdOpt);
+
+In examples2blog (line 31)
+    publishreadme('copiaRM',path_folder,false)
+ 
+
+
+
+
+
+
+
+[u,v,theta,Et] = p1energyfem1(FinalTime,dt,Nx,mode,Gamma);
+%%
+AniThermalDisplacement(u,v,theta,Et)
+
+
+Undefined function 'p1energyfem1' for input arguments of type 'double'.
+
+Error in ./imgs-matlab/copiaRM (line 201)
+[u,v,theta,Et] = p1energyfem1(FinalTime,dt,Nx,mode,Gamma);
+
+
+
+References
+
+[1] A. B' atkai, K.J. Engel, J. Pr&quot;uss and R. Schnaubelt, Polynomial stability of operator semigroups, Math. Nachr. 279, pp.
+
+[2] A. Borichev and Y. Tomilov, Optimal polynomial decay of functions and operator semigroups, Math. Ann., 347(2), pp.455-478, 2010.
+
+[3] S. W. Hansen, Exponential energy decay in a linear thermoelastic rod. J. Math. Anal. Appli.,167, pp. 429-442, 1992.
+
+[4] F.A. Khodja, A. Benabdallah, and D. Teniou, Stability of coupled systems, Abstr. Appl. Anal. Volume 1, Number 3, 327-340, 1996.
+
+[5] F. A. Khodja, A. Benabdallah and D. Teniou, Dynamical stabilizers and coupled systems}, ESAIM Proceeding,2, pp. 253-262, 1997.
+
+[6] F. A. Khodja, A. Bader and A. Benabdallah, Dynamic stabilization of systems via decoupling techniques, ESAIM: COCV,4,
+
+[7] Z. Liu and S. Zheng, Exponential stability of semigroup associated with thermoelastic system, Quart. Appl. Math, 51, pp.535-545, 1993.
+
+[8] Z. Y. Liu and S. Zheng, Uniform exponential stability and approximation in control of a thermoelastic system, SIAM J. Control Optim. 32, pp. 1226-1246, 1994.
+
+[9] Z. Liu and B. Rao, Characterization of polynomial decay rate for the solution of linear evolution equation. Zeitschrift  angewandte Mathematik und Physik ZAMP,56, pp. 630-644, 2005.
+
+[10] L. Maniar and S. Nafiri, Approximation and uniform polynomial stability of C_0-semigroups,ESAIM: COCV 22, pp. 208-235, 2016.
+
+</description>
+        <pubDate>Thu, 18 Jul 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0030</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0030</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
     
       <item>
         <title>Rotors imbalance suppression by optimal control</title>
@@ -260,223 +467,406 @@ In the uncontrolled case, the balancing device does not act. In the controlled c
       </item>
     
       <item>
-        <title>Optimal control of the obstacle problem</title>
-        <description>
-A sample state of the parabolic obstacle problem.
-
-In this tutorial, we will present how to numerically solve and implement optimal control strategies for the elliptic and parabolic obstacle problems using the FEniCS Finite Element toolbox and the dolfin-adjoint optimization package [1, 2, 3].
-
-Mathematical formulation
-
-Fix $\Omega \subset \mathbb{R}^2$ and an obstacle $\psi \in H^2(\Omega)$.  Denote by $K_\psi$ the convex subset of $H^1_0(\Omega)$ consisting of all functions $\geq \psi(x)$.
-
-The elliptic obstacle problem takes the form: find $y \in K_\psi$ such that
-
-
-
-Here $f \in L^2(\Omega)$ is a given auxiliary forcing (may be $0$) and $u \in L^2(\Omega)$ represents the control.
-
-Similarly, the parabolic problem reads: find $y \in L^2(0, T; K_\psi) \cap H^1(0, T; L^2(\Omega))$ such that
-
-
-
-for $t \in (0, T)$, and $y(0, \cdot) = y_0$. Once again, $f$ designates an auxiliary forcing and $u = u(t,x)$ the control, which may now be time-dependent.
-
-We will be interested in minimizing the tracking-type functional
-
-
-
-over all controls $u$ where $y$ is the associated solution to the elliptic problem and $y_d \in L^2(\Omega)$ is the target, and similarly
-
-
-
-for the parabolic case, where $y_d$ may be a time-dependent target. In both functionals, $\delta&amp;gt;0$ is a small parameter which filters controls of large norm (Tikhonov regularization).
-
-The elliptic problem
+        <title>Analysis, numerics and control for the obstacle problem</title>
+        <description>In this tutorial, we present some aspects of the obstacle problem in the stationary (elliptic) and the evolutionary (parabolic) setting by means of numerical simulations, performed in FEniCS and Matlab.
 
 
 
 
-Preview of the obtained optimal state and control.
-
-We concentrate a large part of the numerical implementation on the elliptic problem, as it may be transferred to the parabolic problem by time-stepping. Both of the above problems admit a unique solution [4, 5]. Nevertheless, there are some difficulties to be considered when solving the problem numerically, namely because the problems are not differentiable (the solution map for the obstacle problem is only Lipschitz continuous [6]). Following [4], we mend this issues in the next section by penalizing, a common approach for solving variational inequalities.
-
-We use the approximation
+ Figure 1. The solution (blue) of the one-dimensional elliptic obstacle problem is superharmonic (concave down) and matches derivatives with the obstacle (black). 
 
 
+1. Mathematical formulation
 
-for all $v$ where $\epsilon&amp;gt;0$ is the penalty parameter. It yields solutions which converge to the solution of the variational inequality as $\epsilon\rightarrow 0$ [7]. In fact, this is the de facto strategy for proving the well-posedness of the obstacle problem (in both settings).
-To apply a gradient-based optimisation method, we need differentiabilty, thus the non-smooth max operator is replaced by a differentiable ($C^1$) approximation.
+1.1. Elliptic problem
+Let $\Omega \subset \mathbb{R}^d$ be open, regular and bounded, let $\psi \in H^2(\Omega)$ (the obstacle) and $g \in H^1(\Omega)$ (boundary data) with $\psi \leq g$ on $\partial \Omega$ be given. We consider the functional
 
 
 
- Regularization of the penalty function. 
-
-While we may treat complex geometries and obstacles using the FEniCS toolbox, we restrict ourselves to $\Omega = [-2,2]^2$ and the obstacle $\psi(x) = (1-x^2)\chi_{B_1}$ in this tutorial.
+where $f \in L^2(\Omega)$ is given, and the closed convex set
 
 
 
+The classical obstacle problem can be written as
 
-The obstacle and the target profile.
 
-In the elliptic case, the target is given by $y_d(x) = \frac12(\cos(x)+\cos(y))$.
 
-Implementation
+and admits a unique minimizer $\phi \in \mathcal{K}^g_{\text{OB}}$, which is also a solution of the variational inequality
 
-We begin by importing the necessary libraries. The fenics module contains all of the necessary finite element tools for the space discretization of PDEs. The syntax is symbolic and one uses the pre-defined FEniCS objects, including FunctionSpace (for the finite element space), Function (for the unknown state and control) etc.
-The dolfin_adjoint module contains the library wherein the adjoint optimization methodology is fully automatized (using automatic differentiation) provided the forward model.
+
+
+The terminology “obstacle problem” comes from the physical origin of the model $-$ the solution $\phi$ represents the equilibrium position of an elastic membrane, which is constrained to lie above an obstacle (given by the graph of the function $\psi$).
+
+Notation:  The notation
+
+
+
+designates the Gateaux derivative ($L^2$-gradient) of the functional ${F}_{\text{OB}}$ at the point $\phi$ in the direction $\zeta$; in occurence,
+
+
+
+Most of the regularity theory for the obstacle problem has been developed for the model case $\Delta \psi=-1$. We refer to [3,4] for a detailed presentation. 
+For simplicity of the presentation, let us thus assume for a moment that $f \equiv -1$ and $\psi \equiv 0$. Choosing appropriate test functions bring us from the variational inequality for $\phi$ to
+
+
+
+The set ${ \phi=0 }$ is called contact set, while $\partial { \phi&amp;gt;0 }$ is the free boundary.
+
+
+
+ The solution $\phi$ to the elliptic obstacle problem just above. 
+
+
+
+  
+    
+      Remark: $\quad$At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have $
+      \nabla (\phi-\psi)
+      =0$ along the boundary.
+    
+  
+
+
+1.2. Parabolic problem
+
+The parabolic counterpart onsists in finding $u \in H^1(]0, +\infty[; L^2(\Omega))\cap L^2(]0,+\infty[; H^2(\Omega) \cap \mathcal{K}^g_{\text{OB}})$ satisfying
+
+
+
+The name “parabolic obstacle problem” for the above system may be misleading. 
+While the mathematical formulation is similar, the physical interpretation of the elliptic and parabolic problem is different. In the parabolic setting, seeing $\psi$ as a physical obstacle in space is not correct. Rather, one should interpret $\psi$ as a barrier for the temperature $u$. More accurately, we are dealing with a parabolic variational inequality with an obstacle-type constraint.
+
+The function $\psi$ may be time-dependent, but for simplicity we omit this case.
+
+
+
+
+
+
+
+
+
+
+
+ Figure 2. Here $\psi(x)=3*\sqrt{(1-x^2)}$ in $(-1,1)$ (black) is a barrier for the evolving solution (blue). The initial data coincides with $\psi$ on (-1.5, 1.5). We observe that the contact set $\{ u = \psi \}$ changes (gets smaller) as time grows. There is also matching of normal derivatives on the contact points (i.e. the free boundary). 
+Finally, the solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) for large time, as seen below.   
+
+For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with two boundary conditions at the free boundary
+
+
+
+This is an overdetermined problem, which means that the free boundary/the contact set ${u=0}$ has to change with time to ensure that both BC hold for every time. The evolution of the contact set may be observed in the numerics of Figures 2,3,4.
+
+Remark: $\quad$
+As for the elliptic problem, solving the above parabolic problem is different to just solving the heat equation for $u$ in a subdomain of $\Omega$ and setting $u$ elsewhere, with a Dirichlet boundary condition. Indeed, solving the latter problem does not guarantee that we would have $|\nabla u|= 0$ along the boundary.
+
+Remark: $\quad$
+While in Figure 2 the contact set is shrinking does not disappear, it may happen that the contact set vanishes (depending on the magnitude of the boundary data $g$, the support of the initial data $u_0$, and if present, the source term $f$).
+
+1.3. Relationship between both problems
+
+In the recent paper [5], it is shown that the solution $u(t)$ to the parabolic variational inequality converges to the solution $\phi$ of the elliptic probelem in $H^1(\Omega)$ norm as $t\rightarrow \infty$ with exponential rate. This is done by means of new techniques including a so-called constrained Lojaseiwicz inequality.
+
+We may observe this convergence numerically in Figures 3 and 4. In both cases, we work in the ball $B_2$, with boundary data $g\equiv 0.8$, barrier $\psi\equiv 0$ and 
+initial datum supported outside $B_{1.5}$.
+
+The one-dimensional case:
+
+
+
+
+
+
+
+
+
+Figure 3. The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. 
+
+The two-dimensional case:
+
+
+
+  
+
+
+
+
+
+
+Figure 4. We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  
+
+2. Numerical implementation
+
+2.1. Possible strategies
+
+A common approach for proving the well-posedness and $W^{2,p}$ regularity for variational inequalities is a technique called penalization, which consists of approximating by a sequence of semilinear equations [8]. For any $\epsilon&amp;gt;0$, we will consider
+
+
+
+to approximate the parabolic problem, and remove $u’$ and time dependence for the elliptic one. As $\epsilon\rightarrow0$, the solution $u_\epsilon$ of the above equation converges to the variational inequality.  Here
+
+
+
+may be replaced by another penalty function, for instance $\beta_\epsilon(u) = -\exp(-u/\epsilon)$.
+
+The approximated problem is relatively simple to implement numerically. We may use finite elements (say $P1$ elements) to discretize in space, and time-stepping (Euler implicit for instance) to discretize in time.
+
+There are other ways to solve the variational inequality after discretizing in space and time (using one’s favorite metood). One which is popular in the literature for the elliptic problem is the primal dual active set method, which we will present in a future post.
+
+2.2. Code
+
+i). Elliptic problem.
+
+Let us start by solving the two-dimensional elliptic problem from Figure 4.
+
+The fenics module [1] contains all of the necessary finite element tools for the space discretization of PDEs.
+
 from fenics import *
-from fenics_adjoint import *
 from obstacles import dome
+from mshr import mesh
 
+It is advantageous to regularize the “kink” appearing in penalty function (the negative part of a function) in view of using a Newton method for solving the nonlinear problem
 
-We define the smooth approximation of the max.
-def smoothmax(r, eps=1e-4):
+def smoothmax(r, eps=1e-4): 
 	return conditional(gt(r, eps), r-eps/2, conditional(lt(r, 0), 0, r**2/(2*eps)))
 
+We mesh the domain $B_2$.
 
-We mesh the domain $[-2,2]^2$ in $16384$ elements.
-mesh = RectangleMesh(Point(-2,-2), Point(2,2), 128, 128)
+mesh = generate_mesh(Circle(Point(0, 0), 2), 25)
 
 
-$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V = Vh).
+$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V).
+
 V = FunctionSpace(mesh, &quot;CG&quot;, 1)
-y = Function(V, name=&quot;State&quot;)
-u = Function(V, name=&quot;Control&quot;)
-w = TestFunction(V)
-psi = interpolate(dome(degree=4), V)
-f = Constant(0.1)		
-alpha, eps = 1e-4, 1e-6
-yd = interpolate(Expression(&quot;0.5*(cos(x[0])+cos(x[1]))&quot;, degree=2), V)
+w = Function(V)
+v = TestFunction(V)
+psi = Constant(0.)
+f = Constant(-1)		
+eps = Constant(pow(10, -8))
 
 
-Using the symbolic expressions of FEniCS, we define the variational formulation of the penalized PDE:
-bc = DirichletBC(V, 0.0, &quot;on_boundary&quot;)
-F = inner(grad(y), grad(w))*dx - 1/eps*inner(smoothmax(-y+psi), w)*dx - inner(f+u, w)*dx
-solve(F == 0, y, bcs=bc)
+Using the symbolic expressions of FEniCS, we define the variational formulation of the penalized PDE, which we write in the form $F(w)=0$:
+
+bc = DirichletBC(V, 0.8, &quot;on_boundary&quot;)
+F = dot(grad(w), grad(v))*dx - 1/eps*inner(smoothmax(-w+psi), v)*dx - f*v*dx
 
 
-A “tape” of the forward model is built. This tape is used to drive the optimization by repeatedly solving the forward model and the adjoint model for varying control inputs. Since the problem is nonlinear, a Newton method is used by the command solve.
+We solve the nonliner problem with the command solve, which makes use of a Newton method to solve the nonlinear equation $F(w)=0$.
 
-We finish by defining the objective functional to be minimized:
+solve(F == 0, w, bcs=bc)
+
+
+We visualise in ParaView by storing the solution in .vtk format using:
+vtkel = File(&quot;output/el.pvd&quot;)
+vtkel &amp;lt;&amp;lt; w
+
+
+ii). Parabolic problem.
+
+We set $T=2$, use $100$ subdivisions and set
+
+dt = T/100
+
+
+This part only differs by the presence of a time-loop. We define the initial datum in a separate class:
+
+class indata(Expression):
+	def eval(self, value, x):
+		if sqrt(x[0]*x[0]+x[1]*x[1]) &amp;lt;= 1.95:
+			value[0] = 0
+		elif 1.95 &amp;lt;= sqrt(x[0]*x[0] + x[1]*x[1]) &amp;lt;= 2:
+			value[0] = (sqrt(x[0]*x[0]+x[1]*x[1])-1.95)/(2-1.95)*0.8
+		else:
+			value[0] = 0.8
+
+
+Repeating as in the elliptic case up to defining the variational form, we now set the inital datum (interpolating the expression onto the FEM space) and time:
+
+un = interpolate(indata(degree=2), V)
+t = 0
+
+We set up the time loop:
+
+vtksol = File(&quot;output/popsol.pvd&quot;)
+for n in range(num_steps):
+    t+=dt
+    solve(F==0, u, bcs=bc)
+    vtksol &amp;lt;&amp;lt; (u, t)
+    un.assign(u) 
+
+
+Optimal Control
+
+We will now briefly present the implementation of an optimal control strategy for the elliptic and parabolic problems. We will make use of the penalized problems where $\epsilon&amp;gt;0$ is small (of the order $10^{-8}$). This strategy has been succesfully applied in [8].
+
+3.1. Elliptic problem
+
+Given a target $\phi_d$ and a regularization parameter $\delta&amp;gt;0$ (we usually use $\delta = 10^{-2}$), we seek to minimize
+
+
+
+subject to
+
+
+
+For simplicity of the presentation, we will consider
+
+
+
+
+
+
+
+on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$.
+
+The uncontrolled solution of the elliptic obstacle problem in this case is:
+
+
+
+
+
+The FEniCS optimization code will have the effect of obtaining the following results.
+
+
+
+	
+
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+&amp;lt;/center&amp;gt;
+
+
+
+
+
+Figure. The optimal state (top left) may be seen to satisfy the obstacle constraint, and takes the shape of the target (bottom left). 
+
+Let us present the numerical implementation. After importing the dolfin_adjoint optimization module [2], we make use of the code for simulating the uncontrolled problem. A “tape” of the forward model is built. This tape is used to drive the optimization by repeatedly solving the forward model and the adjoint model for varying control inputs.
+
+Defining the objective functional to be minimized:
 
 delta = Constant(1e-2)
-j = assemble(0.5*inner(y-yd, y-yd)*dx + delta/2*inner(u, u)*dx)	
+j = assemble(0.5*inner(w-wd, w-wd)*dx + delta/2*inner(u, u)*dx)	
 m = Control(u)
 
 
 Writing the state $y$ as the output of the solution map corresponding to the input $m$, one sees that the objective functional depends only on the control:
+
 J = ReducedFunctional(j, m)									
 
 
-We run the optimization (the default solver is the Broyden–Fletcher–Goldfarb–Shanno (L-BFGS-B), but a wide selection of methods is available):
-u_opt = minimize(J, options={&quot;maxiter&quot;: 15, &quot;gtol&quot;: 1e-6, &quot;ftol&quot;: 1e-100})
+We run the optimization, based on a conjugate-gradient method:
+
+u_opt = minimize(J, options={&quot;method&quot;=&quot;CG&quot;})
 
 
 The tape is modified such that the initial guess for y (to be used in the Newton solver in the forward problem) is set to y_opt.
+
 y_opt = y.block_variable.saved_output
 Control(y).update(y_opt)
 
 
-We postprocess using Paraview.
-psipvd = File(&quot;elliptic/psi.pvd&quot;)
-ypvd = File(&quot;elliptic/y_opt.pvd&quot;)
-upvd = File(&quot;elliptic/u_opt.pvd&quot;)
-ydpvd = File(&quot;elliptic/yd.pvd&quot;)
-
-ypvd &amp;lt;&amp;lt; y_opt
-upvd &amp;lt;&amp;lt; u_opt
-ydpvd &amp;lt;&amp;lt; yd
-psipvd &amp;lt;&amp;lt; psi
-
-
-The following figures allow us to conclude that the optimal state does indeed satisfy the obstacle constraint.
-
-
-
-
 The algorithm converged after 8 iterations, and the value of the functional at the final iteration is $0.0967$.
 
-The parabolic problem
+3.2. The parabolic problem
 
-Implementation
-
-We only sketch the important steps, and the full code may be found in the attached files. The same penalization function is used, thus the penalized problem reduces to a parametrized semilinear heat equation. Following the same meshing and element setting as above, we define the required data and parameters.
-
-data = Expression(&quot;1-(-0.3*t+0.85)*(x[0]*x[0]+x[1]*x[1])&quot;, t = 0, degree = 4)
-T, dt = 2, Constant(0.1)
+Given a final time $T&amp;gt;0$, a target $u_d$ and a regularization parameter $\delta&amp;gt;0$, we seek to minimize
 
 
-We will store the control as a Python dictionary to keep the time ordered.
-For each time, the control $u(t)$ will be a function.
 
-ctrls, t = OrderedDict(), float(dt)
-while t &amp;lt;= T:
-	ctrls[t] = Function(V)
-	t += float(dt)
+subject to
 
 
-As the problem is more complex, it is convenient to build a solver for the forward problem. Given a control, we solve the parabolic obstacle problem and also construct the tracking part of the functional using the computed state.
-def solve_parabolic(ctrls, epsilon):
-	...
-	y_n = Expression(&quot;1-0.85*(x[0]*x[0]+x[1]*x[1])&quot;, degree=3)
-	y_n = interpolate(y_n, V)
 
-	F = y*v*dx + nu*dt*dot(grad(y), grad(v))*dx - dt/epsilon*dot(smoothmax(-y+psi), v)*dx - (y_n + dt*(f+0.1))*v*dx
-	bc = DirichletBC(V, 0.0, &quot;on_boundary&quot;)	
+For simplicity of the presentation, we will consider the same setting as in Figure 3, namely $f\equiv-1\,$,  $g\equiv0.8\,$, on the domain $\Omega = [-2,2]$. The target temperature is $u_d(x) = 0.8$. This would correspond to “melting”, as this target is never equal to zero, thus has no contact set. We would thus expect the action of the control $v$ to lift-up $u$ from $0$ and thus the contact set (and free boundary) to vanish.
 
-	t = float(dt)
-	j = 0.5*float(dt)*assemble((y - yd)**2*dx)
-	...
-	while t &amp;lt;= T:
-		f.assign(ctrls[t])
-		data.t = t
-		yd.assign(interpolate(data, V))
-		solve(F==0, y, bcs=bc)
-		if t &amp;gt; T - float(dt):
-			weight = 0.5
-		else:
-			weight = 1
-		j += weight*float(dt)*assemble((y - yd)**2*dx)
-		vtk_sol &amp;lt;&amp;lt; (y, t)
-		vtk_data &amp;lt;&amp;lt; (yd, t)
-		t += float(dt)
-	return y, yd, j
+We appeal to DyCon-Toolbox [9] for the numerical implementation of this problem. DyCon-Toolbox is an efficient and easy to use solver for nonlinear control problems.
 
 
-We set the tape.
-epsilon, delta = Constant(1e-4), Constant(1e-2)					
-y, yd, j = solve_parabolic(ctrls, epsilon)
+
+The optimal state (left, red), starting from an initial datum with a non-empty contact set (left, blue) and the optimal control (red, right). 
 
 
-We build the objective functional.
-reg_u = delta/2*sum([1/dt*(fb-fa)**2*dx for fb, fa in
-	zip(list(ctrls.values())[1:], list(ctrls.values())[:-1])])
-J = j + assemble(reg_u)
-m = [Control(c) for c in ctrls.values()]
-rf = ReducedFunctional(J, m)
-
-
-We now run the optimization procedure.
-opt_ctrls = minimize(rf)
-
-
-Once the optimal control computed, we solve the forward problem with it to obtain the optimal state.
-dico = OrderedDict()
-s, i = float(dt), 0
-while s &amp;lt;= T:
-	dico[s] = opt_ctrls[i]
-	i+= 1
-	s += float(dt)
-new_y, new_yd, new_j = solve_parabolic(dico, epsilon)
+The action and magnitude of the control ensures that the solution to the parabolic problem will lift-off from the initial contact set. 
+For comparison, we recall that the uncontroled free dynamics have a very different behavior:
 
 
 
 
 
- The state and the target, tracked throughout. 
+We begin by symbolically defining the time variable:
+syms t
 
-The constraint $y\geq \psi$ is satisfied, which is why the optimal state does not lift off sharply.
+
+We discretize the interval $[-2, 2]$:
+N = 70;
+xi = -2; xf = 2;
+xline = linspace(xi,xf,N+2);
+xline = xline(2:end-1);
+
+We define symbolically (as in FEniCS) the state vector $Y$ and control vector $U$:
+Y = SymsVector('y',N);
+U = SymsVector('u',N);
+
+We discretize by finite differences, and define the semilinear penalty term:
+alpha = 1e-3;
+epsilon = 1e-2;
+A = FDLaplacian(xline);
+
+F  = @(Y) NonLinearTerm(Y,alpha);
+dF = @(Y) DiffNonLinearTerm(Y,alpha);
+
+
+We may define the parabolic problem to be solved.
+dx = xline(2) - xline(1);
+Y_t = @(t,Y,U,Params) A*Y + 1/epsilon*F(-Y) + U + (1/dx^2)*[0.8;zeros(N-2,1);0.8];
+Dyn = pde(Y_t,Y,U);
+
+We set the mesh, and other relevant parameters such as the final time and initial data. We consider the same data as in the free problem.
+
+Dyn.mesh   = xline;
+Dyn.Solver = @ode23;
+Dyn.Nt     = 150;
+Dyn.FinalTime        = 0.3;
+Dyn.InitialCondition = InitialConditionFcn(xline);
+
+
+We now compute the necessary Jacobian matrices.
+
+Dyn.Derivatives.Control.Num = @(t,Y,U,Params) eye(N);
+Dyn.Derivatives.State.Num   = @(t,Y,U,Params) A + 1/epsilon*dF(-Y);
+
+
+We may solve the free problem over the given time interval. We recall that we have used finite differences to discretize in space (but finite elements can be used as well in more complicated settings), and the underlying solve command solves the system of ODEs by means of some Runge-Kutta scheme.
+
+[tspan,Ysolution] = solve(Dyn);
+figure
+surf(Ysolution)
+
+Having solved the free dynamics, we are now in a position to solve the optimal control problem:
+
+YT = 0.8 + 0*xline';
+beta = dx^4;
+Psi  = @(T,Y) dx*(YT - Y).'*(YT - Y);
+L    = @(t,Y,U)  dx*(YT - Y).'*(YT - Y) + ...
+                 beta*dx*0.5*alpha*(U.'*U);
+OCP = Pontryagin(Dyn,Psi,L);
+U0 = -ones(Dyn.Nt,Dyn.ControlDimension);
+U0 = GradientMethod(OCP,U0,'Graphs',true,'EachIter',2,'DescentAlgorithm',@AdaptativeDescent)
+
 
 References:
 
@@ -486,16 +876,21 @@ Archive of Numerical Software, vol. 3, 2015.
 
 [2] Patrick E. Farrell, David A. Ham, Simon W. Funke and Marie E. Rognes (2013). Automated derivation of the adjoint of high-level transient finite element programs, SIAM Journal on Scientific Computing 35.4, pp. C369-C393. doi:10.1137/120873558. arXiv:1204.5577
 
-[3] Simon W. Funke and Patrick E. Farrell (2013). A framework for automated PDE-constrained optimisation, submitted. arXiv:1302.3894
+[3] Figalli A. (2018), Free boundary regularity in obstacle problems 
+Journées EDP 2018, to appear.
 
-[4] M. Hintermüller and I. Kopacka. A smooth penalty approach and a nonlinear multigrid algorithm for elliptic MPECs. Computational Optimization and Applications, 50(1):111–145, 2011. URL: http://dx.doi.org/10.1007/s10589-009-9307-9.
+[4] Figalli, A. (2018), Regularity of interfaces in phase transitions via obstacle problems 
+Proceedings ICM 2018, to appear.
 
-[5] Borjan Geshkovski (2018). Obstacle Problems: Theory and Applications. Master Thesis.
+[5] Colombo M. and Spolaor, L. and Velichkov, B. (2018), On the asymptotic behavior of the solutions to parabolic variational inequalities, ArXiV preprint.
 
-[6] Christopher Meyer, Andreas Rademacher, W. Wollner. Adaptive Optimal Control of the Obstacle Problem.
-SIAM J. Scientific Computing, 2015.
+[6] Borjan Geshkovski (2018). Obstacle Problems: Theory and Applications. Master Thesis.
 
-[7] D. Kinderlehrer and G. Stampacchia. An introduction to variational inequalities and their applications. Volume 31 of Classics in Applied Mathematics. SIAM, 2000.
+[7] Hintermüller M. and Kopacka I., A smooth penalty approach and a nonlinear multigrid algorithm for elliptic MPECs. Computational Optimization and Applications, 50(1):111–145, 2011.
+
+[8] D. Kinderlehrer and G. Stampacchia. An introduction to variational inequalities and their applications. Volume 31 of Classics in Applied Mathematics. SIAM, 2000.
+
+[9] DyCon-Toolbox, https://deustotech.github.io/dycon-toolbox-documentation/.
 
 </description>
         <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
@@ -1707,231 +2102,6 @@ Fields, Vol. 8, No. 3,4 (2018), pp. 935-964.
         <category>tutorial</category>
         
         <category>WP03</category>
-        
-      </item>
-    
-      <item>
-        <title>Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL</title>
-        <description>A sample result
-
-
-
-This video describes an optimal control steering red dots(evaders) to the position $(4,4)$, which is calculated by IpOpt with AMPL. See the post explaining IpOpt and AMPL for detailed description.
-
-The guidance-by-repulsion model
-
-Let $u_{ei}$ and $u_{dj}$ be the positions of the evaders $(i=1,\ldots,N)$ and drivers $(j=1,\ldots,M)$, respectively, in ${\mathbb R}^2$. We consider the following ODE system:
-
-
-
-
-
-
-
-where $\kappa_j(t)$ is the control interface and the interaction functions are given by
-
-
-
-In the dynamics, the evaders always get forced from all of the drivers, while the drivers wants to keep a stable distance ($f_d(1)-f_e(1)=0$). By choosing proper $\kappa_j(t)$, we wants to steer the evaders into a predetermined region.
-
-The objective of the control is given by the cost function with the fixed final time $t_f&amp;gt;0$,
-
-
-
-where $\delta_1$ is a regularization coefficient, $0.1$ in this post.
-
-AMPL code for solving the optimal control problem
-
-Let us explain an AMPL code step by step. First, we need to set relative parameters.
-# GBR_fixedtime.mod
-
-# This file solves the Guidance-by-repulsion model with 2 drivers and 16 evaders to 
-
-# the target point [4;4] in a fixed final time T=10.
-
-# Define the parameters of the problem
-
-param pi      = 3.141592653589793238462643; 
-
-param Nt      = 100;      # number of discretized points in time
-
-param M_sqrt  = 4;        # sqrt of Number of evaders
-
-param M_e     = M_sqrt^2; # Number of evaders
-
-param M_d     = 2;        # Number of drivers
-
-param T       = 10;
-
-param M_kappa = 5;        # Bound on the control
-
-# Target point
-
-param uf1 = 4;
-param uf2 = 4;
-
-
-For the initial condition, we use uniform distribution of evaders in a square $[-1,1]\times[-1,1]$, and the drivers are in a circle with radius $5$.
-# Initial values
-
-param ue_zero {k in 1..M_e, j in 1..2};
-for {k1 in 1..M_sqrt, k2 in 1..M_sqrt, j in 1..2} {
-	let ue_zero[M_sqrt*(k1-1)+k2,1] := ((k1-1)/(M_sqrt-1))*2-1;
-	let ue_zero[M_sqrt*(k1-1)+k2,2] := ((k2-1)/(M_sqrt-1))*2-1;
-}
-param ud_zero {l in 1..M_d, j in 1..2};
-for {l in 1..M_d, j in 1..2} {
-	let ud_zero[l,1] := 5*cos(2*pi/M_d*(l-1));
-	let ud_zero[l,2] := 5*sin(2*pi/M_d*(l-1));
-}
-
-# State variables
-
-var ue {k in 1..M_e, i in 0..Nt, j in 1..2};
-var ve {k in 1..M_e, i in 0..Nt, j in 1..2};
-var ud {l in 1..M_d, i in 0..Nt, j in 1..2};
-var vd {l in 1..M_d, i in 0..Nt, j in 1..2};
-var uec {i in 0..Nt, j in 1..2} = 1/M_e*(sum {k in 1..M_e} (ue[k,i,j]));
-
-# initialize
-
-subject to ue_init {k in 1..M_e, j in 1..2} : ue[k,0,j] = ue_zero[k,j];
-subject to ud_init {l in 1..M_d, j in 1..2} : ud[l,0,j] = ud_zero[l,j];
-subject to vd_init {k in 1..M_e, j in 1..2} : ve[k,0,j] = 0;
-subject to ve_init {l in 1..M_d, j in 1..2} : vd[l,0,j] = 0;  
-let {k in 1..M_e, i in 0..Nt, j in 1..2} ue[k,i,j] := ue_zero[k,j];
-let {l in 1..M_d, i in 0..Nt, j in 1..2} ud[l,i,j] := ud_zero[l,j];
-let {k in 1..M_e, i in 0..Nt, j in 1..2} ve[k,i,j] := 0;
-let {l in 1..M_d, i in 0..Nt, j in 1..2} vd[l,i,j] := 0;   
-
-For the initial guess, we also put the initial data for the whole timeline. If we don’t specify this, then the default values are zero, which can make redundant errors or iterations.
-
-Now, we define the controls and cost.
-# The control function
-
-var kappa {l in 1..M_d, i in 0..Nt}, default 2.8;  
-subject to kappa_bounds {l in 1..M_d, i in 0..Nt} : -M_kappa &amp;lt;= kappa[l,i] &amp;lt;= M_kappa;
-# initial guess on control
-
-let {l in 1..M_d, i in 0..Nt} kappa[l,i] := 2.8;
-
-# The cost function
-
-minimize cost: 
- 1/M_e*(sum {k in 1..M_e} ((ue[k,Nt+1,1]-uf1)^2+(ue[k,Nt+1,2]-uf2)^2)) + 0.1/M_d/(Nt+1)*( sum {l in 1..M_d, i in 0..Nt} (( kappa[l,i]^2)) );
-
-The dynamics need to be described in the form of restriction condition of states and control variables. In order to avoid divide-by-zero, we additionally put the restriction on the distance. Since our equation has unbounded interaction kernels, it is convenient to use Euler’s forward method. Backward or central method may result unexpected high velocities by closing to the infinite values.
-# Restriction on distance
-
-subject to distance {k in 1..M_e, l in 1..M_d, i in 0..Nt} :
-		(ue[k,i,1]-ud[l,i,1])^2+(ue[k,i,2]-ud[l,i,2])^2 &amp;gt;= 0.001;
-# Dynamics
-
-subject to ue_dyn {k in 1..M_e, i in 0..Nt-1, j in 1..2} :
-		(ue[k,i+1,j]-ue[k,i,j])*Nt/T = ve[k,i,j];
-subject to ud_dyn {l in 1..M_d, i in 0..Nt-1, j in 1..2} :
-		(ud[l,i+1,j]-ud[l,i,j])*Nt/T = vd[l,i,j];
-subject to ve_dyn {k in 1..M_e, i in 0..Nt-1, j in 1..2} :
-		(ve[k,i+1,j]-ve[k,i,j])*Nt/T = sum {l in 1..M_d} ( -2/((ud[l,i,1] - ue[k,i,1])^2+(ud[l,i,2] - ue[k,i,2])^2)*(ud[l,i,j] - ue[k,i,j]) )  - 2*ve[k,i,j];
-subject to vd1_dyn {l in 1..M_d, i in 0..Nt-1} :
-		(vd[l,i+1,1]-vd[l,i,1])*Nt/T = (-5.5/((ud[l,i,1] - uec[i,1])^2+(ud[l,i,2] - uec[i,2])^2)+10/(((ud[l,i,1] - uec[i,1])^2+(ud[l,i,2] - uec[i,2])^2)^2) -2)*(ud[l,i,1] - uec[i,1]) + kappa[l,i] * (-(ud[l,i,2]-uec[i,2])) - 2*vd[l,i,1];
-subject to vd2_dyn {l in 1..M_d, i in 0..Nt-1} :
-		(vd[l,i+1,2]-vd[l,i,2])*Nt/T = (-5.5/((ud[l,i,1] - uec[i,1])^2+(ud[l,i,2] - uec[i,2])^2)+10/(((ud[l,i,1] - uec[i,1])^2+(ud[l,i,2] - uec[i,2])^2)^2) -2)*(ud[l,i,2] - uec[i,2]) + kappa[l,i] * ((ud[l,i,1]-uec[i,1])) - 2*vd[l,i,2];
-
-The next step is to solve and get the output. It is convenient to describe the parameters of the problem to visualize later.
-# Solve with IpOpt
-
-option solver ipopt;
-option ipopt_options &quot;max_iter=20000 linear_solver=mumps hessian_approximation=limited-memory halt_on_ampl_error yes&quot;;
-solve;
-# Display solution
-
-printf : &quot;%24.16e\n&quot;, T;
-printf : &quot;%d\n&quot;, Nt;
-printf : &quot;%d\n&quot;, M_d;
-printf : &quot;%d\n&quot;, M_e;
-printf : &quot;%24.16e\n&quot;, uf1;
-printf : &quot;%24.16e\n&quot;, uf2;
-
-printf {l in 1..M_d, i in 0..Nt} : &quot;%24.16e\n&quot;, kappa[l,i];
-printf {k in 1..M_e, i in 0..Nt, j in 1..2} : &quot;%24.16e\n&quot;, ue[k,i,j];
-printf {l in 1..M_d, i in 0..Nt, j in 1..2} : &quot;%24.16e\n&quot;, ud[l,i,j];
-printf {k in 1..M_e, i in 0..Nt, j in 1..2} : &quot;%24.16e\n&quot;, ve[k,i,j];
-printf {l in 1..M_d, i in 0..Nt, j in 1..2} : &quot;%24.16e\n&quot;, vd[l,i,j];
-printf : &quot;End. \n&quot;;
-end;
-
-
-
-Finally, we used MATLAB to show the trajectories. After copying the result to a file ‘output.txt’, we read it with the following code.
-
-fid= fopen('output.txt','r');            % Open out.txt
-temp = fscanf(fid,'%f');
-M_d = 2; M_e = 9; index1 = 1;
-T = temp(index1); index1 = index1+1;
-Nt = temp(index1); index1 = index1+1;
-M_d = temp(index1); index1 = index1+1;
-M_e = temp(index1); index1 = index1+1;
-uf1 = temp(index1); index1 = index1+1;
-uf2 = temp(index1); index1 = index1+1; index2 = index1+M_d*(Nt+1)-1;
-kappa = temp(index1:index2); kappa = reshape(kappa, [Nt+1 M_d]); index1 = index2+1; index2 = index1+2*(Nt+1)*M_e-1;
-ue = temp(index1:index2); ue = reshape(ue, [2 Nt+1 M_e]); index1 = index2+1; index2 = index1+2*(Nt+1)*M_d-1;
-ud = temp(index1:index2); ud = reshape(ud, [2 Nt+1 M_d]); index1 = index2+1; index2 = index1+2*(Nt+1)*M_e-1;
-ve = temp(index1:index2); ve = reshape(ve, [2 Nt+1 M_e]); index1 = index2+1; index2 = index1+2*(Nt+1)*M_d-1;
-vd = temp(index1:index2); vd = reshape(vd, [2 Nt+1 M_d]); 
-index2 == length(temp)      % Check the file is properly read.
-tline = linspace(0,T,Nt+1);
-
-fclose(fid);
-
-
-%% Cost calculation
-
-u_f = [uf1;uf2];
-Final_Time = tline(end);
-Final_Position = reshape(ue(:,end,:),[2 M_e]);
-Final_cost = sum( (Final_Position(1,:) - u_f(1)).^2+(Final_Position(2,:) - u_f(2)).^2 )/M_e;
-Running_cost = 0.001*trapz(tline,mean(kappa(:,1:M_d).^2,2))/M_d;
-
-%% Visualize the trajectories
-
-f1 = figure('position', [0, 0, 1000, 400]);
-subplot(1,2,1)
-hold on
-for k = 1:M_d
-	plot(ud(1,:,k),ud(2,:,k),'b--','LineWidth',1.3);
-end
-for l = 1:M_e
-	plot(ue(1,:,l),ue(2,:,l),'r-','LineWidth',1.5);
-end
-xlabel('abscissa')
-ylabel('ordinate')
-title(['Position error = ', num2str(Final_cost)])
-grid on
-
-
-Then, one can get the following trajectories and optimal control solution.
-
-
-
-subplot(1,2,2)
-plot(tline,kappa','LineWidth',1.3);
-xlabel('Time')
-ylabel('Control \kappa(t)')
-title(['Total Time = ',num2str(tline(end)),' and running cost = ',num2str(Running_cost)])
-grid on
-
-
-
-</description>
-        <pubDate>Mon, 27 May 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/WP99-P0026</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/WP99-P0026</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP06</category>
         
       </item>
     

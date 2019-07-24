@@ -2,6 +2,26 @@
     
     
     {
+      "title"           : "Uniform exponential and polynomial stability and approximation in control of a thermoelastic model",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P0030",
+      "date"            : "2019-07-18",
+      "author"          : ["NafiriS"],
+      "description"     : "The main objective of this blog is to explain by numerical experiments the difference between exponential and polynomial stability, and this, in terms of spectral properties and energy behavior. These results are in perfect agreement with our theory.",
+      "avatar"          : ""
+    } ,
+  
+    {
+      "title"           : "Analysis, numerics and control for the obstacle problem",
+      "categories"      : ["tutorial", "WP03"],
+      "url"             : "/tutorial/wp03/WP03-P0031",
+      "date"            : "2019-07-08",
+      "author"          : ["BorjanG"],
+      "description"     : "In this tutorial, we will present and elaborate an optimal control strategy for the obstacle problem in two space dimensions using Python's FEniCS toolbox. Different meshes and obstacles are considered.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_2d.gif"
+    } ,
+  
+    {
       "title"           : "Propagation of one and two-dimensional discrete waves under finite difference approximation",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/WP99-P0023",

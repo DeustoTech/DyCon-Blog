@@ -144,6 +144,11 @@
   <!-- End Google Analytics -->
 
 
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 </head>
 
 <body>
@@ -193,6 +198,204 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;The main objective of this blog is to explain numerically the difference between exponential and polynomial decay in term of energy and spectral properties. We Show also that system with polynomial decay are very  sensitive to the choice of initial data.&lt;/p&gt;
+</code></pre></div></div>
+
+<h2 id="model-problem">Model Problem</h2>
+
+<p>We consider the numerical approximation of the following coupled thermoelastic wave models</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \label{eq1} \tag{1}  \left\{\begin{array}{llll}                       u_{tt}(x,t)- \Delta u(x,t)+\gamma\theta_x(x,t)=0\quad &in\;\Omega\times(0, \infty)\\ 		      \theta_{t}(x,t)-\Delta\theta(x,t)-\gamma u_{tx}(x,t) =0\quad &in\;\Omega\times(0, \infty)\\ 		      u(x,t)=0=\theta(x,t)\qquad &\text{on } \partial\Omega\times(0,\infty)\\ u(x,0)=u_{0}(x),\; u_{t}(x,0)=u_{1}(x),\; \theta(x,0)=\theta_{0}(x) \quad &on \;\Omega                      \end{array}                    \right. \end{equation} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \label{eq2} \tag{2}  \left\{\begin{array}{llll}                       u_{tt}(x,t)- \Delta u(x,t)+\gamma\theta(x,t)=0\quad &in\;\Omega\times(0, \infty)\\ 		      \theta_{t}(x,t)-\Delta\theta(x,t)-\gamma u_{t}(x,t) =0\quad &in\;\Omega\times(0, \infty)\\ 		      u(x,t)=0=\theta(x,t)\qquad &\text{on } \partial\Omega\times(0,\infty)\\ u(x,0)=u_{0}(x),\; u_{t}(x,0)=u_{1}(x),\; \theta(x,0)=\theta_{0}(x) \quad &on \;\Omega                      \end{array}                    \right. \end{equation} %]]></script>
+
+<p>where $u(x,t)$ is the displacement (longitudinal or transverse, depending upon the application) at position $x$ along a bounded smooth domain $\Omega\subset\mathbb{R}$ and time $t$ , and $\theta(x,t)$ is the temperature deviation from the reference temperature at position $x$ and time $t$, $u_0(x)$, $v_0(x)$ and $\theta_0(x)$ are initial data in a suitable space. The small positive constant $\gamma$ is a thermo-mechanical coupling parameter and is generally small in comparison to 1. System (\ref{eq1}) differs from system $\eqref{eq2}$ at the coupling terms, where we have replaced the strong coupling ($\gamma\theta_x$ and $\gamma u_{tx}$) by a weak coupling ($\gamma\theta$ and $\gamma u_{t}$).</p>
+
+<p>It is well known from literature that system (\ref{eq1}) and (\ref{eq2}) are respectively exponentially and polynomially stable, see [3,7] and [5,6,9].</p>
+
+<p>In this post, we will show by numerical experiments, how the coupling terms affect quantitative and qualitative properties of thermoelastic systems (\ref{eq1}) and (\ref{eq2}). These results could be found in [8,10].</p>
+
+<p>To do this, we consider a semi discretization version of both systems (\ref{eq1}) and (\ref{eq2}), obtained with finite element method, which has the following form</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq3} \tag{3}  (S_i)\left\{\begin{array}{ll}  z'_n(t)=A_{i,n} z_n(t),\quad t\geq 0,\;n\in\mathbb{N},\;i=1,2\\  z_n(0)=z_{n0},\;n\in\mathbb{N}\\ \end{array} \right. \end{equation}</script>
+
+<p>where for all $n\in\mathbb{N}$, $z_n=(u_n,v_n,\theta_n)^T$ is the semi discrete solution, $z_{n0}$ is the discretized initial data, $A_{i,n}$ the discretized dynamic and the subscript $\cdot_i$ refers to system (\ref{eq1}) and (\ref{eq2}) with</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} A_{i,n}=\left(\begin{matrix}                     0 & D_n & 0\\ 	       -D_n & 0 & -\gamma F_{i,n}\\ 		    0 & \gamma F_{i,n} & -D_n^2                    \end{matrix} \right),\quad i=1,2 \end{align} %]]></script>
+
+<p>and $F_{2,n}=I_n$,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} D_n=\left(\begin{matrix}                     1 &  & \\ 	        & \ddots &  \\ 		     &   & n                    \end{matrix} \right),\quad (F_{1,n})_{ij}=\left\{\begin{array}{ll}  -\frac{4}{\pi}\frac{ij}{i^2-j^2},\quad `i-j`=\text{odd},\\  0,\qquad\qquad\text{otherwise}. \end{array} \right. \end{align} %]]></script>
+
+<h2 id="spectral-properties-of-thermoelastic-systems">Spectral properties of thermoelastic systems</h2>
+
+<p>Figure 1 and Figure 2 show how the coupling terms affect the placement of eigenvalues of the dynamic $A_{n}$. In Figure 1, we see that a uniform distance between the eigenvalues and the imaginary axis is preserved, see Table 1. Another observation is that for fixed $n$, the eigenvalues of higher frequency modes, in particular, the one of the $n^{th}$ mode, are closer to the imaginary axis. Moreover, as the number of modes increases, these eigenvalues bend back towards the vertical line $\lambda=-\frac{\gamma^2}{2}$, a fact which has been already shown in [4]. Therefore, the corresponding spectral element approximation scheme preserves the property of exponential stability.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/taple1.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig1.png" alt="" /> Location of the complex eigenvalues of the matrix $A_{1,n}$ with the finite element method</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nx</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="n">stabexpsem</span><span class="p">(</span><span class="n">Nx</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pour n=30, d=8.940629e-04
+pour n=60, d=8.941023e-04
+pour n=90, d=8.941065e-04
+pour n=120, d=8.941075e-04
+
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/copiaRM_01.png" alt="" /></p>
+
+<p>In Figure 2, conversely to Figure 1 where a uniform distance between the eigenvalues and the imaginary axis is preserved, we observe that, as the number of modes increases, an asymptotic behaviour appears in the neighborhood of the imaginary axis at $\pm\infty$. This property is mainly related to systems with polynomial decay, see \cite{BEPS2006}.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig2.png" alt="" /> Location of the complex eigenvalues of the matrix $A_{2,n}$ with the finite</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nx</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="n">stabpolysem</span><span class="p">(</span><span class="n">Nx</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/copiaRM_02.png" alt="" /></p>
+
+<h2 id="uniform-and-polynomial-decay-of-the-energy">Uniform and polynomial decay of the energy</h2>
+
+<p>The discrete energy associated to system (\ref{eq3}) is given by</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq4} \tag{4} E_{i,n}(t)=\frac{1}{2}\sum_{j=1}^n\Big\{ \vert u_j(t)\vert^{2} + \vert v_j(t)\vert^{2}+ \vert \theta_j(t)\vert^{2}\Big\},\;i=1,2. \end{equation}</script>
+
+<p>The discrete energy $E_{1,n}$ associated to system (ref{eq1}) decays exponentially to zero, see Figure 3, in the following sense: $\exists M,\alpha$ positive constants such that</p>
+
+<script type="math/tex; mode=display">E_{1,n}(t)\leqslant Me^{-\alpha t}E_{1,n}(0),\;n\in\mathbb{N},\;t>0.</script>
+
+<p>However, the introduction of the weak coupling term in system (ref{eq1}) has changed the dynamic and consequently the behavior of energy (\ref{eq4}). In this case, we say that system (\ref{eq2}) decays polynomially to zero, see Figure 4, in the following sense: $\exists M,\alpha$ positive constants such that</p>
+
+<script type="math/tex; mode=display">E_{2,n}(t)\leqslant \frac{M}{t} \vert A_{2,n} z_{n0} \vert^2  ; n \in \mathbb{N},\;t>0.</script>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/exp.png" alt="" /> Exponential decay of $E_{1,n}(t)$</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/poly.png" alt="" /> Polynomial decay of $E_{2,n}(t)$</p>
+
+<h2 id="effect-of-smoothness-of-the-initial-data-on-the-rate-of-decay-of-energy">Effect of smoothness of the initial data on the rate of decay of energy</h2>
+
+<p>It has been shown theoretically, see [1,2], that the energy associated to system (\ref{eq2}) is very sensitive to the smoothness of its initial data. This fact, has been also observed numerically, see Figure 6. we use</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nx</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="n">FinalTime</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nb">mode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">Gamma</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="n">k</span><span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>and we consider the following initial data</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">pi</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+<span class="n">v0</span><span class="o">=</span><span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">/</span><span class="nb">pi</span><span class="p">)</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
+<span class="n">teta0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Through Figure 6, we notice that for $j = 1$, the approximate energy $E_{2,n}(t)$ decays to zero as the time $t$ increases. Moreover, we observe that the decay rate depends strongly on $j$. That is, when $j$ increases, initial data are very oscillating. We say in this case that the rate of decay of the discrete energy $E_{2,n}(t)$ is very sensitive to the choice of the initial data. However, the behavior of the energy assosiated to system (\ref{eq1}) remains indifferent to the smoothness of initial data when $n\to\infty$, see Figure 5.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig5.png" alt="" />  Exponential decay of $E_{1,n}(t)$</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig6.png" alt="" />  Polynomial decay of $E_{2,n}(t)$</p>
+
+<p>To obtain the previous figures, one need only to execute the following</p>
+
+<p>script:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">Et</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_effect_exp</span><span class="p">(</span><span class="n">FinalTime</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="nb">mode</span><span class="p">,</span><span class="n">Gamma</span><span class="p">);</span>
+<span class="c1">%%</span>
+<span class="n">AniThermalDisplacement</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">Et</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Operation terminated by user during matlab.graphics.shape.internal.Button
+
+
+In matlab.graphics.controls.AxesToolbarButton
+
+In matlab.ui.controls.ToolbarStateButton
+
+In matlab.graphics.controls.ToolbarController.createToolbarButton
+
+In matlab.graphics.controls.ToolbarController.createToolbarButton
+
+In matlab.graphics.controls.ToolbarController.getDefaultToolbar
+
+In
+matlab.graphics.interaction.internal.UnifiedAxesInteractions.processQueuedDefaultInteractionInitialization
+
+In matlab.graphics.controls.ToolbarController.doPostUpdateFcn
+
+In AniThermalDisplacement (line 99)
+    pause(0.05)
+
+In ./imgs-matlab/copiaRM (line 199)
+AniThermalDisplacement(u,v,theta,Et)
+
+In evalmxdom&gt;instrumentAndRun (line 109)
+text = evalc(evalstr);
+
+In evalmxdom (line 21)
+[data,text,laste] =
+instrumentAndRun(file,cellBoundaries,imageDir,imagePrefix,options);
+
+In publish
+
+In publishreadme (line 78)
+mdfile   = publish(tmpfile, mdOpt);
+
+In examples2blog (line 31)
+    publishreadme('copiaRM',path_folder,false)
+ 
+
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/copiaRM_03.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/copiaRM_04.png" alt="" /></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">Et</span><span class="p">]</span> <span class="o">=</span> <span class="n">p1energyfem1</span><span class="p">(</span><span class="n">FinalTime</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="nb">mode</span><span class="p">,</span><span class="n">Gamma</span><span class="p">);</span>
+<span class="c1">%%</span>
+<span class="n">AniThermalDisplacement</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">Et</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Undefined function 'p1energyfem1' for input arguments of type 'double'.
+
+Error in ./imgs-matlab/copiaRM (line 201)
+[u,v,theta,Et] = p1energyfem1(FinalTime,dt,Nx,mode,Gamma);
+
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<p>[1] A. B' atkai, K.J. Engel, J. Pr"uss and R. Schnaubelt, Polynomial stability of operator semigroups, Math. Nachr. 279, pp.</p>
+
+<p>[2] A. Borichev and Y. Tomilov, Optimal polynomial decay of functions and operator semigroups, Math. Ann., 347(2), pp.455-478, 2010.</p>
+
+<p>[3] S. W. Hansen, Exponential energy decay in a linear thermoelastic rod. J. Math. Anal. Appli.,167, pp. 429-442, 1992.</p>
+
+<p>[4] F.A. Khodja, A. Benabdallah, and D. Teniou, Stability of coupled systems, Abstr. Appl. Anal. Volume 1, Number 3, 327-340, 1996.</p>
+
+<p>[5] F. A. Khodja, A. Benabdallah and D. Teniou, Dynamical stabilizers and coupled systems}, ESAIM Proceeding,2, pp. 253-262, 1997.</p>
+
+<p>[6] F. A. Khodja, A. Bader and A. Benabdallah, Dynamic stabilization of systems via decoupling techniques, ESAIM: COCV,4,</p>
+
+<p>[7] Z. Liu and S. Zheng, Exponential stability of semigroup associated with thermoelastic system, Quart. Appl. Math, 51, pp.535-545, 1993.</p>
+
+<p>[8] Z. Y. Liu and S. Zheng, Uniform exponential stability and approximation in control of a thermoelastic system, SIAM J. Control Optim. 32, pp. 1226-1246, 1994.</p>
+
+<p>[9] Z. Liu and B. Rao, Characterization of polynomial decay rate for the solution of linear evolution equation. Zeitschrift  angewandte Mathematik und Physik ZAMP,56, pp. 630-644, 2005.</p>
+
+<p>[10] L. Maniar and S. Nafiri, Approximation and uniform polynomial stability of C_0-semigroups,ESAIM: COCV 22, pp. 208-235, 2016.</p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h1 id="the-model"&gt;The model&lt;/h1&gt;
 </code></pre></div></div>
 
@@ -419,223 +622,433 @@ In the uncontrolled case, the balancing device does not act. In the controlled c
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2 id="asda"&gt;asda&lt;/h2&gt;
 
 
-&lt;p&gt;&lt;img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/output.gif" alt="" /&gt;&lt;/p&gt;
+&lt;p&gt;In this tutorial, we present some aspects of the obstacle problem in the stationary (elliptic) and the evolutionary (parabolic) setting by means of numerical simulations, performed in &lt;code class="highlighter-rouge"&gt;FEniCS&lt;/code&gt; and &lt;code class="highlighter-rouge"&gt;Matlab&lt;/code&gt;.&lt;/p&gt;
 </code></pre></div></div>
-<p><center>A sample state of the parabolic obstacle problem.</center></p>
 
-<p>In this tutorial, we will present how to numerically solve and implement optimal control strategies for the elliptic and parabolic obstacle problems using the <code class="highlighter-rouge">FEniCS</code> Finite Element toolbox and the <code class="highlighter-rouge">dolfin-adjoint</code> optimization package [1, 2, 3].</p>
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/obstaclepb_1d.png" width="1000px" />
+</center>
+<center> Figure 1. The solution (blue) of the one-dimensional elliptic obstacle problem is superharmonic (concave down) and matches derivatives with the obstacle (black). 
+</center>
 
-<h2 id="mathematical-formulation"><em>Mathematical formulation</em></h2>
+<h2 id="1-mathematical-formulation"><em>1. Mathematical formulation</em></h2>
 
-<p>Fix $\Omega \subset \mathbb{R}^2$ and an obstacle $\psi \in H^2(\Omega)$.  Denote by $K_\psi$ the convex subset of $H^1_0(\Omega)$ consisting of all functions $\geq \psi(x)$.</p>
+<h3 id="11-elliptic-problem">1.1. Elliptic problem</h3>
+<p>Let $\Omega \subset \mathbb{R}^d$ be open, regular and bounded, let $\psi \in H^2(\Omega)$ (the <em>obstacle</em>) and $g \in H^1(\Omega)$ (boundary data) with $\psi \leq g$ on $\partial \Omega$ be given. We consider the functional</p>
 
-<p>The elliptic obstacle problem takes the form: find $y \in K_\psi$ such that</p>
+<script type="math/tex; mode=display">\mathcal{F}_{\text{OB}}(u):= \frac12 \int_\Omega |\nabla u|^2 dx - \int_\Omega fu \, dx</script>
 
-<script type="math/tex; mode=display">(\nabla y, \nabla v-y)_{L^2(\Omega)} \geq  (f+u, v-y)_{L^2(\Omega)} \quad \forall v \in K_\psi.</script>
+<p>where $f \in L^2(\Omega)$ is given, and the closed convex set</p>
 
-<p>Here $f \in L^2(\Omega)$ is a given auxiliary forcing (may be $0$) and $u \in L^2(\Omega)$ represents the control.</p>
+<script type="math/tex; mode=display">\mathcal{K}^g_{\text{OB}} := \{ u \in H^1(\Omega): u - g \in H^1_0(\Omega), \, u \geq \psi \, \text{ in } \, \Omega  \}.</script>
 
-<p>Similarly, the parabolic problem reads: find $y \in L^2(0, T; K_\psi) \cap H^1(0, T; L^2(\Omega))$ such that</p>
+<p>The <strong>classical obstacle problem</strong> can be written as</p>
 
-<script type="math/tex; mode=display">(y_t(t) v-y(t) )_{L^2(\Omega)}+ (\nabla y(t), \nabla (v-y(t)) )_{L^2(\Omega)} \geq  (f+u(t), v-y(t))_{L^2(\Omega)} \quad \forall v \in K_\psi</script>
+<script type="math/tex; mode=display">\min_{u \in \mathcal{K}^g_{\text{OB}}} \mathcal{F}_{\text{OB}}(u)</script>
 
-<p>for $t \in (0, T)$, and $y(0, \cdot) = y_0$. Once again, $f$ designates an auxiliary forcing and $u = u(t,x)$ the control, which may now be time-dependent.</p>
+<p>and admits a unique minimizer $\phi \in \mathcal{K}^g_{\text{OB}}$, which is also a solution of the <strong>variational inequality</strong></p>
 
-<p>We will be interested in minimizing the tracking-type functional</p>
+<script type="math/tex; mode=display">\nabla \mathcal{F}_{\text{OB}}(\phi) \cdot (v-\phi) \geq 0 \quad \text{ for every } \quad v \in \mathcal{K}^g_{\text{OB}}.</script>
 
-<script type="math/tex; mode=display">J(u, y) = \frac12 \| y - y_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|_{L^2(\Omega)}^2</script>
+<p>The terminology “<em>obstacle problem</em>” comes from the physical origin of the model $-$ the solution $\phi$ represents the equilibrium position of an elastic membrane, which is constrained to lie above an obstacle (given by the graph of the function $\psi$).</p>
 
-<p>over all controls $u$ where $y$ is the associated solution to the elliptic problem and $y_d \in L^2(\Omega)$ is the target, and similarly</p>
+<p><strong>Notation:</strong>  The notation</p>
 
-<script type="math/tex; mode=display">J(u, y) = \frac12 \| y-y_d\|_{L^2(0, T; \Omega)}^2 + \frac{\delta}{2} \| u \|_{L^2(0, T; \Omega)}^2</script>
+<script type="math/tex; mode=display">\nabla \mathcal{F}_{\text{OB}}(\phi)\cdot\zeta</script>
 
-<p>for the parabolic case, where $y_d$ may be a time-dependent target. In both functionals, $\delta&gt;0$ is a small parameter which filters controls of large norm (Tikhonov regularization).</p>
+<p>designates the Gateaux derivative ($L^2$-gradient) of the functional ${F}_{\text{OB}}$ at the point $\phi$ in the direction $\zeta$; in occurence,</p>
 
-<h2 id="the-elliptic-problem"><em>The elliptic problem</em></h2>
+<script type="math/tex; mode=display">\nabla \mathcal{F}_{\text{OB}}(\phi)\cdot\zeta = (\nabla \phi, \nabla \zeta)_{L^2(\Omega)}-(f, \zeta)_{L^2(\Omega)}-(g,\zeta)_{L^2(\partial \Omega)}</script>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/state.png" alt="" />
-<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/control.png" alt="" /></p>
+<p>Most of the regularity theory for the obstacle problem has been developed for the model case $\Delta \psi=-1$. We refer to [3,4] for a detailed presentation. 
+For simplicity of the presentation, let us thus assume for a moment that $f \equiv -1$ and $\psi \equiv 0$. Choosing appropriate test functions bring us from the variational inequality for $\phi$ to</p>
 
-<center>Preview of the obtained optimal state and control.</center>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+\Delta \phi = 1 	&\text{ in }  \{\phi>0\}  \\
+\phi \geq 0 &\text{ in } \Omega \\
+\phi = |\nabla \phi| = 0 &\text{ on } \partial \{\phi>0\} \\
+\phi = g &\text{ on } \partial \Omega.
+\end{cases} %]]></script>
 
-<p>We concentrate a large part of the numerical implementation on the elliptic problem, as it may be transferred to the parabolic problem by time-stepping. Both of the above problems admit a unique solution [4, 5]. Nevertheless, there are some difficulties to be considered when solving the problem numerically, namely because the problems are not differentiable (the solution map for the obstacle problem is only Lipschitz continuous [6]). Following [4], we mend this issues in the next section by penalizing, a common approach for solving variational inequalities.</p>
+<p>The set ${ \phi=0 }$ is called <em>contact set</em>, while $\partial { \phi&gt;0 }$ is the <em>free boundary</em>.</p>
 
-<p>We use the approximation</p>
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/esol_matlab.png" width="600px" />
+<center> The solution $\phi$ to the elliptic obstacle problem just above. </center>
+</center>
 
-<script type="math/tex; mode=display">(\nabla y, \nabla v)_{L^2(\Omega)} + \frac{1}{\epsilon} (\max(y-\psi, 0), v)_{L^2(\Omega)} = (f+u, v)_{L^2(\Omega)}</script>
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Remark:</strong> $\quad$At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have $</td>
+      <td>\nabla (\phi-\psi)</td>
+      <td>=0$ along the boundary.</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>for all $v$ where $\epsilon&gt;0$ is the penalty parameter. It yields solutions which converge to the solution of the variational inequality as $\epsilon\rightarrow 0$ [7]. In fact, this is the de facto strategy for proving the well-posedness of the obstacle problem (in both settings).
-To apply a gradient-based optimisation method, we need differentiabilty, thus the non-smooth max operator is replaced by a differentiable ($C^1$) approximation.</p>
+<h3 id="12-parabolic-problem">1.2. Parabolic problem</h3>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/plot_max.png" alt="" /></p>
+<p>The parabolic counterpart onsists in finding $u \in H^1(]0, +\infty[; L^2(\Omega))\cap L^2(]0,+\infty[; H^2(\Omega) \cap \mathcal{K}^g_{\text{OB}})$ satisfying</p>
 
-<center> Regularization of the penalty function. </center>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	\big(\, u'(t), v-u(t) \big)_{L^2(\Omega)} + 
+	\nabla \mathcal{F}_{\text{OB}}(u(t))\cdot (v-u(t)) \geq 0 &\text{ for every } v \in \mathcal{K}^g_{\text{OB}}, \, t>0 \\
+	u(0, x) = u_0 \in \mathcal{K}^g_{\text{OB}}.
+\end{cases} %]]></script>
 
-<p>While we may treat complex geometries and obstacles using the <code class="highlighter-rouge">FEniCS</code> toolbox, we restrict ourselves to $\Omega = [-2,2]^2$ and the obstacle $\psi(x) = (1-x^2)\chi_{B_1}$ in this tutorial.</p>
+<p>The name “<em>parabolic obstacle problem</em>” for the above system <strong>may be misleading</strong>. 
+While the mathematical formulation is similar, the physical interpretation of the elliptic and parabolic problem is different. In the parabolic setting, seeing $\psi$ as a physical obstacle in space is not correct. Rather, one should interpret $\psi$ as a <em>barrier</em> for the temperature $u$. More accurately, we are dealing with a parabolic variational inequality with an obstacle-type constraint.</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/obstacle.png" alt="" />
-<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/target.png" alt="" /></p>
+<p>The function $\psi$ may be time-dependent, but for simplicity we omit this case.</p>
 
-<center>The obstacle and the target profile.</center>
+<center>
+<table>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_dome.gif" width="600px" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/steady_dome.png" width="600px" /></th>
+</tr>
+</table>
+</center>
+<center> Figure 2. Here $\psi(x)=3*\sqrt{(1-x^2)}$ in $(-1,1)$ (black) is a barrier for the evolving solution (blue). The initial data coincides with $\psi$ on (-1.5, 1.5). We observe that the contact set $\{ u = \psi \}$ changes (gets smaller) as time grows. There is also matching of normal derivatives on the contact points (i.e. the free boundary). 
+Finally, the solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) for large time, as seen below.   </center>
 
-<p>In the elliptic case, the target is given by $y_d(x) = \frac12(\cos(x)+\cos(y))$.</p>
+<p>For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with <strong>two boundary conditions</strong> at the free boundary</p>
 
-<h3 id="implementation">Implementation</h3>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	u_t - \Delta u = -1 &\text{ in } \quad \{ u(t)>0\} \times ]0, +\infty[ \\
+	u \geq 0 &\text{ in } \quad \Omega \times ]0, +\infty[ \\
+	u = |\nabla u| = 0 &\text{ on } \quad \partial \{ u(t)>0 \} \times ]0, +\infty[\\
+	u = g &\text{ on } \quad  \partial \Omega \times ]0, +\infty[ \\
+	u = u_0 &\text{ on } \quad \Omega \times \{ t = 0\}
+\end{cases} %]]></script>
 
-<p>We begin by importing the necessary libraries. The <code class="highlighter-rouge">fenics</code> module contains all of the necessary finite element tools for the space discretization of PDEs. The syntax is symbolic and one uses the pre-defined FEniCS objects, including <code class="highlighter-rouge">FunctionSpace</code> (for the finite element space), <code class="highlighter-rouge">Function</code> (for the unknown state and control) etc.
-The <code class="highlighter-rouge">dolfin_adjoint</code> module contains the library wherein the adjoint optimization methodology is fully automatized (using automatic differentiation) provided the forward model.</p>
+<p>This is an overdetermined problem, which means that the <em>free boundary/the contact set ${u=0}$ has to change with time</em> to ensure that both BC hold for every time. The evolution of the contact set may be observed in the numerics of Figures 2,3,4.</p>
+
+<p><strong>Remark:</strong> $\quad$
+As for the elliptic problem, solving the above parabolic problem is different to just solving the heat equation for $u$ in a subdomain of $\Omega$ and setting $u$ elsewhere, with a Dirichlet boundary condition. Indeed, solving the latter problem does not guarantee that we would have $|\nabla u|= 0$ along the boundary.</p>
+
+<p><strong>Remark:</strong> $\quad$
+While in Figure 2 the contact set is shrinking does not disappear, it may happen that the contact set vanishes (depending on the magnitude of the boundary data $g$, the support of the initial data $u_0$, and if present, the source term $f$).</p>
+
+<h3 id="13-relationship-between-both-problems">1.3. Relationship between both problems</h3>
+
+<p>In the recent paper [5], it is shown that the solution $u(t)$ to the parabolic variational inequality converges to the solution $\phi$ of the elliptic probelem in $H^1(\Omega)$ norm as $t\rightarrow \infty$ with exponential rate. This is done by means of new techniques including a so-called constrained Lojaseiwicz inequality.</p>
+
+<p>We may observe this convergence numerically in Figures 3 and 4. In both cases, we work in the ball $B_2$, with boundary data $g\equiv 0.8$, barrier $\psi\equiv 0$ and 
+initial datum supported outside $B_{1.5}$.</p>
+
+<p>The one-dimensional case:</p>
+<table>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_0.gif" width="600px" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/steady_0.png" width="600px" /></th>
+</tr>
+</table>
+
+<center>Figure 3. The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. </center>
+
+<p>The two-dimensional case:</p>
+<center>
+<table>
+<tr>
+<th><video style="text-align:center" controls="" width="110%">  <source src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_2d.mp4" type="video/mp4" /></video></th>
+<th><img style="padding-bottom: 5px;" src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/steady_2d.png" width="99%" /></th>
+</tr>
+</table>
+
+
+</center>
+<center>Figure 4. We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  </center>
+
+<h2 id="2-numerical-implementation">2. <em>Numerical implementation</em></h2>
+
+<h3 id="21-possible-strategies">2.1. Possible strategies</h3>
+
+<p>A common approach for proving the well-posedness and $W^{2,p}$ regularity for variational inequalities is a technique called penalization, which consists of approximating by a sequence of semilinear equations [8]. For any $\epsilon&gt;0$, we will consider</p>
+
+<script type="math/tex; mode=display">u' - \Delta u + \frac{1}{\epsilon} (u-\psi)_{-} = f \quad \text{ in } \quad \Omega \times ]0,\infty[</script>
+
+<p>to approximate the parabolic problem, and remove $u’$ and time dependence for the elliptic one. As $\epsilon\rightarrow0$, the solution $u_\epsilon$ of the above equation converges to the variational inequality.  Here</p>
+
+<script type="math/tex; mode=display">\beta_\epsilon(u) = \frac{1}{\epsilon}(u)_- = \frac{1}{\epsilon}\min \{u, 0 \}</script>
+
+<p>may be replaced by another penalty function, for instance $\beta_\epsilon(u) = -\exp(-u/\epsilon)$.</p>
+
+<p>The approximated problem is relatively simple to implement numerically. We may use finite elements (say $P1$ elements) to discretize in space, and time-stepping (Euler implicit for instance) to discretize in time.</p>
+
+<p>There are other ways to solve the variational inequality after discretizing in space and time (using one’s favorite metood). One which is popular in the literature for the elliptic problem is the <em>primal dual active set</em> method, which we will present in a future post.</p>
+
+<h3 id="22-code">2.2. Code</h3>
+
+<h4 id="i-elliptic-problem">i). Elliptic problem.</h4>
+
+<p>Let us start by solving the two-dimensional elliptic problem from Figure 4.</p>
+
+<p>The <code class="highlighter-rouge">fenics</code> module [1] contains all of the necessary finite element tools for the space discretization of PDEs.</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fenics</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">fenics_adjoint</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">obstacles</span> <span class="kn">import</span> <span class="n">dome</span>
+<span class="kn">from</span> <span class="nn">mshr</span> <span class="kn">import</span> <span class="n">mesh</span>
 </code></pre></div></div>
+<p>It is advantageous to regularize the “kink” appearing in penalty function (the negative part of a function) in view of using a Newton method for solving the nonlinear problem</p>
 
-<p>We define the smooth approximation of the max.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">smoothmax</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">smoothmax</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span> 
 	<span class="k">return</span> <span class="n">conditional</span><span class="p">(</span><span class="n">gt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="p">),</span> <span class="n">r</span><span class="o">-</span><span class="n">eps</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">conditional</span><span class="p">(</span><span class="n">lt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">eps</span><span class="p">)))</span>
 </code></pre></div></div>
+<p>We mesh the domain $B_2$.</p>
 
-<p>We mesh the domain $[-2,2]^2$ in $16384$ elements.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mesh</span> <span class="o">=</span> <span class="n">RectangleMesh</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mesh</span> <span class="o">=</span> <span class="n">generate_mesh</span><span class="p">(</span><span class="n">Circle</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">25</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V = Vh).</p>
+<p>$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V).</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">V</span> <span class="o">=</span> <span class="n">FunctionSpace</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="s">"CG"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"State"</span><span class="p">)</span>
-<span class="n">u</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"Control"</span><span class="p">)</span>
-<span class="n">w</span> <span class="o">=</span> <span class="n">TestFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
-<span class="n">psi</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">dome</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">V</span><span class="p">)</span>
-<span class="n">f</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>		
-<span class="n">alpha</span><span class="p">,</span> <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-6</span>
-<span class="n">yd</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">Expression</span><span class="p">(</span><span class="s">"0.5*(cos(x[0])+cos(x[1]))"</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">V</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">TestFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>		
+<span class="n">eps</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">))</span>
 </code></pre></div></div>
 
-<p>Using the symbolic expressions of <code class="highlighter-rouge">FEniCS</code>, we define the variational formulation of the penalized PDE:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bc</span> <span class="o">=</span> <span class="n">DirichletBC</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s">"on_boundary"</span><span class="p">)</span>
-<span class="n">F</span> <span class="o">=</span> <span class="n">inner</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">grad</span><span class="p">(</span><span class="n">w</span><span class="p">))</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">eps</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">smoothmax</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="o">+</span><span class="n">psi</span><span class="p">),</span> <span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="n">inner</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="n">u</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span>
-<span class="n">solve</span><span class="p">(</span><span class="n">F</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bcs</span><span class="o">=</span><span class="n">bc</span><span class="p">)</span>
+<p>Using the symbolic expressions of <code class="highlighter-rouge">FEniCS</code>, we define the variational formulation of the penalized PDE, which we write in the form $F(w)=0$:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bc</span> <span class="o">=</span> <span class="n">DirichletBC</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s">"on_boundary"</span><span class="p">)</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">grad</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">eps</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">smoothmax</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="o">+</span><span class="n">psi</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="n">f</span><span class="o">*</span><span class="n">v</span><span class="o">*</span><span class="n">dx</span>
 </code></pre></div></div>
 
-<p>A “tape” of the forward model is built. This tape is used to drive the optimization by repeatedly solving the forward model and the adjoint model for varying control inputs. Since the problem is nonlinear, a Newton method is used by the command <code class="highlighter-rouge">solve</code>.</p>
+<p>We solve the nonliner problem with the command <code class="highlighter-rouge">solve</code>, which makes use of a Newton method to solve the nonlinear equation $F(w)=0$.</p>
 
-<p>We finish by defining the objective functional to be minimized:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">solve</span><span class="p">(</span><span class="n">F</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">bcs</span><span class="o">=</span><span class="n">bc</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We visualise in <code class="highlighter-rouge">ParaView</code> by storing the solution in .vtk format using:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vtkel = File("output/el.pvd")
+vtkel &lt;&lt; w
+</code></pre></div></div>
+
+<h4 id="ii-parabolic-problem">ii). Parabolic problem.</h4>
+
+<p>We set $T=2$, use $100$ subdivisions and set</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="mi">100</span>
+</code></pre></div></div>
+
+<p>This part only differs by the presence of a time-loop. We define the initial datum in a separate class:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">indata</span><span class="p">(</span><span class="n">Expression</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mf">1.95</span><span class="p">:</span>
+			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">elif</span> <span class="mf">1.95</span> <span class="o">&lt;=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mf">1.95</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="mf">1.95</span><span class="p">)</span><span class="o">*</span><span class="mf">0.8</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.8</span>
+</code></pre></div></div>
+
+<p>Repeating as in the elliptic case up to defining the variational form, we now set the inital datum (interpolating the expression onto the FEM space) and time:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">un</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">indata</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">V</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+<p>We set up the time loop:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vtksol = File("output/popsol.pvd")
+for n in range(num_steps):
+    t+=dt
+    solve(F==0, u, bcs=bc)
+    vtksol &lt;&lt; (u, t)
+    un.assign(u) 
+</code></pre></div></div>
+
+<h2 id="optimal-control"><em>Optimal Control</em></h2>
+
+<p>We will now briefly present the implementation of an optimal control strategy for the elliptic and parabolic problems. We will make use of the penalized problems where $\epsilon&gt;0$ is small (of the order $10^{-8}$). This strategy has been succesfully applied in [8].</p>
+
+<h3 id="31-elliptic-problem">3.1. Elliptic problem</h3>
+
+<p>Given a target $\phi_d$ and a regularization parameter $\delta&gt;0$ (we usually use $\delta = 10^{-2}$), we seek to minimize</p>
+
+<script type="math/tex; mode=display">J(u) = \frac12 \|\phi-\phi_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|_{L^2(\Omega)}</script>
+
+<p>subject to</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	-\Delta \phi + \frac{1}{\epsilon} (\phi-\psi)_- = f+u &\text{ in } \Omega \\
+	\phi = g &\text{ on } \partial \Omega.
+\end{cases} %]]></script>
+
+<p>For simplicity of the presentation, we will consider</p>
+
+<script type="math/tex; mode=display">f\equiv-1</script>
+
+<script type="math/tex; mode=display">g\equiv0\</script>
+
+<script type="math/tex; mode=display">\psi(x) = \sqrt{(1-|x|^2)_+}</script>
+
+<p>on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$.</p>
+
+<p>The uncontrolled solution of the elliptic obstacle problem in this case is:</p>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/freesteady.png" width="600px" />
+</center>
+
+<p>The <code class="highlighter-rouge">FEniCS</code> optimization code will have the effect of obtaining the following results.</p>
+
+<table>
+<tr>
+	<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/optimalstate_dome.png" width="600px" />
+	</th>
+	<th>
+	<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/dome_obstacle.png" width="600px" />
+	</th>
+</tr>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/target_dome.png" width="600px" />
+</th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/optimalcontrol_dome.png" width="600px" />
+</th>
+</tr>
+</table>
+
+<p>&lt;/center&gt;</p>
+
+<center>
+
+
+</center>
+<center>Figure. The optimal state (top left) may be seen to satisfy the obstacle constraint, and takes the shape of the target (bottom left). </center>
+
+<p>Let us present the numerical implementation. After importing the <code class="highlighter-rouge">dolfin_adjoint</code> optimization module [2], we make use of the code for simulating the uncontrolled problem. A “tape” of the forward model is built. This tape is used to drive the optimization by repeatedly solving the forward model and the adjoint model for varying control inputs.</p>
+
+<p>Defining the objective functional to be minimized:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">delta</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">)</span>
-<span class="n">j</span> <span class="o">=</span> <span class="n">assemble</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">yd</span><span class="p">,</span> <span class="n">y</span><span class="o">-</span><span class="n">yd</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">+</span> <span class="n">delta</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>	
+<span class="n">j</span> <span class="o">=</span> <span class="n">assemble</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">w</span><span class="o">-</span><span class="n">wd</span><span class="p">,</span> <span class="n">w</span><span class="o">-</span><span class="n">wd</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">+</span> <span class="n">delta</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>	
 <span class="n">m</span> <span class="o">=</span> <span class="n">Control</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Writing the state $y$ as the output of the solution map corresponding to the input $m$, one sees that the objective functional depends only on the control:</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">J</span> <span class="o">=</span> <span class="n">ReducedFunctional</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>									
 </code></pre></div></div>
 
-<p>We run the optimization (the default solver is the Broyden–Fletcher–Goldfarb–Shanno (L-BFGS-B), but a wide selection of methods is available):</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u_opt</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">"maxiter"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s">"gtol"</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="s">"ftol"</span><span class="p">:</span> <span class="mf">1e-100</span><span class="p">})</span>
+<p>We run the optimization, based on a conjugate-gradient method:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u_opt</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">"method"</span><span class="o">=</span><span class="s">"CG"</span><span class="p">})</span>
 </code></pre></div></div>
 
 <p>The tape is modified such that the initial guess for y (to be used in the Newton solver in the forward problem) is set to y_opt.</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_opt</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">block_variable</span><span class="o">.</span><span class="n">saved_output</span>
 <span class="n">Control</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_opt</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>We postprocess using <code class="highlighter-rouge">Paraview</code>.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">psipvd</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s">"elliptic/psi.pvd"</span><span class="p">)</span>
-<span class="n">ypvd</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s">"elliptic/y_opt.pvd"</span><span class="p">)</span>
-<span class="n">upvd</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s">"elliptic/u_opt.pvd"</span><span class="p">)</span>
-<span class="n">ydpvd</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s">"elliptic/yd.pvd"</span><span class="p">)</span>
-
-<span class="n">ypvd</span> <span class="o">&lt;&lt;</span> <span class="n">y_opt</span>
-<span class="n">upvd</span> <span class="o">&lt;&lt;</span> <span class="n">u_opt</span>
-<span class="n">ydpvd</span> <span class="o">&lt;&lt;</span> <span class="n">yd</span>
-<span class="n">psipvd</span> <span class="o">&lt;&lt;</span> <span class="n">psi</span>
-</code></pre></div></div>
-
-<p>The following figures allow us to conclude that the optimal state does indeed satisfy the obstacle constraint.</p>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/side.png" alt="" />
-<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/above.png" alt="" /></p>
-
 <p>The algorithm converged after 8 iterations, and the value of the functional at the final iteration is $0.0967$.</p>
 
-<h2 id="the-parabolic-problem"><em>The parabolic problem</em></h2>
+<h3 id="32-the-parabolic-problem">3.2. The parabolic problem</h3>
 
-<h3 id="implementation-1">Implementation</h3>
+<p>Given a final time $T&gt;0$, a target $u_d$ and a regularization parameter $\delta&gt;0$, we seek to minimize</p>
 
-<p>We only sketch the important steps, and the full code may be found in the attached files. The same penalization function is used, thus the penalized problem reduces to a parametrized semilinear heat equation. Following the same meshing and element setting as above, we define the required data and parameters.</p>
+<script type="math/tex; mode=display">J(u) = \frac12 \|u(T)-u_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| v \|_{L^2(\Omega)}</script>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">Expression</span><span class="p">(</span><span class="s">"1-(-0.3*t+0.85)*(x[0]*x[0]+x[1]*x[1])"</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">degree</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">T</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<p>subject to</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	u'-\Delta u + \frac{1}{\epsilon} (u)_- = f+v &\text{ in } \Omega \times (0, T) \\
+	u = g &\text{ on } \partial \Omega \times (0, T) \\
+	u = u_0 &\text{ in } \Omega \times \{ t = 0 \}
+\end{cases} %]]></script>
+
+<p>For simplicity of the presentation, we will consider the same setting as in Figure 3, namely $f\equiv-1\,$,  $g\equiv0.8\,$, on the domain $\Omega = [-2,2]$. The target temperature is $u_d(x) = 0.8$. This would correspond to “melting”, as this target is never equal to zero, thus has no contact set. We would thus expect the action of the control $v$ to lift-up $u$ from $0$ and thus the contact set (and free boundary) to vanish.</p>
+
+<p>We appeal to <code class="highlighter-rouge">DyCon-Toolbox</code> [9] for the numerical implementation of this problem. <code class="highlighter-rouge">DyCon-Toolbox</code> is an efficient and easy to use solver for nonlinear control problems.</p>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/ocpop.gif" width="900px" />
+<center>The optimal state (left, red), starting from an initial datum with a non-empty contact set (left, blue) and the optimal control (red, right). </center>
+</center>
+
+<p>The action and magnitude of the control ensures that the solution to the parabolic problem will lift-off from the initial contact set. 
+For comparison, we recall that the uncontroled free dynamics have a very different behavior:</p>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_0.gif" width="600px" />
+</center>
+
+<p>We begin by symbolically defining the time variable:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">t</span>
 </code></pre></div></div>
 
-<p>We will store the control as a <code class="highlighter-rouge">Python</code> dictionary to keep the time ordered.
-For each time, the control $u(t)$ will be a function.</p>
+<p>We discretize the interval $[-2, 2]$:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">xf</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">xline</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">xf</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">xline</span> <span class="o">=</span> <span class="n">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+<p>We define symbolically (as in <code class="highlighter-rouge">FEniCS</code>) the state vector $Y$ and control vector $U$:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Y</span> <span class="o">=</span> <span class="n">SymsVector</span><span class="p">(</span><span class="s">'y'</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">SymsVector</span><span class="p">(</span><span class="s">'u'</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+</code></pre></div></div>
+<p>We discretize by finite differences, and define the semilinear penalty term:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">;</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">;</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">FDLaplacian</span><span class="p">(</span><span class="n">xline</span><span class="p">);</span>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ctrls</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(),</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
-<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">T</span><span class="p">:</span>
-	<span class="n">ctrls</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
-	<span class="n">t</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+<span class="n">F</span>  <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="n">NonLinearTerm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">alpha</span><span class="p">);</span>
+<span class="n">dF</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="n">DiffNonLinearTerm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">alpha</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>As the problem is more complex, it is convenient to build a solver for the forward problem. Given a control, we solve the parabolic obstacle problem and also construct the tracking part of the functional using the computed state.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">solve_parabolic</span><span class="p">(</span><span class="n">ctrls</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
-	<span class="o">...</span>
-	<span class="n">y_n</span> <span class="o">=</span> <span class="n">Expression</span><span class="p">(</span><span class="s">"1-0.85*(x[0]*x[0]+x[1]*x[1])"</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-	<span class="n">y_n</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">y_n</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+<p>We may define the parabolic problem to be solved.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dx</span> <span class="o">=</span> <span class="n">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">xline</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">Y_t</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">Y</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">F</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">U</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">[</span><span class="mf">0.8</span><span class="p">;</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="mf">0.8</span><span class="p">];</span>
+<span class="n">Dyn</span> <span class="o">=</span> <span class="n">pde</span><span class="p">(</span><span class="n">Y_t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">);</span>
+</code></pre></div></div>
+<p>We set the mesh, and other relevant parameters such as the final time and initial data. We consider the same data as in the free problem.</p>
 
-	<span class="n">F</span> <span class="o">=</span> <span class="n">y</span><span class="o">*</span><span class="n">v</span><span class="o">*</span><span class="n">dx</span> <span class="o">+</span> <span class="n">nu</span><span class="o">*</span><span class="n">dt</span><span class="o">*</span><span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">grad</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="n">dt</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">dot</span><span class="p">(</span><span class="n">smoothmax</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="o">+</span><span class="n">psi</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="p">(</span><span class="n">y_n</span> <span class="o">+</span> <span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="mf">0.1</span><span class="p">))</span><span class="o">*</span><span class="n">v</span><span class="o">*</span><span class="n">dx</span>
-	<span class="n">bc</span> <span class="o">=</span> <span class="n">DirichletBC</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s">"on_boundary"</span><span class="p">)</span>	
-
-	<span class="n">t</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
-	<span class="n">j</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span><span class="o">*</span><span class="n">assemble</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">yd</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
-	<span class="o">...</span>
-	<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">T</span><span class="p">:</span>
-		<span class="n">f</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">ctrls</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
-		<span class="n">data</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">t</span>
-		<span class="n">yd</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">interpolate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">V</span><span class="p">))</span>
-		<span class="n">solve</span><span class="p">(</span><span class="n">F</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bcs</span><span class="o">=</span><span class="n">bc</span><span class="p">)</span>
-		<span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="n">T</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
-			<span class="n">weight</span> <span class="o">=</span> <span class="mf">0.5</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="n">weight</span> <span class="o">=</span> <span class="mi">1</span>
-		<span class="n">j</span> <span class="o">+=</span> <span class="n">weight</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span><span class="o">*</span><span class="n">assemble</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">yd</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
-		<span class="n">vtk_sol</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-		<span class="n">vtk_data</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">yd</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-		<span class="n">t</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
-	<span class="k">return</span> <span class="n">y</span><span class="p">,</span> <span class="n">yd</span><span class="p">,</span> <span class="n">j</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">mesh</span>   <span class="o">=</span> <span class="n">xline</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">Solver</span> <span class="o">=</span> <span class="o">@</span><span class="n">ode23</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">Nt</span>     <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">FinalTime</span>        <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">InitialConditionFcn</span><span class="p">(</span><span class="n">xline</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>We set the tape.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">epsilon</span><span class="p">,</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">),</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">)</span>					
-<span class="n">y</span><span class="p">,</span> <span class="n">yd</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">solve_parabolic</span><span class="p">(</span><span class="n">ctrls</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+<p>We now compute the necessary Jacobian matrices.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">Control</span><span class="o">.</span><span class="n">Num</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">Num</span>   <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">dF</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>We build the objective functional.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">reg_u</span> <span class="o">=</span> <span class="n">delta</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">fb</span><span class="o">-</span><span class="n">fa</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">dx</span> <span class="k">for</span> <span class="n">fb</span><span class="p">,</span> <span class="n">fa</span> <span class="ow">in</span>
-	<span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">ctrls</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">1</span><span class="p">:],</span> <span class="nb">list</span><span class="p">(</span><span class="n">ctrls</span><span class="o">.</span><span class="n">values</span><span class="p">())[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])])</span>
-<span class="n">J</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="n">assemble</span><span class="p">(</span><span class="n">reg_u</span><span class="p">)</span>
-<span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="n">Control</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ctrls</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
-<span class="n">rf</span> <span class="o">=</span> <span class="n">ReducedFunctional</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+<p>We may solve the free problem over the given time interval. We recall that we have used finite differences to discretize in space (but finite elements can be used as well in more complicated settings), and the underlying solve command solves the system of ODEs by means of some Runge-Kutta scheme.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">tspan</span><span class="p">,</span><span class="n">Ysolution</span><span class="p">]</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">Dyn</span><span class="p">);</span>
+<span class="n">figure</span>
+<span class="n">surf</span><span class="p">(</span><span class="n">Ysolution</span><span class="p">)</span>
 </code></pre></div></div>
+<p>Having solved the free dynamics, we are now in a position to solve the optimal control problem:</p>
 
-<p>We now run the optimization procedure.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">opt_ctrls</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">rf</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">YT</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">+</span> <span class="mi">0</span><span class="o">*</span><span class="n">xline</span><span class="o">'</span><span class="p">;</span>
+<span class="nb">beta</span> <span class="o">=</span> <span class="n">dx</span><span class="o">^</span><span class="mi">4</span><span class="p">;</span>
+<span class="n">Psi</span>  <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span> <span class="n">dx</span><span class="o">*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">);</span>
+<span class="n">L</span>    <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">)</span>  <span class="n">dx</span><span class="o">*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="k">...</span>
+                 <span class="nb">beta</span><span class="o">*</span><span class="n">dx</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">U</span><span class="o">.'*</span><span class="n">U</span><span class="p">);</span>
+<span class="n">OCP</span> <span class="o">=</span> <span class="n">Pontryagin</span><span class="p">(</span><span class="n">Dyn</span><span class="p">,</span><span class="n">Psi</span><span class="p">,</span><span class="n">L</span><span class="p">);</span>
+<span class="n">U0</span> <span class="o">=</span> <span class="o">-</span><span class="nb">ones</span><span class="p">(</span><span class="n">Dyn</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span><span class="n">Dyn</span><span class="o">.</span><span class="n">ControlDimension</span><span class="p">);</span>
+<span class="n">U0</span> <span class="o">=</span> <span class="n">GradientMethod</span><span class="p">(</span><span class="n">OCP</span><span class="p">,</span><span class="n">U0</span><span class="p">,</span><span class="s1">'Graphs'</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="s1">'EachIter'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'DescentAlgorithm'</span><span class="p">,</span><span class="o">@</span><span class="n">AdaptativeDescent</span><span class="p">)</span>
 </code></pre></div></div>
-
-<p>Once the optimal control computed, we solve the forward problem with it to obtain the optimal state.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dico</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
-<span class="n">s</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="mi">0</span>
-<span class="k">while</span> <span class="n">s</span> <span class="o">&lt;=</span> <span class="n">T</span><span class="p">:</span>
-	<span class="n">dico</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt_ctrls</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-	<span class="n">i</span><span class="o">+=</span> <span class="mi">1</span>
-	<span class="n">s</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
-<span class="n">new_y</span><span class="p">,</span> <span class="n">new_yd</span><span class="p">,</span> <span class="n">new_j</span> <span class="o">=</span> <span class="n">solve_parabolic</span><span class="p">(</span><span class="n">dico</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/surface.gif" alt="" />
-<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/target.gif" alt="" /></p>
-
-<center> The state and the target, tracked throughout. </center>
-
-<p>The constraint $y\geq \psi$ is satisfied, which is why the optimal state does not lift off sharply.</p>
 
 <h2 id="references">References:</h2>
 
@@ -645,16 +1058,21 @@ Archive of Numerical Software, vol. 3, 2015.</p>
 
 <p>[2] Patrick E. Farrell, David A. Ham, Simon W. Funke and Marie E. Rognes (2013). Automated derivation of the adjoint of high-level transient finite element programs, SIAM Journal on Scientific Computing 35.4, pp. C369-C393. doi:10.1137/120873558. arXiv:1204.5577</p>
 
-<p>[3] Simon W. Funke and Patrick E. Farrell (2013). A framework for automated PDE-constrained optimisation, submitted. arXiv:1302.3894</p>
+<p>[3] Figalli A. (2018), Free boundary regularity in obstacle problems 
+Journées EDP 2018, to appear.</p>
 
-<p>[4] M. Hintermüller and I. Kopacka. A smooth penalty approach and a nonlinear multigrid algorithm for elliptic MPECs. Computational Optimization and Applications, 50(1):111–145, 2011. URL: http://dx.doi.org/10.1007/s10589-009-9307-9.</p>
+<p>[4] Figalli, A. (2018), Regularity of interfaces in phase transitions via obstacle problems 
+Proceedings ICM 2018, to appear.</p>
 
-<p>[5] Borjan Geshkovski (2018). Obstacle Problems: Theory and Applications. Master Thesis.</p>
+<p>[5] Colombo M. and Spolaor, L. and Velichkov, B. (2018), On the asymptotic behavior of the solutions to parabolic variational inequalities, ArXiV preprint.</p>
 
-<p>[6] Christopher Meyer, Andreas Rademacher, W. Wollner. Adaptive Optimal Control of the Obstacle Problem.
-SIAM J. Scientific Computing, 2015.</p>
+<p>[6] Borjan Geshkovski (2018). Obstacle Problems: Theory and Applications. Master Thesis.</p>
 
-<p>[7] D. Kinderlehrer and G. Stampacchia. An introduction to variational inequalities and their applications. Volume 31 of Classics in Applied Mathematics. SIAM, 2000.</p>
+<p>[7] Hintermüller M. and Kopacka I., A smooth penalty approach and a nonlinear multigrid algorithm for elliptic MPECs. Computational Optimization and Applications, 50(1):111–145, 2011.</p>
+
+<p>[8] D. Kinderlehrer and G. Stampacchia. An introduction to variational inequalities and their applications. Volume 31 of Classics in Applied Mathematics. SIAM, 2000.</p>
+
+<p>[9] DyCon-Toolbox, https://deustotech.github.io/dycon-toolbox-documentation/.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In [1], we discuss several aspects of wave propagation in a computational framework. In particular, we consider the following one-dimensional wave equation&lt;/p&gt;
 </code></pre></div></div>
