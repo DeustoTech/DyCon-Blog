@@ -2,16 +2,6 @@
     
     
     {
-      "title"           : "Uniform exponential and polynomial stability and approximation in control of a thermoelastic model",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0030",
-      "date"            : "2019-07-18",
-      "author"          : ["NafiriS"],
-      "description"     : "The main objective of this blog is to explain by numerical experiments the difference between exponential and polynomial stability, and this, in terms of spectral properties and energy behavior. These results are in perfect agreement with our theory.",
-      "avatar"          : ""
-    } ,
-  
-    {
       "title"           : "Analysis, numerics and control for the obstacle problem",
       "categories"      : ["tutorial", "WP03"],
       "url"             : "/tutorial/wp03/WP03-P0031",
@@ -19,6 +9,16 @@
       "author"          : ["BorjanG"],
       "description"     : "In this tutorial, we will present and elaborate an optimal control strategy for the obstacle problem in two space dimensions using Python's FEniCS toolbox. Different meshes and obstacles are considered.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_2d.gif"
+    } ,
+  
+    {
+      "title"           : "Rotors imbalance suppression by optimal control",
+      "categories"      : ["tutorial", "WP02"],
+      "url"             : "/tutorial/wp02/P0005",
+      "date"            : "2019-07-08",
+      "author"          : ["DarioP"],
+      "description"     : "Formulation of Optimal control problem for rotor imbalance. Explanation of the code to numerically solve the problem.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0004/spindlegrinder8mod.png"
     } ,
   
     {
