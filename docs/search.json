@@ -18,7 +18,7 @@
       "date"            : "2019-07-08",
       "author"          : ["DarioP"],
       "description"     : "Formulation of Optimal control problem for rotor imbalance. Explanation of the code to numerically solve the problem.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP02/P0004/spindlegrinder8mod.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP02/P0004/main.gif"
     } ,
   
     {
@@ -224,11 +224,11 @@
     {
       "title"           : "LQR optimal control design for a coupled PDE-ODE system.",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0006",
+      "url"             : "/tutorial/wp05/P0002",
       "date"            : "2018-10-28",
       "author"          : ["BorjanG"],
       "description"     : "Stabilization of a coupled PDE-ODE system by means of a feedback LQR control.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/copiaRM_02.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0002/copiaRM_02.png"
     } ,
   
     {
@@ -374,7 +374,7 @@
     {
       "title"           : "Finite element approximation of the 1-D fractional Poisson equation",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0007",
+      "url"             : "/tutorial/wp05/P0003",
       "date"            : "2017-12-05",
       "author"          : ["UmbertoB","VictorH"],
       "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control",
@@ -384,7 +384,7 @@
     {
       "title"           : "Solving an optimal control problem arisen in ecology with AMPL",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0003",
+      "url"             : "/tutorial/wp05/P0001",
       "date"            : "2017-12-05",
       "author"          : ["JiaminZ","EnriqueZ"],
       "description"     : "We present a computational tool to solve optimal control problems for diffusion-reaction systems describing the growth and spread of populations",
