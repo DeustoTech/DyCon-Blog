@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 24 Jul 2019 13:49:23 +0200</pubDate>
-    <lastBuildDate>Wed, 24 Jul 2019 13:49:23 +0200</lastBuildDate>
+    <pubDate>Fri, 26 Jul 2019 10:18:52 +0200</pubDate>
+    <lastBuildDate>Fri, 26 Jul 2019 10:18:52 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -47,16 +47,16 @@ Figure 1 and Figure 2 show how the coupling terms affect the placement of eigenv
 
  Location of the complex eigenvalues of the matrix $A_{1,n}$ with the finite element method
 
+error
 Nx = 30;
 stabexpsem(Nx);
 
 
-pour n=30, d=8.940629e-04
-pour n=60, d=8.941023e-04
-pour n=90, d=8.941065e-04
-pour n=120, d=8.941075e-04
+Error using error
+Not enough input arguments.
 
-
+Error in tp1d0d1572_49d1_41a8_914f_f09a199a8ec3 (line 114)
+error
 
 
 
@@ -66,8 +66,6 @@ In Figure 2, conversely to Figure 1 where a uniform distance between the eigenva
 
 Nx = 30;
 stabpolysem(Nx);
-
-
 
 
 Uniform and polynomial decay of the energy
@@ -93,10 +91,10 @@ Effect of smoothness of the initial data on the rate of decay of energy
 It has been shown theoretically, see [1,2], that the energy associated to system (\ref{eq2}) is very sensitive to the smoothness of its initial data. This fact, has been also observed numerically, see Figure 6. we use
 
 Nx = 100;
-FinalTime = 50;
+FinalTime = 100;
 dt = 0.5;
 mode = 1;
-Gamma = 0.1;
+Gamma = 0.2;
 n = 100;
 k= 2;
 
@@ -120,66 +118,11 @@ To obtain the previous figures, one need only to execute the following
 script:
 
 [u,v,theta,Et] = data_effect_exp(FinalTime,dt,Nx,mode,Gamma);
-%%
-AniThermalDisplacement(u,v,theta,Et)
+%% AniThermalDisplacement(u,v,theta,Et)
 
 
-Operation terminated by user during matlab.graphics.shape.internal.Button
-
-
-In matlab.graphics.controls.AxesToolbarButton
-
-In matlab.ui.controls.ToolbarStateButton
-
-In matlab.graphics.controls.ToolbarController.createToolbarButton
-
-In matlab.graphics.controls.ToolbarController.createToolbarButton
-
-In matlab.graphics.controls.ToolbarController.getDefaultToolbar
-
-In
-matlab.graphics.interaction.internal.UnifiedAxesInteractions.processQueuedDefaultInteractionInitialization
-
-In matlab.graphics.controls.ToolbarController.doPostUpdateFcn
-
-In AniThermalDisplacement (line 99)
-    pause(0.05)
-
-In ./imgs-matlab/copiaRM (line 199)
-AniThermalDisplacement(u,v,theta,Et)
-
-In evalmxdom&amp;gt;instrumentAndRun (line 109)
-text = evalc(evalstr);
-
-In evalmxdom (line 21)
-[data,text,laste] =
-instrumentAndRun(file,cellBoundaries,imageDir,imagePrefix,options);
-
-In publish
-
-In publishreadme (line 78)
-mdfile   = publish(tmpfile, mdOpt);
-
-In examples2blog (line 31)
-    publishreadme('copiaRM',path_folder,false)
- 
-
-
-
-
-
-
-
-[u,v,theta,Et] = p1energyfem1(FinalTime,dt,Nx,mode,Gamma);
-%%
-AniThermalDisplacement(u,v,theta,Et)
-
-
-Undefined function 'p1energyfem1' for input arguments of type 'double'.
-
-Error in ./imgs-matlab/copiaRM (line 201)
-[u,v,theta,Et] = p1energyfem1(FinalTime,dt,Nx,mode,Gamma);
-
+[u,v,theta,Et] = p1energyfem(FinalTime,dt,Nx,mode,Gamma);
+%% AniThermalDisplacement(u,v,theta,Et)
 
 
 References
@@ -282,15 +225,11 @@ The set ${ \phi=0 }$ is called contact set, while $\partial { \phi&amp;gt;0 }$ i
  The solution $\phi$ to the elliptic obstacle problem just above. 
 
 
+Remark: At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have
 
-  
-    
-      Remark: $\quad$At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have $
-      \nabla (\phi-\psi)
-      =0$ along the boundary.
-    
-  
 
+
+along the boundary.
 
 1.2. Parabolic problem
 
