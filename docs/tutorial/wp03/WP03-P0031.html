@@ -337,29 +337,32 @@ For simplicity of the presentation, let us thus assume for a moment that $f \equ
 <center>
 <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/esol_matlab.png" width="600px" />
 <center> The solution $\phi$ to the elliptic obstacle problem just above. </center>
-</center>
 
-<p><strong>Remark:</strong> At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have</p>
 
-<script type="math/tex; mode=display">|\nabla (\phi-\psi)| =0</script>
+__Remark:__ At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have 
 
-<p>along the boundary.</p>
+$$|\nabla (\phi-\psi)| =0$$
 
-<h3 id="12-parabolic-problem">1.2. Parabolic problem</h3>
+ along the boundary.
 
-<p>The parabolic counterpart onsists in finding $u \in H^1(]0, +\infty[; L^2(\Omega))\cap L^2(]0,+\infty[; H^2(\Omega) \cap \mathcal{K}^g_{\text{OB}})$ satisfying</p>
+### 1.2. Parabolic problem
 
-<script type="math/tex; mode=display">% <![CDATA[
+The parabolic counterpart onsists in finding $u \in H^1(]0, +\infty[; L^2(\Omega))\cap L^2(]0,+\infty[; H^2(\Omega) \cap \mathcal{K}^g_{\text{OB}})$ satisfying
+
+$$
+
 \begin{cases}
 	\big(\, u'(t), v-u(t) \big)_{L^2(\Omega)} + 
-	\nabla \mathcal{F}_{\text{OB}}(u(t))\cdot (v-u(t)) \geq 0 &\text{ for every } v \in \mathcal{K}^g_{\text{OB}}, \, t>0 \\
+	\nabla \mathcal{F}_{\text{OB}}(u(t))\cdot (v-u(t)) \geq 0 &amp;\text{ for every } v \in \mathcal{K}^g_{\text{OB}}, \, t&gt;0 \\
 	u(0, x) = u_0 \in \mathcal{K}^g_{\text{OB}}.
-\end{cases} %]]></script>
+\end{cases}
 
-<p>The name “<em>parabolic obstacle problem</em>” for the above system <strong>may be misleading</strong>. 
-While the mathematical formulation is similar, the physical interpretation of the elliptic and parabolic problem is different. In the parabolic setting, seeing $\psi$ as a physical obstacle in space is not correct. Rather, one should interpret $\psi$ as a <em>barrier</em> for the temperature $u$. More accurately, we are dealing with a parabolic variational inequality with an obstacle-type constraint.</p>
+$$
 
-<p>The function $\psi$ may be time-dependent, but for simplicity we omit this case.</p>
+The name "_parabolic obstacle problem_" for the above system __may be misleading__. 
+While the mathematical formulation is similar, the physical interpretation of the elliptic and parabolic problem is different. In the parabolic setting, seeing $\psi$ as a physical obstacle in space is not correct. Rather, one should interpret $\psi$ as a _barrier_ for the temperature $u$. More accurately, we are dealing with a parabolic variational inequality with an obstacle-type constraint. 
+
+The function $\psi$ may be time-dependent, but for simplicity we omit this case.
 
 <center>
 <table>
@@ -374,33 +377,36 @@ While the mathematical formulation is similar, the physical interpretation of th
 <center> Figure 2. Here $\psi(x)=3*\sqrt{(1-x^2)}$ in $(-1,1)$ (black) is a barrier for the evolving solution (blue). The initial data coincides with $\psi$ on (-1.5, 1.5). We observe that the contact set $\{ u = \psi \}$ changes (gets smaller) as time grows. There is also matching of normal derivatives on the contact points (i.e. the free boundary). 
 Finally, the solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) for large time, as seen below.   </center>
 
-<p>For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with <strong>two boundary conditions</strong> at the free boundary</p>
+For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a "weak form" of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with __two boundary conditions__ at the free boundary
 
-<script type="math/tex; mode=display">% <![CDATA[
+$$
+
 \begin{cases}
-	u_t - \Delta u = -1 &\text{ in } \quad \{ u(t)>0\} \times ]0, +\infty[ \\
-	u \geq 0 &\text{ in } \quad \Omega \times ]0, +\infty[ \\
-	u = |\nabla u| = 0 &\text{ on } \quad \partial \{ u(t)>0 \} \times ]0, +\infty[\\
-	u = g &\text{ on } \quad  \partial \Omega \times ]0, +\infty[ \\
-	u = u_0 &\text{ on } \quad \Omega \times \{ t = 0\}
-\end{cases} %]]></script>
+	u_t - \Delta u = -1 &amp;\text{ in } \quad \{ u(t)&gt;0\} \times ]0, +\infty[ \\
+	u \geq 0 &amp;\text{ in } \quad \Omega \times ]0, +\infty[ \\
+	u = |\nabla u| = 0 &amp;\text{ on } \quad \partial \{ u(t)&gt;0 \} \times ]0, +\infty[\\
+	u = g &amp;\text{ on } \quad  \partial \Omega \times ]0, +\infty[ \\
+	u = u_0 &amp;\text{ on } \quad \Omega \times \{ t = 0\}
+\end{cases}
 
-<p>This is an overdetermined problem, which means that the <em>free boundary/the contact set ${u=0}$ has to change with time</em> to ensure that both BC hold for every time. The evolution of the contact set may be observed in the numerics of Figures 2,3,4.</p>
+$$
 
-<p><strong>Remark:</strong> $\quad$
-As for the elliptic problem, solving the above parabolic problem is different to just solving the heat equation for $u$ in a subdomain of $\Omega$ and setting $u$ elsewhere, with a Dirichlet boundary condition. Indeed, solving the latter problem does not guarantee that we would have $|\nabla u|= 0$ along the boundary.</p>
+This is an overdetermined problem, which means that the _free boundary/the contact set $\{u=0\}$ has to change with time_ to ensure that both BC hold for every time. The evolution of the contact set may be observed in the numerics of Figures 2,3,4.
 
-<p><strong>Remark:</strong> $\quad$
-While in Figure 2 the contact set is shrinking does not disappear, it may happen that the contact set vanishes (depending on the magnitude of the boundary data $g$, the support of the initial data $u_0$, and if present, the source term $f$).</p>
+__Remark:__ $\quad$
+As for the elliptic problem, solving the above parabolic problem is different to just solving the heat equation for $u$ in a subdomain of $\Omega$ and setting $u$ elsewhere, with a Dirichlet boundary condition. Indeed, solving the latter problem does not guarantee that we would have $|\nabla u|= 0$ along the boundary. 
 
-<h3 id="13-relationship-between-both-problems">1.3. Relationship between both problems</h3>
+__Remark:__ $\quad$
+While in Figure 2 the contact set is shrinking does not disappear, it may happen that the contact set vanishes (depending on the magnitude of the boundary data $g$, the support of the initial data $u_0$, and if present, the source term $f$).
 
-<p>In the recent paper [5], it is shown that the solution $u(t)$ to the parabolic variational inequality converges to the solution $\phi$ of the elliptic probelem in $H^1(\Omega)$ norm as $t\rightarrow \infty$ with exponential rate. This is done by means of new techniques including a so-called constrained Lojaseiwicz inequality.</p>
+### 1.3. Relationship between both problems
 
-<p>We may observe this convergence numerically in Figures 3 and 4. In both cases, we work in the ball $B_2$, with boundary data $g\equiv 0.8$, barrier $\psi\equiv 0$ and 
-initial datum supported outside $B_{1.5}$.</p>
+In the recent paper [5], it is shown that the solution $u(t)$ to the parabolic variational inequality converges to the solution $\phi$ of the elliptic probelem in $H^1(\Omega)$ norm as $t\rightarrow \infty$ with exponential rate. This is done by means of new techniques including a so-called constrained Lojaseiwicz inequality. 
 
-<p>The one-dimensional case:</p>
+We may observe this convergence numerically in Figures 3 and 4. In both cases, we work in the ball $B_2$, with boundary data $g\equiv 0.8$, barrier $\psi\equiv 0$ and 
+initial datum supported outside $B_{1.5}$.
+
+The one-dimensional case: 
 <table>
 <tr>
 <th>
@@ -412,7 +418,7 @@ initial datum supported outside $B_{1.5}$.</p>
 
 <center>Figure 3. The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. </center>
 
-<p>The two-dimensional case:</p>
+The two-dimensional case:
 <center>
 <table>
 <tr>
@@ -425,141 +431,165 @@ initial datum supported outside $B_{1.5}$.</p>
 </center>
 <center>Figure 4. We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  </center>
 
-<h2 id="2-numerical-implementation">2. <em>Numerical implementation</em></h2>
 
-<h3 id="21-possible-strategies">2.1. Possible strategies</h3>
 
-<p>A common approach for proving the well-posedness and $W^{2,p}$ regularity for variational inequalities is a technique called penalization, which consists of approximating by a sequence of semilinear equations [8]. For any $\epsilon&gt;0$, we will consider</p>
+## 2. _Numerical implementation_
 
-<script type="math/tex; mode=display">u' - \Delta u + \frac{1}{\epsilon} (u-\psi)_{-} = f \quad \text{ in } \quad \Omega \times ]0,\infty[</script>
+### 2.1. Possible strategies
 
-<p>to approximate the parabolic problem, and remove $u’$ and time dependence for the elliptic one. As $\epsilon\rightarrow0$, the solution $u_\epsilon$ of the above equation converges to the variational inequality.  Here</p>
+A common approach for proving the well-posedness and $W^{2,p}$ regularity for variational inequalities is a technique called penalization, which consists of approximating by a sequence of semilinear equations [8]. For any $\epsilon&gt;0$, we will consider 
 
-<script type="math/tex; mode=display">\beta_\epsilon(u) = \frac{1}{\epsilon}(u)_- = \frac{1}{\epsilon}\min \{u, 0 \}</script>
+$$
 
-<p>may be replaced by another penalty function, for instance $\beta_\epsilon(u) = -\exp(-u/\epsilon)$.</p>
+u' - \Delta u + \frac{1}{\epsilon} (u-\psi)_{-} = f \quad \text{ in } \quad \Omega \times ]0,\infty[ 
 
-<p>The approximated problem is relatively simple to implement numerically. We may use finite elements (say $P1$ elements) to discretize in space, and time-stepping (Euler implicit for instance) to discretize in time.</p>
+$$
 
-<p>There are other ways to solve the variational inequality after discretizing in space and time (using one’s favorite metood). One which is popular in the literature for the elliptic problem is the <em>primal dual active set</em> method, which we will present in a future post.</p>
+to approximate the parabolic problem, and remove $u'$ and time dependence for the elliptic one. As $\epsilon\rightarrow0$, the solution $u_\epsilon$ of the above equation converges to the variational inequality.  Here 
 
-<h3 id="22-code">2.2. Code</h3>
+$$\beta_\epsilon(u) = \frac{1}{\epsilon}(u)_- = \frac{1}{\epsilon}\min \{u, 0 \}$$
 
-<h4 id="i-elliptic-problem">i). Elliptic problem.</h4>
+ may be replaced by another penalty function, for instance $\beta_\epsilon(u) = -\exp(-u/\epsilon)$. 
 
-<p>Let us start by solving the two-dimensional elliptic problem from Figure 4.</p>
+The approximated problem is relatively simple to implement numerically. We may use finite elements (say $P1$ elements) to discretize in space, and time-stepping (Euler implicit for instance) to discretize in time.
 
-<p>The <code class="highlighter-rouge">fenics</code> module [1] contains all of the necessary finite element tools for the space discretization of PDEs.</p>
+There are other ways to solve the variational inequality after discretizing in space and time (using one's favorite metood). One which is popular in the literature for the elliptic problem is the _primal dual active set_ method, which we will present in a future post. 
+ 
+### 2.2. Code
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fenics</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">obstacles</span> <span class="kn">import</span> <span class="n">dome</span>
-<span class="kn">from</span> <span class="nn">mshr</span> <span class="kn">import</span> <span class="n">mesh</span>
-</code></pre></div></div>
-<p>It is advantageous to regularize the “kink” appearing in penalty function (the negative part of a function) in view of using a Newton method for solving the nonlinear problem</p>
+#### i). Elliptic problem.
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">smoothmax</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span> 
-	<span class="k">return</span> <span class="n">conditional</span><span class="p">(</span><span class="n">gt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="p">),</span> <span class="n">r</span><span class="o">-</span><span class="n">eps</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">conditional</span><span class="p">(</span><span class="n">lt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">eps</span><span class="p">)))</span>
-</code></pre></div></div>
-<p>We mesh the domain $B_2$.</p>
+Let us start by solving the two-dimensional elliptic problem from Figure 4.
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mesh</span> <span class="o">=</span> <span class="n">generate_mesh</span><span class="p">(</span><span class="n">Circle</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">25</span><span class="p">)</span>
-</code></pre></div></div>
+The `fenics` module [1] contains all of the necessary finite element tools for the space discretization of PDEs. 
 
-<p>$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V).</p>
+```python
+from fenics import *
+from obstacles import dome
+from mshr import mesh
+```
+It is advantageous to regularize the "kink" appearing in penalty function (the negative part of a function) in view of using a Newton method for solving the nonlinear problem
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">V</span> <span class="o">=</span> <span class="n">FunctionSpace</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="s">"CG"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">w</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
-<span class="n">v</span> <span class="o">=</span> <span class="n">TestFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
-<span class="n">psi</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
-<span class="n">f</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>		
-<span class="n">eps</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">))</span>
-</code></pre></div></div>
+```python
+def smoothmax(r, eps=1e-4): 
+	return conditional(gt(r, eps), r-eps/2, conditional(lt(r, 0), 0, r**2/(2*eps)))
+```
+We mesh the domain $B_2$. 
 
-<p>Using the symbolic expressions of <code class="highlighter-rouge">FEniCS</code>, we define the variational formulation of the penalized PDE, which we write in the form $F(w)=0$:</p>
+```python
+mesh = generate_mesh(Circle(Point(0, 0), 2), 25)
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bc</span> <span class="o">=</span> <span class="n">DirichletBC</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s">"on_boundary"</span><span class="p">)</span>
-<span class="n">F</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">grad</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">eps</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">smoothmax</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="o">+</span><span class="n">psi</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="n">f</span><span class="o">*</span><span class="n">v</span><span class="o">*</span><span class="n">dx</span>
-</code></pre></div></div>
+$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V).
 
-<p>We solve the nonliner problem with the command <code class="highlighter-rouge">solve</code>, which makes use of a Newton method to solve the nonlinear equation $F(w)=0$.</p>
+```python
+V = FunctionSpace(mesh, "CG", 1)
+w = Function(V)
+v = TestFunction(V)
+psi = Constant(0.)
+f = Constant(-1)		
+eps = Constant(pow(10, -8))
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">solve</span><span class="p">(</span><span class="n">F</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">bcs</span><span class="o">=</span><span class="n">bc</span><span class="p">)</span>
-</code></pre></div></div>
+Using the symbolic expressions of `FEniCS`, we define the variational formulation of the penalized PDE, which we write in the form $F(w)=0$:
 
-<p>We visualise in <code class="highlighter-rouge">ParaView</code> by storing the solution in .vtk format using:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vtkel = File("output/el.pvd")
+```python
+bc = DirichletBC(V, 0.8, "on_boundary")
+F = dot(grad(w), grad(v))*dx - 1/eps*inner(smoothmax(-w+psi), v)*dx - f*v*dx
+```
+
+We solve the nonliner problem with the command `solve`, which makes use of a Newton method to solve the nonlinear equation $F(w)=0$.
+
+```python
+solve(F == 0, w, bcs=bc)
+```
+
+We visualise in `ParaView` by storing the solution in .vtk format using:
+```
+vtkel = File("output/el.pvd")
 vtkel &lt;&lt; w
-</code></pre></div></div>
+```
 
-<h4 id="ii-parabolic-problem">ii). Parabolic problem.</h4>
+#### ii). Parabolic problem.
 
-<p>We set $T=2$, use $100$ subdivisions and set</p>
+We set $T=2$, use $100$ subdivisions and set
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="mi">100</span>
-</code></pre></div></div>
+```python
+dt = T/100
+```
 
-<p>This part only differs by the presence of a time-loop. We define the initial datum in a separate class:</p>
+This part only differs by the presence of a time-loop. We define the initial datum in a separate class:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">indata</span><span class="p">(</span><span class="n">Expression</span><span class="p">):</span>
-	<span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-		<span class="k">if</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mf">1.95</span><span class="p">:</span>
-			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-		<span class="k">elif</span> <span class="mf">1.95</span> <span class="o">&lt;=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
-			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mf">1.95</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="mf">1.95</span><span class="p">)</span><span class="o">*</span><span class="mf">0.8</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.8</span>
-</code></pre></div></div>
+```python
+class indata(Expression):
+	def eval(self, value, x):
+		if sqrt(x[0]*x[0]+x[1]*x[1]) &lt;= 1.95:
+			value[0] = 0
+		elif 1.95 &lt;= sqrt(x[0]*x[0] + x[1]*x[1]) &lt;= 2:
+			value[0] = (sqrt(x[0]*x[0]+x[1]*x[1])-1.95)/(2-1.95)*0.8
+		else:
+			value[0] = 0.8
+```
 
-<p>Repeating as in the elliptic case up to defining the variational form, we now set the inital datum (interpolating the expression onto the FEM space) and time:</p>
+Repeating as in the elliptic case up to defining the variational form, we now set the inital datum (interpolating the expression onto the FEM space) and time:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">un</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">indata</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">V</span><span class="p">)</span>
-<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-</code></pre></div></div>
-<p>We set up the time loop:</p>
+```python
+un = interpolate(indata(degree=2), V)
+t = 0
+```
+We set up the time loop:
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vtksol = File("output/popsol.pvd")
-for n in range(num_steps):
-    t+=dt
-    solve(F==0, u, bcs=bc)
-    vtksol &lt;&lt; (u, t)
-    un.assign(u) 
-</code></pre></div></div>
+	vtksol = File("output/popsol.pvd")
+	for n in range(num_steps):
+        t+=dt
+        solve(F==0, u, bcs=bc)
+        vtksol &lt;&lt; (u, t)
+        un.assign(u) 
 
-<h2 id="optimal-control"><em>Optimal Control</em></h2>
+## _Optimal Control_
 
-<p>We will now briefly present the implementation of an optimal control strategy for the elliptic and parabolic problems. We will make use of the penalized problems where $\epsilon&gt;0$ is small (of the order $10^{-8}$). This strategy has been succesfully applied in [8].</p>
+We will now briefly present the implementation of an optimal control strategy for the elliptic and parabolic problems. We will make use of the penalized problems where $\epsilon&gt;0$ is small (of the order $10^{-8}$). This strategy has been succesfully applied in [8].
 
-<h3 id="31-elliptic-problem">3.1. Elliptic problem</h3>
+### 3.1. Elliptic problem
 
-<p>Given a target $\phi_d$ and a regularization parameter $\delta&gt;0$ (we usually use $\delta = 10^{-2}$), we seek to minimize</p>
+Given a target $\phi_d$ and a regularization parameter $\delta&gt;0$ (we usually use $\delta = 10^{-2}$), we seek to minimize 
 
-<script type="math/tex; mode=display">J(u) = \frac12 \|\phi-\phi_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|_{L^2(\Omega)}</script>
+$$
 
-<p>subject to</p>
+J(u) = \frac12 \|\phi-\phi_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|_{L^2(\Omega)}
 
-<script type="math/tex; mode=display">% <![CDATA[
+$$
+
+subject to
+
+$$
+
 \begin{cases}
-	-\Delta \phi + \frac{1}{\epsilon} (\phi-\psi)_- = f+u &\text{ in } \Omega \\
-	\phi = g &\text{ on } \partial \Omega.
-\end{cases} %]]></script>
+	-\Delta \phi + \frac{1}{\epsilon} (\phi-\psi)_- = f+u &amp;\text{ in } \Omega \\
+	\phi = g &amp;\text{ on } \partial \Omega.
+\end{cases}
 
-<p>For simplicity of the presentation, we will consider</p>
+$$
 
-<script type="math/tex; mode=display">f\equiv-1</script>
+For simplicity of the presentation, we will consider 
 
-<script type="math/tex; mode=display">g\equiv0\</script>
+$$f\equiv-1$$
 
-<script type="math/tex; mode=display">\psi(x) = \sqrt{(1-|x|^2)_+}</script>
+$$g\equiv0\ $$ 
 
-<p>on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$.</p>
+$$\psi(x) = \sqrt{(1-|x|^2)_+}$$
 
-<p>The uncontrolled solution of the elliptic obstacle problem in this case is:</p>
+on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$. 
+
+The uncontrolled solution of the elliptic obstacle problem in this case is:
 
 <center>
 <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/freesteady.png" width="600px" />
 </center>
 
-<p>The <code class="highlighter-rouge">FEniCS</code> optimization code will have the effect of obtaining the following results.</p>
+
+
+The `FEniCS` optimization code will have the effect of obtaining the following results.
 
 <table>
 <tr>
@@ -580,7 +610,7 @@ for n in range(num_steps):
 </tr>
 </table>
 
-<p>&lt;/center&gt;</p>
+</center>
 
 <center>
 
