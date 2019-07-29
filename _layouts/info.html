@@ -34,18 +34,6 @@
     }
   </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <script type="text/javascript">
   google.charts.load('current', {'packages':['table']});
   google.charts.setOnLoadCallback(drawTable);
@@ -70,9 +58,42 @@
 </script>
 
 
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['table']});
+  google.charts.setOnLoadCallback(drawTable);
 
+  function drawTable() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Name');
+    data.addColumn('number', 'Nº of Posts');
+    data.addColumn('date', 'Date of Last Post');
+    data.addColumn('string', 'Name of Last Post');
+
+
+    data.addRows([
+      {% assign authors = site.data.members| sort  %}
+      {%- for author in authors -%}     
+      {%-if author[1].active == "true"-%}
+      {%- else-%}
+      {%- continue -%}
+      {%- endif-%}
+      {%- assign qpost        = site.posts|where:"layout","tutorial"|where:"author",author[0] -%}
+      {%- assign lastpost     = qpost[0].date | date: '%Y,%m,%d' -%}
+      {%- assign lastpostname = qpost[0].title -%}
+
+      {%- assign npost    = qpost|size -%}
+      {%- if npost==0 -%}{% continue %}{%- endif -%}
+      ['{{author[1].name}}',  {{npost}} , new Date({{lastpost}}),'{{lastpostname}}'],
+      {% endfor %}
+    ]);
+
+    var table = new google.visualization.Table(document.getElementById('table_div_act'));
+
+    table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+  }
+</script>
 </head>
-<body>
+<body> 
     {% include nav.html %}
 <!-- Page Header -->
 <header class="intro-header">
@@ -102,6 +123,9 @@
       <hr>
       <div id="table_div"></div>
 
+      <h1> Resumen por Autor Activo</h1>
+      <hr>
+      <div id="table_div_act"></div>
 	</div>
 </div>
     {% include footer.html %}

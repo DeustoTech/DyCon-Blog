@@ -45,27 +45,3 @@ var simplemde = new SimpleMDE({ element: document.getElementById("MyID") });
 
 {% endfor %}
 
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<script src="https://api.trello.com/1/client.js?key={3a23f3aa77c478895126e5f47ea61b48}"></script>
-
-<script>
-    var myList = 'INSERT YOUR IDLIST HERE';
-
-var creationSuccess = function (data) {
-  console.log('Card created successfully.');
-  console.log(JSON.stringify(data, null, 2));
-};
-
-var newCard = {
-  name: 'New Test Card', 
-  desc: 'This is the description of our new card.',
-  // Place this card at the top of our list 
-  idList: myList,
-  pos: 'top'
-};
-
-window.Trello.post('/cards/', newCard, creationSuccess);  
-</script>

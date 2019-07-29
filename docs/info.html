@@ -216,18 +216,6 @@
     }
   </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <script type="text/javascript">
   google.charts.load('current', {'packages':['table']});
   google.charts.setOnLoadCallback(drawTable);
@@ -249,9 +237,37 @@
 </script>
 
 
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['table']});
+  google.charts.setOnLoadCallback(drawTable);
 
+  function drawTable() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Name');
+    data.addColumn('number', 'Nº of Posts');
+    data.addColumn('date', 'Date of Last Post');
+    data.addColumn('string', 'Name of Last Post');
+
+
+    data.addRows([
+      ['Borjan Geshkovski',  2 , new Date(2019,07,08),'Analysis, numerics and control for the obstacle problem'],
+      ['Dario Pighin',  2 , new Date(2019,07,08),'Rotors imbalance suppression by optimal control'],
+      ['Debayan Maity',  1 , new Date(2019,06,07),'Controllability of a Class of Infinite Dimensional Systems with Age Structure'],
+      ['Domenec Ruiz',  1 , new Date(2018,10,28),'Stabilization of a collective behavior model'],
+      ['Dongnam Ko',  2 , new Date(2019,05,27),'Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL'],
+      ['Jesus Oroya',  3 , new Date(2019,06,26),'Propagation of one and two-dimensional discrete waves under finite difference approximation'],
+      ['Liard Thibault',  1 , new Date(2019,05,24),'Reconstruction of traffic state using autonomous vehicles'],
+      ['Umberto Biccari',  9 , new Date(2019,06,26),'Propagation of one and two-dimensional discrete waves under finite difference approximation'],
+      
+    ]);
+
+    var table = new google.visualization.Table(document.getElementById('table_div_act'));
+
+    table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+  }
+</script>
 </head>
-<body>
+<body> 
     <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
@@ -1116,34 +1132,14 @@ Control of a parameter dependent system in a robust manner
 </div>
 <hr />
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
-<script src="https://api.trello.com/1/client.js?key={3a23f3aa77c478895126e5f47ea61b48}"></script>
-
-<script>
-    var myList = 'INSERT YOUR IDLIST HERE';
-
-var creationSuccess = function (data) {
-  console.log('Card created successfully.');
-  console.log(JSON.stringify(data, null, 2));
-};
-
-var newCard = {
-  name: 'New Test Card', 
-  desc: 'This is the description of our new card.',
-  // Place this card at the top of our list 
-  idList: myList,
-  pos: 'top'
-};
-
-window.Trello.post('/cards/', newCard, creationSuccess);  
-</script>
-
 
       <h1> Resumen por Autor</h1>
       <hr>
       <div id="table_div"></div>
 
+      <h1> Resumen por Autor Activo</h1>
+      <hr>
+      <div id="table_div_act"></div>
 	</div>
 </div>
     <!-- Footer -->
