@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 29 Jul 2019 11:54:03 +0200</pubDate>
-    <lastBuildDate>Mon, 29 Jul 2019 11:54:03 +0200</lastBuildDate>
+    <pubDate>Tue, 30 Jul 2019 08:47:11 +0200</pubDate>
+    <lastBuildDate>Tue, 30 Jul 2019 08:47:11 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -225,28 +225,20 @@ The set ${ \phi=0 }$ is called contact set, while $\partial { \phi&amp;gt;0 }$ i
  The solution $\phi$ to the elliptic obstacle problem just above. 
 
 
-__Remark:__ At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have 
+Remark: At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have
 
-$$|\nabla (\phi-\psi)| =0$$
 
- along the boundary.
 
-### 1.2. Parabolic problem
+along the boundary.
+
+1.2. Parabolic problem
 
 The parabolic counterpart onsists in finding $u \in H^1(]0, +\infty[; L^2(\Omega))\cap L^2(]0,+\infty[; H^2(\Omega) \cap \mathcal{K}^g_{\text{OB}})$ satisfying
 
-$$
 
-\begin{cases}
-	\big(\, u'(t), v-u(t) \big)_{L^2(\Omega)} + 
-	\nabla \mathcal{F}_{\text{OB}}(u(t))\cdot (v-u(t)) \geq 0 &amp;amp;\text{ for every } v \in \mathcal{K}^g_{\text{OB}}, \, t&amp;gt;0 \\
-	u(0, x) = u_0 \in \mathcal{K}^g_{\text{OB}}.
-\end{cases}
 
-$$
-
-The name &quot;_parabolic obstacle problem_&quot; for the above system __may be misleading__. 
-While the mathematical formulation is similar, the physical interpretation of the elliptic and parabolic problem is different. In the parabolic setting, seeing $\psi$ as a physical obstacle in space is not correct. Rather, one should interpret $\psi$ as a _barrier_ for the temperature $u$. More accurately, we are dealing with a parabolic variational inequality with an obstacle-type constraint. 
+The name “parabolic obstacle problem” for the above system may be misleading. 
+While the mathematical formulation is similar, the physical interpretation of the elliptic and parabolic problem is different. In the parabolic setting, seeing $\psi$ as a physical obstacle in space is not correct. Rather, one should interpret $\psi$ as a barrier for the temperature $u$. More accurately, we are dealing with a parabolic variational inequality with an obstacle-type constraint.
 
 The function $\psi$ may be time-dependent, but for simplicity we omit this case.
 
@@ -263,36 +255,26 @@ The function $\psi$ may be time-dependent, but for simplicity we omit this case.
  Figure 2. Here $\psi(x)=3*\sqrt{(1-x^2)}$ in $(-1,1)$ (black) is a barrier for the evolving solution (blue). The initial data coincides with $\psi$ on (-1.5, 1.5). We observe that the contact set $\{ u = \psi \}$ changes (gets smaller) as time grows. There is also matching of normal derivatives on the contact points (i.e. the free boundary). 
 Finally, the solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) for large time, as seen below.   
 
-For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a &quot;weak form&quot; of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with __two boundary conditions__ at the free boundary
+For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with two boundary conditions at the free boundary
 
-$$
 
-\begin{cases}
-	u_t - \Delta u = -1 &amp;amp;\text{ in } \quad \{ u(t)&amp;gt;0\} \times ]0, +\infty[ \\
-	u \geq 0 &amp;amp;\text{ in } \quad \Omega \times ]0, +\infty[ \\
-	u = |\nabla u| = 0 &amp;amp;\text{ on } \quad \partial \{ u(t)&amp;gt;0 \} \times ]0, +\infty[\\
-	u = g &amp;amp;\text{ on } \quad  \partial \Omega \times ]0, +\infty[ \\
-	u = u_0 &amp;amp;\text{ on } \quad \Omega \times \{ t = 0\}
-\end{cases}
 
-$$
+This is an overdetermined problem, which means that the free boundary/the contact set ${u=0}$ has to change with time to ensure that both BC hold for every time. The evolution of the contact set may be observed in the numerics of Figures 2,3,4.
 
-This is an overdetermined problem, which means that the _free boundary/the contact set $\{u=0\}$ has to change with time_ to ensure that both BC hold for every time. The evolution of the contact set may be observed in the numerics of Figures 2,3,4.
+Remark: $\quad$
+As for the elliptic problem, solving the above parabolic problem is different to just solving the heat equation for $u$ in a subdomain of $\Omega$ and setting $u$ elsewhere, with a Dirichlet boundary condition. Indeed, solving the latter problem does not guarantee that we would have $|\nabla u|= 0$ along the boundary.
 
-__Remark:__ $\quad$
-As for the elliptic problem, solving the above parabolic problem is different to just solving the heat equation for $u$ in a subdomain of $\Omega$ and setting $u$ elsewhere, with a Dirichlet boundary condition. Indeed, solving the latter problem does not guarantee that we would have $|\nabla u|= 0$ along the boundary. 
-
-__Remark:__ $\quad$
+Remark: $\quad$
 While in Figure 2 the contact set is shrinking does not disappear, it may happen that the contact set vanishes (depending on the magnitude of the boundary data $g$, the support of the initial data $u_0$, and if present, the source term $f$).
 
-### 1.3. Relationship between both problems
+1.3. Relationship between both problems
 
-In the recent paper [5], it is shown that the solution $u(t)$ to the parabolic variational inequality converges to the solution $\phi$ of the elliptic probelem in $H^1(\Omega)$ norm as $t\rightarrow \infty$ with exponential rate. This is done by means of new techniques including a so-called constrained Lojaseiwicz inequality. 
+In the recent paper [5], it is shown that the solution $u(t)$ to the parabolic variational inequality converges to the solution $\phi$ of the elliptic probelem in $H^1(\Omega)$ norm as $t\rightarrow \infty$ with exponential rate. This is done by means of new techniques including a so-called constrained Lojaseiwicz inequality.
 
 We may observe this convergence numerically in Figures 3 and 4. In both cases, we work in the ball $B_2$, with boundary data $g\equiv 0.8$, barrier $\psi\equiv 0$ and 
 initial datum supported outside $B_{1.5}$.
 
-The one-dimensional case: 
+The one-dimensional case:
 
 
 
@@ -317,96 +299,81 @@ The two-dimensional case:
 
 Figure 4. We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  
 
+2. Numerical implementation
+
+2.1. Possible strategies
+
+A common approach for proving the well-posedness and $W^{2,p}$ regularity for variational inequalities is a technique called penalization, which consists of approximating by a sequence of semilinear equations [8]. For any $\epsilon&amp;gt;0$, we will consider
 
 
-## 2. _Numerical implementation_
 
-### 2.1. Possible strategies
+to approximate the parabolic problem, and remove $u’$ and time dependence for the elliptic one. As $\epsilon\rightarrow0$, the solution $u_\epsilon$ of the above equation converges to the variational inequality.  Here
 
-A common approach for proving the well-posedness and $W^{2,p}$ regularity for variational inequalities is a technique called penalization, which consists of approximating by a sequence of semilinear equations [8]. For any $\epsilon&amp;gt;0$, we will consider 
 
-$$
 
-u' - \Delta u + \frac{1}{\epsilon} (u-\psi)_{-} = f \quad \text{ in } \quad \Omega \times ]0,\infty[ 
-
-$$
-
-to approximate the parabolic problem, and remove $u'$ and time dependence for the elliptic one. As $\epsilon\rightarrow0$, the solution $u_\epsilon$ of the above equation converges to the variational inequality.  Here 
-
-$$\beta_\epsilon(u) = \frac{1}{\epsilon}(u)_- = \frac{1}{\epsilon}\min \{u, 0 \}$$
-
- may be replaced by another penalty function, for instance $\beta_\epsilon(u) = -\exp(-u/\epsilon)$. 
+may be replaced by another penalty function, for instance $\beta_\epsilon(u) = -\exp(-u/\epsilon)$.
 
 The approximated problem is relatively simple to implement numerically. We may use finite elements (say $P1$ elements) to discretize in space, and time-stepping (Euler implicit for instance) to discretize in time.
 
-There are other ways to solve the variational inequality after discretizing in space and time (using one's favorite metood). One which is popular in the literature for the elliptic problem is the _primal dual active set_ method, which we will present in a future post. 
- 
-### 2.2. Code
+There are other ways to solve the variational inequality after discretizing in space and time (using one’s favorite metood). One which is popular in the literature for the elliptic problem is the primal dual active set method, which we will present in a future post.
 
-#### i). Elliptic problem.
+2.2. Code
+
+i). Elliptic problem.
 
 Let us start by solving the two-dimensional elliptic problem from Figure 4.
 
-The `fenics` module [1] contains all of the necessary finite element tools for the space discretization of PDEs. 
+The fenics module [1] contains all of the necessary finite element tools for the space discretization of PDEs.
 
-```python
 from fenics import *
 from obstacles import dome
 from mshr import mesh
-```
-It is advantageous to regularize the &quot;kink&quot; appearing in penalty function (the negative part of a function) in view of using a Newton method for solving the nonlinear problem
 
-```python
+It is advantageous to regularize the “kink” appearing in penalty function (the negative part of a function) in view of using a Newton method for solving the nonlinear problem
+
 def smoothmax(r, eps=1e-4): 
 	return conditional(gt(r, eps), r-eps/2, conditional(lt(r, 0), 0, r**2/(2*eps)))
-```
-We mesh the domain $B_2$. 
 
-```python
+We mesh the domain $B_2$.
+
 mesh = generate_mesh(Circle(Point(0, 0), 2), 25)
-```
+
 
 $P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V).
 
-```python
 V = FunctionSpace(mesh, &quot;CG&quot;, 1)
 w = Function(V)
 v = TestFunction(V)
 psi = Constant(0.)
 f = Constant(-1)		
 eps = Constant(pow(10, -8))
-```
 
-Using the symbolic expressions of `FEniCS`, we define the variational formulation of the penalized PDE, which we write in the form $F(w)=0$:
 
-```python
+Using the symbolic expressions of FEniCS, we define the variational formulation of the penalized PDE, which we write in the form $F(w)=0$:
+
 bc = DirichletBC(V, 0.8, &quot;on_boundary&quot;)
 F = dot(grad(w), grad(v))*dx - 1/eps*inner(smoothmax(-w+psi), v)*dx - f*v*dx
-```
 
-We solve the nonliner problem with the command `solve`, which makes use of a Newton method to solve the nonlinear equation $F(w)=0$.
 
-```python
+We solve the nonliner problem with the command solve, which makes use of a Newton method to solve the nonlinear equation $F(w)=0$.
+
 solve(F == 0, w, bcs=bc)
-```
 
-We visualise in `ParaView` by storing the solution in .vtk format using:
-```
+
+We visualise in ParaView by storing the solution in .vtk format using:
 vtkel = File(&quot;output/el.pvd&quot;)
 vtkel &amp;lt;&amp;lt; w
-```
 
-#### ii). Parabolic problem.
+
+ii). Parabolic problem.
 
 We set $T=2$, use $100$ subdivisions and set
 
-```python
 dt = T/100
-```
+
 
 This part only differs by the presence of a time-loop. We define the initial datum in a separate class:
 
-```python
 class indata(Expression):
 	def eval(self, value, x):
 		if sqrt(x[0]*x[0]+x[1]*x[1]) &amp;lt;= 1.95:
@@ -415,57 +382,46 @@ class indata(Expression):
 			value[0] = (sqrt(x[0]*x[0]+x[1]*x[1])-1.95)/(2-1.95)*0.8
 		else:
 			value[0] = 0.8
-```
+
 
 Repeating as in the elliptic case up to defining the variational form, we now set the inital datum (interpolating the expression onto the FEM space) and time:
 
-```python
 un = interpolate(indata(degree=2), V)
 t = 0
-```
+
 We set up the time loop:
 
-	vtksol = File(&quot;output/popsol.pvd&quot;)
-	for n in range(num_steps):
-        t+=dt
-        solve(F==0, u, bcs=bc)
-        vtksol &amp;lt;&amp;lt; (u, t)
-        un.assign(u) 
+vtksol = File(&quot;output/popsol.pvd&quot;)
+for n in range(num_steps):
+    t+=dt
+    solve(F==0, u, bcs=bc)
+    vtksol &amp;lt;&amp;lt; (u, t)
+    un.assign(u) 
 
-## _Optimal Control_
+
+Optimal Control
 
 We will now briefly present the implementation of an optimal control strategy for the elliptic and parabolic problems. We will make use of the penalized problems where $\epsilon&amp;gt;0$ is small (of the order $10^{-8}$). This strategy has been succesfully applied in [8].
 
-### 3.1. Elliptic problem
+3.1. Elliptic problem
 
-Given a target $\phi_d$ and a regularization parameter $\delta&amp;gt;0$ (we usually use $\delta = 10^{-2}$), we seek to minimize 
+Given a target $\phi_d$ and a regularization parameter $\delta&amp;gt;0$ (we usually use $\delta = 10^{-2}$), we seek to minimize
 
-$$
 
-J(u) = \frac12 \|\phi-\phi_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|_{L^2(\Omega)}
-
-$$
 
 subject to
 
-$$
 
-\begin{cases}
-	-\Delta \phi + \frac{1}{\epsilon} (\phi-\psi)_- = f+u &amp;amp;\text{ in } \Omega \\
-	\phi = g &amp;amp;\text{ on } \partial \Omega.
-\end{cases}
 
-$$
+For simplicity of the presentation, we will consider
 
-For simplicity of the presentation, we will consider 
 
-$$f\equiv-1$$
 
-$$g\equiv0\ $$ 
 
-$$\psi(x) = \sqrt{(1-|x|^2)_+}$$
 
-on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$. 
+
+
+on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$.
 
 The uncontrolled solution of the elliptic obstacle problem in this case is:
 
@@ -473,9 +429,7 @@ The uncontrolled solution of the elliptic obstacle problem in this case is:
 
 
 
-
-
-The `FEniCS` optimization code will have the effect of obtaining the following results.
+The FEniCS optimization code will have the effect of obtaining the following results.
 
 
 
@@ -485,8 +439,6 @@ The `FEniCS` optimization code will have the effect of obtaining the following r
 	
 	
 	
-
-
 
 
 
