@@ -22,4 +22,12 @@ DyCon Blog pretende compilar distintas simulaciones de la teoría del control.
 # MarkDown Editor
 - Visual Studio Code + Plugin "Markdown All in One"
 - Online Editors: 
-  - 
+
+
+
+
+<textarea id="MyID">
+</textarea>
+<script>
+var simplemde = new SimpleMDE({ element: document.getElementById("MyID") });
+</script>

@@ -1,0 +1,409 @@
+I"Z<h3>Featured Video</h3>
+
+<p><i>Evolution of the controls and of the state for $y^0=1$, $y^1=5$, $M=20$ and the discretization parameters $N_x=30$, $N_t=450$ in the minimal computed time $T\simeq\mathtt{0.2093}$.</i></p>
+<video style="display: block; margin: 0 auto; width: 75%;" controls="">
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/N1.ogg" type="video/ogg" />
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/N1.mp4" type="video/mp4" />
+Your browser does not support the video tag.
+</video>
+
+<h3>Introduction</h3>
+
+<p>In this short tutorial we explain how to use IpOpt in order to solve time optimal control problems. We refer to [<a href="#cite1">1</a>,<a href="#cite4">4</a>,<a href="#cite5">5</a>] for a survey on numerical methods in optimal control and how to implement them efficiently according to the context.</p>
+<h4>The tools</h4>
+<ul>
+ 	<li><a href="https://projects.coin-or.org/Ipopt" target="_blank" rel="noopener noreferrer">IpOpt</a> is an interior-point optimization routine (see <a href="#IPOPT">[6]</a>).
+Basically, it numerically solves optimisation problems of the form:                                   
+
+$$
+\begin{equation}\label{eq:P0}\tag{P0}
+			\begin{array}{cl}
+				\min &amp; f(x)\\
+				 &amp; \begin{array}{l}
+					x\in\mathbb{R}^n\, ,\\
+					g(x)\leqslant 0\, ,\\
+					h(x)=0\, .
+				\end{array}
+			\end{array}
+		\end{equation}
+
+$$
+
+IpOpt can be used together with <a href="https://www.mathworks.com/products/matlab.html" target="_blank" rel="noopener noreferrer">Matlab</a>, <a href="http://www.freefem.org" target="_blank" rel="noopener noreferrer">FreeFem++</a>...and can be used directly in <strong>.cpp</strong> codes.</li>
+ 	<li><a href="http://ampl.com/" target="_blank" rel="noopener noreferrer">AMPL</a> is an automatic differentiation and the modelling language (see <a href="#AMPL">[2]</a>). The interest of using AMPL together with IpOpt is that, the gradient of the cost function and the constraints is automatically generated. Solving problems with IpOpt and AMPL can be made online through the <a href="https://neos-server.org/neos/solvers/nco:Ipopt/AMPL.html" target="_blank" rel="noopener noreferrer">NEOS</a> solvers.</li>
+</ul>
+<h4>Solving problem (P0)</h4>
+<p>Let us write in AMPL language the problem (P0).</p>
+<pre><span style="color: green;"># The variable of the problem</span>
+<b>var</b> x {i in 1..n}
+<span style="color: green;"># The cost function to be minimized</span>
+<b>minimize</b> cost : f(x); 						 
+<span style="color: green;"># The inequality constraints</span>
+<b>subject to</b> inequality_constraints : g(x)&lt;=0;
+<span style="color: green;"> # The equality constraints</span>
+<b>subject to</b> equality_constraints: h(x)=0; 	
+<span style="color: green;"> # Set IpOpt as solver</span>
+<b>option solver</b> ipopt;						 
+<span style="color: green;"># Set options for IpOpt, such as the maximal number of iterations</span>
+<b>option</b> ipopt_options <span style="color: brown;">"max_iter=20000 linear_solver=mumps halt_on_ampl_error yes"</span>;
+<span style="color: green;"># Solve the problem</span>
+<b>solve</b>;
+<span style="color: green;"># Display the cost value</span>
+<b>printf</b> : <span style="color: brown;">"# cost = %24.16e\n"</span>, cost;		
+<b>printf</b> : <span style="color: brown;">"# Data\n"</span>;
+<span style="color: green;"># Display the optimal values of x</span>
+<b>printf</b> {i in 0..n} : <span style="color: brown;">"%24.16e\n"</span>, x[i];		
+<span style="color: green;"># Quit AMPL</span>
+<b>end</b>;										
+</pre>
+<h4>Solving a time optimal control problem with constraints</h4>
+<p>Let us now turn to a time optimal control problem.
+Given a dynamical system,</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq:1a}
+\dot{y}=f(y,u)\, ,
+\end{equation}</script>
+
+<p>some initial condition $\mathrm{y}^0\in \mathbb{R}^n$ and some terminal condition $\mathrm{y}^1\in\mathbb{R}^n$ and some bound $M&gt;0$, the aim is to find the minimal time $T\geqslant 0$ such that there exist a control $u\in L^\infty(0,T)^m$ such that,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+|u_i(t)|\leqslant M  (t\in(0,T)\ \text{a.e.}\, ,\ i\in\{1,\dots,m\}),
+\end{equation}</script>
+
+<p>and the solution $y$ of (1) satisfies the constraint,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+g(y(t))\leqslant 0 (t\in(0,T)),
+\end{equation}</script>
+
+<p>and the terminal condition,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+y(T)=\mathrm{y}^1\, ,
+\end{equation}</script>
+
+<p>where $g$ is given and define constraints of the state variable $y$. Of course to be able to solve this system, one needs to have $g(\mathrm{y}^0)\leqslant0$ and $g(\mathrm{y}^1)\leqslant0$.
+The above optimal control problem, can be recast as an optimisation problem under constraints similar to (P0). More precisely, it is</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{cl}
+	\min & T\\
+	 & \begin{array}{l}
+		u\in L^\infty(0,T)^M\, ,\\
+		\dot{y}=f(y,u)\, , y(0)=\mathrm{y}^0\, ,\\
+		y(T)=\mathrm{y}^1\, ,\\
+		g(y(t))\leqslant 0 (t\in(0,T)).
+	\end{array}
+\end{array} %]]></script>
+
+<p>In order to handle numerically, this problem, we will use a time discretization. Let us explain it with the explicit Euler method. But any other time discretization can be used.
+Fix some parameter $N_t\in\mathbb{N}^*$ (the number of time steps) and for $T&gt;0$ given, define $y_i$ the estimation of $y(iT/N_t)$ for $i\in{0,\dots,N_t}$. The explicit Euler scheme, gives the relation,</p>
+
+<script type="math/tex; mode=display">y_{i+1}=y_i+\frac{T}{N_t}f(y_i,u_i)\, ,</script>
+
+<p>with $u_i\simeq u(iT/N_t)$. Then the state and control constraints are replaced by:</p>
+
+<script type="math/tex; mode=display">g(y_i)\leqslant 0 \text{and} |u_i|\leqslant M\, .</script>
+
+<p>Consequently, in discretized version, we end up with a finite dimensional control problem under constraints, whose AMPL version is:</p>
+<pre><span style="color: green;"># Define the parameters of the problem</span>
+<span style="color: green;"># number of time step discretization points</span>
+<b>param</b> Nt=100;
+<span style="color: green;"># bound on the control</span>
+<b>param</b> M =1;   
+<span style="color: green;"># initial condition</span>
+<b>param</b> y0=1;
+<span style="color: green;"># final condition</span>
+<b>param</b> y1=0;
+
+<span style="color: green;"># Define variables of the problem</span>
+<b>var</b> y {i in 0..Nt};
+<span style="color: green;"># The control shall be in [-M,M]</span>
+<b>var</b> u {i in 0..Nt} &gt;=M, &lt;=M;  
+<span style="color: green;"># The time T shall be nonnegative</span>
+<b>var</b> T &gt;=0;                    
+
+<span style="color: green;"># The cost function is the time T</span>
+<b>minimize</b> cost: T;
+<span style="color: green;"># Set the constraints</span>
+<span style="color: green;"># y is solution of (1)</span>
+<b>subject to</b> y_dyn {i in 0..Nt-1} :                        
+		y[i+1]=y[i]+T/Nt*f(y[i],u[i]);
+<span style="color: green;"># y(0)=y0</span>
+<b>subject to</b> y_init : y[0] =y0;                            
+<span style="color: green;"># y(T)=y1</span>
+<b>subject to</b> y_end  : y[Nt]=y1;                            
+<span style="color: green;"># g(y(t))&lt;=0</span>
+<b>subject to</b> state_constraint {i in 1..Nt-1} : g(y[i])&lt;=0;
+
+<span style="color: green;"># Solve with IpOpt</span>
+<b>option solver</b> ipopt;
+<b>option</b> ipopt_options <span style="color: brown;">"max_iter=20000 linear_solver=mumps halt_on_ampl_error yes"</span>;
+<b>solve</b>;
+<span style="color: green;"># Display solution</span>
+<b>printf</b> : <span style="color: brown;">"# T = %24.16e\n"</span>, T;
+<b>printf</b> : <span style="color: brown;">"# Nt = %d\n"</span>, Nt;
+<b>printf</b> : <span style="color: brown;">"# Data\n"</span>;
+<b>printf</b> {i in 0..Nt} : <span style="color: brown;">" %24.16e\n"</span>, u[i];
+<b>printf</b> {i in 0..Nt} : <span style="color: brown;">" %24.16e\n"</span>, y[i];
+<b>end</b>;
+</pre>
+<h4>Application to the constrained heat equation</h4>
+<p>Now we can turn to the control of the heat equation with nonnegative state constraint.
+To this end, we consider the controlled 1D heat equation with Neumann boundary control.</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2}
+\left\{
+\begin{array}{r@{\>}l@{}l}
+\dot{y}(t,x)  =\partial_x^2y(t,x)  (t>0\, ,\ x\in(0,1)),\\[2mm]
+\partial_xy(t,0)  =v_0(t)  (t>0),\\[2mm]
+\partial_xy(t,1)  =v_1(t)  (t>0),
+\end{array}
+\right.
+\end{equation}</script>
+
+<p>To this problem, we add the control constraints,</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2CC}
+|v_0(t)|\leqslant M \text{and} |v_1(t)|\leqslant M (t>0\ \text{a.e.}),
+\end{equation}</script>
+
+<p>with some $M&gt;0$ given and we add the state constraint,</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2SC}
+y(t,x)\geqslant 0 ( (t,x)\in \mathbb{R}_+^*\times(0,1)\ \text{a.e.}).
+\end{equation}</script>
+
+<p>To the system (5) we add the initial condition</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2IC}
+y(0,x)=y^0(x) (x\in(0,1)),
+\end{equation}</script>
+
+<p>and the terminal condition</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2TC}
+y(T,x)=y^1(x) (x\in(0,1)).
+\end{equation}</script>
+
+<p>In <a href="#LTZheat">[3]</a>, it has been proved that every positive constant state $\mathrm{y}^0$ can be steered to some over positive constant state $\mathrm{y}^1$ in a large enough time $T$. Our goal here is to find numerically the minimal time $T$ such there exist controls satisfying (6) such that the corresponding solution $y$ of (5) and (8) satisfies the constraint (6) and the terminal condition (9), i.e.~ we aim to minimize</p>
+
+<script type="math/tex; mode=display">\begin{array}{cl}
+\min  T\\
+  \begin{array}{l}
+T>0\, ,\\
+v_0,\, v_1\in L^\infty(0,T)\, ,
+y \text{ solution of (5) and (8) satisfies}\\
+ y(T,\cdot)=y^1 \text{and} y(t,x)\geqslant 0 (t>0,\ x\in(0,1)\ $\text{a.e.}$).
+\end{array}
+\end{array}</script>
+
+<p>Firstly, we will use a space discretization to reduce the system (5). To this end, we define $N\in\mathbb{N}^*$ and for every $n\in{0,\dots,N}$, $x_n=\frac{n}{N}$. Based on this discretization of $[0,1]$, we will discretized (5) using centered finite differences. That is to say, given $V(t)=(v_0(t)\, ,\ v_1(t))^\top$ and $Y(t)\in \mathbb{R}^{N+1}$, a vector approaching $\bigl( y(t,x_0),\ \dots,\ y(t,x_N)\bigr)^\top$, $Y$ is solution of</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq:doc3a}
+	\dot{Y}=AY+BV (t>0)\, ,
+\end{equation}</script>
+
+<p>with the initial condition</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+	Y(0)=\mathrm{y}^0e_{N+1}
+\end{equation}</script>
+
+<p>the target state,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+	Y(T)=\mathrm{y}^1e_{N+1}
+\end{equation}</script>
+
+<p>the state constraint,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+	Y(t)\geqslant 0  (t>0\ \text{a.e.})
+\end{equation}</script>
+
+<p>and the control constraint,</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+	|V_0(t)|\leqslant M\text{and} |V_1(t)|\leqslant M (t>0\ \text{a.e.})\, ,
+\end{equation}</script>
+
+<p>where we have set $e_{N+1}=(1,\dots,1)^\top\in\mathbb{R}^{N+1}$,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+A=N^2\begin{pmatrix}
+2 & -2  & 0 & \hdots &\hdots & \hdots & 0\\
+1 & -2  & 1 & 0  & \hdots &  \hdots & 0\\
+0 & \ddots & \ddots &  \ddots &  \ddots  & \vdots\\
+\vdots & \ddots & \ddots  & \ddots & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & \ddots  & \ddots & 0\\
+0  & \hdots & \hdots & 0 & 1 & -2 & 1\\
+0  & \hdots & \hdots & \hdots & 0  &2 & -2\\
+\end{pmatrix}\in M_{N+1}(R)\text{and} B=2N\begin{pmatrix}
+1 & 0\\
+0 & \vdots\\
+\vdots & \vdots\\
+\vdots & \vdots\\
+\vdots & \vdots\\
+\vdots& 0\\
+0  &  1
+\end{pmatrix}\in M_{N+1,2}(\mathbb{R})\, . %]]></script>
+
+<p>Now we can discretize (10) using explicit Euler scheme and similarly to the previous example, we obtain an optimisation problem of finite dimension with constraints whose AMPL formulation is</p>
+<pre><span style="color: green;"># Parameters of the problem</span>
+<b>param</b> Nx=30;   <span style="color: green;"># Number of space discretisation points</span>
+<b>param</b> Nt=300;  <span style="color: green;"># Number of time discretisation points</span>
+<span style="color: green;"># One have to check a posteriori that the number of time steps is large enough so that the</span>
+<span style="color: green;"># CFL condition, T*Nx^2/Nt &lt;=1/2, is satisfied</span>
+<b>param</b> dx=1/Nx; <span style="color: green;"># Space step</span>
+<b>param</b> M =20;   <span style="color: green;"># Bound on the controls</span>
+
+<span style="color: green;"># Variables of the system</span>
+<span style="color: green;"># i stands for the time index and j for the space index</span>
+<b>var</b> y {i in 0..Nt, j in 0..Nx} &gt;=0; <span style="color: green;"># State of the control problem</span>
+<span style="color: green;"># Neuman controls in 0 and 1. The controls are in [-M,M].</span>
+<b>var</b> v0 {i in 0..Nt} &gt;=-M, &lt;=M;
+<b>var</b> v1 {i in 0..Nt} &gt;=-M, &lt;=M;
+<b>var</b> T &gt;=0;      <span style="color: green;"># Control time</span>
+<b>var</b> dt=T/Nt;    <span style="color: green;"># Time step</span>
+
+<span style="color: green;"># Define the cost function</span>
+<b>minimize</b> cost: T;
+
+<span style="color: green;"># Define the constraints</span>
+<span style="color: green;"># y is solution of the discretize system</span>
+<b>subject to</b> y_dyn {i in 0..Nt-1, j in 1..Nx-1}:
+	(y[i+1,j]-y[i,j])*(dx)^2=(y[i,j-1]-2*y[i,j]+y[i,j+1])*dt;
+<span style="color: green;"># Neuman boundary conditions in 0 and 1</span>
+<b>subject to</b> left_boundary  {i in 1..Nt-1}: y[i,1]-y[i,0]    =v0[i]*dx;
+<b>subject to</b> right_boundary {i in 1..Nt-1}: y[i,Nx]-y[i,Nx-1]=v1[i]*dx;
+<span style="color: green;"># y(0)=y0 and y(T)=y1</span>
+<b>subject to</b> y_init {j in 0..Nx}: y[0,j] =5;
+<b>subject to</b> y_end  {j in 0..Nx}: y[Nt,j]=1;
+
+<span style="color: green;"># Solve with IpOpt</span>
+<b>option solver</b> ipopt;
+<b>option</b> ipopt_options <span style="color: brown;">"max_iter=2000 linear_solver=mumps halt_on_ampl_error yes"</span>;
+<b>solve</b>;
+
+<span style="color: green;"># Write the solution in the file out.txt</span>
+<b>printf</b>: <span style="color: brown;">" # T = %24.16e\n"</span>, T &gt;  out.txt;
+<b>printf</b>: <span style="color: brown;">" # Nx = %d\n"</span>, Nx    &gt;&gt; out.txt;
+<b>printf</b>: <span style="color: brown;">" # Nt = %d\n"</span>, Nt    &gt;&gt; out.txt;
+<b>printf</b>: <span style="color: brown;">" # Data\n"</span>           &gt;&gt; out.txt;
+<b>printf</b> {i in 0..Nt}: <span style="color: brown;">" %24.16e\n"</span>, v0[i] &gt;&gt; out.txt;
+<b>printf</b> {i in 0..Nt}: <span style="color: brown;">" %24.16e\n"</span>, v1[i] &gt;&gt; out.txt;
+<b>printf</b> {i in 0..Nt, j in 0..Nx}: <span style="color: brown;">" %24.16e\n"</span>, y[i,j] &gt;&gt; out.txt;
+
+<b>end</b>;
+</pre>
+<p>Once the file out.txt is written, it can be for instance read by <a name="scilab">Scilab</a> with the following code</p>
+<pre>fid= <b>mopen</b>(<span style="color: brown;">'out.txt'</span>,<span style="color: brown;">'r'</span>);            <span style="color: green;">// Open out.txt</span>
+T  = <b>mfscanf</b>(fid,<span style="color: brown;">'%s %s %s'</span>);         <span style="color: green;">// Read ``# T =''</span>
+T  = <b>mfscanf</b>(fid,<span style="color: brown;">'%f'</span>);               <span style="color: green;">// Read value of T</span>
+Nx = <b>mfscanf</b>(fid,<span style="color: brown;">'%s %s %s'</span>);         <span style="color: green;">// Read ``# Nx =''</span>
+Nx = <b>mfscanf</b>(fid,<span style="color: brown;">'%d'</span>);               <span style="color: green;">// Read value of Nx</span>
+Nt = <b>mfscanf</b>(fid,<span style="color: brown;">'%s %s %s'</span>);         <span style="color: green;">// Read ``# Nt =''</span>
+Nt = <b>mfscanf</b>(fid,<span style="color: brown;">'%d'</span>);               <span style="color: green;">// Read value of Nt</span>
+s  = <b>mfscanf</b>(fid,<span style="color: brown;">'%s %s'</span>); s=[];      <span style="color: green;">// Read ``# Data''</span>
+v0 = <b>mfscanf</b>(Nt+1,fid,<span style="color: brown;">'%f'</span>); v0=v0';  <span style="color: green;">// Read the Nt+1 values of v0</span>
+v1 = <b>mfscanf</b>(Nt+1,fid,<span style="color: brown;">'%f'</span>); v1=v1';  <span style="color: green;">// Read the Nt+1 values of v1</span>
+y  = <b>mfscanf</b>((Nt+1)*(Nx+1),fid,<span style="color: brown;">'%f'</span>); <span style="color: green;">// Read the (Nt+1)*(Nx+1) values of y</span>
+<b>mclose</b>(fid);                          <span style="color: green;">// Close out.txt</span>
+
+y = <b>matrix</b>(y,Nx+1,Nt+1); y=y'; <span style="color: green;">// Reshape y as a matrix, line i is the solution at time i/Nt</span>
+x = 0:1/Nx:1; t = 0:T/Nt:T;    <span style="color: green;">// Define the space and time discretisations</span>
+<b>printf</b>(<span style="color: brown;">'time:\t%f\n'</span>,T);       <span style="color: green;">// Display the control time</span>
+<b>plot</b>(t,[v0;v1]); <b>sleep</b>(2000); <b>clf</b>();               <span style="color: green;">// plot controls and wait 2s</span>
+<b>plot2d</b>(x,y(1,:),rect=[0 0 1 10]); <b>sleep</b>(100);      <span style="color: green;">// plot the initial state and wait 0.1s</span>
+<b>for</b> i=2:1:Nt,
+	<b>plot</b>(x,y(i,:),rect=[0 0 1 10]); <b>sleep</b>(10); <span style="color: green;">// plot the state at each time instants</span>
+<b>end</b>
+<b>plot</b>(x,y(\$,:),rect=[0 0 1 10]);
+<span style="color: green;">// plot the final state</span>
+</pre>
+<p>Based on these two codes, we obtain</p>
+<ul>
+ 	<li>for $y^0=1$, $y^1=5$, $M=20$ and the discretization parameters $N_x=30$, $N_t=450$ the results displayed on the video:
+<video style="display: block; margin: 0 auto; width: 75%;" controls="">
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/N1.ogg" type="video/ogg" />
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/N1.mp4" type="video/mp4" />
+Your browser does not support the video tag.
+</video>
+(the minimal time obtained is $T\simeq\mathtt{0.2093}$);</li>
+ 	<li>for $y^0=5$, $y^1=1$, $M=800$ and the discretization parameters $N_x=30$, $N_t=450$ the results displayed on the video:
+<video style="display: block; margin: 0 auto; width: 75%;" controls="">
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/N2.ogg" type="video/ogg" />
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/N2.mp4" type="video/mp4" />
+Your browser does not support the video tag.
+</video>
+(the minimal time obtained is $T\simeq\mathtt{0.1938}$).</li>
+</ul>
+<p>Similarly, we can consider the time optimal control problem,</p>
+
+<script type="math/tex; mode=display">\begin{array}{cl}
+\min  T\\
+  \begin{array}{l}
+T>0\, ,\\
+u_0,\, u_1\in L^\infty(0,T)\\
+u_0(t)\geqslant0\text{and} u_1(t)\geqslant 0  (t\in(0,T)\ \text{a.e.}),\\
+y \text{ solution of (11) satisfies } y(T,\cdot)=y^1\, ,
+\end{array}
+\end{array}</script>
+
+<p>with (11) given by,</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq:doc4}
+\left\{\begin{array}{r@{\>}l@{}l}
+\dot{y}(t,x)  =\partial_x^2y(t,x)  (t>0\, ,\ x\in(0,1)),\\[2mm]
+y(t,0)  =u_0(t)  (t>0),\\[2mm]
+y(t,1)  =u_1(t)  (t>0),\\[2mm]
+y(0,x)  =y^0(x)  (x\in(0,1).
+\end{array}\right.
+\end{equation}</script>
+
+<p>Numerically, we obtain</p>
+<ul>
+ 	<li>for $y^0=5$, $y^1=1$, $M=50$ and the discretization parameters $N_x=30$, $N_t=450$ the results displayed on the video:
+<video style="display: block; margin: 0 auto; width: 75%;" controls="">
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/D1.ogg" type="video/ogg" />
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/D1.mp4" type="video/mp4" />
+Your browser does not support the video tag.
+</video>
+(the minimal time obtained is $T\simeq\mathtt{0.1931}$);</li>
+ 	<li>for $y^0=1$, $y^1=5$, $M=50$ and the discretization parameters $N_x=20$, $N_t=200$ the results displayed on the video:
+<video style="display: block; margin: 0 auto; width: 75%;" controls="">
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/D2.ogg" type="video/ogg" />
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/D2.mp4" type="video/mp4" />
+Your browser does not support the video tag.
+</video>
+(the minimal time obtained is $T\simeq\mathtt{0.0498}$);</li>
+ 	<li>for $y^0=1$, $y^1=5$, $M=3000$ and the discretization parameters $N_x=20$, $N_t=200$ the results displayed on the video:
+<video style="display: block; margin: 0 auto; width: 75%;" controls="">
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/D3.ogg" type="video/ogg" />
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/08/D3.mp4" type="video/mp4" />
+Your browser does not support the video tag.
+</video>
+(the minimal time obtained is $T\simeq\mathtt{0.0438}$).</li>
+</ul>
+<h3>Useful links</h3>
+<ul>
+ 	<li>IpOpt project: <a href="https://projects.coin-or.org/Ipopt" target="_blank">https://projects.coin-or.org/Ipopt</a></li>
+ 	<li>AMPL project: <a href="http://ampl.com/products/ampl/" target="_blank">http://ampl.com/products/ampl/</a></li>
+ 	<li>NEOS solvers: <a href="https://neos-server.org/neos/solvers/" target="_blank">https://neos-server.org/neos/solvers/</a></li>
+</ul>
+
+<h6>References</h6>
+
+<p><strong>[1]</strong> J. T. Betts. <a href="http://epubs.siam.org/doi/book/10.1137/1.9780898718577" name="cite1" target="_blank"><em>Practical methods for optimal control and estimation using nonlinear programming.</em></a> 2nd ed. Philadelphia, PA: Society for Industrial and Applied Mathematics (SIAM),2nd ed. edition, 2010.</p>
+
+<p><strong>[2]</strong> R. Fourer, D. M. Gay, and B. W. Kernighan. <a href="http://ampl.com/resources/the-ampl-book/" name="cite2" target="_blank"><em>A modeling language for mathematical programming.</em></a> Manage. Sci., 36(5):519–554, 1990.</p>
+
+<p><strong>[3]</strong> J. Lohéac, E. Trélat, and E. Zuazua. <a name="cite3" target="_blank"></a><em>Minimal controllability time for the heat equation under state constraints.</em> In preparation.</p>
+
+<p><strong>[4]</strong> E. Trélat. <a href="https://www.ljll.math.upmc.fr/trelat/fichiers/livreopt.pdf" name="cite4" target="_blank"><em>Contrôle optimal. Théorie et applications.</em></a> Paris: Vuibert, 2005.</p>
+
+<p><strong>[5]</strong> E. Trélat. <a href="https://www.ljll.math.upmc.fr/trelat/fichiers/contaero.pdf" name="cite5" target="_blank"><em>Optimal control and applications to aerospace: some results and challenges.</em></a> J.Optim. Theory Appl., 154(3):713–758, 2012.</p>
+
+<p><strong>[6]</strong> A. Wächter and L. T. Biegler. <a href="http://link.springer.com/article/10.1007/s10107-004-0559-y" name="cite6" target="_blank"><em>On the implementation of an interior-point filter line-search algorithm for large-scale nonlinear programming.</em></a> Math. Program., 106(1 (A)):25–57, 2006.</p>
+:ET

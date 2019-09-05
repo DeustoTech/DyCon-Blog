@@ -5,9 +5,9 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 30 Jul 2019 08:47:11 +0200</pubDate>
-    <lastBuildDate>Tue, 30 Jul 2019 08:47:11 +0200</lastBuildDate>
-    <generator>Jekyll v3.8.5</generator>
+    <pubDate>Thu, 05 Sep 2019 12:18:53 +0200</pubDate>
+    <lastBuildDate>Thu, 05 Sep 2019 12:18:53 +0200</lastBuildDate>
+    <generator>Jekyll v4.0.0</generator>
     
       <item>
         <title>Uniform exponential and polynomial stability and approximation in control of a thermoelastic model</title>
@@ -222,7 +222,7 @@ The set ${ \phi=0 }$ is called contact set, while $\partial { \phi&amp;gt;0 }$ i
 
 
 
- The solution $\phi$ to the elliptic obstacle problem just above. 
+ The solution $\phi$ to the elliptic obstacle problem just above. The obstacle is equal to zero, and the free boundary is displayed in red. 
 
 
 Remark: At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have
@@ -255,6 +255,20 @@ The function $\psi$ may be time-dependent, but for simplicity we omit this case.
  Figure 2. Here $\psi(x)=3*\sqrt{(1-x^2)}$ in $(-1,1)$ (black) is a barrier for the evolving solution (blue). The initial data coincides with $\psi$ on (-1.5, 1.5). We observe that the contact set $\{ u = \psi \}$ changes (gets smaller) as time grows. There is also matching of normal derivatives on the contact points (i.e. the free boundary). 
 Finally, the solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) for large time, as seen below.   
 
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 3. The solution to the parabolic obstacle problem (left) with Dirichlet boundary condition $=1$ and the obstacle (right). The free boundary (delimiting the contact set with the obstacle) is projected on a plane below in red. It is seen that the source term $-1$ acts as a gravity force pushing the membrane towards the obstacle. We moreover observe a convergence to the equilibrium position (see also the section below). 
+
 For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with two boundary conditions at the free boundary
 
 
@@ -284,20 +298,34 @@ The one-dimensional case:
 
 
 
-Figure 3. The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. 
+
+Figure 4. The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. 
 
 The two-dimensional case:
 
 
 
-  
 
 
 
 
 
 
-Figure 4. We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  
+
+
+
+Figure 5. We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  
+
+
+
+
+
+
+
+
+
+
+Figure 6. In this figure, the obstacle is set to zero, and we consider Dirichlet boundary conditions $=0.8$ on the fixed boundary. We see that even when considering initial data which are not an equilibrum membrane position (but do satisfy the obstacle condition), as time increases, the solution of the parabolic problem (left) converges to that of the elliptic problem (right)  
 
 2. Numerical implementation
 

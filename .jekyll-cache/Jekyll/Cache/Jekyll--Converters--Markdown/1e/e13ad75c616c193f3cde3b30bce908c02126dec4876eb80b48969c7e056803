@@ -1,0 +1,127 @@
+I"IG<h2 id="model-problem">Model Problem</h2>
+
+<p>We consider the numerical approximation of the inverse problem for the linear advection-diffusion equation,</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{modeleq} \begin{cases} \partial_t u - d \Delta u + v \nabla \cdot u = 0, \  \  \textbf{x}  \in \Omega, t \in [0,T],\\ u(\textbf{x},t) = 0,  \  \  \textbf{x}  \in \partial \Omega, t \in [0,T],\\ u(\textbf{x},0) = u_0(\textbf{x}), \  \  \textbf{x}  \in \Omega,\\ \end{cases} \end{equation}</script>
+
+<p>with $d$ being the diffusivity of the material and $v$ the direction of the advection.</p>
+
+<p>Given a final time $T&gt;0$ and a target function $u^\ast$ the aim is to identify the initial condition $u_0$ such that the solution, at time $t=T$, reaches the target $u^*$ or gets as close as possible to it. We assume that the initial condition $u_0$ is characterized as a combined set of sparse sources. This means that $u_0$ is a linear combination of unitary deltas with certain and possibly different weights, i.e:</p>
+
+<script type="math/tex; mode=display">\begin{align} u_0 = \sum_{i=1}^{l} \alpha_i \delta(x_i). \end{align}</script>
+
+<p>We formulate the inverse problem using optimal control techniques. In particular, we consider the minimization of the following functional:</p>
+
+<script type="math/tex; mode=display">\begin{align} J(u_0) := J(u(\cdot,0)) = \frac{1}{2} \int_{\Omega} (u(\cdot, T) - u^*)^2 d \Omega + \tau \int_{\Omega} \vert u(\cdot,0) \vert d \Omega. \end{align}</script>
+
+<h2 id="space-and-time-discretization">Space and time discretization</h2>
+
+<p>Letting $\textbf{u} : [0, T] \rightarrow \mathbb{R}^s$ where $s$ is the number of grid points on $\Omega$, we can write a general finite element (FE) discretization of the diffusion–advection equation in \eqref{modeleq} in a compact form as:</p>
+
+<script type="math/tex; mode=display">\begin{align} \textbf{M} \dot{\textbf{u}}(t) + d \textbf{A} \textbf{u}(t) + v \textbf{V} \textbf{u}(t) = 0. \end{align}</script>
+
+<p>In order to get a time discretized version of the previous equation, we apply implicit Euler method with stepsize $\Delta t := T/N$ where $N$ is the total number of time steps. The numerical approximations to the solution are given by the vectors $\textbf{u}^n \approx \textbf{u}(t_n) \in \mathbb{R}^s$ with respect to the index $n=i\Delta t$ for $i=1,2,..,N$. Therefore, the fully discrete version of model equation is as follows,</p>
+
+<script type="math/tex; mode=display">\begin{align} (\textbf{M} + d \Delta t \textbf{A} + v \Delta t \textbf{V}) \textbf{u}^{n+1} = \textbf{M} \textbf{u}^n. \end{align}</script>
+
+<h2 id="adjoint-algorithm-for-sparse-source-identification">Adjoint Algorithm for sparse source identification</h2>
+
+<p>The algorithm to be presented in this work for the sparse source identification of the linear diffusion-advection equation based on the adjoint methodology consists of two steps. Firstly, we use the adjoint methodology to identify the locations of the sources. Secondly, a least squares fitting is applied to find the corresponding intensities of the sources.</p>
+
+<p>We have considered here a two-dimensional example with several sources to be identified in a multi-model environment. This means that the left half ($\Omega_1 = [0,1] \times [0,1]$) and the right half ($\Omega_2 = [1,2] \times [0,1]$) of the domain are modelled with different equations. In particular, the heat equation is used on $\Omega_1$ and the diffusion–advection equation is used on $\Omega_2$.</p>
+
+<p>The initialization parameters look as follows:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span><span class="o">=</span><span class="mi">30</span><span class="p">;</span> <span class="c1">%% space discretization points in y-direction</span>
+<span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="p">/(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% mesh size</span>
+<span class="n">t0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">%% initial time</span>
+<span class="n">tf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span> <span class="c1">%% final time</span>
+<span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span> <span class="c1">%% time discretization points</span>
+<span class="n">dt</span><span class="o">=</span><span class="p">(</span><span class="n">tf</span><span class="o">-</span><span class="n">t0</span><span class="p">)/</span><span class="n">n</span><span class="p">;</span> <span class="c1">%% stepsize</span>
+<span class="n">TOL</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">;</span> <span class="c1">%% stopping tolerance</span>
+
+<span class="n">d1</span><span class="o">=</span><span class="mf">0.05</span><span class="p">;</span> <span class="c1">%% diffusivity of the material on the left sudomain</span>
+<span class="n">d2</span><span class="o">=</span><span class="mf">0.05</span><span class="p">;</span> <span class="c1">%% diffusivity of the material on the left sudomain</span>
+
+<span class="c1">%% advection components</span>
+<span class="n">vx</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="n">vy</span><span class="o">=-</span><span class="mi">3</span><span class="p">;</span>
+
+<span class="n">tau</span><span class="o">=</span><span class="n">dx</span><span class="o">^</span><span class="mi">4</span><span class="p">;</span> <span class="c1">%% regularization parameter</span>
+<span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span> <span class="c1">%% stepsize of the gradient descent method</span>
+</code></pre></div></div>
+
+<p>We now compute the FE discretization matrices $M$, $A$ and $V$ that are respectively the mass matrix, the stiffness matrix and the advection matrix. For the FE discretization we assume equidistant structured meshes. In particular we use triangular elements and the classical pyramidal test functions are employed.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">]</span> <span class="o">=</span> <span class="n">computeFEmatrices</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">d1</span><span class="p">,</span><span class="n">d2</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">);</span> <span class="c1">%% Compute FE discretization matrices</span>
+</code></pre></div></div>
+
+<p>A reference initial condition is chosen and we compute using the FE discretization specified above and implicit Euler in time its corresponding final state at time $T$. This final state will be considered the initial data of the inverse problem to be solved and we name it the target function $u^*$ as mentioned previously.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0_ref</span> <span class="o">=</span> <span class="n">initial_deltas</span><span class="p">(</span><span class="n">N</span><span class="p">);</span> <span class="c1">%% computes reference initial condition</span>
+
+<span class="p">[</span><span class="n">U_target</span><span class="p">,</span><span class="n">u_target</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0_ref</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span> <span class="c1">%% Compute target distribution</span>
+</code></pre></div></div>
+
+<p>We now call the algorithm that estimates the initial condition $u_0$ using as a initial data the target function $u^*$. As mentioned before, this algorithm consists of two steps.</p>
+
+<p>Firstly, the classical adjoint methodology that minimizes the functional $J(u_0)$ subject to the diffusion-advection equation is used. The iterative optimization algorithm employed is the classical gradient descent method. However, although this iterative procedure finds quite accurately the locations of the sources, it does not recover the sparse character of the initial condition. This is not suprising because the recovered initial data comes from solving the adjoint problem which is basically a diffusive process that smoothes out its state. Consequently, a second procedure is needed to project the obtained non sparse initial condition into the set of admissible sparse solutions.</p>
+
+<p>As the initial condition $u_0$ is assumed to be a linear combination between the locations and the intensities, once we have fixed the locations using the adjoint methodology we can solve a least squares problem to get the remaining intensities. We assemble a matrix $\textbf{L} \in \mathbb{R}^{s \times l}$ where at each column we have the forward solution for a single unitary delta placed at each of the locations already identified. We then solve the following linear system of equations for the vector of unknowns $\alpha = (\alpha_1, \alpha_2, …, \alpha_l)^T$:</p>
+
+<script type="math/tex; mode=display">\begin{align} \textbf{L}^T \textbf{L} \alpha = \textbf{L}^T u^*, \end{align}</script>
+
+<p>to find the intensities vector $\alpha$.</p>
+
+<p>Adjoint algorithm for sparse source identification (algorithm 4)</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">SparseIdentification</span><span class="p">(</span><span class="n">u_target</span><span class="p">,</span><span class="n">TOL</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">,</span><span class="n">epsilon</span><span class="p">,</span><span class="n">tau</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Finally, the final state at $T$ is computed using as a initial condition the estimated sparse sources identified with our algorithm.</p>
+
+<p>Compute final state with the recovered initial condition</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">UF</span><span class="p">,</span><span class="n">u_final</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We can see the evolution recovered</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0014/evolution.gif" alt="" /></p>
+
+<p>We now visualize the numerical results. Plots on the left side show the reference initial solution and the given target. Similarly, plots on the right side show the recovered initial condition and the distribution at the final time $T$ produced by the recovered initial sources.</p>
+
+<p>One can observe the difference between the two models (the heat equation on $\Omega_1$ and the diffusion-advection on $\Omega_2$) in the two figures at the bottom where the initial sources on $\Omega_2$ move downwards at the same time as they dissipate while the initial sources on $\Omega_1$ only dissipate without displacement.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component x</span>
+<span class="n">yplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component y</span>
+<span class="c1">%%</span>
+<span class="nb">figure</span><span class="p">(</span><span class="s1">'unit'</span><span class="p">,</span><span class="s1">'norm'</span><span class="p">,</span><span class="s1">'pos'</span><span class="p">,[</span><span class="mf">0.25</span> <span class="mf">0.1</span> <span class="mf">0.5</span> <span class="mf">0.8</span><span class="p">])</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0_ref</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Reference initial state (front view)'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered initial state (front view)'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0_ref</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Reference initial state (above view)'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered initial state (above view)'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U_target</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Given target u^*'</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">UF</span><span class="p">)</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered final state'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0014/copiaRM_01.png" alt="" /></p>
+:ET

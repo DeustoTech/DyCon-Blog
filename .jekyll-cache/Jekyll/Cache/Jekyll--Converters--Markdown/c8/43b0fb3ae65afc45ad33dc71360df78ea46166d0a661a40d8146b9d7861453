@@ -1,0 +1,101 @@
+I"*"<p>The turnpike property establishes that, when a general optimal control problem is settled in large time, for most of the time the optimal control and trajectories remain exponentially close to the optimal control and state of the corresponding steady-state or static optimal control problem.</p>
+
+<h4>The turnpike property</h4>
+<p><img class=" wp-image-1524" src="https://cmc.deusto.eus/wp-content/uploads/2017/03/dibujo4.png" alt="The turnpike property illustrated" width="500" /> Figure 1: When an optimal control problem satisfies the turnpike property, the solution remains close to certain path for most of the time, except maybe for an initial time interval $T_1$ and a final time interval $T_2$. In this Figure, $x(t,x_0,u(t))$ is solution of the optimal control problem (3) with the cost function (2), while $\bar{x}$ is the optimal solution of the stationary problem (5).</p>
+
+<p>The origin of the term Turnpike is in the interpretation that Samuelson did of this phenomenon in [<a href="#dorfman1958linear">1</a>] : suppose we want to travel from city A to city B by car, the best way to do it, the optimal way, is to take the highway (namely, the turnpike) as near as we can from city A, and leave it when we are close to B. So, except nearby A and B, we are expected to be on the highway: in other words, the turnpike of the problem.
+The turnpike property is very useful, since it gives us an idea of the nature of the optimal solution of a problem, without having to solve it analytically. In practice, the turnpike property allows performing a significant improvement of the numerical methods used to solve optimal control problems.</p>
+
+<h4>The Turnpike property in the Linear Case</h4>
+<p>Consider the finite-dimensional dynamical system</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+\begin{cases}
+\label{linearproblem}
+ x_t + Ax = Bu\\
+ x(0)=x_0 \in \mathbb{R}^{N}
+\end{cases}
+\end{equation}</script>
+
+<p>where $A \in M(N,N)$, $B\in M(N,M)$, with control $u \in L^2 (0,T;\mathbb{R}^{N})$. Given a matrix $C \in M(N,N)$, and some $x^\ast  \in \mathbb{R}^{N}$, consider the optimal control problem</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+\min_{u} J^T (u) = \frac{1}{2} \int_0^T \left( |u(t)|^2 + |C(x(t)-x^\ast )|^2 \right)dt.
+\end{equation}</script>
+
+<p>There exists a unique optimal control $u(t)$ in $ L^2 (0,T;\mathbb{R}^{M})$, characterized by the optimality condition</p>
+
+<script type="math/tex; mode=display">u = - B^\ast p =
+    \begin{cases}
+    -p_t + A^\ast  p = C^\ast C( x-x^\ast ) \\
+    p(T)=0 \in \mathbb{R}^N
+    \end{cases}</script>
+
+<p>Let formulate the same problem for the steady-state model</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+Ax=Bu
+\end{equation}</script>
+
+<p>Then, there exists a unique minimum $\bar{u}$, and a unique optimal state $\bar{x}$, of the stationary optimal control problem</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+%\nonumber
+\left\lbrace
+\begin{array}{clc}
+ \min_{u} J_s (u) = \frac{1}{2} \left( |u|^2 + |C(x -x^\ast )|^2 \right). \
+\\  subject \,\,\, to\,\,\, Ax=Bu
+\end{array}
+\right.
+\end{equation}</script>
+
+<p>Let assume that:</p>
+<ol>
+	<li>The pair $(A,B)$ is controllable.</li>
+	<li>The pair $(A,C)$ is observable.</li>
+</ol>
+<p>Then, we have the following result (proved in [<a href="porretta2013long">2</a>])
+<strong>Theorem:</strong> <em>there exist positive constants $\lambda$ and $K$, independent on $T$, such that $ \forall t \in [0,T]$</em></p>
+
+<script type="math/tex; mode=display">|u(t) -\bar{u}| + |x(t) - \bar{x}| \leq K \left( e^{-\lambda t} + e{-\lambda (T-t)} \right) .</script>
+
+<h4>Some results and extensions on the turnpike property</h4>
+<ul>
+	<li>Turnpike theorems were derived in the 60's for discrete-time optimal control problems arising in econometry [<a href="#mckenzie1976turnpike">3</a>] and references therein).</li>
+	<li>See [<a href="#carlson2012infinite">4</a>], [<a href="#zaslavski2006turnpike">5</a>] and the references therein for an extensive overview of turnpike results</li>
+	<li>In [<a href="#trelat2015turnpike">6</a>] they proved a turnpike theorem for nonlinear finite--dimensional systems, involving the state, the control and also the adjoint. Besides that, they explain how the turnpike can be used to improve certain numerical methods.</li>
+	<li>A turnpike theorem for the 1-D wave equation with a homogeneous Dirichlet boundary condition at one side, and a Neumann boundary control action at the other can be found in [<a href="#gugat2016optimal">7</a>].</li>
+	<li>A turnpike theorem for the two--dimensional Navier-Stokes Equation is proved in [<a href="#zamorano2016turnpike">8</a>], for both time depending and non-depending control.</li>
+	<li>An application of the turnpike property to the Lotka-Volterra model can be found in [<a href="#ibanez2017optimal">9</a>]. The property is used to improve the single shooting method to solve the problem.</li>
+</ul>
+<p><img class=" wp-image-1536" src="https://cmc.deusto.eus/wp-content/uploads/2017/05/fig2-e1494492767300.jpg" alt="turnpike phenomenon in two species" width="482" height="361" /> Figure 2: The Lotka-Volterra equations model a biological ecosystem where two species interact: a prey and a predator. In [<a href="#ibanez2017optimal">9</a>] the control is introduced by hunting both species. In this figure we can see the turnpike phenomenon in both species ($x_1$ is the prey and $x_2$ is the predator species) and the control $u(t)$, which represents the hunting. In dashed blue, we have the evolution of each variable, and in black, the turnpike.</p>
+
+<h4>Perspectives</h4>
+<ul>
+<li> The study of the periodic turnpike property for optimal control problems in Hilbert spaces (in progress, E.Tr&eacute;lat, C. Zhang and E. Zuazua)</li>
+<li> Clarify the turnpike property for nonlinear PDE without smallness conditions on the target.</li>
+<li> The turnpike property on multi-D wave equations.</li>
+<li> Prove a turnpike theorem for a constrained control for linear and nonlinear finite--dimensional optimal control problems.</li>
+<li> Develope the turnpike computational code to solve a wide range of problems as it has been done in [<a href="#ibanez2017optimal">9</a>] for the Lotka-Volterra model.</li>
+</ul>
+
+<h4>References</h4>
+
+<p><strong>[1]</strong> Robert Dorfman, Paul Anthony Samuelson, and Robert M Solow <a name="dorfman1958linear"><em>Linear programming and economic analysis.</em></a> Courier Corporation, 1958.</p>
+
+<p><strong>[2]</strong> Alessio Porretta and Enrique Zuazua. <a name="porretta2013long" href="http://epubs.siam.org/doi/abs/10.1137/130907239"><em>Long time versus steady state optimal control.</em></a> SIAM Journal on Control and Optimization, 51(6):4242–4273, 2013.</p>
+
+<p><strong>[3]</strong> Lionel W McKenzie. <a name="mckenzie1976turnpike" href="http://www.dictionaryofeconomics.com/article?id=pde2012_T000259"><em>Turnpike theory.</em></a> Econometrica: Journal of the Econometric Society, pages 841–865, 1976.</p>
+
+<p><strong>[4]</strong> Dean Carlson, Alain B Haurie, and Arie Leizarowitz. <a name="carlson2012infinite" href="http://www.springer.com/la/book/9783642767579"><em>Infinite horizon optimal control: deterministic and stochastic systems.</em></a> Springer Science &amp; Business Media, 2012.</p>
+
+<p><strong>[5]</strong> Alexander Zaslavski. <a name="zaslavski2006turnpike" href="http://www.springer.com/us/book/9780387281551"><em>Turnpike properties in the calculus of variations and optimal control, volume 80.</em></a> Springer Science &amp; Business Media, 2006.</p>
+
+<p><strong>[6]</strong> Emmanuel Trélat and Enrique Zuazua. <a name="trelat2015turnpike" href="http://www.sciencedirect.com/science/article/pii/S0022039614003568"><em>The turnpike property in finite-dimensional nonlinear optimal control</em></a> Journal of Differential Equations, 258(1):81–114, 2015.</p>
+
+<p><strong>[7]</strong> Martin Gugat, Emmanuel Trélat, and Enrique Zuazua. <a name="gugat2016optimal" href="https://arxiv.org/abs/1505.05017"><em>Optimal Neumann control for the 1D wave equation: finite horizon, infinite horizon, boundary tracking terms and the turnpike property</em></a> Systems &amp; Control Letters, 90:61–70, 2016.</p>
+
+<p><strong>[8]</strong> S Zamorano. <a name="zamorano2016turnpike" href="https://arxiv.org/abs/1601.04984"><em>The turnpike property for two-dimensional navier-stokes equations.</em></a> arXiv preprint arXiv:1601.04984, 2016.</p>
+
+<p><strong>[9]</strong> Aitziber Ibañez. <a name="ibanez2017optimal" href="https://www.ncbi.nlm.nih.gov/pubmed/27642712"><em>Optimal control of the Lotka–Volterra system: turnpike property and numerical simulations.</em></a> Journal of Biological Dynamics, 11(1):25–41, 2017.</p>
+:ET

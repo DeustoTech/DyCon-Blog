@@ -1,0 +1,271 @@
+I"�Y<h3>1 Introduction</h3>
+
+<p>We are interested in the numerical discretization of the  Kolmogorov equation [12]</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{kolmo}
+\left\{
+\begin{array}{lll}
+\partial_t f - \mu \partial_{xx} f - v(x) \partial_y f =0, & (x,y)\in\RR^2, t>0,\\
+f(x,y,0) =f_0(x,y),      & (x,y)\in\RR^2
+\end{array}
+\right.
+\end{equation} %]]></script>
+
+<p>where $\mu&gt;0$ is a diffusive  function and  $v$ a potential function.<br />
+This is one example of degenerate advection-diffusion equations which have the property of hypo-ellipticity (see for instance, [6, 13, 14]), ensuring the $C^\infty$ regularity of solutions for $t&gt;0$ ([6]).<br />
+In the present case, the generator of the semigroup is constituted by the superposition of operators  $\mu \partial_{xx}$ and $ v(x) \partial_y $. Despite the presence of a first order term, that could lead to transport phenomena and, consequently, to the lack of smoothing, the regularizing effect is ensured by the fact that the commutator of these two operators is non-trivial, allowing to gain regularity in the variable $y$. A full characterization of hypo-ellipticity can be found in [6].</p>
+
+<p>Solutions of (1) experience also  decay properties as $t\to  \infty$. This is also a manifestation of hypo-coercivity (in the sense developed by Villani [13], [14]) as a byproduct of the hidden interaction  of the two operators entering in the generator of the semigroup.</p>
+
+<p>In this particular case $\mu=1$ and $v(x)=x$, using the Fourier transform, the fundamental solution of (1) (starting from an initial Dirac mass $\delta_{(x_0, y_0)}$) can be computed explicitly getting the following anisotropic Gaussian kernel</p>
+
+<script type="math/tex; mode=display">\begin{equation*}\label{kernel}
+    K_{(x_0, y_0)}(x,y,t)  =
+     \frac{1}{3\pi^2 t^2}
+          exp \bigg[ -\frac{1}{\pi^2}\left(
+                                    \frac{3| y-(y_0+tx_0) |^2}{t^3} +
+                                    \frac{3(y-(y_0+tx_0)) (x-x_0)}{t^2}      +
+                                    \frac{| x-x_0 |^2}{t}
+                                    \right)
+                \bigg]
+  \end{equation*}</script>
+
+<p>which exhibits different diffusivity and decay scales in the variables $x$ and $y$.
+In view of the structure of the fundamental solution, one can deduce the following decay rates:</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{decay}
+\| f(t)\|_{L^2}+ \sqrt t\,  \| \partial_x f(t) \|_{L^2}+ t^{\frac 32} \|\partial_y f(t)\| _{L^2}\leq C ||f_0||_{L^2}
+\end{equation}</script>
+
+<p>for solutions with initial data $f_0$ in $L^2$. Similar decay properties can be predicted by scaling arguments, due to the invariance properties of the equation in (\ref{kolmo}).</p>
+
+<p>These decay properties are of anisotropic nature and of a different rate  in the  $x$ and $y$-directions. Indeed, in the $x$-direction, as in the classical heat equation,  we observe a decay rate of the order of $t^{-1/2}$, while, in the $y$-variable, the decay is of order  $t^{-3/2}$.</p>
+
+<p>The obtention of these decay properties by energy methods has been a challenging topic of particular interest when dealing with more general convection-diffusion models that do not allow the explicit computation of the kernel. In this effort, the asymptotic behavior of Kolmogorov equation and several other relevant kinetic models was investigated intensively through the concept and techniques of hypo-coercivity,  which allow to make explicit the hidden diffusivity and dissipativity of the involved operators  (see [13], [14] and the previous references therein).</p>
+
+<p>The literature on the asymptotic behaviour of models related with Kolmogorov equation is huge. We refer for instance to [8], [9], [2] for earlier works, and to [4], [5] for more recent approaches. Roughly speaking, it is by now well known that, constructing well-adapted Lyapunov functionals through  variations of the natural energy of the system,  one can  make the dissipativity properties of the semigroup  emerge and  then obtain the sharp decay rates. These techniques have been developed also in other contexts such as partially dissipative hyperbolic systems (see [1]).</p>
+
+<p>In [10] Porretta and Zuazua introduces a numerical scheme that preserves this hypo-coercivity property at the numerical level, uniformly on the mesh-size parameters. The issue is relevant from a computational point of view since, as it has been observed in a number of contexts (wave propagation, dispersivity of Schrödinger equations, conservation laws, etc. [15], [7]), the convergence property in the classical sense of numerical analysis (a property that concerns finite-time horizons) is not sufficient to ensure the asymptotic behavior of the PDE solutions to be captured correctly. The fact that the numerical approximation schemes preserve the decay properties of continuous solutions can be considered as a manifestation of the property of <i>numerical hypo-coercivity.</i></p>
+
+<p>In [3] Foster <i>et al</i> introduces a numerical scheme which preserves the long time behavior of solutions to the Kolmogorov equation. The method presented is based on a self-similar change of variables technique to transform the Kolmogorov equation into a new form, such that the problem of designing structure preserving schemes, for the original equation, amounts to building a standard scheme for the transformed equation. We also present an analysis for the operator splitting technique for the self-similar method and numerical results for the described scheme.</p>
+
+<p>Here, instead of, we investigate this behavior using the characteristics-Galerkin finite element method (trough Freefem++ [11])  and in particular, we confront the  results to those obtained in [3].</p>
+
+<h4>2 Description of the numerical scheme</h4>
+<p>At the numerical level, we employ a finite element method based on characteristics-Galerkin technique, and for the sake of simplicity and ease,  we use the Freefem ++ software ([11]). As described above, solution of Equation (1) does not only diffuses in the direction of x, by the effect of the diffusion operator $\partial_{xx} f$, but it is also diffuses in the direction of $y$, due to the transport equation $\partial_t f   - v(x) \partial_y f$. We will treat both effects, transport and diffusion separately,   using the characteristics method, that we recall hereafter, for the equation $\partial_t f   - v(x) \partial_y f$ and linear or quadratic  finite element to discretise  the diffusion term.</p>
+<h3>2.1 Transport</h3>
+<!--\label{SectionTransport}-->
+<p>Let us consider the following scalar two dimensional transport equation</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{transport}
+\partial_t f +  c \cdot \nabla f = g, \quad  c \in\RR^2 \textrm{ in } \Omega \subset\RR^2 \times (0,T)
+\end{equation}</script>
+
+<p>for some function $g$. Let (x,y,t)$\in \mathbb{R}^2 \times \mathbb{R}^+$. This transport equation can be written using the total derivative</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{td}
+\frac{d}{ds} f( X_{x,y,t}(s),s) = g
+\end{equation}</script>
+
+<p>if and only if the curve $( X_{x,y,t}(s),s)$ satisfies the system of ordinary differential equation</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{odec}
+\left\{
+\begin{array}{ll}
+\frac{d}{ds} X_{x,y,t}(s) =  c( X_{x,y,t}(s),s),&  \forall s\in(0,t), \\
+ X_{x,y,t}(t) = (x,y) \\
+\end{array}\right.
+\end{equation} %]]></script>
+
+<p>Under suitable assumptions on $ c$, the problem is well defined and there exists a unique solution to (6) $ X_{x,y,t}$, called the characteristic curve reaching (or passing from)  the point $(x,y)$ at time $t$.
+Since we cannot compute explicitly, in general,  the solution of the equation (6), hence (4), we look for an approximate solution. Noting $\delta t&gt;0$ the time step and $t_{n+1} = t_n + \delta t$, an easy manner to approximate the solution of Equation (4) is to perform a backward convection by the method of characteristic</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{approxMOC}
+ \frac{1}{\delta t} \left(f^{n+1}(x,y)-f^{n}( X_{x,y,t_n}(x))\right) = g^n(x,y)
+\end{equation}</script>
+
+<p>where $f^n(x,y) = f(x,y,t_n)$ and $ X_{x,y,t_n}(x)$ is an approximation, as shown  below, of the solution at time $t_n=n \delta t$ of the ordinary differential equation (6) for $s\in(t_n,t_{n+1})$ with  the final data $ X_{x,y,t}(t_{n+1}) = (x,y)$.</p>
+
+<p>Assuming $f$ regular enough, by Taylor expansion, one can write</p>
+
+<script type="math/tex; mode=display">f^n( X_{x,y,t}(t_{n}))=f^n( X_{x,y,t}(t_{n+1})) - \delta t \  c( X_{x,y,t_n}(t_n),t_n) \cdot \nabla f^n(x)  + O(\delta t^2)</script>
+
+<p>Applying also a Taylor expansion to the function $t\mapsto f^n((x,y)-t  c( X_{x,y,t_n}(t_n),t_n))$, we get</p>
+
+<script type="math/tex; mode=display">f^n((x,y)-t  c( X_{x,y,t_n}(t_n),t_n)) = f^n( X_{x,y,t}(t_{n+1})) - \delta t \  c( X_{x,y,t_n}(t_n),t_n) \cdot \nabla f^n(x)  + O(\delta t^2)</script>
+
+<p>and therefore one can approximate $f^n( X_{x,y,t}(t_{n}))$   by $f^n((x,y)- \delta t \  c( X_{x,y,t_n}(t_n),t_n))$. For the sake of clarity, in the sequel, we note $X(t)$ the characteristic curve passing through the point $(x,y)$ at time $t$.</p>
+
+<h3>2.2 Numerical algorithm</h3>
+<p>For numerical purpose, we consider Equation (1) in $\Omega \subset \mathbb{R}^2$ with homogeneous Neumann boundary conditions. Keeping in mind the characteristic method,  Equation (1) can be written</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{kolmo2}
+\left\{
+\begin{array}{lll}
+\frac{d}{dt} f( X(t)) - \mbox{div}(A \nabla f) =0, & (x,y)\in\Omega, t\in (0,T), T>0\\
+A \nabla f \cdot  n =0, & \textrm{ in } \partial\Omega\\
+f(x,y,0) =f_0(x,y),      & (x,y)\in\Omega
+\end{array}
+\right.
+\end{equation} %]]></script>
+
+<p>where $ n$ stands for the outward unit normal to $\Omega$, and  for all $s\in(0,t)$,   $ X$ is the solution of</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{odekolmo}
+\left\{
+\begin{array}{ll}
+\frac{d}{ds} X(s) =  v( X_{x,y,t}(s)),&  \forall s\in(0,t), \\
+ X(t) = (x,y) \ .\\
+\end{array}\right.
+\end{equation} %]]></script>
+
+<p>Here, we use the following notations</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+v = \left(\begin{array}{c}            0\\-v           \end{array}\right)$ and $A = \left(\begin{array}{cc}            \mu& 0\\0&0           \end{array}\right) %]]></script>
+
+<p>Formally, thus, one can write, for any $\varphi \in V$ for some functional space, the weak form of Equation (8) as follows</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{weakform1}
+\int_{\Omega}  \frac{d}{dt} f(X(t)) \varphi \ dx dy + \int_{\Omega} A \nabla f \cdot \nabla \varphi \ dx dy  = 0
+\end{equation}</script>
+
+<p>Let us denote $t_0&lt;t_1&lt;\ldots &lt; t_M = T$ be the discrete time with $t_n = n \delta t$ where $\delta t$ denotes the time step. We set  $M = T/\delta t$. <br />
+Using the method of characteristic for the total derivative (see section 2.1), the weak form (10) can be approximated by</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\int_{\Omega}  \frac{1}{\delta t}\left(f^{n+1}-f^n \circ  X^n  \right)\varphi  \ dx dy + \int_{\Omega} A \nabla f^{n+1} \cdot \nabla \varphi \ dx dy  = 0
+\end{equation*}</script>
+
+<p>or</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{weakform2}
+a(f^{n+1},\varphi) = (f^n,\varphi)
+\end{equation}</script>
+
+<p>where
+<script type="math/tex">a(f,\varphi) = ((I/ \delta t+A\nabla)f,\varphi) \ .</script>
+Here $(\cdot,\cdot)$ is the inner product in $L^2(\Omega)$.</p>
+
+<p>Therefore, denoting $\tau_h$ a partition of $\Omega$ by triangles and $V_h$ the $P_k$-finite element space (of degree $k$),
+the weak discrete form of the problem (8) is</p>
+
+<p>Find ${f_h^n}_{n=1}^{M=T/\delta t} \subset V_h$ such that for $n=1,\dots, M$,</p>
+
+<script type="math/tex; mode=display">a(f_h^n,\varphi_h) = (f^n,\varphi_h), \ \forall \varphi_h \in V_h \ .</script>
+
+<p>The Freefem++ script corresponding to the problem may as follows
+&lt;/ol&gt;
+Freefem++ CODE:</p>
+<ol>
+ 	<li value="1">Freefem++ code for prog_control.m:
+<pre>
+<span style="color: green;"></span>
+<span style="color: green;">/*</span>
+<span style="color: green;">C****************************************************************************C</span>
+<span style="color: green;">C                                                                            C</span>
+<span style="color: green;">C     This program solve the Kolmogorov equation                             C </span>
+<span style="color: green;">C     f_t-mu*f_{xx}-v(x) f_y = 0 on Omega x [0,T]                            C  </span>
+<span style="color: green;">C     with free boundary conditions                                          C</span>
+<span style="color: green;">C     using the Characteristic-Galerkin Finite Element Method                C </span>
+<span style="color: green;">C********************************************C*******************************C</span>
+<span style="color: green;">C     f(i,j)   ==&gt; unknown scalar function   C</span>
+<span style="color: green;">C     phi(i,j) ==&gt; test function             C</span>
+<span style="color: green;">C     v(i)     ==&gt; scalar potential function C</span>
+<span style="color: green;">C********************************************C</span>
+<span style="color: green;">*/      </span>
+<span style="color: green;"></span>
+<span style="color: green;">//Omega : square mesh [0,20]x[0,20] </span>
+<span style="color: green;">real aa = 10;</span>
+<span style="color: green;">real x0=-aa,x1=aa;</span>
+<span style="color: green;">real y0=-aa,y1=aa;</span>
+<span style="color: green;">int m = 100;</span>
+<span style="color: green;">mesh Th=square(m,m,[x0+(x1-x0)*x,y0+(y1-y0)*y]);</span>
+<span style="color: green;"></span>
+<span style="color: green;"></span>
+<span style="color: green;">real Tf  = 10,     </span>
+<span style="color: green;">     dt  = 0.01,  </span>
+<span style="color: green;">     mu  = 1;    // viscosity parameter (see equation above)</span>
+<span style="color: green;">     </span>
+<span style="color: green;"></span>
+<span style="color: green;">fespace Vh(Th,P2);     // P1 linear finite element</span>
+<span style="color: green;">Vh f0 = exp(-x^2-y^2), // initial data</span>
+<span style="color: green;">   phi,                // test function</span>
+<span style="color: green;">   v=-x,</span>
+<span style="color: green;">   f;</span>
+<span style="color: green;"></span>
+<span style="color: green;">   </span>
+<span style="color: green;">for(real t=0;t&lt;=Tf;t=t+dt)</span>
+<span style="color: green;">{</span>
+<span style="color: green;">  Vh c=convect([0,v(x,y)],-dt,f0);</span>
+<span style="color: green;">  solve Kolmogorov(f,phi)</span>
+<span style="color: green;">            = </span>
+<span style="color: green;">              int2d(Th)(f*phi/dt +mu*(dx(f)*dx(phi)))</span>
+<span style="color: green;">    	    - int2d(Th)(c/dt*phi)</span>
+<span style="color: green;">	    ;</span>
+<span style="color: green;">  f0=f;</span>
+<span style="color: green;">}</span>
+<span style="color: green;"></span>
+</pre>
+<h4>3 Numerical experiment</h4>
+In this section we present a test case, [3], for which we confront to an exact solution of the Kolmogorov Equation (1) with $\mu=1$ and $v(x)=x$. In particular, we compare our results to the one obtained in [3]. For our numerical test case, we have used linear finite element.
+The initial value problem (1) with the initial data $f_0(x,y) = \exp(-x^2-y^2)$ admits the following exact solution
+$$f_{ex}(x,y,t) = \frac{\exp\left(-\frac{(( 3+3t^2 +4t^3)x^2 +6t(1+2t)xy+3(1+4t)y^2)}{(3+12t+4t^3 +4t^4)}\right)}{\sqrt{1 + 4 t + 4/3 t^2 + 4/3 t^4}} \ . $$
+As done in [3], for each numerical tests, we have considered the time interval, and problem domain to be respectively $[0, T=10]$ and $\Omega = [−10, 10] \times [−10,10]$, The time step is kept constant equal to $\delta t = 0.01$ and the number of triangles along each side of the domain is given by $m=50$, $100$ and $150$.
+As one can see in the video above, the support for the function grows beyond the problem domain in the given time interval and interact with boundary conditions. This interaction, since we do not use here transparent boundary conditions, increases the error as one can also observe in Figure 1. We also show the time evolution of $\|f(\cdot,t)-f_{ex}(\cdot,t)\|_2$, $\|\partial_xf(\cdot,t)\|_2$, $\|\partial_y f(\cdot,t)\|_2$ and
+$$D(t)=\left(\| f(t)\|_{L^2}+ \sqrt t\,  \| \partial_x f(t) \|_{L^2}+ t^{\frac 32} \|\partial_y f(t)\| _{L^2}\right)/||f_0||_{L^2} \ ,$$  in Figure 2. The $L_2$ error at time time $T=10$ is approximately $0.0072$ as one can see in Figure 2(a). Moreover, the error $\int_0^T \| f(\cdot,t)-f_{ex}(\cdot,t)\|_2 dt $ is approximately of order $0.02$. We also observe, due to the interaction with the boundary conditions that the errors increase sensibly for each numerical experiments approximately at time $t\approx 8.5$. Therefore, in order to  compute the numerical order  of convergence, we have computed for each $m$, $m\mapsto \max_t\left( \|f(\cdot,t)-f_{ex}(\cdot,t)\|_2\right)$. We find almost the order $1$ which is satisfactory.  Finally, we have computed the quantity
+$$D(t) =\left(\| f(t)\|_{L^2}+ \sqrt t\,  \| \partial_x f(t) \|_{L^2}+ t^{\frac 32} \|\partial_y f(t)\| _{L^2}\right)/||f_0||_{L^2}\ , $$
+for which we numerically show that the constant for the decay rates is $C=1$ as shown in Figure 2(d)
+
+<video style="display: block; margin: 0 auto; width: 75%;" controls="">
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/11/Kolmogorov1.ogg" type="video/ogg" />
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/11/Kolmogorov1.mp4" type="video/mp4" />
+Your browser does not support the video tag.
+</video>
+<i>Movie 1: Numerical simulation of the test case .</i>
+
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/11/freefemsol100.eps_.jpg" alt="Freefem solution with m=100" width="562" height="446" class="size-full wp-image-01" /> <i align="aligncenter">Figure 1.a: Numerical and exact solution at time $T=10$, Freefem solution with $m=100$</i>
+
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/11/exactsol100.eps_.jpg" alt="Exact solution" width="562" height="446" class="size-full wp-image-02" /> <i align="aligncenter">Figure 1.b: Numerical and exact solution at time $T=10$, Exact solution</i>
+
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/11/L2error.eps_.jpg" alt="L_2 errors" width="562" height="446" class="size-full wp-image-1" /> <i align="aligncenter">Figure 2.a: $L_2$ errors, $t\mapsto\|f(\cdot,t)-f_{ex}(\cdot,t)\|_2$</i>
+
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/11/L2normdx.eps_.jpg" alt="L_2 errors" width="562" height="446" class="size-full wp-image-2" /> <i align="aligncenter">Figure 2.b: $L_2$ errors, $t\mapsto \|\partial_xf(\cdot,t)\|_2$</i>
+
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/11/L2normdy.eps_.jpg" alt="L_2 errors" width="562" height="446" class="size-full wp-image-3" /> <i align="aligncenter">Figure 2.c: $L_2$ errors, $t\mapsto \|\partial_yf(\cdot,t)\|_2$</i>
+
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/11/L2ez.eps_.jpg" alt="L_2 errors" width="562" height="446" class="size-full wp-image-4" /> <i align="aligncenter">Figure 2.d: $L_2$ errors,$t\mapsto D(t)$</i>
+
+
+
+To end, we present a last numerical simulation of rotating and moving initial data.
+<video style="display: block; margin: 0 auto; width: 75%;" controls="">
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/11/Kolmogorov2.ogg" type="video/ogg" />
+<source src="https://cmc.deusto.eus/wp-content/uploads/2017/11/Kolmogorov2.mp4" type="video/mp4" />
+Your browser does not support the video tag.
+</video>
+<i>Movie 2: Numerical simulation on $\Omega = [0,10]\times[0,20]$, $[0,T=0.6]$ with $\mu=10^{-3}$, $v(x)=-x$  and $f_0(x,y) = 20 \exp(-(y-15)^2) \exp(-0.1(x-10)^2)$.</i>
+
+<h4>Bibliography</h4>
+
+<p><strong>[1]</strong> K. Beauchard and E. Zuazua, <a href=""><em><i>Sharp large time asymptotics for partially dissipative hyperbolic systems</i></em></a>, Arch. Ration. Mech. Anal. 199 (2011) 177-7227.</p>
+<p><strong>[2]</strong> A. Carpio, <a href=""><em><i>Long-time behavior for solutions of the Vlasov-Poisson-Fokker-Planck equation</i></em></a>, Mathematical methods in the applied sciences 21 (1998), 985-1014.</p>
+<p><strong>[3]</strong> E. L. Foster, J. Lohéac and  M.-B. Tran, <a href=""><em><i> A Structure Preserving Scheme for the Kolmogorov Equation</i></em></a>, preprint   2014 (arXiv:1411.1019v3).</p>
+<p><strong>[4]</strong> F. Hérau, <a href=""><em><i>Short and long time behavior of the Fokker-Planck equation in a confining potential and applications</i></em></a>, J.  Funct.  Anal. 244 (2007), 95-118.</p>
+<p><strong>[5]</strong> F. Hérau  and F. Nier, <a href=""><em><i>Isotropic hypoellipticity and trend to equilibrium for the Fokker-Planck equation with a high-degree potential</i></em></a>,  Arch. Ration. Mech. Anal. 171 (2004), 151-218.</p>
+<p><strong>[6]</strong> L. Höormander, <a href=""><em><i>Hypoelliptic second order differential equations</i></em></a>,  Acta Math. 119 (1967), 147-171.</p>
+<p><strong>[7]</strong> L. Ignat, A. Pozo and E. Zuazua, <a href=""><em><i>Large-time asymptotics, vanishing viscosity and numerics for 1-D scalar conservation laws</i></em></a>, Math of Computation, to appear.</p>
+<p><strong>[8]</strong> A. M. Il'in, <a href=""><em><i>On a class of ultraparabolic equations</i></em></a>, Soviet Math. Dokl. 5  (1964), 1673-1676.</p>
+<p><strong>[9]</strong> A. M. Il'in and R. Z. Kasminsky, <a href=""><em><i> On the equations of Brownian motion</i></em></a>, Theory Probab. Appl. 9 (1964), 421-444.</p>
+<p><strong>[10]</strong> A. Porretta and E. Zuazua, <a href=""><em><i>Numerical hypocoercivity for the Kolmogorov equation</i></em></a>, Mathematics of Computation 86.303 (2017): 97-119.</p>
+<p><strong>[11]</strong> Frédéric Hecht, Olivier Pironneau, A~Le~Hyaric and K~Ohtsuka, <a href=""><em><i>Freefem++ manual</i></em></a>, 2005.</p>
+<p><strong>[12]</strong> A. Kolmogoroff, <a href=""><em><i>Zufallige bewegungen (zur theorie der brownschen bewegung)</i></em></a><i> Annals of Mathematics</i>, pages 116--117, 1934.</p>
+<p><strong>[13]</strong> C. Villani, <a href=""><em><i>Hypocoercivity</i></em></a>, Mem. Amer. Math. Soc. 202  (2009).</p>
+<p><strong>[14]</strong> C. Villani, <a href=""><em><i>Hypocoercive diffusion operators</i></em></a>, In International Congress of Mathematicians, Vol. III, 473-498.  Eur. Math. Soc. Zürich, 2006.</p>
+<p><strong>[15]</strong> E. Zuazua, <a href=""><em><i>Propagation, observation, and control of waves approximated by finite difference methods</i></em></a>, SIAM Review, 47 (2) (2005), 197-243.</p>
+</li></ol>
+:ET

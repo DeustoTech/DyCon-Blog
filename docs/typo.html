@@ -395,7 +395,7 @@ For simplicity of the presentation, let us thus assume for a moment that $f \equ
 
 <center>
 <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/esol_matlab.png" width="600px" />
-<center> The solution $\phi$ to the elliptic obstacle problem just above. </center>
+<center> The solution $\phi$ to the elliptic obstacle problem just above. The obstacle is equal to zero, and the free boundary is displayed in red. </center>
 </center>
 
 <p><strong>Remark:</strong> At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have</p>
@@ -433,6 +433,20 @@ While the mathematical formulation is similar, the physical interpretation of th
 <center> Figure 2. Here $\psi(x)=3*\sqrt{(1-x^2)}$ in $(-1,1)$ (black) is a barrier for the evolving solution (blue). The initial data coincides with $\psi$ on (-1.5, 1.5). We observe that the contact set $\{ u = \psi \}$ changes (gets smaller) as time grows. There is also matching of normal derivatives on the contact points (i.e. the free boundary). 
 Finally, the solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) for large time, as seen below.   </center>
 
+<center>
+<table>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/terrain_rotate.gif" width="600px" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/obstacle3d.png" width="600px" /></th>
+</tr>
+</table>
+
+
+</center>
+<center>Figure 3. The solution to the parabolic obstacle problem (<strong>left</strong>) with Dirichlet boundary condition $=1$ and the obstacle (<strong>right</strong>). The free boundary (delimiting the contact set with the obstacle) is projected on a plane below in red. It is seen that the source term $-1$ acts as a gravity force pushing the membrane towards the obstacle. We moreover observe a convergence to the equilibrium position (see also the section below). </center>
+
 <p>For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with <strong>two boundary conditions</strong> at the free boundary</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
@@ -459,7 +473,8 @@ While in Figure 2 the contact set is shrinking does not disappear, it may happen
 <p>We may observe this convergence numerically in Figures 3 and 4. In both cases, we work in the ball $B_2$, with boundary data $g\equiv 0.8$, barrier $\psi\equiv 0$ and 
 initial datum supported outside $B_{1.5}$.</p>
 
-<p>The one-dimensional case:</p>
+<p><strong>The one-dimensional case:</strong></p>
+
 <table>
 <tr>
 <th>
@@ -469,20 +484,33 @@ initial datum supported outside $B_{1.5}$.</p>
 </tr>
 </table>
 
-<center>Figure 3. The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. </center>
+<center>Figure 4. The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. </center>
 
-<p>The two-dimensional case:</p>
+<p><strong>The two-dimensional case:</strong></p>
 <center>
 <table>
 <tr>
-<th><video style="text-align:center" controls="" width="110%">  <source src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_2d.mp4" type="video/mp4" /></video></th>
-<th><img style="padding-bottom: 5px;" src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/steady_2d.png" width="99%" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/state.gif" width="600px" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/interface.gif" width="600px" /></th>
 </tr>
 </table>
 
 
 </center>
-<center>Figure 4. We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  </center>
+<center>Figure 5. We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  </center>
+
+<table>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/finger_rotate.gif" width="600px" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/elliptic_zero.png" width="600px" /></th>
+</tr>
+</table>
+
+<center>Figure 6. In this figure, the obstacle is set to zero, and we consider Dirichlet boundary conditions $=0.8$ on the fixed boundary. We see that even when considering initial data which are not an equilibrum membrane position (but do satisfy the obstacle condition), as time increases, the solution of the parabolic problem (<strong>left</strong>) converges to that of the elliptic problem (<strong>right</strong>)  </center>
 
 <h2 id="2-numerical-implementation">2. <em>Numerical implementation</em></h2>
 
@@ -592,7 +620,7 @@ for n in range(num_steps):
 
 <p>Given a target $\phi_d$ and a regularization parameter $\delta&gt;0$ (we usually use $\delta = 10^{-2}$), we seek to minimize</p>
 
-<script type="math/tex; mode=display">J(u) = \frac12 \|\phi-\phi_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|_{L^2(\Omega)}</script>
+<script type="math/tex; mode=display">J(u) = \frac12 \|\phi-\phi_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|^2_{L^2(\Omega)}</script>
 
 <p>subject to</p>
 
@@ -615,7 +643,7 @@ for n in range(num_steps):
 <p>The uncontrolled solution of the elliptic obstacle problem in this case is:</p>
 
 <center>
-<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/freesteady.png" width="600px" />
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/elliptic.png" width="600px" />
 </center>
 
 <p>The <code class="highlighter-rouge">FEniCS</code> optimization code will have the effect of obtaining the following results.</p>
@@ -623,18 +651,18 @@ for n in range(num_steps):
 <table>
 <tr>
 	<th>
-<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/optimalstate_dome.png" width="600px" />
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/opt_state.png" width="600px" />
 	</th>
 	<th>
-	<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/dome_obstacle.png" width="600px" />
+	<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/obstacle.png" width="600px" />
 	</th>
 </tr>
 <tr>
 <th>
-<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/target_dome.png" width="600px" />
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/target.png" width="600px" />
 </th>
 <th>
-<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/optimalcontrol_dome.png" width="600px" />
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/opt_control.png" width="600px" />
 </th>
 </tr>
 </table>
@@ -754,7 +782,7 @@ For comparison, we recall that the uncontroled free dynamics have a very differe
 </code></pre></div></div>
 <p>Having solved the free dynamics, we are now in a position to solve the optimal control problem:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">YT</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">+</span> <span class="mi">0</span><span class="o">*</span><span class="n">xline</span><span class="o">'</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">YT</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">+</span> <span class="mi">0</span><span class="o">*</span><span class="nb">xline</span><span class="o">'</span><span class="p">;</span>
 <span class="nb">beta</span> <span class="o">=</span> <span class="n">dx</span><span class="o">^</span><span class="mi">4</span><span class="p">;</span>
 <span class="n">Psi</span>  <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span> <span class="n">dx</span><span class="o">*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">);</span>
 <span class="n">L</span>    <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">)</span>  <span class="n">dx</span><span class="o">*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="k">...</span>
@@ -1721,11 +1749,11 @@ u\equiv 0, & x\in(-1,1)^c.
 
 <span class="n">F</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 
-<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
     <span class="n">xx</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">xx</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">xx</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
-    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
-    <span class="n">F</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
+    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
+    <span class="n">F</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
 <span class="k">end</span>
 
 <span class="n">A</span> <span class="o">=</span> <span class="n">FEFractionalLaplacian</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
@@ -1783,11 +1811,11 @@ u\equiv 0, & x\in(-1,1)^c.
 
 <span class="n">F</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 
-<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
     <span class="n">xx</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">xx</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">xx</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
-    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
-    <span class="n">F</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
+    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
+    <span class="n">F</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
 <span class="k">end</span>
 
 <span class="n">A</span> <span class="o">=</span> <span class="n">FEFractionalLaplacian</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
@@ -1943,20 +1971,20 @@ R0 =
 
 <span class="n">UI</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">);;</span>
 
-<span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span>
+<span class="k">for</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span>
     <span class="n">Uold</span><span class="o">=</span><span class="n">U</span><span class="p">;</span>
-      <span class="n">UI</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">=</span><span class="n">h</span><span class="o">*</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">));</span>
+      <span class="n">UI</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">h</span><span class="o">*</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">));</span>
     <span class="k">for</span> <span class="n">o</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-    <span class="n">UI</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">=</span><span class="n">UI</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="o">*</span><span class="n">Uold</span><span class="p">(</span><span class="n">o</span><span class="p">);</span>
+    <span class="n">UI</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">UI</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="o">*</span><span class="n">Uold</span><span class="p">(</span><span class="n">o</span><span class="p">);</span>
     <span class="k">end</span>
-    <span class="n">B</span><span class="o">=</span><span class="p">[</span><span class="n">lambda</span><span class="o">*</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">))</span> <span class="p">;</span><span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)];</span>
+    <span class="n">B</span><span class="o">=</span><span class="p">[</span><span class="n">lambda</span><span class="o">*</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">))</span> <span class="p">;</span><span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)];</span>
     <span class="n">F</span><span class="o">=-</span> <span class="n">delta</span><span class="o">*</span><span class="n">Uold</span> <span class="p">;</span>
     <span class="n">U</span><span class="o">=</span><span class="n">A</span><span class="o">*</span><span class="n">Uold</span><span class="o">+</span><span class="n">B</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="n">F</span><span class="p">;</span>
     <span class="n">val</span><span class="o">=</span><span class="nb">feval</span><span class="p">(</span><span class="o">@</span><span class="n">int</span><span class="p">,</span><span class="n">Uold</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">a</span><span class="p">);</span>
-    <span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">A0</span><span class="o">-</span><span class="n">mu</span><span class="o">*</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">-</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">)));</span>
-    <span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">muc</span> <span class="o">*</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">));</span>
+    <span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">A0</span><span class="o">-</span><span class="n">mu</span><span class="o">*</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">-</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">)));</span>
+    <span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">muc</span> <span class="o">*</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">));</span>
     <span class="n">Up</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-    <span class="n">Up</span><span class="o">=</span><span class="p">[</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span> <span class="n">U</span><span class="p">];</span>
+    <span class="n">Up</span><span class="o">=</span><span class="p">[</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span> <span class="n">U</span><span class="p">];</span>
     <span class="n">Uf</span><span class="o">=</span><span class="p">[</span><span class="n">Uf</span><span class="p">,</span><span class="n">Up</span><span class="p">];</span>
 <span class="k">end</span>
 </code></pre></div></div>
@@ -2199,7 +2227,7 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 <span class="c1">% Read the data from the external file data.txt</span>
 
 <span class="n">fid</span><span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="s1">'data.txt'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">);</span>
-<span class="n">C</span> <span class="o">=</span> <span class="nb">fscanf</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span><span class="s1">'%f'</span><span class="p">,</span><span class="n">Inf</span><span class="p">);</span>
+<span class="n">C</span> <span class="o">=</span> <span class="nb">fscanf</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span><span class="s1">'%f'</span><span class="p">,</span><span class="nb">Inf</span><span class="p">);</span>
 <span class="n">T</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">Nx</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">Nt</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
@@ -2772,8 +2800,8 @@ x<10 %]]></script> and <script type="math/tex">\rho_0(x)=0</script> if <script t
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 
-<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span>
-    <span class="n">U</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">u0</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">U</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">u0</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="mi">0</span><span class="p">);</span>
 <span class="k">end</span>
 <span class="nb">figure</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">U</span><span class="p">)</span>
@@ -2787,8 +2815,8 @@ x<10 %]]></script> and <script type="math/tex">\rho_0(x)=0</script> if <script t
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span><span class="o">=@</span><span class="p">(</span> <span class="n">t</span> <span class="p">)</span> <span class="mi">2</span><span class="o">*</span><span class="n">t</span> <span class="p">;</span>
 <span class="n">Q</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span>
- <span class="n">Q</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">))</span>   <span class="p">;</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span>
+ <span class="n">Q</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>   <span class="p">;</span>
 <span class="k">end</span>
 
 <span class="nb">figure</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -2814,15 +2842,15 @@ x<10 %]]></script> and <script type="math/tex">\rho_0(x)=0</script> if <script t
 <span class="c1">%%gif('pdedelay4.gif','frame',fig,'DelayTime',1)</span>
 <span class="k">for</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span>
     <span class="k">if</span> <span class="p">(((</span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="n">to</span><span class="p">)</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span><span class="o">||</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="n">to</span><span class="p">)</span><span class="o">&lt;</span><span class="n">epsilon</span><span class="p">))</span>
-        <span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span>
-            <span class="n">Ut</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">u0</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="n">to</span><span class="p">);</span>
-            <span class="n">Fretard</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">Ut</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+        <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">Ut</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">u0</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="n">to</span><span class="p">);</span>
+            <span class="n">Fretard</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">Ut</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
         <span class="k">end</span>
     <span class="k">else</span>
         <span class="n">s</span><span class="o">=</span><span class="nb">floor</span><span class="p">((</span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="n">to</span><span class="p">)/</span><span class="n">dt</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-        <span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span>
-            <span class="n">Ut</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">Uf</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
-            <span class="n">Fretard</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">Ut</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+        <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">Ut</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">Uf</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
+            <span class="n">Fretard</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">Ut</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
         <span class="k">end</span>
     <span class="k">end</span>
     <span class="n">Uold</span><span class="o">=</span><span class="n">U</span><span class="p">;</span>
@@ -3543,8 +3571,8 @@ ans =
 <p>Construct feedback controller using interpolation of DRE sol</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gain</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="nb">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
-<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="n">gain</span><span class="p">(</span><span class="nb">i</span><span class="p">,:)</span> <span class="o">=</span> <span class="n">B</span><span class="o">'</span> <span class="o">*</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="nb">i</span><span class="p">,:),</span><span class="nb">size</span><span class="p">(</span><span class="n">A</span><span class="p">));</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">gain</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span> <span class="o">=</span> <span class="n">B</span><span class="o">'</span> <span class="o">*</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">,:),</span><span class="nb">size</span><span class="p">(</span><span class="n">A</span><span class="p">));</span>
 <span class="k">end</span>
 <span class="n">gain_t</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="nb">interp1</span><span class="p">(</span><span class="n">time_ric</span><span class="p">,</span><span class="n">gain</span><span class="p">,</span><span class="n">t</span><span class="p">);</span>
 <span class="n">u_dr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">gain_t</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
@@ -3553,8 +3581,8 @@ ans =
 <span class="n">i_nonlinear_dre</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">Nsys_f</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">9.8</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="n">u_dr</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
 <span class="p">[</span><span class="n">timedn</span><span class="p">,</span> <span class="n">statedn</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_nonlinear_dre</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span><span class="c1">%%</span>
 <span class="n">input_dric</span><span class="o">=</span><span class="p">[];</span>
-<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">timedn</span><span class="p">)</span>
-    <span class="n">input_dric</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">u_dr</span><span class="p">(</span><span class="n">timedn</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="n">statedn</span><span class="p">(</span><span class="nb">i</span><span class="p">,:)</span><span class="o">'</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">timedn</span><span class="p">)</span>
+    <span class="n">input_dric</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">u_dr</span><span class="p">(</span><span class="n">timedn</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">statedn</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="o">'</span><span class="p">);</span>
 <span class="k">end</span>
 </code></pre></div></div>
 
@@ -3645,10 +3673,10 @@ ans =
 <p>Solve the rps basis by solving the optimization problems</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Psi</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">Nbasis</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ei</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">Nbasis</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">ei</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">Psi</span><span class="p">(:,</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">A</span><span class="p">\(</span><span class="n">B</span><span class="s1">'*((B*inv(A)*B'</span><span class="p">)\</span><span class="n">ei</span><span class="p">));</span>
+<span class="n">ei</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">Psi</span><span class="p">(:,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">A</span><span class="p">\(</span><span class="n">B</span><span class="s1">'*((B*inv(A)*B'</span><span class="p">)\</span><span class="n">ei</span><span class="p">));</span>
 <span class="k">end</span>
 </code></pre></div></div>
 
@@ -3731,15 +3759,15 @@ ans =
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="nb">cell</span><span class="p">(</span><span class="n">N</span><span class="p">/</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">f</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="mi">1</span><span class="p">;</span>
-<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span>
-    <span class="n">f</span><span class="p">{</span><span class="nb">i</span><span class="o">+</span><span class="mi">1</span><span class="p">}</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="mi">2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="nb">i</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">f</span><span class="p">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">}</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="mi">2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
 <span class="k">end</span>
 <span class="n">f</span> <span class="o">=</span> <span class="nb">flip</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
 
 <span class="n">Matrix_cos</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">/</span><span class="mi">2</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">/</span><span class="mi">2</span>
     <span class="n">xx</span><span class="o">=</span><span class="nb">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span>
-    <span class="n">Matrix_cos</span><span class="p">(</span><span class="nb">i</span><span class="p">,:)</span><span class="o">=</span><span class="nb">arrayfun</span><span class="p">(</span><span class="n">f</span><span class="p">{</span><span class="nb">i</span><span class="p">},</span><span class="n">xx</span><span class="p">);</span>
+    <span class="n">Matrix_cos</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="o">=</span><span class="nb">arrayfun</span><span class="p">(</span><span class="n">f</span><span class="p">{</span><span class="n">i</span><span class="p">},</span><span class="n">xx</span><span class="p">);</span>
 <span class="k">end</span>
 </code></pre></div></div>
 
@@ -4238,9 +4266,9 @@ K =
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A1</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
 <span class="n">A2</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="n">m</span><span class="p">:</span><span class="mi">7</span><span class="o">*</span><span class="n">m</span>
-    <span class="n">bj</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="p">(</span><span class="nb">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="mi">9</span><span class="p">)</span><span class="o">^</span><span class="mi">4</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="nb">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="mi">9</span><span class="p">)/</span><span class="mi">3</span><span class="p">)/(</span><span class="mi">3</span><span class="o">^</span><span class="mi">5</span><span class="o">*</span><span class="nb">gamma</span><span class="p">(</span><span class="mi">5</span><span class="p">)));</span>
-    <span class="n">A2</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,(</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="nb">j</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">=</span><span class="n">bj</span><span class="o">*</span><span class="n">A1</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">j</span><span class="o">=</span><span class="n">m</span><span class="p">:</span><span class="mi">7</span><span class="o">*</span><span class="n">m</span>
+    <span class="n">bj</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="p">(</span><span class="n">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="mi">9</span><span class="p">)</span><span class="o">^</span><span class="mi">4</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">/</span><span class="mi">9</span><span class="p">)/</span><span class="mi">3</span><span class="p">)/(</span><span class="mi">3</span><span class="o">^</span><span class="mi">5</span><span class="o">*</span><span class="nb">gamma</span><span class="p">(</span><span class="mi">5</span><span class="p">)));</span>
+    <span class="n">A2</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">j</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">=</span><span class="n">bj</span><span class="o">*</span><span class="n">A1</span><span class="p">;</span>
 <span class="k">end</span>
 <span class="n">P</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">/</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">A2</span><span class="p">;</span>
 </code></pre></div></div>
@@ -4259,9 +4287,9 @@ K =
 <p>Mortality matrix. The mortality rate $\beta(a)=\dfrac{1}{9(A-a)}$</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">S</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
-    <span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
-        <span class="n">S</span><span class="p">((</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="nb">i</span><span class="p">,(</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="nb">i</span><span class="p">)</span><span class="o">=-</span><span class="mi">1</span><span class="p">/(</span><span class="mi">16</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="p">((</span><span class="nb">j</span><span class="o">*</span><span class="n">n</span><span class="p">)/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))));</span>
+<span class="k">for</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+    <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+        <span class="n">S</span><span class="p">((</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="n">i</span><span class="p">,(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">=-</span><span class="mi">1</span><span class="p">/(</span><span class="mi">16</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="p">((</span><span class="n">j</span><span class="o">*</span><span class="n">n</span><span class="p">)/(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))));</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="n">A</span><span class="o">=</span><span class="n">P</span><span class="o">+</span><span class="n">B1</span><span class="o">+</span><span class="n">B3</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
@@ -4273,9 +4301,9 @@ K =
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
 <span class="n">Z0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
-    <span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
-        <span class="n">Z0</span><span class="p">((</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="nb">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mi">5</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="nb">i</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">3</span><span class="p">/</span><span class="mi">10</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">)/</span><span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="nb">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">4</span><span class="p">/</span><span class="mi">10</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+    <span class="k">for</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+        <span class="n">Z0</span><span class="p">((</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mi">5</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">i</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">3</span><span class="p">/</span><span class="mi">10</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">)/</span><span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">j</span><span class="p">/</span><span class="n">n</span><span class="o">-</span><span class="mi">4</span><span class="p">/</span><span class="mi">10</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">);</span>
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div></div>
@@ -4891,8 +4919,8 @@ ini =
 <span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span> <span class="n">F</span><span class="p">,</span> <span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
 
 <span class="nb">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
-    <span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">(:,</span><span class="nb">i</span><span class="p">));</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">(:,</span><span class="n">i</span><span class="p">));</span>
     <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
 <span class="k">end</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">(:,</span><span class="n">N</span><span class="p">))</span>
@@ -4915,8 +4943,8 @@ ini =
 <span class="p">[</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_nonlinear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
 
 <span class="nb">figure</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
-    <span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="nb">i</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="n">i</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
     <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
 <span class="k">end</span>
 <span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="n">N</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -4930,8 +4958,8 @@ ini =
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_nonlinear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
 
 <span class="nb">figure</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
-    <span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="nb">i</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="n">i</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
     <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
 <span class="k">end</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="n">N</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -5161,17 +5189,17 @@ ini =
 
 <p>N is the size of the graph, that is to say, the number of nodes.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="n">numnodes</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="nb">numnodes</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>We compute the number of neighbours of each node</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">connectivities</span> <span class="o">=</span> <span class="n">degree</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">connectivities</span> <span class="o">=</span> <span class="nb">degree</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>We check whether the graph is connected or not, if not, we must choose a different graph.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">conncomp</span><span class="p">(</span><span class="n">G</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="nb">conncomp</span><span class="p">(</span><span class="n">G</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Generate a new graph'</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre></div></div>
@@ -5180,7 +5208,7 @@ ini =
 
 <p>We compute the Perron matrix of $G$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="nb">gamma</span> <span class="o">*</span> <span class="n">laplacian</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="nb">gamma</span> <span class="o">*</span> <span class="nb">laplacian</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>We can see that the system tends to reach a consensus, that is to say, if no control is applied to the system, it evolves to a steady state in which all the nodes have the same state.</p>
@@ -5415,8 +5443,8 @@ ans =
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
 <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">ones</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-    <span class="n">A</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+    <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 <span class="k">end</span>
 <span class="n">A</span>
 </code></pre></div></div>
@@ -5494,8 +5522,8 @@ theta0 =
     <span class="n">iter</span> <span class="o">=</span> <span class="n">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
     <span class="c1">%% Definition of the linearized Kuramoto problem</span>
     <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">ones</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-    <span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-        <span class="n">A</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+        <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
     <span class="k">end</span>
     <span class="c1">%% Initial state</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span><span class="n">sigma</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
@@ -5807,7 +5835,7 @@ poissonOptShapeFoam
 <span class="n">fr</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="n">hx</span><span class="p">)</span><span class="o">*</span><span class="nb">pi</span><span class="o">^</span><span class="mi">2</span><span class="p">/</span><span class="mi">16</span><span class="p">;</span> <span class="c1">%% Frequency of the oscillations</span>
 </code></pre></div></div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u0</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">gamma</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span><span class="o">.*</span><span class="nb">exp</span><span class="p">(</span><span class="mi">1</span><span class="nb">i</span><span class="o">*</span><span class="n">fr</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u0</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">gamma</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span><span class="o">.*</span><span class="nb">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">i</span><span class="o">*</span><span class="n">fr</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>Plot of the initial datum</p>

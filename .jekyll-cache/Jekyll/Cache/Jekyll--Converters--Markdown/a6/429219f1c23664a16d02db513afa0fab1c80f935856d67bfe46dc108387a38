@@ -1,0 +1,219 @@
+I"�Q<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clc</span><span class="p">;</span>
+<span class="nb">clear</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.</p>
+
+<p>Consider $N$  agents $y_i$ for $i=1,…,N$, and let $y=(y_1,…,y_N)\in \mathbb{R}^N$.</p>
+
+<p>The model considered is the following:</p>
+
+<p><script type="math/tex">\dot{y}=Ay+\vec{G}(y)=:F(y)</script> where $A$ is a matrix of the form:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+A:=\begin{pmatrix}  -1 & 1& 0& & &\cdots & & & 0\\  1 & -2& 1& 0& &\cdots & & & 0\\  0 & 1& -2& 1& 0 &\cdots & & & 0\\  \\  \vdots\\  \\  0 & 0& 0& &\cdots & 0& 1& -2& 1\\  0 & 0& 0& &\cdots & & 0& 1& -1 \end{pmatrix}_{N\times N} %]]></script>
+
+<p>and $\vec{G}:\mathbb{R}^N\to\mathbb{R}^N$ is a non linear function of the form</p>
+
+<script type="math/tex; mode=display">\begin{equation} \vec{G}(x)=\begin{pmatrix}  G(x_1)\\  G(x_2)\\  \vdots\\  G(x_N) \end{pmatrix}, \end{equation}</script>
+
+<p>where $G$ is a non-linear function, matrix $A$ models the interaction between agents. Agent $i$ changes its state according to the state of agent $i+1$ and $i-1$ in a linear way plus a non-linear effect that depends only on his state.</p>
+
+<p>Note that the manifold</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\mathcal{M}_N=\{x\in\mathbb{R}^N\text{ such that }x=\alpha \begin{pmatrix}&1\\&1\\&\vdots\\&1\end{pmatrix}\quad\alpha\in\mathbb{R}\} %]]></script>
+
+<p>is invariant under $F$. Indeed, taking $x\in\mathcal{M}_N$ we have that</p>
+
+<script type="math/tex; mode=display">Ax=0.</script>
+
+<p>Therefore, the mean will follow the following 1-d dynamical system</p>
+
+<script type="math/tex; mode=display">\dot{\alpha}=G(\alpha)</script>
+
+<p>Here we will consider that $G(0)=0$ and that $DG(0)&gt;0$, we have an unstable critical point at 0. Let N=20,</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">A</span><span class="o">=</span><span class="nb">full</span><span class="p">(</span><span class="nb">gallery</span><span class="p">(</span><span class="s1">'tridiag'</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+<span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">A</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>and that</p>
+
+<script type="math/tex; mode=display">\vec{G}(x)\in \mathcal{M}_N</script>
+
+<p>here $G$ is taken in the following form (and we compute also its derivative).</p>
+
+<p>The non-linearity choosen is:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.20</span><span class="p">;</span>
+<span class="n">syms</span> <span class="n">G</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="n">syms</span> <span class="n">DG</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="n">G</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="n">piecewise</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;=-</span><span class="n">a</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">c</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="o">&lt;=</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">c</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">a</span><span class="o">&lt;</span><span class="n">x</span><span class="o">&lt;</span><span class="n">a</span><span class="p">,</span> <span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">a</span><span class="p">));</span>
+<span class="n">DG</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+<span class="n">G</span><span class="o">=@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="nb">double</span><span class="p">(</span><span class="n">G</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+<span class="n">DG</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="nb">double</span><span class="p">(</span><span class="n">DG</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+
+<span class="nb">close</span> <span class="nb">all</span>
+<span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">fplot</span><span class="p">(</span><span class="n">G</span><span class="p">,[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Plot of the non-linearity'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">grid</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0014-Domenec/copiaRM_01.png" alt="" /></p>
+
+<p>The function field assigns an $N$ dimensional vector corresponding to the field for every point in $\mathbb{R}^N$, matrix $A$ and the nonlinear function $G$</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="n">field</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+F =
+
+  function_handle with value:
+
+    @(t,y)field(A,G,y)
+
+
+</code></pre></div></div>
+
+<p>Now its the turn to define our cost functional. Our goal will be to stabilize the system in a critical point inside the manifold $\mathcal{M}_N$. Notice that, in particular $0$ is a critical point.</p>
+
+<p>We will choose the matrix $Q$ in a way that the vector that defines $\mathcal{M}_N$ is an eigenvector of the matrix $Q$, we have seen that the manifold $\mathcal{M}_N$ is invariant under the flow. Our cost functional will take into account if we are not in this manifold.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+Q=\begin{pmatrix}1-\frac{1}{N}&-\frac{1}{N}&-\frac{1}{N}&\cdots&-\frac{1}{N}\\-\frac{1}{N}&1-\frac{1}{N}&-\frac{1}{N}&\cdots&-\frac{1}{N}\\ \vdots&\vdots&\vdots& &\vdots\\ -\frac{1}{N}&-\frac{1}{N}&-\frac{1}{N}&\cdots&1-\frac{1}{N}\end{pmatrix} %]]></script>
+
+<p>We check that its eigenvalues are non-negative</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Q</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">-</span><span class="nb">ones</span><span class="p">([</span><span class="n">N</span> <span class="n">N</span><span class="p">])/</span><span class="n">N</span><span class="p">;</span>
+<span class="n">EigQ</span><span class="o">=</span><span class="nb">eig</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+EigQ =
+
+     0
+     1
+
+
+</code></pre></div></div>
+
+<p>And we define $R$ being just the identity</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Linearize arround the unstable equilibrium 0 and obtain the linearized system $\dot{y}=Ly$</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="n">L</span><span class="o">=</span><span class="n">A</span><span class="o">+</span><span class="n">DG</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>we set our control matrix B</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>One has to check the rank of the controllability matrix to see if we satisfy the Kalman rank condition</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Co</span><span class="o">=</span><span class="n">ctrb</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">B</span><span class="p">);</span>
+<span class="nb">rank</span><span class="o">=</span><span class="nb">rank</span><span class="p">(</span><span class="n">Co</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+rank =
+
+     2
+
+
+</code></pre></div></div>
+
+<p>Once it is done, we are in the position of solving the algebraic Riccati equation</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">ricsol</span><span class="p">,</span><span class="n">cleig</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">Q</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Consider a time span and an initial datum</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">radius</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">ini</span>    <span class="o">=</span> <span class="n">radius</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">+</span><span class="nb">rand</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+radius =
+
+     6
+
+
+ini =
+
+   -1.3855
+    1.4941
+
+
+</code></pre></div></div>
+
+<p>the free dynamics would result</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tspan</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+<span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span> <span class="n">F</span><span class="p">,</span> <span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
+
+<span class="nb">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">(:,</span><span class="n">i</span><span class="p">));</span>
+    <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
+<span class="k">end</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">(:,</span><span class="n">N</span><span class="p">))</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Free dynamics'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">grid</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0014-Domenec/copiaRM_02.png" alt="" /></p>
+
+<p>Now the LQ controller with the linear and the non-linear dynamics</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u_lq</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+
+
+<span class="n">i_linear</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">L</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">u_lq</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+<span class="p">[</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_linear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
+
+<span class="n">i_nonlinear</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)[</span><span class="n">F</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="n">B</span><span class="o">*</span><span class="n">u_lq</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)];</span>
+<span class="p">[</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_nonlinear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
+
+<span class="nb">figure</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="n">i</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+    <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
+<span class="k">end</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="n">N</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">grid</span> <span class="n">on</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'LQR regulator on the linearized system'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0014-Domenec/copiaRM_03.png" alt="" /></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_nonlinear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
+
+<span class="nb">figure</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="n">i</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+    <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
+<span class="k">end</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="n">N</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">grid</span> <span class="n">on</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'LQR regulator on the non-linear dynamics'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0014-Domenec/copiaRM_04.png" alt="" /></p>
+
+:ET

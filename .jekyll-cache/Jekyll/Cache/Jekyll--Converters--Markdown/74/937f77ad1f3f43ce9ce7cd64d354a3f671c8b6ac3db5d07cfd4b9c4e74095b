@@ -1,0 +1,139 @@
+I"ÇH<p>The time dependent transmission problem is as follows, where we consider a domain $\Omega \subset \mathbb{R}^2$ which is cut into two subdomains $\Omega_1 \cup \Omega_2 = \Omega$ with transmission conditions at the interface $\Gamma = \Omega_1 \cap \Omega_2$:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} \begin{split} & \alpha_m \frac{\partial u_m(\textbf{x},t)}{\partial t} - \nabla \cdot (\lambda_m  \nabla u_m(\textbf{x},t)) = 0,\  \  t \in [t_0, t_f],  \  \  \textbf{x} \in \Omega_m \subset \mathbb{R}^2, \\ & u_m(\textbf{x},t) = 0, \  \  t \in [t_0, t_f], \  \  \textbf{x} \in \partial \Omega_m \backslash \Gamma, \\ & u_1(\textbf{x},t) = u_2(\textbf{x},t), \  \  \textbf{x} \in \Gamma, \\ & \lambda_2 \frac{\partial u_2(\textbf{x},t)}{\partial \textbf{n}_2} = -\lambda_1 \frac{\partial u_1(\textbf{x},t)}{\partial \textbf{n}_1}, \  \  \textbf{x} \in \Gamma, \\ & u_m(\textbf{x},0) = u_m^0(\textbf{x}), \  \  \textbf{x} \in \Omega_m, \end{split} \end{align} %]]></script>
+
+<p>where $\textbf{n}_m$ is the outward normal to $\Omega_m$ for $m=1,2$.</p>
+
+<p>The constants $\lambda_1$ and $\lambda_2$ describe the thermal conductivities of the materials on $\Omega_1$ and $\Omega_2$ respectively. $D_1$ and $D_2$ represent the thermal diffusivities of the materials and they are defined by</p>
+
+<script type="math/tex; mode=display">\begin{align} D_m = \frac{\lambda_m}{\alpha_m}, \  \  \mbox{with} \  \  \alpha_m = \rho_m c_{p_m} \end{align}</script>
+
+<p>where $\rho_m$ represents the density and $c_{p_m}$ the heat capacity of the material placed in $\Omega_m$, $m=1,2$.</p>
+
+<h2 id="discretization">DISCRETIZATION</h2>
+
+<p>Let $u_I^{(1)}$ and $u_I^{(2)}$ correspond to the unknowns on $\Omega_1$ and $\Omega_2$ respectively and $u_{\Gamma}$ correspond to the unknows at the interface $\Gamma$, then the compact 2D finite difference (FD) formulation on equidistant meshes of (1) for the vector of unknowns</p>
+
+<script type="math/tex; mode=display">\textbf{u} = (\textbf{u}_I^{(1)}, \textbf{u}_I^{(2)}, \textbf{u}_{\Gamma})^T</script>
+
+<p>will be</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \tilde{\textbf{M}} \dot{\textbf{u}} - \tilde{\textbf{A}} \textbf{u} = 0 \  \  \mbox{where} \  \  \tilde{\textbf{M}} = \left( \begin{array}{ccc} \textbf{M}_1 & \textbf{0} & \textbf{M}_{I \Gamma}^{(1)} \\ \textbf{0} & \textbf{M}_2 & \textbf{M}_{I \Gamma}^{(2)} \\ \textbf{M}_{\Gamma I}^{(1)} & \textbf{M}_{\Gamma I}^{(2)} & \textbf{M}_{\Gamma \Gamma}^{(1)} + \textbf{M}_{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \tilde{\textbf{A}} = \left( \begin{array}{ccc} \textbf{A}_1 & \textbf{0} & \textbf{A}_{I \Gamma}^{(1)} \\ \textbf{0} & \textbf{A}_2 & \textbf{A}_{I \Gamma}^{(2)} \\ \textbf{A}_{\Gamma I}^{(1)} & \textbf{A}_{\Gamma I}^{(2)} & -\textbf{A}_{\Gamma \Gamma}^{(1)} - \textbf{A}_{\Gamma \Gamma}^{(2)} \end{array} \right), \end{equation} %]]></script>
+
+<p>for the mass matrices $M_m$, $M_{\Gamma \Gamma}^{(m)}$, $M_{I \Gamma}^{(m)}$, $M_{\Gamma I}^{(m)}$ and the stiffness matrices</p>
+
+<script type="math/tex; mode=display">\textbf{A}_m, \textbf{A}_{\Gamma \Gamma}^{(m)}, \textbf{A}_{I \Gamma}^{(m)}, \textbf{A}_{\Gamma I}^{(m)}</script>
+
+<p>for $m=1,2$.</p>
+
+<p>Applying the implicit Euler method with time step $\Delta t$ to the system (3), we get for the vector of unknowns</p>
+
+<script type="math/tex; mode=display">u^{n+1} = (u_I^{(1),n+1}, u_I^{(2),n+1}, u_{\Gamma}^{n+1})^T</script>
+
+<script type="math/tex; mode=display">\begin{equation} \textbf{A} \textbf{u}^{n+1} = \tilde{\textbf{M}} \textbf{u}^n \  \  \mbox{where} \  \  \textbf{A} = \tilde{\textbf{M}} - \Delta t \tilde{\textbf{A}}. \end{equation}</script>
+
+<h2 id="dirichlet-neumann-iteration">DIRICHLET-NEUMANN ITERATION</h2>
+
+<p>We now employ a standard Dirichlet-Neumann iteration to solve the discrete system (4), getting in the $k$-th iteration the two equation systems</p>
+
+<script type="math/tex; mode=display">\begin{equation} (\textbf{M}_1 - \Delta t \textbf{A}_1) \textbf{u}_I^{(1),n+1,k+1} = -(\textbf{M}_{I \Gamma}^{(1)} - \Delta t \textbf{A}_{I \Gamma}^{(1)}) \textbf{u}_{\Gamma}^{n+1,k} + \textbf{M}_1 \textbf{u}_I^{(1),n} + \textbf{M}_{I \Gamma}^{(1)} \textbf{u}_{\Gamma}^n, \end{equation}</script>
+
+<script type="math/tex; mode=display">\begin{equation} \hat{\textbf{A}} \hat{\textbf{u}}^{k+1} = \hat{\textbf{M}} \textbf{u}^n - \textbf{b}^k, \end{equation}</script>
+
+<p>to be solved in succession. Here,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \begin{split} \hat{\textbf{A}} = \left( \begin{array}{cc} \textbf{M}_2 - \Delta t \textbf{A}_2 & \textbf{M}_{I \Gamma}^{(2)} - \Delta t \textbf{A}_{I \Gamma}^{(2)} \\ \textbf{M}_{\Gamma I}^{(2)} - \Delta t \textbf{A}_{\Gamma I}^{(2)} & \textbf{M}_{\Gamma \Gamma}^{(2)} + \Delta t \textbf{A}_{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \hat{\textbf{M}} = \left( \begin{array}{ccc} \textbf{0} & \textbf{M}_2 & \textbf{M}_{I \Gamma}^{(2)} \\ \textbf{M}_{\Gamma I}^{(1)} & \textbf{M}_{\Gamma I}^{(2)} & \textbf{M}_{\Gamma \Gamma}^{(1)} + \textbf{M}_{\Gamma \Gamma}^{(2)} \end{array} \right) \  \  \mbox{and} \\ \textbf{b}^k = \left( \begin{array}{c} \textbf{0} \\ (\textbf{M}_{\Gamma I}^{(1)} - \Delta t \textbf{A}_{\Gamma I}^{(1)}) \textbf{u}_I^{(1),n+1,k+1} + (\textbf{M}_{\Gamma \Gamma}^{(1)} + \Delta t \textbf{A}_{\Gamma \Gamma}^{(1)}) \textbf{u}_{\Gamma}^{n+1,k} \end{array} \right),  \  \  \hat{\textbf{u}}^{k+1} = \left( \begin{array}{c} \textbf{u}_I^{(2),n+1,k+1} \\ \textbf{u}_{\Gamma}^{n+1,k+1} \end{array} \right) \nonumber \end{split} \end{equation} %]]></script>
+
+<p>with some initial condition, here $u_{\Gamma}^{n+1,0} = u_{\Gamma}^{n}$. The iteration is terminated according to the standard criterion</p>
+
+<script type="math/tex; mode=display">\vert \textbf{u}_{\Gamma}^{k+1} - \textbf{u}_{\Gamma}^k \vert \leq \tau</script>
+
+<p>where $\tau$ is a user defined tolerance.</p>
+
+<h2 id="implementation">IMPLEMENTATION</h2>
+
+<p>We consider here the thermal interaction between two different materials which physical properties are described by their thermal conductivities and diffusivities $\lambda_1$, $\lambda_2$ and $D_1$, $D_2$ respectively. Furthermore, we consider the non overlapping identical domains $\Omega_1 = [0,1] \times [0,1]$ and $\Omega_2 = [1,2] \times [0,1]$.</p>
+
+<p>The initialization parameters look as follows:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Ns</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>          <span class="c1">%% space discretization points in each dimension</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">Ns</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">%% mesh size</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>   <span class="n">t0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">%% final time - initial time</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>           <span class="c1">%% time discretization points</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="p">(</span><span class="n">tf</span><span class="o">-</span><span class="n">t0</span><span class="p">)/</span><span class="n">Nt</span><span class="p">;</span>  <span class="c1">%% stepsize</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D1</span>      <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>    <span class="c1">%% thermal diffusivity of material on domain 1</span>
+<span class="n">D2</span>      <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>      <span class="c1">%% thermal diffusivity of material on domain 2</span>
+<span class="n">lambda1</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>    <span class="c1">%% thermal conductivity material on domain 1</span>
+<span class="n">lambda2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>      <span class="c1">%% thermal conductivity material on domain 2</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">alpha1</span>  <span class="o">=</span> <span class="n">lambda1</span><span class="p">/</span><span class="n">D1</span><span class="p">;</span>
+<span class="n">alpha2</span>  <span class="o">=</span> <span class="n">lambda2</span><span class="p">/</span><span class="n">D2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>In addition to the parameters above, other objects need to be specified before starting the iterative procedure. The space grids both in $x$-direction and $y$-direction are given to later plot the numerical solution, also the initial conditions $u_m^0(x)$, $x \in \Omega_m$ and the mass and stiffness matrices coming from the space discretization:</p>
+
+<p>space grid w.r.t component x</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span>
+<span class="c1">%% space grid w.r.t component y</span>
+<span class="n">yplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="c1">%%</span>
+<span class="c1">%% this functions gives the initial conditions w.r.t. domain 1 (U1_0), domain 2 (U2_0) and interface unknowns (UG_0).</span>
+<span class="p">[</span><span class="n">U1_0</span><span class="p">,</span> <span class="n">U2_0</span><span class="p">,</span> <span class="n">UG_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_conditions</span><span class="p">(</span><span class="n">Ns</span><span class="p">);</span>
+<span class="c1">%%</span>
+<span class="c1">%% this function calculates the discretization matrices using finite differences</span>
+<span class="p">[</span><span class="n">A1</span><span class="p">,</span><span class="n">A2</span><span class="p">,</span><span class="n">A1g</span><span class="p">,</span><span class="n">A2g</span><span class="p">,</span><span class="n">Ag1</span><span class="p">,</span><span class="n">Ag2</span><span class="p">,</span><span class="n">Agg1</span><span class="p">,</span><span class="n">Agg2</span><span class="p">,</span><span class="n">M1</span><span class="p">,</span><span class="n">M2</span><span class="p">,</span><span class="n">M1g</span><span class="p">,</span><span class="n">M2g</span><span class="p">,</span><span class="n">Mg1</span><span class="p">,</span><span class="n">Mg2</span><span class="p">,</span><span class="n">Mgg1</span><span class="p">,</span><span class="n">Mgg2</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_matrices</span><span class="p">(</span><span class="n">Ns</span><span class="p">,</span><span class="n">lambda1</span><span class="p">,</span><span class="n">lambda2</span><span class="p">,</span><span class="n">alpha1</span><span class="p">,</span><span class="n">alpha2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Then, the iterative procedure takes place where the equations (4) and (5) are solved alternatively on $\Omega_1$ and $\Omega_2$ respectively until convergence is achieved at each time step. The implementation is specified below:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UG_old</span> <span class="o">=</span> <span class="n">UG_0</span><span class="p">;</span> <span class="c1">%% UG_0 is fixed over the Dirichlet-Neumann iteration while UG_old is being updated</span>
+<span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">%% gif('2D_FDM.gif','frame',figure(1))</span>
+<span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">Nt</span> <span class="c1">%% time recursion</span>
+    <span class="c1">%% initial guess for the stopping criteria of the inner fixed point iteration</span>
+    <span class="nb">error</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="c1">%% Dirichlet-Neumann iteration</span>
+    <span class="k">while</span><span class="p">(</span><span class="nb">error</span><span class="o">&gt;</span><span class="mf">1e-10</span><span class="p">)</span>
+        <span class="c1">%% solve problem on domain 1 using Dirichlet BC at the interface</span>
+        <span class="n">U1</span> <span class="o">=</span> <span class="n">solve_dirichlet</span><span class="p">(</span><span class="n">Ns</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">U1_0</span><span class="p">,</span><span class="n">UG_0</span><span class="p">,</span><span class="n">A1</span><span class="p">,</span><span class="n">M1</span><span class="p">,</span><span class="n">A1g</span><span class="p">,</span><span class="n">M1g</span><span class="p">,</span><span class="n">UG_old</span><span class="p">);</span>
+        <span class="c1">%% solve problem on domain 2 using Neumann BC at the interface</span>
+        <span class="p">[</span><span class="n">U2</span><span class="p">,</span> <span class="n">UG_new</span><span class="p">]</span> <span class="o">=</span> <span class="n">solve_neumann</span><span class="p">(</span><span class="n">Ns</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">U1_0</span><span class="p">,</span><span class="n">U2_0</span><span class="p">,</span><span class="n">UG_0</span><span class="p">,</span><span class="n">A2</span><span class="p">,</span><span class="n">M2</span><span class="p">,</span><span class="n">Ag2</span><span class="p">,</span><span class="n">Mg2</span><span class="p">,</span><span class="n">A2g</span><span class="p">,</span><span class="n">M2g</span><span class="p">,</span><span class="n">Agg1</span><span class="p">,</span><span class="n">Agg2</span><span class="p">,</span><span class="n">Mgg1</span><span class="p">,</span><span class="n">Mgg2</span><span class="p">,</span><span class="n">Ag1</span><span class="p">,</span><span class="n">Mg1</span><span class="p">,</span><span class="n">U1</span><span class="p">,</span><span class="n">UG_old</span><span class="p">);</span>
+        <span class="c1">%% calculate value for the stopping criteria (difference between two consecutive iterates at the interface)</span>
+        <span class="nb">error</span> <span class="o">=</span> <span class="nb">norm</span><span class="p">(</span><span class="n">UG_old</span> <span class="o">-</span> <span class="n">UG_new</span><span class="p">);</span>
+        <span class="c1">%% update UG_old</span>
+        <span class="n">UG_old</span> <span class="o">=</span> <span class="n">UG_new</span><span class="p">;</span>
+
+        <span class="c1">%%put together U1,U2 and UG_old for plotting</span>
+        <span class="n">Uplot</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">Ns</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span>
+        <span class="n">Uplot</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="n">Ns</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">U1</span><span class="p">;</span>
+        <span class="n">Uplot</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">UG_old</span><span class="p">;</span>
+        <span class="n">Uplot</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="o">+</span><span class="mi">3</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">U2</span><span class="p">;</span>
+
+<span class="c1">%%         figure(1)</span>
+<span class="c1">%%         mesh(xplot,yplot,Uplot);</span>
+<span class="c1">%%         zlim([-80 40])</span>
+<span class="c1">%%         xlabel('x')</span>
+<span class="c1">%%         ylabel('y')</span>
+<span class="c1">%%         zlabel('u(x,y)')</span>
+<span class="c1">%%         title(['Numerical solution at time: t = ',num2str(k*dt)])</span>
+<span class="c1">%%         gif</span>
+<span class="c1">%%         pause(0.1)</span>
+    <span class="k">end</span>
+    <span class="c1">%% update the initial values U1_0, U2_0 and UG_0 to start the next time</span>
+    <span class="c1">%% step</span>
+    <span class="n">U1_0</span> <span class="o">=</span> <span class="n">U1</span><span class="p">;</span>
+    <span class="n">U2_0</span> <span class="o">=</span> <span class="n">U2</span><span class="p">;</span>
+    <span class="n">UG_0</span> <span class="o">=</span> <span class="n">UG_old</span><span class="p">;</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0017/2D_FDM.gif" alt="" /></p>
+
+:ET

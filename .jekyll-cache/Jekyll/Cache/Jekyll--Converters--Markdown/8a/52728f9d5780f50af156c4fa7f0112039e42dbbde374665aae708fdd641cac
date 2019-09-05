@@ -1,0 +1,83 @@
+I"�<p>In this short tutorial, we explain how to use Riccati’s theory to solve an LQ control problem with targets.</p>
+
+<p>We consider the optimal control problem:</p>
+
+<script type="math/tex; mode=display">\min_{u\in L^2(0,T;\mathbb{R}^m)}J^{T}(u)=\frac12 \left[ \int_0^T  \vert u(t)-q(t) \vert ^2 dt+\beta\int_0^T  \vert C(x(t)-z(t))\vert ^2 dt+\gamma \vert D(x(T)-z(T))\vert ^2\right],</script>
+
+<p>where:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases} \frac{d}{dt}x(t)+Ax(t)=Bu(t)\hspace{0.6 cm} & t\in (0,T)\\ x(0)=x_0. \end{cases} %]]></script>
+
+<p>In the above control problem, $A \in M_{n \times n}$, $B \in M_{n \times m}$, $C \in M_{r\times n}$ and $D\in M_{r\times n}$. The control $u:[0,T]\longrightarrow R^m$, while the state $x:[0,T]\longrightarrow R^n$. The control target is $q\in C^1([0,T];R^m)$ and the state target is $z\in C^1([0,T];R^n)$. $\beta\geq 0$ and $\gamma\geq 0$ are positive parameters.</p>
+
+<p>By the Direct Methods in the Calculus of Variations and strict convexity, the above problem admits an unique optimal control $u^T$. The corresponding optimal state is denoted by $x^T$.</p>
+
+<p>We compute the optimal pair (optimal control, optimal state) by using the well-known Riccati’s theory (see, for instance, [1, Lemma 2.6] and [2, section 4.3]).</p>
+
+<p>For further details regarding the algorithm, we refer to <a href="a">href=”https://github.com/DeustoTech/RiccatiLQ/blob/master/RiccatiAlgorithm.pdf”</a> RiccatiAlgorithm <a href="/a">/a</a></p>
+
+<p>Take</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">B</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">C</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">D</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">beta</span><span class="o">=</span><span class="mi">26</span><span class="p">;</span>
+<span class="nb">gamma</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="mf">1.4</span><span class="p">;</span><span class="mf">1.4</span><span class="p">];</span>
+<span class="n">q</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="mi">0</span><span class="p">;</span>
+<span class="n">z</span><span class="o">=@</span><span class="p">(</span><span class="n">t</span><span class="p">)[</span><span class="nb">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span><span class="nb">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)];</span>
+<span class="n">T</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
+<span class="n">Nt</span><span class="o">=</span><span class="mi">1000</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>We solve an LQ problem with the above data.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span> <span class="n">uopt</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">lqtarget</span><span class="p">(</span> <span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">,</span><span class="nb">beta</span><span class="p">,</span> <span class="nb">gamma</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span> <span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_01.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_02.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP02/P0003/copiaRM_03.png" alt="" /></p>
+
+<p>Since the parameter $\beta$ is large enough and the control acts only on the first component of first equation</p>
+
+<ul>
+  <li>
+    <p>the first component of the state is close to the target;</p>
+  </li>
+  <li>
+    <p>the second component of the state is less close to the target;</p>
+  </li>
+  <li>
+    <p>the control is far from its target.</p>
+  </li>
+</ul>
+
+<p>The algorithm described in this guide can be employed to test the fulfillment of the turnpike property (see, for instance, [1] and [3]). In agreement with the theory, the turnpike effect is evident if:</p>
+
+<ul>
+  <li>
+    <p>the targets are constants;</p>
+  </li>
+  <li>
+    <p>$(A,B)$ is controllable;</p>
+  </li>
+  <li>
+    <p>$(A,C)$ is observable, $\beta&gt;0$ and $\gamma=0$;</p>
+  </li>
+  <li>
+    <p>the time horizon $T$ is large enough.</p>
+  </li>
+</ul>
+
+<h1 id="references">References</h1>
+<p>[1] Alessio Porretta and Enrique Zuazua, <em>Long time versus steady state optimal control</em>, SIAM Journal on Control and Optimization, 51 (2013).</p>
+
+<p>[2] Emmanuel Trelat, control optimal: theory &amp; applications , Vuibert, 2008.</p>
+
+<p>[3] Emmanuel Trelat and Enrique Zuazua, <em>The turnpike property in finite-dimensional nonlinear optimal control</em>, Journal of Differential Equations, 258 (2015).</p>
+:ET

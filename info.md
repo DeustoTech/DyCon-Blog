@@ -5,12 +5,6 @@ description:
 layout: info
 ---
 
-<textarea id="MyID">
-</textarea>
-<script>
-var simplemde = new SimpleMDE({ element: document.getElementById("MyID") });
-</script>
-
 <h1>Posts by month</h1>
 
 

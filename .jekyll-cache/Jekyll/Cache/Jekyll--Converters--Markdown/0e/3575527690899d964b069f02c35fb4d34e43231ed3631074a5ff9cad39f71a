@@ -1,0 +1,24 @@
+I"2<h5>A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation</h5>
+
+<p>This webpage contains a free software to compute the control of the wave equation with Matlab.</p>
+
+<h5>Features</h5>
+
+<p>With wave control you can explore the following:</p>
+
+<ul>
+<li>Exact control of the 1-d wave equation with finite differences and mixed finite elements when the control acts in one extreme.</li>
+<li>Exact control of the 2-d wave equation with finite differences and mixed finite elements when the control acts in the boundary.</li>
+<li>The stabilization of the 1-D wave equation in an interval with a damping acting on an internal subset, discretized with finite differences and numerical viscosity.</li>
+<li>The stabilization of the 2-D wave equation in a square with a damping acting on an internal set, discretized with finite differences and numerical viscosity.</li>
+</ul>
+
+<p>Some views are given below,</p>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol1.jpg" alt="figure1" class="post-photo-graphic" /><br /><i>Figure 1</i>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol2.jpg" alt="figure2" class="post-photo-graphic" /><br /><i>Figure 2</i>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol3.jpg" alt="figure3" class="post-photo-graphic" /><br /><i>Figure 3</i>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol4.jpg" alt="figure4" class="post-photo-graphic" /><br /><i class="aligncenter">Figure 4</i>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol5.jpg" alt="figure5" class="post-photo-graphic" /><br /><i>Figure 5</i>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol6.jpg" alt="figure6" class="post-photo-graphic" /><br /><i>Figure 6</i></p>
+:ET

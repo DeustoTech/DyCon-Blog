@@ -332,17 +332,17 @@ img:active{
 
 <p>N is the size of the graph, that is to say, the number of nodes.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="n">numnodes</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="nb">numnodes</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>We compute the number of neighbours of each node</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">connectivities</span> <span class="o">=</span> <span class="n">degree</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">connectivities</span> <span class="o">=</span> <span class="nb">degree</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>We check whether the graph is connected or not, if not, we must choose a different graph.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">conncomp</span><span class="p">(</span><span class="n">G</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="nb">conncomp</span><span class="p">(</span><span class="n">G</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Generate a new graph'</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre></div></div>
@@ -351,7 +351,7 @@ img:active{
 
 <p>We compute the Perron matrix of $G$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="nb">gamma</span> <span class="o">*</span> <span class="n">laplacian</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="nb">gamma</span> <span class="o">*</span> <span class="nb">laplacian</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>We can see that the system tends to reach a consensus, that is to say, if no control is applied to the system, it evolves to a steady state in which all the nodes have the same state.</p>
