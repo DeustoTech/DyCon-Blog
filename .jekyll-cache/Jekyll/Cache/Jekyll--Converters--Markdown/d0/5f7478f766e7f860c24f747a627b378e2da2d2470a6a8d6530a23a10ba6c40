@@ -1,0 +1,484 @@
+I"
+�<p>In this tutorial, we present some aspects of the obstacle problem in the stationary (elliptic) and the evolutionary (parabolic) setting by means of numerical simulations, performed in <code class="highlighter-rouge">FEniCS</code> and <code class="highlighter-rouge">Matlab</code>.</p>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/obstaclepb_1d.png" width="1000px" />
+</center>
+<center> <strong>Figure 1.</strong> The solution (blue) of the one-dimensional elliptic obstacle problem is superharmonic (concave down) and matches derivatives with the obstacle (black). 
+</center>
+
+<h2 id="1-mathematical-formulation"><em>1. Mathematical formulation</em></h2>
+
+<h3 id="11-elliptic-problem">1.1. Elliptic problem</h3>
+<p>Let $\Omega \subset \mathbb{R}^d$ be open, regular and bounded, let $\psi \in H^2(\Omega)$ (the <em>obstacle</em>) and $g \in H^1(\Omega)$ (boundary data) with $\psi \leq g$ on $\partial \Omega$ be given. We consider the functional</p>
+
+<script type="math/tex; mode=display">\mathcal{F}_{\text{OB}}(u):= \frac12 \int_\Omega |\nabla u|^2 dx - \int_\Omega fu \, dx</script>
+
+<p>where $f \in L^2(\Omega)$ is given, and the closed convex set</p>
+
+<script type="math/tex; mode=display">\mathcal{K}^g_{\text{OB}} := \{ u \in H^1(\Omega): u - g \in H^1_0(\Omega), \, u \geq \psi \, \text{ in } \, \Omega  \}.</script>
+
+<p>The <strong>classical obstacle problem</strong> can be written as</p>
+
+<script type="math/tex; mode=display">\min_{u \in \mathcal{K}^g_{\text{OB}}} \mathcal{F}_{\text{OB}}(u)</script>
+
+<p>and admits a unique minimizer $\phi \in \mathcal{K}^g_{\text{OB}}$, which is also a solution of the <strong>variational inequality</strong></p>
+
+<script type="math/tex; mode=display">\nabla \mathcal{F}_{\text{OB}}(\phi) \cdot (v-\phi) \geq 0 \quad \text{ for every } \quad v \in \mathcal{K}^g_{\text{OB}}.</script>
+
+<p>The terminology “<em>obstacle problem</em>” comes from the physical origin of the model $-$ the solution $\phi$ represents the equilibrium position of an elastic membrane, which is constrained to lie above an obstacle (given by the graph of the function $\psi$).</p>
+
+<p><strong>Notation:</strong>  The notation</p>
+
+<script type="math/tex; mode=display">\nabla \mathcal{F}_{\text{OB}}(\phi)\cdot\zeta</script>
+
+<p>designates the Gateaux derivative ($L^2$-gradient) of the functional ${F}_{\text{OB}}$ at the point $\phi$ in the direction $\zeta$; in occurence,</p>
+
+<script type="math/tex; mode=display">\nabla \mathcal{F}_{\text{OB}}(\phi)\cdot\zeta = (\nabla \phi, \nabla \zeta)_{L^2(\Omega)}-(f, \zeta)_{L^2(\Omega)}-(g,\zeta)_{L^2(\partial \Omega)}</script>
+
+<p>Most of the regularity theory for the obstacle problem has been developed for the model case $\Delta \psi=-1$. We refer to [3,4] for a detailed presentation. 
+For simplicity of the presentation, let us thus assume for a moment that $f \equiv -1$ and $\psi \equiv 0$. Choosing appropriate test functions bring us from the variational inequality for $\phi$ to</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+\Delta \phi = 1 	&\text{ in }  \{\phi>0\}  \\
+\phi \geq 0 &\text{ in } \Omega \\
+\phi = |\nabla \phi| = 0 &\text{ on } \partial \{\phi>0\} \\
+\phi = g &\text{ on } \partial \Omega.
+\end{cases} %]]></script>
+
+<p>The set ${ \phi=0 }$ is called <em>contact set</em>, while $\partial { \phi&gt;0 }$ is the <em>free boundary</em>.</p>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/esol_matlab_1.png" width="600px" />
+<center> <strong>Figure 2.</strong> The solution $\phi$ to the elliptic obstacle problem just above. The <strong>obstacle</strong> is equal to 0 (<strong>gray plane</strong>), and the free boundary (boundary of the contact set between the membrane and the obstacle) is displayed in red, projected just below. </center>
+</center>
+
+<p><strong>Remark:</strong> At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have</p>
+
+<script type="math/tex; mode=display">|\nabla (\phi-\psi)| =0</script>
+
+<p>along the boundary.</p>
+
+<h3 id="12-parabolic-problem">1.2. Parabolic problem</h3>
+
+<p>The parabolic counterpart onsists in finding $u \in H^1(]0, +\infty[; L^2(\Omega))\cap L^2(]0,+\infty[; H^2(\Omega) \cap \mathcal{K}^g_{\text{OB}})$ satisfying</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	\big(\, u'(t), v-u(t) \big)_{L^2(\Omega)} + 
+	\nabla \mathcal{F}_{\text{OB}}(u(t))\cdot (v-u(t)) \geq 0 &\text{ for every } v \in \mathcal{K}^g_{\text{OB}}, \, t>0 \\
+	u(0, x) = u_0 \in \mathcal{K}^g_{\text{OB}}.
+\end{cases} %]]></script>
+
+<p>The name “<em>parabolic obstacle problem</em>” for the above system <strong>may be misleading</strong>. 
+While the mathematical formulation is similar, the physical interpretation of the elliptic and parabolic problem is different. In the parabolic setting, seeing $\psi$ as a physical obstacle in space is not correct. Rather, one should interpret $\psi$ as a <em>barrier</em> for the temperature $u$. More accurately, we are dealing with a parabolic variational inequality with an obstacle-type constraint.</p>
+
+<p>The function $\psi$ may be time-dependent, but for simplicity we omit this case.</p>
+
+<center>
+<table>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_dome.gif" width="600px" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/steady_dome.png" width="600px" /></th>
+</tr>
+</table>
+</center>
+<center> <strong>Figure 3.</strong> Here $\psi(x)=3*\sqrt{(1-x^2)}$ in $(-1,1)$ (black) is a barrier for the evolving solution (blue). The initial data coincides with $\psi$ on (-1.5, 1.5). We observe that the contact set $\{ u = \psi \}$ changes (gets smaller) as time grows. There is also matching of normal derivatives on the contact points (i.e. the free boundary). 
+Finally, the solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) for large time, as seen below.   </center>
+
+<center>
+<table>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/terrain_rotate.gif" width="600px" /></th>
+</tr>
+</table>
+
+
+</center>
+<center><strong>Figure 4.</strong> The solution to the parabolic problem with Dirichlet boundary condition =1. The <strong>obstacle</strong> is given by the <strong>"three towers"</strong>. The free boundary (boundary of the contact set with the obstacle) is projected on a plane below in red. It is seen that the source term $-1$ acts as a gravity force pushing the membrane towards the obstacle. We moreover observe a convergence to the equilibrium position (see also the section below). </center>
+
+<p>For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with <strong>two boundary conditions</strong> at the free boundary</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	u_t - \Delta u = -1 &\text{ in } \quad \{ u(t)>0\} \times ]0, +\infty[ \\
+	u \geq 0 &\text{ in } \quad \Omega \times ]0, +\infty[ \\
+	u = |\nabla u| = 0 &\text{ on } \quad \partial \{ u(t)>0 \} \times ]0, +\infty[\\
+	u = g &\text{ on } \quad  \partial \Omega \times ]0, +\infty[ \\
+	u = u_0 &\text{ on } \quad \Omega \times \{ t = 0\}
+\end{cases} %]]></script>
+
+<p>This is an overdetermined problem, which means that the <em>free boundary/the contact set ${u=0}$ has to change with time</em> to ensure that both BC hold for every time. The evolution of the contact set may be observed in the numerics of Figures 3,4,5.</p>
+
+<p><strong>Remark:</strong> $\quad$
+As for the elliptic problem, solving the above parabolic problem is different to just solving the heat equation for $u$ in a subdomain of $\Omega$ and setting $u$ elsewhere, with a Dirichlet boundary condition. Indeed, solving the latter problem does not guarantee that we would have $|\nabla u|= 0$ along the boundary.</p>
+
+<p><strong>Remark:</strong> $\quad$
+While in Figure 3 the contact set is shrinking does not disappear, it may happen that the contact set vanishes (depending on the magnitude of the boundary data $g$, the support of the initial data $u_0$, and if present, the source term $f$).</p>
+
+<h3 id="13-relationship-between-both-problems">1.3. Relationship between both problems</h3>
+
+<p>In the recent paper [5], it is shown that the solution $u(t)$ to the parabolic variational inequality converges to the solution $\phi$ of the elliptic probelem in $H^1(\Omega)$ norm as $t\rightarrow \infty$ with exponential rate. This is done by means of new techniques including a so-called constrained Lojaseiwicz inequality.</p>
+
+<p>We may observe this convergence numerically in Figures 4 and 5. In both cases, we work in the ball $B_2$, with boundary data $g\equiv 0.8$, barrier $\psi\equiv 0$ and 
+initial datum supported outside $B_{1.5}$.</p>
+
+<p><strong>The one-dimensional case:</strong></p>
+
+<table>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_0.gif" width="600px" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/steady_0.png" width="600px" /></th>
+</tr>
+</table>
+
+<center><strong>Figure 5.</strong> The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. </center>
+
+<p><strong>The two-dimensional case:</strong></p>
+<center>
+<table>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/state.gif" width="600px" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/interface.gif" width="600px" /></th>
+</tr>
+</table>
+
+
+</center>
+<center><strong>Figure 6.</strong> We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  </center>
+
+<table>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/finger_rotate.gif" width="600px" /></th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/esol_matlab_1.png" width="600px" /></th>
+</tr>
+</table>
+
+<center><strong>Figure 7.</strong> In this figure, the obstacle is set to zero, and we consider Dirichlet boundary conditions $=0.8$ on the fixed boundary. We see that even when considering initial data which are not an equilibrum membrane position (but do satisfy the obstacle condition), as time increases, the solution of the parabolic problem (<strong>left</strong>) converges to that of the elliptic problem (<strong>right</strong>)  </center>
+
+<h2 id="2-numerical-implementation">2. <em>Numerical implementation</em></h2>
+
+<h3 id="21-possible-strategies">2.1. Possible strategies</h3>
+
+<p>A common approach for proving the well-posedness and $W^{2,p}$ regularity for variational inequalities is a technique called penalization, which consists of approximating by a sequence of semilinear equations [8]. For any $\epsilon&gt;0$, we will consider</p>
+
+<script type="math/tex; mode=display">u' - \Delta u + \frac{1}{\epsilon} (u-\psi)_{-} = f \quad \text{ in } \quad \Omega \times ]0,\infty[</script>
+
+<p>to approximate the parabolic problem, and remove $u’$ and time dependence for the elliptic one. As $\epsilon\rightarrow0$, the solution $u_\epsilon$ of the above equation converges to the variational inequality.  Here</p>
+
+<script type="math/tex; mode=display">\beta_\epsilon(u) = \frac{1}{\epsilon}(u)_- = \frac{1}{\epsilon}\min \{u, 0 \}</script>
+
+<p>may be replaced by another penalty function, for instance $\beta_\epsilon(u) = -\exp(-u/\epsilon)$.</p>
+
+<p>The approximated problem is relatively simple to implement numerically. We may use finite elements (say $P1$ elements) to discretize in space, and time-stepping (Euler implicit for instance) to discretize in time.</p>
+
+<p>There are other ways to solve the variational inequality after discretizing in space and time (using one’s favorite metood). One which is popular in the literature for the elliptic problem is the <em>primal dual active set</em> method, which we will present in a future post.</p>
+
+<h3 id="22-code">2.2. Code</h3>
+
+<h4 id="i-elliptic-problem">i). Elliptic problem.</h4>
+
+<p>Let us start by solving the two-dimensional elliptic problem from Figure 4.</p>
+
+<p>The <code class="highlighter-rouge">fenics</code> module [1] contains all of the necessary finite element tools for the space discretization of PDEs.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fenics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">obstacles</span> <span class="kn">import</span> <span class="n">dome</span>
+<span class="kn">from</span> <span class="nn">mshr</span> <span class="kn">import</span> <span class="n">mesh</span>
+</code></pre></div></div>
+<p>It is advantageous to regularize the “kink” appearing in penalty function (the negative part of a function) in view of using a Newton method for solving the nonlinear problem</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">smoothmax</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span> 
+	<span class="k">return</span> <span class="n">conditional</span><span class="p">(</span><span class="n">gt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="p">),</span> <span class="n">r</span><span class="o">-</span><span class="n">eps</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">conditional</span><span class="p">(</span><span class="n">lt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">eps</span><span class="p">)))</span>
+</code></pre></div></div>
+<p>We mesh the domain $B_2$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mesh</span> <span class="o">=</span> <span class="n">generate_mesh</span><span class="p">(</span><span class="n">Circle</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">25</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">V</span> <span class="o">=</span> <span class="n">FunctionSpace</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="s">"CG"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">TestFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>		
+<span class="n">eps</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Using the symbolic expressions of <code class="highlighter-rouge">FEniCS</code>, we define the variational formulation of the penalized PDE, which we write in the form $F(w)=0$:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bc</span> <span class="o">=</span> <span class="n">DirichletBC</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s">"on_boundary"</span><span class="p">)</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">grad</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">eps</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">smoothmax</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="o">+</span><span class="n">psi</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="n">f</span><span class="o">*</span><span class="n">v</span><span class="o">*</span><span class="n">dx</span>
+</code></pre></div></div>
+
+<p>We solve the nonliner problem with the command <code class="highlighter-rouge">solve</code>, which makes use of a Newton method to solve the nonlinear equation $F(w)=0$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">solve</span><span class="p">(</span><span class="n">F</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">bcs</span><span class="o">=</span><span class="n">bc</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We visualise in <code class="highlighter-rouge">ParaView</code> by storing the solution in .vtk format using:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vtkel = File("output/el.pvd")
+vtkel &lt;&lt; w
+</code></pre></div></div>
+
+<h4 id="ii-parabolic-problem">ii). Parabolic problem.</h4>
+
+<p>We set $T=2$, use $100$ subdivisions and set</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="mi">100</span>
+</code></pre></div></div>
+
+<p>This part only differs by the presence of a time-loop. We define the initial datum in a separate class:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">indata</span><span class="p">(</span><span class="n">Expression</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mf">1.95</span><span class="p">:</span>
+			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">elif</span> <span class="mf">1.95</span> <span class="o">&lt;=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mf">1.95</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="mf">1.95</span><span class="p">)</span><span class="o">*</span><span class="mf">0.8</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.8</span>
+</code></pre></div></div>
+
+<p>Repeating as in the elliptic case up to defining the variational form, we now set the inital datum (interpolating the expression onto the FEM space) and time:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">un</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">indata</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">V</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+<p>We set up the time loop:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vtksol = File("output/popsol.pvd")
+for n in range(num_steps):
+    t+=dt
+    solve(F==0, u, bcs=bc)
+    vtksol &lt;&lt; (u, t)
+    un.assign(u) 
+</code></pre></div></div>
+
+<h2 id="optimal-control"><em>Optimal Control</em></h2>
+
+<p>We will now briefly present the implementation of an optimal control strategy for the elliptic and parabolic problems. We will make use of the penalized problems where $\epsilon&gt;0$ is small (of the order $10^{-8}$). This strategy has been succesfully applied in [8].</p>
+
+<h3 id="31-elliptic-problem">3.1. Elliptic problem</h3>
+
+<p>Given a target $\phi_d$ and a regularization parameter $\delta&gt;0$ (we usually use $\delta = 10^{-2}$), we seek to minimize</p>
+
+<script type="math/tex; mode=display">J(u) = \frac12 \|\phi-\phi_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|^2_{L^2(\Omega)}</script>
+
+<p>subject to</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	-\Delta \phi + \frac{1}{\epsilon} (\phi-\psi)_- = f+u &\text{ in } \Omega \\
+	\phi = g &\text{ on } \partial \Omega.
+\end{cases} %]]></script>
+
+<p>For simplicity of the presentation, we will consider</p>
+
+<script type="math/tex; mode=display">f\equiv-1</script>
+
+<script type="math/tex; mode=display">g\equiv0\</script>
+
+<script type="math/tex; mode=display">\psi(x) = \sqrt{(1-|x|^2)_+}</script>
+
+<p>on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$.</p>
+
+<p>The uncontrolled solution of the elliptic obstacle problem in this case is:</p>
+
+<table>
+<tr>
+	<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/elliptic_zero_dome.png" width="600px" />
+	</th>
+	<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/obstacle.png" width="600px" />
+	</th>
+</tr>
+</table>
+
+<center><strong>Figure 8.</strong> For comparison with the controlled problem, we show also the solution to the free elliptic problem with the "dome" like obstacle given on the right. </center>
+
+<p>The <code class="highlighter-rouge">FEniCS</code> optimization code will have the effect of obtaining the following results.</p>
+
+<table>
+<tr>
+	<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/opt_state.png" width="600px" />
+	</th>
+	<th>
+	<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/obstacle.png" width="600px" />
+	</th>
+</tr>
+<tr>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/target.png" width="600px" />
+</th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/opt_control.png" width="600px" />
+</th>
+</tr>
+</table>
+
+<center>
+
+
+</center>
+<center><strong>Figure 9.</strong> The optimal state (<strong>top left</strong>) can be seen to be above the obstacle (<strong>top right</strong>), and is very much alike the shape of the target (<strong>bottom left</strong>). Finally, the optimal control is given (<strong>bottom right</strong>). </center>
+
+<p>Let us present the numerical implementation. After importing the <code class="highlighter-rouge">dolfin_adjoint</code> optimization module [2], we make use of the code for simulating the uncontrolled problem. A “tape” of the forward model is built. This tape is used to drive the optimization by repeatedly solving the forward model and the adjoint model for varying control inputs.</p>
+
+<p>Defining the objective functional to be minimized:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">delta</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">)</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">assemble</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">w</span><span class="o">-</span><span class="n">wd</span><span class="p">,</span> <span class="n">w</span><span class="o">-</span><span class="n">wd</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">+</span> <span class="n">delta</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>	
+<span class="n">m</span> <span class="o">=</span> <span class="n">Control</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Writing the state $y$ as the output of the solution map corresponding to the input $m$, one sees that the objective functional depends only on the control:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">J</span> <span class="o">=</span> <span class="n">ReducedFunctional</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>									
+</code></pre></div></div>
+
+<p>We run the optimization, based on a conjugate-gradient method:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u_opt</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">"method"</span><span class="o">=</span><span class="s">"CG"</span><span class="p">})</span>
+</code></pre></div></div>
+
+<p>The tape is modified such that the initial guess for y (to be used in the Newton solver in the forward problem) is set to y_opt.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_opt</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">block_variable</span><span class="o">.</span><span class="n">saved_output</span>
+<span class="n">Control</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_opt</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The algorithm converged after 8 iterations, and the value of the functional at the final iteration is $0.0967$.</p>
+
+<h3 id="32-the-parabolic-problem">3.2. The parabolic problem</h3>
+
+<p>Given a final time $T&gt;0$, a target $u_d$ and a regularization parameter $\delta&gt;0$, we seek to minimize</p>
+
+<script type="math/tex; mode=display">J(u) = \frac12 \|u(T)-u_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| v \|_{L^2(\Omega)}</script>
+
+<p>subject to</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	u'-\Delta u + \frac{1}{\epsilon} (u)_- = f+v &\text{ in } \Omega \times (0, T) \\
+	u = g &\text{ on } \partial \Omega \times (0, T) \\
+	u = u_0 &\text{ in } \Omega \times \{ t = 0 \}
+\end{cases} %]]></script>
+
+<p>For simplicity of the presentation, we will consider the same setting as in Figure 3, namely $f\equiv-1\,$,  $g\equiv0.8\,$, on the domain $\Omega = [-2,2]$. The target temperature is $u_d(x) = 0.8$. This would correspond to “melting”, as this target is never equal to zero, thus has no contact set. We would thus expect the action of the control $v$ to lift-up $u$ from $0$ and thus the contact set (and free boundary) to vanish.</p>
+
+<p>We appeal to <code class="highlighter-rouge">DyCon-Toolbox</code> [9] for the numerical implementation of this problem. <code class="highlighter-rouge">DyCon-Toolbox</code> is an efficient and easy to use solver for nonlinear control problems.</p>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/ocpop.gif" width="900px" />
+<center><strong>Figure 10.</strong> The optimal state (left, red), starting from an initial datum with a non-empty contact set (left, blue) and the optimal control (red, right). </center>
+</center>
+
+<p>The action and magnitude of the control ensures that the solution to the parabolic problem will lift-off from the initial contact set. 
+For comparison, we recall that the uncontroled free dynamics have a very different behavior:</p>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_0.gif" width="600px" />
+</center>
+
+<center><strong>Figure 11.</strong> The uncontrolled free dynamics of the parabolic obstacle problem in 1 dimension, where the obstacle is zero. </center>
+
+<p>We begin by symbolically defining the time variable:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">t</span>
+</code></pre></div></div>
+
+<p>We discretize the interval $[-2, 2]$:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">xf</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">xline</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">xf</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">xline</span> <span class="o">=</span> <span class="n">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+<p>We define symbolically (as in <code class="highlighter-rouge">FEniCS</code>) the state vector $Y$ and control vector $U$:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Y</span> <span class="o">=</span> <span class="n">SymsVector</span><span class="p">(</span><span class="s">'y'</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">SymsVector</span><span class="p">(</span><span class="s">'u'</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+</code></pre></div></div>
+<p>We discretize by finite differences, and define the semilinear penalty term:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">;</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">;</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">FDLaplacian</span><span class="p">(</span><span class="n">xline</span><span class="p">);</span>
+
+<span class="n">F</span>  <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="n">NonLinearTerm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">alpha</span><span class="p">);</span>
+<span class="n">dF</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="n">DiffNonLinearTerm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">alpha</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We may define the parabolic problem to be solved.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dx</span> <span class="o">=</span> <span class="n">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">xline</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">Y_t</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">Y</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">F</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">U</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">[</span><span class="mf">0.8</span><span class="p">;</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="mf">0.8</span><span class="p">];</span>
+<span class="n">Dyn</span> <span class="o">=</span> <span class="n">pde</span><span class="p">(</span><span class="n">Y_t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">);</span>
+</code></pre></div></div>
+<p>We set the mesh, and other relevant parameters such as the final time and initial data. We consider the same data as in the free problem.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">mesh</span>   <span class="o">=</span> <span class="n">xline</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">Solver</span> <span class="o">=</span> <span class="o">@</span><span class="n">ode23</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">Nt</span>     <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">FinalTime</span>        <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">InitialConditionFcn</span><span class="p">(</span><span class="n">xline</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We now compute the necessary Jacobian matrices.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">Control</span><span class="o">.</span><span class="n">Num</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">Num</span>   <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">dF</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We may solve the free problem over the given time interval. We recall that we have used finite differences to discretize in space (but finite elements can be used as well in more complicated settings), and the underlying solve command solves the system of ODEs by means of some Runge-Kutta scheme.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">tspan</span><span class="p">,</span><span class="n">Ysolution</span><span class="p">]</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">Dyn</span><span class="p">);</span>
+<span class="n">figure</span>
+<span class="n">surf</span><span class="p">(</span><span class="n">Ysolution</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Having solved the free dynamics, we are now in a position to solve the optimal control problem:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">YT</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">+</span> <span class="mi">0</span><span class="o">*</span><span class="nb">xline</span><span class="o">'</span><span class="p">;</span>
+<span class="nb">beta</span> <span class="o">=</span> <span class="n">dx</span><span class="o">^</span><span class="mi">4</span><span class="p">;</span>
+<span class="n">Psi</span>  <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span> <span class="n">dx</span><span class="o">*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">);</span>
+<span class="n">L</span>    <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">)</span>  <span class="n">dx</span><span class="o">*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="k">...</span>
+                 <span class="nb">beta</span><span class="o">*</span><span class="n">dx</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">U</span><span class="o">.'*</span><span class="n">U</span><span class="p">);</span>
+<span class="n">OCP</span> <span class="o">=</span> <span class="n">Pontryagin</span><span class="p">(</span><span class="n">Dyn</span><span class="p">,</span><span class="n">Psi</span><span class="p">,</span><span class="n">L</span><span class="p">);</span>
+<span class="n">U0</span> <span class="o">=</span> <span class="o">-</span><span class="nb">ones</span><span class="p">(</span><span class="n">Dyn</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span><span class="n">Dyn</span><span class="o">.</span><span class="n">ControlDimension</span><span class="p">);</span>
+<span class="n">U0</span> <span class="o">=</span> <span class="n">GradientMethod</span><span class="p">(</span><span class="n">OCP</span><span class="p">,</span><span class="n">U0</span><span class="p">,</span><span class="s1">'Graphs'</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="s1">'EachIter'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'DescentAlgorithm'</span><span class="p">,</span><span class="o">@</span><span class="n">AdaptativeDescent</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="references">References:</h2>
+
+<p>[1] The FEniCS Project Version 1.5
+M. S. Alnaes, J. Blechta, J. Hake, A. Johansson, B. Kehlet, A. Logg, C. Richardson, J. Ring, M. E. Rognes and G. N. Wells
+Archive of Numerical Software, vol. 3, 2015.</p>
+
+<p>[2] Patrick E. Farrell, David A. Ham, Simon W. Funke and Marie E. Rognes (2013). Automated derivation of the adjoint of high-level transient finite element programs, SIAM Journal on Scientific Computing 35.4, pp. C369-C393. doi:10.1137/120873558. arXiv:1204.5577</p>
+
+<p>[3] Figalli A. (2018), Free boundary regularity in obstacle problems 
+Journées EDP 2018, to appear.</p>
+
+<p>[4] Figalli, A. (2018), Regularity of interfaces in phase transitions via obstacle problems 
+Proceedings ICM 2018, to appear.</p>
+
+<p>[5] Colombo M. and Spolaor, L. and Velichkov, B. (2018), On the asymptotic behavior of the solutions to parabolic variational inequalities, ArXiV preprint.</p>
+
+<p>[6] Borjan Geshkovski (2018). Obstacle Problems: Theory and Applications. Master Thesis.</p>
+
+<p>[7] Hintermüller M. and Kopacka I., A smooth penalty approach and a nonlinear multigrid algorithm for elliptic MPECs. Computational Optimization and Applications, 50(1):111–145, 2011.</p>
+
+<p>[8] D. Kinderlehrer and G. Stampacchia. An introduction to variational inequalities and their applications. Volume 31 of Classics in Applied Mathematics. SIAM, 2000.</p>
+
+<p>[9] DyCon-Toolbox, https://deustotech.github.io/dycon-toolbox-documentation/.</p>
+
+:ET
