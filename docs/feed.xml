@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 05 Sep 2019 12:24:54 +0200</pubDate>
-    <lastBuildDate>Thu, 05 Sep 2019 12:24:54 +0200</lastBuildDate>
+    <pubDate>Mon, 09 Sep 2019 16:24:13 +0200</pubDate>
+    <lastBuildDate>Mon, 09 Sep 2019 16:24:13 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -267,7 +267,7 @@ Finally, the solution of the parabolic problem (left, blue) converges to that of
 
 
 
-Figure 3. The solution to the parabolic obstacle problem (left) with Dirichlet boundary condition $=1$ and the obstacle (right). The free boundary (delimiting the contact set with the obstacle) is projected on a plane below in red. It is seen that the source term $-1$ acts as a gravity force pushing the membrane towards the obstacle. We moreover observe a convergence to the equilibrium position (see also the section below). 
+Figure 3. The solution to the parabolic problem (left) with Dirichlet boundary condition $=1$ and the obstacle (right). The free boundary (boundary of the contact set with the obstacle) is projected on a plane below in red. It is seen that the source term $-1$ acts as a gravity force pushing the membrane towards the obstacle. We moreover observe a convergence to the equilibrium position (see also the section below). 
 
 For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with two boundary conditions at the free boundary
 
@@ -451,10 +451,6 @@ For simplicity of the presentation, we will consider
 
 on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$.
 
-The uncontrolled solution of the elliptic obstacle problem in this case is:
-
-
-
 
 
 The FEniCS optimization code will have the effect of obtaining the following results.
@@ -482,7 +478,7 @@ The FEniCS optimization code will have the effect of obtaining the following res
 
 
 
-Figure. The optimal state (top left) may be seen to satisfy the obstacle constraint, and takes the shape of the target (bottom left). 
+Figure 7. The optimal state (top left) can be seen to be above the obstacle (top right), and is very much alike the shape of the target (bottom left). Finally, the optimal control is given ( bottom right). 
 
 Let us present the numerical implementation. After importing the dolfin_adjoint optimization module [2], we make use of the code for simulating the uncontrolled problem. A “tape” of the forward model is built. This tape is used to drive the optimization by repeatedly solving the forward model and the adjoint model for varying control inputs.
 
@@ -527,7 +523,7 @@ We appeal to DyCon-Toolbox [9] for the numerical implementation of this problem.
 
 
 
-The optimal state (left, red), starting from an initial datum with a non-empty contact set (left, blue) and the optimal control (red, right). 
+Figure 8. The optimal state (left, red), starting from an initial datum with a non-empty contact set (left, blue) and the optimal control (red, right). 
 
 
 The action and magnitude of the control ensures that the solution to the parabolic problem will lift-off from the initial contact set. 
@@ -536,6 +532,9 @@ For comparison, we recall that the uncontroled free dynamics have a very differe
 
 
 
+
+Figure 9. The uncontrolled free dynamics of the parabolic obstacle problem in 1 dimension, where the obstacle is zero. 
+&amp;lt;/center&amp;gt;
 
 We begin by symbolically defining the time variable:
 syms t

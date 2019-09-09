@@ -1,4 +1,4 @@
-I"P�
+I"�
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;The main objective of this blog is to explain numerically the difference between exponential and polynomial decay in term of energy and spectral properties. We Show also that system with polynomial decay are very  sensitive to the choice of initial data.&lt;/p&gt;
 </code></pre></div></div>
 
@@ -149,7 +149,7 @@ error
 <center>
 <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/obstaclepb_1d.png" width="1000px" />
 </center>
-<center> Figure 1. The solution (blue) of the one-dimensional elliptic obstacle problem is superharmonic (concave down) and matches derivatives with the obstacle (black). 
+<center> <strong>Figure 1.</strong> The solution (blue) of the one-dimensional elliptic obstacle problem is superharmonic (concave down) and matches derivatives with the obstacle (black). 
 </center>
 
 <h2 id="1-mathematical-formulation"><em>1. Mathematical formulation</em></h2>
@@ -195,7 +195,7 @@ For simplicity of the presentation, let us thus assume for a moment that $f \equ
 <p>The set ${ \phi=0 }$ is called <em>contact set</em>, while $\partial { \phi&gt;0 }$ is the <em>free boundary</em>.</p>
 
 <center>
-<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/esol_matlab.png" width="600px" />
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/esol_matlab_1.png" width="600px" />
 <center> The solution $\phi$ to the elliptic obstacle problem just above. The obstacle is equal to zero, and the free boundary is displayed in red. </center>
 </center>
 
@@ -231,7 +231,7 @@ While the mathematical formulation is similar, the physical interpretation of th
 </tr>
 </table>
 </center>
-<center> Figure 2. Here $\psi(x)=3*\sqrt{(1-x^2)}$ in $(-1,1)$ (black) is a barrier for the evolving solution (blue). The initial data coincides with $\psi$ on (-1.5, 1.5). We observe that the contact set $\{ u = \psi \}$ changes (gets smaller) as time grows. There is also matching of normal derivatives on the contact points (i.e. the free boundary). 
+<center> <strong>Figure 2.</strong> Here $\psi(x)=3*\sqrt{(1-x^2)}$ in $(-1,1)$ (black) is a barrier for the evolving solution (blue). The initial data coincides with $\psi$ on (-1.5, 1.5). We observe that the contact set $\{ u = \psi \}$ changes (gets smaller) as time grows. There is also matching of normal derivatives on the contact points (i.e. the free boundary). 
 Finally, the solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) for large time, as seen below.   </center>
 
 <center>
@@ -246,7 +246,7 @@ Finally, the solution of the parabolic problem (left, blue) converges to that of
 
 
 </center>
-<center>Figure 3. The solution to the parabolic obstacle problem (<strong>left</strong>) with Dirichlet boundary condition $=1$ and the obstacle (<strong>right</strong>). The free boundary (delimiting the contact set with the obstacle) is projected on a plane below in red. It is seen that the source term $-1$ acts as a gravity force pushing the membrane towards the obstacle. We moreover observe a convergence to the equilibrium position (see also the section below). </center>
+<center><strong>Figure 3.</strong> The solution to the parabolic problem (<strong>left</strong>) with Dirichlet boundary condition $=1$ and the obstacle (<strong>right</strong>). The free boundary (boundary of the contact set with the obstacle) is projected on a plane below in red. It is seen that the source term $-1$ acts as a gravity force pushing the membrane towards the obstacle. We moreover observe a convergence to the equilibrium position (see also the section below). </center>
 
 <p>For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with <strong>two boundary conditions</strong> at the free boundary</p>
 
@@ -285,7 +285,7 @@ initial datum supported outside $B_{1.5}$.</p>
 </tr>
 </table>
 
-<center>Figure 4. The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. </center>
+<center><strong>Figure 4.</strong> The solution of the parabolic problem (left, blue) converges to that of the elliptic problem (right, red) as time increases. We again see that the contact set $\{ u = 0\}$ changes with time. </center>
 
 <p><strong>The two-dimensional case:</strong></p>
 <center>
@@ -300,7 +300,7 @@ initial datum supported outside $B_{1.5}$.</p>
 
 
 </center>
-<center>Figure 5. We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  </center>
+<center><strong>Figure 5.</strong> We see that as time increases, the contact region $\{ u = 0\}$ (white patch) gets smaller. In terms of the Stefan problem, the white patch represents the ice temperature. Ice is melting as time increases, but does not fully melt, because the support of the initial data is too small and the temperature on the boundary is not high enough.  </center>
 
 <table>
 <tr>
@@ -311,7 +311,7 @@ initial datum supported outside $B_{1.5}$.</p>
 </tr>
 </table>
 
-<center>Figure 6. In this figure, the obstacle is set to zero, and we consider Dirichlet boundary conditions $=0.8$ on the fixed boundary. We see that even when considering initial data which are not an equilibrum membrane position (but do satisfy the obstacle condition), as time increases, the solution of the parabolic problem (<strong>left</strong>) converges to that of the elliptic problem (<strong>right</strong>)  </center>
+<center><strong>Figure 6.</strong> In this figure, the obstacle is set to zero, and we consider Dirichlet boundary conditions $=0.8$ on the fixed boundary. We see that even when considering initial data which are not an equilibrum membrane position (but do satisfy the obstacle condition), as time increases, the solution of the parabolic problem (<strong>left</strong>) converges to that of the elliptic problem (<strong>right</strong>)  </center>
 
 <h2 id="2-numerical-implementation">2. <em>Numerical implementation</em></h2>
 
@@ -441,11 +441,11 @@ for n in range(num_steps):
 
 <p>on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$.</p>
 
-<p>The uncontrolled solution of the elliptic obstacle problem in this case is:</p>
+<!-- The uncontrolled solution of the elliptic obstacle problem in this case is:
 
 <center>
 <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/elliptic.png" width="600px" />
-</center>
+</center> -->
 
 <p>The <code class="highlighter-rouge">FEniCS</code> optimization code will have the effect of obtaining the following results.</p>
 
@@ -472,7 +472,7 @@ for n in range(num_steps):
 
 
 </center>
-<center>Figure. The optimal state (top left) may be seen to satisfy the obstacle constraint, and takes the shape of the target (bottom left). </center>
+<center><strong>Figure 7.</strong> The optimal state (<strong>top left</strong>) can be seen to be above the obstacle (<strong>top right</strong>), and is very much alike the shape of the target (<strong>bottom left</strong>). Finally, the optimal control is given (<strong> bottom right</strong>). </center>
 
 <p>Let us present the numerical implementation. After importing the <code class="highlighter-rouge">dolfin_adjoint</code> optimization module [2], we make use of the code for simulating the uncontrolled problem. A “tape” of the forward model is built. This tape is used to drive the optimization by repeatedly solving the forward model and the adjoint model for varying control inputs.</p>
 
@@ -522,7 +522,7 @@ for n in range(num_steps):
 
 <center>
 <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/ocpop.gif" width="900px" />
-<center>The optimal state (left, red), starting from an initial datum with a non-empty contact set (left, blue) and the optimal control (red, right). </center>
+<center><strong>Figure 8.</strong> The optimal state (left, red), starting from an initial datum with a non-empty contact set (left, blue) and the optimal control (red, right). </center>
 </center>
 
 <p>The action and magnitude of the control ensures that the solution to the parabolic problem will lift-off from the initial contact set. 
@@ -531,6 +531,9 @@ For comparison, we recall that the uncontroled free dynamics have a very differe
 <center>
 <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP03/P0031/parabolic_free_0.gif" width="600px" />
 </center>
+
+<center><strong>Figure 9.</strong> The uncontrolled free dynamics of the parabolic obstacle problem in 1 dimension, where the obstacle is zero. </center>
+<p>&lt;/center&gt;</p>
 
 <p>We begin by symbolically defining the time variable:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">t</span>
