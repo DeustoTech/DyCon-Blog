@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 23 Sep 2019 12:17:12 +0200</pubDate>
-    <lastBuildDate>Mon, 23 Sep 2019 12:17:12 +0200</lastBuildDate>
+    <pubDate>Tue, 24 Sep 2019 08:58:41 +0200</pubDate>
+    <lastBuildDate>Tue, 24 Sep 2019 08:58:41 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -1257,16 +1257,40 @@ We consider two examples :  1) The classical Lotka-McKendrick system and 2) Lotk
  
  Several other applications can be found in [3].
 
- We now present some numerical siimulation of the controlled trajectory. We shall consider the case  $A = 0$
+Numerical Simulations
+ We now present some numerical siimulations of the controlled trajectory.  We shall consider the case  $A = 0$
 and $B = 1,$ i.e the classical Lotka-McKendrick system. We also consider the case $a_1 = 0$ and $a_2 = a_{\dagger} =4,$ i.e., the control
-acts everywhere with respect to age variable. 
-Then by Theorem 1 we know that system (1) is null controllable in any time. In the following
+acts everywhere with respect to age variable. We present numerical simulations in the following two scenarios : 1) null controllabilty,
+2) controllability to a steady state.
+Null Controllability
+By Theorem 1 we know that system (1) is null controllable in any time. In the following
 video, we see the evolution of unctrolled trajectory and controlled trajectories to zero  with controllability time $t=2$ and $t =5.$ 
-
 
    
   
 
+
+ We now plot the control functions. In the following two videoes, we see the evolution of the control
+ functions at controllability time $t = 2$ and $t =5$
+ respectively.
+
+
+
+  
+   
+    
+   
+  
+    
+   &amp;nbsp; &amp;nbsp; 
+
+   
+   
+  
+ 
+ 
+ 
+Controllability to a steady state
  If we choose $\beta$ and $\mu$ such that $R = \int_0^{a_\dagger} \beta(a) e^{-\int_0^r \mu(r) \ dr } da = 1,$ then
 $p_s(a) = \alpha e^{-\int_0^r \mu(r) \ dr }$ with $\alpha \in (0,\infty)$ is a steady state to the system (1) with zero steady control.
 Thus we can control to these trajectories also. In the following example, we have chosen $a_{\dagger} = 4,$ $a_b = 1,$ $\alpha = 1.25$ and
@@ -1283,8 +1307,27 @@ controllable to the trajectory $p_s(a)$ in any time.  In the following video,
 we see the evolution of unctrolled trajectory and controlled trajectories to the steady state $p_s(a)$ with
 controllability time $t=2$ and $t =5.$
 
+
    
   
+ As before, in the following two videos we see the evolution of the control functions at time $t =2$ and $t=5$ respectively. 
+
+
+
+  
+   
+    
+   
+  
+    
+   &amp;nbsp; &amp;nbsp; 
+
+   
+   
+  
+ 
+ 
+ 
 
 
 
@@ -1298,10 +1341,6 @@ Systems with Age Structure. Submitted.
 
  [4] M. Tucsnak and G. Weiss,  Observation and control for operator semigroups,   
 Birkh&amp;auml;user Advanced Texts: Basler Lehrbu&amp;uuml;cher. [Birkh&amp;auml;user Advanced Texts: Basel Textbooks], Birkh&amp;auml;user Verlag, Basel, 2009. 
-
-
-
-
 
 </description>
         <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>

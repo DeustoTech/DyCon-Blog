@@ -441,16 +441,40 @@ estimate of $q(t,0)$ and the final-state observability of $q$ in the general cas
  </p>
 <p> Several other applications can be found in [3].</p>
 
-<p> We now present some numerical siimulation of the controlled trajectory. We shall consider the case  $A = 0$
+<h2 id="NS">Numerical Simulations</h2>
+<p> We now present some numerical siimulations of the controlled trajectory.  We shall consider the case  $A = 0$
 and $B = 1,$ i.e the classical Lotka-McKendrick system. We also consider the case $a_1 = 0$ and $a_2 = a_{\dagger} =4,$ i.e., the control
-acts everywhere with respect to age variable. 
-Then by Theorem 1 we know that system (1) is null controllable in any time. In the following
+acts everywhere with respect to age variable. We present numerical simulations in the following two scenarios : 1) null controllabilty,
+2) controllability to a steady state.
+<h4 id="NS">Null Controllability</h4>
+By Theorem 1 we know that system (1) is null controllable in any time. In the following
 video, we see the evolution of unctrolled trajectory and controlled trajectories to zero  with controllability time $t=2$ and $t =5.$ </p>
-
-<video style="display:block; margin: 0 auto;" controls="">
+<video style="display:block; margin: 0 auto;;width:80%" controls="">
    <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/Video-Null.mp4" type="video/mp4" />
   </video>
 
+<p>
+ We now plot the control functions. In the following two videoes, we see the evolution of the control
+ functions at controllability time $t = 2$ and $t =5$
+ respectively.
+</p>
+
+<table>
+  <tr>
+   <th>
+    <video style="display:block; margin: 0 auto;width:100%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/control-1.mp4" type="video/mp4" />
+  </video>
+    </th>
+   &nbsp; &nbsp; 
+<th>
+   <video style="display:block; margin: 0 auto;width:100%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/control-2.mp4" type="video/mp4" />
+  </video>
+ </th>
+ </tr>
+ </table>
+<h4 id="NS">Controllability to a steady state</h4>
 <p> If we choose $\beta$ and $\mu$ such that $R = \int_0^{a_\dagger} \beta(a) e^{-\int_0^r \mu(r) \ dr } da = 1,$ then
 $p_s(a) = \alpha e^{-\int_0^r \mu(r) \ dr }$ with $\alpha \in (0,\infty)$ is a steady state to the system (1) with zero steady control.
 Thus we can control to these trajectories also. In the following example, we have chosen $a_{\dagger} = 4,$ $a_b = 1,$ $\alpha = 1.25$ and
@@ -466,11 +490,30 @@ In this case we can verify that $R=1$ and $p_s(a) = 1.25 e^{-.05 a^2}.$ As befor
 controllable to the trajectory $p_s(a)$ in any time.  In the following video,
 we see the evolution of unctrolled trajectory and controlled trajectories to the steady state $p_s(a)$ with
 controllability time $t=2$ and $t =5.$
-<video style="display:block; margin: 0 auto;" controls="">
+</p>
+<video style="display:block; margin: 0 auto;width:80%" controls="">
    <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/Video-SS.mp4" type="video/mp4" />
   </video>
+<p> As before, in the following two videos we see the evolution of the control functions at time $t =2$ and $t=5$ respectively. </p>
 
+<p>
+<table>
+  <tr>
+   <th>
+    <video style="display:block; margin: 0 auto;;width:100%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/control-3.mp4" type="video/mp4" />
+  </video>
+    </th>
+   &nbsp; &nbsp; 
+<th>
+   <video style="display:block; margin: 0 auto;;width:100%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/control-4.mp4" type="video/mp4" />
+  </video>
+ </th>
+ </tr>
+ </table>
 
+</p>
 
 <h2 id="references">References</h2>
 <p> [1] D. Maity, <em> On the Null Controllability of the Lotka-Mckendrick System,</em> Submitted. </p>
@@ -483,10 +526,6 @@ Systems with Age Structure</em>. Submitted.</p>
 <p> [4] M. Tucsnak and G. Weiss, <em> Observation and control for operator semigroups, </em>  
 Birkh&auml;user Advanced Texts: Basler Lehrbu&uuml;cher. [Birkh&auml;user Advanced Texts: Basel Textbooks], Birkh&auml;user Verlag, Basel, 2009. </p>
 
-
-
-
-</p>
 
         <hr>
       </div>
