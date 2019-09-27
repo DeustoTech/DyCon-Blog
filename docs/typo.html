@@ -185,7 +185,7 @@
                 </li>
                 
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">WebSiteMap</a>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -198,6 +198,19 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;En esta entrada veremos como podremos estimar  el sistema dinámico apartir de datos sobre la evolución de este sistema.&lt;/p&gt;
+</code></pre></div></div>
+
+<p>Lo primero que haremos es inspeccionar de que datos disponemos</p>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;</span> <span class="nb">whos</span>
+</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">Name</span>               <span class="n">Size</span>                  <span class="n">Bytes</span>  <span class="n">Class</span>     <span class="n">Attributes</span>
+
+  <span class="n">solution</span>         <span class="mi">100</span><span class="n">x200x50</span>            <span class="mi">8000000</span>  <span class="nb">double</span>              
+  <span class="n">tspan</span>              <span class="mi">1</span><span class="n">x200</span>                  <span class="mi">1600</span>  <span class="nb">double</span>    
+</code></pre></div></div>
+<p>En este caso tenemos 100 simulaciones de una ecuación diferencial</p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;The main objective of this blog is to explain numerically the difference between exponential and polynomial decay in term of energy and spectral properties. We Show also that system with polynomial decay are very  sensitive to the choice of initial data.&lt;/p&gt;
 </code></pre></div></div>
 
