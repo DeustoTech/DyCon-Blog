@@ -185,7 +185,7 @@
                 </li>
                 
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">WebSiteMap</a>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -320,8 +320,31 @@ img:active{
 
 <p>Figure 1 and Figure 2 show how the coupling terms affect the placement of eigenvalues of the dynamic $A_{n}$. In Figure 1, we see that a uniform distance between the eigenvalues and the imaginary axis is preserved, see Table 1. Another observation is that for fixed $n$, the eigenvalues of higher frequency modes, in particular, the one of the $n^{th}$ mode, are closer to the imaginary axis. Moreover, as the number of modes increases, these eigenvalues bend back towards the vertical line $\lambda=-\frac{\gamma^2}{2}$, a fact which has been already shown in [4]. Therefore, the corresponding spectral element approximation scheme preserves the property of exponential stability.</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/taple1.png" alt="" /></p>
-
+<center> <strong>Table 1.</strong> Distance between $\sigma(A_{1,n})$ and the imaginary axis form the spectral element method</center>
+<center>
+<table align="center">
+    <tr>
+        <th>n</th>
+        <th>$min \{ -Re(\Lambda),\Lambda \in \sigma(A_{1,n}) \}$</th>
+    </tr>
+    <tr>
+        <th>8</th>
+        <th>$8.9227x10^{-4}$</th>
+    </tr>
+    <tr>
+        <th>16</th>
+        <th>$8.9383x10^{-4}$</th>
+    </tr>
+    <tr>
+        <th>24</th>
+        <th>$8.9402x10^{-4}$</th>
+    </tr>
+    <tr>
+        <th>32</th>
+        <th>$8.9407x10^{-4}$</th>
+    </tr>            
+</table>
+</center>
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig1.png" alt="" /> Location of the complex eigenvalues of the matrix $A_{1,n}$ with the finite element method</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">error</span>
@@ -389,18 +412,6 @@ error
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig5.png" alt="" />  Exponential decay of $E_{1,n}(t)$</p>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig6.png" alt="" />  Polynomial decay of $E_{2,n}(t)$</p>
-
-<p>To obtain the previous figures, one need only to execute the following</p>
-
-<p>script:</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">Et</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_effect_exp</span><span class="p">(</span><span class="n">FinalTime</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="nb">mode</span><span class="p">,</span><span class="n">Gamma</span><span class="p">);</span>
-<span class="c1">%% AniThermalDisplacement(u,v,theta,Et)</span>
-</code></pre></div></div>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">Et</span><span class="p">]</span> <span class="o">=</span> <span class="n">p1energyfem</span><span class="p">(</span><span class="n">FinalTime</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="nb">mode</span><span class="p">,</span><span class="n">Gamma</span><span class="p">);</span>
-<span class="c1">%% AniThermalDisplacement(u,v,theta,Et)</span>
-</code></pre></div></div>
 
 <h2 id="references">References</h2>
 

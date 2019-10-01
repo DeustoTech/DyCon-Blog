@@ -185,7 +185,7 @@
                 </li>
                 
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">WebSiteMap</a>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -198,6 +198,19 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;En esta entrada veremos como podremos estimar  el sistema dinámico apartir de datos sobre la evolución de este sistema.&lt;/p&gt;
+</code></pre></div></div>
+
+<p>Lo primero que haremos es inspeccionar de que datos disponemos</p>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;</span> <span class="nb">whos</span>
+</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">Name</span>               <span class="n">Size</span>                  <span class="n">Bytes</span>  <span class="n">Class</span>     <span class="n">Attributes</span>
+
+  <span class="n">solution</span>         <span class="mi">100</span><span class="n">x200x50</span>            <span class="mi">8000000</span>  <span class="nb">double</span>              
+  <span class="n">tspan</span>              <span class="mi">1</span><span class="n">x200</span>                  <span class="mi">1600</span>  <span class="nb">double</span>    
+</code></pre></div></div>
+<p>En este caso tenemos 100 simulaciones de una ecuación diferencial</p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2 id="background-and-motivation"&gt;Background and motivation&lt;/h2&gt;
 </code></pre></div></div>
 
@@ -565,8 +578,31 @@ For the numerical simulation we have applied an implicit Crank-Nicolson scheme w
 
 <p>Figure 1 and Figure 2 show how the coupling terms affect the placement of eigenvalues of the dynamic $A_{n}$. In Figure 1, we see that a uniform distance between the eigenvalues and the imaginary axis is preserved, see Table 1. Another observation is that for fixed $n$, the eigenvalues of higher frequency modes, in particular, the one of the $n^{th}$ mode, are closer to the imaginary axis. Moreover, as the number of modes increases, these eigenvalues bend back towards the vertical line $\lambda=-\frac{\gamma^2}{2}$, a fact which has been already shown in [4]. Therefore, the corresponding spectral element approximation scheme preserves the property of exponential stability.</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/taple1.png" alt="" /></p>
-
+<center> <strong>Table 1.</strong> Distance between $\sigma(A_{1,n})$ and the imaginary axis form the spectral element method</center>
+<center>
+<table align="center">
+    <tr>
+        <th>n</th>
+        <th>$min \{ -Re(\Lambda),\Lambda \in \sigma(A_{1,n}) \}$</th>
+    </tr>
+    <tr>
+        <th>8</th>
+        <th>$8.9227x10^{-4}$</th>
+    </tr>
+    <tr>
+        <th>16</th>
+        <th>$8.9383x10^{-4}$</th>
+    </tr>
+    <tr>
+        <th>24</th>
+        <th>$8.9402x10^{-4}$</th>
+    </tr>
+    <tr>
+        <th>32</th>
+        <th>$8.9407x10^{-4}$</th>
+    </tr>            
+</table>
+</center>
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig1.png" alt="" /> Location of the complex eigenvalues of the matrix $A_{1,n}$ with the finite element method</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">error</span>
@@ -634,18 +670,6 @@ error
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig5.png" alt="" />  Exponential decay of $E_{1,n}(t)$</p>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/fig6.png" alt="" />  Polynomial decay of $E_{2,n}(t)$</p>
-
-<p>To obtain the previous figures, one need only to execute the following</p>
-
-<p>script:</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">Et</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_effect_exp</span><span class="p">(</span><span class="n">FinalTime</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="nb">mode</span><span class="p">,</span><span class="n">Gamma</span><span class="p">);</span>
-<span class="c1">%% AniThermalDisplacement(u,v,theta,Et)</span>
-</code></pre></div></div>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">Et</span><span class="p">]</span> <span class="o">=</span> <span class="n">p1energyfem</span><span class="p">(</span><span class="n">FinalTime</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="nb">mode</span><span class="p">,</span><span class="n">Gamma</span><span class="p">);</span>
-<span class="c1">%% AniThermalDisplacement(u,v,theta,Et)</span>
-</code></pre></div></div>
 
 <h2 id="references">References</h2>
 
@@ -1769,34 +1793,79 @@ estimate of $q(t,0)$ and the final-state observability of $q$ in the general cas
  </p>
 <p> Several other applications can be found in [3].</p>
 
-<p> Due to the presence of the transport phenomena, the system \eqref{eq:main} is not null controllable for small time (see for
-instance [2, Proposition 5.1]). This can also be seen from the following numerical simulation. Let us consider the case $A = 0$
-and $B = 1,$ i.e the classical Lotka-McKendrick system. We choose $a_1 = 0,$ $a_2 = .2$ and $a_{\dagger} = 2.$ We choose a initial
-data $q_0$ for the system \eqref{eq:adj}, localized in a neighbourhood of $a = 1.8,$ and we plot the solution of the adjoint problem
-\eqref{eq:adj}(See Fig 3). We see that, the solution propages along the characteristic lines. It reaches the observation/control region
-$(a_1, a_2) = (0,.2)$ in time $t &gt; 1.8.$ Before this time the $L^2$ norm of the solution over the obsevation region is small. Hence
-the lack of null controllability for small time. </p>
+<h2 id="NS">Numerical Simulations</h2>
+<p> We now present some numerical siimulations of the controlled trajectory.  We shall consider the case  $A = 0$
+and $B = 1,$ i.e the classical Lotka-McKendrick system. We also consider the case $a_1 = 0$ and $a_2 = a_{\dagger} =4,$ i.e., the control
+acts everywhere with respect to age variable. We present numerical simulations in the following two scenarios : 1) null controllabilty,
+2) controllability to a steady state.
+<h4 id="NS">Null Controllability</h4>
+By Theorem 1 we know that system (1) is null controllable in any time. In the following
+video, we see the evolution of unctrolled trajectory and controlled trajectories to zero  with controllability time $t=2$ and $t =5.$ </p>
+<video style="display:block; margin: 0 auto;;width:80%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/Video-Null.mp4" type="video/mp4" />
+  </video>
+
+<p>
+ We now plot the control functions. In the following two videoes, we see the evolution of the control
+ functions at controllability time $t = 2$ and $t =5$
+ respectively.
+</p>
+
 <table>
   <tr>
    <th>
-     <figure>
-  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/Fig03.jpg" alt="f1" style="width:90%" />
-</figure>
+    <video style="display:block; margin: 0 auto;width:100%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/control-1.mp4" type="video/mp4" />
+  </video>
     </th>
+   &nbsp; &nbsp; 
 <th>
-    <figure>
-  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/Fig06.jpg" alt="f2" style="width:90%" />
- </figure> 
+   <video style="display:block; margin: 0 auto;width:100%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/control-2.mp4" type="video/mp4" />
+  </video>
  </th>
  </tr>
-  <caption>Fig.3 : Solution of the adjoing system \eqref{eq:adj}, localized at $t = 0$ near $a = 1.8,$ that propagates with the
-  velocity $1$ to the left. As soon as it reaches $a =0,$ it gets renewed by the renewal condition and propagates to the left again.</caption>
+ </table>
+<h4 id="NS">Controllability to a steady state</h4>
+<p> If we choose $\beta$ and $\mu$ such that $R = \int_0^{a_\dagger} \beta(a) e^{-\int_0^r \mu(r) \ dr } da = 1,$ then
+$p_s(a) = \alpha e^{-\int_0^r \mu(r) \ dr }$ with $\alpha \in (0,\infty)$ is a steady state to the system (1) with zero steady control.
+Thus we can control to these trajectories also. In the following example, we have chosen $a_{\dagger} = 4,$ $a_b = 1,$ $\alpha = 1.25$ and
+\begin{equation*}
+\beta(a) = \begin{cases}
+0 &amp; \mbox{ if } a \in [0,1), \\
+\frac{1}{3}e^{.05 a^2} &amp;  \mbox{ if } a \in [1,4],
+\end{cases}
+\qquad
+\mu(a) = .1 a.
+\end{equation*}
+In this case we can verify that $R=1$ and $p_s(a) = 1.25 e^{-.05 a^2}.$ As before we take control everywhere, thus the system is
+controllable to the trajectory $p_s(a)$ in any time.  In the following video,
+we see the evolution of unctrolled trajectory and controlled trajectories to the steady state $p_s(a)$ with
+controllability time $t=2$ and $t =5.$
+</p>
+<video style="display:block; margin: 0 auto;width:80%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/Video-SS.mp4" type="video/mp4" />
+  </video>
+<p> As before, in the following two videos we see the evolution of the control functions at time $t =2$ and $t=5$ respectively. </p>
+
+<p>
+<table>
+  <tr>
+   <th>
+    <video style="display:block; margin: 0 auto;;width:100%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/control-3.mp4" type="video/mp4" />
+  </video>
+    </th>
+   &nbsp; &nbsp; 
+<th>
+   <video style="display:block; margin: 0 auto;;width:100%" controls="">
+   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/control-4.mp4" type="video/mp4" />
+  </video>
+ </th>
+ </tr>
  </table>
 
-<p>In this video we see the evolution of the adjoint system \eqref{eq:adj}. We notice the same behavious described above.</p>
-<video style="display:block; margin: 0 auto;" width="70%" controls="">
-   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/peaks.mp4" type="video/mp4" />
-  </video>
+</p>
 
 <h2 id="references">References</h2>
 <p> [1] D. Maity, <em> On the Null Controllability of the Lotka-Mckendrick System,</em> Submitted. </p>
