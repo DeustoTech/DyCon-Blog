@@ -1,4 +1,4 @@
 .DS_Store
 docs/feed.xml
 
-\.jekyll-cache/
+.jekyll-cache
