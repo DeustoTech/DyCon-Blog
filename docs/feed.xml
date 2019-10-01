@@ -5,9 +5,317 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 09 Sep 2019 17:08:40 +0200</pubDate>
-    <lastBuildDate>Mon, 09 Sep 2019 17:08:40 +0200</lastBuildDate>
+    <pubDate>Tue, 01 Oct 2019 12:37:40 +0200</pubDate>
+    <lastBuildDate>Tue, 01 Oct 2019 12:37:40 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Touchdown localization for the MEMS problem with variable dielectric permittivity</title>
+        <description>Background and motivation
+
+An idealized version of a MEMS device consists of two conducting plates connected to an electric circuit
+(see Figure 1).
+The upper plate is rigid and fixed while the lower one is elastic and fixed only at the boundary.
+Initially the plates are parallel and at unit distance from each other.
+When a voltage (difference of potential between the two plates) is applied, the lower
+plate starts to bend and, if the voltage is large enough,
+the lower plate eventually touches the upper one, conducting to the so-called  pull-in instability. In the mathematical framework, this phenomenon is known as quenching or  touchdown.
+Such device can be used for instance as an actuator, a microvalve (the touching-down part closes the valve),
+or a fuse.
+
+
+  
+
+
+
+ Figure 1:  Two-membrane MEMS device
+
+
+We consider a well-known model for micro-electromechanical systems (MEMS)
+with variable dielectric permittivity, based on the following parabolic equation with singular nonlinearity:
+
+
+
+where $\Omega$ is a smoothly bounded domain of $\mathbb{R}^2$ and 
+ is a Hölder continuous function in .
+
+In this mathematical model, the domain $\Omega$ represents the shape of the elastic plate in the horizontal direction, the solution $u=u(t,x)$ measures its vertical deflection,
+while the function $f(x)$ is proportional to the constant voltage and characterizes the varying dielectric permittivity of the elastic plate.
+We can write the permittivity profile $f$ as follows:
+
+
+
+where $\lambda&amp;gt;0$ is the applied voltage, $\varepsilon_0&amp;gt;0$ is the permittivity of the vacuum and $\varepsilon_1(x)$ is the dielectric permittivity of the material. 
+As a key feature, in our model the permittivity of the elastic plate may be inhomogeneous,
+and this can be used to trigger the properties of the device. 
+We refer to [1],[4],[5] and the references therein for the full details of the model derivation.
+
+It is well known that problem (\ref{quenching problem}) admits a unique maximal classical solution $u$.
+We denote its maximal existence time by $T=T_f\in (0,\infty]$. Moreover,
+under some largeness assumption on $f$, it is known that the maximum of $u$ reaches the value $1$
+at a finite time, so that $u$ ceases to exist in the classical sense. This is what we call  touchdown in finite time $T_f&amp;lt;\infty$.
+Actually, if we consider $f(x) = \lambda\dfrac{\varepsilon_0}{\varepsilon_1(x)}$,
+it is well-known that there exists a positive $\lambda^\ast$, known as  pull-in voltage, which depends on $\Omega$ and $\varepsilon_1(x)$, such that
+
+$\bullet \quad $ If $\lambda&amp;lt;\lambda^\ast$, then $T_f=\infty$ and the global classical solution converges to the minimal positive steady state.
+
+$\bullet \quad $ If $\lambda&amp;gt;\lambda^\ast$, then $T_f&amp;lt;\infty$, and then touchdown occurs in finite time.
+
+In the actual design of a MEMS device there are several issues that must be considered.
+Typically, one of the design goals is to achieve the maximum possible stable steady-state with relatively small applied voltage $\lambda$.  Another consideration may be to increase the stable operating range of the device by increasing the pull-in voltage.
+For other devices, such as micropumps and microvalves, where touchdown behavior is explicitly exploited,
+it is of interest to be able to localize the touchdown points, or similarly, to be able to avoid touchdown in certain parts of the device.
+Our approach to achieve this last goal is to consider a material with varying dielectric permittivity allowing us to localize the touchdown points by a suitable choice of the permittivity profile.
+
+Results
+
+We start by the definition of touchdown point.
+A point $x = x_0$ is called a  touchdown or  quenching point if there exists a sequence ${(x_n , t_n )} \in \Omega\times (0, T)$ such that
+
+
+
+The set of all such points is called the  touchdown or  quenching set, denoted by $\mathcal{T}=\mathcal{T}_f\subset\overline{\Omega}$.
+
+We show in [2] that touchdown can actually be ruled out in subregions of $\Omega$ 
+where $f$ is positive but suitably small, below a positive threshold.
+
+ Theorem 1:
+Let $\Omega\subset \mathbb{R}^n$ a smooth bounded domain and $f$ a function satisfying
+
+
+
+There exists $\gamma_0&amp;gt;0$ depending only on $\Omega,M,\mu,r$ such that:
+
+(i) $\quad$ For any $x_0\in \Omega$, if $f(x_0) &amp;lt;\gamma_0 {\hskip 1pt} \text{dist}^3 (x_0,\partial\Omega)$, then $x_0$ is not a touchdown point.
+
+(ii) $\quad $ For any $\omega\subset\subset \Omega$, if $\displaystyle\sup_{x\in \overline{\Omega}\setminus \omega} f(x) &amp;lt;
+\gamma_0 {\hskip 1pt} \text{dist}^3(\omega,\partial\Omega)$, then the touchdown set 
+ is contained in $\omega$.
+
+Roughly speaking, the statement (i) in the above theorem allows one to rule out touchdown in an interior point by choosing a permittivity profile which is sufficiently small at that point, while statement (ii) allows to design devices producing touchdown inside any given subset of $\Omega$ by choosing a permittivity profile concentrated in that subset.
+
+Numerical Simulation 1:  no touchdown at the origin 
+
+In our first example, we consider a circular elastic plate of radius 1, that is $\Omega = B(0,1)\subset\mathbb{R}^2$.
+It is well known that if the dielectric permittivity is constant, the unique touchdown point is the center of the disk.
+
+As consequence of Theorem 1 (i), we can prevent touchdown to occur at the origin by choosing a permittivity profile $f$ such that $f(0)$ is sufficiently small.
+Let’s assume that the applied voltage $\lambda$, together with the permittivity of the vacuum $\varepsilon_0$ and the permittivity of the material $\varepsilon_1$ are such that
+
+
+
+In this case, we might cover the center of the disk with a material with higher permittivity so that the value of $\varepsilon_1(x)$ in $B(0,1/4)$ is (for example) twice its value in $\Omega\setminus B(0,1/4)$.
+That is, we consider the following permittivity profile:
+
+
+
+The following video represents the evolution of the elastic plate from the rest position to the pull-in instability.
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme in polar coordinates with number of meshpoint $N=100$ in the radial interval $[0,1]$.
+
+
+
+
+
+
+
+ Simulation 1:   Evolution of the elastic plate until pull-in instability (touchdown). The solution reaches the value 1 in a circumference and then, touchdown is avoided at the center of the plate.
+In the schematic video, we remove the upper plate of the MEMS device in order to see the final profile of the solution.  
+
+
+Numerical Simulation 2:  touchdown near a prescribed circumference 
+
+Let us suppose now that we want our system to touch down in a circumference of radius near $0.7$.
+This time we can use Theorem 1 (ii). We will choose a permittivity profile $f$ sufficiently concentrated near a circumference of radius $0.7$. Consider for example:
+
+
+
+The following video represents the evolution of the elastic plate from the rest position to the pull-in instability. 
+In Figure 2 below, we plot the radial final touchdown profile.
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme in polar coordinates with number of meshpoint $N=100$ in the radial interval $[0,1]$.
+
+
+
+
+
+
+
+ Simulation 2:   Evolution of the elastic plate until pull-in instability (touchdown). The solution reaches the value 1 in a circumference of radius near $0.7$.
+In the schematic video, we remove the upper plate of the MEMS device in order to see the final profile of the solution.  
+
+
+
+
+
+ Figure 2:   Plot of the  radial touchdown profile. Observe that, as expected, touchdown occurs on a circumference of radius between $0.65$ and $0.75$. 
+
+
+Nontrivial touchdown sets
+
+In view of Theorem 1,
+it is a natural question whether such smallness conditions are actually necessary, 
+or whether touchdown could be shown to occur only at or near the maximum points of the permittivity profile $f$.
+In this connection, using stability properties of the touchdown set,
+in [2] we construct radial ‘‘M’‘-shaped profiles giving rise to 
+single-point touchdown at the origin.
+
+Numerical simulation 3:
+
+For this example, we have considered the following radial M-shaped profile in a disk of radius 1:
+
+
+
+For this profile, the unique touchdown point is at the origin, far away from the maxima of $f$.
+Therefore, if we want to prevent touchdown at the origin, we need to choose a permittivity profile $f$ such that $f(0)$ is small enough (below a certain thershold).
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme in polar coordinates with number of meshpoint $N=100$ in the radial interval $[0,1]$.
+
+
+
+
+
+
+
+ Simulation 3:   Evolution of the elastic plate until pull-in instability (touchdown). Although we consider a ''M''-shaped permittivity profile, the solution touches down only at the origin, far away from the maximum of $f$.
+In the schematic video, we remove the upper plate of the MEMS device in order to see the final profile of the solution.  
+
+
+Numerical simulation 4:
+
+Another rather surprising example is the following radially increasing profile:
+
+
+
+For this example, the unique touchdown point is the origin, which is actually the global minimum of  $f$. In [2], we give a rigorous proof of the existence of this kind of behaviors. It is based on a stability result of the touchdown set combined with the fact that single-point touchdown occurs for constant permittivity profiles.
+
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme in polar coordinates with number of meshpoint $N=100$ in the radial interval $[0,1]$.
+
+
+
+
+
+
+
+ Simulation 4:   Evolution of the elastic plate until pull-in instability (touchdown). Although the permittivity profile is radially increasing,  the unique touchdown point is the origin, the minimum point of $f$.
+In the schematic video, we remove the upper plate of the MEMS device in order to see the final profile of the solution.  
+
+
+Quantitative results in 1 dimension
+
+Motivated by practical considerations of MEMS design, our aim in [3] is to further investigate the 
+touchdown localization problem
+and to show that in one space dimension, where analytic computations can be made more precise,
+one can obtain quite quantitative conditions.
+Namely, we look for a lower estimate of the ratio $\rho$ between $f$ and its maximum,
+below which no touchdown occurs on a subregion of $\Omega$.
+Rather surprisingly, it turns out that, under suitable assumptions on $f$,
+our methods yield values of
+ the threshold-ratio $\rho$ which are not ‘‘small’’ but can actually be up to the order
+
+
+
+which could hence be quite appropriate for robust practical use.
+
+In order to give good estimates of the  ratio $\rho$, we shall consider two typical situations, which roughly correspond to a one-bump or a two-bump shape for the profile $f$. 
+ The touchdown is ruled out in a subinterval respectively located between a bump and 
+an endpoint of $\Omega$, or between two bumps.
+The idea behind this is that the plate can be covered with two dielectric materials, 
+one with a high permittivity and the other with a lower permittivity. We then seek for a ratio between the two permittivities, allowing to rule out touchdown in the low permittivity region.
+
+Reduction to a finite-dimensional optimization problem
+
+As a consequence of our method, the threshold-ratio $\rho$  is rigorously obtained as the solution of a suitable finite-dimensional optimization problem, with either three or four parameters. 
+An advantage of our results is that they apply to large classes of configurations, so that detailed numerics need not be carried out to localize the touchdown set for particular cases.
+
+For the precise statements of the results, as well as for a detailed study of the optimization problem and numerical estimates of the threshold ratio, we refer the lector to [3].
+The Matlab codes to compute numerical estimates of the solution of the optimization problem are availabe at the beginig of the page.
+
+Here we give two concrete examples in order to illustrate 
+the results.
+The threshold ratio is obtained by a simple numerical procedure applied to the finite-dimensional optimization problem. 
+The following two figures represent some typical permittivity profiles $f(x)$ and the localization of the corresponding touchdown sets
+ in the one-bump and two-bump cases respectively. 
+The touchdown sets are localized in a neighborhood of the bumps, represented by the fat lines.
+
+
+ 
+
+
+
+ Figure 3: An illustration of the localization of thouchdown set for a one-bump permittivity profile.
+Here, the figure represents the permittivity profile $f$ and  not  the profile of the solution.
+
+
+
+
+
+
+
+ Figure 4: An illustration of the localization of thouchdown set for a two-bump permittivity profile.
+Here, the figure represents the permittivity profile $f$ and  not  the profile of the solution.
+
+
+Numerical simulation 5:
+
+We give an example of a one-bump permittivity profile, similar to the one in Figure 3.
+Although our result applies to a large class of profiles, here we consider, for computational simplicity, the following bang-bang profile:
+
+
+
+The following video represents  the evolution of a 1-dimensional membrane
+with a one-bump permittivity profile $f$. 
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme with number of meshpoint $N=1000$ in the interval $[-6,6]$.
+
+
+
+
+
+
+
+ Simulation 5:   Evolution of the elastic 1-dimensional membrane until pull-in instability (touchdown). We see that touchdown is localized in the region where $f$ is big (see Figure 3).  
+
+
+Numerical simulation 6:
+
+We give an example of a two-bump permittivity profile, similar to the one in Figure 4.
+Although our result applies to a large class of profiles, here we consider, for computational simplicity,
+the following bang-bang profile:
+
+
+
+The following video represents  the evolution of a 1-dimensional membrane
+with a two-bump permittivity profile $f$.
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme with number of meshpoint $N=1000$ in the interval $[-10,10]$.
+
+
+
+
+
+
+
+ Simulation 6:   Evolution of the elastic 1-dimensional membrane until pull-in instability (touchdown). We see that touchdown is localized in the region where $f$ is big (see Figure 4).  
+
+
+References
+
+[1] P. Esposito, N. Ghoussoub, Y. Guo,  Mathematical analysis of partial differential equations modeling electrostatic MEMS. Courant Lecture Notes in Mathematics, 20. Courant Institute of Mathematical Sciences, New York; American Mathematical Society, Providence, RI, 2010. xiv+318 pp.
+
+[2] C. Esteve, Ph. Souplet,  No touchdown at points of small permittivity and nontrivial touchdown sets for the MEMS problem. Advances in Differential Equations, Vol 24, Number 7-8(2019), 465-500.
+
+[3] C. Esteve, Ph. Souplet,  Quantitative touchdown localization for the MEMS problem with variable dielectric permittivity. Nonlinearity} 31 4883 (2018).
+
+[4] Ph. Laurençot, Ch. Walker,  Some singular equations modeling MEMS. Bull. Amer. Math. Soc. 54 (2017), 437-479.
+
+[5] J.A. Pelesko, D.H. Bernstein,  Modeling MEMS and NEMS, Chapman Hall and CRC Press, 2002.
+</description>
+        <pubDate>Mon, 30 Sep 2019 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0040</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0040</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
     
       <item>
         <title>Uniform exponential and polynomial stability and approximation in control of a thermoelastic model</title>
@@ -1773,271 +2081,6 @@ References
         <category>tutorial</category>
         
         <category>WP05</category>
-        
-      </item>
-    
-      <item>
-        <title>Controllability of the one-dimensional fractional heat equation under positivity constraints</title>
-        <description>In [2], we analyzed the controllablity properties under non-negative control and state constraints of the following heat-like equation involving the fractional Laplacian on $(-1,1)$
-
-
-
-In \ref{frac_heat}, $\omega\subset (-1,1)$ is the control region in which the distributed control $u$ acts. Moreover, we denote by $(-d_x^2)^s$ the fractional Laplace operator defined, for all $s\in(0,1)$, as the following singular integral
-
-
-
-with $c_s$ an explicit normalization constant given by
-
-
-
-Gamma being the usual Euler Gamma function.
-
-The main result we established are the following results:
-
-
-  
-    For any $s&amp;gt;1/2$, there exists $T&amp;gt;0$ such that the fractional heat equation \ref{frac_heat} is controllable to positive trajectories by means of a non-negative control $u\in L^\infty(\omega\times(0,T))$. Moreover, if the initial datum $z_0\geq 0$ is non-negative, we also have $z(x,t)\geq 0$ for every $(x,t)\in (-1,1)\times (0,T)$.
-  
-  
-    If we define the minimal controllability time by
-  
-
-
-
-
-we have $T_{min}&amp;gt;0$.
-
-
-  For $T = T_{min}$, there exists a non-negative control $u\in \mathcal M(\omega\times(0,T_{min}))$, the space of Radon measures
-on $\omega\times(0,T_{min})$, such that the corresponding solution $z$ of \ref{frac_heat} satisfies $z(x,T) = \widehat{z}(x,T)$ a.e.
-in $(-1,1)$.
-
-
-These results extend to the fractional case the ones previously obtained by our team in the context of the linear and semi-linear heat equation (see our previous entries in the DyCon Blog, WP3_P0001 and WP3_P0002).
-
-In this post, we present some numerical development in order to find the minimal controllability time for the discretized
-fractional heat equation with non-negative control constraint and to confirm our theoretical results.
-
-In particular, we will consider the problem of steering the initial datum
-
-
-
-to the target trajectroy $\widehat{z}$ solution of \ref{frac_heat} with initial datum
-
-
-
-and right-hand side $\widehat{u}\equiv 1$.
-
-We choose $s=0.8$ and $\omega=(-0.3,0.8)\subset (-1,1)$ as the control region. The approximation of the minimal controllability time is obtained by solving the following constrained minimization problem.
-
-
-
-subject to
-
-
-
-To solve this problem numerically, we employ the expert interior-point optimization routine IpOpt combined with automatic differentiation and the modeling language AMPL. The interest of using AMPL together with IpOpt is that the gradient of the cost function and the constraints is automatically generated. Solving problems with IpOpt and AMPL can be made online through the NEOS solvers.
-
-To perform our simulations, we apply a FE method for the space discretization of the fractional Laplacian (see [1]) on a uniform space-grid
-
-
-
-with $N_x=20$ . Moreover, we use an explicit Euler scheme for the time integration on the time-grid
-
-
-
-with $N_t$ satisfying the Courant-Friedrich-Lewy condition. In particular, we choose here $N_t=100$.
-
-The AMPL code for solving this minimation problem is included below. In it, the matrices defining the dynamics are computed through specific functions implemented in Matlab and are given as parameters.
-
-It is important to remark that we are interested in the controllability to the trajectory $\widehat{z}(\cdot,T)$ but, at the same time, $T$ is a variable in our code since it is the cost functional we aim to minimize. In view of that, our final target changes during the minimization process. Nevertheless this issue can be bypassed by taking advance of the linear nature of our equation and solving the traslated constrained minimization problem consisting in finding the minimial time for steering the inital datum $z_0-\widehat{z}_0$ by employing a control $u\geq\widehat{u}$ ($\widehat{z}_0$ and $\widehat{u}$ are the same given above).
-
-# Minimal time for the constrained controllability of the fractional heat equation.
-
-# 1: define the parameters
-
-param Nx = 20;               # number of spatial discretization points
-
-param Nt = 100;              # number of time discretization points
-
-param y0 {1..Nx};            # initial condition
-
-param y1 = 0;                # target
-
-param dx = 2/Nx;             # Space step
-
-param C = 1;                 # Bound on the controls
-
-param A {1..Nx,1..Nx};       # Stiffness or rigidity matrix
-
-param B {1..Nx,1..Nx};       # Control matrix
-
-param M {1..Nx,1..Nx};       # Mass matrix  
-
-# 2: define the variables
-
-var y {j in 0..Nt, i in 1..Nx};       # State
-var u {j in 0..Nt, i in 1..Nx}&amp;gt;=-C;   # Control
-var T &amp;gt;=0;                            # Time horizon
-var dt = T/Nt;                        # Time step
-
-# 3: define the data
-
-data;
-
-# Initial datum
-
-param y0: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 :=
-1 -0.000000 -0.905270 -1.785847 -2.617711 -3.378170 -4.046482 -4.604416 -5.036753 -5.331701 -5.481215 -5.481215 -5.331701 -5.036753 -4.604416 -4.046482 -3.378170 -2.617711 -1.785847 -0.905270 -0.000000;
-
-# Stiffness or rigidity matrix A
-
-param A: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 :=
-1 -5.551728 2.242487 0.359689 0.077115 0.033148 0.017829 0.010871 0.007193 0.005044 0.003694 0.002798 0.002178 0.001733 0.001405 0.001158 0.000966 0.000816 0.000697 0.000600 0.000521
-...
-20 0.000521 0.000600 0.000697 0.000816 0.000966 0.001158 0.001405 0.001733 0.002178 0.002798 0.003694 0.005044 0.007193 0.010871 0.017829 0.033148 0.077115 0.359689 2.242487 -5.551728;
-
-
-# Control matrix B
-
-param B: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 :=
-1 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
-...
-20 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000;
-
-
-# Mass matrix M
-
-param M: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 :=
-1 0.070175 0.017544 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
-...
-20 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.017544 0.070175;
-
-
-# 4: define the cost functional to minimize
-
-minimize cost: T;
-
-# 5: define the constraints
-
-# 5.a: dynamics y' = Ay + Bu, implemented through an Explicit Euler method.
-
-subject to y_dyn {j in 1..Nt, i in 2..Nx-1}:
-sum {l in 1..Nx} M[i,l]*y[j,l] = sum {l in 1..Nx}M[i,l]*y[j-1,l] + dt*sum {l in 1..Nx}(A[i,l]*y[j-1,l] + B[i,l]*u[j-1,l]);
-
-# 5.b: homogeneous Dirichlet boundary conditions in -1 and 1.
-
-subject to left_boundary  {j in 0..Nt}: y[j,1] = 0;
-subject to right_boundary {j in 0..Nt}: y[j,Nx] = 0;
-
-# 5.c: initial condition.
-
-subject to y_init {i in 1..Nx}: y[0,i] = y0[i];
-
-# 5.d: target.
-
-subject to y_end1 {i in 1..Nx}: y[Nt,i] = y1;
-
-# 6: solve the problem with IpOpt
-
-option solver ipopt;
-option ipopt_options &quot;max_iter=100000 linear_solver=mumps hessian_approximation=exact halt_on_ampl_error yes&quot;;
-solve;
-
-# 7: print the results.
-
-printf: &quot;T  = %24.16e\n&quot;, T;
-printf: &quot;Nx = %d\n&quot;, Nx;
-printf: &quot;Nt = %d\n&quot;, Nt;
-printf {j in 0..Nt, i in 1..Nx}: &quot; %24.16e\n&quot;, y[j,i];
-printf {j in 0..Nt, i in 1..Nx}: &quot; %24.16e\n&quot;, u[j,i];
-
-end;
-
-
-Once the minimization is concluded, we save the results in a file “data.txt” and we use Matlab to reshape the solution and the control so to obtain two $N_x\times(N_t+1)$ matrices for the plots.
-
-This can be done through the following script:
-
-close all
-% Read the data from the external file data.txt
-
-fid= fopen('data.txt','r');
-C = fscanf(fid,'%f',Inf);
-T = C(1);
-Nx = C(2);
-Nt = C(3);
-y = C(4:(Nt+1)*Nx+3);
-u = C((Nt+1)*Nx+4:end);
-fclose(fid);
-
-% Reshape the state y and the control u into two Nx times Nt+1 matrices
-y = reshape(y,Nx,Nt+1);
-u = reshape(u,Nx,Nt+1);
-
-
-From the reshaped solution and control, we can generate the plots. For instance, the m-file plot_control.m is the one generating Figure 2 below.
-
-The minimal time that we obtain from our minimization process is $T_{min}\simeq 0,2101$. Our simulations show that in this time horizon the fractional heat equation \ref{frac_heat} is controllable from the initial datum $z_0$ to the desired trajectory $\widehat{z}(\cdot,T)$ by maintaining the positivity of the solution (as it is expected since the initial datum is positive in $(-1,1)$, see Figure 1).
-
-
-Figure 1. Controllability of the fractional heat equation \ref{frac_heat}in the minimal time $T_{min}=0.2101$.
-
-Moreover, as it is observed also in Figure 2, the control has an impulsional behavior.
-
-
-Figure 2. Minimal-time control. In the $(t,x)$ plane in blue the time $t$ varies from $t = 0$ (left) to $t = T_{min}$ (right).
-
-This behavior of the control is not surprising. Indeed, as it was already observed in our previous works [3,4], the minimal-time controls are expected to be atomic measures, in particular linear combinations of Dirac deltas. Our simulations are thus consistent with the aforementioned papers.
-
-The impulsional behavior of the control is then lost when extending the time horizon beyond $T_{min}$. This is shown in Figure 3, in which we display the behavior of the control steering the solution of the fractional heat equation \ref{frac_heat} from the initial datum $z_0$ to the target $\widehat{z}(\cdot,T)$ in the time horizon $T=0.4$.
-
-
-Figure 3. Behavior of the control in time $T = 0.4$. The white lines delimit the control region $\omega = (-0.3, 0.8)$. The regions in which the control is active are marked in yellow. The atomic nature is lost.
-
-This control has been computed by employing once again IpOpt for solving the following minimization problem:
-
-
-
-subject to
-
-
-
-As we can observe, the action of this control is now more distributed in $\omega$. Neverthelss, in accordance with our theoretical results, the equation is still controllable in the prescribed time horizon (see Figure 4)
-
-
-Figure 4. Controllability of the fractional heat equation \ref{frac_heat}in time $T = 0.4$. The atomic behavior of the control is lost.
-
-Finally, we consider the case of a time horizon $T&amp;lt;T_{min}$, in which constrained controllability is expected to fail. This time, we employ a classical conjugate gradient method implemented in the DyCon Computational Toolbox for solving the above optimization problem.
-
-As before, we apply a FE method for the space discretization of the fractional Laplacian on a uniform space-grid with $N_x=20$ points and we use an explicit Euler scheme for the time integration on a time-grid with $N_t=100$ points. Furthermore, we choose a time horizon $T=0.15$, which is below the minimal controllability time $T_{min}$.
-
-Our simulation then show that the solution of \ref{frac_heat} fails to be controlled. In fact, Figure 5 shows that the state computed by employing the tools of the DyCon Computational Toolbox does not totally match the desired target in the time horizon prescribed.
-
-
-Figure 5. Evolution in the time interval $(0,0.15)$ of the solution of \ref{frac_heat} with $s = 0.8$ under the positivity control constraint $u\geq 0$. The equation is not controllable.
-
-References
-
-[1] U. Biccari and V. Hernández-Santamarı́a, Controllability of a one-dimensional fractional heat equation: theoretical and
-numerical aspects. IMA J. Math. Control. Inf, to appear, 2018.
-
-[2] U. Biccari, M. Warma and E. Zuazua, Controllability of the one-dimensional fractional heat equation under positivity constraints. Submitted.
-
-[3] J. Loheac, E. Trélat, and E. Zuazua, Minimal controllability time for the heat equation under unilateral state or control
-constraints. Math. Models Methods Appl. Sci., Vol. 27, No. 9 (2017), pp 1587-1644.
-
-[4] D. Pighin and E. Zuazua, Controllability under positivity constraints of semilinear heat equations. Math. Control. Relat.
-Fields, Vol. 8, No. 3,4 (2018), pp. 935-964.
-</description>
-        <pubDate>Fri, 31 May 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP03</category>
         
       </item>
     

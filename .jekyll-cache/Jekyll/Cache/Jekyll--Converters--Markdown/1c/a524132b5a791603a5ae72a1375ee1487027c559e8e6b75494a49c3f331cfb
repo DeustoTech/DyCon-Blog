@@ -1,4 +1,4 @@
-I"qq <div style="display: block;">
+I"3s <div style="display: block;">
     <ul>
     
       <div class="display-inline">
@@ -99,6 +99,17 @@
                 
               </a>
               <div class="author-name">Carlos Castro</div>
+            </div>
+          </div>
+        
+          <div class="author-container">
+            <div class="photo-author">
+              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">
+                
+                  <img src="https://deustotech.github.io/DyCon-Blog/assets/placeholder-180x250.gif" alt="" width="178" height="250">
+                
+              </a>
+              <div class="author-name">Carlos Esteve</div>
             </div>
           </div>
         
