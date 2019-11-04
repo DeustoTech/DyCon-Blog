@@ -181,7 +181,7 @@
         ['Dario Pighin',  2 , new Date(2019,07,08),'Rotors imbalance suppression by optimal control'],
         ['Debayan Maity',  1 , new Date(2019,06,07),'Controllability of a Class of Infinite Dimensional Systems with Age Structure'],
         ['Domenec Ruiz',  1 , new Date(2018,10,28),'Stabilization of a collective behavior model'],
-        ['Dongnam Ko',  2 , new Date(2019,11,01),'Optimal Control Problem with CasADi on null-controllability of the network system'],
+        ['Dongnam Ko',  2 , new Date(2019,05,27),'Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL'],
         ['Emmanuel Trélat',  2 , new Date(2018,03,05),'Control of the semi-discrete 1D heat equation under nonnegative control constraint'],
         ['Enrique Zuazua',  17 , new Date(2018,05,01),'Optimal Control of the Poisson Equation with OpenFOAM'],
         ['Mohammed Nor Frioui',  2 , new Date(2019,06,04),'A numerical method for solving an age structured virus model'],
@@ -228,11 +228,11 @@
     data.addColumn('date', 'expected date');
 
     data.addRows([
-      ['Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL', 'Dongnam Ko *'  , new Date("2019-05-27")],
       ['Controllability to steady states of a reaction diffusion system and emergence of barriers.', 'Domenec Ruiz *'  , new Date("2019-07-08")],
       ['Uniform exponential and polynomial stability and approximation in control of a thermoelastic model', ' *'  , new Date("2019-07-18")],
       ['System Identification of PDE equations from data', 'Jesus Oroya *'  , new Date("2019-10-01")],
-      ['Movil control strategy for models with memory terms', 'Jesus Oroya *'  , new Date("2019-10-30")],]);
+      ['Movil control strategy for models with memory terms', 'Jesus Oroya *'  , new Date("2019-10-30")],
+      ['Optimal Control Problem with CasADi on null-controllability of the network system', 'Dongnam Ko *'  , new Date("2019-11-01")],]);
 
     var table = new google.visualization.Table(document.getElementById('table_div_upc'));
 
@@ -258,7 +258,7 @@
       ['Dario Pighin',  2 , new Date(2019,07,08),'Rotors imbalance suppression by optimal control'],
       ['Debayan Maity',  1 , new Date(2019,06,07),'Controllability of a Class of Infinite Dimensional Systems with Age Structure'],
       ['Domenec Ruiz',  1 , new Date(2018,10,28),'Stabilization of a collective behavior model'],
-      ['Dongnam Ko',  2 , new Date(2019,11,01),'Optimal Control Problem with CasADi on null-controllability of the network system'],
+      ['Dongnam Ko',  2 , new Date(2019,05,27),'Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL'],
       ['Jesus Oroya',  3 , new Date(2019,06,26),'Propagation of one and two-dimensional discrete waves under finite difference approximation'],
       ['Liard Thibault',  1 , new Date(2019,05,24),'Reconstruction of traffic state using autonomous vehicles'],
       ['Umberto Biccari',  9 , new Date(2019,06,26),'Propagation of one and two-dimensional discrete waves under finite difference approximation'],
@@ -345,20 +345,6 @@
       <div id="table_div_upc"></div>
 
       <h1>Posts by month</h1>
-
-<h2>November-2019</h2>
-
-<h4 class="headline">1.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0027-DongnamHeat2D">Optimal Control Problem with CasADi on null-controllability of the network system</a></h4>
-<p>Author:
-      
-      
-           
-<a href="https://deustotech.github.io/DyCon-Blog/author/DongnamK">Dongnam Ko</a>
-       - 01-November-2019</p>
-<div class="ellipsis-two-lines">
-The aim of this work is to recover the initial sparse sources that lead to a given final measurements using the diffusion equation. It is assumed that the initial condition can be written down as a linear combination of unitary deltas and their weights. In that context, an algorithm that combines the adjoint methodology with least squares is presented. In particular, the adjoint methodology is used to find the localization of the sparse sources and least squares to find the corresponding intensities.
-</div>
-<hr />
 
 <h2>October-2019</h2>
 
@@ -496,7 +482,19 @@ We analyze the controllability properties under positivity constraints on the co
 </div>
 <hr />
 
-<h4 class="headline">2.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/WP99-P0032">Reconstruction of traffic state using autonomous vehicles</a></h4>
+<h4 class="headline">2.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/WP99-P0026">Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL</a></h4>
+<p>Author:
+      
+      
+           
+<a href="https://deustotech.github.io/DyCon-Blog/author/DongnamK">Dongnam Ko</a>
+       - 27-May-2019</p>
+<div class="ellipsis-two-lines">
+In this post, we use IpOpt and AMPL to simulate optimal controls on a nonlinear ODE system with unbounded interactions. The restriction and initial guess on the state variables are critical for this problem to operate minimization algorithm. From the data calculated from AMPL, we interpret and visualize it using Matlab.
+</div>
+<hr />
+
+<h4 class="headline">3.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/WP99-P0032">Reconstruction of traffic state using autonomous vehicles</a></h4>
 <p>Author:
       
       
