@@ -2,6 +2,26 @@
     
     
     {
+      "title"           : "Optimal Control Problem with CasADi on null-controllability of the network system",
+      "categories"      : ["tutorial", "WP06"],
+      "url"             : "/tutorial/wp06/P0027-DongnamHeat2D",
+      "date"            : "2019-11-01",
+      "author"          : ["DongnamK"],
+      "description"     : "The aim of this work is to recover the initial sparse sources that lead to a given final measurements using the diffusion equation. It is assumed that the initial condition can be written down as a linear combination of unitary deltas and their weights. In that context, an algorithm that combines the adjoint methodology with least squares is presented. In particular, the adjoint methodology is used to find the localization of the sparse sources and least squares to find the corresponding intensities.",
+      "avatar"          : ""
+    } ,
+  
+    {
+      "title"           : "Numerical simulation of nonlinear Population Dynamics Structuring by age and Spatial diffusion",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0051",
+      "date"            : "2019-10-30",
+      "author"          : ["YacoubaS"],
+      "description"     : "In this tutorial, we propose the Hum method to approximate numerically the control in a null controllability problem for a non linear population dynamics model structuring in age and spatial diffusion.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0051/v1.png"
+    } ,
+  
+    {
       "title"           : "Touchdown localization for the MEMS problem with variable dielectric permittivity",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/P0040",
@@ -89,16 +109,6 @@
       "author"          : ["UmbertoB"],
       "description"     : "We analyze the controllability properties under positivity constraints on the control or the state of a one-dimensional heat equation involving the fractional Laplacian $(-\Delta)^s$ ($0 1/2$. Moreover, we show that in this minimal time constrained controllability is achieved by means of a control that belongs to a certain space of Radon measures. We also give some numerical simulations that confirm our theoretical results.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/deltas.png"
-    } ,
-  
-    {
-      "title"           : "Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL",
-      "categories"      : ["tutorial", "WP06"],
-      "url"             : "/tutorial/wp06/WP99-P0026",
-      "date"            : "2019-05-27",
-      "author"          : ["DongnamK"],
-      "description"     : "In this post, we use IpOpt and AMPL to simulate optimal controls on a nonlinear ODE system with unbounded interactions. The restriction and initial guess on the state variables are critical for this problem to operate minimization algorithm. From the data calculated from AMPL, we interpret and visualize it using Matlab.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0026/ds.gif"
     } ,
   
     {
@@ -382,16 +392,6 @@
     } ,
   
     {
-      "title"           : "Finite element approximation of the 1-D fractional Poisson equation",
-      "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0003",
-      "date"            : "2017-12-05",
-      "author"          : ["UmbertoB","VictorH"],
-      "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control",
-      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFeatImg.jpg"
-    } ,
-  
-    {
       "title"           : "Solving an optimal control problem arisen in ecology with AMPL",
       "categories"      : ["tutorial", "WP05"],
       "url"             : "/tutorial/wp05/P0001",
@@ -399,6 +399,16 @@
       "author"          : ["JiaminZ","EnriqueZ"],
       "description"     : "We present a computational tool to solve optimal control problems for diffusion-reaction systems describing the growth and spread of populations",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/11/ex2_1.png"
+    } ,
+  
+    {
+      "title"           : "Finite element approximation of the 1-D fractional Poisson equation",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0003",
+      "date"            : "2017-12-05",
+      "author"          : ["UmbertoB","VictorH"],
+      "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFeatImg.jpg"
     } ,
   
     {

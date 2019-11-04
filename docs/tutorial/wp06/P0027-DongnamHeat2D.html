@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Optimal Control Problem with CasADi on null-controllability of the network system - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0027-DongnamHeat2D">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP06">
+            Finite versus infinite-dimensional dynamical systems</a> &#8827;</small>
+          </h2>
+          <h1>Optimal Control Problem with CasADi on null-controllability of the network system</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/DongnamK">Dongnam Ko</a>
+                  </span>
+                </span>
+              
+              - 01 November 2019
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/Heat2D_control_Casadi.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <p>This code needs the installation of CasADi 3.4.5: https://web.casadi.org/get/</p>
+
+<p>In this post, we will consider the null-controllability in the finite difference scheme of the 2D Heat equation. As a modification to the optimal control problem, we use CasADi and IpOpt to simulate optimization.</p>
+
+<p>A similar problem has been treated in the DyCon Blog post, https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022 which deals with the one-dimensional fractional heat equation under positivity constraints.</p>
+
+<p>We start with the finite difference scheme of the 2D Heat equation and the control on one boundary of the square domain $[0,1]^2$. <script type="math/tex">% <![CDATA[
+\begin{cases} \frac{dz_{i,j}}{dt} = (N+1)^2(z_{i+1,j}+z_{i-1,j}+z_{i,j+1}+z_{i,j-1}-4z_{i,j}) + u\delta(i-1), & i,j = 1,\ldots,N,~ t \in (0,T) \\ z_{i,j}(t) = 0, & i = 0, N+1, ~\text{or}~ j=0, N+1,~ t \in (0,T) \\ z_{i,j}(0)=z^0_{i,j}, & i,j=1,\ldots,N. \end{cases} %]]></script></p>
+
+<p>We will consider the problem of steering the initial datum: <script type="math/tex">% <![CDATA[
+z^0_{i,j} = \begin{cases} (-1)^{i+1} & \text{if}~ i+j=N+1,\\ 0 & \text{otherwise}. \end{cases} %]]></script></p>
+
+<p>to the zero solution. This is a well-known controllable problem.</p>
+
+<h2 id="problem-formulation">Problem formulation</h2>
+
+<p>Parameters for the problem</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N_size</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">%% Space discretization for 1D</span>
+<span class="n">Nx</span> <span class="o">=</span> <span class="n">N_size</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span> <span class="c1">%% Space discretization for 2D</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">%% Time discretization : need to check the CFL condition</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span> <span class="c1">%% Final time</span>
+
+<span class="c1">%% Discretization of the Space</span>
+<span class="nb">xline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">xline</span> <span class="o">=</span> <span class="nb">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="nb">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="nb">xline</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="c1">%%</span>
+<span class="n">xline_f</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="nb">xline</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="nb">xline</span><span class="p">(</span><span class="k">end</span><span class="p">),</span><span class="mi">2</span><span class="o">*</span><span class="n">N_size</span><span class="p">);</span>
+
+<span class="p">[</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">]</span>   <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="nb">xline</span><span class="p">,</span><span class="nb">xline</span><span class="p">);</span>
+<span class="p">[</span><span class="n">xmsf</span><span class="p">,</span><span class="n">ymsf</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">xline_f</span><span class="p">,</span><span class="n">xline_f</span><span class="p">);</span>
+
+<span class="c1">%% Initial data</span>
+<span class="n">Y0_2d</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N_size</span>
+    <span class="k">for</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N_size</span>
+        <span class="n">Y0_2d</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="nb">xline</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="nb">pi</span><span class="p">)</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="nb">xline</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="nb">pi</span><span class="p">);</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+<span class="n">Y0</span> <span class="o">=</span> <span class="n">Y0_2d</span><span class="p">(:);</span>
+<span class="c1">%% Target data</span>
+<span class="n">Y1</span> <span class="o">=</span> <span class="mf">0.3</span><span class="o">*</span><span class="n">Y0</span><span class="p">;</span>
+
+<span class="c1">%% Definition of the dynamics : Y' = AY+BU</span>
+<span class="n">B</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="n">N_size</span><span class="p">);</span> <span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">N_size</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">N_size</span><span class="p">)</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N_size</span><span class="p">);</span>
+
+<span class="n">A1_mat</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="nb">ones</span><span class="p">(</span><span class="n">N_size</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">A1_mat</span> <span class="o">=</span> <span class="n">A1_mat</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">N_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">N_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">A2_mat</span> <span class="o">=</span> <span class="n">A1_mat</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N_size</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">A2_mat</span> <span class="o">=</span> <span class="nb">blkdiag</span><span class="p">(</span><span class="n">A2_mat</span><span class="p">,</span><span class="n">A1_mat</span><span class="p">);</span>
+<span class="k">end</span>
+<span class="n">A_mat</span> <span class="o">=</span> <span class="n">A2_mat</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">N_size</span><span class="o">.*</span><span class="p">(</span><span class="n">N_size</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">),</span><span class="n">N_size</span><span class="p">)</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">N_size</span><span class="o">.*</span><span class="p">(</span><span class="n">N_size</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="n">N_size</span><span class="p">);</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">A_mat</span><span class="p">;</span> <span class="c1">%% A: Discrete Laplacian in 2D with uniform squared mesh</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<span class="n">options_plot_graphs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">,</span><span class="s1">'NodeColor'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">,</span><span class="s1">'ArrowSize'</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="s1">'NodeLabel'</span><span class="p">,{}};</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">digraph</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="s1">'XData'</span><span class="p">,</span><span class="n">xms</span><span class="p">(:)</span><span class="s1">','</span><span class="n">YData</span><span class="s1">',yms(:)'</span><span class="p">,</span><span class="n">options_plot_graphs</span><span class="p">{:})</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'x-axis'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'y-axis'</span><span class="p">)</span>
+<span class="nb">grid</span> <span class="n">on</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_01.png" alt="" /></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% Discretization of the time : we need to check CFL condition to change 'Nt'.</span>
+<span class="n">tline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%%uniform time mesh</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="n">tline</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">tline</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">%% Simulation of the uncontrolled trajectory</span>
+<span class="n">M</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">dt</span><span class="p">/</span><span class="n">dx</span><span class="o">.^</span><span class="mi">2</span><span class="o">*</span><span class="n">A</span><span class="p">;</span>
+<span class="n">L</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">dt</span><span class="p">/</span><span class="n">dx</span><span class="o">.^</span><span class="mi">2</span><span class="o">*</span><span class="n">A</span><span class="p">;</span>
+<span class="n">P</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">dt</span><span class="o">*</span><span class="n">B</span><span class="p">;</span>
+
+<span class="n">Y</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">Y</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">Y0</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">Nt</span> <span class="c1">%% loop over time intervals</span>
+   <span class="c1">%% Crank-Nicolson method without control</span>
+   <span class="n">Y</span><span class="p">(:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">M</span><span class="p">\</span><span class="n">L</span><span class="o">*</span><span class="n">Y</span><span class="p">(:,</span><span class="n">k</span><span class="p">);</span>
+<span class="k">end</span>
+<span class="n">YT</span> <span class="o">=</span> <span class="n">Y</span><span class="p">(:,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">Y</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">);</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="nb">interp2</span><span class="p">(</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">xmsf</span><span class="p">,</span><span class="n">ymsf</span><span class="p">);</span>
+<span class="n">isurf</span> <span class="o">=</span> <span class="nb">surf</span><span class="p">(</span><span class="n">xmsf</span><span class="p">,</span><span class="n">ymsf</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="s1">'FaceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="n">isurf</span><span class="o">.</span><span class="n">CData</span> <span class="o">=</span> <span class="n">isurf</span><span class="o">.</span><span class="n">CData</span><span class="o">*</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">Y</span><span class="p">(:,</span><span class="k">end</span><span class="p">),</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">);</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="nb">interp2</span><span class="p">(</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">xmsf</span><span class="p">,</span><span class="n">ymsf</span><span class="p">);</span>
+<span class="n">jsurf</span> <span class="o">=</span> <span class="nb">surf</span><span class="p">(</span><span class="n">xmsf</span><span class="p">,</span><span class="n">ymsf</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="s1">'FaceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="n">jsurf</span><span class="o">.</span><span class="n">CData</span> <span class="o">=</span> <span class="n">jsurf</span><span class="o">.</span><span class="n">CData</span><span class="o">*</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">10</span><span class="p">;</span>
+<span class="c1">%%</span>
+<span class="n">jsurf</span><span class="o">.</span><span class="n">Parent</span><span class="o">.</span><span class="n">Color</span> <span class="o">=</span> <span class="s1">'none'</span><span class="p">;</span>
+<span class="nb">lightangle</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1">%%</span>
+<span class="nb">legend</span><span class="p">({</span><span class="s1">'Initial Condition'</span><span class="p">,</span><span class="s1">'Target'</span><span class="p">})</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_02.png" alt="" /></p>
+
+<h2 id="optimization-problem">Optimization problem</h2>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">opti</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Opti</span><span class="p">();</span>  <span class="c1">%% CasADi function</span>
+
+<span class="c1">%% ---- Input variables ---------</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% state trajectory</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="n">N_size</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>   <span class="c1">%% control</span>
+
+<span class="c1">%% ---- Dynamic constraints --------</span>
+<span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">Nt</span> <span class="c1">%% loop over control intervals</span>
+   <span class="c1">%% Crank-Nicolson method : this helps us to boost the optimization</span>
+   <span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">M</span><span class="o">*</span><span class="n">X</span><span class="p">(:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span> <span class="n">L</span><span class="o">*</span><span class="n">X</span><span class="p">(:,</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">P</span><span class="o">*</span><span class="p">(</span><span class="n">U</span><span class="p">(:,</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">U</span><span class="p">(:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">end</span>
+
+<span class="c1">%% ---- State constraints --------</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">X</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span><span class="n">Y0</span><span class="p">);</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">X</span><span class="p">(:,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span><span class="n">Y1</span><span class="p">);</span>
+
+<span class="c1">%% ---- Optimization objective  ----------</span>
+<span class="n">Cost</span> <span class="o">=</span> <span class="p">(</span><span class="n">dx</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">U</span><span class="o">.^</span><span class="mi">2</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="p">/</span><span class="n">Nt</span><span class="p">));</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">Cost</span><span class="p">);</span> <span class="c1">%% minimizing L2 at the final time</span>
+
+<span class="c1">%% ---- initial guesses for solver ---</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">set_initial</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">);</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">set_initial</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">%% ---- solve NLP              ------</span>
+<span class="n">p_opts</span> <span class="o">=</span> <span class="nb">struct</span><span class="p">(</span><span class="s1">'expand'</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<span class="n">s_opts</span> <span class="o">=</span> <span class="nb">struct</span><span class="p">(</span><span class="s1">'max_iter'</span><span class="p">,</span><span class="mi">10000</span><span class="p">);</span> <span class="c1">%% iteration limitation</span>
+
+<span class="n">opti</span><span class="o">.</span><span class="n">solver</span><span class="p">(</span><span class="s1">'ipopt'</span><span class="p">,</span><span class="n">p_opts</span><span class="p">,</span><span class="n">s_opts</span><span class="p">);</span> <span class="c1">%% set numerical backend</span>
+<span class="nb">tic</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">solve</span><span class="p">();</span>   <span class="c1">%% actual solve</span>
+<span class="nb">toc</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:     2752
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:       84
+
+Total number of variables............................:      420
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:      352
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  \vert\vertd\vert\vert  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 1.38e-01 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  6.9867496e+02 8.88e-16 2.49e-08  -2.5 1.78e+02    -  1.00e+00 1.00e+00h  1
+
+Number of Iterations....: 1
+
+                                   (scaled)                 (unscaled)
+Objective...............:   6.9867496486950017e+02    6.9867496486950017e+02
+Dual infeasibility......:   2.4853882507613889e-08    2.4853882507613889e-08
+Constraint violation....:   8.8817841970012523e-16    8.8817841970012523e-16
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   2.0349560410724553e-09    2.4853882507613889e-08
+
+
+Number of objective function evaluations             = 2
+Number of objective gradient evaluations             = 2
+Number of equality constraint evaluations            = 2
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 2
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 1
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.140
+Total CPU secs in NLP function evaluations           =      0.000
+
+EXIT: Optimal Solution Found.
+               t_proc [s]   t_wall [s]    n_eval
+       nlp_f      1.1e-05        1e-05         2
+       nlp_g      5.7e-05      5.7e-05         2
+  nlp_grad_f        2e-05      1.9e-05         3
+  nlp_hess_l        4e-06        4e-06         1
+   nlp_jac_g      9.3e-05      9.4e-05         3
+      solver        0.154        0.149         1
+Elapsed time is 0.186246 seconds.
+
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_03.png" alt="" /></p>
+
+<h2 id="post-processing">Post-processing</h2>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Sol_x</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">X</span><span class="p">);</span> <span class="c1">%% solved controlled trajectory</span>
+<span class="n">Sol_u</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">U</span><span class="p">);</span> <span class="c1">%% solved control</span>
+<span class="c1">%%Sol_x = opti.debug.value(X);</span>
+<span class="c1">%%Sol_u = opti.debug.value(U); %% final data if algorithm stops with error</span>
+
+<span class="n">Sol_z</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% displaying variable</span>
+<span class="n">Sol_z</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">Sol_x</span><span class="p">(:,</span><span class="k">end</span><span class="p">),[</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">]);</span>
+<span class="n">Sol_y</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% displaying uncontrolled variable</span>
+<span class="n">Sol_y</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">YT</span><span class="p">,[</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">]);</span>
+
+<span class="n">xxline</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">),[</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span> <span class="mi">1</span><span class="p">]);</span>
+<span class="n">yyline</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">'</span><span class="p">,[</span><span class="mi">1</span> <span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">]);</span>
+<span class="n">max_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">Sol_z</span><span class="p">(:));</span>
+
+<span class="nb">figure</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">xxline</span><span class="p">,</span><span class="n">yyline</span><span class="p">,</span><span class="n">Sol_y</span><span class="p">(:,:));</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'x'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'y'</span><span class="p">);</span> <span class="nb">zlabel</span><span class="p">(</span><span class="s1">'z'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Uncontrolled final values'</span><span class="p">);</span>
+<span class="nb">zlim</span><span class="p">([</span><span class="o">-</span><span class="n">max_y</span> <span class="n">max_y</span><span class="p">])</span>
+<span class="c1">%%hold on</span>
+<span class="nb">figure</span>
+<span class="c1">%%hold on</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">xxline</span><span class="p">,</span><span class="n">yyline</span><span class="p">,</span><span class="n">Sol_z</span><span class="p">(:,:));</span>
+<span class="nb">zlim</span><span class="p">([</span><span class="o">-</span><span class="n">max_y</span> <span class="n">max_y</span><span class="p">])</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'x'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'y'</span><span class="p">);</span> <span class="nb">zlabel</span><span class="p">(</span><span class="s1">'z'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Controlled final values'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_04.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_05.png" alt="" /></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Final_2</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% displaying variable</span>
+<span class="n">Final_2</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,:)</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">Sol_x</span><span class="p">(:,:),[</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="n">Final_1</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% displaying variable</span>
+<span class="n">Final_1</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,:)</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">Y</span><span class="p">(:,:),[</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="c1">%% Free dynamics</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
+<span class="n">isurf</span> <span class="o">=</span> <span class="nb">surf</span><span class="p">(</span><span class="n">Final_1</span><span class="p">(:,:,</span><span class="mi">1</span><span class="p">));</span>
+<span class="nb">zlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span> <span class="mi">1</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">it</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span>
+   <span class="n">isurf</span><span class="o">.</span><span class="n">ZData</span> <span class="o">=</span>  <span class="n">Final_1</span><span class="p">(:,:,</span><span class="n">it</span><span class="p">);</span>
+<span class="c1">%%    pause(0.1)</span>
+<span class="k">end</span>
+<span class="c1">%% Controlled dynamics</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
+<span class="n">isurf</span> <span class="o">=</span> <span class="nb">surf</span><span class="p">(</span><span class="n">Final_2</span><span class="p">(:,:,</span><span class="mi">1</span><span class="p">));</span>
+<span class="nb">zlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span> <span class="mi">1</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">it</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span>
+   <span class="n">isurf</span><span class="o">.</span><span class="n">ZData</span> <span class="o">=</span>  <span class="n">Final_2</span><span class="p">(:,:,</span><span class="n">it</span><span class="p">);</span>
+<span class="c1">%%    pause(0.1)</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_06.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_07.png" alt="" /></p>
+
+<p>The simulation needs careful regularization coefficients, 1e5 which is big enough, in the cost function. This is from the nature of the Laplacian, which has significantlly different eigenvalues and high control cost for small time horizon.</p>
+
+<p>Next, we consider a small modification of the dynamics ‘A_mat’, which makes the dynamics controllable by only one node (1,1). This is impossible in the current operator since the initial data ‘Y0’ is not controllable.</p>
+
+<p>The following matrix ‘AS_mat’ links the nodes in a line, for example, 1-2-3-6-5-4-7-8-9 for $N=3$, which is a partial network of ‘A_mat’. Since the 1D heat equation is controllable, ‘AS_mat’ is controllable by the first node:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AC_mat</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">N_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="n">N_size</span><span class="o">-</span><span class="mi">2</span>
+    <span class="n">AC_mat</span> <span class="o">=</span> <span class="nb">blkdiag</span><span class="p">(</span><span class="n">AC_mat</span><span class="p">,</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">N_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">AC_mat</span><span class="p">(</span><span class="k">end</span><span class="p">,</span><span class="k">end</span><span class="o">-</span><span class="n">N_size</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">if</span> <span class="n">N_size</span><span class="o">==</span><span class="mi">2</span>
+        <span class="k">break</span>
+    <span class="k">end</span>
+    <span class="n">AC_mat</span> <span class="o">=</span> <span class="nb">blkdiag</span><span class="p">(</span><span class="n">AC_mat</span><span class="p">,</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">N_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">AC_mat</span><span class="p">(</span><span class="k">end</span><span class="o">-</span><span class="n">N_size</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="k">end</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">N_size</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="k">end</span>
+<span class="k">if</span> <span class="nb">length</span><span class="p">(</span><span class="n">AC_mat</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">N_size</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">AC_mat</span> <span class="o">=</span> <span class="nb">blkdiag</span><span class="p">(</span><span class="n">AC_mat</span><span class="p">,</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">N_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">AC_mat</span><span class="p">(</span><span class="k">end</span><span class="p">,</span><span class="k">end</span><span class="o">-</span><span class="n">N_size</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="n">AS_mat</span> <span class="o">=</span> <span class="p">(</span><span class="n">AC_mat</span> <span class="o">+</span> <span class="n">AC_mat</span><span class="o">'</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">Nx</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">options_plot_graphs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">,</span><span class="s1">'NodeColor'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">,</span><span class="s1">'ArrowSize'</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="s1">'NodeLabel'</span><span class="p">,{}};</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">digraph</span><span class="p">(</span><span class="n">AS_mat</span><span class="p">),</span><span class="s1">'XData'</span><span class="p">,</span><span class="n">xms</span><span class="p">(:)</span><span class="s1">','</span><span class="n">YData</span><span class="s1">',yms(:)'</span><span class="p">,</span><span class="n">options_plot_graphs</span><span class="p">{:})</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'x-axis'</span><span class="p">);</span><span class="nb">ylabel</span><span class="p">(</span><span class="s1">'y-axis'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Network'</span><span class="p">)</span>
+<span class="nb">grid</span> <span class="n">on</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_08.png" alt="" /></p>
+
+<p>Note that ‘AS_mat’ has the nonzero elements in the positions that ‘A_mat’ has. By deleting several interactions of ‘A_mat’, ‘AS_mat’ is now exactly controllable by one node. This is the idea of the structural controllability in the network system, called ‘network control’.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">N_size</span><span class="o">.^</span><span class="mi">2</span><span class="o">*</span><span class="n">AS_mat</span><span class="p">;</span>
+<span class="c1">%% Y' = AY + BU</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="n">tline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%%uniform time mesh</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">tline</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">tline</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">%% Simulation of the uncontrolled trajectory</span>
+<span class="n">M</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">dt</span><span class="p">/</span><span class="n">dx</span><span class="o">.^</span><span class="mi">2</span><span class="o">*</span><span class="n">A</span><span class="p">;</span>
+<span class="n">L</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">dt</span><span class="p">/</span><span class="n">dx</span><span class="o">.^</span><span class="mi">2</span><span class="o">*</span><span class="n">A</span><span class="p">;</span>
+<span class="n">P</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">dt</span><span class="o">*</span><span class="n">B</span><span class="p">;</span>
+
+<span class="n">Y</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">Y</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">Y0</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">Nt</span> <span class="c1">%% loop over time intervals</span>
+   <span class="c1">%% Crank-Nicolson method without control</span>
+   <span class="n">Y</span><span class="p">(:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">M</span><span class="p">\</span><span class="n">L</span><span class="o">*</span><span class="n">Y</span><span class="p">(:,</span><span class="n">k</span><span class="p">);</span>
+<span class="k">end</span>
+<span class="n">YT</span> <span class="o">=</span> <span class="n">Y</span><span class="p">(:,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">Y1</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">YT</span><span class="p">;</span>
+<span class="c1">%% surf(Y)</span>
+<span class="c1">%% plot(YT)</span>
+</code></pre></div></div>
+
+<h2 id="optimization-problem-1">Optimization problem</h2>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">opti</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Opti</span><span class="p">();</span>  <span class="c1">%% CasADi function</span>
+
+<span class="c1">%% ---- Input variables ---------</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% state trajectory</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>   <span class="c1">%% control</span>
+
+<span class="c1">%% ---- Dynamic constraints --------</span>
+<span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">Nt</span> <span class="c1">%% loop over control intervals</span>
+   <span class="c1">%% Crank-Nicolson method</span>
+   <span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">M</span><span class="o">*</span><span class="n">X</span><span class="p">(:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span> <span class="n">L</span><span class="o">*</span><span class="n">X</span><span class="p">(:,</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">P</span><span class="o">*</span><span class="p">(</span><span class="n">U</span><span class="p">(:,</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">U</span><span class="p">(:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">end</span>
+
+<span class="c1">%% ---- State constraints --------</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">X</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span><span class="n">Y0</span><span class="p">);</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">X</span><span class="p">(:,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span><span class="n">Y1</span><span class="p">);</span>
+
+<span class="c1">%% ---- Optimization objective  ----------</span>
+<span class="n">Cost</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">U</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="p">/</span><span class="n">Nt</span><span class="p">));</span> <span class="c1">%%1e3*dx^2*sum(sum((X(:,Nt+1)-Y1).^2))+;</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">Cost</span><span class="p">);</span> <span class="c1">%% minimizing L2 at the final time</span>
+
+<span class="c1">%% ---- Initial guess ----</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">set_initial</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">);</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">set_initial</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">%% ---- solve NLP              ------</span>
+<span class="n">p_opts</span> <span class="o">=</span> <span class="nb">struct</span><span class="p">(</span><span class="s1">'expand'</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<span class="n">s_opts</span> <span class="o">=</span> <span class="nb">struct</span><span class="p">(</span><span class="s1">'max_iter'</span><span class="p">,</span><span class="mf">1e5</span><span class="p">);</span> <span class="c1">%% cut down the algorithm at the 1000-th iteration.</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">solver</span><span class="p">(</span><span class="s1">'ipopt'</span><span class="p">,</span><span class="n">p_opts</span><span class="p">,</span><span class="n">s_opts</span><span class="p">);</span> <span class="c1">%% set numerical backend</span>
+<span class="nb">tic</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">solve</span><span class="p">();</span>   <span class="c1">%% actual solve</span>
+<span class="nb">toc</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:     2852
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:       31
+
+Total number of variables............................:      527
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:      512
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  \vert\vertd\vert\vert  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 1.04e-01 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  2.9522421e+04 8.88e-16 6.25e-02  -2.5 1.08e+03    -  1.00e+00 1.00e+00h  1
+
+Number of Iterations....: 1
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.9522420946189726e+04    2.9522420946189726e+04
+Dual infeasibility......:   6.2500000000000000e-02    6.2500000000000000e-02
+Constraint violation....:   8.8817841970012523e-16    8.8817841970012523e-16
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   1.4002320737719130e-12    6.2500000000000000e-02
+
+
+Number of objective function evaluations             = 2
+Number of objective gradient evaluations             = 2
+Number of equality constraint evaluations            = 2
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 2
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 1
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.357
+Total CPU secs in NLP function evaluations           =      0.000
+
+EXIT: Optimal Solution Found.
+               t_proc [s]   t_wall [s]    n_eval
+       nlp_f      1.4e-05      1.4e-05         2
+       nlp_g      5.7e-05      5.8e-05         2
+  nlp_grad_f      2.1e-05        2e-05         3
+  nlp_hess_l        5e-06        5e-06         1
+   nlp_jac_g      8.9e-05      8.8e-05         3
+      solver        0.378        0.125         1
+Elapsed time is 0.391622 seconds.
+
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_09.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_10.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_11.png" alt="" /></p>
+
+<h2 id="post-processing-1">Post-processing</h2>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%%Sol_x = sol.value(X); %% solved controlled trajectory</span>
+<span class="c1">%%Sol_u = sol.value(U); %% solved control</span>
+<span class="n">Sol_x</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">X</span><span class="p">);</span>
+<span class="n">Sol_u</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">U</span><span class="p">);</span> <span class="c1">%% final data if algorithm stops with error</span>
+
+<span class="n">Sol_z</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% displaying variable</span>
+<span class="n">Sol_z</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">Sol_x</span><span class="p">(:,</span><span class="k">end</span><span class="p">),[</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">]);</span>
+<span class="n">Sol_y</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% displaying uncontrolled variable</span>
+<span class="n">Sol_y</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">YT</span><span class="p">,[</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">]);</span>
+
+<span class="n">xxline</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">),[</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span> <span class="mi">1</span><span class="p">]);</span>
+<span class="n">yyline</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">'</span><span class="p">,[</span><span class="mi">1</span> <span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">]);</span>
+<span class="n">max_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">Sol_z</span><span class="p">(:)));</span>
+
+<span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">xxline</span><span class="p">,</span><span class="n">yyline</span><span class="p">,</span><span class="n">Sol_y</span><span class="p">(:,:));</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'x'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'y'</span><span class="p">);</span> <span class="nb">zlabel</span><span class="p">(</span><span class="s1">'z'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Uncontrolled final values'</span><span class="p">);</span>
+<span class="nb">zlim</span><span class="p">([</span><span class="o">-</span><span class="n">max_y</span> <span class="n">max_y</span><span class="p">])</span>
+<span class="c1">%%hold on</span>
+<span class="nb">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">%%hold on</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">xxline</span><span class="p">,</span><span class="n">yyline</span><span class="p">,</span><span class="n">Sol_z</span><span class="p">(:,:));</span>
+<span class="nb">zlim</span><span class="p">([</span><span class="o">-</span><span class="n">max_y</span> <span class="n">max_y</span><span class="p">])</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'x'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'y'</span><span class="p">);</span> <span class="nb">zlabel</span><span class="p">(</span><span class="s1">'z'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Controlled final values'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_12.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_13.png" alt="" /></p>
+
+<h2 id="recover-the-trajectories">Recover the trajectories</h2>
+
+<p>The algorithm of IpOpt does not guarantee the dynamics exactly follows the discrete time-evolution, but approximate it. We may use the linear solver in Matlab to recover the exact dynamics with the implicit C-N method. This process is needed if we stop the algorithm and test that it is an approximate solution.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Yc</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">Yc</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">Y0</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">Nt</span> <span class="c1">%% loop over control intervals</span>
+   <span class="c1">%% Crank-Nicolson method</span>
+   <span class="n">Yc</span><span class="p">(:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">M</span><span class="p">\</span><span class="n">L</span><span class="o">*</span><span class="n">Yc</span><span class="p">(:,</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">M</span><span class="p">\</span><span class="n">P</span><span class="o">*</span><span class="p">(</span><span class="n">Sol_u</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">Sol_u</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+   <span class="c1">%% M Y(:,k+1) = L Y(:,k) + P (u(k)+u(k+1));</span>
+<span class="k">end</span>
+<span class="n">YTc</span> <span class="o">=</span> <span class="n">Yc</span><span class="p">(:,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="nb">figure</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">YT</span><span class="p">,</span><span class="s1">'-'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">Sol_x</span><span class="p">(:,</span><span class="k">end</span><span class="p">),</span><span class="s1">'r*'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">YTc</span><span class="p">,</span><span class="s1">'b*'</span><span class="p">)</span>
+
+<span class="c1">%% Save the data</span>
+<span class="n">Final_3</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% displaying variable</span>
+<span class="n">Final_3</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,:)</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">Y</span><span class="p">(:,:),[</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="n">Final_4</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">N_size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% displaying variable</span>
+<span class="n">Final_4</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,:)</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">Yc</span><span class="p">(:,:),[</span><span class="n">N_size</span><span class="p">,</span><span class="n">N_size</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="c1">%% Free dynamics</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
+<span class="n">isurf</span> <span class="o">=</span> <span class="nb">surf</span><span class="p">(</span><span class="n">Final_3</span><span class="p">(:,:,</span><span class="mi">1</span><span class="p">));</span>
+<span class="nb">zlim</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span> <span class="mi">2</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">it</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span>
+   <span class="n">isurf</span><span class="o">.</span><span class="n">ZData</span> <span class="o">=</span>  <span class="n">Final_3</span><span class="p">(:,:,</span><span class="n">it</span><span class="p">);</span>
+   <span class="nb">pause</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">end</span>
+<span class="c1">%% Controlled dynamics</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
+<span class="n">isurf</span> <span class="o">=</span> <span class="nb">surf</span><span class="p">(</span><span class="n">Final_4</span><span class="p">(:,:,</span><span class="mi">1</span><span class="p">));</span>
+<span class="nb">zlim</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span> <span class="mi">2</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">it</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span>
+   <span class="n">isurf</span><span class="o">.</span><span class="n">ZData</span> <span class="o">=</span>  <span class="n">Final_4</span><span class="p">(:,:,</span><span class="n">it</span><span class="p">);</span>
+   <span class="nb">pause</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_14.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_15.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_16.png" alt="" /></p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0027-DongnamHeat2D/copiaRM_17.png" alt="" /></p>
+
+<p>Sure, this problem needs a big control cost (or long time horizon) and also more calculation costs for optimization since its close approximation ‘A_mat’ was not controllable.</p>
+
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

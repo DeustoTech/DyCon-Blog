@@ -1,0 +1,66 @@
+---
+layout: default
+---
+<!-- Extraemos el json topic segun el titulo de post, para de esta forma tener todas las propiedades de topic -->
+
+{% assign topic = site.data.Courses[page.title] %}
+<header class="intro-header">
+  <div class="container" style="padding-top: 50px;">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h2>
+          <small class="light-grey">
+            <a href="{{site.url}}{{site.baseurl}}/projects/courses">Courses</a>	&#8827;
+          </small>
+        </h2>
+
+        <h1>{{topic.name}}</h1>
+      </div>
+		</div>
+	</div>
+</header>
+<hr>
+
+<article>
+  <div id="content" class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div>{{topic.description}}</div>
+      <h4>Lectures:</h4>
+      <!-- Realizamos la query  -->
+      {% assign qposts = site.posts | where:"layout","lecture" | where:"categories", page.title | sort  %}
+      {% for post in qposts %}
+        <div class="post-preview shadowbox">
+          <div class="post-avatar-wp">
+          {% if post.avatar %}
+          <img src="{{ post.avatar }}">
+          {% else %}
+          <img src="https://www.serautonomo.net/wp-content/plugins/sp-amp/placeholder.png">
+          {% endif %}
+          </div>
+          <div class="post-info">
+            <a href="{{ post.url | prepend: site.baseurl }}" class="display-block">
+              <h4 class="post-preview-title ellipsis-two-lines"> {{ post.title }} </h4>
+            </a>
+            <div class="post-preview-subtitle ellipsis-two-lines">
+              {{ post.description }}
+            </div>
+            <div class="post-preview-authors ellipsis-one-line">
+              Author{% if post.author.size > 1 %}s{% endif %}:
+              {% assign counter = 0 %}
+              {% for aut in post.author %}
+                {% assign counter = counter | plus: 1 %}
+                  <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>{% unless post.author.size == counter %},{% endunless %}
+              {% endfor %}
+              - {{post.date|date_to_long_string}}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</article>
+
+
+<!-- Post Content -->
+{% include imagezoom.html %}
+

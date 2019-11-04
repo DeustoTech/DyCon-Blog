@@ -5,9 +5,1017 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 10 Oct 2019 16:07:42 +0200</pubDate>
-    <lastBuildDate>Thu, 10 Oct 2019 16:07:42 +0200</lastBuildDate>
+    <pubDate>Mon, 04 Nov 2019 10:26:38 +0100</pubDate>
+    <lastBuildDate>Mon, 04 Nov 2019 10:26:38 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Optimal Control Problem with CasADi on null-controllability of the network system</title>
+        <description>This code needs the installation of CasADi 3.4.5: https://web.casadi.org/get/
+
+In this post, we will consider the null-controllability in the finite difference scheme of the 2D Heat equation. As a modification to the optimal control problem, we use CasADi and IpOpt to simulate optimization.
+
+A similar problem has been treated in the DyCon Blog post, https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022 which deals with the one-dimensional fractional heat equation under positivity constraints.
+
+We start with the finite difference scheme of the 2D Heat equation and the control on one boundary of the square domain $[0,1]^2$. 
+
+We will consider the problem of steering the initial datum: 
+
+to the zero solution. This is a well-known controllable problem.
+
+Problem formulation
+
+Parameters for the problem
+
+N_size = 4; %% Space discretization for 1D
+Nx = N_size^2; %% Space discretization for 2D
+Nt = 20; %% Time discretization : need to check the CFL condition
+T = 0.1; %% Final time
+
+%% Discretization of the Space
+xline = linspace(0,1,N_size+2);
+xline = xline(2:end-1);
+dx = xline(2) - xline(1);
+%%
+xline_f = linspace(xline(1),xline(end),2*N_size);
+
+[xms,yms]   = meshgrid(xline,xline);
+[xmsf,ymsf] = meshgrid(xline_f,xline_f);
+
+%% Initial data
+Y0_2d = zeros(N_size);
+for i=1:N_size
+    for j=1:N_size
+        Y0_2d(i,j) = sin(xline(i)*pi)*sin(xline(j)*pi);
+    end
+end
+Y0 = Y0_2d(:);
+%% Target data
+Y1 = 0.3*Y0;
+
+%% Definition of the dynamics : Y' = AY+BU
+B = zeros(N_size^2,N_size); B(1:N_size,1:N_size) = eye(N_size);
+
+A1_mat = diag(-4*ones(N_size,1),0);
+A1_mat = A1_mat + diag(ones(N_size-1,1),1) +diag(ones(N_size-1,1),-1);
+A2_mat = A1_mat;
+for j=1:N_size-1
+    A2_mat = blkdiag(A2_mat,A1_mat);
+end
+A_mat = A2_mat + diag(ones(N_size.*(N_size-1),1),N_size) + diag(ones(N_size.*(N_size-1),1),-N_size);
+A = A_mat; %% A: Discrete Laplacian in 2D with uniform squared mesh
+
+
+clf
+options_plot_graphs = {'LineWidth',2,'DisplayName','off','NodeColor','r','ArrowSize',9,'MarkerSize',7,'NodeLabel',{}};
+plot(digraph(A),'XData',xms(:)','YData',yms(:)',options_plot_graphs{:})
+xlabel('x-axis')
+ylabel('y-axis')
+grid on
+
+
+
+
+%% Discretization of the time : we need to check CFL condition to change 'Nt'.
+tline = linspace(0,T,Nt+1); %%uniform time mesh
+
+dt = tline(2)-tline(1);
+
+%% Simulation of the uncontrolled trajectory
+M = eye(Nx) - 0.5*dt/dx.^2*A;
+L = eye(Nx) + 0.5*dt/dx.^2*A;
+P = 0.5*dt*B;
+
+Y = zeros(Nx,Nt+1);
+Y(:,1) = Y0;
+for k=1:Nt %% loop over time intervals
+   %% Crank-Nicolson method without control
+   Y(:,k+1) = M\L*Y(:,k);
+end
+YT = Y(:,Nt+1);
+
+
+clf
+Z = reshape(Y(:,1),N_size,N_size);
+Z = interp2(xms,yms,Z,xmsf,ymsf);
+isurf = surf(xmsf,ymsf,Z,'FaceAlpha',0.5);
+isurf.CData = isurf.CData*0 + 1;
+hold on
+Z = reshape(Y(:,end),N_size,N_size);
+Z = interp2(xms,yms,Z,xmsf,ymsf);
+jsurf = surf(xmsf,ymsf,Z,'FaceAlpha',0.5);
+jsurf.CData = jsurf.CData*0 + 10;
+%%
+jsurf.Parent.Color = 'none';
+lightangle(10,10)
+%%
+legend({'Initial Condition','Target'})
+
+
+
+
+Optimization problem
+
+opti = casadi.Opti();  %% CasADi function
+
+%% ---- Input variables ---------
+X = opti.variable(Nx,Nt+1); %% state trajectory
+U = opti.variable(N_size,Nt+1);   %% control
+
+%% ---- Dynamic constraints --------
+for k=1:Nt %% loop over control intervals
+   %% Crank-Nicolson method : this helps us to boost the optimization
+   opti.subject_to(M*X(:,k+1)== L*X(:,k) + P*(U(:,k)+U(:,k+1)));
+end
+
+%% ---- State constraints --------
+opti.subject_to(X(:,1)==Y0);
+opti.subject_to(X(:,Nt+1)==Y1);
+
+%% ---- Optimization objective  ----------
+Cost = (dx*sum(sum(U.^2))*(T/Nt));
+opti.minimize(Cost); %% minimizing L2 at the final time
+
+%% ---- initial guesses for solver ---
+opti.set_initial(X, Y);
+opti.set_initial(U, 0);
+
+%% ---- solve NLP              ------
+p_opts = struct('expand',true);
+s_opts = struct('max_iter',10000); %% iteration limitation
+
+opti.solver('ipopt',p_opts,s_opts); %% set numerical backend
+tic
+sol = opti.solve();   %% actual solve
+toc
+
+
+This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:     2752
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:       84
+
+Total number of variables............................:      420
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:      352
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  \vert\vertd\vert\vert  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 1.38e-01 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  6.9867496e+02 8.88e-16 2.49e-08  -2.5 1.78e+02    -  1.00e+00 1.00e+00h  1
+
+Number of Iterations....: 1
+
+                                   (scaled)                 (unscaled)
+Objective...............:   6.9867496486950017e+02    6.9867496486950017e+02
+Dual infeasibility......:   2.4853882507613889e-08    2.4853882507613889e-08
+Constraint violation....:   8.8817841970012523e-16    8.8817841970012523e-16
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   2.0349560410724553e-09    2.4853882507613889e-08
+
+
+Number of objective function evaluations             = 2
+Number of objective gradient evaluations             = 2
+Number of equality constraint evaluations            = 2
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 2
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 1
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.140
+Total CPU secs in NLP function evaluations           =      0.000
+
+EXIT: Optimal Solution Found.
+               t_proc [s]   t_wall [s]    n_eval
+       nlp_f      1.1e-05        1e-05         2
+       nlp_g      5.7e-05      5.7e-05         2
+  nlp_grad_f        2e-05      1.9e-05         3
+  nlp_hess_l        4e-06        4e-06         1
+   nlp_jac_g      9.3e-05      9.4e-05         3
+      solver        0.154        0.149         1
+Elapsed time is 0.186246 seconds.
+
+
+
+
+
+Post-processing
+
+Sol_x = sol.value(X); %% solved controlled trajectory
+Sol_u = sol.value(U); %% solved control
+%%Sol_x = opti.debug.value(X);
+%%Sol_u = opti.debug.value(U); %% final data if algorithm stops with error
+
+Sol_z = zeros(N_size+2,N_size+2,1); %% displaying variable
+Sol_z(2:end-1,2:end-1) = reshape(Sol_x(:,end),[N_size,N_size]);
+Sol_y = zeros(N_size+2,N_size+2,1); %% displaying uncontrolled variable
+Sol_y(2:end-1,2:end-1) = reshape(YT,[N_size,N_size]);
+
+xxline = repmat(linspace(0,1,N_size+2),[N_size+2 1]);
+yyline = repmat(linspace(0,1,N_size+2)',[1 N_size+2]);
+max_y = max(Sol_z(:));
+
+figure
+surf(xxline,yyline,Sol_y(:,:));
+xlabel('x'); ylabel('y'); zlabel('z'); title('Uncontrolled final values');
+zlim([-max_y max_y])
+%%hold on
+figure
+%%hold on
+surf(xxline,yyline,Sol_z(:,:));
+zlim([-max_y max_y])
+xlabel('x'); ylabel('y'); zlabel('z'); title('Controlled final values');
+
+
+
+
+
+
+Final_2 = zeros(N_size+2,N_size+2,Nt+1); %% displaying variable
+Final_2(2:end-1,2:end-1,:) = reshape(Sol_x(:,:),[N_size,N_size,Nt+1]);
+
+Final_1 = zeros(N_size+2,N_size+2,Nt+1); %% displaying variable
+Final_1(2:end-1,2:end-1,:) = reshape(Y(:,:),[N_size,N_size,Nt+1]);
+
+%% Free dynamics
+fig = figure;
+isurf = surf(Final_1(:,:,1));
+zlim([-1 1])
+for it = 1:Nt+1
+   isurf.ZData =  Final_1(:,:,it);
+%%    pause(0.1)
+end
+%% Controlled dynamics
+fig = figure;
+isurf = surf(Final_2(:,:,1));
+zlim([-1 1])
+for it = 1:Nt+1
+   isurf.ZData =  Final_2(:,:,it);
+%%    pause(0.1)
+end
+
+
+
+
+
+
+The simulation needs careful regularization coefficients, 1e5 which is big enough, in the cost function. This is from the nature of the Laplacian, which has significantlly different eigenvalues and high control cost for small time horizon.
+
+Next, we consider a small modification of the dynamics ‘A_mat’, which makes the dynamics controllable by only one node (1,1). This is impossible in the current operator since the initial data ‘Y0’ is not controllable.
+
+The following matrix ‘AS_mat’ links the nodes in a line, for example, 1-2-3-6-5-4-7-8-9 for $N=3$, which is a partial network of ‘A_mat’. Since the 1D heat equation is controllable, ‘AS_mat’ is controllable by the first node:
+
+AC_mat = diag(ones(N_size-1,1),-1);
+for j=1:2:N_size-2
+    AC_mat = blkdiag(AC_mat,diag(ones(N_size-1,1),1));
+    AC_mat(end,end-N_size)=1;
+    if N_size==2
+        break
+    end
+    AC_mat = blkdiag(AC_mat,diag(ones(N_size-1,1),-1));
+    AC_mat(end-N_size+1,end-2*N_size+1)=1;
+end
+if length(AC_mat) &amp;lt; (N_size.^2)
+    AC_mat = blkdiag(AC_mat,diag(ones(N_size-1,1),1));
+    AC_mat(end,end-N_size)=1;
+end
+
+AS_mat = (AC_mat + AC_mat') - 2*eye(Nx);
+
+
+options_plot_graphs = {'LineWidth',2,'DisplayName','off','NodeColor','r','ArrowSize',9,'MarkerSize',7,'NodeLabel',{}};
+plot(digraph(AS_mat),'XData',xms(:)','YData',yms(:)',options_plot_graphs{:})
+xlabel('x-axis');ylabel('y-axis')
+title('Network')
+grid on
+
+
+
+
+Note that ‘AS_mat’ has the nonzero elements in the positions that ‘A_mat’ has. By deleting several interactions of ‘A_mat’, ‘AS_mat’ is now exactly controllable by one node. This is the idea of the structural controllability in the network system, called ‘network control’.
+
+B = zeros(N_size^2,1); B(1) = 1;
+A = N_size.^2*AS_mat;
+%% Y' = AY + BU
+
+T = 0.1;
+Nt = 30;
+tline = linspace(0,T,Nt+1); %%uniform time mesh
+dt = tline(2)-tline(1);
+
+%% Simulation of the uncontrolled trajectory
+M = eye(Nx) - 0.5*dt/dx.^2*A;
+L = eye(Nx) + 0.5*dt/dx.^2*A;
+P = 0.5*dt*B;
+
+Y = zeros(Nx,Nt+1);
+Y(:,1) = Y0;
+for k=1:Nt %% loop over time intervals
+   %% Crank-Nicolson method without control
+   Y(:,k+1) = M\L*Y(:,k);
+end
+YT = Y(:,Nt+1);
+Y1 = 1.5*YT;
+%% surf(Y)
+%% plot(YT)
+
+
+Optimization problem
+
+opti = casadi.Opti();  %% CasADi function
+
+%% ---- Input variables ---------
+X = opti.variable(Nx,Nt+1); %% state trajectory
+U = opti.variable(1,Nt+1);   %% control
+
+%% ---- Dynamic constraints --------
+for k=1:Nt %% loop over control intervals
+   %% Crank-Nicolson method
+   opti.subject_to(M*X(:,k+1)== L*X(:,k) + P*(U(:,k)+U(:,k+1)));
+end
+
+%% ---- State constraints --------
+opti.subject_to(X(:,1)==Y0);
+opti.subject_to(X(:,Nt+1)==Y1);
+
+%% ---- Optimization objective  ----------
+Cost = (sum(U.^2)*(T/Nt)); %%1e3*dx^2*sum(sum((X(:,Nt+1)-Y1).^2))+;
+opti.minimize(Cost); %% minimizing L2 at the final time
+
+%% ---- Initial guess ----
+opti.set_initial(X, Y);
+opti.set_initial(U, 0);
+
+%% ---- solve NLP              ------
+p_opts = struct('expand',true);
+s_opts = struct('max_iter',1e5); %% cut down the algorithm at the 1000-th iteration.
+opti.solver('ipopt',p_opts,s_opts); %% set numerical backend
+tic
+sol = opti.solve();   %% actual solve
+toc
+
+
+This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:     2852
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:       31
+
+Total number of variables............................:      527
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:      512
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  \vert\vertd\vert\vert  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 1.04e-01 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  2.9522421e+04 8.88e-16 6.25e-02  -2.5 1.08e+03    -  1.00e+00 1.00e+00h  1
+
+Number of Iterations....: 1
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.9522420946189726e+04    2.9522420946189726e+04
+Dual infeasibility......:   6.2500000000000000e-02    6.2500000000000000e-02
+Constraint violation....:   8.8817841970012523e-16    8.8817841970012523e-16
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   1.4002320737719130e-12    6.2500000000000000e-02
+
+
+Number of objective function evaluations             = 2
+Number of objective gradient evaluations             = 2
+Number of equality constraint evaluations            = 2
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 2
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 1
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.357
+Total CPU secs in NLP function evaluations           =      0.000
+
+EXIT: Optimal Solution Found.
+               t_proc [s]   t_wall [s]    n_eval
+       nlp_f      1.4e-05      1.4e-05         2
+       nlp_g      5.7e-05      5.8e-05         2
+  nlp_grad_f      2.1e-05        2e-05         3
+  nlp_hess_l        5e-06        5e-06         1
+   nlp_jac_g      8.9e-05      8.8e-05         3
+      solver        0.378        0.125         1
+Elapsed time is 0.391622 seconds.
+
+
+
+
+
+
+
+
+
+Post-processing
+
+%%Sol_x = sol.value(X); %% solved controlled trajectory
+%%Sol_u = sol.value(U); %% solved control
+Sol_x = opti.debug.value(X);
+Sol_u = opti.debug.value(U); %% final data if algorithm stops with error
+
+Sol_z = zeros(N_size+2,N_size+2,1); %% displaying variable
+Sol_z(2:end-1,2:end-1) = reshape(Sol_x(:,end),[N_size,N_size]);
+Sol_y = zeros(N_size+2,N_size+2,1); %% displaying uncontrolled variable
+Sol_y(2:end-1,2:end-1) = reshape(YT,[N_size,N_size]);
+
+xxline = repmat(linspace(0,1,N_size+2),[N_size+2 1]);
+yyline = repmat(linspace(0,1,N_size+2)',[1 N_size+2]);
+max_y = max(abs(Sol_z(:)));
+
+figure(1)
+surf(xxline,yyline,Sol_y(:,:));
+xlabel('x'); ylabel('y'); zlabel('z'); title('Uncontrolled final values');
+zlim([-max_y max_y])
+%%hold on
+figure(2)
+%%hold on
+surf(xxline,yyline,Sol_z(:,:));
+zlim([-max_y max_y])
+xlabel('x'); ylabel('y'); zlabel('z'); title('Controlled final values');
+
+
+
+
+
+
+Recover the trajectories
+
+The algorithm of IpOpt does not guarantee the dynamics exactly follows the discrete time-evolution, but approximate it. We may use the linear solver in Matlab to recover the exact dynamics with the implicit C-N method. This process is needed if we stop the algorithm and test that it is an approximate solution.
+
+Yc = zeros(Nx,Nt+1);
+Yc(:,1) = Y0;
+for k=1:Nt %% loop over control intervals
+   %% Crank-Nicolson method
+   Yc(:,k+1) = M\L*Yc(:,k) + M\P*(Sol_u(k)+Sol_u(k+1));
+   %% M Y(:,k+1) = L Y(:,k) + P (u(k)+u(k+1));
+end
+YTc = Yc(:,Nt+1);
+figure
+plot(YT,'-')
+hold on
+plot(Sol_x(:,end),'r*')
+plot(YTc,'b*')
+
+%% Save the data
+Final_3 = zeros(N_size+2,N_size+2,Nt+1); %% displaying variable
+Final_3(2:end-1,2:end-1,:) = reshape(Y(:,:),[N_size,N_size,Nt+1]);
+
+Final_4 = zeros(N_size+2,N_size+2,Nt+1); %% displaying variable
+Final_4(2:end-1,2:end-1,:) = reshape(Yc(:,:),[N_size,N_size,Nt+1]);
+
+%% Free dynamics
+fig = figure;
+isurf = surf(Final_3(:,:,1));
+zlim([-2 2])
+for it = 1:Nt+1
+   isurf.ZData =  Final_3(:,:,it);
+   pause(0.1)
+end
+%% Controlled dynamics
+fig = figure;
+isurf = surf(Final_4(:,:,1));
+zlim([-2 2])
+for it = 1:Nt+1
+   isurf.ZData =  Final_4(:,:,it);
+   pause(0.1)
+end
+
+
+
+
+
+
+
+
+
+
+Sure, this problem needs a big control cost (or long time horizon) and also more calculation costs for optimization since its close approximation ‘A_mat’ was not controllable.
+
+</description>
+        <pubDate>Fri, 01 Nov 2019 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0027-DongnamHeat2D</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0027-DongnamHeat2D</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP06</category>
+        
+      </item>
+    
+      <item>
+        <title>Numerical simulation of nonlinear Population Dynamics Structuring by age and Spatial diffusion</title>
+        <description>In this tutorial, we propose the Hum method to approximate numerically the control in a null controllability problem for a non linear population dynamics model structuring in age and spatial diffusion.
+
+For given the positive function $F$, we consider the following Population Dynamics Model Structuring by age and spatial diffusion:
+
+
+
+where, $\Omega$ is a boundary subset of $\mathbb{R}^{N}$, $A$ is the maximal age and $T&amp;gt;0$ the final time. Also, $\Theta=\omega× (a_1,a_2)× (0,T),$ is the control support. Here, $\beta$ is the fertility rate depending also the age a, $\mu$ the mortality rate depending of the age a, $y_0$ the initial condition in $L^2(\Omega× (0,A)),$ $V$ is the control term and $y$ represent the density of the population of age $a$ at time $t$ and location $x∈ \Omega.$
+
+We assume that the fertility rate $\beta$ and the mortality rate $\mu$ satisfy the demographic property:
+
+
+
+and
+
+
+
+where
+
+
+
+The function $F,$ verify:
+
+
+
+Numerical Simulations
+
+In this part, the objective is to illustrate numerically the approximate null controllability of the nonlinear problem.
+
+Indeed, we consider the following system:
+
+
+
+Discretization and simulation of uncontrolled system
+
+The idea in this part is to highlight the numerical simimulation of the nonlinear problem. The first parts is to reduce the PDE to the finite dimensional system of the form
+
+
+
+where $A_l$ and $B$ are matrices, and
+
+
+
+is the finite dimensional state and control vector. Here, VectorF is the contribution of the nonlinear part, which comes from births. So let’s consider the following system
+
+
+
+where
+
+
+
+To solve $(4)$, the space (dimension 1) and age discretization is performed with finite difference method on rectangular grid 
+on $[0,L]\times [0,A]$. For a given rectangular grid $\mathcal{T}$ with vertex $(x_i,a_j)\quad 1\leq i\leq N,\quad 1\leq j\leq M$ and uniform step size (without loss of generality) $\Delta x$ in $x-$direction and $\Delta a$ in $a-$direction, we denote by  the diameter of the grid
+The finite difference approximation of the diffusion term of the operator $\textbf{A}$ is given by
+
+
+
+The finite difference approximation of the aging term of the operator A is given by
+
+
+
+Let $y_{i,j}(t)$ be the approximation of $y(x_i,a_j)$ and
+
+
+
+where $y_{i,j}$ is at the position $i+j*(N-1)$ and $A_l$ the matrix of the mortality approximation, the diffusion approximation and the aging approximation.
+
+Take into account the newborns
+
+We denote by $\beta(a),$ the fertility rate, the newborn is given by:
+
+
+
+We approximate $\int_{0}^{A}\beta(a)y(x,a,t)da$ by
+
+
+
+Then
+
+
+
+But as
+
+
+
+then
+
+
+
+We create also the nonlinear vectorF from the births. Indeed, if we denote by
+
+
+
+the matrix of the births,
+
+
+
+and we define the vectorF by:
+
+
+
+The corresponding discrete system is given for a continuous initial solution $y_0$ by
+
+
+
+Example 1
+
+Simulation of the uncontrolled system:
+
+For the simulation, we take $L=1,\text{ } A=10\text{, }\Delta x=1/54\quad \Delta a= 5/54$ and $T=40$. Moreover $F(t)=t\Phi(t)$ a Globally Lipchitz function where
+
+
+
+The fertility $\beta$ is given by:
+
+
+
+here $v=1$, $\gamma=5$, $\alpha=7$ and the mortality rate $\mu$ by
+
+
+
+
+
+
+
+
+
+Video 1. Evolution of the state of the uncontrolled system between t=0 and t=30 
+
+We observe in this video the growth (aging) of news borns over time. We also notice the high birth rate of this population.
+
+Construction of the control and numerical simulation
+
+We construct the control problem, which consists in minimizing the functional and we choose the classical Hum functional and the control matrix $B=\chi_{\Theta}$ where $\Theta=(x_1,x_2)\times (a_1,a_2)\times (0,T),$ and we suppose that $U_T$ is the desired state:
+
+
+
+Here $U_T=0.$
+The approximate null controllability become the minimization of  the functional $J,$ where $(U_l,V_l)$ verify the following system
+
+
+
+In this part the fertility $\beta$ is given by:
+
+
+
+here $v=1$, $\gamma=5$, $\alpha=7$
+ and
+
+
+
+and $VectorF=(P_lU_l).^2$.This means that we consider that $F(t)=t^2$ which is globally lipchizt on a compact which is our case.
+
+The system becomes:
+
+
+
+Example 2
+
+In this example, we take $ε=0.05$, $\Delta x=0.05$ and $\Delta a= 0.5$, with the initial condition
+
+
+
+the following numerical results were obtained for $T=12$ and $\Delta t=120$.
+
+Evolution of the control V between t=0 and t=12.
+
+
+
+Video 2. Evolution of the state of controlled system between t=0 and t=12 
+
+We notice that, with a control domain that takes into account the most populated part of the domain, the Hum method applied to the Casadi algorithm gives us an interesting approximative controllability result while maintaining the positivity of the density.
+Evolution of the controlled state (density of the population) between t=0 and t=12.
+
+
+
+
+Video 3. Evolution of the control function between t=0 and t=12 
+
+Example 3
+
+Here, we keep the same parameters of the Example 1 but we change the final time (here T=20) , and we take $\Delta x=1/18$, $Δ a=5/18$, $\epsilon=0.05$ the following numerical results were obtained:
+
+
+
+Video 4. Evolution of the state of the controlled system between t=0 and t=20 
+
+
+
+
+
+Video 4. Evolution of the state of the controlled system between t=0 and t=20 
+
+Example 4
+
+In this part we consider a smaller control domain. Indeed we take 
+$\Theta =(0,2/5)\times(0,4)\times(0,T)$. 
+In addition we also remove $\epsilon=0.001$ and $T=20.$ The rest is identical to the data of example 2.
+
+We obtain the following numerical results:
+
+Evolution of the control V between t=0 and t=20.
+
+
+
+
+
+Video 4. Evolution of the state of the controlled system between t=0 and t=20 
+
+Here although the result is acceptable, we notice that the state of the controlled system is negative for most of the time.
+Evolution of the controlled state (the density of the population) between t=0 and t=20.
+
+
+
+
+
+Video 5. Evolution of the control function between t=0 and t=20 
+We notice here that the solution to the final time tends to 0, but during the time of control much of the state of the system was negative.
+We notice that numerically we have approximation and the positivity of the state, if the support of the control covers the most populated part of the domain (space, age).
+
+However it should be noted that we could not take a positivity constraint in our simulations. It should be noted that we have better approximations when we do not consider the cost of control.
+
+References
+[1] Dycon Toolbox
+
+[2] CasaDi toolbox
+
+[3] Luca Gerardo-Giorda: NUMERICAL APPROXIMATION OF DENSITY DEPENDENT DIFFUSION IN AGE-STRUCTURED POPULATION DYNAMICS
+</description>
+        <pubDate>Wed, 30 Oct 2019 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0051</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0051</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP05</category>
+        
+      </item>
+    
+      <item>
+        <title>Movil control strategy for models with memory terms</title>
+        <description>En este tutorial enseñaremos como implentar la estrategía del control interíor móvil para la ecuación del calor. En el ejemplo típico de control interior en la ecuación del calor se pretende llevar al sistema desde un estado inicial, $u_0$ hasta el estado nulo en todo el espacio, $\Omega$. Para ello se define una subconjunto, $\omega \in \Omega$, donde el control, $f(x,t)$ puede actuar, es decir que para puntos, $x \notin \omega$, el control es cero. Es conocido que la controlabilidad de la ecuación del calor para todo tiempo esta asegurada, sin embargo en el caso de la ecuación del calor con términos de memoria este resultado no es válido.
+
+
+
+Donde $f$ es el control definido de solo en el subconjunto, $\omega \in \Omega$.
+
+
+
+
+    
+        
+          
+             
+           
+        
+        
+          
+             
+           
+        
+    
+    
+        
+          
+              Video 1: Heat equation
+           
+        
+        
+          
+              Video 2:  Heat equation with memory
+           
+        
+     
+    
+        
+          
+              Podemos ver la evolucion de dos modelos, con un región de control, $\X_{(a,b)}$, situado en la posición del elipsoide azul en la parte superior de la simulación. Podemos ver que el control LQR es eficaz para la ecuación del calor, sin embargo débil ante la presencia de término de memoria
+           
+        
+     
+
+
+En problema donde el laplaciano, $\Delta$, es un laplaciano fracionario, $(-\Delta)^s$, la controlabilidad del sistema esta condicionada por la potencia, $s$; el control móvil puede ser útil. Esta estrategía puede recuperar la propiedad de controlabilidad del sistema. Este modelo se pueda iamginar como un fuente/sumidero móvil que se mueve a puntos estratégicos del espacio para estabilizar la temperatura del lugar.
+
+Por simplicidad, relizaremos la simulación con el laplaciano entero, sin embargo el control del laplaciano fraccionario se puede realizar de manera análoga.
+
+Lo primero que deberemos definir es la función caracteristica del control, $\chi$ dependiente de un punto del espacio. Si trabajamos en coordenadas cartesianas podemos definir la función:
+
+
+
+donde $\Theta(x)$ es la fución theta de heaviside. Un representación gráfica de $W(x,a,b)$ permiter reconocer a esta función con valor unidad entre los valores $a$ y $b$ y nulo fuera de ellos.
+
+
+
+
+
+donde $u$ representa el estado
+
+
+
+clear;
+
+
+Ns = 8;
+Nt = 5;
+xline = linspace(-1,1,Ns);
+yline = linspace(-1,1,Ns);
+
+[xms,yms] = meshgrid(xline,yline);
+
+
+Bfunction
+
+xwidth = 0.35;
+ywidth = 0.35;
+B = @(xms,yms,xs,ys) WinWP05(xms,xs,xwidth).*WinWP05(yms,ys,ywidth);
+Bmatrix =  @(xs,ys) diag(reshape(B(xms,yms,xs,ys),1,Ns^2));
+
+
+A = FDLaplacial2D(xline,yline);
+
+Atotal = zeros(Ns^2+4,Ns^2+4);
+Atotal(1:Ns^2,1:Ns^2) = A;
+
+RumbaMatrixDynamics = [0 0 1 0; ...
+                       0 0 0 1; ...
+                       0 0 0 0; ...
+                       0 0 0 0 ];
+
+Atotal(Ns^2+1:end,Ns^2+1:end) = RumbaMatrixDynamics;
+
+
+gaussian function in 2D
+
+gs = @(x,y,x0,y0,alpha) exp(-(x-x0).^2/alpha^2  - (y-y0).^2/alpha^2);
+
+alpha = 0.1;
+alphamid = 0.2;
+%% We build the initial condition
+
+U0 = + 2*gs(xms,yms,+0.25,+0.25,alpha) ...
+     + 2*gs(xms,yms,+0.25,-0.25,alpha) ...
+     + 2*gs(xms,yms,-0.25,-0.25,alpha);
+
+
+surf(xms,yms,U0);
+
+
+
+
+U0 = U0(:);
+
+
+T = 0.05;
+tspan = linspace(0,T,Nt+1);
+
+
+Ysym = sym('Y',[Ns^2+4 1]);
+Usym = sym('U',[Ns^2+2 1]);
+FDT = @(t,X,U,Params) Atotal*X+ [Bmatrix(X(end-3),X(end-2))*U(1:end-2) ;0; 0; U(end-1:end)];
+
+idynammics = pde(FDT,Ysym,Usym);
+idynammics.mesh = {xline,yline};
+idynammics.InitialCondition = [U0;0;0;0;0];
+idynammics.Nt = Nt+1;
+idynammics.FinalTime = T;
+idynammics.Solver = @eulere;
+%%
+[~ , Xnum_free] = solve(idynammics);
+
+Xnum_free = Xnum_free';
+
+
+opti = casadi.Opti();  %% CasADi optimization structure
+
+%% ---- Input variables ---------
+Xcas = opti.variable(Ns^2+4,Nt+1); %% state trajectory
+Ucas = opti.variable(Ns^2+2,Nt+1);   %% control
+
+%% ---- Dynamic constraints --------
+Fcas = @(x,u) Atotal*x+ [Bmatrix(x(end-3),x(end-2))*u(1:end-2) ;0;0; u(end-1:end)]; %% dx/dt = f(x,u)
+
+for k=1:Nt %% loop over control intervals
+   %% Euler forward method
+   x_next = Xcas(:,k) + (T/Nt)*Fcas(Xcas(:,k),Ucas(:,k));
+   opti.subject_to(Xcas(:,k+1)==x_next); %% close the gaps
+end
+
+%% ---- State constraints --------
+opti.subject_to(Xcas(:,1)==[U0;0.5;0.5; 0 ;0]);
+
+HeatCas = Ucas(1:end-2,:);
+Max = 1e4;
+opti.subject_to(HeatCas(:) &amp;lt;= Max)
+opti.subject_to(HeatCas(:) &amp;gt;= -Max)
+
+%% ---- Optimization objective  ----------
+beta = 1e-2;
+%%Cost = (Xcas(1:end-4,Nt+1))'*(Xcas(1:end-4,Nt+1)) + beta*sum(sum((Ucas(1:end-2,:))'*(Ucas(1:end-2,:))));
+Cost = (Xcas(1:end-4,Nt+1))'*(Xcas(1:end-4,Nt+1));
+
+opti.minimize(Cost); %% minimizing L2 at the final time
+
+%% ---- initial guesses for solver ---
+opti.set_initial(Xcas, Xnum_free);
+opti.set_initial(Ucas, 0);
+
+
+%% ---- solve NLP              ------
+p_opts = struct('expand',false);
+s_opts = struct('acceptable_tol',1e3,'constr_viol_tol',1e-3,'compl_inf_tol',1e-3);
+opti.solver('ipopt',p_opts,s_opts); %% set numerical backend
+tic
+sol = opti.solve();   %% actual solve
+toc
+
+
+This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:    23858
+Number of nonzeros in inequality constraint Jacobian.:      768
+Number of nonzeros in Lagrangian Hessian.............:      719
+
+Total number of variables............................:      804
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:      408
+Total number of inequality constraints...............:      768
+        inequality constraints with only lower bounds:      384
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:      384
+
+iter    objective    inf_pr   inf_du lg(mu)  \vert\vertd\vert\vert  lg(rg) alpha_du alpha_pr  ls
+   0  2.8698289e-02 5.00e-01 2.50e-04  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  3.9465117e-02 5.25e-02 1.03e-01  -1.0 1.00e+01  -4.0 9.89e-01 1.00e+00h  1
+   2  2.6459139e-02 2.64e-08 2.73e-04  -1.0 2.35e+00  -4.5 9.91e-01 1.00e+00h  1
+   3  2.4596415e-02 3.87e-08 5.99e-04  -1.0 4.38e+00  -5.0 1.00e+00 1.00e+00f  1
+...
+...
+...
+
+Number of Iterations....: 227
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.3074995023555472e-06    2.3074995023555472e-06
+Dual infeasibility......:   4.8878051464110080e-08    4.8878051464110080e-08
+Constraint violation....:   5.3675648722691441e-05    5.3675648722691441e-05
+Complementarity.........:   1.9187414051909107e-06    1.9187414051909107e-06
+Overall NLP error.......:   5.3675648722691441e-05    5.3675648722691441e-05
+
+
+Number of objective function evaluations             = 375
+Number of objective gradient evaluations             = 228
+Number of equality constraint evaluations            = 375
+Number of inequality constraint evaluations          = 375
+Number of equality constraint Jacobian evaluations   = 228
+Number of inequality constraint Jacobian evaluations = 228
+Number of Lagrangian Hessian evaluations             = 227
+Total CPU secs in IPOPT (w/o function evaluations)   =      6.393
+Total CPU secs in NLP function evaluations           =      0.339
+
+EXIT: Solved To Acceptable Level.
+               t_proc [s]   t_wall [s]    n_eval
+       nlp_f      0.00229      0.00226       375
+       nlp_g        0.067       0.0428       375
+  nlp_grad_f       0.0025      0.00251       229
+  nlp_hess_l       0.0464       0.0411       227
+   nlp_jac_g        0.202        0.175       229
+      solver         7.02         5.23         1
+Elapsed time is 5.290691 seconds.
+
+
+
+Xnum_with_control = sol.value(Xcas);
+
+
+interpolation in time
+
+AnimationMovilControl(Xnum_with_control,Xnum_free,tspan,xline,yline,Bmatrix)
+
+
+
+
+</description>
+        <pubDate>Wed, 30 Oct 2019 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0050</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0050</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP05</category>
+        
+      </item>
     
       <item>
         <title>System Identification of PDE equations from data</title>
@@ -1288,688 +2296,6 @@ References
         <category>tutorial</category>
         
         <category>WP99</category>
-        
-      </item>
-    
-      <item>
-        <title>Sparse sources identification through adjoint localization algorithm</title>
-        <description>Model Problem
-
-We consider the numerical approximation of the inverse problem for the linear advection-diffusion equation,
-
-
-
-with $d$ being the diffusivity of the material and $v$ the direction of the advection.
-
-Given a final time $T&amp;gt;0$ and a target function $u^\ast$ the aim is to identify the initial condition $u_0$ such that the solution, at time $t=T$, reaches the target $u^*$ or gets as close as possible to it. We assume that the initial condition $u_0$ is characterized as a combined set of sparse sources. This means that $u_0$ is a linear combination of unitary deltas with certain and possibly different weights, i.e:
-
-
-
-We formulate the inverse problem using optimal control techniques. In particular, we consider the minimization of the following functional:
-
-
-
-Space and time discretization
-
-Letting $\textbf{u} : [0, T] \rightarrow \mathbb{R}^s$ where $s$ is the number of grid points on $\Omega$, we can write a general finite element (FE) discretization of the diffusion–advection equation in \eqref{modeleq} in a compact form as:
-
-
-
-In order to get a time discretized version of the previous equation, we apply implicit Euler method with stepsize $\Delta t := T/N$ where $N$ is the total number of time steps. The numerical approximations to the solution are given by the vectors $\textbf{u}^n \approx \textbf{u}(t_n) \in \mathbb{R}^s$ with respect to the index $n=i\Delta t$ for $i=1,2,..,N$. Therefore, the fully discrete version of model equation is as follows,
-
-
-
-Adjoint Algorithm for sparse source identification
-
-The algorithm to be presented in this work for the sparse source identification of the linear diffusion-advection equation based on the adjoint methodology consists of two steps. Firstly, we use the adjoint methodology to identify the locations of the sources. Secondly, a least squares fitting is applied to find the corresponding intensities of the sources.
-
-We have considered here a two-dimensional example with several sources to be identified in a multi-model environment. This means that the left half ($\Omega_1 = [0,1] \times [0,1]$) and the right half ($\Omega_2 = [1,2] \times [0,1]$) of the domain are modelled with different equations. In particular, the heat equation is used on $\Omega_1$ and the diffusion–advection equation is used on $\Omega_2$.
-
-The initialization parameters look as follows:
-
-N=30; %% space discretization points in y-direction
-dx=1/(N+1); %% mesh size
-t0=0; %% initial time
-tf=0.1; %% final time
-n=5; %% time discretization points
-dt=(tf-t0)/n; %% stepsize
-TOL=1e-5; %% stopping tolerance
-
-d1=0.05; %% diffusivity of the material on the left sudomain
-d2=0.05; %% diffusivity of the material on the left sudomain
-
-%% advection components
-vx=0;
-vy=-3;
-
-tau=dx^4; %% regularization parameter
-epsilon=0.1; %% stepsize of the gradient descent method
-
-
-We now compute the FE discretization matrices $M$, $A$ and $V$ that are respectively the mass matrix, the stiffness matrix and the advection matrix. For the FE discretization we assume equidistant structured meshes. In particular we use triangular elements and the classical pyramidal test functions are employed.
-
-[M,A,V] = computeFEmatrices(N,d1,d2,vx,vy); %% Compute FE discretization matrices
-
-
-A reference initial condition is chosen and we compute using the FE discretization specified above and implicit Euler in time its corresponding final state at time $T$. This final state will be considered the initial data of the inverse problem to be solved and we name it the target function $u^*$ as mentioned previously.
-
-U0_ref = initial_deltas(N); %% computes reference initial condition
-
-[U_target,u_target] = compute_target(U0_ref,N,n,dt,M,A,V); %% Compute target distribution
-
-
-We now call the algorithm that estimates the initial condition $u_0$ using as a initial data the target function $u^*$. As mentioned before, this algorithm consists of two steps.
-
-Firstly, the classical adjoint methodology that minimizes the functional $J(u_0)$ subject to the diffusion-advection equation is used. The iterative optimization algorithm employed is the classical gradient descent method. However, although this iterative procedure finds quite accurately the locations of the sources, it does not recover the sparse character of the initial condition. This is not suprising because the recovered initial data comes from solving the adjoint problem which is basically a diffusive process that smoothes out its state. Consequently, a second procedure is needed to project the obtained non sparse initial condition into the set of admissible sparse solutions.
-
-As the initial condition $u_0$ is assumed to be a linear combination between the locations and the intensities, once we have fixed the locations using the adjoint methodology we can solve a least squares problem to get the remaining intensities. We assemble a matrix $\textbf{L} \in \mathbb{R}^{s \times l}$ where at each column we have the forward solution for a single unitary delta placed at each of the locations already identified. We then solve the following linear system of equations for the vector of unknowns $\alpha = (\alpha_1, \alpha_2, …, \alpha_l)^T$:
-
-
-
-to find the intensities vector $\alpha$.
-
-Adjoint algorithm for sparse source identification (algorithm 4)
-
-U0 = SparseIdentification(u_target,TOL,dt,n,N,M,A,V,epsilon,tau);
-
-
-Finally, the final state at $T$ is computed using as a initial condition the estimated sparse sources identified with our algorithm.
-
-Compute final state with the recovered initial condition
-
-[UF,u_final] = compute_target(U0,N,n,dt,M,A,V);
-
-
-We can see the evolution recovered
-
-
-
-We now visualize the numerical results. Plots on the left side show the reference initial solution and the given target. Similarly, plots on the right side show the recovered initial condition and the distribution at the final time $T$ produced by the recovered initial sources.
-
-One can observe the difference between the two models (the heat equation on $\Omega_1$ and the diffusion-advection on $\Omega_2$) in the two figures at the bottom where the initial sources on $\Omega_2$ move downwards at the same time as they dissipate while the initial sources on $\Omega_1$ only dissipate without displacement.
-
-xplot = linspace(0,2,2*N+3); %% space grid w.r.t component x
-yplot = linspace(0,1,N+2); %% space grid w.r.t component y
-%%
-figure('unit','norm','pos',[0.25 0.1 0.5 0.8])
-subplot(3,2,1)
-surf(xplot,yplot,U0_ref)
-shading interp;colorbar;colormap jet
-title('Reference initial state (front view)')
-subplot(3,2,2)
-surf(xplot,yplot,U0)
-shading interp;colorbar;colormap jet
-title('Recovered initial state (front view)')
-subplot(3,2,3)
-pcolor(xplot,yplot,U0_ref)
-shading interp;colorbar;colormap jet
-title('Reference initial state (above view)')
-subplot(3,2,4)
-pcolor(xplot,yplot,U0)
-shading interp;colorbar;colormap jet
-title('Recovered initial state (above view)')
-subplot(3,2,5)
-pcolor(xplot,yplot,U_target)
-shading interp;colorbar;colormap jet
-title('Given target u^*')
-subplot(3,2,6)
-pcolor(xplot,yplot,UF)
-shading interp;colorbar;colormap jet
-title('Recovered final state')
-
-
-
-</description>
-        <pubDate>Fri, 14 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0014</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0014</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP04</category>
-        
-      </item>
-    
-      <item>
-        <title>Controllability of a Class of Infinite Dimensional Systems with Age Structure</title>
-        <description>
- Infinite dimensional dynamical systems coupling age structuring with diffusion appear naturally in
- population dynamics, medicine or epidemiology. A by now classical example is the Lotka-Mckendrick system with spatial diffusion. The
- aim of this blog is to study contaollability properties of such age structured models in an unified manner. 
- 
-
-
-Let $A : \mathcal{D}(A) \to X$  be the generator of a $C^0$ semigroup $\mathbb{S}$ on the Hilbert space $X$ and let $U$ be
-another Hilbert space. Both $X$ and $U$ will be identified with their duals. Let $B$ be a (possibly unbounded) linear operator
-from $U$ to $X$, which is supposed to be an admissible control operator for  $\mathbb{S}$.
-In the examples we have in mind, the above spaces and operators describe the dynamics of a system without age structure.
-In particular, $X$ is the state space and $U$ is the control space.
-The corresponding age structured system is obtained by first extending these spaces to
-\begin{equation} \label{input-space}
-\mathcal{X} = L^{2}(0,a_{\dagger}; X), \quad \mathcal{U} = L^{2}(0,a_\dagger;U).
-\end{equation} 
-where $a_\dagger&amp;gt;0$ denotes the maximal age individuals can attain. Let $p(t) \in \chi$ be the distribution density of the
-individuals with respect to age $a\geqslant 0$ and at some time $t \geqslant 0.$  Then the abstract version of the Lotka-McKendrick
-system to be considered in this paper writes:
- \begin{equation} \label{eq:main}
-\begin{cases}
-\displaystyle \frac{\partial p}{\partial t} + \frac{\partial p}{\partial a} - A p  + \mu(a) p =  \mathcal{\chi}_{(a_{1},a_{2})} B u, &amp;amp; t \geqslant 0, a \in (0,a_\dagger), \\
-\displaystyle p(t,0)  = \displaystyle \int_{0}^{a_\dagger} \beta(s) p(t,s) \; {\rm d}s, &amp;amp; t \geqslant 0, \\
-\displaystyle p(0,a) = p_{0},
-\end{cases}
-\end{equation} 
-where $\mathcal{\chi}$ is the characteristic function of the interval $(a_{1}, a_{2})$ with
-$0 \leqslant a_{1} &amp;lt; a_{2} \leqslant a_\dagger$ and $p_{0}$ is the initial population density.
-In the above system, the positive function $\mu:[0,a_\dagger] \to \mathbb{R}_{+}$ denotes the
-natural mortality rate of individuals of age $a.$ We denote by $\beta: [0,a_\dagger] \to \mathbb{R}_{+}$
-the positive function describing the fertility rate at age $a.$ We assume that the fertility rate $\beta$ a
-nd the mortality rate $\mu$ satisfy the conditions
-
-(H1) $\beta \in L^\infty[0, a_\dagger], \; \beta \geqslant 0$ for almost every $a \in [0,a_\dagger].$
-(H2) $\mu \in L^1_{loc}[0, a_\dagger], \; \mu \geqslant 0$ for almost every $a \in [0,a_\dagger].$
-(H3) $\displaystyle \int_0^{a_\dagger} \mu(a) \ {\rm d} a = \infty.$
-
-
-Before we state our result, let us introduce the notion of null controllability of the pair $(A,B).$
-
-We say that a pair $(A,B)$ is null-controllable in time $\tau,$ if for every $z_{0} \in X$ there exists a control $u \in L^{2}(0,\tau,U)$ such that, the solution of the system
-\begin{equation*}
-\dot z(t) = A z(t) + Bu(t) \quad t \in [0,\tau], \qquad z(0) = z_{0},
-\end{equation*}
-satisfies $z(\tau) = 0.$
-
-
-We prove the following result
-
-Assume that  $\beta$ and $\mu$ satisfy the conditions (H1)-(H3) above. Moreover,
-suppose that the fertility rate $\beta$ is such that
-\begin{equation} \label{eq:beta}
-\beta(a)= 0 \mbox{ for all } a \in (0,a_{b}),
-\end{equation}
-for some $a_b\in (0,a_\dagger)$ and that $a_1 &amp;lt; a_b$.
-Let us assume that the pair $(A,B)$ is null controllable in arbitrary time. 
-Then for every $\tau &amp;gt; a_{1} + a_{\dagger}-a_{2}$ and for every $p_{0} \in \chi$ there exists  a control $v \in L^{2}(0,\tau;\mathcal{U})$ such that the solution $p$ of \eqref{eq:main} satisfies
-\begin{equation}
-p(\tau,a) = 0 \mbox{ for all }  a \in (0,a_\dagger).
-\end{equation} 
- 
-
-It is well known that null controllability is equivalent to final state observability of the adjoint system
-(see for instance [4, Section 11.2]). The adjoint of the above system reads as
-\begin{equation} \label{eq:adj}
-\begin{cases}
-\displaystyle \frac{\partial q}{\partial t} - \frac{\partial p}{\partial a} - A^* p  + \mu(a) p - \beta(a) q(t,0) =  0, &amp;amp; t \geqslant 0, a \in (0,a_\dagger), \\
-\displaystyle q(t,a_\dagger)  = 0, &amp;amp; t \geqslant 0, \\
-\displaystyle q(0,a) = q_{0},
-\end{cases}
-\end{equation} 
-where $A^*$ is the adjoint of  $A.$  In order to prove Theorem 1, it is enough to prove the following
-
- Let us assume the hypothesis of Theorem 1. Then for every $\tau &amp;gt; a_1 + a_\dagger - a_2$ there exists $k_\tau &amp;gt; 0$ such that
- the solution $q$ of \eqref{eq:adj} satishfies
- \begin{equation} \label{eq:est-adj}
- \int_0^{a_\dagger} \|q(\tau, a)\|^2_X \ da  \leqslant k_\tau^2 \int_0^\tau \int_{a_1}^{a_2} \left\|B^*q(t,a) \right\|^2_U \ da dt, \qquad \qquad (q_0 \in \mathcal{X}).
- \end{equation}
- 
-Let us give an idea of the proof. We combine characteristics method with final state observability of the pair $(A^*, B^*).$ For siplicity
-in the presentation, let us assume that $\mu = 0,$ $a_1 = 0,$ $a_2 &amp;lt; a_b$ and $\tau = 2a_\dagger.$
-The detail proof of Theorem 1, in a slightly more general case, can be found in [3]. Integrating along the characteristic lines,
-it is not very difficult to see that
-\begin{equation*}
-q(t,a) = \int_{t + a - a_\dagger}^{t} e^{(t-s)A^*} \beta(a+ \tau - s) q(s, 0) \ ds, \qquad t &amp;gt; a_\dagger. 
-\end{equation*}
-Therefore,
-\begin{equation} \label{est0}
-\int_0^{a_\dagger} \|q(\tau, a)\|^2_X \ da \leqslant C \int_{a_\dagger}^\tau \left\|q(t,0) \right\|^2_X \ dt. 
-\end{equation}
-Thus to prove \eqref{eq:est-adj}, we need to estimate the right hand side of the above estimate. We now make use of the condition
-\eqref{eq:beta}.  Note that, due to this condition, $q$ satisfies
-\begin{equation} \label{eq:adj-2}
-\displaystyle \frac{\partial q}{\partial t} - \frac{\partial q}{\partial a} - A^* p  + \mu(a) p =  0,  \quad  t \geqslant 0, a \in (0,a_2).
-\end{equation}
-For a.e. $t \in (a_\dagger, \tau),$ we define $w(s) = q(s, t- s),$ $s \in (t - a_2, t).$ Then $w$ solves
-\begin{equation*}
-\displaystyle \frac{\partial w}{\partial s} - A^* w = 0, \quad s \in (t - a_2, t). 
-\end{equation*}
-Since the pair $(A, B)$ is null controllable in any time, or equivalently the pair $(A^*, B^*)$ is final-state observable in any
-time, there exists a constant
-$C &amp;gt; 0,$ depending only on $a_2, A$ and $B$  such that
-\begin{equation*}
-\left\| w(t) \right\|_{X}^2 \leqslant C \int_{t-a_2}^t \left\| B^* w(s) \right\|^2_U \ ds. 
-\end{equation*}
-Coming back to $q$ and integrating over $[a_\dagger, \tau]$ with respect to $t,$ we have that
-\begin{equation}
-\int_{a_\dagger}^\tau \|q(t,0)\|^2_X \ dt \leqslant \int_{0}^\tau \int_{0}^{a_2} \left\|B^* q(t,a)\right\|^2  \ da dt. 
-\end{equation}
-Combining the above estimate together with \eqref{est0}, we get \eqref{eq:est-adj}. In the two figures below, we ilustrate the
-estimate of $q(t,0)$ and the final-state observability of $q$ in the general case.
-
-
-
-  
-   
-     
-  
-   Fig.1 - An ilustration of the estimate of $q(t,0).$ We apply final state observability of $(A^*, B^*)$ along
-  the characteristics. Since we want to estimate $q(t,0),$ we consider the trajectory $\gamma(s) = (t-s,s),$
-  $s \leqslant t \leqslant \tau$ (or equivalently the backward characteristics starting from $(t,0).$) 
-
-    
-
-    
-  
-   Fig.2 - An illustration of the final-state observability at time $\tau &amp;gt; a_1 + a_\dagger - a_2$: For
-  $ a \in (0,a_2 - \varepsilon)$ (blue region) the backward characteristics starting from $t = \tau$ enters the
-  observation domain.  For $a \in (a_2 - \varepsilon, a_\dagger)$, the backward characteristics (green region)
-  hits the line $a = a_\dagger$, gets renewed by the renewal condition $\beta(a)q(t,0)$ and then enters the observation
-  domain (purple region).
- 
- 
- 
- 
-
-Examples
-We consider two examples :  1) The classical Lotka-McKendrick system and 2) Lotka-Mckendrick system with diffusion.
-
- 1)  The classical Lotka-McKendrick system : Let us choose $X = \mathbb{R},$ $A=0$ and $B=1.$ Then the system \eqref{eq:main} reduces
- to  classical Lotka-McKendrick system. By Theorem 1, this system is null controllable in time $\tau &amp;gt; a_1 + a_\dagger - a_2.$ A
- similar result was obtained in [1]. 
-
-
-
- 2)  The Lotka-McKendrick system with spatial diffusion  : Let $\Omega$ be a smooth bounded domain in $\mathbb{R}^3$ and
- $\omega \subseteq \Omega.$ Let us consider 
- \begin{equation*}
- X = L^2(\Omega), \quad A = \Delta , \quad \mathcal{D}(A) =
- \left\{ f \in H^2(\Omega) \mid \displaystyle \frac{\partial f}{\partial n} = 0\right\}, \quad B = \chi_{\omega}.
- \end{equation*}
- This corresponds to the Lotka-McKendrick model with spatial diffusion ([2]). It is known that, the pair $(A, B)$ or equivalently
- the heat equation with localized interior control, is null controllable in any time. Thus we can apply Theorem 1 to conclude that
- the system is null controllable in time $\tau &amp;gt; a_1 + a_\dagger - a_2.$
- 
- Several other applications can be found in [3].
-
-Numerical Simulations
- We now present some numerical siimulations of the controlled trajectory.  We shall consider the case  $A = 0$
-and $B = 1,$ i.e the classical Lotka-McKendrick system. We also consider the case $a_1 = 0$ and $a_2 = a_{\dagger} =4,$ i.e., the control
-acts everywhere with respect to age variable. We present numerical simulations in the following two scenarios : 1) null controllabilty,
-2) controllability to a steady state.
-Null Controllability
-By Theorem 1 we know that system (1) is null controllable in any time. In the following
-video, we see the evolution of unctrolled trajectory and controlled trajectories to zero  with controllability time $t=2$ and $t =5.$ 
-
-   
-  
-
-
- We now plot the control functions. In the following two videoes, we see the evolution of the control
- functions at controllability time $t = 2$ and $t =5$
- respectively.
-
-
-
-  
-   
-    
-   
-  
-    
-   &amp;nbsp; &amp;nbsp; 
-
-   
-   
-  
- 
- 
- 
-Controllability to a steady state
- If we choose $\beta$ and $\mu$ such that $R = \int_0^{a_\dagger} \beta(a) e^{-\int_0^r \mu(r) \ dr } da = 1,$ then
-$p_s(a) = \alpha e^{-\int_0^r \mu(r) \ dr }$ with $\alpha \in (0,\infty)$ is a steady state to the system (1) with zero steady control.
-Thus we can control to these trajectories also. In the following example, we have chosen $a_{\dagger} = 4,$ $a_b = 1,$ $\alpha = 1.25$ and
-\begin{equation*}
-\beta(a) = \begin{cases}
-0 &amp;amp; \mbox{ if } a \in [0,1), \\
-\frac{1}{3}e^{.05 a^2} &amp;amp;  \mbox{ if } a \in [1,4],
-\end{cases}
-\qquad
-\mu(a) = .1 a.
-\end{equation*}
-In this case we can verify that $R=1$ and $p_s(a) = 1.25 e^{-.05 a^2}.$ As before we take control everywhere, thus the system is
-controllable to the trajectory $p_s(a)$ in any time.  In the following video,
-we see the evolution of unctrolled trajectory and controlled trajectories to the steady state $p_s(a)$ with
-controllability time $t=2$ and $t =5.$
-
-
-   
-  
- As before, in the following two videos we see the evolution of the control functions at time $t =2$ and $t=5$ respectively. 
-
-
-
-  
-   
-    
-   
-  
-    
-   &amp;nbsp; &amp;nbsp; 
-
-   
-   
-  
- 
- 
- 
-
-
-
-References
- [1] D. Maity,  On the Null Controllability of the Lotka-Mckendrick System, Submitted. 
- [2] D. Maity, M. Tucsnak and E. Zuazua,  Controllability and positivity constraints in population dynamics with age
-structuring and diffusion , Journal de Math&amp;eacute;matiques Pures et Appliqu&amp;eacute;s. In press, 10.1016/j.matpur.2018.12.006.
-
- [3] D. Maity, M. Tucsnak and E. Zuazua,  Controllability of a Class of Infinite Dimensional
-Systems with Age Structure. Submitted.
-
- [4] M. Tucsnak and G. Weiss,  Observation and control for operator semigroups,   
-Birkh&amp;auml;user Advanced Texts: Basler Lehrbu&amp;uuml;cher. [Birkh&amp;auml;user Advanced Texts: Basel Textbooks], Birkh&amp;auml;user Verlag, Basel, 2009. 
-
-</description>
-        <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/WP99-P0030</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/WP99-P0030</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP05</category>
-        
-      </item>
-    
-      <item>
-        <title>Finite Element approximation of the one-dimensional fractional Laplacian</title>
-        <description>We describe here a Finite Element algorithm for the approximation of the one-dimensional fractional Laplacian $(-d_x^2)^s$ on the interval $(-L,L)$, $L&amp;gt;0$ and for the numerical resolution of the following fractional Poisson equation
-
-
-
-This algorithm has also been emploied in [2,3] for the numerical controllability of fractional parabolic problems (see our previous entries in the DyCon Blog, WP3_P0001 and WP3_P0022).
-
-We recall that the fractional Laplacian is defined, for all $s\in(0,1)$ and any function $u$ regular enough, as the following singular integral
-
-
-
-with $c_s$ an explicit normalization constant given by
-
-
-
-$\Gamma$ being the usual Euler Gamma function.
-
-The starting point of the FE method is the definition of a bilinear form associated to the fractional Laplace operator $(-d_x^2)^s$ and the introduction of the variational formulation corresponding to the elliptic problem \eqref{Fl_Poisson}.
-
-This variational formulation is given as follows: find $u\in H_0^s(-L,L)$ such that the identity
-
-
-
-is satisfied for any function $v\in H_0^s(-L,L)$. In \eqref{variational}, with $H_0^s(-L,L)$ we indicate the space
-
-
-
-$H^s(\mathbb{R})$ being the usual fractional Sobolev space. Moreover, the bilinear form
-
-
-
-is defined as
-
-
-
-Let us describe how, starting from the above bilinear form, we can obtain our FE approximation. For simplicity, in what follows we will take $L=1$, although the methodology remains the same for any real $L&amp;gt;0$.
-
-Let us take a uniform partition of the interval $(-1,1)$ as follows:
-
-
-
-with $x_{i+1}=x_i+h$, $i=0,\ldots N$. We call $\mathfrak{M}$ the mesh composed by the points ${x_i\,:\, i=1,\ldots,N}$, while the set of the boundary points is denoted $\partial\mathfrak{M}:={x_0,x_{N+1}}$.
-
-Now, define $K_i:=[x_i,x_{i+1}]$ and consider the discrete space
-
-
-
-where $\mathcal{P}^1$ is the space of the continuous and piece-wise linear functions. Hence, we approximate \eqref{variational} with the following discrete problem: find $u_h\in V_h$ such that
-
-
-
-for all $v_h\in V_h$. If now we indicate with
-
-
-
-a basis of $V_h$, it will be sufficient that the above equality is satisfied for all the functions of the basis, since any element of $V_h$ is a linear combination of them. Therefore the problem takes the following form
-
-
-
-Clearly, since $u_h\in V_h$, we have $u_h(x) = \sum_{j=1}^N u_j\phi_j(x)$, where the coefficients $u_j$ are, a priori, unknown. In this way, \eqref{WFD} is reduced to solve the linear system $\mathcal A_h u=F$, where the stiffness matrix $\mathcal A_h\in \mathbb{R}^{N\times N}$ has components
-
-
-
-while the vector $F\in\mathbb{R}^N$ is given by $F=(F_1,\ldots,F_N)$ with
-
-
-
-Moreover, the basis
-
-
-
-that we will employ is the classical one in which each $\phi_i$ is the tent function with $supp(\phi_i)=(x_{i-1},x_{i+1})$ and verifying $\phi_i(x_j)=\delta_{i,j}$. In particular, for $x\in{x_{i-1},x_i,x_{i+1}}$ the $i^{th}$ function of the basis is explicitly defined as (see Figure 1)
-
-
-
-
-Figure 1. Basis function $\phi_i$ on its support $(x_{i-1},x_{i+1})$.
-
-We now start building the stiffness matrix $\mathcal A_h$ approximating the fractional Laplacian. This will be done in three steps, since the values of the matrix can be computed differentiating among three well defined regions: the upper triangle, corresponding to $j\geq i+2$, the upper diagonal corresponding to $j=i+1$ and the diagonal, corresponding to $j=i$. In each of these regions the intersections among the support of the basis functions are different, thus generating different values of the bilinear form.
-
-We present below an abridged explanation of how to compute the entries of $\mathcal{A}_h$. Complete details may be found in [2].
-
-Step 1: $j\geq i+2$
-
-In this case we have $supp(\phi_i)\cap supp(\phi_j) =\emptyset$ (see also Figure 2). Hence, \eqref{stiffness_nc} is reduced to computing only the integral
-
-
-
-
-Figure 2. Basis functions $\phi_i(x)$ and $\phi_j(x)$ for $j\geq i + 1$. The supports are disjoint.
-
-Taking into account the definition of the basis function \eqref{basis_fun}, the integral \eqref{elem_noint_app} becomes
-
-
-
-Let us introduce the following change of variables:
-
-
-
-Then, rewriting (with some abuse of notations since there is no possibility of confusion) $\hat{x}=x$ and $\hat{y}=y$, we get
-
-
-
-This integral can be computed explicitly, and we obtain
-
-
-
-Notice that, when $s=1/2$, both the numerator and the denominator of the expression above are zero. In this case, the value of $a_{i,j}$ can be obtained by taking the limit $s\to 1/2$ and we get
-
-
-
-if $k\neq 2$ and
-
-
-
-Step 2: $j= i+1$
-This is the most cumbersome case, since it is the one with the most interactions between the basis functions (see Figure 3).
-
-
-Figure 3. Basis functions $\phi_i(x)$ and $\phi_{i+1}(x)$. In this case, the intersection of the supports is the interval $[x_i,x_{i+1}]$.
-
-Using the symmetry of the integral with respect to the bisector $y=x$, we have
-
-
-
-Also in this case, the terms $Q_i$, $i=1,\ldots,6$, can be computed explicitely, by noticing also the following facts:
-
-
-  $Q_1=Q_6=0$ since $\phi_i = 0$ on the domain of integration.
-  $Q_2=Q_5$ due to symmetry.
-
-
-Then, the elements $a_{i,i+1}$ are given by the sum $2Q_2+Q_3+Q_4$ and we have
-
-
-
-Step 3: $j= i$
-As a last step, we fill the diagonal of the matrix $\mathcal A_h$, which collects the values corresponding to $\phi_i(x)=\phi_j(x)$ (see Figure 4).
-
-
-Figure 4. Basis functions $\phi_i(x)=\phi_j(x)$.
-
-In this case, we have
-
-
-
-Once again, the terms $R_i$, $i=1,\ldots,7$ can be computed explicitely, by taking also into account that $R_1=R_3=R_6=R_7=0$ because the corresponding integration domains are all away from the support of the basis functions.
-
-The result of these computations gives the values
-
-
-
-Step 4: building of $\mathcal A_h$
-
-Summarizing, we have the following values for the elements of the stiffness matrix $\mathcal{A}_h$: for $s\neq 1/2$
-
-
-
-For $s=1/2$, instead, we have
-
-
-
-Numerical results
-
-We present the numerical simulations corresponding to the algorithm previously described.
-
-First of all, we test numerically the accuracy of our method for the resolution of the elliptic equation \eqref{Fl_Poisson} by applying it to the following problem
-
-
-
-In this particular case, the unique solution $u$ can be computed exactly and it is given by
-
-
-
-where $\chi_{(-1,1)}$ indicates the characteristic function of the interval $(-1,1)$.
-
-The solution of \eqref{poisson} in the case  $s=0.1$ and $N=50$ is computed with the following script which emploies the function FEFractionalLaplacian.m ginving the FE discretization of $(-d_x^2)^s$.
-
-s = 0.1;
-N = 50;
-L = 1;
-
-x = linspace(-L,L,N+2);
-x = x(2:end-1);
-h = x(2)-x(1);
-
-f = @(x) 1+0*x;
-Phi = @(x) 1-abs(x);
-
-F = zeros(N,1);
-
-for i=1:N
-    xx = linspace(x(i)-h,x(i)+h,N+1);
-    xx = 0.5*(xx(2:end)+xx(1:end-1));
-    B1 = f(xx).*(Phi((xx-x(i))/h));
-    F(i) = ((2*h)/N)*sum(B1); 
-end
-
-A = FEFractionalLaplacian(s,L,N);
-sol = A\F;
-
-
-In Figure 5, we show a comparison for different values of $s$ between the exact solution \eqref{real_sol} and the computed numerical approximation.
-
-
-Figure 5. Real and numerical solution.
-
-One can notice that when $s=0.1$ (and also for other small values of s), the computed solution is to a certain extent different from the exact solution. Notwithstanding, it is well-known that the notion of trace is not defined for the spaces $H^s(-1,1)$ with $s\leq 1/2$. Hence, it is somehow natural that we cannot expect a point-wise convergence in this case.
-
-Furthermore, the accuracy of our algorithm is validated by a simple error analysis.
-
-The computation of the error in the space $H_0^s(-1,1)$ can be readily done by using the definition of the bilinear form, namely
-
-
-
-where have used the orthogonality condition $a(v_h,u-u_h)=0$ for all $v_h \in V_h$.
-
-For this particular test, since $f\equiv 1$ in $(-1,1)$, the problem is therefore reduced to
-
-
-
-where the right-hand side can be easily computed, since we have the closed formula
-
-
-
-and the term corresponding to $\int_{-1}^1u_h$ can be carried out numerically. Moreover, we have the following convergence result.
-
-Theorem [2] For the solution $u$ of \eqref{WFD} and its FE approximation $u_h$ given by \eqref{WFD}, if $h$ is sufficiently small, the following estimates hold
-
-
-
-where $\mathcal{C}$ is a positive constant not depending on $h$.
-
-In Figure 6, we present the computational errors evaluated for different values of $s$ and $h$, which can be obtained with the following function.
-
-function [h,e] = error_fl(s,N)
-
-x = linspace(-1,1,N+2);
-x = x(2:end-1);
-h = x(2)-x(1);
-
-f = @(x) 1+0*x;
-Phi = @(x) 1-abs(x);
-
-F = zeros(N,1);
-
-for i = 1:N
-    xx = linspace(x(i)-h,x(i)+h,N+1);
-    xx = 0.5*(xx(2:end)+xx(1:end-1));
-    B1 = f(xx).*(Phi((xx-x(i))/h));
-    F(i) = ((2*h)/N)*sum(B1); 
-end
-
-A = FEFractionalLaplacian(s,1,N);
-sol = A\F;
-val = pi/(2^(2*s)*gamma(s+0.5)*gamma(s+1.5));
-valnum = h*sum(sol);
-e = sqrt(val-valnum);
-
-
-
-Figure 6. Computational error in logarithmic scale in terms for different values of $s$.
-
-The rates of convergence shown are of order (in $h$) of $1/2$, and this convergence rate is maintained also for small values of $s$. This confirms the accuracy of our approximation. In particular, the behavior shown in Figure 6 is not in contrast with the known theoretical results.
-
-References
-
-[1] G. Acosta, F. Bersetche and J. P. Borthagaray, A short FE implementation for a 2d homogeneous Dirichlet problem of a Fractional Laplacian. Comput. Math. Appl., Vol. 74, No. 4 (2017), pp. 784-816.
-
-[2] U. Biccari and V. Hernández-Santamarı́a, Controllability of a one-dimensional fractional heat equation: theoretical and
-numerical aspects. IMA J. Math. Control. Inf, to appear, 2018.
-
-[3] U. Biccari, M. Warma and E. Zuazua, Controllability of the one-dimensional fractional heat equation under positivity constraints. Submitted.
-</description>
-        <pubDate>Fri, 07 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/WP99-P0024</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/WP99-P0024</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP05</category>
         
       </item>
     

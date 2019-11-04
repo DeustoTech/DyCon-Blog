@@ -1,0 +1,56 @@
+---
+layout: default
+---
+
+<!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0">
+          {%- assign topiclabel = page.categories[1] -%}
+          <h2><small class="light-grey"><a href="{{site.url}}/{{site.baseurl}}/projects/courses">Courses</a>
+            &#8827;<a href="{{site.url}}/{{site.baseurl}}/course/{{topiclabel}}">
+            {{site.data.Courses[topiclabel].name}}</a> &#8827;</small>
+          </h2>
+          <h1>{{ page.title }}</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author{% if page.author.size > 1 %}s{% endif %}:
+              {% assign counter = 0 %}
+              {% for aut in page.author %}
+                {% assign counter = counter | plus: 1 %}
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{ site.data.members[aut].name }}</a>{% unless page.author.size == counter %},{% endunless %}
+                  </span>
+                </span>
+              {% endfor %}
+              - {{ page.date | date_to_long_string }}
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+{% include imagezoom.html %}
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        {% if page.url_zip %}
+          {% if page.old %}
+            <a href="{{page.url_zip}}""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          {% else %}
+            <a href="{{site.url}}{{site.baseurl}}/{{page.url_zip}}""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          {% endif %}
+        {% endif %}
+        {{ content | markdownify }}
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>

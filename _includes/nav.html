@@ -22,6 +22,9 @@
                 </li>
                 {% assign qposts = site.pages |where:"layout","project"|sort: "position" %}
                 {% for page in qposts %}
+                    {% if page.title == "Courses" %}
+                        {% continue %}
+                    {% endif %}
                 <li>
                     <a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
                 </li>
