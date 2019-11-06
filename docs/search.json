@@ -4,37 +4,37 @@
     {
       "title"           : "Numerical simulation of nonlinear Population Dynamics Structuring by age and Spatial diffusion",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0051",
+      "url"             : "/tutorial/wp05/P0012",
       "date"            : "2019-10-30",
       "author"          : ["YacoubaS"],
       "description"     : "In this tutorial, we propose the Hum method to approximate numerically the control in a null controllability problem for a non linear population dynamics model structuring in age and spatial diffusion.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0051/v1.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0012/v1.png"
     } ,
   
     {
       "title"           : "Touchdown localization for the MEMS problem with variable dielectric permittivity",
       "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0040",
+      "url"             : "/tutorial/wp99/P0010",
       "date"            : "2019-09-30",
       "author"          : ["CarlosE"],
       "description"     : "In this tutorial we study the localization of touchdown points in a mathematical model for micro-electro-mechanical systems (MEMS) with variable dielectric permittivity. We consider a device consisting of two conducting plates, connected to an electric circuit. The upper plate is rigid and fixed while the lower one is elastic and fixed only at the boundary. When a voltage (difference of potential between the two plates) is applied, the lower plate starts to bend and, if the voltage is large enough, the lower plate eventually touches the upper one. This is called touchdown phenomenon and our aim is to control the localization of touchdown points in the device by a suitable choice of the dielectric permittivity of the material.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0040/MEMSgif2.gif"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/MEMSgif2.gif"
     } ,
   
     {
       "title"           : "Analysis, numerics and control for the obstacle problem",
       "categories"      : ["tutorial", "WP03"],
-      "url"             : "/tutorial/wp03/WP03-P0031",
+      "url"             : "/tutorial/wp03/P0004",
       "date"            : "2019-07-08",
       "author"          : ["BorjanG"],
       "description"     : "In this tutorial, we will present and elaborate an optimal control strategy for the obstacle problem in two space dimensions using Python's FEniCS toolbox. Different meshes and obstacles are considered.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0031/terrain_rotate.gif"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0004/terrain_rotate.gif"
     } ,
   
     {
       "title"           : "Rotors imbalance suppression by optimal control",
       "categories"      : ["tutorial", "WP02"],
-      "url"             : "/tutorial/wp02/P0005",
+      "url"             : "/tutorial/wp02/P0004",
       "date"            : "2019-07-08",
       "author"          : ["DarioP"],
       "description"     : "Formulation of Optimal control problem for rotor imbalance. Explanation of the code to numerically solve the problem.",
@@ -44,81 +44,81 @@
     {
       "title"           : "Propagation of one and two-dimensional discrete waves under finite difference approximation",
       "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/WP99-P0023",
+      "url"             : "/tutorial/wp99/P0008",
       "date"            : "2019-06-26",
       "author"          : ["UmbertoB","JesusO"],
       "description"     : "We analyze the propagation properties of the numerical versions of one and two-dimensional wave equations, semi-discretized in space by finite difference schemes, and we illustrate that numerical solutions may have unexpected behaviours with respect to the analytic ones.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0023/animation.gif"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0008/animation.gif"
     } ,
   
     {
       "title"           : "Sparse sources identification through adjoint localization algorithm",
       "categories"      : ["tutorial", "WP04"],
-      "url"             : "/tutorial/wp04/P0014",
+      "url"             : "/tutorial/wp04/P0005",
       "date"            : "2019-06-14",
       "author"          : ["AzaharM"],
       "description"     : "The aim of this work is to recover the initial sparse sources that lead to a given final measurements using the diffusion equation. It is assumed that the initial condition can be written down as a linear combination of unitary deltas and their weights. In that context, an algorithm that combines the adjoint methodology with least squares is presented. In particular, the adjoint methodology is used to find the localization of the sparse sources and least squares to find the corresponding intensities.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0014/evolution.gif"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0005/evolution.gif"
     } ,
   
     {
       "title"           : "Controllability of a Class of Infinite Dimensional Systems with Age Structure",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/WP99-P0030",
+      "url"             : "/tutorial/wp05/P0010",
       "date"            : "2019-06-07",
       "author"          : ["DebayanM"],
       "description"     : "In this tutorial,  we investigate the linear infinite dimensional system obtained by implementing an age structure to a given  linear dynamical system. We show that if the initial system is null controllable in a time small enough, then the age structured system is also null controllable in a time depending on the various involved parameters.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/Fig06.jpg"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0010/Fig06.jpg"
     } ,
   
     {
       "title"           : "Finite Element approximation of the one-dimensional fractional Laplacian",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/WP99-P0024",
+      "url"             : "/tutorial/wp05/P0009",
       "date"            : "2019-06-07",
       "author"          : ["UmbertoB","VictorH"],
       "description"     : "We describe a FE method for the approximation of the one-dimensional fractional Laplacian $(-d_x^2)^s$ on a uniform mesh discretizing the symmetric interval $(-L,L)$, $L>0$.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0024/solution.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0009/solution.png"
     } ,
   
     {
       "title"           : "A numerical method for solving an age structured virus model",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0025",
+      "url"             : "/tutorial/wp05/P0008",
       "date"            : "2019-06-04",
       "author"          : ["FriouiM"],
       "description"     : "We consider an age-structured HIV infection model with a general nonlinear infection function. The numerical method to solve this system of equation is based on the upwind method for solving hyperbolic partial differential equation and the ODEs are solving by explicit Euler method.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0025/Schema.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0008/Schema.png"
     } ,
   
     {
       "title"           : "Controllability of the one-dimensional fractional heat equation under positivity constraints",
       "categories"      : ["tutorial", "WP03"],
-      "url"             : "/tutorial/wp03/WP03-P0022",
+      "url"             : "/tutorial/wp03/P0003",
       "date"            : "2019-05-31",
       "author"          : ["UmbertoB"],
       "description"     : "We analyze the controllability properties under positivity constraints on the control or the state of a one-dimensional heat equation involving the fractional Laplacian $(-\Delta)^s$ ($0 1/2$. Moreover, we show that in this minimal time constrained controllability is achieved by means of a control that belongs to a certain space of Radon measures. We also give some numerical simulations that confirm our theoretical results.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0022/deltas.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0003/deltas.png"
     } ,
   
     {
       "title"           : "Optimal strategies for guidance-by-repulsion model with IpOpt and AMPL",
       "categories"      : ["tutorial", "WP06"],
-      "url"             : "/tutorial/wp06/WP99-P0026",
+      "url"             : "/tutorial/wp06/P0005",
       "date"            : "2019-05-27",
       "author"          : ["DongnamK"],
       "description"     : "In this post, we use IpOpt and AMPL to simulate optimal controls on a nonlinear ODE system with unbounded interactions. The restriction and initial guess on the state variables are critical for this problem to operate minimization algorithm. From the data calculated from AMPL, we interpret and visualize it using Matlab.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0026/ds.gif"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0005/ds.gif"
     } ,
   
     {
       "title"           : "Reconstruction of traffic state using autonomous vehicles",
       "categories"      : ["tutorial", "WP04"],
-      "url"             : "/tutorial/wp04/WP99-P0032",
+      "url"             : "/tutorial/wp04/P0004",
       "date"            : "2019-05-24",
       "author"          : ["ThibaultL"],
       "description"     : "Autonomous Vehicles (briefly AVs) have already been tested on urban and highway networks and,  for the future they may be used to monitor and manage the   vehicular traffic. The impact of autonomous vehicles on vehicular traffic is modeled  by a PDE+ODE models with moving point-flux constraint. The PDE is a nonlinear  hyperbolic conservation laws and the ODE represents the trajectory of autonomous vehicles. We show that the data collected by autonomous vehicles' sensors can be used to reconstruct the traffic state.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0032/paper_example_3_real_sol%202.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/paper_example_3_real_sol%202.png"
     } ,
   
     {
@@ -134,27 +134,27 @@
     {
       "title"           : "A reaction-diffusion equation with delay",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0030",
+      "url"             : "/tutorial/wp05/P0007",
       "date"            : "2019-04-03",
       "author"          : ["FriouiM"],
       "description"     : "The aim of this tutorial is to give a numerical method for solving a partial differential equation with a constant delay.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0030/pdedelay4.gif"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0007/pdedelay4.gif"
     } ,
   
     {
       "title"           : "Structured deformations of continua",
       "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0018",
+      "url"             : "/tutorial/wp99/P0007",
       "date"            : "2019-03-26",
       "author"          : ["MarcoM","JoseM"],
       "description"     : "A Multiscale Geometrical Basis for Variational Problems in Mechanics",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0018/p0018_50.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0007/p0018_50.png"
     } ,
   
     {
       "title"           : "The Dirichlet-Neumann iteration for two coupled heterogeneous heat equations",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0017",
+      "url"             : "/tutorial/wp05/P0006",
       "date"            : "2019-03-26",
       "author"          : ["AzaharM"],
       "description"     : "This tutorial explains how to use the Dirichlet-Neumann method to coordinate the numerical solutions of two linear heat equations with strong jumps in the material coefficients accross a common interface.",
@@ -164,7 +164,7 @@
     {
       "title"           : "An introduction to the moment method for optimal control problems for polynomial ODEs",
       "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0015-moment",
+      "url"             : "/tutorial/wp99/P0006",
       "date"            : "2019-02-04",
       "author"          : ["SwannM"],
       "description"     : "The aim of this note is to explain how one can solve an optimal control problem with the moment method",
@@ -174,177 +174,177 @@
     {
       "title"           : "Optimal control for inverted pendulum",
       "categories"      : ["tutorial", "OT02"],
-      "url"             : "/tutorial/ot02/P0015-Pendulum",
+      "url"             : "/tutorial/ot02/P0003",
       "date"            : "2019-02-04",
       "author"          : ["NoboruS"],
       "description"     : "Tutorial of optimal control for inverted pendulum with symbolic MATLAB",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0015-Pendulum/Pendulum_pic.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0003/Pendulum_pic.png"
     } ,
   
     {
       "title"           : "Two Grids Filter Method for RPS Semi-Discretization",
       "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0002-Numerical-homogenizaton",
+      "url"             : "/tutorial/wp99/P0005",
       "date"            : "2019-01-07",
       "author"          : ["XinliangL"],
       "description"     : "This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0002-Numerical%20homogenizaton/copiaRM_02.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0005/copiaRM_02.png"
     } ,
   
     {
       "title"           : "Stability analysis of Power Electronic Converters Connected to AC Grids",
       "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/P0011",
+      "url"             : "/tutorial/wp01/P0007",
       "date"            : "2018-11-15",
       "author"          : ["UmbertoB","JesusO"],
       "description"     : "Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/converters.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0007/converters.png"
     } ,
   
     {
       "title"           : "The control on the Kuramoto model by handling one oscillator",
       "categories"      : ["tutorial", "WP06"],
-      "url"             : "/tutorial/wp06/P0009-Dongnam",
+      "url"             : "/tutorial/wp06/P0004",
       "date"            : "2018-10-29",
       "author"          : ["DongnamK"],
       "description"     : "We design the LQR controller and solve it with linearized model.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009-Dongnam/copiaRM_05.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0004/copiaRM_05.png"
     } ,
   
     {
       "title"           : "LQR controller for stabilizing the linear population dynamics model",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0010-Yacouba",
+      "url"             : "/tutorial/wp05/P0005",
       "date"            : "2018-10-29",
       "author"          : ["YacoubaS"],
       "description"     : "In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the linear population dynamics model dependent on age and space",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010-Yacouba/copiaRM_07.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0005/copiaRM_07.png"
     } ,
   
     {
       "title"           : "Coupled transport equations and LQR control",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0008-Charlotte",
+      "url"             : "/tutorial/wp05/P0004",
       "date"            : "2018-10-29",
       "author"          : ["CharlotteR"],
       "description"     : "Numerical computation of a stabilizing control",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0008-Charlotte/copiaRM_07.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0004/copiaRM_07.png"
     } ,
   
     {
       "title"           : "Stabilization of a collective behavior model",
       "categories"      : ["tutorial", "WP06"],
-      "url"             : "/tutorial/wp06/P0014-Domenec",
+      "url"             : "/tutorial/wp06/P0003",
       "date"            : "2018-10-28",
       "author"          : ["DomenecR"],
       "description"     : "Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0014-Domenec/copiaRM_04.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0003/copiaRM_04.png"
     } ,
   
     {
       "title"           : "LQR optimal control design for a coupled PDE-ODE system.",
       "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0002",
+      "url"             : "/tutorial/wp05/P0003",
       "date"            : "2018-10-28",
       "author"          : ["BorjanG"],
       "description"     : "Stabilization of a coupled PDE-ODE system by means of a feedback LQR control.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0002/copiaRM_02.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_02.png"
     } ,
   
     {
       "title"           : "Optimal control of a  graph evolving in discrete time",
       "categories"      : ["tutorial", "OT02"],
-      "url"             : "/tutorial/ot02/P0001",
+      "url"             : "/tutorial/ot02/P0002",
       "date"            : "2018-10-26",
       "author"          : ["AlejandroC"],
       "description"     : "Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0001/copiaRM_01.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0002/copiaRM_01.png"
     } ,
   
     {
       "title"           : "Synchronized Oscillators",
       "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/P0007",
+      "url"             : "/tutorial/wp01/P0006",
       "date"            : "2018-10-19",
       "author"          : ["AnaN","JesusO","UmbertoB"],
       "description"     : "Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0007/copiaRM_02.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/copiaRM_02.png"
     } ,
   
     {
       "title"           : "Optimal Shape Design for Poisson Equation in OpenFOAM",
       "categories"      : ["tutorial", "OT01"],
-      "url"             : "/tutorial/ot01/P0017",
+      "url"             : "/tutorial/ot01/P0006",
       "date"            : "2018-07-23",
       "author"          : ["JoseV"],
       "description"     : "Optimal Control in OpenFOAM",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0017/avatar.PNG"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT01/P0006/avatar.PNG"
     } ,
   
     {
       "title"           : "Rays propagation of a fractional Schrodinger Equation",
       "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0001",
+      "url"             : "/tutorial/wp99/P0004",
       "date"            : "2018-07-21",
       "author"          : ["UmbertoB"],
       "description"     : "Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0001/wave.gif"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0004/wave.gif"
     } ,
   
     {
       "title"           : "Interior Control of the Poisson Equation with the Conjugate Gradient Method in OpenFOAM",
       "categories"      : ["tutorial", "OT01"],
-      "url"             : "/tutorial/ot01/P0020",
+      "url"             : "/tutorial/ot01/P0005",
       "date"            : "2018-07-03",
       "author"          : ["JoseV","VictorH"],
       "description"     : "",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0020/avatar.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT01/P0005/avatar.png"
     } ,
   
     {
       "title"           : "Optimal Shape Design in External Flow",
       "categories"      : ["tutorial", "OT01"],
-      "url"             : "/tutorial/ot01/P0018",
+      "url"             : "/tutorial/ot01/P0004",
       "date"            : "2018-06-30",
       "author"          : ["JoseV"],
       "description"     : "",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0018/avatar.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT01/P0004/avatar.png"
     } ,
   
     {
       "title"           : "Optimal Shape Design for Poisson Equation in Matlab",
       "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0002",
+      "url"             : "/tutorial/wp99/P0003",
       "date"            : "2018-06-29",
       "author"          : ["JoseV"],
       "description"     : "",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0002/avatarWP990002.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0003/avatarWP990002.png"
     } ,
   
     {
       "title"           : "Interior Control of the Heat Equation with the Steepest Descent Method and OpenFOAM",
       "categories"      : ["tutorial", "OT01"],
-      "url"             : "/tutorial/ot01/P0019",
+      "url"             : "/tutorial/ot01/P0003",
       "date"            : "2018-06-29",
       "author"          : ["JoseV","VictorH"],
       "description"     : "",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0019/avatar.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT01/P0003/avatar.png"
     } ,
   
     {
       "title"           : "Interior Control of the Poisson Equation with the Steepest Descent Method in OpenFOAM",
       "categories"      : ["tutorial", "OT01"],
-      "url"             : "/tutorial/ot01/P0003",
+      "url"             : "/tutorial/ot01/P0002",
       "date"            : "2018-06-29",
       "author"          : ["JoseV","VictorH"],
       "description"     : "",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0003/avatarWP990003.PNG"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT01/P0002/avatarWP990003.PNG"
     } ,
   
     {
       "title"           : "Optimal Control of the Poisson Equation with OpenFOAM",
       "categories"      : ["tutorial", "OT01"],
-      "url"             : "/tutorial/ot01/P0021",
+      "url"             : "/tutorial/ot01/P0001",
       "date"            : "2018-05-01",
       "author"          : ["VictorH","JoseV","EnriqueZ"],
       "description"     : "In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE).",
@@ -354,7 +354,7 @@
     {
       "title"           : "WKB expansion for a fractional Schrödinger equation with applications to controllability",
       "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0002-WBK",
+      "url"             : "/tutorial/wp99/P0002",
       "date"            : "2018-04-05",
       "author"          : ["UmbertoB","AlejandroA","EnriqueZ"],
       "description"     : "Theoretical and numerical analysis of the propagation of the solutions for a Schrödinger equation with fractional Laplacian, with application to the study of controllability properties.",
@@ -364,7 +364,7 @@
     {
       "title"           : "Averaged Control",
       "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/T00010",
+      "url"             : "/tutorial/wp01/P0005",
       "date"            : "2018-03-12",
       "author"          : ["VictorH","JoseV","EnriqueZ"],
       "description"     : "In this work, we address the optimal control of parameter-dependent systems.",
@@ -374,7 +374,7 @@
     {
       "title"           : "Control of the semi-discrete 1D heat equation under nonnegative control constraint",
       "categories"      : ["tutorial", "WP03"],
-      "url"             : "/tutorial/wp03/P0001",
+      "url"             : "/tutorial/wp03/P0002",
       "date"            : "2018-03-05",
       "author"          : ["JeromeL","EmmanuelT","EnriqueZ"],
       "description"     : "Using IpOpt to get the time-optimal nonnegative control of a semi-discrete 1D heat equation",
@@ -384,11 +384,21 @@
     {
       "title"           : "Wave Control",
       "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/T00020",
+      "url"             : "/tutorial/wp01/P0004",
       "date"            : "2017-12-21",
       "author"          : ["CarlosC","MiguelC","SorinM","ArnaudM","MihaelaN","EnriqueZ"],
       "description"     : "A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol.jpg"
+    } ,
+  
+    {
+      "title"           : "Finite element approximation of the 1-D fractional Poisson equation",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0002",
+      "date"            : "2017-12-05",
+      "author"          : ["UmbertoB","VictorH"],
+      "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFeatImg.jpg"
     } ,
   
     {
@@ -402,19 +412,9 @@
     } ,
   
     {
-      "title"           : "Finite element approximation of the 1-D fractional Poisson equation",
-      "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0003",
-      "date"            : "2017-12-05",
-      "author"          : ["UmbertoB","VictorH"],
-      "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control",
-      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFeatImg.jpg"
-    } ,
-  
-    {
       "title"           : "Greedy algorithm for Parametric Vlasov-Fokker-Planck System",
       "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/P0001",
+      "url"             : "/tutorial/wp01/P0003",
       "date"            : "2017-11-28",
       "author"          : ["YuhuaZ","EnriqueZ"],
       "description"     : "Short report about the greedy algorithm of linear Vlasov-Fokker-Planck equation, including 6 numerical experiments with figures, and corresponding matlab coding and the explanation of how to implement it.",
@@ -444,7 +444,7 @@
     {
       "title"           : "2D inverse design of linear transport equations on unstructured grids",
       "categories"      : ["tutorial", "WP04"],
-      "url"             : "/tutorial/wp04/P0002",
+      "url"             : "/tutorial/wp04/P0003",
       "date"            : "2017-11-05",
       "author"          : ["MarioM","EnriqueZ"],
       "description"     : "Various discrete adjoint methodologies are discussed for the inverse design of linear transport equations in 2 space dimensions",
@@ -464,7 +464,7 @@
     {
       "title"           : "Turnpike property for functionals involving $L^1$−norm",
       "categories"      : ["tutorial", "WP02"],
-      "url"             : "/tutorial/wp02/P0001",
+      "url"             : "/tutorial/wp02/P0002",
       "date"            : "2017-10-25",
       "author"          : ["MartinL","CesareM","EnriqueZ"],
       "description"     : "We want to study the following optimal control problem...",
@@ -474,27 +474,27 @@
     {
       "title"           : "Radial Basis Functions Interpolation",
       "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0016",
+      "url"             : "/tutorial/wp99/P0001",
       "date"            : "2017-10-11",
       "author"          : ["JoseV"],
       "description"     : "This is a set of Matlab functions to interpolate scattered data with Radial Basis Functions (RBF).",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0016/avatar.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0001/avatar.png"
     } ,
   
     {
       "title"           : "LQR control of a fractional reaction diffusion equation",
       "categories"      : ["tutorial", "OT02"],
-      "url"             : "/tutorial/ot02/P0004",
+      "url"             : "/tutorial/ot02/P0001",
       "date"            : "2017-09-18",
       "author"          : ["UmbertoB"],
       "description"     : "Design of a LQR controller for the stabilization of a fractional reaction diffusion equation",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0004/copiaRM_01.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0001/copiaRM_01.png"
     } ,
   
     {
       "title"           : "IpOpt and AMPL use to solve time optimal control problems",
       "categories"      : ["tutorial", "WP03"],
-      "url"             : "/tutorial/wp03/P0002",
+      "url"             : "/tutorial/wp03/P0001",
       "date"            : "2017-08-05",
       "author"          : ["JeromeL","EmmanuelT","EnriqueZ"],
       "description"     : "How to use IpOpt to solve time optimal control problems",
@@ -504,7 +504,7 @@
     {
       "title"           : "Conservation laws in the presence of shocks",
       "categories"      : ["tutorial", "WP04"],
-      "url"             : "/tutorial/wp04/P0001",
+      "url"             : "/tutorial/wp04/P0002",
       "date"            : "2017-06-05",
       "author"          : ["RodrigoL","EnriqueZ"],
       "description"     : "Tracking control of 1D scalar conservation laws in the presence of shocks",
@@ -514,7 +514,7 @@
     {
       "title"           : "Numerical aspects of LTHC of Burgers equation",
       "categories"      : ["tutorial", "WP04"],
-      "url"             : "/tutorial/wp04/WP04-P0002",
+      "url"             : "/tutorial/wp04/P0001",
       "date"            : "2017-05-04",
       "author"          : ["NavidA","AlejandroP","EnriqueZ"],
       "description"     : "Numerical approximation of the inverse design problem for the Burgers equation",
@@ -524,7 +524,7 @@
     {
       "title"           : "Long time control and the Turnpike property",
       "categories"      : ["tutorial", "WP02"],
-      "url"             : "/tutorial/wp02/P0004",
+      "url"             : "/tutorial/wp02/P0001",
       "date"            : "2017-05-04",
       "author"          : ["AitziberI","EnriqueZ"],
       "description"     : "The turnpike property improves the numerical methods used to solve optimal control problems",
@@ -534,7 +534,7 @@
     {
       "title"           : "Greedy Control",
       "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/P0003",
+      "url"             : "/tutorial/wp01/P0001",
       "date"            : "2017-03-01",
       "author"          : ["MartinL","EnriqueZ"],
       "description"     : "Control of a parameter dependent system in a robust manner",

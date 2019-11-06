@@ -8,7 +8,7 @@
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
   <title>
-    Greedy algorithm for Parametric Vlasov-Fokker-Planck System - DyCon Blog
+    Greedy Control - DyCon Blog
     
   </title>
 
@@ -210,7 +210,7 @@
             &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP01">
             Control of parameter dependent problems</a> &#8827;</small>
           </h2>
-          <h1>Greedy algorithm for Parametric Vlasov-Fokker-Planck System</h1>
+          <h1>Greedy Control</h1>
 					<p class="meta">
             <div class="post-preview-authors ellipsis-one-line">
               Authors:
@@ -219,7 +219,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/YuhuaZ">Yuhua Zhu</a>,
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/MartinL">Martín Lazar</a>,
                   </span>
                 </span>
               
@@ -230,7 +230,7 @@
                   </span>
                 </span>
               
-              - 28 November 2017
+              - 01 March 2017
             </div>
 					</p>
         </div>
@@ -292,203 +292,190 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://cmc.deusto.eus/wp-content/uploads/2018/01/1138580.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="https://cmc.deusto.eus/wp-content/uploads/2017/10/1035053.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
-        <h5>1. Numerical experiments</h5>
+        <h3>The problem</h3>
+<p><img class="size-full" style="float: right;" src="https://cmc.deusto.eus/wp-content/uploads/2017/02/surrogate.png" alt="Surrogate" width="400" /><strong>Control of a parameter dependent system in a robust manner.</strong>
+Fix a control time $T &gt; 0$, an arbitrary initial data $x^0$, and a final target $x^1 \in R^N$
+Given $\varepsilon &gt; 0$ we aim at determining a family of parameters $\nu_1,…, , \nu_n$ in $\mathcal{N}$ so that the corresponding controls $u_1, …, u_n$ are such that for every $\nu \in \mathcal{N}$ there exists $u^\star_\nu \in {\rm span}{u_1,…, u_n}$ steering the system to the state $x_\nu^\star(T)$ within the $\varepsilon$ distance from the target $x^1$.</p>
 
-<p>Consider the one dimensional linear Vlasov-Fokker-Planck (VPFP) as following.</p>
+<h3>The system</h3>
+<p>A finite dimensional linear control system:</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}
 \begin{cases}
-	\delta_tf + \sigma_1v\delta_x f - \frac{\sigma_2}{\epsilon} \delta_x\phi\delta_v f =\frac{\sigma_3}{\epsilon}\delta_v\ (v f +\delta_vf\ ),  t>0, x\in[0,2\pi], v\in \mathbb{R}, \label{eq: VPFP}\\
-	f(0, x,v,z) = f_0(x,v,z),  z\in [a,b].
-	\end{cases}
-\end{equation}</script>
-
-<p>In the numerical experiments, <strong>we compare the results from the greedy algorithm with the results from the polynomial interpolation of the quadrature points.</strong> we set $\epsilon = 1, T = 0.5$ for all examples. More specifically, we set</p>
-
-<script type="math/tex; mode=display">\text{error} = \sum_{i=1}^{50}\int{ {( \hat{f}(T, x, v, z_i) - f(T, x,v,z_i) )}^2} dxdv \hat{f}(T, x,v,z_i)</script>
-
-<p>is the approximation solution obtained from either method, $f(T, x,v,z_i)$ is the exact solution. $z_i$ is uniformly chosen from $[a,b]$. ${\textbf{Dimension}}$ refers to the number of snap shots.</p>
-
-<p>Observe Figure 1-6, we found that the Greedy algorithm converges to the solution faster than the other method. Especially, when there is discontinuity,  the polynomial interpolation doesn’t converge as dimension increases, however, the Greedy algorithm still converges and almost keeps the same convergent rate.</p>
-
-<p><strong>Algorithm 1.1. The algorithm for the polynomial interpolation:</strong></p>
-
-<p>For <strong>Dimension</strong> $= n$, ${\alpha_i}_{i=1}^n$ is the n roots of $n$-th order Legendre polynomial, and let</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-	z_i ^\ast= \frac{b-a}{2}\alpha_i + \frac{a+b}{2},  1\leq i \leq n.\label{}
-\end{equation}</script>
-
-<script type="math/tex; mode=display">\begin{equation}
-	f_i = f(T, x,v, z_i ^\ast) \text{ be the exact solution at time T}.\label{}
-\end{equation}</script>
-
-<p>Then by Lagrange interpolation,</p>
-
-<script type="math/tex; mode=display">\begin{align}
-	\hat{f}(T,x,v,z) = \sum_{i=1}^n l_i(z)f_i, l_i = \prod_{j\neq i} \frac{z-z_j ^\ast}{z_i ^\ast - z_j ^\ast}
-\end{align}</script>
-
-<h3>1.1 Linear VFP with parametric initial data</h3>
-<p>In the first experiment, we consider the case where the parameter $z\in[1,5]$ only involved in the initial data,
-<script type="math/tex">\begin{equation}
-\sigma_1 = \sigma_2 = \sigma_3 = 1, \delta _x\phi = \cos(x),   
-\end{equation}</script></p>
-
-<p>Figure 1:</p>
-
-<script type="math/tex; mode=display">\begin{equation} f_0(x,v,z) = \frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z}{10} |^2}{2} ).\end{equation}</script>
-
-<p>Figure 2:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation} f_0(x,v,z) =\left\{
-\begin{array}{rl}
-\frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z}{10} |^2}{2} ), z<3\\
-\frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z+1}{10} |^2}{2} ), z\geq3.
-\end{array}
-\right.\end{equation} %]]></script>
-
-<p><strong>Algorithm 1.2. The algorithm for PDE with only parameter in initial data:</strong>
-<strong>Offline:</strong></p>
-
-<p>Step 1: Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 100$ in this case.</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-z_1^\ast = \text{argmax}_{z\in N} || f_0(x,v,z) || ^2,
-\end{equation}</script>
-
-<p>where $ \vert f \vert^2 = \int f^2 dxdv$.</p>
-
-<p>Step 2: After obtaining $z_i^\ast, f_i = f_0(x,v,z_i^\ast)$, $i =1, \dots, n-1$,</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-z_n^\ast = \text{argmax}_{z\in N\backslash\{z_i^\ast \}_{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z) ||^2,
-\end{equation}</script>
-
-<p>where $P^{n-1} f_0$ is the projection onto the subspace spanned by $f_1, \dots, f_{n-1}$</p>
-
-<p>Step 3: Stops when</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-\max_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z)||^2 \leq \epsilon
-\end{equation}</script>
-
-<p><strong>Online:</strong> After we obtained the snap shots ${z_i^\ast}_{i=1}^n$,</p>
-
-<p>Step 1: Orthogonalize ${f_i}_{i=1}^n$,
-         and calculate the corresponding</p>
-
-<script type="math/tex; mode=display">{f^T_i = f(T,x,v,z_i)}_{i=1}^n</script>
-
-<p>Step 2: for any given $z$, one can approximate $f(T, x,v,z)$ by</p>
-
-<script type="math/tex; mode=display">\begin{equation}
-a_i = \langle f_0(x,v,z), f_i\rangle,  \hat{f}(x,v, z) = \sum_{i = 1}^na_if^T_i.
-\end{equation}</script>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq1_cts.jpg" alt="figure1" class="size-full wp-image-01" /><i align="aligncenter">Figure 1: Continuous initial data</i></p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq1_discts.jpg" alt="figure2" class="size-full wp-image-02" /><i align="aligncenter">Figure 2: Discontinuous initial data</i></p>
-
-<h3>1.2 Linear parametric VFP with deterministic initial data</h3>
-<p>In the second experiment, we consider the case where the parameter $z\in[1,5]$ only involved in the PDE,</p>
-
-<script type="math/tex; mode=display">\begin{equation}
- f_0(x,v,z) = \frac{1}{\sqrt{2\pi}} ( 2+\sin(x) ) \text{exp} ( -\frac{|v+\cos(x)|^2}{2} )
-\end{equation}</script>
-
-<p>Figure 3:</p>
-
-<script type="math/tex; mode=display">\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi = \cos(x)+\frac{z}{10};\end{equation}</script>
-
-<p>Figure 4:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi =\left\{
-\begin{array}{rl}
-& \cos(x)+\frac{z}{10}, z<3\\
-&\cos(x)+\frac{z+1}{10}, z\geq3
-\end{array}
-\right.
+x'(t)=A( \nu)x(t)+Bu(t),\,0 < t < T,\\
+x(0)=x^0
+\end{cases}
 \end{equation} %]]></script>
 
-<p><strong>Algorithm 1.3. The algorithm for PDE with only parameters in PDE:</strong>
-<strong>Offline:</strong> Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 100$ in this case.</p>
+<ul>
+	<li>$ A( \nu)$ is a $N \times N$−matrix,</li>
+	<li>$B$ is a $N\times M$ control operator, $\,M \leq N$,</li>
+	<li>$\nu$ is a parameter living in a compact set, $\,\mathcal{N}$ of $\mathbb{R}^d$</li>
+</ul>
+<p>Assumptions:</p>
+<ul>
+	<li>the system is (uniform) controllable for all $\nu \in N$,</li>
+	<li>system dimension $\mathcal{N}$ is large</li>
+</ul>
+<h3>The greedy approach</h3>
+<p>$X$ – a Banach space
+$K\subset X$ – a compact subset.
+The method approximates $K$ by a a series of finite dimensional linear spaces $V_n$ (a <strong>linear method</strong>).</p>
+<h5 style="color:green">A general greedy algorithm</h5>
+<ul><li><strong>The first step</strong>
+Choose $x_1 \in K$ such that $$ { {\| x_1 \|}_{X}} = \max_{x \in K} { {\| x \|}_{X}} $$</li>
+<li><strong>The general step</strong>
+Having found $x_1 .. x_n$, denote
 
-<p>Step 1: choose</p>
+$$
+V_n={\rm span} \{x_1, \ldots,x_n\}
+$$
 
-<script type="math/tex; mode=display">z_1^\ast = argmax_{z \in N} || ( \sigma_1,\sigma_2,\sigma_3 )||^2</script>
+Choose the next element
 
-<p>Step 2: After obtaining $z_i^\ast, f_i = f(T,x,v,z_i^\ast)$, $i =1, \dots, n-1$,</p>
+$$
+x_{n+1}:= \arg\!\max_{x \in K} {\rm dist}(x, V_n)
+$$
+</li>
+<li><strong>The algorithm stops</strong> when $\sigma_n(K):= \max_{x \in K} {\rm dist}(x, V_n) $ becomes less than the given tolerance $\varepsilon$.</li>
 
-<script type="math/tex; mode=display">\begin{equation}
-z_n^\ast = argmax_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1}} [ \min_{\hat{f} = \sum a_if_i,  \sum a_i = 1}
-|| \delta_t\hat{f} + \underbrace{ \sigma_1(z)v\delta_x \hat{f} - \frac{\sigma_2(z)}{\epsilon} \delta_x\phi\delta_v \hat{f} - \frac{\sigma_3(z)}{\epsilon}\delta_v ( v \hat{f} + \delta_v\hat{f} ) }_{A(z)\hat{f} } ||^2 ],
-\label{linear z_star}
-\end{equation}</script>
 
-<p>Step 3: Stops when the above maximum residual smaller than $\epsilon$.</p>
+<strong>The Kolmogorov $n$ width</strong>, $d_n(K) $ measures optimal approximation of $K$ by a $n$-dimensional subspace.
+$$
+d_n(K):=\inf_{\dim Y=n} \sup_{x\in K} \, \inf_{y\in Y} { {\| x-y \|}_{X}}\,.
+$$
+<strong>The greedy approximation rates have same decay as the Kolmogorov widths.</strong>
 
-<p><strong>Online:</strong> After we obtained the snap shots ${z_i}_{i=1}^n$,
-and the corresponding $f_i = f(T, x,v,z_i)$,</p>
+<img src="http://cmc.deusto.es/wp-content/uploads/2017/02/greedyControlFig1.jpg" alt="Evolution of last 5 system components and the approximate control" width="562" height="446" class="size-full wp-image-349" srcset="https://cmc.deusto.eus/wp-content/uploads/2017/02/greedyControlFig1.jpg 562w, https://cmc.deusto.eus/wp-content/uploads/2017/02/greedyControlFig1-300x238.jpg 300w, https://cmc.deusto.eus/wp-content/uploads/2017/02/greedyControlFig1-242x192.jpg 242w" sizes="(max-width: 562px) 100vw, 562px" />
 
-<script type="math/tex; mode=display">\begin{equation}
-\hat{f} = argmin_{\hat{f} = \sum a_if_i,  \sum a_i = 1} || \delta_t\hat{f} + \underbrace{\sigma_1(z)v\delta_x \hat{f} - \frac{\sigma_2(z)}{\epsilon} \delta_x\phi\delta_v \hat{f} - \frac{\sigma_3(z)}{\epsilon}\delta_v (v \hat{f} +\delta_v\hat{f} ) }_{A(z)\hat{f} } ||^2
-\end{equation}</script>
+Figure1: Evolution of a) last 5 system components and  b) the approximate control for $\nu=\pi$.
 
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_cts.jpg" alt="figure3" class="size-full wp-image-03" /><i align="aligncenter">Figure 3: Continuous parameter in PDE</i></p>
+<h3>Greedy control</h3>
+Each control can be uniquely determined by the relation
+$$
+u_{\bf \nu} = {\bf B}^\ast e^{(T-t){\bf A}_{\bf \nu}^\ast}  \varphi^0_{\bf \nu},
+$$
+where $\varphi^0_{\bf \nu}\in { {\bf R}}^N$ is the unique  minimiser of a  quadratic functional associated to the adjoint problem.
+This minimiser can  be expressed as the solution of the linear system 
+\begin{equation*}
+\label{phi^0}
+\Lambda_{\bf \nu}   \varphi^0_{\bf \nu} = {\sf x}^1 -  e^{T{\bf A}_{\bf \nu}} {\sf x}^0,
+\end{equation*}
+where $\Lambda_{\bf \nu} $  is the controllability Gramian 
+\begin{equation*}
+\Lambda_{\bf \nu}=\int_0^T e^{(T-t){\bf A}_{\bf \nu}}{\bf B}_{\bf \nu} {\bf B}_{\bf \nu}^\ast e^{(T-t){\bf A}_{\bf \nu}^\ast} dt\,.
+\end{equation*}
 
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_discts.jpg" alt="figure4" class="size-full wp-image-04" /><i align="aligncenter">Figure 4: Discontinuous parameter in PDE</i></p>
+Perform a greedy algorithm to the manifold $\varphi^0({\cal N})$:
+$$
+\nu \in {\cal N} \to \varphi^0_\nu \in  \bf{R}^N\,.
+$$
 
-<h3>1.3 Linear parametric VFP with parametric initial data</h3>
-<p>In the third experiment, we consider the case where the parameter $z\in[1,5]$ involved in both the initial data and the PDE</p>
+The (unknown) quantity ${\rm dist} (\varphi^0_{\bf \nu}, \varphi_i^0)$ to be maximised by the greedy algorithm is replaced by a  <strong>surrogate</strong>:
 
-<script type="math/tex; mode=display">\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, f_0(x,v,z) = \frac{1}{\sqrt{2\pi}}(2+\frac{\sin(x)}{z}) \text{exp}(-\frac{|v+\delta_x\phi|^2}{2})
-\end{equation}</script>
+$$
+\begin{aligned}
+{\rm dist} (\varphi^0_{\bf \nu}, \varphi_i^0)
+&amp;\sim {\rm dist} (\Lambda_{\bf \nu}  \varphi^0_{\bf \nu}, \Lambda_{\bf \nu}  \varphi^0_i) \cr
+&amp;= {\rm dist} ({\sf x}^1 -  e^{T{\bf A}_{\bf \nu}} {\bf x}^0, \Lambda_{\bf \nu}  \varphi^0_i) \,.\cr
+\end{aligned}
+$$
 
-<p>Figure 5:</p>
+<img src="http://cmc.deusto.es/wp-content/uploads/2017/02/surrogate.png" alt="Surrogate" />
+<strong>The greedy control algorithm  results in an optimal decay of the  approximation rates.</strong>
+<h3>Numerical examples</h3>
+<h5>Wave equation</h5>
+We consider the system (1) with:
 
-<script type="math/tex; mode=display">\begin{equation}\delta_x\phi = \cos(x) + \frac{z}{10}, \text{for }t\geq 0,\end{equation}</script>
+$$
+  {\bf A}=\left(\begin{matrix}
+  {\bf 0} &amp; -I\cr
+  { \nu} ( N/2+1)^2 \tilde {\bf A} &amp; {\bf 0}\cr
+  \end{matrix}\right),
+$$
+$$
+    \tilde {\bf A}=\left(\begin{matrix}
+    2 &amp; -1&amp; 0 &amp; \cdots &amp; 0\cr
+    -1&amp;  2 &amp; -1&amp;  \cdots &amp; 0\cr
+    0 &amp; -1&amp;  2 &amp;  \cdots &amp; 0\cr
+    \vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\cr
+        0 &amp;0&amp;  0 &amp; \cdots  &amp;2\cr
+    \end{matrix}\right),
+    \ \
+     {\bf B}=\left(\begin{matrix}
+       0\cr
+       0\cr
+       \vdots\cr
+       0\cr
+       1\cr
+     \end{matrix}\right).
+$$
+The system corresponds to the discretisation of the wave equation problem with the control on the right boundary:
 
-<p>Figure 6:</p>
+$$
+\begin{equation}
+		\begin{cases}
+     	\partial_{tt} v -  \nu \partial_{xx} v=0 \ \ (t, x) \in \langle 0, T \rangle  \times \langle 0,1 \rangle \\
+     	v(t, 0)=0 \ \ v(t, 1)=u(t) \\
+     	v(0, x)=v_0 \ \ \partial_t v(x, 0)=v_1 
+     	\end{cases}
+\end{equation}
+$$
+We take the following values:
+  $$T=3,\;  N=50,\;
+  v_0=\sin(\pi x), \; v_1=0,\;
+  x^1=0
+  $$
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\delta_x\phi =\left\{\begin{array}{rl}& \cos(x)+\frac{z}{10}, z<3\\&\cos(x)+\frac{z+1}{10}, z\geq3\end{array}\right. \text{for }t\geq 0.\end{equation} %]]></script>
+  $$
+  \nu \in [1,10]  = \mathcal{N}
+  $$
 
-<p><strong>Algorithm 1.4. The algorithm for PDE with parameters in PDE and initial data:</strong></p>
+The greedy control has been applied with $\varepsilon=0.5$ and the uniform discretisation of ${\cal N}$ in $k=100$ values.
+The offline algorithm stopped after 24 iterations.
+<strong>The 20-D controls manifold is  well approximated by a 10-D subspace:</strong>
 
-<p><strong>Offline:</strong> Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 10000$ in this case.</p>
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/04/wave-online-3D-nu.jpg" alt="Evolution of the solution to the semi-discretised problem" width="562" height="446" class="size-full wp-image-350" /> 
+Figure2: Evolution of the solution to the semi-discretised problem (2) governed by the approximate control $u_\nu^\star$ for $\nu=\pi$.
 
-<p>Step 1: Using Algorithm 1.4 to obtain 50 snap shots out of $N$
-        to form a new set $N^\ast$.
-Step 2: Using Algorithm 1.3 to get snap shot ${ z_i^\ast }_{i=1}^n$</p>
+<h5>Heat equation</h5>
+For  $   {\bf A}=( N+1)^2\tilde{\bf A}    $, with $\tilde{\bf A}$ given by:
 
-<p><strong>Online:</strong> Same as Algorithm 1.3.</p>
+$$
+    \tilde {\bf A}=\left(\begin{matrix}
+    2 &amp; -1&amp; 0 &amp; \cdots &amp; 0\cr
+    -1&amp;  2 &amp; -1&amp;  \cdots &amp; 0\cr
+    0 &amp; -1&amp;  2 &amp;  \cdots &amp; 0\cr
+    \vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\cr
+        0 &amp;0&amp;  0 &amp; \cdots  &amp;2\cr
+    \end{matrix}\right)
+$$
 
-<p><strong>Remark 1.5.</strong> In the experiments, the exact solution $f(T,x,v,z)$
-refers to the numerical solution to VFP, that is, $f(T,x,v,z)$ is a
-$N_x\times N_v$ dimensional vector obtained by the following scheme</p>
+and the control operator $ {\bf B}= (0, \ldots,0, ( N+1)^2 )^\top,$ the system (1) corresponds to the space-discretisation of the heat equation problem with $N$ internal grid points and  the control on the right boundary:
 
-<script type="math/tex; mode=display">\begin{equation}
-\frac{f^{n+1}_{i,j} - f^n_{i,j}}{\delta_t} +\sigma_1 (v\delta_xf)^n_{i,j} = \frac{\sigma_3}{\epsilon}P(f^{n+1}_{i,j})
-\end{equation}</script>
+$$
+\begin{equation}
+  \begin{cases}
+     \partial_{t} v -  \nu \partial_{xx} v=0 \ \ (t, x) \in \langle 0, T \rangle  \times \langle 0, 1\rangle\\
+     v(t, 0)=0 \ \ v(t, 1)=u_\nu(t),\\
+      v(0, x)=v_0 \\
+    \end{cases}
+\end{equation}
+$$
 
-<p>where $P(f)$ is the discretization of
-$\delta_v (M\delta_v (\frac{f}{M}))$,</p>
+The parameter $\nu$ represents the diffusion coefficient and is supposed to range within the set $\mathcal{N}=[1,2]$.  
+The system satisfies the Kalman's rank condition for any $\nu\in {\cal N}$ and any target time $T$.     
+We aim to control the system  from the initial state $v_0(x)=\sin(\pi x)$ to zero in time $T=0.1$. 
+The greedy control algorithm has been  applied for the system of dimension $N=50$ with  $\varepsilon=0.0001$, and the uniform discretisation of ${\cal N}$ in $k=100$ values. 
+The algorithm stops after only three iterations.
+<img src="https://cmc.deusto.eus/wp-content/uploads/2017/03/heat-online-3D.jpg" alt="Evolution of the solution to the semi-discretised problem for heat equation" width="562" class="size-full wp-image-350" /> Figure3: Evolution of the solution to the semi-discretised problem (3) governed by the approximate control $u_\nu^\star$ for $\nu=\sqrt 2$.
 
-<script type="math/tex; mode=display">M = \frac{1}{\sqrt{2\pi}}e^{-\frac{|v+\frac{\sigma_2}{\sigma_3}\delta_x\phi|^2}{2}}</script>
 
-<p><strong>Remark 1.6.</strong> For the matlab coding, the algorithm for the examples is in the “graph.m” file of the folder “eq1”, “eq2”, “eq3” respectively.  You can change the coefficients in “sig_1”, “sig_2”, “sig_3”, and the electric field in “fcn_phi_x”, and initial data in “fcn_phi_x_0”, “fcn_rho_0”.</p>
-
-<p>P.S. Remember to change the path of other functions at the beginning of “graph.m”.</p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq3_cts.jpg" alt="figure5" class="size-full wp-image-05" /><i align="aligncenter">Figure 5: Continuous parameter in PDE and initial data</i></p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq3_discts.jpg" alt="figure6" class="size-full wp-image-06" /><i align="aligncenter">Figure 6: Discontinuous parameter in PDE and initial data</i></p>
+</ul>
 
         <hr>
       </div>

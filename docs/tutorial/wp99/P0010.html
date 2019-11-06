@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Touchdown localization for the MEMS problem with variable dielectric permittivity - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0010">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">
+            Other Topics</a> &#8827;</small>
+          </h2>
+          <h1>Touchdown localization for the MEMS problem with variable dielectric permittivity</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+                  </span>
+                </span>
+              
+              - 30 September 2019
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/CodesMEMS.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <h2 id="background-and-motivation">Background and motivation</h2>
+
+<p>An idealized version of a MEMS device consists of <b>two conducting plates connected to an electric circuit</b>
+(see Figure 1).
+The upper plate is rigid and fixed while the lower one is elastic and fixed only at the boundary.
+Initially the plates are parallel and at unit distance from each other.
+When a voltage (difference of potential between the two plates) is applied, the lower
+plate starts to bend and, if the voltage is large enough,
+the lower plate eventually touches the upper one, conducting to the so-called <b> pull-in instability</b>. In the mathematical framework, this phenomenon is known as <b>quenching</b> or <b> touchdown</b>.
+Such device can be used for instance as an actuator, a microvalve (the touching-down part closes the valve),
+or a fuse.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/fig6.png" alt="Figure 1: MEMS device" height="200" width="300" /> 
+</figure>
+
+<center>
+<strong> Figure 1: </strong> Two-membrane MEMS device
+</center>
+
+<p>We consider a well-known <b>model for micro-electromechanical systems (MEMS)
+with variable dielectric permittivity</b>, based on the following parabolic equation with singular nonlinearity:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{quenching problem}
+\left\lbrace \begin{array}{rrl}
+u_t - \Delta u = \dfrac{f(x)}{(1-u)^2}, & x\in \Omega, & t>0, \\
+u = 0, & x\in \partial \Omega, & t>0, \\
+u(0,x) = 0, & x \in \Omega, &
+\end{array} \right.
+\end{equation} %]]></script>
+
+<p>where $\Omega$ is a smoothly bounded domain of $\mathbb{R}^2$ and 
+<script type="math/tex">f\geq 0</script> is a Hölder continuous function in <script type="math/tex">\overline{\Omega}</script>.</p>
+
+<p>In this mathematical model, the domain $\Omega$ represents the shape of the elastic plate in the horizontal direction, the solution $u=u(t,x)$ measures its vertical deflection,
+while the function $f(x)$ is proportional to the constant voltage and characterizes the varying dielectric permittivity of the elastic plate.
+We can write the permittivity profile $f$ as follows:</p>
+
+<script type="math/tex; mode=display">f(x) = \lambda\dfrac{\varepsilon_0}{\varepsilon_1(x)},</script>
+
+<p>where $\lambda&gt;0$ is the applied voltage, $\varepsilon_0&gt;0$ is the permittivity of the vacuum and $\varepsilon_1(x)$ is the dielectric permittivity of the material. 
+As a key feature, in our model the permittivity of the elastic plate may be inhomogeneous,
+and this can be used to trigger the properties of the device. 
+We refer to <b>[1],[4],[5] and the references therein for the full details of the model derivation</b>.</p>
+
+<p>It is well known that problem (\ref{quenching problem}) admits a unique maximal classical solution $u$.
+We denote its maximal existence time by $T=T_f\in (0,\infty]$. Moreover,
+under some largeness assumption on $f$, it is known that the maximum of $u$ reaches the value $1$
+at a finite time, so that $u$ ceases to exist in the classical sense. This is what we call <b> touchdown in finite time</b> $T_f&lt;\infty$.
+Actually, if we consider $f(x) = \lambda\dfrac{\varepsilon_0}{\varepsilon_1(x)}$,
+it is well-known that there exists a positive $\lambda^\ast$, known as <b> pull-in voltage</b>, which depends on $\Omega$ and $\varepsilon_1(x)$, such that</p>
+
+<p>$\bullet \quad $ If $\lambda&lt;\lambda^\ast$, then $T_f=\infty$ and the global classical solution converges to the minimal positive steady state.</p>
+
+<p>$\bullet \quad $ If $\lambda&gt;\lambda^\ast$, then $T_f&lt;\infty$, and then touchdown occurs in finite time.</p>
+
+<p>In the actual design of a MEMS device there are several issues that must be considered.
+Typically, one of the design goals is to achieve the maximum possible stable steady-state with relatively small applied voltage $\lambda$.  Another consideration may be to increase the stable operating range of the device by increasing the pull-in voltage.
+For other devices, such as micropumps and microvalves, where touchdown behavior is explicitly exploited,
+<b>it is of interest to be able to localize the touchdown points</b>, or similarly, to be able to avoid touchdown in certain parts of the device.
+Our approach to achieve this last goal is to consider a material with varying dielectric permittivity allowing us to localize the touchdown points by a suitable choice of the permittivity profile.</p>
+
+<h2 id="results">Results</h2>
+
+<p>We start by the definition of touchdown point.
+A point $x = x_0$ is called a <i> touchdown</i> or <i> quenching point</i> if there exists a sequence ${(x_n , t_n )} \in \Omega\times (0, T)$ such that</p>
+
+<script type="math/tex; mode=display">x_n\to x_0,\ \ t_n\uparrow T\ \ \hbox{and}\ \ u(x_n,t_n)\to 1 \ \hbox{as}\ n\to\infty.</script>
+
+<p>The set of all such points is called the <i> touchdown</i> or <i> quenching set</i>, denoted by $\mathcal{T}=\mathcal{T}_f\subset\overline{\Omega}$.</p>
+
+<p>We show in [2] that <b>touchdown can actually be ruled out in subregions of $\Omega$ 
+where $f$ is positive but suitably small, below a positive threshold</b>.</p>
+
+<p><b> Theorem 1:</b>
+Let $\Omega\subset \mathbb{R}^n$ a smooth bounded domain and $f$ a function satisfying</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+\left\lbrace \begin{array}{rrl}
+&&T_f<\infty,\quad \|f\|_\infty\le M,\quad f\ge \mu\chi_B, \\
+&&\hbox{where $M,\mu , r>0$ and $B\subset\Omega$ is a ball of radius $r$.}
+\end{array} \right.
+\end{equation*} %]]></script>
+
+<p>There exists $\gamma_0&gt;0$ depending only on $\Omega,M,\mu,r$ such that:</p>
+
+<p>(i) $\quad$ For any $x_0\in \Omega$, if $f(x_0) &lt;\gamma_0 {\hskip 1pt} \text{dist}^3 (x_0,\partial\Omega)$, then $x_0$ is not a touchdown point.</p>
+
+<p>(ii) $\quad $ For any $\omega\subset\subset \Omega$, if $\displaystyle\sup_{x\in \overline{\Omega}\setminus \omega} f(x) &lt;
+\gamma_0 {\hskip 1pt} \text{dist}^3(\omega,\partial\Omega)$, then the touchdown set 
+ is contained in $\omega$.</p>
+
+<p>Roughly speaking, the statement (i) in the above theorem allows one to rule out touchdown in an interior point by choosing a permittivity profile which is sufficiently small at that point, while statement (ii) allows to design devices producing touchdown inside any given subset of $\Omega$ by choosing a permittivity profile concentrated in that subset.</p>
+
+<h3 id="numerical-simulation-1--no-touchdown-at-the-origin-">Numerical Simulation 1: <i> no touchdown at the origin </i></h3>
+
+<p>In our first example, we consider a circular elastic plate of radius 1, that is $\Omega = B(0,1)\subset\mathbb{R}^2$.
+It is well known that if the dielectric permittivity is constant, the unique touchdown point is the center of the disk.</p>
+
+<p>As consequence of Theorem 1 (i), we can <b>prevent touchdown to occur at the origin</b> by choosing a permittivity profile $f$ such that $f(0)$ is sufficiently small.
+Let’s assume that the applied voltage $\lambda$, together with the permittivity of the vacuum $\varepsilon_0$ and the permittivity of the material $\varepsilon_1$ are such that</p>
+
+<script type="math/tex; mode=display">\lambda\dfrac{\varepsilon_0}{\varepsilon_1} = 8.</script>
+
+<p>In this case, we might cover the center of the disk with a material with higher permittivity so that the value of $\varepsilon_1(x)$ in $B(0,1/4)$ is (for example) twice its value in $\Omega\setminus B(0,1/4)$.
+That is, we consider the following permittivity profile:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+f(x) = \left\lbrace \begin{array}{ll}
+4 &  |x|< 0.25 \\
+8 &  |x|\geq 0.25.
+\end{array}\right. %]]></script>
+
+<p>The following video represents the evolution of the elastic plate from the rest position to the pull-in instability.
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme in polar coordinates with number of meshpoint $N=100$ in the radial interval $[0,1]$.</p>
+
+<center>
+<video controls="" width="65%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/MEMSvideo1.mp4">
+</video>
+</center>
+
+<center>
+<strong> Simulation 1: </strong>  Evolution of the elastic plate until pull-in instability (touchdown). The solution reaches the value 1 in a circumference and then, <b>touchdown is avoided at the center of the plate</b>.
+In the schematic video, we remove the upper plate of the MEMS device in order to see the final profile of the solution.  
+</center>
+
+<h3 id="numerical-simulation-2--touchdown-near-a-prescribed-circumference-">Numerical Simulation 2: <i> touchdown near a prescribed circumference </i></h3>
+
+<p>Let us suppose now that we want our system to touch down in a circumference of radius near $0.7$.
+This time we can use Theorem 1 (ii). We will choose a <b>permittivity profile $f$ sufficiently concentrated near a circumference of radius $0.7$</b>. Consider for example:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+f(x) = \left\lbrace \begin{array}{ll}
+2 &  |x|< 0.65 \\
+8 &  0.65\geq |x|\leq 0.75 \\
+2 &  0.75< |x|.
+\end{array}\right. %]]></script>
+
+<p>The following video represents the evolution of the elastic plate from the rest position to the pull-in instability. 
+In Figure 2 below, we plot the radial final touchdown profile.
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme in polar coordinates with number of meshpoint $N=100$ in the radial interval $[0,1]$.</p>
+
+<center>
+<video controls="" width="65%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/MEMSvideo2.mp4">
+</video>
+</center>
+
+<center>
+<strong> Simulation 2: </strong>  Evolution of the elastic plate until pull-in instability (touchdown). The solution reaches the value 1 in a circumference of <b>radius near</b> $0.7$.
+In the schematic video, we remove the upper plate of the MEMS device in order to see the final profile of the solution.  
+</center>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/Ex2PlotFinalProfile.png" height="350" width="450" /></p>
+
+<center>
+<strong> Figure 2: </strong>  Plot of the <b> radial touchdown profile</b>. Observe that, as expected, touchdown occurs on a circumference of <b>radius between $0.65$ and $0.75$</b>. 
+</center>
+
+<h2 id="nontrivial-touchdown-sets">Nontrivial touchdown sets</h2>
+
+<p>In view of Theorem 1,
+it is a natural question whether such smallness conditions are actually necessary, 
+or whether touchdown could be shown to occur only at or near the maximum points of the permittivity profile $f$.
+In this connection, using stability properties of the touchdown set,
+in [2] we construct radial ‘‘M’‘-shaped profiles giving rise to 
+single-point touchdown at the origin.</p>
+
+<h3 id="numerical-simulation-3">Numerical simulation 3:</h3>
+
+<p>For this example, we have considered the following radial <b>M-shaped profile</b> in a disk of radius 1:</p>
+
+<script type="math/tex; mode=display">f(x)=8-(1/4-|x|^2)^2, \qquad \text{for} \ |x|\in B(0,1).</script>
+
+<p>For this profile, <b>the unique touchdown point is at the origin</b>, far away from the maxima of $f$.
+Therefore, if we want to prevent touchdown at the origin, we need to choose a permittivity profile $f$ such that $f(0)$ is small enough (below a certain thershold).
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme in polar coordinates with number of meshpoint $N=100$ in the radial interval $[0,1]$.</p>
+
+<center>
+<video controls="" width="65%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/MEMSvideo3.mp4">
+</video>
+</center>
+
+<center>
+<strong> Simulation 3: </strong>  Evolution of the elastic plate until pull-in instability (touchdown). Although we consider a ''M''-shaped permittivity profile, <b>the solution touches down only at the origin, far away from the maximum of $f$</b>.
+In the schematic video, we remove the upper plate of the MEMS device in order to see the final profile of the solution.  
+</center>
+
+<h3 id="numerical-simulation-4">Numerical simulation 4:</h3>
+
+<p>Another rather surprising example is the following <b>radially increasing profile</b>:</p>
+
+<script type="math/tex; mode=display">f(x)= 8 + \dfrac{|x|^2}{4}.</script>
+
+<p>For this example, <b>the unique touchdown point is the origin, which is actually the global minimum of </b> $f$. In [2], we give a rigorous proof of the existence of this kind of behaviors. It is based on a stability result of the touchdown set combined with the fact that single-point touchdown occurs for constant permittivity profiles.</p>
+
+<p>For the numerical simulation we have applied an implicit Crank-Nicolson scheme in polar coordinates with number of meshpoint $N=100$ in the radial interval $[0,1]$.</p>
+
+<center>
+<video controls="" width="65%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/MEMSvideo4.mp4">
+</video>
+</center>
+
+<center>
+<strong> Simulation 4: </strong>  Evolution of the elastic plate until pull-in instability (touchdown). Although the permittivity profile is radially increasing, <b> the unique touchdown point is the origin, the minimum point of $f$</b>.
+In the schematic video, we remove the upper plate of the MEMS device in order to see the final profile of the solution.  
+</center>
+
+<h2 id="quantitative-results-in-1-dimension">Quantitative results in 1 dimension</h2>
+
+<p>Motivated by practical considerations of MEMS design, our aim in [3] is to further investigate the 
+touchdown localization problem
+and to show that in one space dimension, where analytic computations can be made more precise,
+one can obtain quite quantitative conditions.
+Namely, <b>we look for a lower estimate of the ratio $\rho$ between $f$ and its maximum,
+below which no touchdown occurs</b> on a subregion of $\Omega$.
+Rather surprisingly, it turns out that, under suitable assumptions on $f$,
+our methods yield values of
+ the <b>threshold-ratio</b> $\rho$ which are not ‘‘small’’ but can actually be up to the order</p>
+
+<script type="math/tex; mode=display">\rho\sim 0.3,</script>
+
+<p>which could hence be quite appropriate for robust practical use.</p>
+
+<p>In order to give good estimates of the  ratio $\rho$, we shall consider two typical situations, which roughly correspond to a <b>one-bump</b> or a <b>two-bump</b> shape for the profile $f$. 
+ The touchdown is ruled out in a subinterval respectively located between a bump and 
+an endpoint of $\Omega$, or between two bumps.
+The idea behind this is that the plate can be covered with two dielectric materials, 
+one with a high permittivity and the other with a lower permittivity. We then seek for a ratio between the two permittivities, allowing to rule out touchdown in the low permittivity region.</p>
+
+<h3 id="reduction-to-a-finite-dimensional-optimization-problem">Reduction to a finite-dimensional optimization problem</h3>
+
+<p>As a consequence of our method, the <b>threshold-ratio</b> $\rho$ <b> is rigorously obtained as the solution of a suitable finite-dimensional optimization problem</b>, with either three or four parameters. 
+An advantage of our results is that they apply to large classes of configurations, so that detailed numerics need not be carried out to localize the touchdown set for particular cases.</p>
+
+<p>For the precise statements of the results, as well as for a detailed study of the optimization problem and <b>numerical estimates of the threshold ratio</b>, we refer the lector to <b>[3]</b>.
+The <b>Matlab codes to compute numerical estimates of the solution of the optimization problem</b> are availabe at the beginig of the page.</p>
+
+<p>Here we give two concrete examples in order to illustrate 
+the results.
+The threshold ratio is obtained by a simple numerical procedure applied to the finite-dimensional optimization problem. 
+<b>The following two figures represent some typical permittivity profiles</b> $f(x)$ and the localization of the corresponding touchdown sets
+ in the one-bump and two-bump cases respectively. 
+The touchdown sets are localized in a neighborhood of the bumps, represented by the fat lines.</p>
+
+<center>
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/OneBumpProfile.PNG" width="65%" /> 
+</center>
+
+<center>
+<strong> Figure 3:</strong> An illustration of the localization of thouchdown set for a <b>one-bump permittivity profile</b>.
+Here, the figure represents the permittivity profile $f$ and <b> not </b> the profile of the solution.
+</center>
+
+<center>
+<img img="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/TwoBumpProfile.PNG" width="65%" />
+</center>
+
+<center>
+<strong> Figure 4:</strong> An illustration of the localization of thouchdown set for a <b>two-bump permittivity profile</b>.
+Here, the figure represents the permittivity profile $f$ and <b> not </b> the profile of the solution.
+</center>
+
+<h3 id="numerical-simulation-5">Numerical simulation 5:</h3>
+
+<p>We give an example of a one-bump permittivity profile, similar to the one in Figure 3.
+Although our result applies to a large class of profiles, here we consider, for computational simplicity, the following <b>bang-bang profile</b>:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+f(x) = \left\lbrace\begin{array}{ll}
+0.42 & x<-2 \\
+2 & -2\leq x\leq 0 \\
+0.42 & x>0.
+\end{array}\right. %]]></script>
+
+<p>The following video represents <b> the evolution of a 1-dimensional membrane</b>
+with a one-bump permittivity profile $f$. 
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme with number of meshpoint $N=1000$ in the interval $[-6,6]$.</p>
+
+<center>
+<video controls="" width="65%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/MEMSvideo5.mp4">
+</video>
+</center>
+
+<center>
+<strong> Simulation 5: </strong>  Evolution of the elastic 1-dimensional membrane until pull-in instability (touchdown). We see that <b>touchdown is localized in the region where $f$ is big</b> (see <b>Figure 3</b>).  
+</center>
+
+<h3 id="numerical-simulation-6">Numerical simulation 6:</h3>
+
+<p>We give an example of a two-bump permittivity profile, similar to the one in Figure 4.
+Although our result applies to a large class of profiles, here we consider, for computational simplicity,
+the following bang-bang profile:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+f(x) = \left\lbrace\begin{array}{ll}
+0.42 & x<-1 \\
+2 & -1\leq x\leq 1 \\
+0.42 & 1<x<4 \\
+2 & 4\leq x \leq 6 \\
+0.42 & x > 6.
+\end{array}\right. %]]></script>
+
+<p>The following video represents <b> the evolution of a 1-dimensional membrane</b>
+with a two-bump permittivity profile $f$.
+For the numerical simulation we have applied an implicit Crank-Nicolson scheme with number of meshpoint $N=1000$ in the interval $[-10,10]$.</p>
+
+<center>
+<video controls="" width="65%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/MEMSvideo6.mp4">
+</video>
+</center>
+
+<center>
+<strong> Simulation 6: </strong>  Evolution of the elastic 1-dimensional membrane until pull-in instability (touchdown). We see that <b>touchdown is localized in the region where $f$ is big</b> (see <b>Figure 4</b>).  
+</center>
+
+<h3 id="references">References</h3>
+
+<p>[1] P. Esposito, N. Ghoussoub, Y. Guo, <i> Mathematical analysis of partial differential equations modeling electrostatic MEMS</i>. Courant Lecture Notes in Mathematics, 20. Courant Institute of Mathematical Sciences, New York; American Mathematical Society, Providence, RI, 2010. xiv+318 pp.</p>
+
+<p>[2] C. Esteve, Ph. Souplet, <i> No touchdown at points of small permittivity and nontrivial touchdown sets for the MEMS problem</i>. Advances in Differential Equations, Vol 24, Number 7-8(2019), 465-500.</p>
+
+<p>[3] C. Esteve, Ph. Souplet, <i> Quantitative touchdown localization for the MEMS problem with variable dielectric permittivity</i>. Nonlinearity} 31 4883 (2018).</p>
+
+<p>[4] Ph. Laurençot, Ch. Walker, <i> Some singular equations modeling MEMS</i>. Bull. Amer. Math. Soc. 54 (2017), 437-479.</p>
+
+<p>[5] J.A. Pelesko, D.H. Bernstein, <i> Modeling MEMS and NEMS</i>, Chapman Hall and CRC Press, 2002.</p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Uniform exponential and polynomial stability and approximation in control of a thermoelastic model - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0009">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">
+            Other Topics</a> &#8827;</small>
+          </h2>
+          <h1>Uniform exponential and polynomial stability and approximation in control of a thermoelastic model</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/NafiriS"></a>
+                  </span>
+                </span>
+              
+              - 18 July 2019
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/main_nafiri.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <p>The main objective of this blog is to explain numerically the difference between exponential and polynomial decay in term of energy and spectral properties. We Show also that system with polynomial decay are very  sensitive to the choice of initial data.</p>
+
+<h2 id="model-problem">Model Problem</h2>
+
+<p>We consider the numerical approximation of the following coupled thermoelastic wave models</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \label{eq1} \tag{1}  \left\{\begin{array}{llll}                       u_{tt}(x,t)- \Delta u(x,t)+\gamma\theta_x(x,t)=0\quad &in\;\Omega\times(0, \infty)\\ 		      \theta_{t}(x,t)-\Delta\theta(x,t)-\gamma u_{tx}(x,t) =0\quad &in\;\Omega\times(0, \infty)\\ 		      u(x,t)=0=\theta(x,t)\qquad &\text{on } \partial\Omega\times(0,\infty)\\ u(x,0)=u_{0}(x),\; u_{t}(x,0)=u_{1}(x),\; \theta(x,0)=\theta_{0}(x) \quad &on \;\Omega                      \end{array}                    \right. \end{equation} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \label{eq2} \tag{2}  \left\{\begin{array}{llll}                       u_{tt}(x,t)- \Delta u(x,t)+\gamma\theta(x,t)=0\quad &in\;\Omega\times(0, \infty)\\ 		      \theta_{t}(x,t)-\Delta\theta(x,t)-\gamma u_{t}(x,t) =0\quad &in\;\Omega\times(0, \infty)\\ 		      u(x,t)=0=\theta(x,t)\qquad &\text{on } \partial\Omega\times(0,\infty)\\ u(x,0)=u_{0}(x),\; u_{t}(x,0)=u_{1}(x),\; \theta(x,0)=\theta_{0}(x) \quad &on \;\Omega                      \end{array}                    \right. \end{equation} %]]></script>
+
+<p>where $u(x,t)$ is the displacement (longitudinal or transverse, depending upon the application) at position $x$ along a bounded smooth domain $\Omega\subset\mathbb{R}$ and time $t$ , and $\theta(x,t)$ is the temperature deviation from the reference temperature at position $x$ and time $t$, $u_0(x)$, $v_0(x)$ and $\theta_0(x)$ are initial data in a suitable space. The small positive constant $\gamma$ is a thermo-mechanical coupling parameter and is generally small in comparison to 1. System (\ref{eq1}) differs from system $\eqref{eq2}$ at the coupling terms, where we have replaced the strong coupling ($\gamma\theta_x$ and $\gamma u_{tx}$) by a weak coupling ($\gamma\theta$ and $\gamma u_{t}$).</p>
+
+<p>It is well known from literature that system (\ref{eq1}) and (\ref{eq2}) are respectively exponentially and polynomially stable, see [3,7] and [5,6,9].</p>
+
+<p>In this post, we will show by numerical experiments, how the coupling terms affect quantitative and qualitative properties of thermoelastic systems (\ref{eq1}) and (\ref{eq2}). These results could be found in [8,10].</p>
+
+<p>To do this, we consider a semi discretization version of both systems (\ref{eq1}) and (\ref{eq2}), obtained with finite element method, which has the following form</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq3} \tag{3}  (S_i)\left\{\begin{array}{ll}  z'_n(t)=A_{i,n} z_n(t),\quad t\geq 0,\;n\in\mathbb{N},\;i=1,2\\  z_n(0)=z_{n0},\;n\in\mathbb{N}\\ \end{array} \right. \end{equation}</script>
+
+<p>where for all $n\in\mathbb{N}$, $z_n=(u_n,v_n,\theta_n)^T$ is the semi discrete solution, $z_{n0}$ is the discretized initial data, $A_{i,n}$ the discretized dynamic and the subscript $\cdot_i$ refers to system (\ref{eq1}) and (\ref{eq2}) with</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} A_{i,n}=\left(\begin{matrix}                     0 & D_n & 0\\ 	       -D_n & 0 & -\gamma F_{i,n}\\ 		    0 & \gamma F_{i,n} & -D_n^2                    \end{matrix} \right),\quad i=1,2 \end{align} %]]></script>
+
+<p>and $F_{2,n}=I_n$,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} D_n=\left(\begin{matrix}                     1 &  & \\ 	        & \ddots &  \\ 		     &   & n                    \end{matrix} \right),\quad (F_{1,n})_{ij}=\left\{\begin{array}{ll}  -\frac{4}{\pi}\frac{ij}{i^2-j^2},\quad `i-j`=\text{odd},\\  0,\qquad\qquad\text{otherwise}. \end{array} \right. \end{align} %]]></script>
+
+<h2 id="spectral-properties-of-thermoelastic-systems">Spectral properties of thermoelastic systems</h2>
+
+<p>Figure 1 and Figure 2 show how the coupling terms affect the placement of eigenvalues of the dynamic $A_{n}$. In Figure 1, we see that a uniform distance between the eigenvalues and the imaginary axis is preserved, see Table 1. Another observation is that for fixed $n$, the eigenvalues of higher frequency modes, in particular, the one of the $n^{th}$ mode, are closer to the imaginary axis. Moreover, as the number of modes increases, these eigenvalues bend back towards the vertical line $\lambda=-\frac{\gamma^2}{2}$, a fact which has been already shown in [4]. Therefore, the corresponding spectral element approximation scheme preserves the property of exponential stability.</p>
+
+<center> <strong>Table 1.</strong> Distance between $\sigma(A_{1,n})$ and the imaginary axis form the spectral element method</center>
+<center>
+<table align="center">
+    <tr>
+        <th>n</th>
+        <th>$min \{ -Re(\Lambda),\Lambda \in \sigma(A_{1,n}) \}$</th>
+    </tr>
+    <tr>
+        <th>8</th>
+        <th>$8.9227x10^{-4}$</th>
+    </tr>
+    <tr>
+        <th>16</th>
+        <th>$8.9383x10^{-4}$</th>
+    </tr>
+    <tr>
+        <th>24</th>
+        <th>$8.9402x10^{-4}$</th>
+    </tr>
+    <tr>
+        <th>32</th>
+        <th>$8.9407x10^{-4}$</th>
+    </tr>            
+</table>
+</center>
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/fig1.png" alt="" /> Location of the complex eigenvalues of the matrix $A_{1,n}$ with the finite element method</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">error</span>
+<span class="n">Nx</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="n">stabexpsem</span><span class="p">(</span><span class="n">Nx</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error using error
+Not enough input arguments.
+
+Error in tp1d0d1572_49d1_41a8_914f_f09a199a8ec3 (line 114)
+error
+
+</code></pre></div></div>
+
+<p>In Figure 2, conversely to Figure 1 where a uniform distance between the eigenvalues and the imaginary axis is preserved, we observe that, as the number of modes increases, an asymptotic behaviour appears in the neighborhood of the imaginary axis at $\pm\infty$. This property is mainly related to systems with polynomial decay, see \cite{BEPS2006}.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/fig2.png" alt="" /> Location of the complex eigenvalues of the matrix $A_{2,n}$ with the finite</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nx</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="n">stabpolysem</span><span class="p">(</span><span class="n">Nx</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="uniform-and-polynomial-decay-of-the-energy">Uniform and polynomial decay of the energy</h2>
+
+<p>The discrete energy associated to system (\ref{eq3}) is given by</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq4} \tag{4} E_{i,n}(t)=\frac{1}{2}\sum_{j=1}^n\Big\{ \vert u_j(t)\vert^{2} + \vert v_j(t)\vert^{2}+ \vert \theta_j(t)\vert^{2}\Big\},\;i=1,2. \end{equation}</script>
+
+<p>The discrete energy $E_{1,n}$ associated to system (ref{eq1}) decays exponentially to zero, see Figure 3, in the following sense: $\exists M,\alpha$ positive constants such that</p>
+
+<script type="math/tex; mode=display">E_{1,n}(t)\leqslant Me^{-\alpha t}E_{1,n}(0),\;n\in\mathbb{N},\;t>0.</script>
+
+<p>However, the introduction of the weak coupling term in system (ref{eq1}) has changed the dynamic and consequently the behavior of energy (\ref{eq4}). In this case, we say that system (\ref{eq2}) decays polynomially to zero, see Figure 4, in the following sense: $\exists M,\alpha$ positive constants such that</p>
+
+<script type="math/tex; mode=display">E_{2,n}(t)\leqslant \frac{M}{t} \vert A_{2,n} z_{n0} \vert^2  ; n \in \mathbb{N},\;t>0.</script>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/exp.png" alt="" /> Exponential decay of $E_{1,n}(t)$</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/poly.png" alt="" /> Polynomial decay of $E_{2,n}(t)$</p>
+
+<h2 id="effect-of-smoothness-of-the-initial-data-on-the-rate-of-decay-of-energy">Effect of smoothness of the initial data on the rate of decay of energy</h2>
+
+<p>It has been shown theoretically, see [1,2], that the energy associated to system (\ref{eq2}) is very sensitive to the smoothness of its initial data. This fact, has been also observed numerically, see Figure 6. we use</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nx</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="n">FinalTime</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nb">mode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">Gamma</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="n">k</span><span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>and we consider the following initial data</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">pi</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+<span class="n">v0</span><span class="o">=</span><span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">/</span><span class="nb">pi</span><span class="p">)</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
+<span class="n">teta0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Through Figure 6, we notice that for $j = 1$, the approximate energy $E_{2,n}(t)$ decays to zero as the time $t$ increases. Moreover, we observe that the decay rate depends strongly on $j$. That is, when $j$ increases, initial data are very oscillating. We say in this case that the rate of decay of the discrete energy $E_{2,n}(t)$ is very sensitive to the choice of the initial data. However, the behavior of the energy assosiated to system (\ref{eq1}) remains indifferent to the smoothness of initial data when $n\to\infty$, see Figure 5.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/fig5.png" alt="" />  Exponential decay of $E_{1,n}(t)$</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/fig6.png" alt="" />  Polynomial decay of $E_{2,n}(t)$</p>
+
+<h2 id="references">References</h2>
+
+<p>[1] A. B' atkai, K.J. Engel, J. Pr"uss and R. Schnaubelt, Polynomial stability of operator semigroups, Math. Nachr. 279, pp.</p>
+
+<p>[2] A. Borichev and Y. Tomilov, Optimal polynomial decay of functions and operator semigroups, Math. Ann., 347(2), pp.455-478, 2010.</p>
+
+<p>[3] S. W. Hansen, Exponential energy decay in a linear thermoelastic rod. J. Math. Anal. Appli.,167, pp. 429-442, 1992.</p>
+
+<p>[4] F.A. Khodja, A. Benabdallah, and D. Teniou, Stability of coupled systems, Abstr. Appl. Anal. Volume 1, Number 3, 327-340, 1996.</p>
+
+<p>[5] F. A. Khodja, A. Benabdallah and D. Teniou, Dynamical stabilizers and coupled systems}, ESAIM Proceeding,2, pp. 253-262, 1997.</p>
+
+<p>[6] F. A. Khodja, A. Bader and A. Benabdallah, Dynamic stabilization of systems via decoupling techniques, ESAIM: COCV,4,</p>
+
+<p>[7] Z. Liu and S. Zheng, Exponential stability of semigroup associated with thermoelastic system, Quart. Appl. Math, 51, pp.535-545, 1993.</p>
+
+<p>[8] Z. Y. Liu and S. Zheng, Uniform exponential stability and approximation in control of a thermoelastic system, SIAM J. Control Optim. 32, pp. 1226-1246, 1994.</p>
+
+<p>[9] Z. Liu and B. Rao, Characterization of polynomial decay rate for the solution of linear evolution equation. Zeitschrift  angewandte Mathematik und Physik ZAMP,56, pp. 630-644, 2005.</p>
+
+<p>[10] L. Maniar and S. Nafiri, Approximation and uniform polynomial stability of C_0-semigroups,ESAIM: COCV 22, pp. 208-235, 2016.</p>
+
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

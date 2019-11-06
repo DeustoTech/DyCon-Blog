@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Optimal Control of the Poisson Equation with OpenFOAM - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/ot01/P0001">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/OT01">
+            Optimal Control in OpenFOAM</a> &#8827;</small>
+          </h2>
+          <h1>Optimal Control of the Poisson Equation with OpenFOAM</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JoseV">José Vicente</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                  </span>
+                </span>
+              
+              - 01 May 2018
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://cmc.deusto.eus/wp-content/uploads/2018/05/1239821.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <p>In this tutorial, we show how to use the C++ library OpenFOAM (Open Field Operation and Manipulation) in order to solve control problems for partial differential equations (PDE).</p>
+
+<p>OpenFOAM is a free open source toolbox that allows the user to code customized solvers for Continuum Mechanics, with special attention to the field of Computational Fluid Dynamics. One can either use one of the multiple solvers already programmed for steady-state, transient or multiphase problems in fluid mechanics, or code his own solver depending on particular needs.</p>
+
+<p>In this work, we will solve the optimal control problem</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:CostFunctional}
+\min _{u \in L^2 \left( \Omega \right)} \mathcal{J}\left( u\right) = \min _{u \in L^2 \left( \Omega \right)} \frac{1}{2} \int_{\Omega} \left( y - y_d \right) ^2 \mathrm{d} \Omega + \frac{\beta}{2} \int_{\Omega} u ^2 \mathrm{d} \Omega,
+\end{equation}</script>
+
+<p>where $u$ is the control variable, $y$ the state variable and $y_d$ a target function. The minimization problem is subject to the elliptic partial differential equation</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+-\Delta y &  = f + u && \mathrm{in} \enspace \Omega \label{eq:PoissonEq}, \\
+\end{align} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+y & = 0 && \mathrm{on} \enspace \Gamma \label{eq:PoissonBC}.
+\end{align} %]]></script>
+
+<p>We use some classical gradient descent methods based on the adjoint methodology, namely the steepest descent and conjugate gradient methods. The corresponding adjoint system for \ref{eq:PoissonEq} writes as,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+- \Delta \lambda & = y - y_d && \mathrm{in} \enspace \Omega, \label{eq:PoissonAdjointEq} \\
+\end{align} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+\lambda & = 0 \ && \mathrm{on} \enspace \Gamma. \label{eq:PoissonAdjointBC}
+\end{align} %]]></script>
+
+<p>In the steepest descent gradient method, we compute the directional derivative of the cost function in \ref{eq:CostFunctional},</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+J^\prime \left( u \right) \delta u = \int_{\Omega} \left( \lambda + \beta u \right) \delta u \mathrm{d} \Omega,
+\end{equation}</script>
+
+<p>where $\lambda$ is solution to the elliptic problem in \ref{eq:PoissonAdjointEq}, and use the gradient to update the control variable as</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+u^{\left( n + 1 \right)} = u^{\left( n \right)} - \gamma \left( \lambda^{\left( n \right)} + \beta u^{\left( n \right)} \right),
+\end{equation}</script>
+
+<p>for some value of $\gamma$.</p>
+
+<p>One of the main advantages of OpenFOAM is its friendly syntax to describe PDE, as can be seen in the lines 10 and 13 in the code below.</p>
+
+<pre class="cpp" style="font-family:monospace;"><span style="color: #666666;">// Initialize L2 norm of control update</span>
+scalar pL2 <span style="color: #000080;">=</span> <span style="color: #0000dd;">10</span><span style="color: #000040;">*</span>tol<span style="color: #008080;">;</span>
+&nbsp;
+<span style="color: #666666;">// Get the volume of mesh cells</span>
+scalarField volField <span style="color: #000080;">=</span> mesh.<span style="color: #007788;">V</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+<span style="color: #0000ff;">while</span> <span style="color: #008000;">&#40;</span>runTime.<span style="color: #007788;">loop</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #000040;">&amp;&amp;</span> <span style="color: #008080;">::</span><span style="color: #0000dd;">sqrt</span><span style="color: #008000;">&#40;</span>pL2<span style="color: #008000;">&#41;</span> <span style="color: #000080;">&gt;</span> tol<span style="color: #008000;">&#41;</span>
+<span style="color: #008000;">&#123;</span>
+    <span style="color: #666666;">// Solve primal equation</span>
+    solve<span style="color: #008000;">&#40;</span>fvm<span style="color: #008080;">::</span><span style="color: #007788;">laplacian</span><span style="color: #008000;">&#40;</span>k, y<span style="color: #008000;">&#41;</span> <span style="color: #000040;">+</span> u<span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Solve ajoint equation</span>
+    solve<span style="color: #008000;">&#40;</span>fvm<span style="color: #008080;">::</span><span style="color: #007788;">laplacian</span><span style="color: #008000;">&#40;</span>k, lambda<span style="color: #008000;">&#41;</span> <span style="color: #000040;">+</span> y <span style="color: #000040;">-</span> yd<span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Update control</span>
+    p <span style="color: #000080;">=</span> lambda <span style="color: #000040;">+</span> beta<span style="color: #000040;">*</span>u<span style="color: #008080;">;</span>
+    u <span style="color: #000080;">=</span> u <span style="color: #000040;">-</span> gamma<span style="color: #000040;">*</span>p<span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Control update norm</span>
+    pL2 <span style="color: #000080;">=</span> <span style="color: #008080;">::</span><span style="color: #0000dd;">sqrt</span><span style="color: #008000;">&#40;</span>gSum<span style="color: #008000;">&#40;</span>volField<span style="color: #000040;">*</span>p.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #000040;">*</span>p.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Compute cost function</span>
+    J <span style="color: #000080;">=</span> <span style="color:#800080;">0.5</span><span style="color: #000040;">*</span>gSum<span style="color: #008000;">&#40;</span>volField<span style="color: #000040;">*</span><span style="color: #008000;">&#40;</span>Foam<span style="color: #008080;">::</span><span style="color: #0000dd;">pow</span><span style="color: #008000;">&#40;</span>y.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #000040;">-</span>yd.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>,<span style="color: #0000dd;">2</span><span style="color: #008000;">&#41;</span> \
+	    <span style="color: #000040;">+</span> beta<span style="color: #000040;">*</span>Foam<span style="color: #008080;">::</span><span style="color: #0000dd;">pow</span><span style="color: #008000;">&#40;</span>u.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>,<span style="color: #0000dd;">2</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Display information</span>
+    Info <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot;Iteration &quot;</span> <span style="color: #000080;">&lt;&lt;</span> runTime.<span style="color: #007788;">timeName</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot; - &quot;</span> \
+	    <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot;Cost value &quot;</span> <span style="color: #000080;">&lt;&lt;</span> J <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot; - &quot;</span> \
+	    <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot;Control variation L2 norm &quot;</span> <span style="color: #000080;">&lt;&lt;</span> <span style="color: #008080;">::</span><span style="color: #0000dd;">sqrt</span><span style="color: #008000;">&#40;</span> pL2 <span style="color: #008000;">&#41;</span> <span style="color: #000080;">&lt;&lt;</span> endl<span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Save current iteration results</span>
+    runTime.<span style="color: #007788;">write</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+<span style="color: #008000;">&#125;</span></pre>
+<!--h4 align="center">steepestdescent.cpp</h4-->
+
+<p>In order to improve the convergence to the optimal control, the conjugate gradient method is applied also to the problem. First, the state variable must be separated in two terms as</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+y = y_u + y_{f},
+\end{equation}</script>
+
+<p>where $y_u$ solves the state equation with zero Dirichlet boundary conditions,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+-\Delta y_u &  = u && \mathrm{in} \enspace \Omega \label{eq:PoissonEqu}, \\
+\end{align} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+y_u & = 0 && \mathrm{on} \enspace \Gamma \label{eq:PoissonBCu},
+\end{align} %]]></script>
+
+<p>and $y_{f}$ is the control-free solution to the state equation,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+-\Delta y_{f} &  = f && \mathrm{in} \enspace \Omega \label{eq:PoissonEq0}, \\
+\end{align} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+y_{f} & = 0 && \mathrm{on} \enspace \Gamma \label{eq:PoissonBC0}.
+\end{align} %]]></script>
+
+<p>Now, using the above separation of the state variable, one part depending on the control and the other part on a known source term, the cost functional in \ref{eq:CostFunctional} can be expressed as</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:CostFunctionalcg}
+J \left( u \right) = \frac{1}{2} \left( y_u + y_f - y_d, y_u + y_f - y_d \right)_{L^2\left( \Omega \right)} + \frac{\beta}{2} \left( u , u \right) _{L^2\left( \Omega \right)}.
+\end{equation}</script>
+
+<p>We define a linear operator $\Lambda: L^2\left( \Omega \right) \rightarrow L^2\left( \Omega \right)$ that takes a control $u$ and returns the solution to problem \ref{eq:PoissonEqu}-\ref{eq:PoissonBCu}, so that $y_u = \Lambda u$. We introduce as well its adjoint operator $\Lambda^<em>: L^2\left( \Omega \right) \rightarrow L^2\left( \Omega \right)$ that takes the source term in \ref{eq:PoissonAdjointEq} and solves the Poisson equation, so that $\lambda = \Lambda^</em> \left( y - y_d \right)$.</p>
+
+<p>The directional derivative of the functional \ref{eq:CostFunctionalcg} then reads as</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+J^\prime\left( u \right) \delta u = \left( \underbrace{ \left(  \Lambda^* \Lambda + \beta I  \right)}_{A_{cg}} u - \underbrace{ \Lambda^* \left( y_d - y_f \right)}_{b_{cg}}, \delta u \right) _{L^2\left( \Omega \right)}.
+\end{equation}</script>
+
+<p>After having identified $A_{cg}$ and $b_{cg}$ we can use the conjugate gradient method to reach the optimal control faster.</p>
+
+<h6><b>Algorithm 1</b> Optimal control with Conjugate Gradient Method</h6>
+<p><b>Require:</b> $y_D$, $u^{\left(0\right)}$, $\beta$, $y_d$, $tol$</p>
+<ol>
+<li> $n \gets 0 $</li>
+<li> compute the control-free solution, $y_f$</li>
+<li> $b \gets \Lambda^*\left( y_d - y_f \right)$</li>
+<li> $z \gets \Lambda u$</li>
+<li> $g \gets \Lambda^*z + \beta u - b$</li>
+<li> $h \gets ||g||^2_{L^2\left(\left[0,T\right]\right)}$</li>
+<li> $h_a \gets h$</li>
+<li> $r \gets -g$</li>
+<li><b>While</b> $||r||_{L^2\left(\left[0,T\right]\right)} &gt; tol $ <b>do</b></li>
+<li>   &emsp; &emsp;    $z \gets \Lambda r$</li>
+<li>   &emsp; &emsp;    $w \gets \Lambda^*z + \beta r$</li>
+<li>   &emsp; &emsp;    $\alpha \gets \frac{h}{\left(r,w\right)_{L^2\left(\left[0,T\right]\right)}}$</li>
+<li>   &emsp; &emsp;    $u \gets u + \alpha r$</li>
+<li>   &emsp; &emsp;    $g \gets g + \alpha w$</li>
+<li>   &emsp; &emsp;    $h_a \gets h$</li>
+<li>   &emsp; &emsp;    $h \gets ||g||^2_{L^2\left(\left[0,T\right]\right)}$</li>
+<li>   &emsp; &emsp;    $\gamma \gets \frac{h}{h_a}$</li>
+<li>   &emsp; &emsp;    $r \gets -g + \gamma r$</li>
+<li>   &emsp; &emsp;    $n \gets n + 1$</li>
+</ol>
+
+<pre class="cpp" style="font-family:monospace;"><span style="color: #666666;">// Compute b: right-hand side of Ax = b</span>
+solve<span style="color: #008000;">&#40;</span>fvm<span style="color: #008080;">::</span><span style="color: #007788;">laplacian</span><span style="color: #008000;">&#40;</span>k, y<span style="color: #008000;">&#41;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+solve<span style="color: #008000;">&#40;</span>fvm<span style="color: #008080;">::</span><span style="color: #007788;">laplacian</span><span style="color: #008000;">&#40;</span>k, lambda<span style="color: #008000;">&#41;</span> <span style="color: #000040;">+</span> yd <span style="color: #000040;">-</span> y<span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+volScalarField b <span style="color: #000080;">=</span> lambda<span style="color: #008080;">;</span>
+&nbsp;
+<span style="color: #666666;">// Compute A*f0</span>
+<span style="color: #666666;">// Primal equation</span>
+solve<span style="color: #008000;">&#40;</span>fvm<span style="color: #008080;">::</span><span style="color: #007788;">laplacian</span><span style="color: #008000;">&#40;</span>k, y0<span style="color: #008000;">&#41;</span> <span style="color: #000040;">+</span> u<span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+<span style="color: #666666;">// Adjoint equation</span>
+solve<span style="color: #008000;">&#40;</span>fvm<span style="color: #008080;">::</span><span style="color: #007788;">laplacian</span><span style="color: #008000;">&#40;</span>k, lambda<span style="color: #008000;">&#41;</span> <span style="color: #000040;">+</span> y0<span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+<span style="color: #666666;">// Compute g0: initial gradient</span>
+volScalarField g <span style="color: #000080;">=</span> lambda <span style="color: #000040;">+</span> beta<span style="color: #000040;">*</span>u <span style="color: #000040;">-</span> b<span style="color: #008080;">;</span>
+scalar gL2 <span style="color: #000080;">=</span> gSum<span style="color: #008000;">&#40;</span> volField <span style="color: #000040;">*</span> g.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #000040;">*</span> g.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+scalar gL2a <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span>
+&nbsp;
+<span style="color: #666666;">// Compute initial residual and its norm</span>
+volScalarField r <span style="color: #000080;">=</span> <span style="color: #000040;">-</span>g<span style="color: #008080;">;</span>
+scalar rL2 <span style="color: #000080;">=</span> gL2<span style="color: #008080;">;</span>
+&nbsp;
+volScalarField w <span style="color: #000080;">=</span> g<span style="color: #008080;">;</span>
+&nbsp;
+scalar alpha <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span>
+scalar gamma <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span>
+&nbsp;
+<span style="color: #0000ff;">while</span> <span style="color: #008000;">&#40;</span>runTime.<span style="color: #007788;">loop</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #000040;">&amp;&amp;</span> <span style="color: #008080;">::</span><span style="color: #0000dd;">sqrt</span><span style="color: #008000;">&#40;</span> rL2 <span style="color: #008000;">&#41;</span> <span style="color: #000080;">&gt;</span> tol<span style="color: #008000;">&#41;</span>
+<span style="color: #008000;">&#123;</span>
+    r.<span style="color: #007788;">dimensions</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>.<span style="color: #007788;">reset</span><span style="color: #008000;">&#40;</span> u.<span style="color: #007788;">dimensions</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Compute w = A*r</span>
+    solve<span style="color: #008000;">&#40;</span>fvm<span style="color: #008080;">::</span><span style="color: #007788;">laplacian</span><span style="color: #008000;">&#40;</span>k, y0<span style="color: #008000;">&#41;</span> <span style="color: #000040;">+</span> r<span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+    solve<span style="color: #008000;">&#40;</span>fvm<span style="color: #008080;">::</span><span style="color: #007788;">laplacian</span><span style="color: #008000;">&#40;</span>k, lambda<span style="color: #008000;">&#41;</span> <span style="color: #000040;">+</span> y0<span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+    w <span style="color: #000080;">=</span> lambda <span style="color: #000040;">+</span> beta<span style="color: #000040;">*</span>r<span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Update alpha</span>
+    alpha <span style="color: #000080;">=</span> gL2 <span style="color: #000040;">/</span> gSum<span style="color: #008000;">&#40;</span> volField <span style="color: #000040;">*</span> r.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #000040;">*</span> w.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Update control</span>
+    u <span style="color: #000080;">=</span> u <span style="color: #000040;">+</span> alpha<span style="color: #000040;">*</span>r<span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Update cost gradient and its norm</span>
+    g <span style="color: #000080;">=</span> g <span style="color: #000040;">+</span> alpha<span style="color: #000040;">*</span>w<span style="color: #008080;">;</span>
+    gL2a <span style="color: #000080;">=</span> gL2<span style="color: #008080;">;</span>
+    gL2 <span style="color: #000080;">=</span> gSum<span style="color: #008000;">&#40;</span> volField <span style="color: #000040;">*</span> g.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #000040;">*</span> g.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+    gamma <span style="color: #000080;">=</span> gL2<span style="color: #000040;">/</span>gL2a<span style="color: #008080;">;</span>
+&nbsp;
+    <span style="color: #666666;">// Update residual and its norm</span>
+    r.<span style="color: #007788;">dimensions</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>.<span style="color: #007788;">reset</span><span style="color: #008000;">&#40;</span> g.<span style="color: #007788;">dimensions</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+    r <span style="color: #000080;">=</span> <span style="color: #000040;">-</span>g <span style="color: #000040;">+</span> gamma<span style="color: #000040;">*</span>r<span style="color: #008080;">;</span>
+    rL2 <span style="color: #000080;">=</span> gSum<span style="color: #008000;">&#40;</span> volField <span style="color: #000040;">*</span> r.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #000040;">*</span> r.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+    solve<span style="color: #008000;">&#40;</span>fvm<span style="color: #008080;">::</span><span style="color: #007788;">laplacian</span><span style="color: #008000;">&#40;</span>k, y<span style="color: #008000;">&#41;</span> <span style="color: #000040;">+</span> u<span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+    J <span style="color: #000080;">=</span> <span style="color:#800080;">0.5</span><span style="color: #000040;">*</span>gSum<span style="color: #008000;">&#40;</span>volField<span style="color: #000040;">*</span><span style="color: #008000;">&#40;</span>Foam<span style="color: #008080;">::</span><span style="color: #0000dd;">pow</span><span style="color: #008000;">&#40;</span>y.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #000040;">-</span>yd.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>,<span style="color: #0000dd;">2</span><span style="color: #008000;">&#41;</span> \
+     <span style="color: #000040;">+</span> beta<span style="color: #000040;">*</span>Foam<span style="color: #008080;">::</span><span style="color: #0000dd;">pow</span><span style="color: #008000;">&#40;</span>u.<span style="color: #007788;">internalField</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>,<span style="color: #0000dd;">2</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+&nbsp;
+    Info <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot;Iteration no. &quot;</span> <span style="color: #000080;">&lt;&lt;</span> runTime.<span style="color: #007788;">timeName</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot; - &quot;</span> \
+	    <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot;Cost value &quot;</span> <span style="color: #000080;">&lt;&lt;</span> J <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot; - &quot;</span> \
+	    <span style="color: #000080;">&lt;&lt;</span> <span style="color: #FF0000;">&quot;Residual &quot;</span> <span style="color: #000080;">&lt;&lt;</span> <span style="color: #008080;">::</span><span style="color: #0000dd;">sqrt</span><span style="color: #008000;">&#40;</span> rL2 <span style="color: #008000;">&#41;</span> <span style="color: #000080;">&lt;&lt;</span> endl<span style="color: #008080;">;</span>
+&nbsp;
+    runTime.<span style="color: #007788;">write</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span>
+<span style="color: #008000;">&#125;</span>
+&nbsp;</pre>
+<!--h5 align="center">conjugategradient.cpp</h5-->
+
+<p>Both solvers, <i>laplaceAdjointFoam</i> for the steepest descent method with $\gamma = 10$ and <i>laplaceCGAdjointFoam</i> for the conjugate gradient method, have been tested in a square domain $[0, 1] \times [0, 1]$ with zero Dirichlet boundary conditions and $\beta = 10^{-3},10^{-4},10^{-5},10^{-6}$. The target function is $y_d = xy \sin \left( \pi x \right) \sin \left( \pi y \right)$.</p>
+
+<p>The problem setup is called <i>case</i> in OpenFOAM and it is independent from the solver itself. A typical case in OpenFOAM has three folders: <i>0</i>, where the problem fields are stored along with their boundary conditions; <i>constant</i>, that includes the mesh data and the physical properties; and <i>system</i>, with parameters regarding the numerical solution and problem output such as tolerances, linear solvers or write interval. In this example, the case folder is called <i>laplaceAdjointFoamCase</i>.</p>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/sd_J.png" alt="Figure 1.a: Functional value against the number of iterations of the gradient method. Steepest descent method. Steepest descent method" width="560" height="420" class="size-full wp-image-8677" />
+Figure 1.a: Functional value against the number of iterations of the gradient method. Steepest descent method. Steepest descent method</p>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/cg_J.png" alt="Figure 1.b: Functional value against the number of iterations of the gradient method. Steepest descent method. Conjugate gradient method." width="560" height="420" class="size-full wp-image-8675" />
+Figure 1.b: Functional value against the number of iterations of the gradient method. Steepest descent method. Conjugate gradient method.</p>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/sd_Jy.png" alt="Figure 2.a" width="560" height="420" class="size-full wp-image-8678" />
+Figure 2.a: $|| y - y_d ||_{L^2 \left( \Omega \right)}$ against the number of iterations of the gradient method. Steepest descent method.</p>
+
+<p><img src="https://cmc.deusto.eus/wp-content/uploads/2018/04/cg_Jy.png" alt="Figure 2.b" width="560" height="420" class="size-full wp-image-8676" />
+Figure 2.b: $|| y - y_d ||_{L^2 \left( \Omega \right)}$ against the number of iterations of the gradient method. Conjugate gradient method.</p>
+
+<h6>Bibliography</h6>
+
+<p><strong>[1]</strong> The OpenFOAM Foundation, <a href="http://openfoam.org" target="_blank"><em>http://openfoam.org</em></a>.</p>
+<p><strong>[2]</strong> F. Tröltzsch. <a href="https://bookstore.ams.org/gsm-112/" target="_blank"><em>Optimal control of partial differential equations: theory, methods, and applications</em></a>. American Mathematical Soc., 2010.</p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

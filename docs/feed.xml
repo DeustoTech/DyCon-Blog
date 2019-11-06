@@ -5,9 +5,253 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 04 Nov 2019 10:31:24 +0100</pubDate>
-    <lastBuildDate>Mon, 04 Nov 2019 10:31:24 +0100</lastBuildDate>
+    <pubDate>Wed, 06 Nov 2019 16:00:21 +0100</pubDate>
+    <lastBuildDate>Wed, 06 Nov 2019 16:00:21 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Movil control strategy for models with memory terms</title>
+        <description>En este tutorial enseñaremos como implentar la estrategía del control interíor móvil para la ecuación del calor. En el ejemplo típico de control interior en la ecuación del calor se pretende llevar al sistema desde un estado inicial, $u_0$ hasta el estado nulo en todo el espacio, $\Omega$. Para ello se define una subconjunto, $\omega \in \Omega$, donde el control, $f(x,t)$ puede actuar, es decir que para puntos, $x \notin \omega$, el control es cero. Este problema se puede escribir como:
+
+
+
+Donde $f$ es el control definido de solo en el subconjunto, $\omega \in \Omega$.
+
+Es conocido que la controlabilidad de la ecuación del calor para todo tiempo esta asegurada, sin embargo en el caso de la ecuación del calor con términos de memoria este resultado no es válido. En este caso, eligiremos un problema con un término de memoria: $\int_0^t u(x,\tau)d\tau$. De esta forma el problema se puede escribir como:
+
+
+
+Este resultado se puede vercuenado aplicamos un control LQR sobre ambos sistemas. El mínimo del funcional LQR en el primer sistema (Equation \ref{heatinterior}) estabiliza la dínamica mientras que el mínimo del funcional en el segundo caso queda muy lejos del equilibrio.
+
+
+
+
+    
+        
+          
+             
+           
+        
+        
+          
+             
+           
+        
+    
+    
+        
+          
+              Video 1: LQR in Heat equation (Equation \ref{heatinterior})
+           
+        
+        
+          
+              Video 2:  LQR in Heat equation with memory (Equation \ref{heatinterior_memory})
+           
+        
+     
+    
+        
+          
+              Podemos ver la evolucion de dos modelos, con un región de control, $\chi_{\omega}$, situado en la posición del elipsoide azul en la parte superior de la simulación. Podemos ver que el control LQR es eficaz para la ecuación del calor, sin embargo débil ante la presencia de término de memoria
+           
+        
+     
+
+
+En el articulo [1], se menciona la idea del control móvil de ….
+….
+….
+
+Definición del función característica dependiente del espacio
+
+Nuestro objetivo en esta sección es la construcción de una función que dado un punto, $\textbf{x} \in \Omega$, devuelva la función carácteristica correspondiente. Para el diseño de la función $\chi_{\omega(t)}$, se ha decidido que ni el tamaño, ni la orientación de $\omega$ cambia en el tiempo. De esta forma, una vez fijados el tamaño en las dos direcciones del espacio y la forma del subconjunto, obtenemos una función que solo depende de un punto $x\in \Omega$.
+
+En esta simulación crearemos el subconjunto como un cuadrado que puede moverse en $\Omega$. este cuadrado se puede construir con una función $W(x)$ definida de la siguiente manera.
+
+
+
+donde $\Theta(x)$ es la fución theta de heaviside. Dado que la función $\Theta(x)$, tiene una aproximación analítica, la función $W(x,a,b)$ puede ser suavizada, detalle que será de vital importancia para que se pueda calcular el gradiente de la restrición asociada a la dinámica cunado realizamos el problema de control óptimo.
+
+Un representación gráfica de $W(x,a,b)$ permiter reconocer a esta función con valor unidad entre los valores $a$ y $b$ y nulo fuera de ellos.
+
+
+  
+    
+      
+    
+  
+  
+    
+      Figure 1: Representación gráfica de $W(x,a,b)$
+    
+  
+
+
+La generalización de esta función en dos dimensiones en inmediata,
+
+
+
+De esta forma dado $(x_{min}, x_{max}, y_{min}, y_{max})$, obtenemos la función característica dependiente solo de la posición de un solo punto.
+
+
+  
+    
+       
+    
+  
+  
+    
+      Video 3: Representación gráfica de  $W_{2D}$
+    
+  
+
+
+Construcción de la dinámica
+
+Para el sistema con memoria (Equation \ref{heatinterior_memory}), podemos introducir una nueva variable, $z(x,t)$ tal que:
+
+
+
+De esta manera el sistema con memoria se convierte en un sistema acoplado de PDEs:
+
+
+
+Dado que $\chi_{\omega}$ puede moverse, y ademas que queremos obtener la trayectoria óptima para el control móvil añadiremos al sistema una partícula que puede moverse en dos dimensiones, su posición vendrá denotada por, $\textbf{d} = (d_x,d_y)$, y su velocidad, $\textbf{v} = (v_x,v_y)$. Además añadiremos un control $\textbf{g}(t) = (g_x(t),g_y(t))$ que actuará como una fuerza que moverá el subconjunto $\chi_{\omega}$.
+
+Entonces, el sistema total queda como:
+
+
+
+Numerical Implementation
+
+En este tutorial necesitaremos DyCon Toolbox, y CasADi. Dado que CasADi es una dependecia de DyCon Toolbox, podemos instalarlo de la siguiente forma
+
+unzip('https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip')
+addpath(genpath(fullfile(cd,'DyCon-toolbox-master'))
+StartDyconPlatform
+
+
+Podemos escribir la ecuación \ref{heatinterior_memory_z_all}, en su forma discreta:
+
+
+
+Creamos las variables de mesh
+
+% Create the mesh variables
+clear;
+Ns = 7;
+Nt = 15;
+xline = linspace(-1,1,Ns);
+yline = linspace(-1,1,Ns);
+[xms,yms] = meshgrid(xline,yline);
+
+
+Creamos la matriz A, que contiene el laplaciano en 2D y la dinámica del control movil
+
+A  = FDLaplacial2D(xline,yline);
+
+Atotal = zeros(2*Ns^2+4,2*Ns^2+4);
+%
+Atotal( 1:Ns^2  , 1:Ns^2 ) = A;
+%
+Atotal( Ns^2+1 : 2*Ns^2   ,   1    :  Ns^2   )  =  eye(Ns^2);
+Atotal(    1   :  Ns^2    , Ns^2+1 : 2*Ns^2  )  =  50*eye(Ns^2); % z = 50*y
+
+RumbaMatrixDynamics = [0 0 1 0; ...
+                       0 0 0 1; ...
+                       0 0 0 0; ...
+                       0 0 0 0 ];
+
+             
+Atotal(2*Ns^2+1:end,2*Ns^2+1:end) = RumbaMatrixDynamics;
+Atotal = sparse(Atotal);
+
+
+Greamos la función $B(\textbf{d}) = B(x_d,y_d)$
+%%
+% We create the B() function 
+xwidth = 0.3;
+ywidth = 0.3;
+B = @(xms,yms,xs,ys) WinWP05(xms,xs,xwidth).*WinWP05(yms,ys,ywidth);
+Bmatrix =  @(xs,ys) [diag(reshape(B(xms,yms,xs,ys),1,Ns^2)) ;zeros(Ns^2)];
+
+
+
+
+Optimal Control Problem
+
+
+
+
+
+opti = casadi.Opti();  % CasADi optimization structure
+
+% ---- Input variables ---------
+Ucas = opti.variable(2*Ns^2+4,Nt+1); % state trajectory
+Fcas = opti.variable(Ns^2+2,Nt+1);   % control
+
+% ---- Dynamic constraints --------
+dUdt = @(y,f) Atotal*u+ [Bmatrix(u(end-3),u(end-2))*f(1:end-2) ; ...
+                                         0                     ; ...
+                                         0                     ; ...
+                                     f(end-1)                  ; ...
+                                     f(end)                    ]; 
+
+% -----Euler backward method-------
+for k=1:Nt % loop over control intervals
+   y_next = Ucas(:,k) + (T/Nt)*dUdt(Ucas(:,k+1),dUdt(:,k+1)); 
+   opti.subject_to(Ucas(:,k+1)==y_next); % close the gaps
+end
+
+% ---- State constraints --------
+opti.subject_to(Ucas(:,1)==[Y0 ; 0.7 ; 0.7; -1.5 ; -1.5]);
+
+% ---- Optimization objective  ----------
+Cost = (Ucas(1:end-4,Nt+1))'*(Ucas(1:end-4,Nt+1));
+
+opti.minimize(Cost); % minimizing L2 at the final time
+
+% ---- initial guesses for solver ---
+opti.set_initial(Ucas, Unum_free);
+opti.set_initial(Fcas, 0);
+
+% ---- solve NLP              ------
+p_opts = struct('expand',false);
+s_opts = struct('acceptable_tol',1e-4,'constr_viol_tol',1e-3,'compl_inf_tol',1e-3);
+opti.solver('ipopt',p_opts,s_opts); % set numerical backend
+tic
+sol = opti.solve();   % actual solve
+toc
+
+
+Mvil Control
+
+
+
+  
+    
+       
+    
+  
+
+
+
+Video 3
+
+
+
+</description>
+        <pubDate>Mon, 04 Nov 2019 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP05</category>
+        
+      </item>
     
       <item>
         <title>Optimal Control Problem with CasADi on null-controllability of the network system</title>
@@ -507,8 +751,8 @@ Sure, this problem needs a big control cost (or long time horizon) and also more
 
 </description>
         <pubDate>Fri, 01 Nov 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0027-DongnamHeat2D</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0027-DongnamHeat2D</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0006</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0006</guid>
         
         
         <category>tutorial</category>
@@ -748,267 +992,8 @@ References
 [3] Luca Gerardo-Giorda: NUMERICAL APPROXIMATION OF DENSITY DEPENDENT DIFFUSION IN AGE-STRUCTURED POPULATION DYNAMICS
 </description>
         <pubDate>Wed, 30 Oct 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0051</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0051</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP05</category>
-        
-      </item>
-    
-      <item>
-        <title>Movil control strategy for models with memory terms</title>
-        <description>En este tutorial enseñaremos como implentar la estrategía del control interíor móvil para la ecuación del calor. En el ejemplo típico de control interior en la ecuación del calor se pretende llevar al sistema desde un estado inicial, $u_0$ hasta el estado nulo en todo el espacio, $\Omega$. Para ello se define una subconjunto, $\omega \in \Omega$, donde el control, $f(x,t)$ puede actuar, es decir que para puntos, $x \notin \omega$, el control es cero. Es conocido que la controlabilidad de la ecuación del calor para todo tiempo esta asegurada, sin embargo en el caso de la ecuación del calor con términos de memoria este resultado no es válido.
-
-
-
-Donde $f$ es el control definido de solo en el subconjunto, $\omega \in \Omega$.
-
-
-
-
-    
-        
-          
-             
-           
-        
-        
-          
-             
-           
-        
-    
-    
-        
-          
-              Video 1: Heat equation
-           
-        
-        
-          
-              Video 2:  Heat equation with memory
-           
-        
-     
-    
-        
-          
-              Podemos ver la evolucion de dos modelos, con un región de control, $\X_{(a,b)}$, situado en la posición del elipsoide azul en la parte superior de la simulación. Podemos ver que el control LQR es eficaz para la ecuación del calor, sin embargo débil ante la presencia de término de memoria
-           
-        
-     
-
-
-En problema donde el laplaciano, $\Delta$, es un laplaciano fracionario, $(-\Delta)^s$, la controlabilidad del sistema esta condicionada por la potencia, $s$; el control móvil puede ser útil. Esta estrategía puede recuperar la propiedad de controlabilidad del sistema. Este modelo se pueda iamginar como un fuente/sumidero móvil que se mueve a puntos estratégicos del espacio para estabilizar la temperatura del lugar.
-
-Por simplicidad, relizaremos la simulación con el laplaciano entero, sin embargo el control del laplaciano fraccionario se puede realizar de manera análoga.
-
-Lo primero que deberemos definir es la función caracteristica del control, $\chi$ dependiente de un punto del espacio. Si trabajamos en coordenadas cartesianas podemos definir la función:
-
-
-
-donde $\Theta(x)$ es la fución theta de heaviside. Un representación gráfica de $W(x,a,b)$ permiter reconocer a esta función con valor unidad entre los valores $a$ y $b$ y nulo fuera de ellos.
-
-
-
-
-
-donde $u$ representa el estado
-
-
-
-clear;
-
-
-Ns = 8;
-Nt = 5;
-xline = linspace(-1,1,Ns);
-yline = linspace(-1,1,Ns);
-
-[xms,yms] = meshgrid(xline,yline);
-
-
-Bfunction
-
-xwidth = 0.35;
-ywidth = 0.35;
-B = @(xms,yms,xs,ys) WinWP05(xms,xs,xwidth).*WinWP05(yms,ys,ywidth);
-Bmatrix =  @(xs,ys) diag(reshape(B(xms,yms,xs,ys),1,Ns^2));
-
-
-A = FDLaplacial2D(xline,yline);
-
-Atotal = zeros(Ns^2+4,Ns^2+4);
-Atotal(1:Ns^2,1:Ns^2) = A;
-
-RumbaMatrixDynamics = [0 0 1 0; ...
-                       0 0 0 1; ...
-                       0 0 0 0; ...
-                       0 0 0 0 ];
-
-Atotal(Ns^2+1:end,Ns^2+1:end) = RumbaMatrixDynamics;
-
-
-gaussian function in 2D
-
-gs = @(x,y,x0,y0,alpha) exp(-(x-x0).^2/alpha^2  - (y-y0).^2/alpha^2);
-
-alpha = 0.1;
-alphamid = 0.2;
-%% We build the initial condition
-
-U0 = + 2*gs(xms,yms,+0.25,+0.25,alpha) ...
-     + 2*gs(xms,yms,+0.25,-0.25,alpha) ...
-     + 2*gs(xms,yms,-0.25,-0.25,alpha);
-
-
-surf(xms,yms,U0);
-
-
-
-
-U0 = U0(:);
-
-
-T = 0.05;
-tspan = linspace(0,T,Nt+1);
-
-
-Ysym = sym('Y',[Ns^2+4 1]);
-Usym = sym('U',[Ns^2+2 1]);
-FDT = @(t,X,U,Params) Atotal*X+ [Bmatrix(X(end-3),X(end-2))*U(1:end-2) ;0; 0; U(end-1:end)];
-
-idynammics = pde(FDT,Ysym,Usym);
-idynammics.mesh = {xline,yline};
-idynammics.InitialCondition = [U0;0;0;0;0];
-idynammics.Nt = Nt+1;
-idynammics.FinalTime = T;
-idynammics.Solver = @eulere;
-%%
-[~ , Xnum_free] = solve(idynammics);
-
-Xnum_free = Xnum_free';
-
-
-opti = casadi.Opti();  %% CasADi optimization structure
-
-%% ---- Input variables ---------
-Xcas = opti.variable(Ns^2+4,Nt+1); %% state trajectory
-Ucas = opti.variable(Ns^2+2,Nt+1);   %% control
-
-%% ---- Dynamic constraints --------
-Fcas = @(x,u) Atotal*x+ [Bmatrix(x(end-3),x(end-2))*u(1:end-2) ;0;0; u(end-1:end)]; %% dx/dt = f(x,u)
-
-for k=1:Nt %% loop over control intervals
-   %% Euler forward method
-   x_next = Xcas(:,k) + (T/Nt)*Fcas(Xcas(:,k),Ucas(:,k));
-   opti.subject_to(Xcas(:,k+1)==x_next); %% close the gaps
-end
-
-%% ---- State constraints --------
-opti.subject_to(Xcas(:,1)==[U0;0.5;0.5; 0 ;0]);
-
-HeatCas = Ucas(1:end-2,:);
-Max = 1e4;
-opti.subject_to(HeatCas(:) &amp;lt;= Max)
-opti.subject_to(HeatCas(:) &amp;gt;= -Max)
-
-%% ---- Optimization objective  ----------
-beta = 1e-2;
-%%Cost = (Xcas(1:end-4,Nt+1))'*(Xcas(1:end-4,Nt+1)) + beta*sum(sum((Ucas(1:end-2,:))'*(Ucas(1:end-2,:))));
-Cost = (Xcas(1:end-4,Nt+1))'*(Xcas(1:end-4,Nt+1));
-
-opti.minimize(Cost); %% minimizing L2 at the final time
-
-%% ---- initial guesses for solver ---
-opti.set_initial(Xcas, Xnum_free);
-opti.set_initial(Ucas, 0);
-
-
-%% ---- solve NLP              ------
-p_opts = struct('expand',false);
-s_opts = struct('acceptable_tol',1e3,'constr_viol_tol',1e-3,'compl_inf_tol',1e-3);
-opti.solver('ipopt',p_opts,s_opts); %% set numerical backend
-tic
-sol = opti.solve();   %% actual solve
-toc
-
-
-This is Ipopt version 3.12.3, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
-
-Number of nonzeros in equality constraint Jacobian...:    23858
-Number of nonzeros in inequality constraint Jacobian.:      768
-Number of nonzeros in Lagrangian Hessian.............:      719
-
-Total number of variables............................:      804
-                     variables with only lower bounds:        0
-                variables with lower and upper bounds:        0
-                     variables with only upper bounds:        0
-Total number of equality constraints.................:      408
-Total number of inequality constraints...............:      768
-        inequality constraints with only lower bounds:      384
-   inequality constraints with lower and upper bounds:        0
-        inequality constraints with only upper bounds:      384
-
-iter    objective    inf_pr   inf_du lg(mu)  \vert\vertd\vert\vert  lg(rg) alpha_du alpha_pr  ls
-   0  2.8698289e-02 5.00e-01 2.50e-04  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
-   1  3.9465117e-02 5.25e-02 1.03e-01  -1.0 1.00e+01  -4.0 9.89e-01 1.00e+00h  1
-   2  2.6459139e-02 2.64e-08 2.73e-04  -1.0 2.35e+00  -4.5 9.91e-01 1.00e+00h  1
-   3  2.4596415e-02 3.87e-08 5.99e-04  -1.0 4.38e+00  -5.0 1.00e+00 1.00e+00f  1
-...
-...
-...
-
-Number of Iterations....: 227
-
-                                   (scaled)                 (unscaled)
-Objective...............:   2.3074995023555472e-06    2.3074995023555472e-06
-Dual infeasibility......:   4.8878051464110080e-08    4.8878051464110080e-08
-Constraint violation....:   5.3675648722691441e-05    5.3675648722691441e-05
-Complementarity.........:   1.9187414051909107e-06    1.9187414051909107e-06
-Overall NLP error.......:   5.3675648722691441e-05    5.3675648722691441e-05
-
-
-Number of objective function evaluations             = 375
-Number of objective gradient evaluations             = 228
-Number of equality constraint evaluations            = 375
-Number of inequality constraint evaluations          = 375
-Number of equality constraint Jacobian evaluations   = 228
-Number of inequality constraint Jacobian evaluations = 228
-Number of Lagrangian Hessian evaluations             = 227
-Total CPU secs in IPOPT (w/o function evaluations)   =      6.393
-Total CPU secs in NLP function evaluations           =      0.339
-
-EXIT: Solved To Acceptable Level.
-               t_proc [s]   t_wall [s]    n_eval
-       nlp_f      0.00229      0.00226       375
-       nlp_g        0.067       0.0428       375
-  nlp_grad_f       0.0025      0.00251       229
-  nlp_hess_l       0.0464       0.0411       227
-   nlp_jac_g        0.202        0.175       229
-      solver         7.02         5.23         1
-Elapsed time is 5.290691 seconds.
-
-
-
-Xnum_with_control = sol.value(Xcas);
-
-
-interpolation in time
-
-AnimationMovilControl(Xnum_with_control,Xnum_free,tspan,xline,yline,Bmatrix)
-
-
-
-
-</description>
-        <pubDate>Wed, 30 Oct 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0050</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0050</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0012</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0012</guid>
         
         
         <category>tutorial</category>
@@ -1032,13 +1017,13 @@ Lo primero que haremos es inspeccionar de que datos disponemos
 En este caso tenemos 100 simulaciones de una ecuación diferencial
 </description>
         <pubDate>Tue, 01 Oct 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/ot02/P0001</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/ot02/P0001</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/ot03/P0001</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/ot03/P0001</guid>
         
         
         <category>tutorial</category>
         
-        <category>OT02</category>
+        <category>OT03</category>
         
       </item>
     
@@ -1340,8 +1325,8 @@ References
 [5] J.A. Pelesko, D.H. Bernstein,  Modeling MEMS and NEMS, Chapman Hall and CRC Press, 2002.
 </description>
         <pubDate>Mon, 30 Sep 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0040</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0040</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0010</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0010</guid>
         
         
         <category>tutorial</category>
@@ -1501,8 +1486,8 @@ References
 
 </description>
         <pubDate>Thu, 18 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0030</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0030</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0009</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0009</guid>
         
         
         <category>tutorial</category>
@@ -1516,8 +1501,8 @@ References
         <description>asda
 </description>
         <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0028</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P9999</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P9999</guid>
         
         
         <category>tutorial</category>
@@ -1985,8 +1970,8 @@ Proceedings ICM 2018, to appear.
 
 </description>
         <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0031</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0031</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0004</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0004</guid>
         
         
         <category>tutorial</category>
@@ -2153,8 +2138,8 @@ online:
 https://www.ljll.math.upmc.fr/trelat/chiers/livreopt2.pdf.
 </description>
         <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0005</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0005</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0004</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0004</guid>
         
         
         <category>tutorial</category>
@@ -2289,8 +2274,8 @@ References
 
 </description>
         <pubDate>Wed, 26 Jun 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/WP99-P0023</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0008</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0008</guid>
         
         
         <category>tutorial</category>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Structured deformations of continua - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0007">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">
+            Other Topics</a> &#8827;</small>
+          </h2>
+          <h1>Structured deformations of continua</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/MarcoM">Marco Morandotti</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JoseM">Jose Matias</a>
+                  </span>
+                </span>
+              
+              - 26 March 2019
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        <h3 id="a-multiscale-geometrical-basis-for-variational-problems-in-mechanics"><em>A Multiscale Geometrical Basis for Variational Problems in Mechanics</em></h3>
+
+<p>This tutorial introduces the notion of <em>structured deformation</em> and shows an easy one-dimensional example.</p>
+
+<p>In the continuum theories of bodies deformations, it is necessary to account for mechanisms of different nature that happen at different length scales. These include</p>
+
+<ul>
+  <li>elastic deformations during which, once the load on the body is released, the original configuration is restored;</li>
+  <li>plastic deformations, which involve a permanent macroscopic deformation after releasing the external load. This permanent macroscopic deformation is explained by means of the reorganisation of atomic bonds;</li>
+  <li>fractures, which involve rupture of the material both at the microscopic and at the macroscopic length scales.</li>
+</ul>
+
+<p>Structured deformations <a href="#DPO1993">[DPO1993]</a> provide a multiscale geometry that captures the contributions at the macroscopic level of both smooth and non-smooth geometrical changes at sub-macroscopic levels. The latter are called <em>disarrangements</em>. <br />
+To encode information of phenomena happening at different length scales in one mathematical object, a (first-order) structured deformation is defined as a pair <script type="math/tex">(g,G)</script>, where <script type="math/tex">g</script> is the macroscopic deformation, the tensor field <script type="math/tex">G</script> is a measure of deformations without disarrangements (the smooth microscopic deformation), and <script type="math/tex">M:=\nabla g-G</script> is a measure of deformations due to disarrangements (the smooth microscopic deformation).
+<br />
+One can recover the standard notions of plastic deformation from <script type="math/tex">G</script> and <script type="math/tex">M</script>, as well as information on the Burgers vector field associated with closed
+curves in the body and the dislocation density field used in describing geometrical changes in bodies with defects from <script type="math/tex">M</script> and <script type="math/tex">\mathrm{curl}M</script> <a href="O2017">[O2017]</a>.</p>
+
+<p>Structured deformations have been set in an energetic formulation framework <a href="#CF1997">[CF1997]</a>, therefore rendering them apt to be studied with variational techniques. In this context, considering suitable function spaces was fundamental to give <script type="math/tex">(g,G)</script> citizenship in the realm of the calculus of variations. The functional-analytic choice of the space <script type="math/tex">SD(\Omega;\mathbb{R}^d)</script>, the set of <script type="math/tex">\mathbb{R}^d</script>-valued structured deformations on <script type="math/tex">\Omega\subset\mathbb{R}^N</script>, was dictated by the necessity of treating the non-smooth behaviours described by the disarrangement tensor <script type="math/tex">M</script>. Being able to describe the discontinuities of the deformation suggested that a good space for <script type="math/tex">g</script> be <script type="math/tex">SBV(\Omega;\mathbb{R}^d)</script>, the space of <script type="math/tex">\mathbb{R}^d</script>-valued <em>special functions of bounded variation</em>. Consequently, the matrix-valued field <script type="math/tex">G</script> is assumed to live in <script type="math/tex">L^1(\Omega;\mathbb{R}^{d\times N})</script>, so that</p>
+
+<script type="math/tex; mode=display">SD(\Omega;\mathbb{R}^d):= SBV(\Omega;\mathbb{R}^d) \times L^1(\Omega;\mathbb{R}^{d\times N}).</script>
+
+<h3 id="aside-on-bv-functions">Aside on <script type="math/tex">BV</script> functions</h3>
+<p>Functions of bounded variation are integrable functions whose distributional derivative is a finite Radon measure, in symbols</p>
+
+<script type="math/tex; mode=display">BV(\Omega;\mathbb{R}^d):=\big\{u\in L^1(\Omega;\mathbb{R}^d): Du\in\mathcal{M}(\Omega;\mathbb{R}^{d\times N})\big\}.</script>
+
+<p>It is known that the distributional derivative <script type="math/tex">Du</script> admits a decomposition into three pieces, namely an absolutely continuous part with respect to the Lebesgue measure <script type="math/tex">\mathcal{L}^N</script>, whose density is given by the gradient <script type="math/tex">\nabla u</script>; a jump part, which is concentrated on an <script type="math/tex">(N-1)</script>-dimensional set <script type="math/tex">S_u</script> and whose density with respect to the Hausdorff measure <script type="math/tex">\mathcal{H}^{N-1}</script> is given by <script type="math/tex">[u]\otimes\nu_u</script> (<script type="math/tex">[u]</script> being the jump of <script type="math/tex">u</script> across the <em>singular set</em> <script type="math/tex">S_u</script>, and <script type="math/tex">\nu_u</script> being the normal vector to <script type="math/tex">S_u</script>); and a part <script type="math/tex">D^c u</script> which is singular with respect to both <script type="math/tex">\mathcal{L}^N</script> and <script type="math/tex">\mathcal{H}^{N-1}</script>, called the <em>Cantor part</em>. To summarise,</p>
+
+<script type="math/tex; mode=display">Du=\nabla u\mathcal{L}^N+[u]\otimes\nu_u\mathcal{H}^{N-1}\lfloor S_u+D^c u.</script>
+
+<p>Special functions of bounded variations are those whose distributional derivative has no Cantor part,</p>
+
+<script type="math/tex; mode=display">SBV(\Omega;\mathbb{R}^d):=\big\{u\in BV(\Omega;\mathbb{R}^d): D^c u=0\big\},</script>
+
+<p>so that, for <script type="math/tex">u\in SBV(\Omega;\mathbb{R}^d)</script> we have <script type="math/tex">Du=\nabla u\mathcal{L}^N+[u]\otimes\nu_u\mathcal{H}^{N-1}\lfloor S_u</script>.</p>
+
+<p><br /></p>
+
+<p>One of the fundamental results contained in the seminal paper <a href="#DPO1993">[DPO1993]</a> is the <em>Approximation Theorem</em>, stating that any structured deformation <script type="math/tex">(g,G)</script> can be approximated by a sequence of simple deformations; in the language of <a href="#CF1997">[CF1997]</a>, the approximation theorem reads
+<br />
+<strong>Approximation Theorem</strong>: <em>Given <script type="math/tex">(g,G)\in SD(\Omega;\mathbb{R}^d)</script>, there exists a sequence <script type="math/tex">u_n\in SBV(\Omega;\mathbb{R}^d)</script> such that</em></p>
+
+<script type="math/tex; mode=display">u_n\to g\quad \text{in $L^1(\Omega;\mathbb{R}^d)$} \qquad \text{and} \qquad \nabla u_n\stackrel{*}{\rightharpoonup}G\quad \text{in $\mathcal{M}(\Omega;\mathbb{R}^{d\times N})$.}</script>
+
+<p>Given the structure of the distributional derivative, it is not difficult to see that the singular part <script type="math/tex">D^s u</script> of <script type="math/tex">Du</script> behaves as below</p>
+
+<script type="math/tex; mode=display">D^s u_n\stackrel{*}{\rightharpoonup} (\nabla g-G)\mathcal{L}^N+ D^s g,</script>
+
+<p>stating that the discontinuities of the approximating sequence <script type="math/tex">u_n</script> converge, in the sense of measures, to a limiting measure which is both diffuse and singular. Therefore, if a structured deformation is such that its disarrangement tensor <script type="math/tex">M=\nabla g-G</script> is non-trivial, it can be approximated by functions with discontinuities which, in the limit, diffuse in the bulk. This has the effect of making the approximating sequence achieve the given structured deformation <script type="math/tex">(g,G)</script> while also achieving <script type="math/tex">M</script>. In a sense, the disarrangement tensor <script type="math/tex">M</script> is a measure of how non-classical a deformation is.</p>
+
+<h2 id="an-example-of-a-1d-structured-deformation">An example of a <script type="math/tex">1D</script> structured deformation</h2>
+<p>In this example, we consider a one-dimensional structured deformation and show how it can be approximated. Let <script type="math/tex">\Omega=(0,1)</script>, and let <script type="math/tex">g(x)=2x</script>, <script type="math/tex">G(x)=1</script>. This pair <script type="math/tex">(g,G)</script> describes the deformation of a material which is stretched macroscopically to twice its size by the <script type="math/tex">g</script>, whereas the smooth part of the microscopic deformation has a gradient <script type="math/tex">G</script> equal to the identity.</p>
+
+<p>How is it possible, then, to approximate <script type="math/tex">(g,G)</script> with a sequence of deformations which behave microscopically like the identity, but achieve the overall effect to stretch the material? Such an approximating sequence should have jumps to allow the material to deform macroscopically, while keeping a microscopical deformation gradient of <script type="math/tex">1</script>. The sequence</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+u_n(x):=x+{k\over n},\qquad \text{for ${k\over n}\leq x<{k+1\over n}$},\qquad k\in\{0,1,\ldots, n-1\} %]]></script>
+
+<p>behaves as desired and approximates <script type="math/tex">(g,G)</script> in the sense described in the Approximation Theorem above. As a matter of fact, <script type="math/tex">u_n\to g</script> and <script type="math/tex">u_n'\to G</script> (even) in <script type="math/tex">L^\infty(0,1)</script>. We can get more information on how the jumps of <script type="math/tex">u_n</script> diffuse in the whole interval <script type="math/tex">(0,1)</script> by looking at the distributional gradient</p>
+
+<script type="math/tex; mode=display">Du_n=1\cdot\mathcal{L}^{N}+D^s u_n=1+\sum_{k=1}^{n-1}{1\over n}\delta_{k/n}</script>
+
+<p>Since <script type="math/tex">D^s g=0</script>, the limit of <script type="math/tex">D^s u_n=\sum_{k=1}^{n-1} {1\over n}\delta_{k/n}</script> recovers just the difference <script type="math/tex">u_n'-G=1</script>. A stronger link between these two quantities is evident considering that <script type="math/tex">\sum_{k=1}^{n-1} {1\over n}\delta_{k/n}</script> is the Riemann sum of the function <script type="math/tex">f(x)=1</script> on <script type="math/tex">(0,1)</script>. A depiction of the first elements of the sequence <script type="math/tex">u_n</script> is provided in the picture below.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0007/p0018_50.png" alt="" /></p>
+
+<center>approximation of the broken ramp</center>
+
+<h1 id="references">References</h1>
+
+<p><a name="CF1997">R. Choksi and I. Fonseca: <em>Bulk and Interfacial Energy Densities for Structured Deformations of Continua</em>. Arch. Rational Mech. Anal. <strong>138</strong> (1997), 37-103.</a></p>
+
+<p><br />
+<a name="DPO1993">G. Del Piero and D. R. Owen: <em>Structured Deformation of Continua</em>. Arch. Rational Mech. Anal. <strong>124</strong> (1993), 99-155.</a>
+<br /></p>
+
+<p><a name="O2017">D. R. Owen: <em>Elasticity with Gradient-Disarrangements: A Multiscale Perspective for Strain-Gradient Theories of Elasticity and of Plasticity</em>. J. Elast. <strong>127</strong> (2017), 115-150.</a></p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

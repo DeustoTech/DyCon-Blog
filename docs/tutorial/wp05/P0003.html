@@ -8,7 +8,7 @@
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
   <title>
-    Finite element approximation of the 1-D fractional Poisson equation - DyCon Blog
+    LQR optimal control design for a coupled PDE-ODE system. - DyCon Blog
     
   </title>
 
@@ -210,27 +210,20 @@
             &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP05">
             Models involving memory terms and hybrid PDE+ODE systems</a> &#8827;</small>
           </h2>
-          <h1>Finite element approximation of the 1-D fractional Poisson equation</h1>
+          <h1>LQR optimal control design for a coupled PDE-ODE system.</h1>
 					<p class="meta">
             <div class="post-preview-authors ellipsis-one-line">
-              Authors:
+              Author:
               
               
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
                   </span>
                 </span>
               
-                
-                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
-                  <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>
-                  </span>
-                </span>
-              
-              - 05 December 2017
+              - 28 October 2018
             </div>
 					</p>
         </div>
@@ -292,307 +285,178 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://cmc.deusto.eus/wp-content/uploads/2017/10/1014385.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/coupled_lqr.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
-        <h3>The problems considered</h3>
-
-<p>We obtain a finite element (FE) scheme for the numerical approximation of the solution to the following non-local Poisson equation</p>
-
-<script type="math/tex; mode=display">\begin{align}
-\begin{cases}
-\ffl{s}{u} = f, \quad  x\in(-L,L)
-\\
-u\equiv 0,  x\in\RR\setminus(-L,L).
-\end{cases}
-\end{align}</script>
-
-<p>In (1), $f$ is a given function and, for all $s\in(0,1)$, $\ffl{s}{}$ denotes the one-dimensional fractional Laplace operator, which is defined as the following singular integral</p>
-
-<script type="math/tex; mode=display">\begin{align}\label{fl}
-\ffl{s}{u}(x) = \ccs\,P.V.\,\int_{\RR}\frac{u(x)-u(y)}{|x-y|^{1+2s} }\,dy.
-\end{align}</script>
-
-<p>Here, $\ccs$ is an explicit normalization constant.</p>
-
-<p>The main novelty of this work relies on the fact that, since we are dealing with a one-dimensional problem, each entry of the stiffness matrix can be computed explicitly, without requiring numerical integration, which is instead needed for the multidimensional case (see <a href="#acosta2017short">[1]</a>). This has the great advantage of reducing the computational cost and allows to be used on more general applications.</p>
-
-<p>A natural example is given by the numerical resolution of the following control problem: given any $T&gt;0$, find a control function $g\in L^2((-1,1)\times(0,T))$ such that the corresponding solution to the parabolic problem</p>
-
-<script type="math/tex; mode=display">\begin{align}
-\begin{cases}
-z_t + \ffl{s}{z} = g\mathbf{1}_{\omega},\quad  (x,t)\in (-1,1)\times(0,T)
-\\
-z=0,  (x,t)\in[\,\RR\setminus (-1,1)\,]\times(0,T)
-\\
-z(x,0)=z_0(x),  x\in (-1,1)
-\end{cases}
-\end{align}</script>
-
-<p>satisfies $z(x,T)=0$.</p>
-
-<p>The approach emploied for solving this control problem is based on the penalized Hilbert Uniqueness Method (<a href="#boyer2013penalised">[2]</a>).</p>
-<h3>Preliminary results</h3>
-<h4>Variational formulation of the elliptic problem</h4>
-<p>Find $u\in H^s_0(-L,L)$ such that</p>
-
-<script type="math/tex; mode=display">\begin{align*}
-\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s} }\,dxdy = \int_{-L}^L fv\,dx,
-\end{align*}</script>
-
-<p>for all $v\in H_0^s(-L,L)$. Here, $H^s_0(-L,L)$ denotes the space</p>
-
-<script type="math/tex; mode=display">\begin{align*}
-H^s_0(-L,L) :=\Big\{\, u\in H^s(\RR)\,:\,u=0 \textrm{ in } \RR\setminus(-L,L)\,\Big\},
-\end{align*}</script>
-
-<p>while $H^s(\RR)$ is the classical fractional Sobolev space of order <em>s</em>. Since the bilinear form <em>a</em> is continuous and coercive, Lax-Milgram Theorem immediately implies that, if $f\in H^{-s}(-L,L)$, the dual space of $H^s_0(-L,L)$, then (1) admits a unique weak solution $u\in H_0^s(-L,L)$.</p>
-<h4>Parabolic problem</h4>
-<p><strong>Definition 1.</strong> <em>System (3) is said to be <u>null-controllable</u> at time $T$ if, for any $z_0\in L^2(-1,1)$, there exists $g\in L^2((-1,1)\times(0,T))$ such that the corresponding solution $z$ satisfies</em></p>
-
-<script type="math/tex; mode=display">\begin{align*}
-z(x,T)=0.
-\end{align*}</script>
-
-<p><strong>Definition 2.</strong> <em>System (3) is said to be <u>approximately controllable</u> at time $T$ if, for any $z_0,z_T\in L^2(-1,1)$ and any $\delta&gt;0$, there exists $g\in L^2((-1,1)\times(0,T))$ such that the corresponding solution $z$ satisfies </em></p>
+        <p>In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the following linear coupled (hybrid) PDE-ODE system:</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
-\begin{align*}
+\begin{cases}       y_t = \alpha y_{xx} + \beta y & (x, t) \in (0, 1) \times (0, T) \\       \dot{s}(t) = -y_x(0,t) & t \in (0, T) \\       y(0, t) = u(t), y(1, t) = 0 & t \in (0, T) \\       y(x, 0) = y_0(x), s(0) = s_0 & x \in (0, 1).   \end{cases} %]]></script>
 
-\renewcommand{\norm}[2]{ {\left\|#1\right\|}_{#2} }
+<p>Similar systems may appear in the modelling of a variety physical phenomena, such as the melting of ice in a body of water [1] or fluid-structure interaction [2]. This particular system may be seen as a simplification of the well known one-phase Stefan problem. The stabilization and control of the former has been investigated in recent works by Krstic et al. (see [1] for example). The relationship between the considered system and the Stefan problem, as well as the control of the latter will be considered in a future tutorial.</p>
 
-\norm{z(x,T)-z_T}{L^2(-1,1)}<\delta.
-\end{align*} %]]></script>
+<p>When no forces are applied, a feature of the governing parabolic PDE is its possibility of generating unstable dynamics as $t \rightarrow \infty$. This phenomenon is due to the fact that the sign of the eigenvalues of the governing elliptic differential operator depends on the magnitude of the constant $\beta$. More precisely, as the differential operator has eigenvalues of the form $\mu_k = \beta - \lambda_k$, where $\lambda_k$ are the eigenvalues of the Dirichlet laplacian, taking $\beta &gt; \lambda_1$ (the biggest among the $\lambda_k$) would yield such a result. We will thence implement a LQR optimal control strategy in order to stabilize the system.</p>
 
-<p>There are few results in the literature on the null-controllability of the fractional heat equation, and they all deal with the <em>spectral</em> definition of the fractional Laplace operator, which is introduced, e.g., in <a href="#micu2006controllability">[3]</a>,<a href="#miller2006controllability">[4]</a>. In this framework, it is known that the fractional heat equation is null-controllable, provided that $s&gt;1/2$. For $s\leq 1/2$, instead, null controllability does not hold, not even for $T$ large.</p>
+<p>We first need to reduce the PDE-ODE system  to a finite dimensional system of the form</p>
 
-<p>However, also for the parabolic equation involving the integral fractional Laplacian (2), at least in the one space dimension, these properties are easily achievable. In more detail, we prove the following.</p>
+<script type="math/tex; mode=display">\dot{z} = Az + Bu,</script>
 
-<p><strong>Proposition 1.</strong> <em>For all $z_0\in L^2(-1,1)$ the parabolic problem (3) is null-controllable with a control function $g\in L^2(\omega\times(0,T))$ if and only if $s&gt;1/2$.
-</em></p>
+<p>where $A$ and $B$ are matrices, and</p>
 
-<p>Even if for $s\leq 1/2$ null controllability for (3) fails, we still have the following result of approximate controllability.</p>
+<script type="math/tex; mode=display">z(t) = \begin{pmatrix} y(t) \\ s(t) \end{pmatrix}</script>
 
-<p><strong>Proposition 2.</strong> <em>Let $s\in(0,1)$. For all $z_0\in L^2(-1,1)$, there exists a control function $g\in L^2(\omega\times(0,T))$ such that the unique solution $z$ to the parabolic problem (3) is approximately controllable.
-</em></p>
-<h3>Development of the numerical scheme</h3>
-<h4>Finite element approximation of the elliptic problem</h4>
-<p>Let us introduce a partition of the interval $(-L,L)$ as follows:</p>
+<p>is the finite dimensional state vector.</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align*}
--L = x_0<x_1<\ldots <x_i<x_{i+1}<\ldots<x_{N+1}=L\,, 
-\end{align*} %]]></script>
+<p>We fix the parameters as follows: $T=1$, $\alpha=1$ and $\beta = 10$:</p>
 
-<p>with $x_{i+1}=x_i+h$, $i=0,\ldots N$, $h&gt;0$. Having defined $K_i:=[x_i,x_{i+1}]$ we consider the discrete space</p>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clc</span><span class="p">;</span> <span class="nb">clear</span><span class="p">;</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">nT</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="n">nX</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="p">/</span><span class="n">nT</span><span class="p">;</span> <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">nX</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">Dir0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Dir1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nb">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nb">beta</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</code></pre></div></div>
 
-<script type="math/tex; mode=display">\begin{align*}
-V_h :=\Big\{v\in H_0^s(-L,L)\,\big|\, \left. v\,\right|_{K_i}\in \mathcal{P}^1\Big\},
-\end{align*}</script>
+<p>We begin the code by discretizing in space the parabolic PDE; this is done by finite differences:</p>
 
-<p>where $\mathcal{P}^1$ is the space of the continuous and piece-wise linear functions. If we indicate with</p>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Id</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">nX</span><span class="p">);</span>
+<span class="n">Lapl</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">Id</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">nX</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">nX</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">A0</span> <span class="o">=</span> <span class="nb">alpha</span><span class="o">*</span><span class="mi">1</span><span class="p">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="n">Lapl</span> <span class="o">+</span> <span class="nb">beta</span><span class="o">*</span><span class="n">Id</span><span class="p">;</span>
+</code></pre></div></div>
 
-<script type="math/tex; mode=display">\big\{\phi_i\big\}_{i=1}^N</script>
+<p>In fact, the finite difference discretization of the Dirichlet laplacian may also be done using the MATLAB routine <code class="highlighter-rouge">delsq</code>. We proceed similarly for the term $y_x(1,t)$ in the ODE, and assemble the complete matrix $A$:</p>
 
-<p>the classical basis of $V_h$ in which each $\phi_i$ is the tent function with $supp(\phi_i)=(x_{i-1},x_{i+1})$ and verifying $\phi_i(x_j)=\delta_{i,j}$, at the end we are reduced to solve the linear system</p>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="n">A</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">A0</span><span class="p">;</span> <span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">=-</span><span class="mi">1</span><span class="p">/</span><span class="n">dx</span><span class="p">;</span>
+</code></pre></div></div>
 
-<script type="math/tex; mode=display">\begin{align*}
-\mathcal A_h u=F,
-\end{align*}</script>
+<p>The control matrix B is constructed as follows:</p>
 
-<p>where the stiffness matrix $\mathcal A_h\in \RR^{N\times N}$ has components</p>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">b</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">alpha</span><span class="o">*</span><span class="n">Dir0</span><span class="p">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span> <span class="n">b</span><span class="p">(</span><span class="n">nX</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">alpha</span><span class="o">*</span><span class="n">Dir1</span><span class="p">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">B</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">Dir0</span><span class="p">/</span><span class="n">dx</span><span class="p">;</span>
+<span class="n">B</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</code></pre></div></div>
 
-<script type="math/tex; mode=display">\begin{align}\label{stiffness_nc}
-a_{i,j}=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(\phi_i(x)-\phi_i(y))(\phi_j(x)-\phi_j(y))}{|x-y|^{1+2s} }\,dxdy, \;\;\; i,j = 1,\ldots,N,
-\end{align}</script>
+<p>We may now proceed with the optimal control strategy. For a continuous time linear system generated by the matrices $(A,B)$ and an infinite time horizon cost functional defined as</p>
 
-<p>while the vector $F\in\RR^N$ is given by $F=(F_1,\ldots,F_N)$ with</p>
+<script type="math/tex; mode=display">J = \int_0^\infty \langle Q z(t), z(t) \rangle + \langle R u(t), u(t)   \rangle dt,</script>
 
-<script type="math/tex; mode=display">\begin{align*}
-F_i = \langle f,\phi_i\rangle = \int_{-L}^L f\phi_i\,dx,\;\;\; i=1,\ldots,N.
-\end{align*}</script>
+<p>the feedback control law that minimizes the value of the cost is $u = -Kz$, where $K = R^{-1}B*P$ and $P$ is found by solving the continuous time algebraic Ricatti equation</p>
 
-<p>The construction of the stiffness matrix $\mathcal A_h$ is done in three steps, since its elements can be computed differentiating among three well defined regions: the upper triangle, corresponding to indices $j\geq i+2$, the upper diagonal corresponding to $j=i+1$, and the diagonal corresponding to $j=i$. In each of these regions, the intersections among the support of the basis functions are different, thus generating different values of the bilinear form.</p>
+<script type="math/tex; mode=display">A*P+PA-(PB)R^1(B*P)+Q=0.</script>
 
-<p>After several computations, we obtain the following expressions for the elements of the stiffness matrix $\mathcal{A}_h$: for $s\neq 1/2$</p>
+<p>We check whether the constructed matrices fit in the framework of LQR. Namely, we first verify that the couple $(A, BB*)$ is stabilizable. This is done by checking if $\text{rank}[\lambda I - A, B] = d$ for any $\lambda \in \sigma(A)\cap \mathbb{R}_+$, where $d$ is the dimension of the state space.</p>
 
-<script type="math/tex; mode=display">\begin{align*}
-a_{i,j} = -h^{1-2s} \begin{cases}
-\displaystyle \,\frac{4(k+1)^{3-2s} + 4(k-1)^{3-2s}-6k^{3-2s}-(k+2)^{3-2s}-(k-2)^{3-2s} }{2s(1-2s)(1-s)(3-2s)},  \displaystyle k=j-i,\,k\geq 2
-\\
-\\
-\displaystyle\frac{3^{3-2s}-2^{5-2s}+7}{2s(1-2s)(1-s)(3-2s)},  \displaystyle j=i+1
-\\
-\\
-\displaystyle\frac{2^{3-2s}-4}{s(1-2s)(1-s)(3-2s)},  \displaystyle j=i.
-\end{cases}
-\end{align*}</script>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eigs</span> <span class="o">=</span> <span class="nb">eig</span><span class="p">(</span><span class="n">A</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">iter</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">real</span><span class="p">(</span><span class="nb">eigs</span><span class="p">(</span><span class="n">iter</span><span class="p">))</span><span class="o">&gt;=</span><span class="mi">0</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+        <span class="n">M</span><span class="p">(:,</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">eigs</span><span class="p">(</span><span class="n">iter</span><span class="p">)</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">A</span><span class="p">;</span> <span class="n">M</span><span class="p">(:,</span><span class="n">nX</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="n">B</span><span class="o">*</span><span class="p">(</span><span class="n">B</span><span class="o">'</span><span class="p">);</span>
+        <span class="n">r_</span> <span class="o">=</span> <span class="nb">rank</span><span class="p">(</span><span class="n">M</span><span class="p">);</span>
+        <span class="n">stabilizable</span> <span class="o">=</span> <span class="p">(</span><span class="n">r_</span> <span class="o">==</span> <span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
 
-<p>For $s=1/2$, instead, we have</p>
+<p>Secondly, we check that the eigenvalues of the associated Hamiltonian matrix do not lie on the imaginary axis.</p>
 
-<script type="math/tex; mode=display">\begin{align*}
-a_{i,j} = \begin{cases}
--4(j-i+1)^2\log(j-i+1)-4(j-i-1)^2\log(j-i-1)
-\\
-\;\;\;+6(j-i)^2\log(j-i)+(j-i+2)^2\log(j-i+2)+(j-i-2)^2\log(j-i-2),  \displaystyle j> i+2
-\\
-\\
-56\ln(2)-36\ln(3),  \displaystyle j= i+2.
-\\
-\\
-\displaystyle 9\ln 3-16\ln 2,  \displaystyle j=i+1
-\\
-\\
-\displaystyle 8\ln 2,  \displaystyle j=i.
-\end{cases}
-\end{align*}</script>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">H</span> <span class="o">=</span> <span class="nb">blkdiag</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="o">-</span><span class="n">A</span><span class="o">'</span><span class="p">);</span>
+<span class="n">H</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="n">Q</span><span class="p">;</span> <span class="n">H</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">nX</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="o">-</span><span class="n">B</span><span class="o">*</span><span class="p">(</span><span class="n">B</span><span class="o">'</span><span class="p">);</span>
+<span class="n">eigH</span> <span class="o">=</span> <span class="nb">real</span><span class="p">(</span><span class="nb">eig</span><span class="p">(</span><span class="n">H</span><span class="p">));</span>
+<span class="n">nb_im_eig</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">eigH</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+</code></pre></div></div>
 
-<h4>Control problem for the fractional heat equation</h4>
-<p>We employ the so called penalised Hilbert Uniqueness Method (HUM) that deals with the resolution of the following minimization problem: find</p>
+<p>Finally, we check if the pair $(Q, A)$ is detectable; the variable <code class="highlighter-rouge">not_det</code> should equal $0$ after the loop.</p>
 
-<script type="math/tex; mode=display">\begin{align}\label{min_je}
-\varphi^T_\varepsilon=\min_{\varphi\in L^2(-1,1)} J_\varepsilon (\varphi^T)
-\end{align}</script>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">not_det</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">iter_</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">real</span><span class="p">(</span><span class="nb">eigs</span><span class="p">(</span><span class="n">iter_</span><span class="p">))</span><span class="o">&gt;=</span><span class="mi">0</span>
+        <span class="n">M_</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">M_</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">:)</span> <span class="o">=</span> <span class="n">Q</span><span class="p">;</span> <span class="n">M_</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">2</span><span class="p">:(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="p">:)</span> <span class="o">=</span> <span class="nb">eigs</span><span class="p">(</span><span class="n">iter_</span><span class="p">)</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">A</span><span class="p">;</span>
+        <span class="n">r_</span> <span class="o">=</span> <span class="nb">rank</span><span class="p">(</span><span class="n">M_</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">r_</span> <span class="o">~=</span> <span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">not_det</span> <span class="o">=</span> <span class="n">not_det</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
 
-<p>where</p>
+<p>We are now in a position to construct the LQR feedback control by solving the algebraic Ricatti equation. This is done by using the MATLAB Control Toolbox routine <code class="highlighter-rouge">care</code>:</p>
 
-<script type="math/tex; mode=display">\begin{align}\label{penalized_fun}
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">ricsol</span><span class="p">,</span> <span class="n">cleig</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">);</span>
+<span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">z</span><span class="p">;</span>
+</code></pre></div></div>
 
-\renewcommand{\norm}[2]{ {\left\|#1\right\|}_{#2} }
+<p>We now compare the uncontrolled (thence unstable) dynamics with the dynamics stabilized by the LQR feedback control. As initial datum for both systems, we pick $u_0(x) = \cos(\pi*x)$ and $s_0 = 0.1$.</p>
 
-J_\varepsilon(\phi^T):=\frac{1}{2}\int_0^T\int_{\omega}|\varphi|^2\,dxdt + \frac{\varepsilon}{2}\norm{\varphi^T}{L^2(-1,1)}^2 + \int_{\Omega} z_0\varphi(0)\,dx,
-\end{align}</script>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_int</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="p">);</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="nb">cos</span><span class="p">(</span><span class="n">x_int</span><span class="o">*</span><span class="nb">pi</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
+<span class="n">z0</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="n">z0</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span> <span class="n">z0</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">y0</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The free system is solved with the Dirichlet boundary condition $u(0,t) = 0.15$:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f1</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">v</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="mf">0.15</span><span class="p">;</span>
+<span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">z_free</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">nT</span><span class="p">),</span> <span class="n">z0</span><span class="p">);</span>
+<span class="p">[</span><span class="n">X1</span><span class="p">,</span><span class="n">Y1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">x_int</span><span class="p">);</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">Y1</span><span class="p">,</span> <span class="n">z_free</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">'</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Space'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Unstable state y_{un} = y_{un}(t,x)'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_01.png" alt="" /></p>
+
+<p>Now we solve and visualize the controlled problem:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f2</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">z</span><span class="p">);</span>
+<span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">z_ctr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">nT</span><span class="p">),</span> <span class="n">z0</span><span class="p">);</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="p">[</span><span class="n">X2</span><span class="p">,</span><span class="n">Y2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span><span class="n">x_int</span><span class="p">);</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="n">Y2</span><span class="p">,</span> <span class="n">z_ctr</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">'</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Space'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Stablilized state y_{st} = y_{st}(t,x)'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_02.png" alt="" /></p>
+
+<p>We also plot the corresponding solutions to the ODE:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">z_free</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.8500</span><span class="p">,</span> <span class="mf">0.3250</span><span class="p">,</span> <span class="mf">0.0980</span><span class="p">],</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">z_ctr</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4470</span><span class="p">,</span> <span class="mf">0.7410</span><span class="p">],</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">);</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'Unstable'</span><span class="p">,</span> <span class="s1">'Stabilized'</span><span class="p">,</span> <span class="s1">'Location'</span><span class="p">,</span> <span class="s1">'SouthWest'</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'The state s'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_03.png" alt="" /></p>
+
+<p>As a final test of our results, we compare the $L^2(0,1)$-norms of both the controlled and uncontrolled state with respect to time.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">norm_free</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/</span><span class="n">nX</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">z_free</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.^</span><span class="mf">0.5</span><span class="p">;</span>
+<span class="n">norm_ctr</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/</span><span class="n">nX</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">z_ctr</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.^</span><span class="mf">0.5</span><span class="p">;</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">norm_free</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.8500</span><span class="p">,</span> <span class="mf">0.3250</span><span class="p">,</span> <span class="mf">0.0980</span><span class="p">],</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">norm_ctr</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4470</span><span class="p">,</span> <span class="mf">0.7410</span><span class="p">],</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">);</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'Unstable state'</span><span class="p">,</span> <span class="s1">'Stabilized state'</span><span class="p">,</span> <span class="s1">'Location'</span><span class="p">,</span> <span class="s1">'NorthWest'</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'L^2 Norm'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_04.png" alt="" /></p>
+
+<h2 id="references">References:</h2>
+
+<p>[1] Koga, Shumon and Diagne, Mamadou and Krstic, Miroslav. Output feedback control of the one-phase Stefan problem. 2016 IEEE 55th Conference on Decision and Control (CDC) (2016).</p>
+
+<p>[2] Vazquez, Juan Luis and Zuazua, Enrique. Large time behavior for a simplified 1D model of fluid-solid interaction. Comm. Partial Differential Equations 28 (2003), no. 9-10, 1705-1738.</p>
 
-<p>where $\varphi$ is the solution to the adjoint problem</p>
-
-<script type="math/tex; mode=display">\begin{align*}
-\begin{cases}
--\varphi_t+\ffl{s}{\varphi}=0,  (x,t)\in (-1,1)\times(0,T)
-\\
-\varphi = 0,  (x,t)\in\big[\RR\setminus(-1,1)\big]\times(0,T)
-\\
-\varphi(x,T)=\varphi^T(x),  x\in (-1,1).
-\end{cases}
-\end{align*}</script>
-
-<p>Then, the approximate and null controllability properties of the system, for a given initial datum $z_0$, can be expressed in terms of the behavior of the penalized HUM approach.</p>
-
-<p>In particular, according to <a href="#boyer2013penalised">[2,Theorem 1.7]</a> we have:</p>
-
-<ul>
- 	<li style="list-style-type: none;">
-<ul>
- 	<li>The equation is approximately controllable at time $T$ from the initial datum $z_0$ if and only if</li>
-</ul>
-</li>
-</ul>
-
-<script type="math/tex; mode=display">\begin{align*}
-\varphi_\varepsilon^T\rightarrow 0,\;\;\;\textrm{ as }\;\varepsilon\to 0.
-\end{align*}</script>
-
-<ul>
- 	<li style="list-style-type: none;">
-<ul>
- 	<li>The equation is null-controllable at time $T$ from the initial datum $z_0$ if and only if</li>
-</ul>
-</li>
-</ul>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align*}
-M_{z_0}^2:=2\sup_{\varepsilon>0}\left( \inf_{L^2(0,T;L^2(\omega))}J_\varepsilon\right)<+\infty.
-\end{align*} %]]></script>
-
-<p>In this case, we have</p>
-
-<script type="math/tex; mode=display">\begin{align*}
-
-\renewcommand{\norm}[2]{ {\left\|#1\right\|}_{#2} }
-
-\norm{g}{L^2(0,T;L^2(\omega))}\leq M_{z_0},\nonumber
-\\
-\norm{\varphi_\varepsilon^T}{L^2(-L,L)}\leq M_{z_0}\sqrt{\varepsilon}.
-\end{align*}</script>
-
-<h3>Numerical results</h3>
-<p>Here, we present the numerical simulations corresponding to our algorithms. We provide a complete discussion of the results obtained.</p>
-
-<p>First of all, in order to test numerically the accuracy of our method for the discretization of the elliptic equation (1) we use the following problem</p>
-
-<script type="math/tex; mode=display">\begin{align}\label{PE_real}
-\left\{\begin{array}{ll}
-\ffl{s}{u} = 1,  x\in(-L,L)
-\\
-u\equiv 0,  x\in\RR\setminus(-L,L).
-\end{array}\right.
-\end{align}</script>
-
-<p>In this particular case, the solution can be expressed as follows</p>
-
-<script type="math/tex; mode=display">\begin{align}\label{real_sol}
-u(x)=\frac{2^{-2s}\sqrt{\pi} }{\Gamma\left(\frac{1+2s}{2}\right)\Gamma(1+s)}\Big(L^2-x^2\Big)^s.
-\end{align}</script>
-
-<p>In figure 1 and figure 2, we show a comparison for different values of $s$ between the exact solution (8) and the computed numerical approximation. Here we consider $L=1$ and $N=50$. One can notice that, when $s=0.1$, the computed solution is to a certain extent different from the exact solution. However, one should be careful with such result and a more precise analysis of the error should be carried.</p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFig1.jpg" alt="Figure 1" width="800" /> Figure 1: Plot for different values of $s&lt;1/2$.</p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFig2.jpg" alt="Figure 2" width="800" /> Figure 2: Plot for different values of $s\geq 1/2$.</p>
-
-<p>In figure 3, we present the computational errors evaluated for different values of $s$ and $h$.</p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFig3.jpg" alt="Figure 3" width="600" /> Figure 3: Convergence of the error.</p>
-
-<p>The rates of convergence shown are of order (in $h$) of $1/2$. This is in accordance with the known theoretical results (see, e.g., <a href="#acosta2017short">[1,Theorem 4.6]</a>). One can see that the convergence rate is maintained also for small values of $s$. Since it is well-known that the notion of trace is not defined for the spaces $H^s(-L,L)$ with $s\leq 1/2$, it is somehow natural that we cannot expect a point-wise convergence in this case.</p>
-<h4>Control experiments</h4>
-<p>We present some numerical results for the controllability of the fractional heat equation (3). We use the finite-element approximation of $\ffl{s}{}$ for the space discretization and the implicit Euler scheme in the time variable. We choose the penalization term <em>ε</em> as a function of <em>h</em>. A practical rule (<a href="#boyer2013penalised">[2]</a>) is to choose $\phi(h)\sim h^{2p}$ where $p$ is the order of accuracy in space of the numerical method used for the discretization of the spatial operator involved. In this case, we take $p=1/2$.
-In figure 4, we observe the time evolution of the uncontrolled solution as well as the controlled solution. Here, we set $s=0.8$, $\omega=(-0.3,0.8)$ and $T=0.3$, and choose $z_0(x) = \sin(\pi x)$. The control domain is the highlighted zone on the plane $(t,x)$. As expected, we observe that the uncontrolled solution decays with time, but does not reach zero at time $T$, while the controlled solution does.</p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFig4.jpg" alt="Figure 4" width="800" /> Figure 4: Time evolution of system (3).</p>
-
-<p>In figure 5, for $s=0.8$ we present the computed values of various quantities of interest when the mesh size goes to zero. More precisely, we observe that the control cost and the optimal energy remain bounded as $h\to 0$. On the other hand, we see that</p>
-
-<script type="math/tex; mode=display">\begin{align}\label{control_norm_behavior}
-|y(T)|_{L^2(-1,1)}\,\sim\,C\sqrt{\phi(h)}=Ch^{1/2}.
-\end{align}</script>
-
-<p>We know that, for $s=0.8$, system (3) is null controllable. This is now confirmed by (9), according to <a href="#boyer2013penalised">[2,Theorem 1.7]</a>. In fact, the same experiment can be repeated for different values of $s&gt;1/2$, obtaining the same conclusions.</p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFig5.jpg" alt="Figure 5" width="600" /> Figure 5: Convergence properties of the method for controllability of the fractional heat equation.</p>
-
-<p>In figure 6, we illustrate the numerical results for the case $s\leq 1/2$. We observe that the cost of the control and the optimal energy increase in both cases, while the target $y(T)$ tends to zero with a slower rate than $h^{1/2}$. This seems to confirm that a uniform observability estimate for (3) does not hold and that we can only expect to have approximate controllability.</p>
-
-<p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFig6.jpg" alt="Figure 6" width="800" /> Figure 6: Convergence properties of the method for $s&lt;1/2$. Same legend as in figure 5.</p>
-
-<p>VIDEOS:</p>
-<ol>
- 	<li>Uncontrolled dynamics with s = 0.8 and T = 0.2 s - the solution dissipates but the zero state is not reached.
-<video style="display: block; margin: 0 auto; width: 75%;" controls="">
-<source src="https://cmc.deusto.eus/wp-content/uploads/2017/10/libre_frac.ogg" type="video/ogg" />
-<source src="https://cmc.deusto.eus/wp-content/uploads/2017/10/libre_frac.mp4" type="video/mp4" />
-Your browser does not support the video tag.
-</video>
-</li>
- 	<li>Controlled dynamics with s = 0.8, T = 0.2 s and \omega = (−0.3, 0.8) - the zero state is reached.
-<video style="display: block; margin: 0 auto; width: 75%;" controls="">
-<source src="https://cmc.deusto.eus/wp-content/uploads/2017/10/soly_control_frac.ogg" type="video/ogg" />
-<source src="https://cmc.deusto.eus/wp-content/uploads/2017/10/soly_control_frac.mp4" type="video/mp4" />
-Your browser does not support the video tag.
-</video>
-</li>
-</ol>
-
-<!--h4>Useful links</h5-->
-<h3>Bibliography</h3>
-
-<p><strong>[1]</strong> Acosta, G., Bersetche, F. M., and Borthagaray, J. P. <a href="http://www.sciencedirect.com/science/article/pii/S0898122117303310" name="acosta2017short"><em>A short FE implementation for a 2d homogeneous Dirichlet problem of a Fractional Laplacian</em></a> Comput. Math. Appl. (2017).</p>
-
-<p><strong>[2]</strong> Boyer, F <a href="https://www.esaim-proc.org/articles/proc/abs/2013/03/proc134102/proc134102.html" name="boyer2013penalised"><em>On the penalized hum approach and its applications to the numerical approximation of null-controls for parabolic problems</em></a> ESAIM: Proceedings vol. 41 (2013), pp. 15–58.</p>
-
-<p><strong>[3]</strong> Micu, S., and Zuazua, E. <a href="http://epubs.siam.org/doi/abs/10.1137/S036301290444263X" name="micu2006controllability"><em>On the controllability of a fractional order parabolic equation.</em></a> SIAM J. Control Optim., vol. 44, no. 6 (2006), pp. 1950–1972.</p>
-
-<p><strong>[4]</strong> Miller, L. <a href="https://hal.archives-ouvertes.fr/hal-00008809/document" name="miller2006controllability"><em>On the controllability of anomalous diffusions generated by the fractional Laplacian.</em></a> Math. Control Signals Systems, vol. 18, no. 3 (2006), pp. 260–271.</p>
 
         <hr>
       </div>
