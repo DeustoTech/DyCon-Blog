@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Optimal Control Problem with CasADi on null-controllability of the network system",
+      "categories"      : ["tutorial", "WP06"],
+      "url"             : "/tutorial/wp06/P0006",
+      "date"            : "2019-11-07",
+      "author"          : ["DongnamK"],
+      "description"     : "The aim of this work is to use CasADi and IpOpt to simulate optimal control problem, which explains the structural controllability of the 2D heat equation. We use finite difference scheme with the uniform grid to test exact controllability of the 2D heat equation. After that, we delete several interactions between grid points and simulate the controllability with smaller number of controlled points.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0006/copiaRM_01.png"
+    } ,
+  
+    {
       "title"           : "Numerical simulation of nonlinear Population Dynamics Structuring by age and Spatial diffusion",
       "categories"      : ["tutorial", "WP05"],
       "url"             : "/tutorial/wp05/P0012",
