@@ -1,0 +1,124 @@
+\begin{thebibliography}{10}
+
+\bibitem{APZ16a}
+Navid Allahverdi, Alejandro Pozo, and Enrique Zuazua.
+\newblock Numerical aspects of large-time optimal control of burgers equation.
+\newblock {\em ESAIM: Mathematical Modelling and Numerical Analysis},
+  50(5):1371--1401, 2016.
+
+\bibitem{APZ16b}
+Navid Allahverdi, Alejandro Pozo, and Enrique Zuazua.
+\newblock Numerical aspects of sonic-boom minimization.
+\newblock {\em A Panorama of Mathematics: Pure and Applied}, 658:267, 2016.
+
+\bibitem{AC12}
+Juan~J Alonso and Michael~R Colonno.
+\newblock Multidisciplinary optimization with applications to sonic-boom
+  minimization.
+\newblock {\em Annual Review of Fluid Mechanics}, 44:505--526, 2012.
+
+\bibitem{BJ98}
+Fran{\c{c}}ois Bouchut and Fran{\c{c}}ois James.
+\newblock One-dimensional transport equations with discontinuous coefficients.
+\newblock {\em Nonlinear Analysis}, 32(7):891, 1998.
+
+\bibitem{BJ99}
+Fran{\c{c}}ois Bouchut and Fran{\c{c}}ois James.
+\newblock Differentiability with respect to initial data for a scalar
+  conservation law.
+\newblock In {\em Hyperbolic problems: theory, numerics, applications}, pages
+  113--118. Springer, 1999.
+
+\bibitem{BC98}
+Alberto Bressan and Rinaldo~M Colombo.
+\newblock Decay of positive waves in nonlinear systems of conservation laws.
+\newblock {\em Annali della Scuola Normale Superiore di Pisa-Classe di
+  Scienze}, 26(1):133--160, 1998.
+
+\bibitem{BM95}
+Alberto Bressan and Andrea Marson.
+\newblock A maximum principle for optimally controlled systems of conservation
+  laws.
+\newblock {\em Rendiconti del Seminario Matematico della Universita di Padova},
+  94:79--94, 1995.
+
+\bibitem{BM95b}
+Alberto Bressan and Andrea Marson.
+\newblock A variational calculus for discontinuous solutions of systems of
+  conservation laws.
+\newblock {\em Communications in partial differential equations},
+  20(9):1491--1552, 1995.
+
+\bibitem{CPZ08}
+Carlos Castro, Francisco Palacios, and Enrique Zuazua.
+\newblock An alternating descent method for the optimal control of the inviscid
+  burgers equation in the presence of shocks.
+\newblock {\em Mathematical Models and Methods in Applied Sciences},
+  18(03):369--416, 2008.
+
+\bibitem{CPZ10}
+Carlos Castro, Francisco Palacios, and Enrique Zuazua.
+\newblock Optimal control and vanishing viscosity for the burgers equation.
+\newblock In {\em Integral Methods in Science and Engineering, Volume 2}, pages
+  65--90. Springer, 2010.
+
+\bibitem{Cle95}
+Robin~Olav Cleveland.
+\newblock {\em Propagation of sonic booms through a real, stratified
+  atmosphere}.
+\newblock PhD thesis, Citeseer, 1995.
+
+\bibitem{CP19}
+Rinaldo Colombo and Vincent Perrollaz.
+\newblock Initial data identification in conservation laws and hamilton-jacobi
+  equations.
+\newblock {\em arXiv preprint arXiv:1903.06448}, 2019.
+
+\bibitem{Daf72}
+Constantine~M Dafermos.
+\newblock Polygonal approximations of solutions of the initial value problem
+  for a conservation law.
+\newblock {\em Journal of Mathematical Analysis and Applications},
+  38(1):33--41, 1972.
+
+\bibitem{Daf10}
+Constantine~M Dafermos.
+\newblock Hyperbolic conservation laws in continuum physics, volume 325 of
+  grundlehren der mathematischen wissenschaften [fundamental principles of
+  mathematical sciences], 2010.
+
+\bibitem{GG14}
+Shyam~Sundar Ghoshal, GD~Veerappa Gowda, et~al.
+\newblock Exact controllability of scalar conservation laws with strict convex
+  flux.
+\newblock {\em Mathematical Control \&amp; Related Fields}, 4(4):401, 2014.
+
+\bibitem{Gla08}
+Olivier Glass.
+\newblock An extension of oleinik's inequality for general 1d scalar
+  conservation laws.
+\newblock {\em Journal of Hyperbolic Differential Equations}, 5(1):113, 2008.
+
+\bibitem{GZ17}
+Laurent Gosse and Enrique Zuazua.
+\newblock Filtered gradient algorithms for inverse design problems of
+  one-dimensional burgers equation.
+\newblock In {\em Innovative algorithms and analysis}, pages 197--227.
+  Springer, 2017.
+
+\bibitem{Kru70}
+Stanislav~N Kru{\v{z}}kov.
+\newblock First order quasilinear equations in several independent variables.
+\newblock {\em Mathematics of the USSR-Sbornik}, 10(2):217, 1970.
+
+\bibitem{LZ19}
+T.~Liard and E.~Zuazua.
+\newblock Inverse design for the one-dimensional burgers equation.
+\newblock Submitted.
+
+\bibitem{Ole57}
+Olga~Arsen'evna Oleinik.
+\newblock Discontinuous solutions of non-linear differential equations.
+\newblock {\em Uspekhi Matematicheskikh Nauk}, 12(3):3--73, 1957.
+
+\end{thebibliography}
