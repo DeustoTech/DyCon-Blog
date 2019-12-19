@@ -7,7 +7,7 @@
       "url"             : "/tutorial/wp05/P0013",
       "date"            : "2019-12-19",
       "author"          : ["JorgeM"],
-      "description"     : "In this tutorial, we propose the Hum method to approximate numerically the control in a null controllability problem for a non linear population dynamics model structuring in age and spatial diffusion.",
+      "description"     : "In this tutorial, we present an optimal control problem related to the Fokker-Planck equation.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0013/avatar.gif"
     } ,
   
