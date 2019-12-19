@@ -2,13 +2,23 @@
     
     
     {
+      "title"           : "Optimal Control of the Fokker-Planck Equation with CasADi",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0013",
+      "date"            : "2019-12-19",
+      "author"          : ["JorgeM"],
+      "description"     : "In this tutorial, we propose the Hum method to approximate numerically the control in a null controllability problem for a non linear population dynamics model structuring in age and spatial diffusion.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0012/avatar.gif"
+    } ,
+  
+    {
       "title"           : "Inverse design for the one-dimensional Burgers equation",
       "categories"      : ["tutorial", "WP04"],
       "url"             : "/tutorial/wp04/P0006",
       "date"            : "2019-12-12",
       "author"          : ["ThibaultL","EnriqueZ"],
       "description"     : "Our aim is to study an optimal control problem  which consists in minimizing the difference between the predictions of the Burgers equation  and the observations of the system at a final time  in $L^2(\mathbb{R})$ norm.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/Projection2.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0012/avatar.gif"
     } ,
   
     {

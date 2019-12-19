@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Optimal Control of the Fokker-Planck Equation with CasADi - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0013">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP05">
+            Models involving memory terms and hybrid PDE+ODE systems</a> &#8827;</small>
+          </h2>
+          <h1>Optimal Control of the Fokker-Planck Equation with CasADi</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
+                  </span>
+                </span>
+              
+              - 19 December 2019
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0012/P0012-PopulationDynamics.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <p>In this tutorial, we present an optimal control problem related to the Fokker-Planck equation.</p>
+
+<h2 id="description-of-the-problem">Description of the problem</h2>
+
+<h3 id="the-fokker-planck-equation">The Fokker Planck Equation</h3>
+
+<p>Let $\Omega$ be an open, bounded, regular subset of $\mathbb{R}^{n}$. Let $T&gt;0$ and denote by $u\in L^2(0,T;H^{1}(\Omega))^n$ a time-dependent vector field in $\Omega$. Consider a particle in $\Omega$ that moves with velocity $u(x,t)$ at each point $x\in\Omega$ in time $t\in(0,T)$. Suppose furthermore that the particle is subject to additive Brownian noise.</p>
+
+<p>Let $p_0(x)$ be the probability density of the position of the particle at time $t=0$. Then, at every time $t&gt;0$, the probability density $p(x,t)$ of the particle satisfies the Fokker-Planck equation [1]:</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\partial_t p - \Delta p + \mathrm{div}(pu) = 0 \quad \mathrm{in}\,\,\Omega\times(0,T)\\
+p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)\\
+(\nabla p-pu)\cdot\mathrm{n} = 0 \quad \mathrm{on}\,\,\partial\Omega\times(0,T)
+\end{cases}</script>
+
+<p>Where $\mathrm{n}$ is the outward unit normal vector field on $\partial\Omega$.</p>
+
+<p>Fix a positive real number $a&gt;0$ and introduce the family of admissible controls:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\mathcal{U}_{\mathrm{ad}}:=\{u\in L^{2}(0,T;H^{1}(\Omega))^n : -a < u(x,t) < a\,\,\mathrm{a.e.}\,\,\mathrm{in}\,\,\Omega\times(0,T)\} %]]></script>
+
+<p>For every non-negative initial data $p_0\in H^{1}(\Omega)$ and every admissible control $u\in\mathcal{U}_{\mathrm{ad}}$, there is a unique solution $p\in\mathcal{C}([0,T];L^{2}(\Omega))\cap L^{2}(0,T;H^{1}(\Omega))$ to the previous problem such that $p(x,t)\geq 0$ for every $t\geq 0$ and almost every $x\in\Omega$ [2].</p>
+
+<p>If, besides, $\int_{\Omega}p_{0}(x)dx=1$, then integrating by parts it’s easy to check that $\int_{\Omega}p(x,t)dx=1$ for every $t\geq 0$, so $p(.,t)$ is indeed a probability density on $\Omega$ for every $t\geq 0$.</p>
+
+<h3 id="optimal-control">Optimal Control</h3>
+
+<p>Fix a smooth reference trajectory $z:[0,T]\rightarrow\Omega$. Our objective is to find an admissible control $u\in\mathcal{U}_{\mathrm{ad}}$ that minimizes the following functional:</p>
+
+<script type="math/tex; mode=display">J(u):=\alpha\int_{0}^{T}\int_{\Omega}\Vert x-z(t)\Vert^2p(x,t)dxdt+\beta\int_{\Omega}\Vert x - z(T)\Vert^2p(x,T)dx + \gamma \int_{0}^{T}\int_{\Omega}\vert u(x,t)\vert^2p(x,t)dxdt</script>
+
+<p>subject to:</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\partial_t p - \Delta p + \mathrm{div}(pu) = 0 \quad \mathrm{in}\,\,\Omega\times(0,T)\\
+p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)\\
+(\nabla p-pu)\cdot\mathrm{n} = 0 \quad \mathrm{on}\,\,\partial\Omega\times(0,T)
+\end{cases}</script>
+
+<p>where $\alpha,\beta$ and $\gamma$ are non-negative real 
+numbers. In [2] it is proven that there always exists a $u^{*}\in\mathcal{U}_{\mathrm{ad}}$ minimizing the previous functional among the family of admissible controls.</p>
+
+<h2 id="numerical-simulation">Numerical Simulation</h2>
+
+<p>In the numerical example that we will present in this post, we will work over the one-dimensional domain $\Omega = (-6,6)$ with time horizon $T = 5$, and the oscillating reference trajectory $z(t) = 4\sin(2t)$. We also fix $\alpha=\beta=\gamma=1$, so that our objective will be to minimize the functional:</p>
+
+<script type="math/tex; mode=display">J(u) = \int_{0}^{T}\int_{\Omega}\vert x - 4\sin(2t)\vert^2 p(x,t)dxdt + \int_{\Omega}\vert x - 4sin(2T)\vert^2p(x,T)dx + \int_{0}^{T}\int_{\Omega}\vert u(x,t)\vert^{2}dxdt</script>
+
+<p>subject to</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\partial_t p - \partial_x^2 p + \partial_x(pu) = 0 \quad \mathrm{in}\,\, (-6,6)\times(0,T)\\
+p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)\\
+\partial_x^{-}p(6,t) - u(6,t)p(6,t) = 0 \quad \mathrm{in} \,\,(0,T)\\
+\partial_x^{+}p(6,t) - u(6,t)p(6,t) = 0 \quad \mathrm{in} \,\,(0,T)
+\end{cases}</script>
+
+<p><img width="80%" src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/ref.png" /></p>
+
+<p>We consider the initial probability density function</p>
+
+<script type="math/tex; mode=display">p_0(x) = \frac{1}{C}\exp(-2x^2)</script>
+
+<p>where $C&gt;0$ is chosen so that $\int_{-6}^{6}p_0(x)dx=1$.</p>
+
+<p><img width="80%" src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/init.png" /></p>
+
+<p>We start by defining the mesh sizes and parameters. We discretize the spatial domain with $20$ points and the temporal domain with $80$ points.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% mesh sizes and parameters</span>
+
+<span class="c1">% spatial mesh</span>
+<span class="n">X_max</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span> <span class="c1">% length of space domain</span>
+<span class="n">Nx</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">% number of mesh points</span>
+<span class="n">x_line</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">X_max</span><span class="p">,</span><span class="n">X_max</span><span class="p">,</span><span class="n">Nx</span><span class="p">);</span> <span class="c1">% discretization of the space domain</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">x_line</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">x_line</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">% space increment</span>
+
+<span class="c1">% temporal mesh</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">% time horizon</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span> <span class="c1">% number of mesh points</span>
+<span class="n">t_line</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span> <span class="c1">% discretization of the time domain</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">t_line</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">t_line</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">% time increment</span>
+
+<span class="c1">% parameters</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">dt</span><span class="p">/(</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">dt</span><span class="p">/(</span><span class="mi">2</span><span class="o">*</span><span class="n">dx</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We define the reference trajectory $z(t)=4\sin(2t)$:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% reference trajectory</span>
+
+<span class="n">ref</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">t_line</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We define the initial probability density $p_0(x) = \frac{1}{C}\exp(-2x^2)$. We compute $C$ using $C = \int_{-6}^{6}\exp(-2x^2)dx = \sqrt{\frac{\pi}{2}}\mathrm{erf}(6\sqrt{2})$, where $\mathrm{erf}$ is the error function.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% initial density</span>
+
+<span class="n">y0</span> <span class="o">=</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">x_line</span><span class="o">.^</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="n">C</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="nb">pi</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">erf</span><span class="p">(</span><span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">X_max</span><span class="p">);</span> <span class="c1">% normalizing constant</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="n">C</span><span class="p">)</span> <span class="o">*</span> <span class="n">y0</span><span class="o">'</span><span class="p">;</span> <span class="c1">% normalized initial density</span>
+</code></pre></div></div>
+
+<p>The uncontrolled evolution of this probability density is given by the following heat equation with Neumann boundary conditions:</p>
+
+<script type="math/tex; mode=display">\partial_t p - \partial_{x}^{2}p = 0 \quad \mathrm{in}\,\,(-6,6)\times(0,T)\\
+p(x,0)=p_0(x)\quad\mathrm{in}\,\,(-6,6)\\
+\partial_{x}^{-}p(6,t) = 0\quad\mathrm{in}\,\,(0,T)\\
+\partial_{x}^{+}p(-6,t) = 0\quad\mathrm{in}\,\,(0,T)</script>
+
+<p>We discretize and solve this equation:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% uncontrolled solution</span>
+
+<span class="n">Yf</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
+<span class="n">Yf</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">y0</span><span class="p">;</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">Nt</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">:</span> <span class="n">Nx</span><span class="o">-</span><span class="mi">1</span>
+        <span class="c1">% euler step</span>
+        <span class="n">Yf</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">Yf</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span>  <span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="n">Yf</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">Yf</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">Yf</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">));</span>
+    <span class="k">end</span>
+    <span class="c1">% zero flux boundary conditions</span>
+    <span class="n">Yf</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">Yf</span><span class="p">(</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> 
+    <span class="n">Yf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">Yf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>We display the uncontrolled solution:</p>
+
+<table>
+  <tr>
+      <th>
+        <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/unctrb.png" />
+      </th>
+      <th>
+        <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/unctrbab.png" />
+      </th>
+  </tr>
+</table>
+
+<p>The following animation displays the evolution of $100$ Brownian particles without control:</p>
+
+<center>
+<video controls="" width="80%" src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/JMALLOWITHOUT.mp4"></video>
+</center>
+
+<p>We now set up the optimal control problem in CasADi:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% optimal control problem</span>
+
+<span class="n">opti</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Opti</span><span class="p">();</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span> <span class="c1">% state variable</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span> <span class="c1">% control variable</span>
+</code></pre></div></div>
+
+<p>We specify the system dynamics, discretizing the Fokker-Planck equation using central differences for the spatial derivatives and a forward Euler scheme for the time derivative:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% system dynamics</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">Nt</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">:</span> <span class="n">Nx</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">term1</span> <span class="o">=</span> <span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">Y</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="n">Y</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">));</span>
+        <span class="n">term2</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">Y</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">U</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="n">U</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">));</span>
+        <span class="n">term3</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">U</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="n">Y</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">));</span>
+        <span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">Y</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">term1</span> <span class="o">-</span> <span class="n">term2</span> <span class="o">-</span> <span class="n">term3</span><span class="p">);</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>We now set the initial condition and zero flux boundary conditions as constraints:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% initial conditions and zero flux boundary conditions</span>
+
+<span class="c1">% initial condition</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">Y</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">y0</span><span class="p">);</span> 
+
+<span class="c1">% zero flux boundary conditions</span>
+<span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">:</span> <span class="n">Nt</span>
+    <span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="n">Y</span><span class="p">(</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)/(</span><span class="mi">1</span><span class="o">-</span><span class="n">dx</span><span class="o">*</span><span class="n">U</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span><span class="n">n</span><span class="p">)));</span>
+    <span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="n">Y</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)/(</span><span class="mi">1</span><span class="o">+</span><span class="n">dx</span><span class="o">*</span><span class="n">U</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)));</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>We set the constraints on the control, taking $a = 2$:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% admissible control constraints</span>
+
+<span class="n">opti</span><span class="o">.</span><span class="n">subject_to</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">&lt;=</span><span class="n">U</span><span class="p">(:)</span><span class="o">&lt;=</span><span class="mi">2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We declare the cost functional:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% cost functional</span>
+
+<span class="n">cost</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">% running cost</span>
+<span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">Nt</span> 
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">Nx</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">cost</span> <span class="o">+</span> <span class="p">(</span><span class="n">x_line</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">ref</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1">% terminal cost</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">Nx</span> 
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">cost</span> <span class="o">+</span> <span class="p">(</span><span class="n">x_line</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">ref</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="c1">% control cost</span>
+<span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">Nt</span> <span class="c1">% control cost</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">Nx</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">cost</span> <span class="o">+</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">U</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>We solve the optimization problem using the IPOPT software:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% solution of the optimization problem</span>
+
+<span class="c1">% set optimization objective</span>
+<span class="n">opti</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">cost</span><span class="p">);</span>
+
+<span class="c1">% solution of the optimization problem</span>
+<span class="n">p_opts</span> <span class="o">=</span> <span class="nb">struct</span><span class="p">(</span><span class="s1">'expand'</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<span class="n">s_opts</span> <span class="o">=</span> <span class="nb">struct</span><span class="p">(</span><span class="s1">'max_iter'</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span> 
+<span class="n">opti</span><span class="o">.</span><span class="n">solver</span><span class="p">(</span><span class="s1">'ipopt'</span><span class="p">,</span><span class="n">p_opts</span><span class="p">,</span><span class="n">s_opts</span><span class="p">);</span> 
+
+<span class="nb">tic</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">solve</span><span class="p">();</span> 
+<span class="nb">toc</span>
+</code></pre></div></div>
+
+<p>Obtaining the following display:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:    10448
+Number of nonzeros in inequality constraint Jacobian.:     1600
+Number of nonzeros in Lagrangian Hessian.............:     6204
+
+Total number of variables............................:     3200
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:     1600
+Total number of inequality constraints...............:     1600
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:     1600
+        inequality constraints with only upper bounds:        0
+
+Number of Iterations....: 39
+
+                                   (scaled)                 (unscaled)
+Objective...............:  7.2472498957747769e+002   9.6893349411152292e+002
+Dual infeasibility......:  1.0060574595627259e-010   1.3450657609300798e-010
+Constraint violation....:  1.1102230246251565e-016   1.1102230246251565e-016
+Complementarity.........:  2.5059036929760477e-009   3.3503108849024674e-009
+Overall NLP error.......:  2.5059036929760477e-009   3.3503108849024674e-009
+
+
+Number of objective function evaluations             = 40
+Number of objective gradient evaluations             = 40
+Number of equality constraint evaluations            = 40
+Number of inequality constraint evaluations          = 40
+Number of equality constraint Jacobian evaluations   = 40
+Number of inequality constraint Jacobian evaluations = 40
+Number of Lagrangian Hessian evaluations             = 39
+Total CPU secs in IPOPT (w/o function evaluations)   =      1.062
+Total CPU secs in NLP function evaluations           =      0.047
+
+EXIT: Optimal Solution Found.
+      solver  :   t_proc      (avg)   t_wall      (avg)    n_eval
+       nlp_f  |   3.00ms ( 75.00us)   3.00ms ( 75.00us)        40
+       nlp_g  |  14.00ms (350.00us)  13.99ms (349.85us)        40
+  nlp_grad_f  |   5.00ms (121.95us)   5.00ms (121.90us)        41
+  nlp_hess_l  |  10.00ms (256.41us)  10.01ms (256.74us)        39
+   nlp_jac_g  |  15.00ms (365.85us)  15.98ms (389.78us)        41
+       total  |   1.11 s (  1.11 s)   1.11 s (  1.11 s)         1
+Elapsed time is 1.561797 seconds.
+</code></pre></div></div>
+
+<p>The following pictures display the temporal evolution of the controlled solution. The solution follows an oscillatory pattern similar to the one given by the reference trajectory:</p>
+
+<table>
+  <tr>
+      <th>
+        <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/ctrb.png" />
+      </th>
+      <th>
+        <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/ctrbab.png" />
+      </th>
+  </tr>
+</table>
+
+<p>Finally, we display the evolution of $100$ Brownian particles subject to the control $u(x,t)$ that we have just computed:</p>
+
+<center>
+<video controls="" width="80%" src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/JMALLO.mp4"></video>
+</center>
+<h2 id="references">References</h2>
+
+<p>[1] Hannes Risken, Till Frank. The Fokker-Planck Equation: Methods of Solution and Applications, Second Edition. Springer-Verlag Berlin Heidelberg, 1996</p>
+
+<p>[2] Roy, S., Annunziato, M., Borzì, A., and Klingenberg, C. (2018). A Fokker–Planck approach to control collective motion. Computational Optimization and Applications, 69(2), 423-459.</p>
+
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

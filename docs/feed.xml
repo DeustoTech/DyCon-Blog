@@ -5,9 +5,317 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 18 Dec 2019 14:52:09 +0100</pubDate>
-    <lastBuildDate>Wed, 18 Dec 2019 14:52:09 +0100</lastBuildDate>
+    <pubDate>Thu, 19 Dec 2019 16:01:55 +0100</pubDate>
+    <lastBuildDate>Thu, 19 Dec 2019 16:01:55 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Optimal Control of the Fokker-Planck Equation with CasADi</title>
+        <description>In this tutorial, we present an optimal control problem related to the Fokker-Planck equation.
+
+Description of the problem
+
+The Fokker Planck Equation
+
+Let $\Omega$ be an open, bounded, regular subset of $\mathbb{R}^{n}$. Let $T&amp;gt;0$ and denote by $u\in L^2(0,T;H^{1}(\Omega))^n$ a time-dependent vector field in $\Omega$. Consider a particle in $\Omega$ that moves with velocity $u(x,t)$ at each point $x\in\Omega$ in time $t\in(0,T)$. Suppose furthermore that the particle is subject to additive Brownian noise.
+
+Let $p_0(x)$ be the probability density of the position of the particle at time $t=0$. Then, at every time $t&amp;gt;0$, the probability density $p(x,t)$ of the particle satisfies the Fokker-Planck equation [1]:
+
+
+
+Where $\mathrm{n}$ is the outward unit normal vector field on $\partial\Omega$.
+
+Fix a positive real number $a&amp;gt;0$ and introduce the family of admissible controls:
+
+
+
+For every non-negative initial data $p_0\in H^{1}(\Omega)$ and every admissible control $u\in\mathcal{U}_{\mathrm{ad}}$, there is a unique solution $p\in\mathcal{C}([0,T];L^{2}(\Omega))\cap L^{2}(0,T;H^{1}(\Omega))$ to the previous problem such that $p(x,t)\geq 0$ for every $t\geq 0$ and almost every $x\in\Omega$ [2].
+
+If, besides, $\int_{\Omega}p_{0}(x)dx=1$, then integrating by parts it’s easy to check that $\int_{\Omega}p(x,t)dx=1$ for every $t\geq 0$, so $p(.,t)$ is indeed a probability density on $\Omega$ for every $t\geq 0$.
+
+Optimal Control
+
+Fix a smooth reference trajectory $z:[0,T]\rightarrow\Omega$. Our objective is to find an admissible control $u\in\mathcal{U}_{\mathrm{ad}}$ that minimizes the following functional:
+
+
+
+subject to:
+
+
+
+where $\alpha,\beta$ and $\gamma$ are non-negative real 
+numbers. In [2] it is proven that there always exists a $u^{*}\in\mathcal{U}_{\mathrm{ad}}$ minimizing the previous functional among the family of admissible controls.
+
+Numerical Simulation
+
+In the numerical example that we will present in this post, we will work over the one-dimensional domain $\Omega = (-6,6)$ with time horizon $T = 5$, and the oscillating reference trajectory $z(t) = 4\sin(2t)$. We also fix $\alpha=\beta=\gamma=1$, so that our objective will be to minimize the functional:
+
+
+
+subject to
+
+
+
+
+
+We consider the initial probability density function
+
+
+
+where $C&amp;gt;0$ is chosen so that $\int_{-6}^{6}p_0(x)dx=1$.
+
+
+
+We start by defining the mesh sizes and parameters. We discretize the spatial domain with $20$ points and the temporal domain with $80$ points.
+
+%% mesh sizes and parameters
+
+% spatial mesh
+X_max = 6; % length of space domain
+Nx = 20; % number of mesh points
+x_line = linspace(-X_max,X_max,Nx); % discretization of the space domain
+dx = x_line(2) - x_line(1); % space increment
+
+% temporal mesh
+T = 5; % time horizon
+Nt = 80; % number of mesh points
+t_line = linspace(0,T,Nt); % discretization of the time domain
+dt = t_line(2) - t_line(1); % time increment
+
+% parameters
+k = dt/(dx^2);
+b = dt/(2*dx);
+
+
+We define the reference trajectory $z(t)=4\sin(2t)$:
+
+%% reference trajectory
+
+ref = 4*sin(2*t_line);
+
+
+We define the initial probability density $p_0(x) = \frac{1}{C}\exp(-2x^2)$. We compute $C$ using $C = \int_{-6}^{6}\exp(-2x^2)dx = \sqrt{\frac{\pi}{2}}\mathrm{erf}(6\sqrt{2})$, where $\mathrm{erf}$ is the error function.
+
+%% initial density
+
+y0 = exp(-2*x_line.^2);
+
+C = sqrt(pi/2)*erf(sqrt(2)*X_max); % normalizing constant
+y0 = (1/C) * y0'; % normalized initial density
+
+
+The uncontrolled evolution of this probability density is given by the following heat equation with Neumann boundary conditions:
+
+
+
+We discretize and solve this equation:
+
+%% uncontrolled solution
+
+Yf = zeros(Nx,Nt);
+Yf(:,1) = y0;
+
+for n = 1 : Nt-1
+    for j = 2 : Nx-1
+        % euler step
+        Yf(j,n+1) = Yf(j,n) +  k * (Yf(j+1,n) - 2*Yf(j,n) + Yf(j-1,n));
+    end
+    % zero flux boundary conditions
+    Yf(Nx,n+1) = Yf(Nx-1,n+1); 
+    Yf(1,n+1) = Yf(2,n+1);
+end
+
+We display the uncontrolled solution:
+
+
+  
+      
+        
+      
+      
+        
+      
+  
+
+
+The following animation displays the evolution of $100$ Brownian particles without control:
+
+
+
+
+
+We now set up the optimal control problem in CasADi:
+
+%% optimal control problem
+
+opti = casadi.Opti();
+Y = opti.variable(Nx,Nt); % state variable
+U = opti.variable(Nx,Nt); % control variable
+
+
+We specify the system dynamics, discretizing the Fokker-Planck equation using central differences for the spatial derivatives and a forward Euler scheme for the time derivative:
+
+%% system dynamics
+
+for n = 1 : Nt-1
+    for j = 2 : Nx-1
+        term1 = k*(Y(j+1,n)-2*Y(j,n)+Y(j-1,n));
+        term2 = b*Y(j,n)*(U(j+1,n)-U(j-1,n));
+        term3 = b*U(j,n)*(Y(j+1,n)-Y(j-1,n));
+        opti.subject_to(Y(j,n+1) == Y(j,n) + term1 - term2 - term3);
+    end
+end
+
+
+We now set the initial condition and zero flux boundary conditions as constraints:
+
+%% initial conditions and zero flux boundary conditions
+
+% initial condition
+opti.subject_to(Y(:,1) == y0); 
+
+% zero flux boundary conditions
+for n = 2 : Nt
+    opti.subject_to(Y(Nx,n) == Y(Nx-1,n)/(1-dx*U(Nx,n)));
+    opti.subject_to(Y(1,n) == Y(2,n)/(1+dx*U(1,n)));
+end
+
+
+We set the constraints on the control, taking $a = 2$:
+
+%% admissible control constraints
+
+opti.subject_to(-2&amp;lt;=U(:)&amp;lt;=2);
+
+
+We declare the cost functional:
+
+%% cost functional
+
+cost = 0;
+
+% running cost
+for n = 1 : Nt 
+    for i = 1 : Nx
+        cost = cost + (x_line(i)-ref(n))^2*Y(i,n);
+    end
+end
+
+% terminal cost
+for i = 1 : Nx 
+    cost = cost + (x_line(i)-ref(n))^2*Y(i,Nt);
+end
+
+% control cost
+for n = 1 : Nt % control cost
+    for i = 1 : Nx
+        cost = cost + Y(i,n)*U(i,n)^2;
+    end
+end
+
+
+We solve the optimization problem using the IPOPT software:
+
+%% solution of the optimization problem
+
+% set optimization objective
+opti.minimize(cost);
+
+% solution of the optimization problem
+p_opts = struct('expand',true);
+s_opts = struct('max_iter',1000); 
+opti.solver('ipopt',p_opts,s_opts); 
+
+tic
+sol = opti.solve(); 
+toc
+
+
+Obtaining the following display:
+
+This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:    10448
+Number of nonzeros in inequality constraint Jacobian.:     1600
+Number of nonzeros in Lagrangian Hessian.............:     6204
+
+Total number of variables............................:     3200
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:     1600
+Total number of inequality constraints...............:     1600
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:     1600
+        inequality constraints with only upper bounds:        0
+
+Number of Iterations....: 39
+
+                                   (scaled)                 (unscaled)
+Objective...............:  7.2472498957747769e+002   9.6893349411152292e+002
+Dual infeasibility......:  1.0060574595627259e-010   1.3450657609300798e-010
+Constraint violation....:  1.1102230246251565e-016   1.1102230246251565e-016
+Complementarity.........:  2.5059036929760477e-009   3.3503108849024674e-009
+Overall NLP error.......:  2.5059036929760477e-009   3.3503108849024674e-009
+
+
+Number of objective function evaluations             = 40
+Number of objective gradient evaluations             = 40
+Number of equality constraint evaluations            = 40
+Number of inequality constraint evaluations          = 40
+Number of equality constraint Jacobian evaluations   = 40
+Number of inequality constraint Jacobian evaluations = 40
+Number of Lagrangian Hessian evaluations             = 39
+Total CPU secs in IPOPT (w/o function evaluations)   =      1.062
+Total CPU secs in NLP function evaluations           =      0.047
+
+EXIT: Optimal Solution Found.
+      solver  :   t_proc      (avg)   t_wall      (avg)    n_eval
+       nlp_f  |   3.00ms ( 75.00us)   3.00ms ( 75.00us)        40
+       nlp_g  |  14.00ms (350.00us)  13.99ms (349.85us)        40
+  nlp_grad_f  |   5.00ms (121.95us)   5.00ms (121.90us)        41
+  nlp_hess_l  |  10.00ms (256.41us)  10.01ms (256.74us)        39
+   nlp_jac_g  |  15.00ms (365.85us)  15.98ms (389.78us)        41
+       total  |   1.11 s (  1.11 s)   1.11 s (  1.11 s)         1
+Elapsed time is 1.561797 seconds.
+
+
+The following pictures display the temporal evolution of the controlled solution. The solution follows an oscillatory pattern similar to the one given by the reference trajectory:
+
+
+  
+      
+        
+      
+      
+        
+      
+  
+
+
+Finally, we display the evolution of $100$ Brownian particles subject to the control $u(x,t)$ that we have just computed:
+
+
+
+
+References
+
+[1] Hannes Risken, Till Frank. The Fokker-Planck Equation: Methods of Solution and Applications, Second Edition. Springer-Verlag Berlin Heidelberg, 1996
+
+[2] Roy, S., Annunziato, M., Borzì, A., and Klingenberg, C. (2018). A Fokker–Planck approach to control collective motion. Computational Optimization and Applications, 69(2), 423-459.
+
+</description>
+        <pubDate>Thu, 19 Dec 2019 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0013</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0013</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP05</category>
+        
+      </item>
     
       <item>
         <title>Inverse design for the one-dimensional Burgers equation</title>
@@ -2177,174 +2485,6 @@ Proceedings ICM 2018, to appear.
         <category>tutorial</category>
         
         <category>WP03</category>
-        
-      </item>
-    
-      <item>
-        <title>Rotors imbalance suppression by optimal control</title>
-        <description>Consider a rotor rotating around a fixed axis. Because of wear and damage, the mass distribution is not homogeneous. This leads to dangerous vibrations in the rotation. A prototypical example can be a wind turbine, affected by misalignment of the blades and/or mass imbalance of the hub and blades [2].
-
-In order to compensate the imbalance, two balancing heads are mounted at the endpoints of the axle, as in figure 1. Each balancing head is made of two masses free to rotate.
-
-Our goal is to determine the optimal movement of the balancing masses to minimize the vibrations. Control theoretical techniques are employed. For further details, see [6].
-
- Figure 1: representation of the rotor and the balancing. The balancing heads are located at the endpoints of the spindle. The four balancing masses (two for each balancing head) are drawn in red. 
-
-Consider a rotor-fixed reference frame $(O;(x,y,z))$. Figures 1 and 2 show a front view of the device and a scheme of the balancing heads. 
-
-Figure 2: front view of the system made of rotor and balancing device. 
-
-Figure 3: scheme of one balancing head. The balancing masses $(m_i,P_{i,1})$ and $(m_i,P_{i,2})$ are drawn in red. The bisector of the angle generated by $\overset{\longrightarrow}{OP_{i,1}}$ and $\overset{\longrightarrow}{OP_{i,2}}$ is the dashed line. The *intermediate* angle $\alpha_i$ is represented in 3(A), while the *gap* angle $\gamma_i$ is depicted in 3(B). The angles $\alpha_i$ and $\gamma_i$ give the position of the balancing masses in each balancing head. 
-
-We consider two planes
-
-
-
-orthogonal to the rotation axis $z$. The balancing device (see figures 1 and 2) is made of two heads lying in each of these planes.
-
-The heads are fixed to the rotor and rotate with it. In particular, $\alpha_i$ and $\gamma_i$ are defined with respect to the rotor-fixed reference frame $(O;(x,y,z))$.
-
-Each head is made of a pair of balancing masses, which are free to rotate orthogonally to the rotation axis $z$.
-
-Namely, we have
-
-  two mass-points $(m_1,P_{1,1})$ and $(m_1,P_{1,2})$ lying on $\pi_1$ at distance $r_1$ from the axis $z$, i.e., in the reference frame $(O;(x,y,z))$
-
-
-
-
-
-  two mass-points $(m_2,P_{2,1})$ and $(m_2,P_{2,2})$ lying on $\pi_2$ at distance $r_2$ from the axis $z$, namely, in the reference frame $(O;(x,y,z))$
-
-
-
-
-For any $i=1,2$, let $b_i$ be the bisector of the angle generated by $\overset{\longrightarrow}{OP_{i,1}}$ and $\overset{\longrightarrow}{OP_{i,2}}$ (see figure 3). The intermediate angle $\alpha_i$ is the angle between the $x$-axis and the bisector $b_i$, while the gap angle $\gamma_i$ is the angle between $\overset{\longrightarrow}{OP_{i,1}}$ and the bisector $b_i$.
-
-The imbalance is modelled by a resulting force $F$ and a momentum $N$ orthogonal to the rotation axis. In the rotor-fixed reference frame $(O;(x,y,z))$, set $P_1 :=  (0,0,-a)$, $P_2 :=  (0,0,b)$, $F :=  (F_x,F_y,0)$ and $N :=  (N_x,N_y,0)$. By imposing the equilibrium condition on forces and momenta, the force $F$ and the momentum $N$ can be decomposed into a force $F_1$ exerted at $P_1$ contained in plane $\pi_1$ and a force $F_2$ exerted at $P_2$ contained in $\pi_2$.
-
-In each plane, we generate a force to balance the system, by moving the balancing masses:
-
-  in the plane $\pi_1$, we compensate $F_1$ by the centrifugal force:
-
-
-
-
-
-  in the plane $\pi_2$, we compensate $F_2$ by the centrifugal force:
-
-
-
-
-The overall imbalance of the system is then given by the resulting forces in $\pi_1$ and $\pi_2$,
-
-
-
-and
-
-
-
-respectively.
-
-The overall imbalance on the system made of rotor and balancing device is measured by the imbalance indicator
-
-
-
-Our task is to find a control strategy such that
-
-  the balancing masses move from their initial configuration $\Phi_0$ to a final configuration $\overline{\Phi}$, where the imbalance is compensated;
-  the imbalance and velocities should be kept small during the correction process.
-
-
-We address the minimization problem
-
-
-
-where $Q(\Phi) :=  G(\Phi)-\inf G$ and
-
-
-
-with .
-
-The theoretical analysis of the above problem is in [6]. The existence of the optimum is proved. The stabilization of the optimal trajectories towards steady optima is proved in any condition.
-
-Simulation
-
-In order to perform some numerical simulations, we firstly discretize our cost functional and then we run AMPL-IPOpt to minimize the resulting discretized functional.
-
-For the purpose of the numerical simulations, it is convenient to rewrite the cost functional as
-
-
-
-subject to the state equation
-
-
-
-Discretization
-Choose $T$ sufficiently large and $Nt \in \mathbb{N} \setminus {0,1}$. Set
-
-
-
-The discretized state is  , whereas the discretized control (velocity) is $(\psi_{i})_{i=0, … ,Nt-2}$. The discretized functional then reads as
-
-
-
-subject to the state equation
-
-
-
-Execution
-
-The discretized minimization problem is
-
-
-
-We address the above minimization problem by employing the interior-point optimization routine IPOpt (see [3,4]) coupled with AMPL [1], which serves as modelling language and performs the automatic differentiation. The interested reader is referred to [8, Chapter 9] and [7] for a survey on existing numerical methods to solve an optimal control problem.
-
-In figures 4, 5, 6 and 7, we plot the computed optimal trajectory for \eqref{functional}, with initial datum $\Phi_0=\left(\alpha_{0,1},\gamma_{0,1};\alpha_{0,2},\gamma_{0,2}\right) :=  \left(2.6,0.6, 2.5,1.5\right)$. We choose $F$, $N$ and $m_i$. The exponential stabilization proved in [6] emerges. 
-
-Figure 4: intermediate angle $\alpha_1$ versus time. 
-
-Figure 5: gap angle $\gamma_1$ versus time. 
-
- Figure 6: intermediate angle $\alpha_2$ versus time. 
-In figure 8, we depict the imbalance indicator versus time along the computed trajectories. As expected, it decays to zero exponentially.
-
-Figure 7: gap angle $\gamma_2$ versus time. 
-
- Figure 8: system response. 
-
-
-
- Figure 9: We represent the evolution in time of the rotor vibrations.
-In the uncontrolled case, the balancing device does not act. In the controlled case, our balancing strategy suppress the vibrations. 
-
-References:
-[1] Robert Fourer, David M Gay, and Brian W Kernighan. A modeling language for mathematical programming. Management Science, 36(5):519{554, 1990.
-
-[2] Mike Jeffrey, Michael Melsheimer, and Jan Liersch. Method and system for determining an imbalance of a wind turbine rotor, September 11 2012. US Patent 8,261,599.
-
-[3] Andreas Waechter, Carl Laird, F Margot, and Y Kawajir. Introduction to ipopt: A tutorial for downloading, installing, and using ipopt. Revision, 2009.
-
-[4] Andreas Waechter and Lorenz T Biegler. On the implementation of an interior-point lterline-search algorithm for large-scale nonlinear programming. Mathematical programming, 106(1):25{57, 2006.
-
-[6] Matteo Gnuffi, Dario Pighin and Noboru Sakamoto. Rotors imbalance suppression by optimal control. Preprint.
-
-[7] Noboru Sakamoto and Arjan J van der Schaft. Analytical approximation methods for the stabilizing solution of the Hamilton-Jacobi equation. IEEE Transactions on Automatic Control, 53(10):2335{2350, 2008.
-
-[8] Emmanuel Trélat. Contrôle optimal : théorie et applications
-Mathématiques Concrètes. Vuibert, Paris, 2005. available
-online:
-https://www.ljll.math.upmc.fr/trelat/chiers/livreopt2.pdf.
-</description>
-        <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0004</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0004</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP02</category>
         
       </item>
     
