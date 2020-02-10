@@ -300,7 +300,7 @@ img:active{
 
 <script type="math/tex; mode=display">\begin{cases}
 \partial_t p - \Delta p + \mathrm{div}(pu) = 0 \quad \mathrm{in}\,\,\Omega\times(0,T)\\
-p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)\\
+p(x,0) = p_0(x) \quad \mathrm{in}\,\,\Omega\\
 (\nabla p-pu)\cdot\mathrm{n} = 0 \quad \mathrm{on}\,\,\partial\Omega\times(0,T)
 \end{cases}</script>
 
@@ -325,7 +325,7 @@ p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)\\
 
 <script type="math/tex; mode=display">\begin{cases}
 \partial_t p - \Delta p + \mathrm{div}(pu) = 0 \quad \mathrm{in}\,\,\Omega\times(0,T)\\
-p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)\\
+p(x,0) = p_0(x) \quad \mathrm{in}\,\,(-6,6)\\
 (\nabla p-pu)\cdot\mathrm{n} = 0 \quad \mathrm{on}\,\,\partial\Omega\times(0,T)
 \end{cases}</script>
 
@@ -340,7 +340,8 @@ numbers. In [2] it is proven that there always exists a $u^{*}\in\mathcal{U}_{\m
 
 <p>subject to</p>
 
-<script type="math/tex; mode=display">\begin{cases}
+<script type="math/tex; mode=display">(1)
+\begin{cases}
 \partial_t p - \partial_x^2 p + \partial_x(pu) = 0 \quad \mathrm{in}\,\, (-6,6)\times(0,T)\\
 p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)\\
 \partial_x^{-}p(6,t) - u(6,t)p(6,t) = 0 \quad \mathrm{in} \,\,(0,T)\\
@@ -397,10 +398,13 @@ p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)\\
 
 <p>The uncontrolled evolution of this probability density is given by the following heat equation with Neumann boundary conditions:</p>
 
-<script type="math/tex; mode=display">\partial_t p - \partial_{x}^{2}p = 0 \quad \mathrm{in}\,\,(-6,6)\times(0,T)\\
+<script type="math/tex; mode=display">(2)
+\begin{cases}
+\partial_t p - \partial_{x}^{2}p = 0 \quad \mathrm{in}\,\,(-6,6)\times(0,T)\\
 p(x,0)=p_0(x)\quad\mathrm{in}\,\,(-6,6)\\
 \partial_{x}^{-}p(6,t) = 0\quad\mathrm{in}\,\,(0,T)\\
-\partial_{x}^{+}p(-6,t) = 0\quad\mathrm{in}\,\,(0,T)</script>
+\partial_{x}^{+}p(-6,t) = 0\quad\mathrm{in}\,\,(0,T)
+\end{cases}</script>
 
 <p>We discretize and solve this equation:</p>
 
@@ -432,7 +436,7 @@ p(x,0)=p_0(x)\quad\mathrm{in}\,\,(-6,6)\\
   </tr>
 </table>
 
-<p>The following animation displays the evolution of $100$ Brownian particles without control:</p>
+<p>The solution $p(x,t)$ of the Heat equation (2) is the probability density associated to a one-dimensional Brownian motion on the real line. This is a particular case of a more general phenomenon: there is a correspondence between certain second order parabolic equations and solutions of stochastic ordinary differential equations [3]. Using the computed value of $p(x,t)$, we can simulate sample paths of a Brownian motion on the real line: the following animation displays the evolution of $100$ Brownian particles without control:</p>
 
 <center>
 <video controls="" width="80%" src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/JMALLOWITHOUT.mp4"></video>
@@ -588,7 +592,7 @@ Elapsed time is 1.561797 seconds.
   </tr>
 </table>
 
-<p>Finally, we display the evolution of $100$ Brownian particles subject to the control $u(x,t)$ that we have just computed:</p>
+<p>Again, by the correspondence between second order parabolic equations and solutions to stochastic ordinary differential equations, the solution $p(x,t)$ to equation (2) is the probability density of a brownian particle on the real line that is subject to the velocity field $u(x,t)$. We use the values of $p(x,t)$ that we have just computed to simulate sample paths of this controlled brownian motion: the following animation displays the evolution of $100$ Brownian particles subject to the control $u(x,t)$:</p>
 
 <center>
 <video controls="" width="80%" src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/JMALLO.mp4"></video>
@@ -598,6 +602,8 @@ Elapsed time is 1.561797 seconds.
 <p>[1] Hannes Risken, Till Frank. The Fokker-Planck Equation: Methods of Solution and Applications, Second Edition. Springer-Verlag Berlin Heidelberg, 1996</p>
 
 <p>[2] Roy, S., Annunziato, M., Borzì, A., and Klingenberg, C. (2018). A Fokker–Planck approach to control collective motion. Computational Optimization and Applications, 69(2), 423-459.</p>
+
+<p>[3] Stroock, Daniel W., Varadhan, S.R.S. Multidimensional Diffusion Processes. Springer-Verlag Berlin Heidelberg, Reprint of the 1997 Edition (Grundlehren der mathematischen Wissenschaften, Vol. 233).</p>
 
 
         <hr>

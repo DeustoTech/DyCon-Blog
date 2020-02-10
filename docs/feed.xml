@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 19 Dec 2019 16:27:59 +0100</pubDate>
-    <lastBuildDate>Thu, 19 Dec 2019 16:27:59 +0100</lastBuildDate>
+    <pubDate>Tue, 07 Jan 2020 16:43:40 +0100</pubDate>
+    <lastBuildDate>Tue, 07 Jan 2020 16:43:40 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -138,7 +138,7 @@ We display the uncontrolled solution:
   
 
 
-The following animation displays the evolution of $100$ Brownian particles without control:
+The solution $p(x,t)$ of the Heat equation (2) is the probability density associated to a one-dimensional Brownian motion on the real line. This is a particular case of a more general phenomenon: there is a correspondence between certain second order parabolic equations and solutions of stochastic ordinary differential equations [3]. Using the computed value of $p(x,t)$, we can simulate sample paths of a Brownian motion on the real line: the following animation displays the evolution of $100$ Brownian particles without control:
 
 
 
@@ -294,7 +294,7 @@ The following pictures display the temporal evolution of the controlled solution
   
 
 
-Finally, we display the evolution of $100$ Brownian particles subject to the control $u(x,t)$ that we have just computed:
+Again, by the correspondence between second order parabolic equations and solutions to stochastic ordinary differential equations, the solution $p(x,t)$ to equation (2) is the probability density of a brownian particle on the real line that is subject to the velocity field $u(x,t)$. We use the values of $p(x,t)$ that we have just computed to simulate sample paths of this controlled brownian motion: the following animation displays the evolution of $100$ Brownian particles subject to the control $u(x,t)$:
 
 
 
@@ -304,6 +304,8 @@ References
 [1] Hannes Risken, Till Frank. The Fokker-Planck Equation: Methods of Solution and Applications, Second Edition. Springer-Verlag Berlin Heidelberg, 1996
 
 [2] Roy, S., Annunziato, M., Borzì, A., and Klingenberg, C. (2018). A Fokker–Planck approach to control collective motion. Computational Optimization and Applications, 69(2), 423-459.
+
+[3] Stroock, Daniel W., Varadhan, S.R.S. Multidimensional Diffusion Processes. Springer-Verlag Berlin Heidelberg, Reprint of the 1997 Edition (Grundlehren der mathematischen Wissenschaften, Vol. 233).
 
 </description>
         <pubDate>Thu, 19 Dec 2019 00:00:00 +0100</pubDate>
