@@ -202,6 +202,115 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;El problema de péndulo doble invertido en un benchmarck muy utilizado en control de sistemas dinámicos. En problema es muy complejo debida al comportamiento caótico del sistemas. Para parámetros ligeramente distintos la trayectoria del sistema toma comportamientos distintos.&lt;/p&gt;
+</code></pre></div></div>
+
+<p><img width="50%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/sch.png" /></p>
+<center>
+  <b>Figure 1.</b>
+</center>
+
+<h3>Equations of motion</h3>
+
+<script type="math/tex; mode=display">M(\theta_1,\theta_2)\frac{d}{dt} \begin{bmatrix} 
+         v \\ \omega_1 \\ \omega_2 
+    \end{bmatrix} = G(\theta_1,\theta_2,\omega_1,\omega_2)  -  \begin{bmatrix}
+      d_1 v \\ d_2\omega_1 \\ d_3 \omega_2
+    \end{bmatrix} + \begin{bmatrix}
+      u \\ 0 \\ 0
+    \end{bmatrix}</script>
+
+<p>where:</p>
+
+<script type="math/tex; mode=display">G(\theta_1,\theta_2,\omega_1,\omega_2) = \begin{bmatrix}
+    l_1(m_1+m_2)\omega_1^2sin(\theta_1) + m_2l_2\omega_2^2 sin(\omega_2) \\
+    -l_1l_2m_2\omega_2^2sin(\theta_1-\theta_2) + g(m_1+m_2)l_1sin(\theta_1) \\
+    l_1l_2m_2\omega_1^2sin(\theta_1-\theta_2) + g l_2 m_2 sin(\theta_2)
+  \end{bmatrix}</script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+M(\theta_1,\theta_2) = \begin{bmatrix}
+      m+m_1+m_2 & l_1(m_1 +m_2 )cos(\theta_1) & m_2l_2cos(\theta_2) \\
+      l_1(m_1+m_2) cos(\theta_1) & l_1^2(m_1+m_2) & l_1l_2m_2 cos(\theta_1-\theta_2) \\
+      l2 m_2 cos(\theta_2) & l_1 l_2 m_2 cos(\theta_1-\theta_2) & l_2^2 m_2
+    \end{bmatrix} %]]></script>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&gt;&gt;</span> <span class="nb">type</span> <span class="n">cartpole_dynamics</span><span class="o">.</span><span class="n">m</span>
+
+<span class="k">function</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">cartpole_dynamics</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">L1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>    <span class="n">L2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">;</span>
+    <span class="n">m1</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">m1</span><span class="p">;</span>    <span class="n">m2</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">m2</span><span class="p">;</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="mf">1e-1</span><span class="p">;</span>    <span class="n">d2</span> <span class="o">=</span> <span class="mf">1e-1</span><span class="p">;</span>    <span class="n">d3</span> <span class="o">=</span> <span class="mf">1e-1</span><span class="p">;</span>
+    <span class="c1">%%%%%%%%%%%%%%%%%%%%%5%%%</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="nb">class</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+    <span class="c1">%</span>
+    <span class="n">q</span>      <span class="o">=</span> <span class="n">s</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="n">theta1</span> <span class="o">=</span> <span class="n">s</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">s</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="n">dq</span>     <span class="o">=</span> <span class="n">s</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">dtheta1</span><span class="o">=</span> <span class="n">s</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>    <span class="n">dtheta2</span><span class="o">=</span> <span class="n">s</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span> 
+    <span class="c1">% q</span>
+    <span class="n">ds</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">dq</span> <span class="o">-</span><span class="n">q</span><span class="p">;</span>
+    <span class="c1">% theta 1</span>
+    <span class="n">ds</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">dtheta1</span><span class="p">;</span>
+    <span class="c1">% theta 2</span>
+    <span class="n">ds</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">dtheta2</span><span class="p">;</span>
+    <span class="c1">%</span>
+    <span class="n">Mt</span> <span class="o">=</span> <span class="p">[</span> <span class="n">M</span><span class="o">+</span><span class="n">m1</span><span class="o">+</span><span class="n">m2</span>                  <span class="n">L1</span><span class="o">*</span><span class="p">(</span><span class="n">m1</span><span class="o">+</span><span class="n">m2</span><span class="p">)</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span>     <span class="n">m2</span><span class="o">*</span><span class="n">L2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">)</span> <span class="p">;</span> <span class="k">...</span>
+          <span class="n">L1</span><span class="o">*</span><span class="p">(</span><span class="n">m1</span><span class="o">+</span><span class="n">m2</span><span class="p">)</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span>     <span class="n">L1</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">m1</span><span class="o">+</span><span class="n">m2</span><span class="p">)</span>             <span class="n">L1</span><span class="o">*</span><span class="n">L2</span><span class="o">*</span><span class="n">m2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta1</span><span class="o">-</span><span class="n">theta2</span><span class="p">)</span> <span class="p">;</span> <span class="k">...</span>
+          <span class="n">L2</span><span class="o">*</span><span class="n">m2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">)</span>          <span class="n">L1</span><span class="o">*</span><span class="n">L2</span><span class="o">*</span><span class="n">m2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta1</span><span class="o">-</span><span class="n">theta2</span><span class="p">)</span>  <span class="n">L2</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="n">m2</span>        <span class="p">];</span>
+    <span class="c1">% v</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">L1</span><span class="o">*</span><span class="p">(</span><span class="n">m1</span><span class="o">+</span><span class="n">m2</span><span class="p">)</span><span class="o">*</span><span class="n">dtheta1</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span> <span class="o">+</span> <span class="n">m2</span><span class="o">*</span><span class="n">L2</span><span class="o">*</span><span class="n">theta2</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">theta2</span><span class="p">)</span>      <span class="o">-</span> <span class="n">d1</span><span class="o">*</span><span class="n">dq</span> <span class="o">+</span> <span class="n">u</span>  <span class="p">;</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="o">-</span><span class="n">L1</span><span class="o">*</span><span class="n">L2</span><span class="o">*</span><span class="n">m2</span><span class="o">*</span><span class="n">dtheta2</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">theta1</span><span class="o">-</span><span class="n">theta2</span><span class="p">)</span> <span class="o">+</span> <span class="n">g</span><span class="o">*</span><span class="p">(</span><span class="n">m1</span><span class="o">+</span><span class="n">m2</span><span class="p">)</span><span class="o">*</span><span class="n">L1</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span>  <span class="o">-</span> <span class="n">d2</span><span class="o">*</span><span class="n">dtheta1</span><span class="p">;</span>
+    <span class="n">f3</span> <span class="o">=</span>  <span class="n">L1</span><span class="o">*</span><span class="n">L2</span><span class="o">*</span><span class="n">m2</span><span class="o">*</span><span class="n">dtheta1</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">theta1</span><span class="o">-</span><span class="n">theta2</span><span class="p">)</span> <span class="o">+</span> <span class="n">g</span><span class="o">*</span><span class="n">L2</span><span class="o">*</span><span class="n">m2</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">theta2</span><span class="p">)</span>       <span class="o">-</span> <span class="n">d3</span><span class="o">*</span><span class="n">dtheta2</span><span class="p">;</span> 
+
+    <span class="n">ds</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">Mt</span><span class="p">\[</span><span class="n">f1</span><span class="p">;</span><span class="n">f2</span><span class="p">;</span><span class="n">f3</span><span class="p">];</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p> Chaotic Behaviour</p>
+
+<center>
+<video controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_thetadiff.mp4">
+</video>
+</center>
+
+<h3>  Optimal Control Problems</h3>
+
+<script type="math/tex; mode=display">J(u) = \int_0^T ||s(t)||^2  + ||u(t)||^2dt + ||s(T)||^2</script>
+
+<center>
+<video controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_control.mp4">
+</video>
+</center>
+
+<p>Implementation in DyCon Toolbox</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
+<span class="c1">% define optimal </span>
+
+<span class="n">Ss</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'x'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="n">As</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'u'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="n">ts</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span>
+<span class="c1">%</span>
+<span class="n">EvolutionFcn</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">'f'</span><span class="p">,{</span><span class="n">ts</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">As</span><span class="p">},{</span> <span class="n">cartpole_dynamics</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">As</span><span class="p">,</span><span class="n">params</span><span class="p">)</span> <span class="p">});</span>
+<span class="c1">%</span>
+<span class="n">dynamics_obj</span> <span class="o">=</span> <span class="n">ode</span><span class="p">(</span><span class="n">EvolutionFcn</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">As</span><span class="p">,</span><span class="n">tspan</span><span class="p">);</span>
+<span class="n">dynamics_obj</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">s0</span><span class="p">;</span>
+<span class="c1">%</span>
+<span class="n">PathCost</span>  <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">'L'</span>  <span class="p">,{</span><span class="n">ts</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">As</span><span class="p">},{</span> <span class="p">(</span>  <span class="p">(</span><span class="n">Ss</span><span class="o">.</span><span class="s1">'*Ss) + 1e-3*(As.'</span><span class="o">*</span><span class="n">As</span><span class="p">)</span> <span class="p">)</span> <span class="p">});</span>
+<span class="n">FinalCost</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">'Psi'</span><span class="p">,{</span><span class="n">Ss</span><span class="p">}</span>      <span class="p">,{</span> <span class="p">(</span>  <span class="p">(</span><span class="n">Ss</span><span class="o">.'*</span><span class="n">Ss</span><span class="p">)</span> <span class="p">)</span> <span class="p">});</span>
+
+<span class="n">ocp_obj</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">dynamics_obj</span><span class="p">,</span><span class="n">PathCost</span><span class="p">,</span><span class="n">FinalCost</span><span class="p">);</span>
+<span class="c1">%</span>
+<span class="n">U0</span> <span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">tspan</span><span class="p">;</span>
+<span class="p">[</span><span class="n">OptControl</span> <span class="p">,</span><span class="n">OptState</span><span class="p">]</span> <span class="o">=</span> <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">ocp_obj</span><span class="p">,</span><span class="n">U0</span><span class="p">,</span><span class="s1">'integrator'</span><span class="p">,</span><span class="s1">'CrankNicolson'</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<p>We use random initial control</p>
+<center>
+<video width="80%" controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_control_rand.mp4">
+</video>
+</center>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial, we present an optimal control problem related to the Fokker-Planck equation.&lt;/p&gt;
 </code></pre></div></div>
 
