@@ -5,12 +5,12 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 13 Feb 2020 17:05:06 +0100</pubDate>
-    <lastBuildDate>Thu, 13 Feb 2020 17:05:06 +0100</lastBuildDate>
+    <pubDate>Thu, 13 Feb 2020 17:07:38 +0100</pubDate>
+    <lastBuildDate>Thu, 13 Feb 2020 17:07:38 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
-        <title>Stabilization of a double pendulum on a cart in DyCon Toolbox</title>
+        <title>Stabilization of a double pendulum on a cart with DyCon Toolbox</title>
         <description>The finite-dimensional dynamical system given by a pendulum on a cart (cartpole) is widely considered as a benchmark for comparing the performance of different control strategies. In this blog post, we consider a double pendulum on a cart and we solve the problem of swinging up the pendulum from the downward position to the upward position using optimal control techniques.
 
 Equations of motion
