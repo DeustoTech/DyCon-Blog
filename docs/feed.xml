@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 13 Feb 2020 16:54:33 +0100</pubDate>
-    <lastBuildDate>Thu, 13 Feb 2020 16:54:33 +0100</lastBuildDate>
+    <pubDate>Thu, 13 Feb 2020 17:05:06 +0100</pubDate>
+    <lastBuildDate>Thu, 13 Feb 2020 17:05:06 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -60,6 +60,9 @@ This dynamical system shows chaotic behaviour. The following animation displays 
 
 
 
+
+
+  Figure 2. Chaotics behaviour
 
 
   Optimal Control Problem 
@@ -139,11 +142,17 @@ The following animation displays the resulting evolution of the system’s state
 
 
 
+  Figure 3. Optimal solution 
+
+
 Interestingly, due to the chaotic character of system (1), the IPOPT routine yields different controlled trajectories if we change the initial guess of the control:
 
 
 
 
+
+
+  Figure 4. Several initial guess of optimization
 
 </description>
         <pubDate>Thu, 13 Feb 2020 00:00:00 +0100</pubDate>
