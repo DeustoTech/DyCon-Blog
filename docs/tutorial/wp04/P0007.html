@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Inverse design for the one-dimensional Burgers equation - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0007">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">
+            Inverse design of time-irreversible models</a> &#8827;</small>
+          </h2>
+          <h1>Inverse design for the one-dimensional Burgers equation</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/Carlos"></a>
+                  </span>
+                </span>
+              
+              - 12 December 2019
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        <h1>The problem</h1>
+
+<p>We consider the following one-dimensional Burgers equation</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq} 
+\left\{ \begin{array}{l}
+\partial_t u(t,x)+\partial_x f(u(t,x))=0, \quad (t,x)\in \mathbb{R}^+ \times \mathbb{R}, \\
+u(0,x)=u_0(x),
+\end{array}\right.
+\end{equation}</script>
+
+<p>where $u$ is the state, $u_0$ is the initial state and  the flux function $f$ is defined by $f(u)=\frac{u^2}{2}$. Kruzkov’s theory  provides existence and uniqueness of a  solution  of \eqref{eq} with initial datum $u_0 \in L^{\infty}(\mathbb R)$. This solution is called a weak-entropy solution, denoted by $(t,x) \to S_t^+(u_0)(x)$. For a given target function $u^T$, we introduce the backward entropy  solution $(t,x) \to S^-_{t}(u^T)(x)$  as follows: 
+for every $t\in [0,T]$, for a.e $x\in \mathbb R$,</p>
+
+<script type="math/tex; mode=display">S^-_{t}(u^T)(x)= S^+_{t}(x\to u^T(-x))(-x).</script>
+
+<p>We study the problem of inverse design for \eqref{eq}. This problem consists in  identifying the set of initial data evolving to a given target at a final time.</p>
+
+<p>Due to the time-irreversibility of the Burgers equation, some target functions are unattainable from weak-entropy solutions of this equation, making the inverse problem under consideration ill-posed. To get around this issue, we introduce the following  optimal control problem</p>
+
+<script type="math/tex; mode=display">\begin{equation} \tag{$\mathcal{O}_T$}\label{opt2} \inf_{u_0\in \mathcal{U}^0_{\text{ad}}} J_0(u_0):=\Vert u^T(\cdot)-S_T^+(u_0)(\cdot)\Vert_{L^2(\mathbb R)},\end{equation}</script>
+
+<p>where $u^T$ is a given target function and the class of admissible initial data $\mathcal{U}^0_{\text{ad}}$ in \eqref{opt2} is defined by</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \label{admissible_set}\mathcal{U}^0_{\text{ad}}=\{u_0\in BV(\mathbb R) \text{ such that } \Vert u_0 \Vert_{BV( \mathbb R)} < C \,  \text{and } \text{supp}(u_0)\subset K_0\}.\end{equation} %]]></script>
+
+<p>Above, <script type="math/tex">BV</script> stands for functions of bounded variation and  $C&gt;0$ is a constant large enough. The study of \eqref{opt2} is motivated by the minimization of the sonic boom effects generated by supersonic aircrafts [2].</p>
+
+<p>To solve the optimal control problem \eqref{opt2}, some difficulties arise from a  theoretical  and  numerical point of view.</p>
+<ul>
+  <li>Since the  entropy solution $u$ of \eqref{eq} may contain shocks even if the initial datum is a smooth function, this generates important added difficulties that have been the object of intensive study in the past, see  [3,4] and the references therein. In particular, the authors make sense of the derivative of $J_0$ in \eqref{opt2} in a weak way by requiring  strong conditions on the set of initial data. This leads to require that entropy solutions of \eqref{eq} have a finite number of non-interacting jumps.</li>
+  <li>When $J_0$ is weakly differentiable,  gradient descent  methods have been implemented in [1,5,6] to solve numerically the optimal problem \eqref{opt2}. In the cases where it was applied successfully, only one possible initial datum emerges, namely the backward entropy solution $S_T^-(u^T)$. This is mainly due to the numerical viscosity that numerical schemes introduce to gain stability. To find some multiple minimizers, the authors in  [8]  use a filtering step in the backward adjoint solution.</li>
+</ul>
+
+<p>Dans [9], we fully characterize the set of minimizers of the optimal control problem \eqref{opt2}.</p>
+
+<p><b>Theorem 1.</b>  Let $u^T\in BV(\mathbb R)$. The optimal control problem \eqref{opt2}  admits multiple optimal solutions. Moreover, for a.e $T&gt;0$, the initial datum $u_0\in BV(\mathbb R)$ is an optimal solution of \eqref{opt2} if and only if $u_0 \in BV(\mathbb R)$ verifies $S_T^+(u_0)=S_T^+ (S_T^-(u^T))$.</p>
+
+<p>A characterisation of the set <script type="math/tex">\{u_0 \in BV(\mathbb R), S_T^+(u_0)=S_T^+ (S_T^-(u^T))\}</script> is given in [7]. An illustration of Theorem 1. is given in Figure 1.</p>
+
+<p><img width="50%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/Projection2.png" /></p>
+<center>Figure 1: The backward-forward  solution $S_T^+(S_T^-(u^T))$ is the projection of $u^T$ onto the set of attainable target functions. The shaded area in red at time $t=0$ represents the set of minimizers of \eqref{opt2} </center>
+
+<p>The proof of Theorem 1 is structured as follows. From [7, Theorem 3.1, Corollary 3.2] or [8, Corollary 1], there exists $u_0\in BV(\mathbb R)$ such that <script type="math/tex">S^+_T(u_0)=q</script> if and only if <script type="math/tex">q</script> satisfies  the one-sided Lipschitz condition, i.e 
+<script type="math/tex">\begin{equation*}\partial_x q \leq \frac{1}{T}  \text{ in } \mathcal{D}'(\mathcal{R}).\end{equation*}</script>
+ Thus, the optimal problem \eqref{opt2} can be rewritten as  follows.</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{opt5} \min_{q\in \mathcal{U}^T_{\text{ad}}} J_1(q):=\Vert u^T-q \Vert_{L^2(\mathcal{R})},  \end{equation}</script>
+
+<p>where the admissible set $\mathcal{U}^T_{\text{ad}}$ is defined by</p>
+
+<script type="math/tex; mode=display">\begin{equation} \mathcal{U}^T_{\text{ad}}=\{ q\in BV(\mathbb R) \text{ such that } \, \, \partial_x q \leq \frac{1}{T} \,  \, \text{and } \Vert q \Vert_{BV( \mathbb R)} \leq C \, \text{and }\text{Supp}(q)\subset K_1 \}.\end{equation}</script>
+
+<p>Above, $K_1$ an open bounded interval large enough.  Note that the optimal problem \eqref{opt5} is not related to the PDE model \eqref{eq}. We prove that $q=S_T^+ (S_T^-(u^T))$ is a critical point of \eqref{opt5} using the first-order optimality conditions applied to \eqref{opt5} and the full characterization of the set <script type="math/tex">\{u_0 \in BV(\mathbb R) \text{ such that } S_T^-(u_0)=S_T^-(u^T)\}</script> given in [9, Theorem A.2].</p>
+
+<h1>Numerical simulations</h1>
+
+<p>In [9,Section 3], we  implement a wave-front tracking algorithm to construct numerically the set of  minimizers of \eqref{opt2}.  We consider for instance, a target function <script type="math/tex">u^T</script>  defined by</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \label{uT} u^T(x)=\left\{\begin{array}{ll}
+2 &\text{if} \, \,x\in (-0.2,1.1)\bigcup(2,3.1)\bigcup (4.1,5.3)\bigcup (6.1,7.2), \\
+-1 & \text{otherwise}.
+\end{array}\right.
+\end{equation} %]]></script>
+
+<p>From Theorem 1,  the backward solution <script type="math/tex">S_T^-(u^T)</script> is an  optimal solution of \eqref{opt2} and  <script type="math/tex">u_0</script> is an optimal solution of \eqref{opt2} if and only if  <script type="math/tex">S_T^+(u_0)=S_T^+ (S_T^-(u^T))</script>. In Figure 2, the target function <script type="math/tex">u^T</script>, the backward solution <script type="math/tex">S_T^-(u^T)</script> and  the backward-forward solution <script type="math/tex">S_T^+ (S_T^-(u^T))</script> are plotted.</p>
+
+<center>
+<table>
+    <tr>
+        <td>
+        <img width="100%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/ex_Stmoins.png" />
+        </td>
+        <td>
+        <img width="90%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/WFTforward.png" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <center>$x\to S^{-}_T(u^T)(x)$ </center>
+        </td>
+        <td>
+        <center>$(t,x)\to S^{+}_t(S^{-}_T(u^T))(x)$ </center>
+         </td>
+    </tr>
+</table>
+</center>
+
+<p><img width="50%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/ex_final.png" /></p>
+<center>$u^T$  and $\color{red}{x\to S^{+}_T(S^{-}_T(u^T))(x)}$ </center>
+<p>$ $</p>
+<center>Figure 2. Plotting of the target function $u^T$ defined in \eqref{uT}, the optimal solution $S_T^-(u^T)$ and the backward-forward solution $\color{red}{S^{+}_T(S^{-}_T(u^T))}$.</center>
+
+<p>Note that <script type="math/tex">S_T^+(S_T^-(u^T))</script> has four different shocks located at $x=1.1$, $x=3.1$, $x=5.3$ and $x=7.2$. If we use a conservative numerical method as Godunov scheme,  the approximate solution of <script type="math/tex">S_T^+(S_T^-(u^T))</script> doesn’t have shocks because of numerical viscosity that numerical schemes introduced, see Video 1.</p>
+
+<center>
+<table>
+    <tr>
+        <td>
+            <video width="98%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/animation_God_WFT.mov" controls=""></video>
+        </td>
+        <td>
+            <video width="98%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/animation_God_WFT_zoom.mov" controls=""></video>
+        </td>
+    </tr>
+</table>
+</center>
+<center>Video 1. Approximate solution of $S_T^+(u_0)$ with $u_0$ an $N$-wave constructed with $ \color{red}{\text{a wave-front tracking algorithm}}$ and $\color{blue}{\text{a Godunov scheme}}$ </center>
+
+<p>This implies that only one minimizer of \eqref{opt2} can be constructed using a Godunov scheme, which is the backward entropy solution $S_T^-(u^T)$. When a wave-front tracking algorithm is implemented, the approximate solution of $S_T^+(S_T^-(u^T))$ has shocks since we track the possible discontinuities from $u^T$ to  $S_T^+(S_T^-(u^T))$. This implies that all initial data $u_0$ that coincide with the approximate solution of $S_T^+ (S_T^-(u^T))$ can be recovered, see [9,Section 3].</p>
+
+<p>In Video 2, we show that the weak-entropy solution of \eqref{eq}  with initial data $S_T^-(u^T)$ coincides with $S_T^+ (S_T^-(u^T))$ at time $T$.</p>
+<center>
+<video width="50%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/animation_0.mov" controls=""></video></center>
+<center>Video 2. Approximate solution of $(t,x) \to S_t^+(S_T^-(u^T))(x)$  using a wave-front tracking algorithm. </center>
+
+<p>In Video 3, three other approximate optimal solutions $u_0$ of \eqref{opt2} are constructed. In particular, we show that  $S_T^+ (u_0)=S_T^+ (S_T^-(u^T))$.</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <video width="100%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/animation_1.mov" controls=""></video>
+        </th>
+        <th>
+            <video width="100%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/animation_3.mov" controls=""></video>
+        </th>
+    </tr>
+<table>
+    <tr>
+                
+            <video width="50%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/animation_4.mov" controls=""></video>
+    
+    </tr>
+</table>
+</table>
+</center>
+<center>Video 3. Three approximate optimal solutions of \eqref{opt2} constructed using a wave-front tracking algorithm </center>
+
+<p>[1] Navid Allahverdi,  Alejandro Pozo and Enrique Zuazua. Numerical aspects of large-time optimal control of Burgers equation. ESAIM: Mathematical Modelling and Numerical Analysis, 50 (5):1371-1401,2016.</p>
+
+<p>[2]  Navid Allahverdi,  Alejandro Pozo and Enrique Zuazua. Numerical aspects of sonic-boom minimization. A panorama of Mathematics: Pure and Applied, 658:267,2016.</p>
+
+<p>[3] François Bouchut and François James. One-dimensional transport equations with discontinuous coefficients. Nonlinear Analysis, 32(7):891,1998.</p>
+
+<p>[4] Alberto Bressan and Andrea Marson. A maximum principle for optimally controlled systems of conservation laws. Rendiconti del Seminario Matematico della Universita di Padova, 94:79-94, 1995.</p>
+
+<p>[5] Carlos Castro, Francisco Palacios and Enrique Zuazua. An alternating descent method for the optimal control of the inviscid Burgers equation in the presence of shocks. Mathematical Models and Methods in Applied Sciences, 18(03):369-416,2008.</p>
+
+<p>[6] Carlos Castro, Francisco Palacios and Enrique Zuazua. Optimal control and vanishing viscosity for the Burgers equation. In Integral Methods in Science and Engineering, Volume 2, pages 65-90. Springer, 2010.</p>
+
+<p>[7] Rinaldo Colombo and Vincent Perrollaz. Initial data identification in conservation laws and Hamilton-Jacobi equations. arXiv preprint arXiv:1903.06448,2019.</p>
+
+<p>[8] Laurent Gosse and Enrique Zuazua. Filtered gradient algorithms for inverse design problems of one-dimensional Burgers equation. In Innovative algorithm and analysis, pages 197-227. Springer, 2017.</p>
+
+<p>[9] Thibault Liard and Enrique Zuazua. Inverse design for the one-dimensional Burgers equation. Submitted (2019).</p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

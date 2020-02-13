@@ -5,28 +5,76 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 13 Feb 2020 13:08:56 +0100</pubDate>
-    <lastBuildDate>Thu, 13 Feb 2020 13:08:56 +0100</lastBuildDate>
+    <pubDate>Thu, 13 Feb 2020 16:54:33 +0100</pubDate>
+    <lastBuildDate>Thu, 13 Feb 2020 16:54:33 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
-        <title>Stabilization of Doble pendulum  by Dycon Toolbox</title>
-        <description>El problema de péndulo doble invertido en un benchmarck muy utilizado en control de sistemas dinámicos. En problema es muy complejo debida al comportamiento caótico del sistemas. Para parámetros ligeramente distintos la trayectoria del sistema toma comportamientos distintos.
-
-
-
-  Figure 1.
-
+        <title>Stabilization of a double pendulum on a cart in DyCon Toolbox</title>
+        <description>The finite-dimensional dynamical system given by a pendulum on a cart (cartpole) is widely considered as a benchmark for comparing the performance of different control strategies. In this blog post, we consider a double pendulum on a cart and we solve the problem of swinging up the pendulum from the downward position to the upward position using optimal control techniques.
 
 Equations of motion
 
 
 
-where:
+  Figure 1. Scheme of system dynamics
+
+
+The physical system defined by the double pendulum in a cart can be modelled as a system of six ordinary differential equations, whose state at each instant of time $t \geq 0$ is the vector $y(t) = \left( x(t), \theta_{1}(t), \theta_{2}(t), v(t), \omega_{1}(t), \omega_{2}(t) \right)$, where:
+
+
+  $x(t) \in \mathbb{R}$ is the position of the cart.
+  $\theta_{i}(t) \in [0, 2\pi]$ is the angle of the $i$-th pendulum.
+  $v(t) \in \mathbb{R}$ is the velocity of the cart.
+  $\omega_{i}(t) \in \mathbb{R}$ is the angular velocity of the $i$-th pendulum.
+
+
+The equations of motion of the system can be derived using the Lagrangian formalism of classical mechanics and are given by:
+
+
+
+where, for each $t \geq 0$, we define:
+
+
+
+and
+
+
+
+We have the fixed parameters:
+
+
+  $d_{i} \in [0,1]$ are damping coefficients.
+  $m &amp;gt; 0$ is the mass of the cart and $m_{i} &amp;gt; 0$ is the mass of the $i$-th pendulum.
+  $l_{i} &amp;gt; 0$ is the length of the $i$-th pendulum.
+
+
+The function $u \in L^{\infty}(0,\infty; \mathbb{R})$ is a time-dependent control that acts on the acceleration term $\dot{v}(t)$ of the cart, and can thus be interpreted as a force that is exerted on the cart.
+
+This dynamical system shows chaotic behaviour. The following animation displays the evolution of the double pendulum on a cart with control $u = 0$ and starting at the two different initial conditions
 
 
 
 
+
+
+
+
+
+
+  Optimal Control Problem 
+
+We will solve the problem of steering the state of the pendulum from the downward position $y_{0} = (0, \pi, \pi, 0, 0, 0)$ to the upward position $z = (0, 0, 0, 0, 0, 0)$ in a fixed time horizon $T &amp;gt; 0$ using a control $u(t)$.
+
+One way to look for solutions to this problem is to minimize the following functional:
+
+
+
+Where $\alpha &amp;gt;0$ is a fixed parameter, the state vector $y(t)$ is subject to the system of differential equations (1) and $y(0) = y_0$.
+
+  Numerical simulation 
+
+We start by implementing the dynamical system defined in (1) as a MATLAB function. We fix the lengths $l_{i} = 1$, and the mass of the cart $M = 50$. The damping coefficients are set to $d_{i} = 0.1$.
 
   &amp;gt;&amp;gt; type cartpole_dynamics.m
 
@@ -60,23 +108,9 @@ function ds = cartpole_dynamics(t,s,u,params)
 end
 
 
- Chaotic Behaviour
+This optimal control problem is solved using CasADi with the IPOPT solver. MATLAB’s symbolic toolbox has been used to implement the system dynamics in CasADi.
 
-
-
-
-
-
-  Optimal Control Problems
-
-
-
-
-
-
-
-
-Implementation in DyCon Toolbox
+The time horizon is set to $T = 10$ and the system (1) has been discretized using a Crank-Nicolson scheme. The use of an implicit discretization method with good behaviour with respect to the number of mesh points has been crucial to speed up the optimization process.
 
 import casadi.*
 % define optimal 
@@ -98,7 +132,15 @@ U0 =0*tspan;
 
 
 
-We use random initial control
+The following animation displays the resulting evolution of the system’s state:
+
+
+
+
+
+
+Interestingly, due to the chaotic character of system (1), the IPOPT routine yields different controlled trajectories if we change the initial guess of the control:
+
 
 
 
@@ -422,6 +464,167 @@ References
         <category>tutorial</category>
         
         <category>WP05</category>
+        
+      </item>
+    
+      <item>
+        <title>Inverse design for the one-dimensional Burgers equation</title>
+        <description>The problem
+
+We consider the following one-dimensional Burgers equation
+
+
+
+where $u$ is the state, $u_0$ is the initial state and  the flux function $f$ is defined by $f(u)=\frac{u^2}{2}$. Kruzkov’s theory  provides existence and uniqueness of a  solution  of \eqref{eq} with initial datum $u_0 \in L^{\infty}(\mathbb R)$. This solution is called a weak-entropy solution, denoted by $(t,x) \to S_t^+(u_0)(x)$. For a given target function $u^T$, we introduce the backward entropy  solution $(t,x) \to S^-_{t}(u^T)(x)$  as follows: 
+for every $t\in [0,T]$, for a.e $x\in \mathbb R$,
+
+
+
+We study the problem of inverse design for \eqref{eq}. This problem consists in  identifying the set of initial data evolving to a given target at a final time.
+
+Due to the time-irreversibility of the Burgers equation, some target functions are unattainable from weak-entropy solutions of this equation, making the inverse problem under consideration ill-posed. To get around this issue, we introduce the following  optimal control problem
+
+
+
+where $u^T$ is a given target function and the class of admissible initial data $\mathcal{U}^0_{\text{ad}}$ in \eqref{opt2} is defined by
+
+
+
+Above,  stands for functions of bounded variation and  $C&amp;gt;0$ is a constant large enough. The study of \eqref{opt2} is motivated by the minimization of the sonic boom effects generated by supersonic aircrafts [2].
+
+To solve the optimal control problem \eqref{opt2}, some difficulties arise from a  theoretical  and  numerical point of view.
+
+  Since the  entropy solution $u$ of \eqref{eq} may contain shocks even if the initial datum is a smooth function, this generates important added difficulties that have been the object of intensive study in the past, see  [3,4] and the references therein. In particular, the authors make sense of the derivative of $J_0$ in \eqref{opt2} in a weak way by requiring  strong conditions on the set of initial data. This leads to require that entropy solutions of \eqref{eq} have a finite number of non-interacting jumps.
+  When $J_0$ is weakly differentiable,  gradient descent  methods have been implemented in [1,5,6] to solve numerically the optimal problem \eqref{opt2}. In the cases where it was applied successfully, only one possible initial datum emerges, namely the backward entropy solution $S_T^-(u^T)$. This is mainly due to the numerical viscosity that numerical schemes introduce to gain stability. To find some multiple minimizers, the authors in  [8]  use a filtering step in the backward adjoint solution.
+
+
+Dans [9], we fully characterize the set of minimizers of the optimal control problem \eqref{opt2}.
+
+Theorem 1.  Let $u^T\in BV(\mathbb R)$. The optimal control problem \eqref{opt2}  admits multiple optimal solutions. Moreover, for a.e $T&amp;gt;0$, the initial datum $u_0\in BV(\mathbb R)$ is an optimal solution of \eqref{opt2} if and only if $u_0 \in BV(\mathbb R)$ verifies $S_T^+(u_0)=S_T^+ (S_T^-(u^T))$.
+
+A characterisation of the set  is given in [7]. An illustration of Theorem 1. is given in Figure 1.
+
+
+Figure 1: The backward-forward  solution $S_T^+(S_T^-(u^T))$ is the projection of $u^T$ onto the set of attainable target functions. The shaded area in red at time $t=0$ represents the set of minimizers of \eqref{opt2} 
+
+The proof of Theorem 1 is structured as follows. From [7, Theorem 3.1, Corollary 3.2] or [8, Corollary 1], there exists $u_0\in BV(\mathbb R)$ such that  if and only if  satisfies  the one-sided Lipschitz condition, i.e 
+
+ Thus, the optimal problem \eqref{opt2} can be rewritten as  follows.
+
+
+
+where the admissible set $\mathcal{U}^T_{\text{ad}}$ is defined by
+
+
+
+Above, $K_1$ an open bounded interval large enough.  Note that the optimal problem \eqref{opt5} is not related to the PDE model \eqref{eq}. We prove that $q=S_T^+ (S_T^-(u^T))$ is a critical point of \eqref{opt5} using the first-order optimality conditions applied to \eqref{opt5} and the full characterization of the set  given in [9, Theorem A.2].
+
+Numerical simulations
+
+In [9,Section 3], we  implement a wave-front tracking algorithm to construct numerically the set of  minimizers of \eqref{opt2}.  We consider for instance, a target function   defined by
+
+
+
+From Theorem 1,  the backward solution  is an  optimal solution of \eqref{opt2} and   is an optimal solution of \eqref{opt2} if and only if  . In Figure 2, the target function , the backward solution  and  the backward-forward solution  are plotted.
+
+
+
+    
+        
+        
+        
+        
+        
+        
+    
+    
+        
+        $x\to S^{-}_T(u^T)(x)$ 
+        
+        
+        $(t,x)\to S^{+}_t(S^{-}_T(u^T))(x)$ 
+         
+    
+
+
+
+
+$u^T$  and $\color{red}{x\to S^{+}_T(S^{-}_T(u^T))(x)}$ 
+$ $
+Figure 2. Plotting of the target function $u^T$ defined in \eqref{uT}, the optimal solution $S_T^-(u^T)$ and the backward-forward solution $\color{red}{S^{+}_T(S^{-}_T(u^T))}$.
+
+Note that  has four different shocks located at $x=1.1$, $x=3.1$, $x=5.3$ and $x=7.2$. If we use a conservative numerical method as Godunov scheme,  the approximate solution of  doesn’t have shocks because of numerical viscosity that numerical schemes introduced, see Video 1.
+
+
+
+    
+        
+            
+        
+        
+            
+        
+    
+
+
+Video 1. Approximate solution of $S_T^+(u_0)$ with $u_0$ an $N$-wave constructed with $ \color{red}{\text{a wave-front tracking algorithm}}$ and $\color{blue}{\text{a Godunov scheme}}$ 
+
+This implies that only one minimizer of \eqref{opt2} can be constructed using a Godunov scheme, which is the backward entropy solution $S_T^-(u^T)$. When a wave-front tracking algorithm is implemented, the approximate solution of $S_T^+(S_T^-(u^T))$ has shocks since we track the possible discontinuities from $u^T$ to  $S_T^+(S_T^-(u^T))$. This implies that all initial data $u_0$ that coincide with the approximate solution of $S_T^+ (S_T^-(u^T))$ can be recovered, see [9,Section 3].
+
+In Video 2, we show that the weak-entropy solution of \eqref{eq}  with initial data $S_T^-(u^T)$ coincides with $S_T^+ (S_T^-(u^T))$ at time $T$.
+
+
+Video 2. Approximate solution of $(t,x) \to S_t^+(S_T^-(u^T))(x)$  using a wave-front tracking algorithm. 
+
+In Video 3, three other approximate optimal solutions $u_0$ of \eqref{opt2} are constructed. In particular, we show that  $S_T^+ (u_0)=S_T^+ (S_T^-(u^T))$.
+
+
+
+    
+        
+            
+        
+        
+            
+        
+    
+
+    
+                
+            
+    
+    
+
+
+
+Video 3. Three approximate optimal solutions of \eqref{opt2} constructed using a wave-front tracking algorithm 
+
+[1] Navid Allahverdi,  Alejandro Pozo and Enrique Zuazua. Numerical aspects of large-time optimal control of Burgers equation. ESAIM: Mathematical Modelling and Numerical Analysis, 50 (5):1371-1401,2016.
+
+[2]  Navid Allahverdi,  Alejandro Pozo and Enrique Zuazua. Numerical aspects of sonic-boom minimization. A panorama of Mathematics: Pure and Applied, 658:267,2016.
+
+[3] François Bouchut and François James. One-dimensional transport equations with discontinuous coefficients. Nonlinear Analysis, 32(7):891,1998.
+
+[4] Alberto Bressan and Andrea Marson. A maximum principle for optimally controlled systems of conservation laws. Rendiconti del Seminario Matematico della Universita di Padova, 94:79-94, 1995.
+
+[5] Carlos Castro, Francisco Palacios and Enrique Zuazua. An alternating descent method for the optimal control of the inviscid Burgers equation in the presence of shocks. Mathematical Models and Methods in Applied Sciences, 18(03):369-416,2008.
+
+[6] Carlos Castro, Francisco Palacios and Enrique Zuazua. Optimal control and vanishing viscosity for the Burgers equation. In Integral Methods in Science and Engineering, Volume 2, pages 65-90. Springer, 2010.
+
+[7] Rinaldo Colombo and Vincent Perrollaz. Initial data identification in conservation laws and Hamilton-Jacobi equations. arXiv preprint arXiv:1903.06448,2019.
+
+[8] Laurent Gosse and Enrique Zuazua. Filtered gradient algorithms for inverse design problems of one-dimensional Burgers equation. In Innovative algorithm and analysis, pages 197-227. Springer, 2017.
+
+[9] Thibault Liard and Enrique Zuazua. Inverse design for the one-dimensional Burgers equation. Submitted (2019).
+</description>
+        <pubDate>Thu, 12 Dec 2019 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0007</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0007</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP04</category>
         
       </item>
     
@@ -2104,21 +2307,6 @@ References
         <pubDate>Thu, 18 Jul 2019 00:00:00 +0200</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0009</link>
         <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P0009</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP99</category>
-        
-      </item>
-    
-      <item>
-        <title>Controllability to steady states of a reaction diffusion system and emergence of barriers.</title>
-        <description>asda
-</description>
-        <pubDate>Mon, 08 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P9999</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P9999</guid>
         
         
         <category>tutorial</category>

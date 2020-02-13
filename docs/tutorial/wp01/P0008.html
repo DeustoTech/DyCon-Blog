@@ -8,7 +8,7 @@
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
   <title>
-    Stabilization of Doble pendulum  by Dycon Toolbox - DyCon Blog
+    Stabilization of a double pendulum on a cart in DyCon Toolbox - DyCon Blog
     
   </title>
 
@@ -210,7 +210,7 @@
             &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP01">
             Control of parameter dependent problems</a> &#8827;</small>
           </h2>
-          <h1>Stabilization of Doble pendulum  by Dycon Toolbox</h1>
+          <h1>Stabilization of a double pendulum on a cart in DyCon Toolbox</h1>
 					<p class="meta">
             <div class="post-preview-authors ellipsis-one-line">
               Authors:
@@ -295,37 +295,91 @@ img:active{
             <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/DYCO.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
-        <p>El problema de péndulo doble invertido en un benchmarck muy utilizado en control de sistemas dinámicos. En problema es muy complejo debida al comportamiento caótico del sistemas. Para parámetros ligeramente distintos la trayectoria del sistema toma comportamientos distintos.</p>
-
-<p><img width="50%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/sch.png" /></p>
-<center>
-  <b>Figure 1.</b>
-</center>
+        <p>The finite-dimensional dynamical system given by a pendulum on a cart (cartpole) is widely considered as a benchmark for comparing the performance of different control strategies. In this blog post, we consider a double pendulum on a cart and we solve the problem of swinging up the pendulum from the downward position to the upward position using optimal control techniques.</p>
 
 <h3>Equations of motion</h3>
 
-<script type="math/tex; mode=display">M(\theta_1,\theta_2)\frac{d}{dt} \begin{bmatrix} 
-         v \\ \omega_1 \\ \omega_2 
-    \end{bmatrix} = G(\theta_1,\theta_2,\omega_1,\omega_2)  -  \begin{bmatrix}
-      d_1 v \\ d_2\omega_1 \\ d_3 \omega_2
+<p><img width="50%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/sch.png" /></p>
+<center>
+  <b>Figure 1. Scheme of system dynamics</b>
+</center>
+
+<p>The physical system defined by the double pendulum in a cart can be modelled as a system of six ordinary differential equations, whose state at each instant of time $t \geq 0$ is the vector $y(t) = \left( x(t), \theta_{1}(t), \theta_{2}(t), v(t), \omega_{1}(t), \omega_{2}(t) \right)$, where:</p>
+
+<ul>
+  <li>$x(t) \in \mathbb{R}$ is the position of the cart.</li>
+  <li>$\theta_{i}(t) \in [0, 2\pi]$ is the angle of the $i$-th pendulum.</li>
+  <li>$v(t) \in \mathbb{R}$ is the velocity of the cart.</li>
+  <li>$\omega_{i}(t) \in \mathbb{R}$ is the angular velocity of the $i$-th pendulum.</li>
+</ul>
+
+<p>The equations of motion of the system can be derived using the Lagrangian formalism of classical mechanics and are given by:</p>
+
+<script type="math/tex; mode=display">(1)
+  \begin{cases}
+  \dot{x}(t) = v(t) \\
+  \dot{\theta}_{1}(t) = \omega_{1}(t) \\
+  \dot{\theta}_{2}(t) = \omega_{2}(t) \\
+  M(\theta_1(t),\theta_2(t)) \cdot \begin{bmatrix} 
+         \dot{v}(t) \\ \dot{\omega}_1(t) \\ \dot{\omega}_2(t) 
+    \end{bmatrix} = G(\theta_1(t),\theta_2(t),\omega_1(t),\omega_2(t))  -  \begin{bmatrix}
+      d_1 \cdot v(t) \\ d_2 \cdot \omega_1(t) \\ d_3 \cdot \omega_2(t)
     \end{bmatrix} + \begin{bmatrix}
-      u \\ 0 \\ 0
-    \end{bmatrix}</script>
+      u(t) \\ 0 \\ 0
+    \end{bmatrix}
+    \end{cases}</script>
 
-<p>where:</p>
+<p>where, for each $t \geq 0$, we define:</p>
 
-<script type="math/tex; mode=display">G(\theta_1,\theta_2,\omega_1,\omega_2) = \begin{bmatrix}
-    l_1(m_1+m_2)\omega_1^2sin(\theta_1) + m_2l_2\omega_2^2 sin(\omega_2) \\
-    -l_1l_2m_2\omega_2^2sin(\theta_1-\theta_2) + g(m_1+m_2)l_1sin(\theta_1) \\
-    l_1l_2m_2\omega_1^2sin(\theta_1-\theta_2) + g l_2 m_2 sin(\theta_2)
+<script type="math/tex; mode=display">G(\theta_1(t),\theta_2(t),\omega_1(t),\omega_2(t)) = \begin{bmatrix}
+    l_1(m_1+m_2) \cdot \omega_1(t)^2 \sin(\theta_1(t)) + m_2l_2\cdot \omega_2(t)^2 \sin(\omega_2(t)) \\
+    -l_1l_2m_2\cdot\omega_2(t)^2 \sin(\theta_1(t)-\theta_2(t)) + g(m_1+m_2)l_1 \cdot \sin(\theta_1(t)) \\
+    l_1l_2m_2 \cdot \omega_1(t)^2\sin(\theta_1(t)-\theta_2(t)) + g l_2 m_2 \cdot \sin(\theta_2(t))
   \end{bmatrix}</script>
 
+<p>and</p>
+
 <script type="math/tex; mode=display">% <![CDATA[
-M(\theta_1,\theta_2) = \begin{bmatrix}
-      m+m_1+m_2 & l_1(m_1 +m_2 )cos(\theta_1) & m_2l_2cos(\theta_2) \\
-      l_1(m_1+m_2) cos(\theta_1) & l_1^2(m_1+m_2) & l_1l_2m_2 cos(\theta_1-\theta_2) \\
-      l2 m_2 cos(\theta_2) & l_1 l_2 m_2 cos(\theta_1-\theta_2) & l_2^2 m_2
+M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
+      m+m_1+m_2 & l_1(m_1 +m_2 )\cdot\cos(\theta_1(t)) & m_2l_2\cdot\cos(\theta_2(t)) \\
+      l_1(m_1+m_2)\cdot\cos(\theta_1(t)) & l_1^2(m_1+m_2) & l_1l_2m_2\cdot \cos(\theta_1(t)-\theta_2(t)) \\
+      l2 m_2\cdot\cos(\theta_2(t)) & l_1 l_2 m_2 \cos(\theta_1(t)-\theta_2(t)) & l_2^2 m_2
     \end{bmatrix} %]]></script>
+
+<p>We have the fixed parameters:</p>
+
+<ul>
+  <li>$d_{i} \in [0,1]$ are damping coefficients.</li>
+  <li>$m &gt; 0$ is the mass of the cart and $m_{i} &gt; 0$ is the mass of the $i$-th pendulum.</li>
+  <li>$l_{i} &gt; 0$ is the length of the $i$-th pendulum.</li>
+</ul>
+
+<p>The function $u \in L^{\infty}(0,\infty; \mathbb{R})$ is a time-dependent control that acts on the acceleration term $\dot{v}(t)$ of the cart, and can thus be interpreted as a force that is exerted on the cart.</p>
+
+<p>This dynamical system shows chaotic behaviour. The following animation displays the evolution of the double pendulum on a cart with control $u = 0$ and starting at the two different initial conditions</p>
+
+<script type="math/tex; mode=display">y_{0,1} = (0, 0, 0.1, 0, 0.5, 0.5)</script>
+
+<script type="math/tex; mode=display">y_{0,2} = (0, 0, 0.05, 0, 0.5, 0.5)</script>
+
+<center>
+<video controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_thetadiff.mp4">
+</video>
+</center>
+
+<h3>  Optimal Control Problem </h3>
+
+<p>We will solve the problem of steering the state of the pendulum from the downward position $y_{0} = (0, \pi, \pi, 0, 0, 0)$ to the upward position $z = (0, 0, 0, 0, 0, 0)$ in a fixed time horizon $T &gt; 0$ using a control $u(t)$.</p>
+
+<p>One way to look for solutions to this problem is to minimize the following functional:</p>
+
+<script type="math/tex; mode=display">J(u) =  \int_0^T ||y(t)||^2 dt +  ||y(T)||^2  + \alpha \int_0^T ||u(t)||^2dt</script>
+
+<p>Where $\alpha &gt;0$ is a fixed parameter, the state vector $y(t)$ is subject to the system of differential equations (1) and $y(0) = y_0$.</p>
+
+<h3>  Numerical simulation </h3>
+
+<p>We start by implementing the dynamical system defined in (1) as a MATLAB function. We fix the lengths $l_{i} = 1$, and the mass of the cart $M = 50$. The damping coefficients are set to $d_{i} = 0.1$.</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&gt;&gt;</span> <span class="nb">type</span> <span class="n">cartpole_dynamics</span><span class="o">.</span><span class="n">m</span>
 
@@ -359,23 +413,9 @@ M(\theta_1,\theta_2) = \begin{bmatrix}
 <span class="k">end</span>
 </code></pre></div></div>
 
-<p> Chaotic Behaviour</p>
+<p>This optimal control problem is solved using CasADi with the IPOPT solver. MATLAB’s symbolic toolbox has been used to implement the system dynamics in CasADi.</p>
 
-<center>
-<video controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_thetadiff.mp4">
-</video>
-</center>
-
-<h3>  Optimal Control Problems</h3>
-
-<script type="math/tex; mode=display">J(u) = \int_0^T ||s(t)||^2  + ||u(t)||^2dt + ||s(T)||^2</script>
-
-<center>
-<video controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_control.mp4">
-</video>
-</center>
-
-<p>Implementation in DyCon Toolbox</p>
+<p>The time horizon is set to $T = 10$ and the system (1) has been discretized using a Crank-Nicolson scheme. The use of an implicit discretization method with good behaviour with respect to the number of mesh points has been crucial to speed up the optimization process.</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
 <span class="c1">% define optimal </span>
@@ -397,7 +437,15 @@ M(\theta_1,\theta_2) = \begin{bmatrix}
 
 </code></pre></div></div>
 
-<p>We use random initial control</p>
+<p>The following animation displays the resulting evolution of the system’s state:</p>
+
+<center>
+<video controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_control.mp4">
+</video>
+</center>
+
+<p>Interestingly, due to the chaotic character of system (1), the IPOPT routine yields different controlled trajectories if we change the initial guess of the control:</p>
+
 <center>
 <video width="80%" controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_control_rand.mp4">
 </video>
