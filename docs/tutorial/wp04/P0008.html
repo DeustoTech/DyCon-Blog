@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    An eurelian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0008">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">
+            Inverse design of time-irreversible models</a> &#8827;</small>
+          </h2>
+          <h1>An eurelian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/AlexandreS">AlexandreS</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                  </span>
+                </span>
+              
+              - 18 February 2020
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        <p>The inverse design of hyperbolic transport equations can be addressed by using gradient-adjoint methodologies. Recently, Morales-Hernandez and Zuazua [1] investigated the convenience of using low order numerical schemes for the adjoint resolution in the gradient-adjoint method. They focused on hyperbolic transport scalar equations with an heterogeneous time-independent vector field.</p>
+
+<p>Morales-Hernandez and Zuazua analysed the numerical resolution of the adjoint equation by means of two methods: a First Order Upwind $(FOU)$ scheme and a Second Order Upwind $(SOU)$ scheme. They concluded that the $FOU$ scheme is the best choice when dealing with smooth functions once the $SOU$ scheme introduces some spurious oscillations. In addition, the $FOU$ scheme requires shorter computational time than the $SOU$ scheme. The non-linear transport problems in which sharp interfaces or discontinuities may appear in the functions has remained to be studied.</p>
+
+<p>The numerical scheme for the adjoint equation determines the direction of descent in the iteration procedure, and consequently the $CPU$ time consumed by the solver. As the $CPU$ time is a decisive factor, we propose the $SOU$ scheme for solving the transport equation and an eulerian-lagrangian scheme that uses the $MMOC$ method for solving the transport and adjoint equations. The $MMOC$ method is based on the characteristic curves very computationally competitive for linear hyperbolic transport equations. The $MMOC$ was initially developed performing the resolution in a forward sense. In this work, the eulerian-lagrangian scheme is used for the transport and adjoint resolution, employing it in both forward and backward senses.</p>
+
+<p>In this work, we perform numerical tests in order to investigate the accuracy and efficiency of an eulerian-lagrangian scheme to solve the problem of inverse design of linear and non-linear hyperbolic transport scalar equations.</p>
+
+<h1 id="the-gradient-adjoint-method">The gradient-adjoint method</h1>
+
+<p>Consider the following hyperbolic transport scalar equation with a vector flux function ${\bf f} (u)$:</p>
+
+<p>\begin{equation}\label{eq1}
+\frac{\partial u}{\partial t} + \nabla \cdot {\bf f} (u) = 0, ~ ~ u({\bf x},0) = u_0.
+\end{equation}</p>
+
+<p>Given a target function $u^* \in \bf H$, $\bf H$ being a Hilbert space, the problem of inverse design consists of achieving $u_0 \in \bf H$ such that the solution of the former evolution equation satisfies $u(T) = u^*$. This problem is solved via the minimization of the functional</p>
+
+<p>\begin{equation}\label{eq2}
+J(u_0) = \frac{1}{2} \int_{0}^{T} \int_{\Omega} (u(T) - u^*)^2 d\Omega dt
+\end{equation}</p>
+
+<p>by means of the gradient descent method:</p>
+
+<p>\begin{equation}\label{eq3}
+{u_0}^{k+1} = {u_0}^k -  \epsilon {\nabla J}^k,
+\end{equation}</p>
+
+<p>where $\epsilon$ is the step size, and the gradient $\nabla J = \sigma (0)$, in which $\sigma$ is the adjoint variable . The gradient $\sigma (0)$ is achieved by solving the adjoint equation:</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq4}
+- \frac{\partial \sigma}{\partial t} - {\bf f}^\prime (u) \cdot \nabla \sigma = 0, ~ ~ \sigma (T) = u(T) - u^*.
+\end{equation}</script>
+
+<p>The gradient-adjoint method is based on iterating a loop, where the transport equation (\ref{eq1}) is solved in a forward sense, while the adjoint equation (\ref{eq4}), which is of hyperbolic nature as well, is solved backwards in time.</p>
+
+<h1 id="the-mmoc-in-forward-sense">The $MMOC$ in forward sense</h1>
+
+<p>Eulerian-lagrangian approaches provide computationally efficient techniques for approximating the solution of hyperbolic transport equations. Douglas and Russel \cite{Dou82} introduced an eulerian-lagrangian method based on the characteristic curve called Modified Method of Characteristic $(MMOC)$ to develop fast solvers for hyperbolic transport equations. Despite the $MMOC$ does not provide a local conservation of the identity associated with the function, it present good performance for linear hyperbolic transport equations.</p>
+
+<p>We use the $MMOC$ method for solving the transport and adjoint equations in the context of the problem of inverse design of hyperbolic transport equations. In this problem, the adjoint equation is always a linear differencial equation, worthing the use of the eulerian-lagrangian scheme. The gradient-adjoint iteration requires the adjoint equation to be solved in backward sense. We employ an eulerian-lagrangian scheme that uses the $MMOC$, considering procedures in forward and backward senses.</p>
+
+<p>Consider a scalar hyperbolic transport equation determining the initial value problem</p>
+
+<p>\begin{equation}\label{eq5}
+\frac{\partial u}{\partial t} + \nabla \cdot {\bf f} (u) = 0, ~ ~ u({\bf x},0) = u(0) ,
+\end{equation}</p>
+
+<p>where ${\bf f} (u)$ is a vector flux function. Rewriting the Eq.~(\ref{eq5}) in nondivergence form,</p>
+
+<p>\begin{equation}\label{eq6}
+\frac{\partial u}{\partial t} + {\bf f}^\prime (u) \cdot \nabla u  = 0 .
+\end{equation}</p>
+
+<p>The solution of Eq.~(\ref{eq6}) is essentially along the characteristic curves of the transport operator $\partial / \partial t + {\bf f}^\prime (u) \cdot \nabla$, so that it is appropriate to introduce differentiation in this characteristic direction. Let</p>
+
+<p>\begin{equation}\label{eq7}
+\partial / \partial t + {\bf f}^\prime (u) \cdot \nabla = \psi \frac{\partial}{\partial \tau} , ~~\psi (u) = \sqrt {1 + {\left \lVert {\bf f}^\prime (u) \right \rVert}^2} , <br />
+\end{equation}</p>
+
+<p>in which the direction $\tau$ depends on $\bf x$.</p>
+
+<p>Let us consider the discretization of  Eq.~(\ref{eq6}) in time. Denote the time step $\Delta t &gt; 0$ and consider the approximation of the solution at times $t^n = n \Delta t$. In the standard $MMOC$, the characteristic derivative is approximated by</p>
+
+<p>\begin{equation}\label{eq8}
+\psi \frac{\partial u}{\partial \tau} \approx \psi (u({\bf x}, t^{n-1})) \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}, t^{n-1})}{\sqrt {\left \lVert {\bf x} - \overline {\bf x} \right \rVert^2 + (\Delta t)^2 }} =  \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}, t^{n-1})}{\Delta t} ,<br />
+\end{equation}</p>
+
+<p>where</p>
+
+<p>\begin{equation}\label{eq9}
+\overline {\bf x}^n =  \overline {\bf x}^n ({\bf x}) = {\bf x} - {\bf f}^\prime (u({\bf x}, t^{n-1}) \Delta t .
+\end{equation}</p>
+
+<p>Let $U^n ({\bf x})$ denote the approximations to $u({\bf x},t^n)$. For a predecessor position</p>
+
+<p>\begin{equation}\label{eq10}
+\overline {\bf X}^n ({\bf x}) = {\bf x} - {\bf f}^\prime (U^{n-1} ({\bf x})) \Delta t,
+\end{equation}</p>
+
+<p>the transported function is defined as</p>
+
+<p>\begin{equation}\label{eq11}
+\overline {U}^n ({\bf x}) =  u (\overline {\bf X}^n ({\bf x}), t^{n-1}) .
+\end{equation}</p>
+
+<p>As the continuous in space approximation for Eq.~(\ref{eq6}) is</p>
+
+<p>\begin{equation}\label{eq12}
+\frac{U^n ({\bf x}) - \overline U^{n} ({\bf x})}{\Delta t} = 0 ,
+\end{equation}</p>
+
+<p>the $MMOC$ scheme is given by</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq13}
+U^n (\textbf{x}) =  \overline U^{n} (\textbf{x}) 
+\end{equation}</script>
+
+<h1 id="preliminary-results">Preliminary results</h1>
+
+<p>The performance of the $MMOC$ scheme is checked in numerical tests, where two hyperbolic transport problems are considered. The results by $MMOC$ are compared with the ones by the Lax-Wendroff ($LW$), which is a second-order central scheme.</p>
+
+<h3 id="2d-doswell-frontogenesis">2D Doswell frontogenesis</h3>
+
+<p>The first test case symbolizes the presence of horizontal temperature gradients and fronts in the context of meteorological dynamics. In this linear problem the flux function is</p>
+
+<p>\begin{equation}
+{\bf f} (u) =  {\bf v} (x,y)~ u ,
+\end{equation}</p>
+
+<p>where ${\bf v} (x,y)= g~(-y,~x)$, ~ $g = \frac{1}{r}2.59807~sech^2(r)~tanh(r), ~and~ r = \sqrt{x^2 + y^2}$. The exact solution of this problem is given by</p>
+
+<p>\begin{equation}
+u (x,y,t) = tanh(y~cos(gt) - x~sin(gt)).
+\end{equation}</p>
+
+<p>The domain $\Omega = [-5,5]^2$ is discretized in 40000 square cells, a step size $\epsilon = 0.5$ is selected and the Courant number is set to $CFL = 1.0$. The results are shown in Fig.1 for the initial condition and target function at $T = 4s$. The target function in a vortex-type profile is presented by both the $LW$ and $MMOC$ schemes.</p>
+
+<center>
+<table style="text-align:center;">
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0008/bilbao_LW_0.jpg" />
+        </th>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0008/bilbao_LW_4.jpg" />
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0008/bilbao_MMOC_0.jpg" />
+        </th>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0008/bilbao_MMOC_4.jpg" />
+        </th>
+    </tr>
+</table>
+</center>
+
+<center> <b>Figure 1.</b> The initial condition and target function by $LW$ (top) and MMOC (bottom).   
+</center>
+
+<p>Results of $CPU$ time and $L_2$ norm of the numerical initial condition with respect to the exact initial condition are displayed in Table [1]. The results are quite the same for the $LW$ and $MMOC$, since we have a linear transport equation.</p>
+
+<center>
+<table style="text-align:center;">
+<tr>
+    <th>
+		  $Scheme$ 
+    </th>
+    <th>
+         $CPU~ time~ (s)$ 
+    </th>
+    <th>
+        $L_2~ norm$ 
+    </th>
+
+
+</tr>
+<tr>
+        <th>
+		  $LW$ 
+    </th>
+    <th>
+         49.0
+    </th>
+    <th>
+        4.07
+    </th>
+</tr>
+<tr>
+        <th>
+		  $MMOC$ 
+    </th>
+    <th>
+         80.8
+    </th>
+    <th>
+        3.96
+    </th>
+</tr>
+</table>
+</center>
+
+<center><b>Table 1.</b> Performance for initial condition of the Doswell frontogenesis.</center>
+
+<h3 id="inviscid-burgers-equation">Inviscid Burgers equation</h3>
+
+<p>We consider the Burgers equation with zero viscosity term which is called the inviscid Burgers equation. This equation is one of the most useful formulation of the behaviour of the shock waves in which nonlinear advection can be observed. In this nonlinear problem the flux function is</p>
+
+<p>\begin{equation}
+f (u) =  \frac{1}{2} u^2 .
+\end{equation}</p>
+
+<p>\noindent
+The exact solution of this problem is given by</p>
+
+<p>\begin{equation}
+u(x,t) = sin(x - ut) .
+\end{equation}</p>
+
+<p>The domain $\Omega = [0,32]^2$ is discretized in 4096 square cells, a step size $\epsilon = 0.01$ is selected and the Courant number is set to $CFL = 0.1$. The exact and $MMOC$ initial conditions are shown in Fig 2. Only for the $MMOC$ scheme, the numerical solver was able to converge to the initial condition considering zero values as a guess initial condition.</p>
+
+<table style="text-align:center;">
+    <tr>
+    <th>
+        <img width="100%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0008/burger_exact.jpg" />
+    </th>
+    <th>
+        <img width="100%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0008/burger_MMOC.jpg" />
+    </th>
+    </tr>
+</table>
+<center>     <b>Figure 2.</b>The exact (left) and $MMOC$ (right) initial conditions.
+</center>
+
+<p>In order to get the convergence for the initial condition, we set $u_0(x) = \beta sin(x)$ as a guess initial condition, where $\beta$ is a constant that, when its value is next to one, approximates guess initial conditions to the exact initial condition. Table 2 displays the $L_2$ norm of the numerical initial condition with respect to the exact initial condition for several $\beta$ values. The numerical solver using the $LW$ scheme was not able to converge to the initial condition when the $\beta$ is zero (exact initial condition). On the other hand, the solver using $MMOC$ scheme converged for any $\beta$ value, showing the smaller norm as the $\beta$ is increased.</p>
+
+<center>
+<table style="text-align:center;">
+    <tr>
+        <th>$\beta$ </th>   <th>$LW$</th>  <th>$MMOC$</th>
+    </tr>
+    <tr>
+        <th>0.0 </th>   <th>-</th>  <th>3.70</th>
+    </tr>
+    <tr>
+        <th>0.5 </th>   <th>23.1</th>  <th>2.59</th>
+    </tr>    
+    <tr>
+        <th>0.9 </th>   <th>24.9</th>  <th>1.23</th>
+    </tr>
+</table>
+</center>
+
+<center>
+<b>table 2. </b>$L_2$ norm for the initial condition of the Burgers problem.
+</center>
+
+<h1 id="conclusions">Conclusions</h1>
+
+<p>The results achieved and presented here are preliminary ones. The $MMOC$ is a promising eulerian-lagrangian scheme for the problem of inverse design of nonlinear transport equations. More complex problems and another eulerian-lagrangian scheme are to be tested. The next steps are the follows:</p>
+
+<ul>
+  <li>simulate and investigate the Buckley-Leverett problem;</li>
+  <li>simulate and investigate the miscible tracer flow; and</li>
+  <li>use the $LCELM$ eulerian-lagrangian scheme [3].</li>
+</ul>
+
+<h1 id="references">References</h1>
+
+<p>[1] M. Morales-Hernandez, E. Zuazua, Adjoint computational methods for 2d inverse design of linear trans-
+port equations on unstructured grids, Computational and Applied Mathematics (2019) 167–192.</p>
+
+<p>[2] J. Douglas, T. F. Russell, Numerical methods for convection dominated diffusion problems based on
+combining the method of characteristics with finite element or finite difference procedures, SIAM J.
+Numer. Anal. (1982) 871–885.</p>
+
+<p>[3] J. Douglas, F. Pereira, L.-M. Yeh, A locally conservative eulerian–lagrangian numerical method and its
+application to nonlinear transport in porous media, Computational Geosciences (2000) 1–40.</p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
