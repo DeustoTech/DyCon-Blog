@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 19 Feb 2020 15:44:58 +0100</pubDate>
-    <lastBuildDate>Wed, 19 Feb 2020 15:44:58 +0100</lastBuildDate>
+    <pubDate>Thu, 20 Feb 2020 07:51:51 +0100</pubDate>
+    <lastBuildDate>Thu, 20 Feb 2020 07:51:51 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -176,9 +176,9 @@ Video 3. Three approximate optimal solutions of \eqref{opt2} constructed using a
 
 Morales-Hernandez and Zuazua analysed the numerical resolution of the adjoint equation by means of two methods: a First Order Upwind $(FOU)$ scheme and a Second Order Upwind $(SOU)$ scheme. They concluded that the $FOU$ scheme is the best choice when dealing with smooth functions once the $SOU$ scheme introduces some spurious oscillations. In addition, the $FOU$ scheme requires shorter computational time than the $SOU$ scheme. The non-linear transport problems in which sharp interfaces or discontinuities may appear in the functions has remained to be studied.
 
-The numerical scheme for the adjoint equation determines the direction of descent in the iteration procedure, and consequently the $CPU$ time consumed by the solver. As the $CPU$ time is a decisive factor, we propose the $SOU$ scheme for solving the transport equation and an eulerian-lagrangian scheme that uses the $MMOC$ method for solving the transport and adjoint equations. The $MMOC$ method is based on the characteristic curves very computationally competitive for linear hyperbolic transport equations. The $MMOC$ was initially developed performing the resolution in a forward sense. In this work, the eulerian-lagrangian scheme is used for the transport and adjoint resolution, employing it in both forward and backward senses.
+The numerical scheme for the adjoint equation determines the direction of descent in the iteration procedure, and consequently the $CPU$ time consumed by the solver. As the $CPU$ time is a decisive factor, we propose an eulerian-lagrangian scheme that uses the Modified Method of Characteristics ($MMOC$) [2] for solving the transport and adjoint equations. The $MMOC$ method is based on the characteristic curves, and so very computationally competitive for linear hyperbolic transport equations. The $MMOC$ was initially developed performing the resolution in a forward sense. In this work, the eulerian-lagrangian scheme is used for the transport and adjoint resolution, employing it in both forward and backward senses.
 
-In this work, we perform numerical tests in order to investigate the accuracy and efficiency of an eulerian-lagrangian scheme to solve the problem of inverse design of linear and non-linear hyperbolic transport scalar equations.
+We perform numerical tests in order to investigate the accuracy and efficiency of the eulerian-lagrangian scheme to solve the problem of inverse design of linear and non-linear hyperbolic transport scalar equations.
 
 The gradient-adjoint method
 
@@ -208,7 +208,7 @@ The gradient-adjoint method is based on iterating a loop, where the transport eq
 
 The $MMOC$ in forward sense
 
-Eulerian-lagrangian approaches provide computationally efficient techniques for approximating the solution of hyperbolic transport equations. Douglas and Russel \cite{Dou82} introduced an eulerian-lagrangian method based on the characteristic curve called Modified Method of Characteristic $(MMOC)$ to develop fast solvers for hyperbolic transport equations. Despite the $MMOC$ does not provide a local conservation of the identity associated with the function, it present good performance for linear hyperbolic transport equations.
+Eulerian-lagrangian approaches provide computationally efficient techniques for approximating the solution of hyperbolic transport equations. Douglas and Russel [2] introduced an eulerian-lagrangian method based on the characteristic curve - the $MMOC$ - to develop fast solvers for hyperbolic transport equations. Despite the $MMOC$ does not provide a local conservation of the identity associated with the function, it present good performance for linear hyperbolic transport equations.
 
 We use the $MMOC$ method for solving the transport and adjoint equations in the context of the problem of inverse design of hyperbolic transport equations. In this problem, the adjoint equation is always a linear differencial equation, worthing the use of the eulerian-lagrangian scheme. The gradient-adjoint iteration requires the adjoint equation to be solved in backward sense. We employ an eulerian-lagrangian scheme that uses the $MMOC$, considering procedures in forward and backward senses.
 
@@ -218,13 +218,13 @@ Consider a scalar hyperbolic transport equation determining the initial value pr
 \frac{\partial u}{\partial t} + \nabla \cdot {\bf f} (u) = 0, ~ ~ u({\bf x},0) = u(0) ,
 \end{equation}
 
-where ${\bf f} (u)$ is a vector flux function. Rewriting the Eq.~(\ref{eq5}) in nondivergence form,
+where ${\bf f} (u)$ is a vector flux function. Rewriting the Eq. (\ref{eq5}) in nondivergence form,
 
 \begin{equation}\label{eq6}
 \frac{\partial u}{\partial t} + {\bf f}^\prime (u) \cdot \nabla u  = 0 .
 \end{equation}
 
-The solution of Eq.~(\ref{eq6}) is essentially along the characteristic curves of the transport operator $\partial / \partial t + {\bf f}^\prime (u) \cdot \nabla$, so that it is appropriate to introduce differentiation in this characteristic direction. Let
+The solution of Eq. (\ref{eq6}) is essentially along the characteristic curves of the transport operator $\partial / \partial t + {\bf f}^\prime (u) \cdot \nabla$, so that it is appropriate to introduce differentiation in this characteristic direction. Let
 
 \begin{equation}\label{eq7}
 \partial / \partial t + {\bf f}^\prime (u) \cdot \nabla = \psi \frac{\partial}{\partial \tau} , ~~\psi (u) = \sqrt {1 + {\left \lVert {\bf f}^\prime (u) \right \rVert}^2} , 
@@ -232,10 +232,10 @@ The solution of Eq.~(\ref{eq6}) is essentially along the characteristic curves o
 
 in which the direction $\tau$ depends on $\bf x$.
 
-Let us consider the discretization of  Eq.~(\ref{eq6}) in time. Denote the time step $\Delta t &amp;gt; 0$ and consider the approximation of the solution at times $t^n = n \Delta t$. In the standard $MMOC$, the characteristic derivative is approximated by
+Let us consider the discretization of  Eq. (\ref{eq6}) in time. Denote the time step $\Delta t &amp;gt; 0$ and consider the approximation of the solution at times $t^n = n \Delta t$. In the standard $MMOC$, the characteristic derivative is approximated by
 
 \begin{equation}\label{eq8}
-\psi \frac{\partial u}{\partial \tau} \approx \psi (u({\bf x}, t^{n-1})) \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}, t^{n-1})}{\sqrt {\left \lVert {\bf x} - \overline {\bf x} \right \rVert^2 + (\Delta t)^2 }} =  \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}, t^{n-1})}{\Delta t} ,
+\psi \frac{\partial u}{\partial \tau} \approx \psi (u({\bf x}, t^{n-1})) \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}^n, t^{n-1})}{\sqrt {\left \lVert {\bf x} - \overline {\bf x}^n \right \rVert^2 + (\Delta t)^2 }} =  \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}^n, t^{n-1})}{\Delta t} ,
 \end{equation}
 
 where
@@ -256,7 +256,7 @@ the transported function is defined as
 \overline {U}^n ({\bf x}) =  u (\overline {\bf X}^n ({\bf x}), t^{n-1}) .
 \end{equation}
 
-As the continuous in space approximation for Eq.~(\ref{eq6}) is
+As the continuous in space approximation for Eq. (\ref{eq6}) is
 
 \begin{equation}\label{eq12}
 \frac{U^n ({\bf x}) - \overline U^{n} ({\bf x})}{\Delta t} = 0 ,
@@ -278,7 +278,7 @@ The first test case symbolizes the presence of horizontal temperature gradients 
 {\bf f} (u) =  {\bf v} (x,y)~ u ,
 \end{equation}
 
-where ${\bf v} (x,y)= g~(-y,~x)$, ~ $g = \frac{1}{r}2.59807~sech^2(r)~tanh(r), ~and~ r = \sqrt{x^2 + y^2}$. The exact solution of this problem is given by
+where ${\bf v} (x,y)= g~(-y,~x)$, $g = \frac{1}{r}2.59807~sech^2(r)~tanh(r)$, and $r = \sqrt{x^2 + y^2}$. The exact solution of this problem is given by
 
 \begin{equation}
 u (x,y,t) = tanh(y~cos(gt) - x~sin(gt)).
@@ -362,14 +362,13 @@ We consider the Burgers equation with zero viscosity term which is called the in
 f (u) =  \frac{1}{2} u^2 .
 \end{equation}
 
-\noindent
 The exact solution of this problem is given by
 
 \begin{equation}
 u(x,t) = sin(x - ut) .
 \end{equation}
 
-The domain $\Omega = [0,32]^2$ is discretized in 4096 square cells, a step size $\epsilon = 0.01$ is selected and the Courant number is set to $CFL = 0.1$. The exact and $MMOC$ initial conditions are shown in Fig 2. Only for the $MMOC$ scheme, the numerical solver was able to converge to the initial condition considering zero values as a guess initial condition.
+The domain $\Omega = [0,32]^2$ is discretized in 4096 square cells, a step size $\epsilon = 0.01$ is selected and the Courant number is set to $CFL = 0.1$. The exact and $MMOC$ initial conditions are shown in Fig 2. Only with the $MMOC$ scheme, the numerical solver was able to converge to the initial condition considering zero values as a guess initial condition.
 
 
     
@@ -404,7 +403,7 @@ In order to get the convergence for the initial condition, we set $u_0(x) = \bet
 
 
 
-table 2. $L_2$ norm for the initial condition of the Burgers problem.
+Table 2. $L_2$ norm for the initial condition of the Burgers problem.
 
 
 Conclusions
@@ -419,15 +418,12 @@ The results achieved and presented here are preliminary ones. The $MMOC$ is a pr
 
 References
 
-[1] M. Morales-Hernandez, E. Zuazua, Adjoint computational methods for 2d inverse design of linear trans-
-port equations on unstructured grids, Computational and Applied Mathematics (2019) 167–192.
+[1] M. Morales-Hernandez, E. Zuazua, Adjoint computational methods for 2d inverse design of linear transport equations on unstructured grids, Computational and Applied Mathematics (2019)
 
-[2] J. Douglas, T. F. Russell, Numerical methods for convection dominated diffusion problems based on
-combining the method of characteristics with finite element or finite difference procedures, SIAM J.
-Numer. Anal. (1982) 871–885.
+[2] J. Douglas, T. F. Russell, Numerical methods for convection dominated diffusion problems based on combining the method of characteristics with finite element or finite difference procedures, SIAM J.
+Numer. Anal. (1982)
 
-[3] J. Douglas, F. Pereira, L.-M. Yeh, A locally conservative eulerian–lagrangian numerical method and its
-application to nonlinear transport in porous media, Computational Geosciences (2000) 1–40.
+[3] J. Douglas, F. Pereira, L.-M. Yeh, A locally conservative euleriana lagrangian numerical method and its application to nonlinear transport in porous media, Computational Geosciences (2000)
 </description>
         <pubDate>Tue, 18 Feb 2020 00:00:00 +0100</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0008</link>

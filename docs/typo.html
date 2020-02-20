@@ -367,9 +367,9 @@ for every $t\in [0,T]$, for a.e $x\in \mathbb R$,</p>
 
 <p>Morales-Hernandez and Zuazua analysed the numerical resolution of the adjoint equation by means of two methods: a First Order Upwind $(FOU)$ scheme and a Second Order Upwind $(SOU)$ scheme. They concluded that the $FOU$ scheme is the best choice when dealing with smooth functions once the $SOU$ scheme introduces some spurious oscillations. In addition, the $FOU$ scheme requires shorter computational time than the $SOU$ scheme. The non-linear transport problems in which sharp interfaces or discontinuities may appear in the functions has remained to be studied.</p>
 
-<p>The numerical scheme for the adjoint equation determines the direction of descent in the iteration procedure, and consequently the $CPU$ time consumed by the solver. As the $CPU$ time is a decisive factor, we propose the $SOU$ scheme for solving the transport equation and an eulerian-lagrangian scheme that uses the $MMOC$ method for solving the transport and adjoint equations. The $MMOC$ method is based on the characteristic curves very computationally competitive for linear hyperbolic transport equations. The $MMOC$ was initially developed performing the resolution in a forward sense. In this work, the eulerian-lagrangian scheme is used for the transport and adjoint resolution, employing it in both forward and backward senses.</p>
+<p>The numerical scheme for the adjoint equation determines the direction of descent in the iteration procedure, and consequently the $CPU$ time consumed by the solver. As the $CPU$ time is a decisive factor, we propose an eulerian-lagrangian scheme that uses the Modified Method of Characteristics ($MMOC$) [2] for solving the transport and adjoint equations. The $MMOC$ method is based on the characteristic curves, and so very computationally competitive for linear hyperbolic transport equations. The $MMOC$ was initially developed performing the resolution in a forward sense. In this work, the eulerian-lagrangian scheme is used for the transport and adjoint resolution, employing it in both forward and backward senses.</p>
 
-<p>In this work, we perform numerical tests in order to investigate the accuracy and efficiency of an eulerian-lagrangian scheme to solve the problem of inverse design of linear and non-linear hyperbolic transport scalar equations.</p>
+<p>We perform numerical tests in order to investigate the accuracy and efficiency of the eulerian-lagrangian scheme to solve the problem of inverse design of linear and non-linear hyperbolic transport scalar equations.</p>
 
 <h1 id="the-gradient-adjoint-method">The gradient-adjoint method</h1>
 
@@ -394,14 +394,14 @@ J(u_0) = \frac{1}{2} \int_{0}^{T} \int_{\Omega} (u(T) - u^*)^2 d\Omega dt
 <p>where $\epsilon$ is the step size, and the gradient $\nabla J = \sigma (0)$, in which $\sigma$ is the adjoint variable . The gradient $\sigma (0)$ is achieved by solving the adjoint equation:</p>
 
 <script type="math/tex; mode=display">\begin{equation}\label{eq4}
-- \frac{\partial \sigma}{\partial t} - {\bf f}^\prime (u) \cdot \nabla \sigma = 0, ~ ~ \sigma (T) = u(T) - u^*.
+\frac{\partial \sigma}{\partial t} - {\bf f}^\prime (u) \cdot \nabla \sigma = 0, ~ ~ \sigma (T) = u(T) - u^* .
 \end{equation}</script>
 
 <p>The gradient-adjoint method is based on iterating a loop, where the transport equation (\ref{eq1}) is solved in a forward sense, while the adjoint equation (\ref{eq4}), which is of hyperbolic nature as well, is solved backwards in time.</p>
 
 <h1 id="the-mmoc-in-forward-sense">The $MMOC$ in forward sense</h1>
 
-<p>Eulerian-lagrangian approaches provide computationally efficient techniques for approximating the solution of hyperbolic transport equations. Douglas and Russel \cite{Dou82} introduced an eulerian-lagrangian method based on the characteristic curve called Modified Method of Characteristic $(MMOC)$ to develop fast solvers for hyperbolic transport equations. Despite the $MMOC$ does not provide a local conservation of the identity associated with the function, it present good performance for linear hyperbolic transport equations.</p>
+<p>Eulerian-lagrangian approaches provide computationally efficient techniques for approximating the solution of hyperbolic transport equations. Douglas and Russel [2] introduced an eulerian-lagrangian method based on the characteristic curve - the $MMOC$ - to develop fast solvers for hyperbolic transport equations. Despite the $MMOC$ does not provide a local conservation of the identity associated with the function, it present good performance for linear hyperbolic transport equations.</p>
 
 <p>We use the $MMOC$ method for solving the transport and adjoint equations in the context of the problem of inverse design of hyperbolic transport equations. In this problem, the adjoint equation is always a linear differencial equation, worthing the use of the eulerian-lagrangian scheme. The gradient-adjoint iteration requires the adjoint equation to be solved in backward sense. We employ an eulerian-lagrangian scheme that uses the $MMOC$, considering procedures in forward and backward senses.</p>
 
@@ -411,13 +411,13 @@ J(u_0) = \frac{1}{2} \int_{0}^{T} \int_{\Omega} (u(T) - u^*)^2 d\Omega dt
 \frac{\partial u}{\partial t} + \nabla \cdot {\bf f} (u) = 0, ~ ~ u({\bf x},0) = u(0) ,
 \end{equation}</p>
 
-<p>where ${\bf f} (u)$ is a vector flux function. Rewriting the Eq.~(\ref{eq5}) in nondivergence form,</p>
+<p>where ${\bf f} (u)$ is a vector flux function. Rewriting the Eq. (\ref{eq5}) in nondivergence form,</p>
 
 <p>\begin{equation}\label{eq6}
 \frac{\partial u}{\partial t} + {\bf f}^\prime (u) \cdot \nabla u  = 0 .
 \end{equation}</p>
 
-<p>The solution of Eq.~(\ref{eq6}) is essentially along the characteristic curves of the transport operator $\partial / \partial t + {\bf f}^\prime (u) \cdot \nabla$, so that it is appropriate to introduce differentiation in this characteristic direction. Let</p>
+<p>The solution of Eq. (\ref{eq6}) is essentially along the characteristic curves of the transport operator $\partial / \partial t + {\bf f}^\prime (u) \cdot \nabla$, so that it is appropriate to introduce differentiation in this characteristic direction. Let</p>
 
 <p>\begin{equation}\label{eq7}
 \partial / \partial t + {\bf f}^\prime (u) \cdot \nabla = \psi \frac{\partial}{\partial \tau} , ~~\psi (u) = \sqrt {1 + {\left \lVert {\bf f}^\prime (u) \right \rVert}^2} , <br />
@@ -425,10 +425,10 @@ J(u_0) = \frac{1}{2} \int_{0}^{T} \int_{\Omega} (u(T) - u^*)^2 d\Omega dt
 
 <p>in which the direction $\tau$ depends on $\bf x$.</p>
 
-<p>Let us consider the discretization of  Eq.~(\ref{eq6}) in time. Denote the time step $\Delta t &gt; 0$ and consider the approximation of the solution at times $t^n = n \Delta t$. In the standard $MMOC$, the characteristic derivative is approximated by</p>
+<p>Let us consider the discretization of  Eq. (\ref{eq6}) in time. Denote the time step $\Delta t &gt; 0$ and consider the approximation of the solution at times $t^n = n \Delta t$. In the standard $MMOC$, the characteristic derivative is approximated by</p>
 
 <p>\begin{equation}\label{eq8}
-\psi \frac{\partial u}{\partial \tau} \approx \psi (u({\bf x}, t^{n-1})) \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}, t^{n-1})}{\sqrt {\left \lVert {\bf x} - \overline {\bf x} \right \rVert^2 + (\Delta t)^2 }} =  \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}, t^{n-1})}{\Delta t} ,<br />
+\psi \frac{\partial u}{\partial \tau} \approx \psi (u({\bf x}, t^{n-1})) \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}^n, t^{n-1})}{\sqrt {\left \lVert {\bf x} - \overline {\bf x}^n \right \rVert^2 + (\Delta t)^2 }} =  \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}^n, t^{n-1})}{\Delta t} ,<br />
 \end{equation}</p>
 
 <p>where</p>
@@ -449,7 +449,7 @@ J(u_0) = \frac{1}{2} \int_{0}^{T} \int_{\Omega} (u(T) - u^*)^2 d\Omega dt
 \overline {U}^n ({\bf x}) =  u (\overline {\bf X}^n ({\bf x}), t^{n-1}) .
 \end{equation}</p>
 
-<p>As the continuous in space approximation for Eq.~(\ref{eq6}) is</p>
+<p>As the continuous in space approximation for Eq. (\ref{eq6}) is</p>
 
 <p>\begin{equation}\label{eq12}
 \frac{U^n ({\bf x}) - \overline U^{n} ({\bf x})}{\Delta t} = 0 ,
@@ -473,7 +473,7 @@ U^n (\textbf{x}) =  \overline U^{n} (\textbf{x})
 {\bf f} (u) =  {\bf v} (x,y)~ u ,
 \end{equation}</p>
 
-<p>where ${\bf v} (x,y)= g~(-y,~x)$, ~ $g = \frac{1}{r}2.59807~sech^2(r)~tanh(r), ~and~ r = \sqrt{x^2 + y^2}$. The exact solution of this problem is given by</p>
+<p>where ${\bf v} (x,y)= g~(-y,~x)$, $g = \frac{1}{r}2.59807~sech^2(r)~tanh(r)$, and $r = \sqrt{x^2 + y^2}$. The exact solution of this problem is given by</p>
 
 <p>\begin{equation}
 u (x,y,t) = tanh(y~cos(gt) - x~sin(gt)).
@@ -557,14 +557,13 @@ u (x,y,t) = tanh(y~cos(gt) - x~sin(gt)).
 f (u) =  \frac{1}{2} u^2 .
 \end{equation}</p>
 
-<p>\noindent
-The exact solution of this problem is given by</p>
+<p>The exact solution of this problem is given by</p>
 
 <p>\begin{equation}
 u(x,t) = sin(x - ut) .
 \end{equation}</p>
 
-<p>The domain $\Omega = [0,32]^2$ is discretized in 4096 square cells, a step size $\epsilon = 0.01$ is selected and the Courant number is set to $CFL = 0.1$. The exact and $MMOC$ initial conditions are shown in Fig 2. Only for the $MMOC$ scheme, the numerical solver was able to converge to the initial condition considering zero values as a guess initial condition.</p>
+<p>The domain $\Omega = [0,32]^2$ is discretized in 4096 square cells, a step size $\epsilon = 0.01$ is selected and the Courant number is set to $CFL = 0.1$. The exact and $MMOC$ initial conditions are shown in Fig 2. Only with the $MMOC$ scheme, the numerical solver was able to converge to the initial condition considering zero values as a guess initial condition.</p>
 
 <table style="text-align:center;">
     <tr>
@@ -599,7 +598,7 @@ u(x,t) = sin(x - ut) .
 </center>
 
 <center>
-<b>table 2. </b>$L_2$ norm for the initial condition of the Burgers problem.
+<b>Table 2. </b>$L_2$ norm for the initial condition of the Burgers problem.
 </center>
 
 <h1 id="conclusions">Conclusions</h1>
@@ -614,15 +613,12 @@ u(x,t) = sin(x - ut) .
 
 <h1 id="references">References</h1>
 
-<p>[1] M. Morales-Hernandez, E. Zuazua, Adjoint computational methods for 2d inverse design of linear trans-
-port equations on unstructured grids, Computational and Applied Mathematics (2019) 167–192.</p>
+<p>[1] M. Morales-Hernandez, E. Zuazua, Adjoint computational methods for 2d inverse design of linear transport equations on unstructured grids, Computational and Applied Mathematics (2019)</p>
 
-<p>[2] J. Douglas, T. F. Russell, Numerical methods for convection dominated diffusion problems based on
-combining the method of characteristics with finite element or finite difference procedures, SIAM J.
-Numer. Anal. (1982) 871–885.</p>
+<p>[2] J. Douglas, T. F. Russell, Numerical methods for convection dominated diffusion problems based on combining the method of characteristics with finite element or finite difference procedures, SIAM J.
+Numer. Anal. (1982)</p>
 
-<p>[3] J. Douglas, F. Pereira, L.-M. Yeh, A locally conservative eulerian–lagrangian numerical method and its
-application to nonlinear transport in porous media, Computational Geosciences (2000) 1–40.</p>
+<p>[3] J. Douglas, F. Pereira, L.-M. Yeh, A locally conservative euleriana lagrangian numerical method and its application to nonlinear transport in porous media, Computational Geosciences (2000)</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;The finite-dimensional dynamical system given by a pendulum on a cart (cartpole) is widely considered as a benchmark for comparing the performance of different control strategies. In this blog post, we consider a double pendulum on a cart and we solve the problem of swinging up the pendulum from the downward position to the upward position using optimal control techniques.&lt;/p&gt;
 </code></pre></div></div>
@@ -14428,7 +14424,11 @@ The algorithm stops after only three iterations.
 
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;&lt;a href="https://cmc.deusto.eus/Carlos-Esteve-Yague/"&gt;&lt;strong&gt;Carlos Esteve Yagüe&lt;/strong&gt;&lt;/a&gt; holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (UAM and DeustoTech). He earned his PhD in analysis of nonlinear parabolic partial differential equations under the supervision of Prof. Philippe Souplet (Université Paris 13). His main research interests are singularity formation for parabolic PDE, Hamilton-Jacobi equations, optimal control theory and differential games.&lt;/p&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Alexandre Santos Francisco holds a degree in Mechanical Engineering and a PhD degree in Nuclear Engineering. He is Professor of Fluid Mechanics at the Universidade Federal Fluminense in Brazil. On the next two months he will be a Visiting Professor at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (FAU, University of Deusto and Universidad Autónoma de Madrid). His main research interests are porous media, computational mathematics, and computational fluid mechanics.
+
+
+
+&lt;p&gt;&lt;a href="https://cmc.deusto.eus/Carlos-Esteve-Yague/"&gt;&lt;strong&gt;Carlos Esteve Yagüe&lt;/strong&gt;&lt;/a&gt; holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (UAM and DeustoTech). He earned his PhD in analysis of nonlinear parabolic partial differential equations under the supervision of Prof. Philippe Souplet (Université Paris 13). His main research interests are singularity formation for parabolic PDE, Hamilton-Jacobi equations, optimal control theory and differential games.&lt;/p&gt;
 
 &lt;a name="NoburuSakamoto"&gt;&lt;/a&gt;Noboru Sakamoto&lt;/strong&gt; received the B.Sc. degree in mathematics from Hokkaido University and M.Sc. and Ph.D. degrees in aerospace engineering from Nagoya University, in 1991, 1993, and 1996, respectively. From 1996 until 2015, he held positions in the Graduate School of Engineering in Nagoya University. Currently, he is a Professor with the Science and Engineering of &lt;a href="http;//www.nanzan-u.ac.jp/English/index.html" target="_blank"&gt;Nanzan University&lt;/a&gt; in Nagoya, Japan. He has held a visiting research position at University of Groningen, The Netherlands, in 2005 and 2006. He received the SICE Best Paper Prizes in 1997, 2006, 2008 and 2011 and SICE Kimura Prize in 2016. His research interests include nonlinear control theory, control of chaotic systems, dynamical system theory and control applications for aerospace engineering.
 
