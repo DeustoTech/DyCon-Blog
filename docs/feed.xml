@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 20 Feb 2020 07:51:51 +0100</pubDate>
-    <lastBuildDate>Thu, 20 Feb 2020 07:51:51 +0100</lastBuildDate>
+    <pubDate>Thu, 20 Feb 2020 08:42:30 +0100</pubDate>
+    <lastBuildDate>Thu, 20 Feb 2020 08:42:30 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -171,7 +171,7 @@ Video 3. Three approximate optimal solutions of \eqref{opt2} constructed using a
       </item>
     
       <item>
-        <title>An eurelian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations</title>
+        <title>An eulerian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations</title>
         <description>The inverse design of hyperbolic transport equations can be addressed by using gradient-adjoint methodologies. Recently, Morales-Hernandez and Zuazua [1] investigated the convenience of using low order numerical schemes for the adjoint resolution in the gradient-adjoint method. They focused on hyperbolic transport scalar equations with an heterogeneous time-independent vector field.
 
 Morales-Hernandez and Zuazua analysed the numerical resolution of the adjoint equation by means of two methods: a First Order Upwind $(FOU)$ scheme and a Second Order Upwind $(SOU)$ scheme. They concluded that the $FOU$ scheme is the best choice when dealing with smooth functions once the $SOU$ scheme introduces some spurious oscillations. In addition, the $FOU$ scheme requires shorter computational time than the $SOU$ scheme. The non-linear transport problems in which sharp interfaces or discontinuities may appear in the functions has remained to be studied.

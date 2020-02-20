@@ -2,7 +2,7 @@
     
     
     {
-      "title"           : "An eurelian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations",
+      "title"           : "An eulerian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations",
       "categories"      : ["tutorial", "WP04"],
       "url"             : "/tutorial/wp04/P0008",
       "date"            : "2020-02-18",
