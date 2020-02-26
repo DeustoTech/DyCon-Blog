@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 20 Feb 2020 08:42:30 +0100</pubDate>
-    <lastBuildDate>Thu, 20 Feb 2020 08:42:30 +0100</lastBuildDate>
+    <pubDate>Wed, 26 Feb 2020 11:41:42 +0100</pubDate>
+    <lastBuildDate>Wed, 26 Feb 2020 11:41:42 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -215,7 +215,7 @@ We use the $MMOC$ method for solving the transport and adjoint equations in the 
 Consider a scalar hyperbolic transport equation determining the initial value problem
 
 \begin{equation}\label{eq5}
-\frac{\partial u}{\partial t} + \nabla \cdot {\bf f} (u) = 0, ~ ~ u({\bf x},0) = u(0) ,
+\frac{\partial u}{\partial t} + \nabla \cdot {\bf f} (u) = 0, ~ ~ u({\bf x},0) = u_0 ,
 \end{equation}
 
 where ${\bf f} (u)$ is a vector flux function. Rewriting the Eq. (\ref{eq5}) in nondivergence form,
@@ -352,7 +352,7 @@ Results of $CPU$ time and $L_2$ norm of the numerical initial condition with res
 
 
 
-Table 1. Performance for initial condition of the Doswell frontogenesis.
+Table 1. Performance for initial condition in the Doswell frontogenesis.
 
 Inviscid Burgers equation
 
@@ -368,7 +368,7 @@ The exact solution of this problem is given by
 u(x,t) = sin(x - ut) .
 \end{equation}
 
-The domain $\Omega = [0,32]^2$ is discretized in 4096 square cells, a step size $\epsilon = 0.01$ is selected and the Courant number is set to $CFL = 0.1$. The exact and $MMOC$ initial conditions are shown in Fig 2. Only with the $MMOC$ scheme, the numerical solver was able to converge to the initial condition considering zero values as a guess initial condition.
+The domain $\Omega = [0,32]^2$ is discretized in 4096 square cells, a step size $\epsilon = 0.01$ is selected and the Courant number is set to $CFL = 0.1$. The exact and $MMOC$ initial conditions are shown in Fig 2 considering zero values as a guess initial condition. Only with the $MMOC$ scheme the numerical solver was able to converge to the initial condition for the selected step size.
 
 
     
@@ -383,7 +383,7 @@ The domain $\Omega = [0,32]^2$ is discretized in 4096 square cells, a step size 
      Figure 2.The exact (left) and $MMOC$ (right) initial conditions.
 
 
-In order to get the convergence for the initial condition, we set $u_0(x) = \beta sin(x)$ as a guess initial condition, where $\beta$ is a constant that, when its value is next to one, approximates guess initial conditions to the exact initial condition. Table 2 displays the $L_2$ norm of the numerical initial condition with respect to the exact initial condition for several $\beta$ values. The numerical solver using the $LW$ scheme was not able to converge to the initial condition when the $\beta$ is zero (exact initial condition). On the other hand, the solver using $MMOC$ scheme converged for any $\beta$ value, showing the smaller norm as the $\beta$ is increased.
+In order to observe the convergence to the initial condition, we set $u_0(x) = \beta sin(x)$ as a guess initial condition, where $\beta$ is a constant. As $\beta$ is next to one, the guess initial conditions is closer to the exact initial condition. Table 2 displays the $CPU$ time and $L_2$ norm of the numerical initial condition with respect to the exact initial condition for several $\beta$ values. The numerical solver using $MMOC$ scheme converged for any $\beta$ value, showing that the norm is smaller as the $\beta$ is increased.
 
 
 
@@ -391,19 +391,19 @@ In order to get the convergence for the initial condition, we set $u_0(x) = \bet
         $\beta$    $LW$  $MMOC$
     
     
-        0.0    -  3.70
+        0.1    3.68  3.39
     
     
-        0.5    23.1  2.59
+        0.5    2.82  2.70
         
     
-        0.9    24.9  1.23
+        0.9    0.95  1.19
     
 
 
 
 
-Table 2. $L_2$ norm for the initial condition of the Burgers problem.
+Table 2. Performance for initial condition by $MMOC$ in the Burgers problem.
 
 
 Conclusions
