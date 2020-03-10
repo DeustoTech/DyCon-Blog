@@ -1,4 +1,8 @@
 # Members
+JanH:
+  name: Jan Heiland
+  description: In my research, I consider control systems and how they can be realized in numerical simulations. Particularly, I’m interested in infinite dimensional and differential-algebraic systems like the incompressible Navier-Stokes equation. In view of numerical implementations, I also investigate model reduction techniques for control systems.
+
 AlexandreS:
   name: Alexandre Francisco
   description: Alexandre Santos Francisco holds a degree in Mechanical Engineering and a PhD degree in Nuclear Engineering. He is Professor of Fluid Mechanics at the Universidade Federal Fluminense in Brazil. On the next two months he will be a Visiting Professor at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (FAU, University of Deusto and Universidad Autónoma de Madrid). His main research interests are porous media, computational mathematics, and computational fluid mechanics.

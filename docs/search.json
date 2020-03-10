@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "FEniCS Burgers POD DMD",
+      "categories"      : ["tutorial", "WP04"],
+      "url"             : "/tutorial/wp04/P0009",
+      "date"            : "2020-03-07",
+      "author"          : ["JanH"],
+      "description"     : "A short python implementation of POD and DMD for a 2D Burgers equation using FEniCS and Scipy",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/ico.png"
+    } ,
+  
+    {
       "title"           : "An eulerian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations",
       "categories"      : ["tutorial", "WP04"],
       "url"             : "/tutorial/wp04/P0008",

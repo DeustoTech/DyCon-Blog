@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    FEniCS Burgers POD DMD - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0009">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">
+            Inverse design of time-irreversible models</a> &#8827;</small>
+          </h2>
+          <h1>FEniCS Burgers POD DMD</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JanH">Jan Heiland</a>,
+                  </span>
+                </span>
+              
+              - 07 March 2020
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        <h1 id="burgers-equation">Burgers equation</h1>
+
+<p>For a given viscosity parameter $\nu$ and for time $t&gt;0$, we consider the 2D Burgers equation on the unit square</p>
+
+<script type="math/tex; mode=display">\frac {\partial}{\partial t}u + (u\nabla)u - \nu \Delta u = 0</script>
+
+<p>with zero Neumann boundary conditions and initial condition</p>
+
+<script type="math/tex; mode=display">u\bigr| _ {t=0}(x _ 1, x _ 2) = 
+\begin{bmatrix}
+ 1 \\\\ 1 
+\end{bmatrix}
+e ^ {-3(x _ 1^2 + x _ 2^2)}</script>
+
+<p>and its numerical approximation using</p>
+
+<ol>
+  <li>Finite Elements in space and Runge-Kutta in time,</li>
+  <li>a POD reduction of the FEM model, and</li>
+  <li>a DMD reduced order model.</li>
+</ol>
+
+<h1 id="0-the-setup">0. The Setup</h1>
+
+<p>We start with importing the necessary modules and defining the parameters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">dolfin</span>
+
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="n">spla</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">from</span> <span class="nn">spacetime_galerkin_pod.ldfnp_ext_cholmod</span> <span class="kn">import</span> <span class="n">SparseFactorMassmat</span>
+
+<span class="n">dolfin</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s">'linear_algebra_backend'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Eigen'</span>
+
+<span class="n">nu</span> <span class="o">=</span> <span class="mf">1e-4</span>  <span class="c1"># the viscosity
+</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">80</span> 
+<span class="n">poddim</span> <span class="o">=</span> <span class="mi">25</span>
+
+<span class="n">t0</span><span class="p">,</span> <span class="n">tE</span><span class="p">,</span> <span class="n">Nts</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">101</span>  <span class="c1"># the time grid for the snapshots
+</span>
+<span class="n">timegrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">tE</span><span class="p">,</span> <span class="n">Nts</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Here, <code class="highlighter-rouge">dolfin</code> is the python interface to <a href="https://fenicsproject.org/">FEniCS</a>
+and the other modules are standard in python, I would say. The module
+<code class="highlighter-rouge">ldfnp_ext_cholmod</code> is a little wrapper for the sparsity optimizing Cholesky
+decomposition of <a href="https://github.com/scikit-sparse/scikit-sparse"><em>sksparse</em></a>.
+It is available on <a href="https://github.com/highlando/spacetime_galerkin_pod">github</a>
+and falls back to <code class="highlighter-rouge">numpy</code> routines, in the case that <code class="highlighter-rouge">sksparse</code> is not
+available.</p>
+
+<h1 id="1-the-fem-discretization">1. The FEM Discretization</h1>
+
+<h2 id="the-spatial-discretization-in-fenics">The spatial discretization in FEniCS</h2>
+
+<p>First, the mesh is defined – here a uniform triangulation of the unit square
+controlled by the parameter <code class="highlighter-rouge">N</code>. For the value <code class="highlighter-rouge">N=80</code> and for globally smooth
+and piecewise quadratic ansatz functions, the resulting dimension of the system
+is 51842.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># The mesh
+</span>
+<span class="n">pone</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ptwo</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">RectangleMesh</span><span class="p">(</span><span class="n">pone</span><span class="p">,</span> <span class="n">ptwo</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="n">V</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">VectorFunctionSpace</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="s">'CG'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">### The FENICS FEM Discretization
+</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">TestFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">TrialFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Next, the discrete linear operators are defined and exported as a <em>SciPy</em> sparse
+matrix. Also, we factorize the mass matrix <code class="highlighter-rouge">mmat</code> for later use and define the
+norm that is weighted with the mass matrix as this is the discrete $L^2$ norm.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ## the mass matrix
+</span>
+<span class="n">mform</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">dx</span>
+<span class="n">massm</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">assemble</span><span class="p">(</span><span class="n">mform</span><span class="p">)</span>
+<span class="n">mmat</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">as_backend_type</span><span class="p">(</span><span class="n">massm</span><span class="p">)</span><span class="o">.</span><span class="n">sparray</span><span class="p">()</span>
+<span class="n">mmat</span><span class="o">.</span><span class="n">eliminate_zeros</span><span class="p">()</span>
+<span class="c1"># factorize it for later
+</span>
+<span class="n">mfac</span> <span class="o">=</span> <span class="n">SparseFactorMassmat</span><span class="p">(</span><span class="n">mmat</span><span class="p">)</span>
+
+<span class="c1"># norm induced by the mass matrix == discrete L2-norm
+</span>
+<span class="k">def</span> <span class="nf">mnorm</span><span class="p">(</span><span class="n">uvec</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">uvec</span><span class="p">,</span> <span class="n">mmat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">uvec</span><span class="p">)))</span>
+
+<span class="c1"># ## the stiffness matrix
+</span>
+<span class="c1"># as a form in FEniCS
+</span>
+<span class="n">aform</span> <span class="o">=</span> <span class="n">nu</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">dolfin</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">dx</span>
+<span class="n">aassm</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">assemble</span><span class="p">(</span><span class="n">aform</span><span class="p">)</span>
+
+<span class="c1"># as a sparse matrix
+</span>
+<span class="n">amat</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">as_backend_type</span><span class="p">(</span><span class="n">aassm</span><span class="p">)</span><span class="o">.</span><span class="n">sparray</span><span class="p">()</span>
+<span class="n">amat</span><span class="o">.</span><span class="n">eliminate_zeros</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Then we define the convective term as function of the velocity <code class="highlighter-rouge">u</code> both in terms
+of an FE-function and as a function of the associated coefficient vector.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ## the convective term
+</span>
+<span class="c1"># as a function in FEniCS
+</span>
+<span class="k">def</span> <span class="nf">burgers_nonl_func</span><span class="p">(</span><span class="n">ufun</span><span class="p">):</span>
+    <span class="n">cform</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">dolfin</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">ufun</span><span class="p">)</span><span class="o">*</span><span class="n">ufun</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">dx</span>
+    <span class="n">cass</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">assemble</span><span class="p">(</span><span class="n">cform</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cass</span>
+
+<span class="c1"># as a vector to form map
+</span>
+<span class="k">def</span> <span class="nf">burgers_nonl_vec</span><span class="p">(</span><span class="n">uvec</span><span class="p">):</span>
+    <span class="n">ufun</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+    <span class="n">ufun</span><span class="o">.</span><span class="n">vector</span><span class="p">()</span><span class="o">.</span><span class="n">set_local</span><span class="p">(</span><span class="n">uvec</span><span class="p">)</span>
+    <span class="n">bnlform</span> <span class="o">=</span> <span class="n">burgers_nonl_func</span><span class="p">(</span><span class="n">ufun</span><span class="p">)</span>
+    <span class="n">bnlvec</span> <span class="o">=</span> <span class="n">bnlform</span><span class="o">.</span><span class="n">get_local</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">bnlvec</span>
+</code></pre></div></div>
+
+<!-- Another helper function that interfaces to *FEniCS* is defined to use the
+`dolfin` functionalities to compute the modulus $u_1^2 + u_2^2$ of the vector
+field $u$ and to plot it.
+
+
+```python
+def plotabs(uvec, fignum=None, vmax=None,
+            sprws=1, spcls=1, spidx=1, colormap='plasma'):
+    ufun = dolfin.Function(V)
+    ufun.vector().set_local(uvec)
+    plt.figure(fignum)
+    plt.subplot(sprws, spcls, spidx)
+    cplt = dolfin.plot(dolfin.inner(ufun, ufun))
+    cplt.set_cmap(colormap)
+    if vmax is not None:
+        cplt.set_clim(vmin=0, vmax=vmax)
+    plt.colorbar(cplt)
+```
+-->
+
+<h2 id="the-runge-kutta-time-integration">The Runge-Kutta Time Integration</h2>
+
+<p>To apply standard time integration schemes (here, <code class="highlighter-rouge">RK23</code> turned out to be most
+efficient), we define the <em>right hand side</em> $f_h$ of the spatially discretized problem</p>
+
+<script type="math/tex; mode=display">\dot u_h = f_h (t_h, u_h).</script>
+
+<p>In this case the <em>right hand side</em> is an application of the discrete diffusion
+and convection operator and the inverse of the mass matrix that, simply
+speaking, maps a (discrete) form onto a discrete function. Note that there is no
+explicit time dependency in the Burgers equation, but the <em>SciPy</em>’s <code class="highlighter-rouge">solve_ivp</code>
+requires this parameter. Also, we define the initial value here. The time grid
+is used to store the solution for the snapshots needed later, but the time
+integrator uses his internal time grid.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inivstrg</span> <span class="o">=</span> <span class="s">'exp(-3.*(x[0]*x[0]+x[1]*x[1]))'</span>
+<span class="n">inivexpr</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">Expression</span><span class="p">((</span><span class="n">inivstrg</span><span class="p">,</span> <span class="n">inivstrg</span><span class="p">),</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">inivfunc</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">inivexpr</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+<span class="n">inivvec</span> <span class="o">=</span> <span class="n">inivfunc</span><span class="o">.</span><span class="n">vector</span><span class="p">()</span><span class="o">.</span><span class="n">get_local</span><span class="p">()</span>
+
+<span class="n">burgsol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">brhs</span><span class="p">,</span> <span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">tE</span><span class="p">),</span> <span class="n">inivvec</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">timegrid</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'RK23'</span><span class="p">)</span>
+<span class="n">fullsol</span> <span class="o">=</span> <span class="n">burgsol</span><span class="o">.</span><span class="n">y</span>
+</code></pre></div></div>
+
+<p>Here is the result. Note the sharp front that develops towards the end of the time
+integration.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/fullsol.png" /></p>
+<center>Solution snapshots of the full FEM model </center>
+
+<h1 id="2-pod-reduced-model">2. POD Reduced Model</h1>
+
+<p>If one has snapshots of the solution $v _ h$ at some time instances $t _ i$ one
+may well think that the span of the matrix of snapshots</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+X = 
+\begin{bmatrix}
+v _ h(t_0) & v _ h(t_2) & \dotsm & v _ h(t_k)
+\end{bmatrix} %]]></script>
+
+<p>is a good candidate for a space in which the solution evolves in. One may even
+go further and look for a low-dimensional basis of this space. The span of a
+matrix is best approximated by its dominant singular vectors. And this is the idea of
+<em>Proper Orthogonal Decomposition</em> (POD) – use the leading singular vectors as a
+basis for the solution space.</p>
+
+<p>We use the <code class="highlighter-rouge">Nts=101</code> snapshots of the FEM solutions to setup the matrix of
+measurements $X$ and to compute the POD modes as $M^{-1/2}v _ k$, where $v _ k$
+is the $k$-th leading left singular vector of $M^{1/2}X$. This procedure gives a
+low-dimensional orthogonal (in the discrete $L^2$ inner product) basis that
+optimally parametrizes the subspace of $L^2$ that is spanned by the solution
+snapshots<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>. In this example, we use the <code class="highlighter-rouge">poddim=25</code> leading singular vectors
+to define the reduced model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">snapshotmat</span> <span class="o">=</span> <span class="n">mfac</span><span class="o">.</span><span class="n">Ft</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">burgsol</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<span class="n">podmodes</span><span class="p">,</span> <span class="n">svals</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">spla</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">snapshotmat</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">selected_podmodes</span> <span class="o">=</span> <span class="n">podmodes</span><span class="p">[:,</span> <span class="p">:</span><span class="n">poddim</span><span class="p">]</span>
+<span class="n">podvecs</span> <span class="o">=</span> <span class="n">mfac</span><span class="o">.</span><span class="n">solve_Ft</span><span class="p">(</span><span class="n">selected_podmodes</span><span class="p">)</span>
+</code></pre></div></div>
+<p>In this implementation we use a sparse factor of the mass matrix instead of the
+square root.  The singular values (in particular those that correspond to the
+discarded directions) give an indication of how good the approximation is.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/svs.png" /></p>
+<center>The singular values of the snapshot matrix </center>
+
+<p>Here, the decay is comparatively slow, so that a one should not expect a good
+low dimensional approximation by POD.</p>
+
+<p>For the simulation, the state is parametrized by $u_h (t) \approx V \tilde
+u_h(t)$ where $V$ is the matrix of the POD modes (in the code $V$ denoted by
+<code class="highlighter-rouge">podvecs</code>), which gives a system in $\tilde u _ h$ with 25 degrees of freedom
+(as opposed to the 51842 of the full order model).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">redamat</span> <span class="o">=</span> <span class="n">podvecs</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">amat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">podvecs</span><span class="p">))</span>  <span class="c1"># the projected stiffness
+</span>
+<span class="k">def</span> <span class="nf">redbrhs</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">redvec</span><span class="p">):</span>
+    <span class="n">inflatedv</span> <span class="o">=</span> <span class="n">podvecs</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">redvec</span><span class="p">)</span>
+    <span class="n">redconv</span> <span class="o">=</span> <span class="n">podvecs</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">burgers_nonl_vec</span><span class="p">(</span><span class="n">inflatedv</span><span class="p">))</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">redamat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">redvec</span><span class="p">)</span> <span class="o">-</span> <span class="n">redconv</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Here we define the projected stiffness matrix and the reduced nonlinearity
+through</p>
+
+<ol>
+  <li>inflating the reduced state to full dimension</li>
+  <li>applying the nonlinearity</li>
+  <li>projecting down the result.</li>
+</ol>
+
+<p>This means that our model is not completely independent of the full dimension.
+For this problem there are <em>hyperreduction</em> techiques like DEIM.</p>
+
+<p>Thus, the <em>right hand side</em> is readily defined the more that the projected mass
+matrix is the identity. Why?</p>
+
+<p>Finally, the initial value is projected into the reduced coordinates and the
+reduced system is integrated in time.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">redburgsol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">redbrhs</span><span class="p">,</span> <span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">tE</span><span class="p">),</span> <span class="n">prjinivvec</span><span class="p">,</span>
+                       <span class="n">t_eval</span><span class="o">=</span><span class="n">timegrid</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'RK23'</span><span class="p">)</span>
+<span class="n">podredsol</span> <span class="o">=</span> <span class="n">redburgsol</span><span class="o">.</span><span class="n">y</span>
+</code></pre></div></div>
+
+<p>In the solution we see that the reduced order model gives a decent approximation
+in the smooth regime in the beginning and has its troubles approximating the front as can be seen in the error (log) plot.</p>
+
+<!-- < figure src="assets/imgs/WP04/P0009/podsol.png" title="Snapshots of the solution of the reduced system" lightbox="true" > -->
+<!-- < figure src="assets/imgs/WP04/P0009/podfullerrlog.png" title="Snapshots of the log of the error between the full and the POD solution" lightbox="true" > -->
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/podsol.png" /></p>
+<center>Snapshots of the solution of the reduced system </center>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/podfullerrlog.png" /></p>
+<center>Snapshots of the log of the error between the full and the POD solution</center>
+
+<h1 id="3-dmd-reduced-model">3. DMD Reduced Model</h1>
+
+<p>POD is partially data driven – it uses data to create a basis but still
+uses (a projection of) the model. If only snapshots but no model is given, one
+may use the method of <em>Dynamic Mode Decomposition</em><sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup> (DMD) that tries to identify
+a matrix $A$ that evolves the state like</p>
+
+<script type="math/tex; mode=display">A v _ h (t_i) = v _ h (t _ {i+1})</script>
+
+<p>In practice, one uses a set of snapshots and the two measurement matrices</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+X = 
+\begin{bmatrix}
+v _ h(t_0) & v _ h(t_2) & \dotsm & v _ h(t _ {k-1})
+\end{bmatrix} %]]></script>
+
+<p>and</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+X' =
+\begin{bmatrix}
+v _ h(t_1) & v _ h(t_2) & \dotsm & v _ h(t _ {k})
+\end{bmatrix}. %]]></script>
+
+<p>Note that $X’$ is basically $X$ shifted by one time step.</p>
+
+<p>Then the DMD matrix can be found by solving the linear regression problem</p>
+
+<script type="math/tex; mode=display">\min _ P \| X' - PX \| _ F.</script>
+
+<p>For the reduced DMD model we use the same snapshot matrix as for the POD. The
+regression problem is solved via SVD to compute the needed pseudo inverse since
+this naturally allows for a rank reduction and a factored representation of the
+DMD matrix.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ### dmd using truncated svd inverse
+</span>
+<span class="n">fburgsol</span> <span class="o">=</span> <span class="n">burgsol</span><span class="o">.</span><span class="n">y</span>
+<span class="n">Xmat</span> <span class="o">=</span> <span class="n">fburgsol</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">Xdsh</span> <span class="o">=</span> <span class="n">fburgsol</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+<span class="n">ux</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">vxh</span> <span class="o">=</span> <span class="n">spla</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">Xmat</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">uxr</span><span class="p">,</span> <span class="n">sxr</span><span class="p">,</span> <span class="n">vxhr</span> <span class="o">=</span> <span class="n">ux</span><span class="p">[:,</span> <span class="p">:</span><span class="n">poddim</span><span class="p">],</span> <span class="n">sx</span><span class="p">[:</span><span class="n">poddim</span><span class="p">],</span> <span class="n">vxh</span><span class="p">[:</span><span class="n">poddim</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="c1"># compute the dmd matrix in factored form: `dmda = dmdaone * dmdatwo`
+</span>
+<span class="n">dmdaone</span> <span class="o">=</span> <span class="n">Xdsh</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vxhr</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">dmdatwo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sxr</span><span class="p">),</span> <span class="n">uxr</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Once the DMD matrix $A$ is determined, the simulation of the DMD reduced model
+is only a repeated multiplication by $A$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># simulation of the dmd reduced model
+</span>
+<span class="n">dmdxo</span> <span class="o">=</span> <span class="n">inivvec</span>
+<span class="n">dmdsol</span> <span class="o">=</span> <span class="p">[</span><span class="n">dmdxo</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Nts</span><span class="p">):</span>
+    <span class="n">dmdsol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dmdaone</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dmdatwo</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dmdsol</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
+
+<span class="n">dmdsol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dmdsol</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<p>As can be seen from the results and the error plots, DMD does a good job in the
+initial phase but fails in the region with the sharp front.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/dmdsol.png" /></p>
+<center>Snapshots of the DMD solution</center>
+<!-- < figure src="assets/imgs/WP04/P0009/dmdfullerrlog.png" title="Error (log) plot with respect to the full FEM solution" lightbox="true" > -->
+
+<h1 id="4-remarks">4. Remarks</h1>
+
+<p>It is commonly accepted that POD does not work well for transport dominated
+problems – like the current case with the low viscosity parameter <code class="highlighter-rouge">nu=1e-4</code>.</p>
+
+<p>So, I think that the results for POD are quite good noting that the reduced
+order model has 25 degrees of freedom whereas the full model has 51842.
+Nonetheless, in my tests, increasing the number of basis functions did not help
+much. One can use a larger <code class="highlighter-rouge">nu</code> to get better POD approximations.</p>
+
+<p>The DMD approach shows a similar performance. If compared to POD, the
+qualitative approximation looks less good but the numbers are slightly better.
+All in all, the DMD approximation seems less reliable as for some parameter
+choices, the performance severely deteriorated.</p>
+
+<p>Differential Equations.* <a href="https://arxiv.org/abs/1611.04050">arXiv:1611.04050</a></p>
+
+<p>Decomposition: Theory and Applications* <a href="https://arxiv.org/abs/1312.0041">arXiv:1312.0041</a></p>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>See, e.g., Lemma 2.5 of Baumann, Benner, and Heiland (2018): *Space-Time Galerkin POD with Application in Optimal Control of Semi-linear Parabolic Partial <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>See, e.g., Tu, Rowley, Luchtenburg, Brunton, Kutz (2013): *On Dynamic Mode <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
