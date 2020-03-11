@@ -2,7 +2,7 @@
     
     
     {
-      "title"           : "FEniCS Burgers POD DMD",
+      "title"           : "POD and DMD Reduced Order Models for a 2D Burgers Equation",
       "categories"      : ["tutorial", "WP04"],
       "url"             : "/tutorial/wp04/P0009",
       "date"            : "2020-03-07",

@@ -8,7 +8,7 @@
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
   <title>
-    FEniCS Burgers POD DMD - DyCon Blog
+    POD and DMD Reduced Order Models for a 2D Burgers Equation - DyCon Blog
     
   </title>
 
@@ -210,7 +210,7 @@
             &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">
             Inverse design of time-irreversible models</a> &#8827;</small>
           </h2>
-          <h1>FEniCS Burgers POD DMD</h1>
+          <h1>POD and DMD Reduced Order Models for a 2D Burgers Equation</h1>
 					<p class="meta">
             <div class="post-preview-authors ellipsis-one-line">
               Authors:
@@ -284,6 +284,10 @@ img:active{
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/burgers.py""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
         <h1 id="burgers-equation">Burgers equation</h1>
 
 <p>For a given viscosity parameter $\nu$ and for time $t&gt;0$, we consider the 2D Burgers equation on the unit square</p>
@@ -306,9 +310,16 @@ e ^ {-3(x _ 1^2 + x _ 2^2)}</script>
   <li>a DMD reduced order model.</li>
 </ol>
 
+<p>We present the basic ideas and how they are realized in a basic <em>Python</em> script.</p>
+
 <h1 id="0-the-setup">0. The Setup</h1>
 
-<p>We start with importing the necessary modules and defining the parameters.</p>
+<p>Please download and run the python file <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/burgers.py"><code class="highlighter-rouge">burgers.py</code></a> to check the
+implementation, to reproduce the presented results, and to the behavior of the
+routines for different parameters.</p>
+
+<p>Here is the start of the script that lists the modules on which the
+implementation bases on.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">dolfin</span>
 
@@ -318,26 +329,16 @@ e ^ {-3(x _ 1^2 + x _ 2^2)}</script>
 
 <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
 <span class="kn">from</span> <span class="nn">spacetime_galerkin_pod.ldfnp_ext_cholmod</span> <span class="kn">import</span> <span class="n">SparseFactorMassmat</span>
-
-<span class="n">dolfin</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s">'linear_algebra_backend'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Eigen'</span>
-
-<span class="n">nu</span> <span class="o">=</span> <span class="mf">1e-4</span>  <span class="c1"># the viscosity
-</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">80</span> 
-<span class="n">poddim</span> <span class="o">=</span> <span class="mi">25</span>
-
-<span class="n">t0</span><span class="p">,</span> <span class="n">tE</span><span class="p">,</span> <span class="n">Nts</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">101</span>  <span class="c1"># the time grid for the snapshots
-</span>
-<span class="n">timegrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">tE</span><span class="p">,</span> <span class="n">Nts</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Here, <code class="highlighter-rouge">dolfin</code> is the python interface to <a href="https://fenicsproject.org/">FEniCS</a>
-and the other modules are standard in python, I would say. The module
+<p>The code uses <code class="highlighter-rouge">dolfin</code> which is the python interface to
+<a href="https://fenicsproject.org/">FEniCS</a> while the other modules <code class="highlighter-rouge">scipy</code>, <code class="highlighter-rouge">numpy</code>,
+and <code class="highlighter-rouge">matplotlib</code> are standard in python, I would say. The module
 <code class="highlighter-rouge">ldfnp_ext_cholmod</code> is a little wrapper for the sparsity optimizing Cholesky
 decomposition of <a href="https://github.com/scikit-sparse/scikit-sparse"><em>sksparse</em></a>.
-It is available on <a href="https://github.com/highlando/spacetime_galerkin_pod">github</a>
-and falls back to <code class="highlighter-rouge">numpy</code> routines, in the case that <code class="highlighter-rouge">sksparse</code> is not
-available.</p>
+It is available from my <a href="https://github.com/highlando/spacetime_galerkin_pod">github
+repository</a> and falls back
+to <code class="highlighter-rouge">numpy</code> routines, in the case that <code class="highlighter-rouge">sksparse</code> is not available.</p>
 
 <h1 id="1-the-fem-discretization">1. The FEM Discretization</h1>
 
@@ -372,8 +373,10 @@ norm that is weighted with the mass matrix as this is the discrete $L^2$ norm.</
 <span class="n">massm</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">assemble</span><span class="p">(</span><span class="n">mform</span><span class="p">)</span>
 <span class="n">mmat</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">as_backend_type</span><span class="p">(</span><span class="n">massm</span><span class="p">)</span><span class="o">.</span><span class="n">sparray</span><span class="p">()</span>
 <span class="n">mmat</span><span class="o">.</span><span class="n">eliminate_zeros</span><span class="p">()</span>
+
 <span class="c1"># factorize it for later
 </span>
+
 <span class="n">mfac</span> <span class="o">=</span> <span class="n">SparseFactorMassmat</span><span class="p">(</span><span class="n">mmat</span><span class="p">)</span>
 
 <span class="c1"># norm induced by the mass matrix == discrete L2-norm
@@ -382,8 +385,7 @@ norm that is weighted with the mass matrix as this is the discrete $L^2$ norm.</
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">uvec</span><span class="p">,</span> <span class="n">mmat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">uvec</span><span class="p">)))</span>
 
 <span class="c1"># ## the stiffness matrix
-</span>
-<span class="c1"># as a form in FEniCS
+# as a form in FEniCS
 </span>
 <span class="n">aform</span> <span class="o">=</span> <span class="n">nu</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">dolfin</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">dx</span>
 <span class="n">aassm</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">assemble</span><span class="p">(</span><span class="n">aform</span><span class="p">)</span>
@@ -416,26 +418,6 @@ of an FE-function and as a function of the associated coefficient vector.</p>
     <span class="k">return</span> <span class="n">bnlvec</span>
 </code></pre></div></div>
 
-<!-- Another helper function that interfaces to *FEniCS* is defined to use the
-`dolfin` functionalities to compute the modulus $u_1^2 + u_2^2$ of the vector
-field $u$ and to plot it.
-
-
-```python
-def plotabs(uvec, fignum=None, vmax=None,
-            sprws=1, spcls=1, spidx=1, colormap='plasma'):
-    ufun = dolfin.Function(V)
-    ufun.vector().set_local(uvec)
-    plt.figure(fignum)
-    plt.subplot(sprws, spcls, spidx)
-    cplt = dolfin.plot(dolfin.inner(ufun, ufun))
-    cplt.set_cmap(colormap)
-    if vmax is not None:
-        cplt.set_clim(vmin=0, vmax=vmax)
-    plt.colorbar(cplt)
-```
--->
-
 <h2 id="the-runge-kutta-time-integration">The Runge-Kutta Time Integration</h2>
 
 <p>To apply standard time integration schemes (here, <code class="highlighter-rouge">RK23</code> turned out to be most
@@ -446,7 +428,7 @@ efficient), we define the <em>right hand side</em> $f_h$ of the spatially discre
 <p>In this case the <em>right hand side</em> is an application of the discrete diffusion
 and convection operator and the inverse of the mass matrix that, simply
 speaking, maps a (discrete) form onto a discrete function. Note that there is no
-explicit time dependency in the Burgers equation, but the <em>SciPy</em>’s <code class="highlighter-rouge">solve_ivp</code>
+explicit time dependency in the Burgers equation, but <em>SciPy</em>’s <code class="highlighter-rouge">solve_ivp</code>
 requires this parameter. Also, we define the initial value here. The time grid
 is used to store the solution for the snapshots needed later, but the time
 integrator uses his internal time grid.</p>
@@ -474,7 +456,7 @@ may well think that the span of the matrix of snapshots</p>
 <script type="math/tex; mode=display">% <![CDATA[
 X = 
 \begin{bmatrix}
-v _ h(t_0) & v _ h(t_2) & \dotsm & v _ h(t_k)
+v _ h(t_0) & v _ h(t_1) & \dotsm & v _ h(t_k)
 \end{bmatrix} %]]></script>
 
 <p>is a good candidate for a space in which the solution evolves in. One may even
@@ -497,7 +479,7 @@ to define the reduced model.</p>
 <span class="n">podvecs</span> <span class="o">=</span> <span class="n">mfac</span><span class="o">.</span><span class="n">solve_Ft</span><span class="p">(</span><span class="n">selected_podmodes</span><span class="p">)</span>
 </code></pre></div></div>
 <p>In this implementation we use a sparse factor of the mass matrix instead of the
-square root.  The singular values (in particular those that correspond to the
+square root. The singular values (in particular those that correspond to the
 discarded directions) give an indication of how good the approximation is.</p>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/svs.png" /></p>
