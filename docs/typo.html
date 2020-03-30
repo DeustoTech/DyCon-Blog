@@ -202,6 +202,140 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:&lt;/p&gt;
+</code></pre></div></div>
+
+<script type="math/tex; mode=display">\begin{cases}
+u_t-\Delta u=u(1-u)(u-\theta)\quad (x,t)\in \Omega\times(0,T)\\
+u=a(x,t)\qquad \qquad\qquad\qquad(x,t)\in \partial\Omega\times(0,T)\\
+ 0\leq u(x,0)\leq 1
+\end{cases}</script>
+
+<p>This a key argument for ensuring controllability that has been studied in [2,3,4,5].</p>
+
+<h2 id="stair-case-method">Stair-case method</h2>
+<p>The stair-case method ( see [1]) guarantees the following:</p>
+
+<p>If we have an admissible continuous path of steady states, for any initial datum in the path, any target function in the path and for $T&gt;0$ sufficiently large, there exists a function $a$ such that drives the system from the initial datum to the target fulfilling the state-constraints along the trajectory.</p>
+
+<h2 id="extension-to-ball-writing-the-problem-in-radial-coordinats-invariant-region-etc">Extension to ball, Writing the problem in radial coordinats invariant region etc</h2>
+
+<p>We will restrict ourselves to the construction of paths that connect the steady state $w\equiv 0$ with the steady state $w\equiv \theta$. For doing such example with our model bistable equation.</p>
+
+<p>In order to construct the paths we will use phase-plane techniques for which we use radial coordinates. Our original domain might not be a ball, for this reason we extend it to a ball and firstly construct the path there.</p>
+
+<center>
+<img width="50%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/ballE-1.png" />
+</center>
+<center><b>Figure 1.</b> Extension to a ball.</center>
+
+<p>Remind that the important issue is to be able to guarantee that for every domain $w\equiv0$ and $w\equiv\theta$ are connected in an admissable way and this is seen in the phase plane representation of the elliptic equation.</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+-u_{rr}-\frac{N-1}{r}u_r=u(1-u)(u-\theta)\\
+u(0)=a\\
+ u_r(0)=0
+\end{cases}</script>
+
+<p>Now, since the radial ODE dissipates:</p>
+
+<script type="math/tex; mode=display">E(u,v)=\frac{1}{2}v^2+F(u)</script>
+
+<p>where $F(u)=\int_0^u f(s)ds$.</p>
+
+<p>Define the following region:
+<script type="math/tex">D:=\{(u,v)\in\mathbb{R}^2 \quad \text{such that}\quad E(u,v)\leq 0\}</script>
+Let $\theta_1$ be defined as:
+<script type="math/tex">\theta_1=\min_{s>0}\{F(s)=0\}</script></p>
+
+<p>Note that the region defined by 
+\begin{equation<em>}
+ \Gamma:={(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}}
+\end{equation</em>}
+Note that $\Gamma\subset D$.</p>
+
+<p>Take $(u_0,0)\in \Gamma$, then the solution of \eqref{radial} with initial
+datum $(u_0,0)$ satisfies:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\frac{d}{dr}E(u,v)=vv_r+f(u)v=-\frac{N-1}{r}v^2<0 %]]></script>
+
+<p>So $(u,v)\in\Gamma$ for all $r&gt;0$.</p>
+
+<p>We have that the blue line (the border of $\Gamma$) in the following figure determines a positively invariant region, which guarantees that all our path will be admissible.</p>
+
+<center>
+<img width="60%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/ContinuousPathinthePhaseSpace-1.png" />
+</center>
+<center><b>Figure 2.</b> Invariant region.</center>
+
+<h2 id="animation-of-the-path">Animation of the path</h2>
+
+<center>
+<video width="80%" controls="">
+  <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/video.mp4" type="video/mp4" />
+</video>
+</center>
+<center><b>Figure 3.</b> Path of steady states.</center>
+
+<p>If our domain is not a ball we restrict our path to the original domin to obtain the desired path.</p>
+
+<h2 id="other-features">Other features</h2>
+
+<p>General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibity to control (See blog entry [Nontrivial]).</p>
+
+<p>Here we restrict ourselves in the one dimensional case. In the following figure one can see how can we connect the steady state $w\equiv 0$ with the first nontrivial solution with boundary value $0$.</p>
+
+<center>
+
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp-1.png" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp2-1.png" />
+                    </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 3.</b> Path of steady states.</center>
+
+<p>However, since this path touches the boundary of the admissible set controllability cannot be guaranteed due to the comparison principle.</p>
+
+<p>Another important remark to be mentioned is that if we forget about the state constraints, more paths can be generated, provided that the ODE representation of the elliptic equation does not blow up. The following figure is an example of a path connecting $w\equiv 0$ with $w\equiv 1$ that violates the constraints:</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/completepath02L12-1.png" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Completepath01L12-1.png" />
+                    </th>       
+    </tr>
+</table>
+</center>
+<center><b>Figure 4.</b> Path of steady states violating constraints.</center>
+
+<h2 id="references">References:</h2>
+
+<p>[1] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
+Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.</p>
+
+<p>[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.</p>
+
+<p>[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
+635
+tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.</p>
+
+<p>[4]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case.   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+
+<p>[5] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h1 id="burgers-equation"&gt;Burgers equation&lt;/h1&gt;
 </code></pre></div></div>
 

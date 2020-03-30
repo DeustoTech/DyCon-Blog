@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Control of reaction-diffusion under state constraints - Application of the staircase method",
+      "categories"      : ["tutorial", "WP03"],
+      "url"             : "/tutorial/wp03/P0005",
+      "date"            : "2020-03-30",
+      "author"          : ["DomenecR"],
+      "description"     : "In this tutorial, we will present and elaborate an optimal control strategy for the obstacle problem in two space dimensions using Python's FEniCS toolbox. Different meshes and obstacles are considered.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0005/figures/completepath02L12-1.png"
+    } ,
+  
+    {
       "title"           : "POD and DMD Reduced Order Models for a 2D Burgers Equation",
       "categories"      : ["tutorial", "WP04"],
       "url"             : "/tutorial/wp04/P0009",
