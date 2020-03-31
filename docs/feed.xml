@@ -5,9 +5,108 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 30 Mar 2020 16:21:57 +0200</pubDate>
-    <lastBuildDate>Mon, 30 Mar 2020 16:21:57 +0200</lastBuildDate>
+    <pubDate>Tue, 31 Mar 2020 10:32:19 +0200</pubDate>
+    <lastBuildDate>Tue, 31 Mar 2020 10:32:19 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Control of reaction-diffusion under state constraints - Barriers</title>
+        <description>This tutorial is focused on the understanding of of the problem
+
+
+
+
+
+
+
+The solutions for $a=0$ constitute an instrisic obstruction to the controllability with state-constraints due to the comparison principle [1]. Indeed, for any control function $0\leq a(x,t)\leq 1$
+the solution of the problem:
+
+
+
+
+
+
+
+where $u$ is an elliptic nontrivial solution satisfies that $v(x,t)\geq u(x)$. Therefore, we cannot expect to control to any function below $u$.
+
+This is why the understanding of the existence or non-existence of nontrivial solutions is of main importance for the controllability under state-constraints.
+
+Non-trivial solutions around the boundary value $a=\theta$ do not constitute an intrinsic obstruction to the controllability because the boundary value $\theta$ is not in the border of the admissible set. However, the existence of such solutions create a technical difficulty for achieving the controllability to the steady state $w\equiv \theta$ which can be solved by constructing paths of steady states (see [PathsSS]).
+
+Elliptic nontrivial solutions with boundary value 1 do not exist. This can be related to the fact that the traveling waves for the Cauchy problem in the real line are approaching the steady state $w\equiv 1$ [2]
+
+The existence of non-trivial solutions can be done either by comparison principles or by understanding the critical points of a functional (see [3]).
+
+Any critical point of the functional:
+
+
+
+
+
+is a weak solution of the main equation.
+
+In order to guarantee that the solution will be between $0$ and $1$, one can extend $f$ by $0$ outside of the interval $[0,1]$.
+
+Restricting ourselves in the one dimensional case (the argument also holds in several dimensions) and making the spatial change fo variables $x\to \frac{x}{L}$, where $L$ is the length of the domain the functional reads:
+
+
+
+In the expresion above we see that if $L$ is small the convex part dominates while if $L$ is large and $\int_0^1f(s)ds&amp;gt;0$ it might not be convex.
+
+In the videos below one can see the evolution of the functional depending on the parametar $\lambda=L^2$. The representation is the evaluation of the functional along the first and the third eigenfunction, i.e. $e_1=\sin(\pi x)$ and $e_3=\sin(3\pi x)$.
+
+Here, one can see the evolution of the functional for $a=0$ and for $a=\theta=1/3$
+
+
+    
+        
+            
+            
+                
+        
+         
+            
+            
+            
+               
+    
+
+Figure 1. Extension to a ball.
+
+In the next figure a qualitative bifurcation diagram is represented, the red curve represents the nontrivial solutions with boundary value $\theta$ and the blue one the boundary value $0$. $\lambda^\ast$ is the minimum $\lambda=L^2$ for which a nontrivial solution around $0$ exists, analogously $\lambda^*_\theta$.
+
+
+
+
+Figure 2. Extension to a ball.
+
+Here one can see different non-trivial solutions for different boundary values. The green curve corresponds to a section of the nontrivial solution in the whole $\mathbb{R}$.
+
+
+
+
+Figure 3. Extension to a ball.
+
+References:
+
+[1] M.H. Protter and H.F. Weinberger, Maximum principles in differential equations, Springer Science &amp;amp; Business Media, 2012.
+
+[2] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
+
+[3]  P.L. Lions, On the existence of positive solutions of semilinear elliptic equations, SIAM Rev. 24 (1982), no. 4, 441–467.
+
+</description>
+        <pubDate>Tue, 31 Mar 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP03</category>
+        
+      </item>
     
       <item>
         <title>Control of reaction-diffusion under state constraints - Application of the staircase method</title>
@@ -18,7 +117,7 @@
 This a key argument for ensuring controllability that has been studied in [2,3,4,5].
 
 Stair-case method
-The stair-case method ( see [1]) guarantees the following:
+The stair-case method (see [1]) guarantees the following:
 
 If we have an admissible continuous path of steady states, for any initial datum in the path, any target function in the path and for $T&amp;gt;0$ sufficiently large, there exists a function $a$ such that drives the system from the initial datum to the target fulfilling the state-constraints along the trajectory.
 
@@ -48,13 +147,13 @@ Define the following region:
 Let $\theta_1$ be defined as:
 
 
-Note that the region defined by 
-\begin{equation}
- \Gamma:={(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}}
-\end{equation}
+Note that the region defined by
+
+
+
 Note that $\Gamma\subset D$.
 
-Take $(u_0,0)\in \Gamma$, then the solution of \eqref{radial} with initial
+Take $(u_0,0)\in \Gamma$, then the solution of radial equation with initial
 datum $(u_0,0)$ satisfies:
 
 
@@ -77,11 +176,11 @@ Animation of the path
 
 Figure 3. Path of steady states.
 
-If our domain is not a ball we restrict our path to the original domin to obtain the desired path.
+If our domain is not a ball we restrict our path to the original domain to obtain the desired path.
 
 Other features
 
-General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibity to control (See blog entry [Nontrivial]).
+General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibility to control (See this blog entry ).
 
 Here we restrict ourselves in the one dimensional case. In the following figure one can see how can we connect the steady state $w\equiv 0$ with the first nontrivial solution with boundary value $0$.
 
@@ -99,7 +198,7 @@ Here we restrict ourselves in the one dimensional case. In the following figure 
 
 
 
-Figure 3. Path of steady states.
+Figure 4. Path of steady states.
 
 However, since this path touches the boundary of the admissible set controllability cannot be guaranteed due to the comparison principle.
 
@@ -117,7 +216,7 @@ Another important remark to be mentioned is that if we forget about the state co
     
 
 
-Figure 4. Path of steady states violating constraints.
+Figure 5. Path of steady states violating constraints.
 
 References:
 
@@ -2328,247 +2427,6 @@ Video 3
         <pubDate>Mon, 04 Nov 2019 00:00:00 +0100</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</link>
         <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP05</category>
-        
-      </item>
-    
-      <item>
-        <title>Numerical simulation of nonlinear Population Dynamics Structuring by age and Spatial diffusion</title>
-        <description>In this tutorial, we propose the Hum method to approximate numerically the control in a null controllability problem for a non linear population dynamics model structuring in age and spatial diffusion.
-
-For given the positive function $F$, we consider the following Population Dynamics Model Structuring by age and spatial diffusion:
-
-
-
-where, $\Omega$ is a boundary subset of $\mathbb{R}^{N}$, $A$ is the maximal age and $T&amp;gt;0$ the final time. Also, $\Theta=\omega× (a_1,a_2)× (0,T),$ is the control support. Here, $\beta$ is the fertility rate depending also the age a, $\mu$ the mortality rate depending of the age a, $y_0$ the initial condition in $L^2(\Omega× (0,A)),$ $V$ is the control term and $y$ represent the density of the population of age $a$ at time $t$ and location $x∈ \Omega.$
-
-We assume that the fertility rate $\beta$ and the mortality rate $\mu$ satisfy the demographic property:
-
-
-
-and
-
-
-
-where
-
-
-
-The function $F,$ verify:
-
-
-
-Numerical Simulations
-
-In this part, the objective is to illustrate numerically the approximate null controllability of the nonlinear problem.
-
-Indeed, we consider the following system:
-
-
-
-Discretization and simulation of uncontrolled system
-
-The idea in this part is to highlight the numerical simimulation of the nonlinear problem. The first parts is to reduce the PDE to the finite dimensional system of the form
-
-
-
-where $A_l$ and $B$ are matrices, and
-
-
-
-is the finite dimensional state and control vector. Here, VectorF is the contribution of the nonlinear part, which comes from births. So let’s consider the following system
-
-
-
-where
-
-
-
-To solve $(4)$, the space (dimension 1) and age discretization is performed with finite difference method on rectangular grid 
-on $[0,L]\times [0,A]$. For a given rectangular grid $\mathcal{T}$ with vertex $(x_i,a_j)\quad 1\leq i\leq N,\quad 1\leq j\leq M$ and uniform step size (without loss of generality) $\Delta x$ in $x-$direction and $\Delta a$ in $a-$direction, we denote by  the diameter of the grid
-The finite difference approximation of the diffusion term of the operator $\textbf{A}$ is given by
-
-
-
-The finite difference approximation of the aging term of the operator A is given by
-
-
-
-Let $y_{i,j}(t)$ be the approximation of $y(x_i,a_j)$ and
-
-
-
-where $y_{i,j}$ is at the position $i+j*(N-1)$ and $A_l$ the matrix of the mortality approximation, the diffusion approximation and the aging approximation.
-
-Take into account the newborns
-
-We denote by $\beta(a),$ the fertility rate, the newborn is given by:
-
-
-
-We approximate $\int_{0}^{A}\beta(a)y(x,a,t)da$ by
-
-
-
-Then
-
-
-
-But as
-
-
-
-then
-
-
-
-We create also the nonlinear vectorF from the births. Indeed, if we denote by
-
-
-
-the matrix of the births,
-
-
-
-and we define the vectorF by:
-
-
-
-The corresponding discrete system is given for a continuous initial solution $y_0$ by
-
-
-
-Example 1
-
-Simulation of the uncontrolled system:
-
-For the simulation, we take $L=1,\text{ } A=10\text{, }\Delta x=1/54\quad \Delta a= 5/54$ and $T=40$. Moreover $F(t)=t\Phi(t)$ a Globally Lipchitz function where
-
-
-
-The fertility $\beta$ is given by:
-
-
-
-here $v=1$, $\gamma=5$, $\alpha=7$ and the mortality rate $\mu$ by
-
-
-
-
-
-
-
-
-
-Video 1. Evolution of the state of the uncontrolled system between t=0 and t=30 
-
-We observe in this video the growth (aging) of news borns over time. We also notice the high birth rate of this population.
-
-Construction of the control and numerical simulation
-
-We construct the control problem, which consists in minimizing the functional and we choose the classical Hum functional and the control matrix $B=\chi_{\Theta}$ where $\Theta=(x_1,x_2)\times (a_1,a_2)\times (0,T),$ and we suppose that $U_T$ is the desired state:
-
-
-
-Here $U_T=0.$
-The approximate null controllability become the minimization of  the functional $J,$ where $(U_l,V_l)$ verify the following system
-
-
-
-In this part the fertility $\beta$ is given by:
-
-
-
-here $v=1$, $\gamma=5$, $\alpha=7$
- and
-
-
-
-and $VectorF=(P_lU_l).^2$.This means that we consider that $F(t)=t^2$ which is globally lipchizt on a compact which is our case.
-
-The system becomes:
-
-
-
-Example 2
-
-In this example, we take $ε=0.05$, $\Delta x=0.05$ and $\Delta a= 0.5$, with the initial condition
-
-
-
-the following numerical results were obtained for $T=12$ and $\Delta t=120$.
-
-Evolution of the control V between t=0 and t=12.
-
-
-
-Video 2. Evolution of the state of controlled system between t=0 and t=12 
-
-We notice that, with a control domain that takes into account the most populated part of the domain, the Hum method applied to the Casadi algorithm gives us an interesting approximative controllability result while maintaining the positivity of the density.
-Evolution of the controlled state (density of the population) between t=0 and t=12.
-
-
-
-
-Video 3. Evolution of the control function between t=0 and t=12 
-
-Example 3
-
-Here, we keep the same parameters of the Example 1 but we change the final time (here T=20) , and we take $\Delta x=1/18$, $Δ a=5/18$, $\epsilon=0.05$ the following numerical results were obtained:
-
-
-
-Video 4. Evolution of the state of the controlled system between t=0 and t=20 
-
-
-
-
-
-Video 4. Evolution of the state of the controlled system between t=0 and t=20 
-
-Example 4
-
-In this part we consider a smaller control domain. Indeed we take 
-$\Theta =(0,2/5)\times(0,4)\times(0,T)$. 
-In addition we also remove $\epsilon=0.001$ and $T=20.$ The rest is identical to the data of example 2.
-
-We obtain the following numerical results:
-
-Evolution of the control V between t=0 and t=20.
-
-
-
-
-
-Video 4. Evolution of the state of the controlled system between t=0 and t=20 
-
-Here although the result is acceptable, we notice that the state of the controlled system is negative for most of the time.
-Evolution of the controlled state (the density of the population) between t=0 and t=20.
-
-
-
-
-
-Video 5. Evolution of the control function between t=0 and t=20 
-We notice here that the solution to the final time tends to 0, but during the time of control much of the state of the system was negative.
-We notice that numerically we have approximation and the positivity of the state, if the support of the control covers the most populated part of the domain (space, age).
-
-However it should be noted that we could not take a positivity constraint in our simulations. It should be noted that we have better approximations when we do not consider the cost of control.
-
-References
-[1] Dycon Toolbox
-
-[2] CasaDi toolbox
-
-[3] Luca Gerardo-Giorda: NUMERICAL APPROXIMATION OF DENSITY DEPENDENT DIFFUSION IN AGE-STRUCTURED POPULATION DYNAMICS
-</description>
-        <pubDate>Wed, 30 Oct 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0012</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0012</guid>
         
         
         <category>tutorial</category>

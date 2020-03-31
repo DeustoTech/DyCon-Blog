@@ -284,6 +284,10 @@ img:active{
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005//Codes.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
         <p>In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:</p>
 
 <script type="math/tex; mode=display">\begin{cases}
@@ -294,12 +298,12 @@ u=a(x,t)\qquad \qquad\qquad\qquad(x,t)\in \partial\Omega\times(0,T)\\
 
 <p>This a key argument for ensuring controllability that has been studied in [2,3,4,5].</p>
 
-<h2 id="stair-case-method">Stair-case method</h2>
-<p>The stair-case method ( see [1]) guarantees the following:</p>
+<h3 id="stair-case-method">Stair-case method</h3>
+<p>The stair-case method (see [1]) guarantees the following:</p>
 
 <p>If we have an admissible continuous path of steady states, for any initial datum in the path, any target function in the path and for $T&gt;0$ sufficiently large, there exists a function $a$ such that drives the system from the initial datum to the target fulfilling the state-constraints along the trajectory.</p>
 
-<h2 id="extension-to-ball-writing-the-problem-in-radial-coordinats-invariant-region-etc">Extension to ball, Writing the problem in radial coordinats invariant region etc</h2>
+<h3 id="extension-to-ball-writing-the-problem-in-radial-coordinats-invariant-region-etc">Extension to ball, Writing the problem in radial coordinats invariant region etc</h3>
 
 <p>We will restrict ourselves to the construction of paths that connect the steady state $w\equiv 0$ with the steady state $w\equiv \theta$. For doing such example with our model bistable equation.</p>
 
@@ -329,13 +333,15 @@ u(0)=a\\
 Let $\theta_1$ be defined as:
 <script type="math/tex">\theta_1=\min_{s>0}\{F(s)=0\}</script></p>
 
-<p>Note that the region defined by 
-\begin{equation<em>}
- \Gamma:={(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}}
-\end{equation</em>}
-Note that $\Gamma\subset D$.</p>
+<p>Note that the region defined by</p>
 
-<p>Take $(u_0,0)\in \Gamma$, then the solution of \eqref{radial} with initial
+<script type="math/tex; mode=display">\begin{equation*}
+ \Gamma:=\{(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}\}
+\end{equation*}</script>
+
+<p>Note that $\Gamma\subset D$.</p>
+
+<p>Take $(u_0,0)\in \Gamma$, then the solution of radial equation with initial
 datum $(u_0,0)$ satisfies:</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
@@ -359,11 +365,11 @@ datum $(u_0,0)$ satisfies:</p>
 </center>
 <center><b>Figure 3.</b> Path of steady states.</center>
 
-<p>If our domain is not a ball we restrict our path to the original domin to obtain the desired path.</p>
+<p>If our domain is not a ball we restrict our path to the original domain to obtain the desired path.</p>
 
 <h2 id="other-features">Other features</h2>
 
-<p>General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibity to control (See blog entry [Nontrivial]).</p>
+<p>General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibility to control (See <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006">this blog entry </a>).</p>
 
 <p>Here we restrict ourselves in the one dimensional case. In the following figure one can see how can we connect the steady state $w\equiv 0$ with the first nontrivial solution with boundary value $0$.</p>
 
@@ -381,7 +387,7 @@ datum $(u_0,0)$ satisfies:</p>
 </table>
 </center>
 
-<center><b>Figure 3.</b> Path of steady states.</center>
+<center><b>Figure 4.</b> Path of steady states.</center>
 
 <p>However, since this path touches the boundary of the admissible set controllability cannot be guaranteed due to the comparison principle.</p>
 
@@ -399,7 +405,7 @@ datum $(u_0,0)$ satisfies:</p>
     </tr>
 </table>
 </center>
-<center><b>Figure 4.</b> Path of steady states violating constraints.</center>
+<center><b>Figure 5.</b> Path of steady states violating constraints.</center>
 
 <h2 id="references">References:</h2>
 

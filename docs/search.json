@@ -2,12 +2,22 @@
     
     
     {
+      "title"           : "Control of reaction-diffusion under state constraints - Barriers",
+      "categories"      : ["tutorial", "WP03"],
+      "url"             : "/tutorial/wp03/P0006",
+      "date"            : "2020-03-31",
+      "author"          : ["DomenecR"],
+      "description"     : "This tutorial is part of the control under state constraints. We will show how obstructions to the state constraint controllability can appear.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0006/figures/ellipticL20DEF-1.png"
+    } ,
+  
+    {
       "title"           : "Control of reaction-diffusion under state constraints - Application of the staircase method",
       "categories"      : ["tutorial", "WP03"],
       "url"             : "/tutorial/wp03/P0005",
       "date"            : "2020-03-30",
       "author"          : ["DomenecR"],
-      "description"     : "In this tutorial, we will present and elaborate an optimal control strategy for the obstacle problem in two space dimensions using Python's FEniCS toolbox. Different meshes and obstacles are considered.",
+      "description"     : "In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0005/figures/completepath02L12-1.png"
     } ,
   
