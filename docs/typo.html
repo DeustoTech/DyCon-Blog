@@ -205,27 +205,28 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;This tutorial is focused on the understanding of of the problem&lt;/p&gt;
 </code></pre></div></div>
 
-<script type="math/tex; mode=display">-\Delta u=f(u) \qquad x\in\Omega</script>
-
 <script type="math/tex; mode=display">% <![CDATA[
-0< u< 1 \qquad x\in\Omega %]]></script>
+\begin{cases}
+   -\Delta u=f(u)      &   x\in\Omega     \\
+    0< u< 1            &   x\in\Omega              \\
+    u=a\in\{0,\theta\} &   x\in\partial\Omega 
+\end{cases} %]]></script>
 
-<script type="math/tex; mode=display">u=a\in\{0,\theta\} \qquad x\in\partial\Omega</script>
-
-<p>The solutions for $a=0$ constitute an instrisic obstruction to the controllability with state-constraints due to the comparison principle [1]. Indeed, for any control function $0\leq a(x,t)\leq 1$
+<p>The solutions for $a=0$ constitute an intrinsic obstruction to the controllability with state-constraints due to the comparison principle [1]. Indeed, for any control function $0\leq a(x,t)\leq 1$
 the solution of the problem:</p>
 
-<script type="math/tex; mode=display">v_t-\Delta v=f(v) \qquad x\in\Omega\times(0,T)</script>
-
-<script type="math/tex; mode=display">v=a(x,t) \qquad x\in\partial\Omega\times(0,T)</script>
-
-<script type="math/tex; mode=display">v(x,0)\geq u \qquad x\in\Omega</script>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+    v_t-\Delta v=f(v) & x\in\Omega\times(0,T) \\
+ v=a(x,t) & x\in\partial\Omega\times(0,T) \\
+ v(x,0)\geq u & x\in\Omega
+\end{cases} %]]></script>
 
 <p>where $u$ is an elliptic nontrivial solution satisfies that $v(x,t)\geq u(x)$. Therefore, we cannot expect to control to any function below $u$.</p>
 
 <p>This is why the understanding of the existence or non-existence of nontrivial solutions is of main importance for the controllability under state-constraints.</p>
 
-<p>Non-trivial solutions around the boundary value $a=\theta$ do not constitute an intrinsic obstruction to the controllability because the boundary value $\theta$ is not in the border of the admissible set. However, the existence of such solutions create a technical difficulty for achieving the controllability to the steady state $w\equiv \theta$ which can be solved by constructing paths of steady states (see [PathsSS]).</p>
+<p>Non-trivial solutions around the boundary value $a=\theta$ do not constitute an intrinsic obstruction to the controllability because the boundary value $\theta$ is not in the border of the admissible set. However, the existence of such solutions create a technical difficulty for achieving the controllability to the steady state $w\equiv \theta$ which can be solved by constructing paths of steady states (See <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005">this blog entry </a>).</p>
 
 <p>Elliptic nontrivial solutions with boundary value 1 do not exist. This can be related to the fact that the traveling waves for the Cauchy problem in the real line are approaching the steady state $w\equiv 1$ [2]</p>
 
@@ -247,7 +248,7 @@ the solution of the problem:</p>
 
 <p>In the expresion above we see that if $L$ is small the convex part dominates while if $L$ is large and $\int_0^1f(s)ds&gt;0$ it might not be convex.</p>
 
-<p>In the videos below one can see the evolution of the functional depending on the parametar $\lambda=L^2$. The representation is the evaluation of the functional along the first and the third eigenfunction, i.e. $e_1=\sin(\pi x)$ and $e_3=\sin(3\pi x)$.</p>
+<p>In the videos below one can see the evolution of the functional depending on the parameter $\lambda=L^2$. The representation is the evaluation of the functional along the first and the third eigenfunction, i.e. $e_1=\sin(\pi x)$ and $e_3=\sin(3\pi x)$.</p>
 
 <p>Here, one can see the evolution of the functional for $a=0$ and for $a=\theta=1/3$</p>
 
