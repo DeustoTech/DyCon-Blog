@@ -42,6 +42,16 @@
     } ,
   
     {
+      "title"           : "Control for a semilinear heat equation and analogies with a collective behavior model",
+      "categories"      : ["tutorial", "WP06"],
+      "url"             : "/tutorial/wp06/P0008",
+      "date"            : "2020-03-15",
+      "author"          : ["DomenecR"],
+      "description"     : "In this tutorial we will apply the DyCon toolbox to find a control to the semi-discrete semi-linear heat equation.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0008/copiaRM_01.png"
+    } ,
+  
+    {
       "title"           : "POD and DMD Reduced Order Models for a 2D Burgers Equation",
       "categories"      : ["tutorial", "WP04"],
       "url"             : "/tutorial/wp04/P0009",
