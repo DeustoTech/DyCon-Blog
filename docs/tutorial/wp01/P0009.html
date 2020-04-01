@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Simultaneous Control with DyCon Toolbox - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP01">
+            Control of parameter dependent problems</a> &#8827;</small>
+          </h2>
+          <h1>Simultaneous Control with DyCon Toolbox</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+                  </span>
+                </span>
+              
+              - 01 April 2020
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/DYCO.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <p>In this tutorial we will present a simultaneous control problem in a linear system dependent on parameters. We will use the MATLAb DyCon Toolbox library.</p>
+
+<h3 id="setup">Setup</h3>
+
+<p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+<span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
+</code></pre></div></div>
+<h3 id="problem-definition">Problem definition</h3>
+
+<p>The simultaneous control problem is defined as:</p>
+
+<script type="math/tex; mode=display">\min _{u \in L^2(0,T)} \mathcal{J}\left( u\right) = 
+\min _{u \in L^2(0,T)} \frac{1}{2}  \sum_{\nu \in \mathcal{K}}  || x\left( T, \nu \right) - x_T ||_{\mathbb{R}^ N}^2  + 
+\frac{\beta}{2} \int_0^T u^2 \mathrm{d}t \quad \beta \in \mathbb{R}^+</script>
+
+<p>subject to:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{
+\begin{array}{ll}
+x^\prime \left( t \right) = A \left( \nu \right) x \left( t \right) + B \left( \nu \right) u \left( t \right), \quad 0 < t <T, \\
+x\left( 0 \right) = x^0.
+\end{array}
+\right. %]]></script>
+
+<p>where:</p>
+
+<script type="math/tex; mode=display">\mathcal{K}= \left\{ \nu_i \in \mathbb{R}, \enspace 1\leq i \leq K \right\}</script>
+
+<h3 id="numerical-implementation">Numerical Implementation</h3>
+
+<p>First we import the CasAdi library in order to create symbolic variables</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
+<span class="c1">%% In this case $\nu_i$ are</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="n">M</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Then we create the matrices of linear dynamics.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+A_\nu = \begin{bmatrix}
+  -\nu & 1 \\
+  0    & -\nu
+\end{bmatrix} \ \ \ 
+B_\nu = \begin{bmatrix}
+0 \\
+1 
+\end{bmatrix} %]]></script>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">]</span> <span class="o">=</span> <span class="n">GenMatSim</span><span class="p">(</span><span class="n">nu</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>With these matrices we create the <code class="highlighter-rouge">ode</code> object</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span><span class="n">T</span>  <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
+<span class="c1">%% create linear dynamic</span>
+<span class="n">iode</span> <span class="o">=</span> <span class="n">linearode</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">tspan</span><span class="p">);</span>
+<span class="c1">%% set initial condition</span>
+<span class="n">Y0</span> <span class="o">=</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">iode</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">Y0</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>then we create the optimal control problem</p>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% Get Symbolical variable</span>
+<span class="n">Ys</span>  <span class="o">=</span> <span class="n">iode</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">sym</span><span class="p">;</span>
+<span class="n">Us</span>  <span class="o">=</span> <span class="n">iode</span><span class="o">.</span><span class="n">Control</span><span class="o">.</span><span class="n">sym</span><span class="p">;</span>
+<span class="n">ts</span>  <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span> <span class="c1">%% &lt;= Create a symbolical time</span>
+<span class="c1">% Set Target</span>
+<span class="n">YT</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span><span class="n">YT</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">YT</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="c1">%</span>
+<span class="n">PathCost</span>  <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'L'</span>  <span class="p">,{</span><span class="n">ts</span><span class="p">,</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">},{</span> <span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Us</span><span class="o">'*</span><span class="n">Us</span><span class="p">)</span>           <span class="p">});</span>
+<span class="n">FinalCost</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'Psi'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">}</span>      <span class="p">,{</span>  <span class="mf">1e7</span><span class="o">*</span><span class="p">((</span><span class="n">Ys</span><span class="o">-</span><span class="n">YT</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">Ys</span><span class="o">-</span><span class="n">YT</span><span class="p">))</span> <span class="p">});</span>
+<span class="c1">% Create the optimal control</span>
+<span class="n">iocp</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">PathCost</span><span class="p">,</span><span class="n">FinalCost</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Solve Optimal Control Problem with ipopt solver</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">ZerosControl</span><span class="p">(</span><span class="n">iode</span><span class="p">);</span>
+<span class="p">[</span><span class="n">Uopt</span> <span class="p">,</span><span class="n">Yopt</span><span class="p">]</span> <span class="o">=</span>  <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">iocp</span><span class="p">,</span><span class="n">U0</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:   199700
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:      600
+
+Total number of variables............................:    50500
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:    50000
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  1.0000000e+09 1.12e-02 7.88e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  4.0934345e+06 1.26e-13 5.63e-09  -1.0 1.66e+02    -  1.00e+00 1.00e+00f  1
+
+Number of Iterations....: 1
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.0467172272726700e+01    4.0934344545453396e+06
+Dual infeasibility......:   5.6305735629536002e-09    1.1261147125907198e-03
+Constraint violation....:   1.2612133559741778e-13    1.2612133559741778e-13
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   5.6305735629536002e-09    1.1261147125907198e-03
+
+
+Number of objective function evaluations             = 2
+Number of objective gradient evaluations             = 2
+Number of equality constraint evaluations            = 2
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 2
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 1
+Total CPU secs in IPOPT (w/o function evaluations)   =      1.391
+Total CPU secs in NLP function evaluations           =      0.027
+
+EXIT: Optimal Solution Found.
+               t_proc [s]   t_wall [s]    n_eval
+       nlp_f     0.000381      0.00038         2
+       nlp_g       0.0042       0.0042         2
+  nlp_grad_f      0.00167      0.00167         3
+  nlp_hess_l      0.00331      0.00332         1
+   nlp_jac_g        0.026        0.026         3
+      solver         1.48         1.36         1
+Elapsed time is 3.853462 seconds.
+
+</code></pre></div></div>
+
+<p>Compute Free solution</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Yfree</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">U0</span><span class="o">*</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">Yfree</span> <span class="o">=</span> <span class="nb">full</span><span class="p">(</span><span class="n">Yfree</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="visualization">Visualization</h3>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">Units</span> <span class="o">=</span> <span class="s1">'norm'</span><span class="p">;</span><span class="n">fig</span><span class="o">.</span><span class="n">Position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span> <span class="mf">0.1</span> <span class="mf">0.6</span> <span class="mf">0.5</span><span class="p">];</span>
+<span class="c1">%%</span>
+<span class="n">plotSimu</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">Yopt</span><span class="p">,</span><span class="n">Uopt</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0009/copiaRM_01.png" alt="" /></p>
+
+<center><b>Figure 1. </b>The different colors represent the dynamic system under different parameters. It can be seen how the same control is obtained acting for all the dynamic systems is capable of driving the systems to the target.</center>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

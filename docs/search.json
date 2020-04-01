@@ -2,6 +2,26 @@
     
     
     {
+      "title"           : "The Optimal control on the Kuramoto adaptative coupling model with DyCon Toolbox",
+      "categories"      : ["tutorial", "WP06"],
+      "url"             : "/tutorial/wp06/P0007",
+      "date"            : "2020-04-01",
+      "author"          : ["DongnamK"],
+      "description"     : "In this DyCon Toolbox tutorial, we present how to use OptimaControl enviroment to control a consensus that models the complex emergent dynamics over a given network.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP06/P0007/ico.gif"
+    } ,
+  
+    {
+      "title"           : "Simultaneous Control with DyCon Toolbox",
+      "categories"      : ["tutorial", "WP01"],
+      "url"             : "/tutorial/wp01/P0009",
+      "date"            : "2020-04-01",
+      "author"          : ["JesusO"],
+      "description"     : "In this tutorial we will present a simultaneous control problem in a linear system dependent on parameters. We will use the MATLAb DyCon Toolbox library.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0009/ico.png"
+    } ,
+  
+    {
       "title"           : "Control of reaction-diffusion under state constraints - Barriers",
       "categories"      : ["tutorial", "WP03"],
       "url"             : "/tutorial/wp03/P0006",

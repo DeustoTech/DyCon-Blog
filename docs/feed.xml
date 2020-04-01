@@ -5,9 +5,438 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 31 Mar 2020 22:42:55 +0200</pubDate>
-    <lastBuildDate>Tue, 31 Mar 2020 22:42:55 +0200</lastBuildDate>
+    <pubDate>Wed, 01 Apr 2020 12:28:35 +0200</pubDate>
+    <lastBuildDate>Wed, 01 Apr 2020 12:28:35 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>The Optimal control on the Kuramoto adaptative coupling model with DyCon Toolbox</title>
+        <description>In this tutorial, we present how to use Pontryagin environment to control a consensus system that models the complex emergent dynamics over a given network. The control basically minimize the cost functional which contains the running cost and desired final state.
+
+Setup
+
+In this tutorial we need DyCon Toolbox, to install it we will have to write the following in our MATLAB console:
+
+unzip('https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip')
+addpath(genpath(fullfile(cd,'DyCon-toolbox-master')))
+
+Model
+
+The Kuramoto model describes the phases $\theta_i$ of active oscillators, which is described by the following dynamics:
+
+
+
+Here, the first constant terms $\omega_i$ denote the natural oscillatory behaviors, and the interactions are nonlinearly affected by the relative phases. The amplitude and connections of interactions are determined by the coupling strength, $K_{i,j}$.
+
+Control strategy
+
+The control interface is on the coupling strength as follows:
+
+
+
+This is a nonlinear version of bi-linear control problem for the Kuramoto interactions. The idea is as follows;
+
+
+  
+    There are $N$ number of oscillators, oscillating with their own natural frequencies.
+  
+  
+    We want to make a collective behavior using their own decision process. The interaction is given by the Kuramoto model, or may follow other interaction rules. The network can be given or flexible with control.
+  
+  
+    The cost of control will be related to the collective dynamics we want, such as the variance of frequencies or phases.
+  
+
+
+Numerical simulation
+
+Here, we consider a simple problem: we control the all-to-all network system to get gathered phases at final time $T$. We first need to define the system of ODEs in terms of symbolic variables.
+
+clear all
+m = 50;  %% [m]: number of oscillators.
+
+import casadi.*
+
+t     = SX.sym('t');
+symTh = SX.sym('y', [m,1]);   %% [y] :  phases of oscillators, $\theta_i$.
+symOm = SX.sym('om', [m,1]);  %% [om]:  natural frequencies of osc., $\omega_i$.
+symK  = SX.sym('K',[m,m]);    %% [K] :  the coupling network matrix, $K_{i,j}$.
+symU  = SX.sym('u',[1,1]);    %% [u] :  the control function along time, $u(t)$.
+
+
+syms Vsys;    %% [Vsys]: the vector fields of ODEs.
+symThth = repmat(symTh,[1 m]);
+
+
+Vsys = casadi.Function('V',{symOm,symK,symTh,symU}, ...
+{ symOm + (symU./m)*sum(symK.*sin(repmat(symTh,[1 m]).' - repmat(symTh,[1 m])),2) }); 
+
+
+The parameter $\omega_i$ and $K_{i,j}$ should be specified for the calculations. Practically, $K_{i,j}u(t) &amp;gt; \vert \max\Omega - \min\Omega \vert$ leads to the synchronization of frequencies. We normalize the coupling strength to 1, and give random values for the natural frequencies from the normal distribution $N(0,0.1)$. We also choose initial data from $N(0,\pi/4)$.
+
+rng('default');
+rng(1,'twister');
+Om_init = normrnd(0,0.2,m,1);
+Om_init = Om_init - mean(Om_init);  %% Mean zero frequencies
+Th_init = normrnd(0,pi/8,m,1);
+
+
+K_init = ones(m,m);                 %% Constant coupling strength, 1.
+T = 5;                              %% We give enough time for the frequency synchronization.
+
+
+symF = casadi.Function('F',{t,symTh,symU},{Vsys(Om_init,K_init,symTh,symU)});
+
+tspan = linspace(0,T,110);
+odeEqn = ode(symF,symTh,symU,tspan);
+SetIntegrator(odeEqn,'RK4')
+odeEqn.InitialCondition = Th_init;
+
+
+We next construct cost functional for the control problem.
+
+PathCost  = casadi.Function('L'  ,{t,symTh,symU},{ (1/2)*(symU'*symU)           });
+FinalCost = casadi.Function('Psi',{symTh}      ,{  1e5*(1/m^2)*sum(sum((symThth.' - symThth).^2))  });
+
+iCP_1 = ocp(odeEqn,PathCost,FinalCost);
+
+
+Solve Gradient descent
+
+tic
+ControlGuess = ZerosControl(odeEqn);
+[OptControl_1 ,OptThetaVector_1] =  ArmijoGradient(iCP_1,ControlGuess);
+toc
+
+
+Length Step has been change: LenghtStep = 0.00025
+iter: 001 | error: 2.215e+02 | LengthStep: 5.00e-04 | J: 1.16893e+03 | Distance2Target: NaN 
+iter: 002 | error: 2.214e+02 | LengthStep: 1.00e-03 | J: 1.16780e+03 | Distance2Target: NaN 
+iter: 003 | error: 2.212e+02 | LengthStep: 2.00e-03 | J: 1.16554e+03 | Distance2Target: NaN 
+iter: 004 | error: 2.207e+02 | LengthStep: 4.00e-03 | J: 1.16103e+03 | Distance2Target: NaN 
+iter: 005 | error: 2.198e+02 | LengthStep: 8.00e-03 | J: 1.15206e+03 | Distance2Target: NaN 
+iter: 006 | error: 2.180e+02 | LengthStep: 1.60e-02 | J: 1.13430e+03 | Distance2Target: NaN 
+iter: 007 | error: 2.144e+02 | LengthStep: 3.20e-02 | J: 1.09950e+03 | Distance2Target: NaN 
+iter: 008 | error: 2.074e+02 | LengthStep: 6.40e-02 | J: 1.03270e+03 | Distance2Target: NaN 
+iter: 009 | error: 1.938e+02 | LengthStep: 1.28e-01 | J: 9.09692e+02 | Distance2Target: NaN 
+iter: 010 | error: 1.682e+02 | LengthStep: 2.56e-01 | J: 7.01968e+02 | Distance2Target: NaN 
+iter: 011 | error: 1.235e+02 | LengthStep: 5.12e-01 | J: 4.10547e+02 | Distance2Target: NaN 
+iter: 012 | error: 6.257e+01 | LengthStep: 1.02e+00 | J: 1.47399e+02 | Distance2Target: NaN 
+Length Step has been change: LenghtStep = 0.256
+iter: 013 | error: 4.113e+01 | LengthStep: 5.12e-01 | J: 1.20852e+02 | Distance2Target: NaN 
+iter: 014 | error: 2.215e+01 | LengthStep: 1.02e+00 | J: 9.58348e+01 | Distance2Target: NaN 
+Length Step has been change: LenghtStep = 0.256
+Length Step has been change: LenghtStep = 0.064
+Length Step has been change: LenghtStep = 0.016
+Length Step has been change: LenghtStep = 0.004
+Length Step has been change: LenghtStep = 0.001
+Length Step has been change: LenghtStep = 0.00025
+Length Step has been change: LenghtStep = 6.25e-05
+Length Step has been change: LenghtStep = 1.5625e-05
+Length Step has been change: LenghtStep = 3.9063e-06
+Length Step has been change: LenghtStep = 9.7656e-07
+Length Step has been change: LenghtStep = 2.4414e-07
+Length Step has been change: LenghtStep = 6.1035e-08
+Length Step has been change: LenghtStep = 1.5259e-08
+Length Step has been change: LenghtStep = 3.8147e-09
+
+    Mininum Length Step have been achive !! 
+
+Elapsed time is 2.131655 seconds.
+
+
+
+Visualization
+
+First, we present the dynamics without control,
+
+FreeThetaVector = solve(odeEqn,ControlGuess);
+FreeThetaVector = full(FreeThetaVector);
+figure
+plot(FreeThetaVector')
+ylabel('Phases [rad]')
+xlabel('Time [sec]')
+title('The dynamics without control (incoherence)')
+
+
+
+
+and see the controled dynamics.
+
+figure
+plot(OptThetaVector_1')
+ylabel('Phases [rad]')
+xlabel('Time [sec]')
+title(&quot;The dynamics under control L^2 | N_{osc}=&quot;+m)
+
+
+
+
+We also can plot the control function along time.
+
+figure
+plot(OptControl_1)
+legend(&quot;norm(u(t)) = &quot;+norm(OptControl_1))
+ylabel('u(t)')
+xlabel('Time [sec]')
+title('The control function')
+
+
+
+
+The problem with different regularization
+
+In this part, we change the regularization into $L^1$-norm and see the difference.
+
+PathCost  = casadi.Function('L'  ,{t,symTh,symU},{ sqrt(symU.^2+1e-3)});
+iCP_2 = ocp(odeEqn,PathCost,FinalCost);
+
+
+tic
+[OptControl_2 ,OptThetaVector_2] =  ArmijoGradient(iCP_2,ControlGuess);
+toc
+
+
+Length Step has been change: LenghtStep = 0.00025
+iter: 001 | error: 2.363e+01 | LengthStep: 5.00e-04 | J: 1.11735e+02 | Distance2Target: NaN 
+iter: 002 | error: 2.363e+01 | LengthStep: 1.00e-03 | J: 1.11730e+02 | Distance2Target: NaN 
+iter: 003 | error: 2.361e+01 | LengthStep: 2.00e-03 | J: 1.11720e+02 | Distance2Target: NaN 
+iter: 004 | error: 2.359e+01 | LengthStep: 4.00e-03 | J: 1.11699e+02 | Distance2Target: NaN 
+iter: 005 | error: 2.353e+01 | LengthStep: 8.00e-03 | J: 1.11659e+02 | Distance2Target: NaN 
+iter: 006 | error: 2.343e+01 | LengthStep: 1.60e-02 | J: 1.11579e+02 | Distance2Target: NaN 
+iter: 007 | error: 2.322e+01 | LengthStep: 3.20e-02 | J: 1.11420e+02 | Distance2Target: NaN 
+iter: 008 | error: 2.282e+01 | LengthStep: 6.40e-02 | J: 1.11109e+02 | Distance2Target: NaN 
+iter: 009 | error: 2.208e+01 | LengthStep: 1.28e-01 | J: 1.10509e+02 | Distance2Target: NaN 
+iter: 010 | error: 2.081e+01 | LengthStep: 2.56e-01 | J: 1.09388e+02 | Distance2Target: NaN 
+iter: 011 | error: 1.890e+01 | LengthStep: 5.12e-01 | J: 1.07391e+02 | Distance2Target: NaN 
+iter: 012 | error: 1.674e+01 | LengthStep: 1.02e+00 | J: 1.04033e+02 | Distance2Target: NaN 
+iter: 013 | error: 1.607e+01 | LengthStep: 2.05e+00 | J: 9.86861e+01 | Distance2Target: NaN 
+iter: 014 | error: 4.081e+01 | LengthStep: 4.10e+00 | J: 9.24707e+01 | Distance2Target: NaN 
+Length Step has been change: LenghtStep = 1.024
+Length Step has been change: LenghtStep = 0.256
+Length Step has been change: LenghtStep = 0.064
+Length Step has been change: LenghtStep = 0.016
+Length Step has been change: LenghtStep = 0.004
+Length Step has been change: LenghtStep = 0.001
+Length Step has been change: LenghtStep = 0.00025
+Length Step has been change: LenghtStep = 6.25e-05
+Length Step has been change: LenghtStep = 1.5625e-05
+Length Step has been change: LenghtStep = 3.9063e-06
+Length Step has been change: LenghtStep = 9.7656e-07
+Length Step has been change: LenghtStep = 2.4414e-07
+Length Step has been change: LenghtStep = 6.1035e-08
+Length Step has been change: LenghtStep = 1.5259e-08
+Length Step has been change: LenghtStep = 3.8147e-09
+
+    Mininum Length Step have been achive !! 
+
+Elapsed time is 2.494788 seconds.
+
+
+
+figure
+
+line(tspan,OptThetaVector_2')
+ylabel('Phases [rad]')
+xlabel('Time [sec]')
+title(&quot;The dynamics under control L^1 | N_{osc}=&quot;+m)
+
+
+
+
+figure
+plot(OptControl_1)
+line(1:length(OptControl_2),OptControl_2,'Color','red')
+
+Psi_1 = norm(sin(OptThetaVector_1(:,end).' - OptThetaVector_1(:,end)),'fro');
+Psi_2 = norm(sin(OptThetaVector_2(:,end).' - OptThetaVector_2(:,end)),'fro');
+
+legend(&quot;u(t) with L^2-norm; Terminal cost = &quot;+Psi_1,&quot;u(t) with L^1-norm; Terminal cost = &quot;+Psi_2)
+ylabel('The coupling strength (u(t))')
+xlabel('Time [sec]')
+title('The comparison between two different control cost functionals')
+
+
+
+
+As one can expected from the regularization functions, the control function from $L^2$-norm acting more smoothly from $0$ to the largest value. The function from $L^2$-norm draws much stiff lines.
+
+YFr = FreeThetaVector';
+YL1 = OptThetaVector_1';
+YL2 = OptThetaVector_2';
+%%
+animationpendulums({YFr,YL1,YL2},tspan,{'Free','L^2 Control','L^1 Control'})
+
+
+Finally, we can see the behavior of the two control types against the evolution of free dynamics.
+
+
+
+</description>
+        <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP06</category>
+        
+      </item>
+    
+      <item>
+        <title>Simultaneous Control with DyCon Toolbox</title>
+        <description>In this tutorial we will present a simultaneous control problem in a linear system dependent on parameters. We will use the MATLAb DyCon Toolbox library.
+
+Setup
+
+In this tutorial we need DyCon Toolbox, to install it we will have to write the following in our MATLAB console:
+
+unzip('https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip')
+addpath(genpath(fullfile(cd,'DyCon-toolbox-master')))
+
+Problem definition
+
+The simultaneous control problem is defined as:
+
+
+
+subject to:
+
+
+
+where:
+
+
+
+Numerical Implementation
+
+First we import the CasAdi library in order to create symbolic variables
+
+import casadi.*
+%% In this case $\nu_i$ are
+M = 50;
+nu = linspace(1,6,M);
+
+Then we create the matrices of linear dynamics.
+
+
+
+[A,B] = GenMatSim(nu);
+
+
+With these matrices we create the ode object
+
+Nt = 500;T  = 0.8;
+tspan = linspace(0,T,Nt);
+%% create linear dynamic
+iode = linearode(A,B,tspan);
+%% set initial condition
+Y0 = ones(2, 1);
+iode.InitialCondition = repmat(Y0,M,1);
+
+
+then we create the optimal control problem
+% Get Symbolical variable
+Ys  = iode.State.sym;
+Us  = iode.Control.sym;
+ts  = SX.sym('t'); %% &amp;lt;= Create a symbolical time
+% Set Target
+YT = zeros(2, 1);YT = repmat(YT,M,1);
+%
+PathCost  = casadi.Function('L'  ,{ts,Ys,Us},{ (1/2)*(Us'*Us)           });
+FinalCost = casadi.Function('Psi',{Ys}      ,{  1e7*((Ys-YT).'*(Ys-YT)) });
+% Create the optimal control
+iocp = ocp(iode,PathCost,FinalCost);
+
+
+Solve Optimal Control Problem with ipopt solver
+
+U0 = ZerosControl(iode);
+[Uopt ,Yopt] =  IpoptSolver(iocp,U0);
+
+
+This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:   199700
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:      600
+
+Total number of variables............................:    50500
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:    50000
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  1.0000000e+09 1.12e-02 7.88e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  4.0934345e+06 1.26e-13 5.63e-09  -1.0 1.66e+02    -  1.00e+00 1.00e+00f  1
+
+Number of Iterations....: 1
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.0467172272726700e+01    4.0934344545453396e+06
+Dual infeasibility......:   5.6305735629536002e-09    1.1261147125907198e-03
+Constraint violation....:   1.2612133559741778e-13    1.2612133559741778e-13
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   5.6305735629536002e-09    1.1261147125907198e-03
+
+
+Number of objective function evaluations             = 2
+Number of objective gradient evaluations             = 2
+Number of equality constraint evaluations            = 2
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 2
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 1
+Total CPU secs in IPOPT (w/o function evaluations)   =      1.391
+Total CPU secs in NLP function evaluations           =      0.027
+
+EXIT: Optimal Solution Found.
+               t_proc [s]   t_wall [s]    n_eval
+       nlp_f     0.000381      0.00038         2
+       nlp_g       0.0042       0.0042         2
+  nlp_grad_f      0.00167      0.00167         3
+  nlp_hess_l      0.00331      0.00332         1
+   nlp_jac_g        0.026        0.026         3
+      solver         1.48         1.36         1
+Elapsed time is 3.853462 seconds.
+
+
+
+Compute Free solution
+
+Yfree = solve(iode,U0*0);
+Yfree = full(Yfree);
+
+
+Visualization
+
+fig = figure;
+fig.Units = 'norm';fig.Position = [0.1 0.1 0.6 0.5];
+%%
+plotSimu(tspan,Yfree,Yopt,Uopt,M)
+
+
+
+
+Figure 1. The different colors represent the dynamic system under different parameters. It can be seen how the same control is obtained acting for all the dynamic systems is capable of driving the systems to the target.
+</description>
+        <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP01</category>
+        
+      </item>
     
       <item>
         <title>Control of reaction-diffusion under state constraints - Barriers</title>
@@ -1645,797 +2074,6 @@ Video 3. Three approximate optimal solutions of \eqref{opt2} constructed using a
         <category>tutorial</category>
         
         <category>WP04</category>
-        
-      </item>
-    
-      <item>
-        <title>Optimal Control Problem with CasADi on null-controllability of the network system</title>
-        <description>This code needs the installation of CasADi 3.4.5: https://web.casadi.org/get/
-
-The objectives of this post are twofold, one is to introduce CasADi (with IpOpt) to simulate optimal control problem, and the other is to introduce the concept of the structural controllability, as an example, for the 2D heat equation.
-
-Controllability of the 2D heat equation
-
-In this post, we simulate structural controllability for the two-dimensional heat equation. First, we start with the finite difference scheme of the 2D Heat equation and the control on one boundary of the square domain $[0,1]^2$.
-
-
-
-A similar problem has been treated in another DyCon Blog post using AMPL and IpOpt, which deals with the one-dimensional fractional heat equation under positivity constraints. Here we use CasADi and IpOpt in Matlab language.
-
-We will consider the problem of steering the initial datum:
-
-
-
-to the final target $(1.5 \cdot \bar z_{i,j}(T))$, where $\bar z_{i,j}(T)$ is a reference solution from $z^0_{i,j}$ without control.
-
-Problem formulation
-
-Parameters for the problem:
-
-N_size = 4; %% Space discretization for 1D
-Nx = N_size^2; %% Space discretization for 2D
-Nt = 20; %% Time discretization
-T = 0.1; %% Final time
-
-%% Discretization of the Space
-xline_ = linspace(0,1,N_size+2);
-[xmsf,ymsf] = meshgrid(xline_,xline_);
-xline = xline_(2:end-1);
-[xms,yms]   = meshgrid(xline,xline);
-
-dx = xline(2) - xline(1);
-
-%% Initial data
-Y0_2d = zeros(N_size);
-for i=1:N_size
-    for j=1:N_size
-        Y0_2d(i,j) = sin(xline(i)*pi)*sin(xline(j)*pi);
-    end
-end
-Y0 = Y0_2d(:);
-
-
-%% Definition of the dynamics : Y' = AY+BU
-B = zeros(N_size^2,N_size); B(1:N_size,1:N_size) = eye(N_size); %% control for i=1,...,N_size.
-
-A1_mat = ones(N_size,1);
-A2_mat = spdiags([A1_mat -2*A1_mat A1_mat], [-1 0 1], N_size,N_size);
-I_mat  = speye(N_size);
-A_mat  = kron(I_mat,A2_mat)+kron(A2_mat,I_mat);
-
-A = A_mat; %% A: Discrete Laplacian in 2D with uniform squared mesh
-
-%% Discretization of the time : we need to check CFL condition to change 'Nt'.
-tline = linspace(0,T,Nt+1); %%uniform time mesh
-
-dt = tline(2)-tline(1);
-
-
-The interactions between nodes (grid points) can be displayed as follows:
-
-options_plot_graphs = {'LineWidth',2,'DisplayName','off','NodeColor','r','ArrowSize',9,'MarkerSize',7,'NodeLabel',{}};
-p = plot(digraph(A),'XData',xms(:)','YData',yms(:)',options_plot_graphs{:});
-hold on
-plot(xms(:,1),yms(:,1),'b.','MarkerSize',30) %% Blue dots are controlled nodes
-xlabel('x-axis')
-ylabel('y-axis')
-grid on
-for i=1:N_size.^2
-    text(p.XData(i)+0.01, p.YData(i)+0.02, num2str(i), 'FontSize', 20);
-end
-
-
-
-
-Fig 1. The interaction network of 'A_mat'. The controlled nodes are colored blue.
-
-Now we may simulate the reference trajectory without control.
-
-%% Simulation of the uncontrolled trajectory
-M = eye(Nx) - 0.5*dt/dx.^2*A;
-L = eye(Nx) + 0.5*dt/dx.^2*A;
-P = 0.5*dt*B;
-
-Y = zeros(Nx,Nt+1);
-
-Y(:,1) = Y0;
-for k=1:Nt %% loop over time intervals
-   %% Crank-Nicolson method without control
-   Y(:,k+1) = M\L*Y(:,k);
-end
-YT = Y(:,Nt+1);
-
-ratio = 1.5;
-Y1 = ratio*YT; %% Target data
-
-clf
-Z = reshape(Y(:,1),N_size,N_size);
-Z = [zeros(1,N_size+2) ; zeros(N_size,1), Z, zeros(N_size,1) ; zeros(1,N_size+2)];
-isurf = surf(xmsf,ymsf,Z,'FaceAlpha',0.3);
-isurf.CData = isurf.CData*0 + 10;
-hold on
-Z = reshape(Y(:,end),N_size,N_size);
-Z = [zeros(1,N_size+2) ; zeros(N_size,1), Z, zeros(N_size,1) ; zeros(1,N_size+2)];
-jsurf = surf(xmsf,ymsf,Z,'FaceAlpha',0.7);
-jsurf.CData = jsurf.CData*0 + 1;
-jsurf.Parent.Color = 'none';
-lightangle(10,10)
-legend({'Initial Condition','Final Data'})
-
-
-
-Fig 2. The initial condition and the final data of uncontrolled dynamics.
-
-Optimization problem
-
-From now on, we use CasADi to consider an exact control problem.
-
-opti = casadi.Opti();  %% CasADi function
-
-%% ---- Input variables ---------
-X = opti.variable(Nx,Nt+1); %% state trajectory
-U = opti.variable(N_size,Nt+1);   %% control
-
-%% ---- Dynamic constraints --------
-for k=1:Nt %% loop over control intervals
-   %% Crank-Nicolson method : this helps us to boost the optimization
-   opti.subject_to(M*X(:,k+1)== L*X(:,k) + 0.5*P*(U(:,k)+U(:,k+1)));
-end
-
-%% ---- State constraints --------
-opti.subject_to(X(:,1)==Y0);
-opti.subject_to(X(:,Nt+1)==Y1);
-
-%% ---- Optimization objective  ----------
-Cost = (dx*sum(sum(U.^2))*(T/Nt));
-opti.minimize(Cost); %% minimizing L2 over time
-
-%% ---- initial guesses for solver ---
-opti.set_initial(X, Y);
-opti.set_initial(U, 0);
-
-%% ---- solve NLP              ------
-p_opts = struct('expand',true);
-s_opts = struct('max_iter',10000); %% iteration limitation
-
-opti.solver('ipopt',p_opts,s_opts); %% set numerical backend
-tic
-sol = opti.solve();   %% actual solve
-toc
-
-
-This is Ipopt version 3.12.3, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
-
-Number of nonzeros in equality constraint Jacobian...:     2752
-Number of nonzeros in inequality constraint Jacobian.:        0
-Number of nonzeros in Lagrangian Hessian.............:       84
-
-Total number of variables............................:      420
-                     variables with only lower bounds:        0
-                variables with lower and upper bounds:        0
-                     variables with only upper bounds:        0
-Total number of equality constraints.................:      352
-Total number of inequality constraints...............:        0
-        inequality constraints with only lower bounds:        0
-   inequality constraints with lower and upper bounds:        0
-        inequality constraints with only upper bounds:        0
-
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-   0  0.0000000e+00 6.69e-02 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
-   1  1.6511358e+02 6.66e-16 7.31e-07  -2.5 8.68e+01    -  1.00e+00 1.00e+00h  1
-   2  1.6511358e+02 6.66e-16 2.39e-12  -8.6 5.47e-09    -  1.00e+00 1.00e+00h  1
-
-Number of Iterations....: 2
-
-                                   (scaled)                 (unscaled)
-Objective...............:   1.6511358437684962e+02    1.6511358437684962e+02
-Dual infeasibility......:   2.3874235921539366e-12    2.3874235921539366e-12
-Constraint violation....:   6.6613381477509392e-16    6.6613381477509392e-16
-Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
-Overall NLP error.......:   4.0210221040688533e-13    2.3874235921539366e-12
-
-
-Number of objective function evaluations             = 3
-Number of objective gradient evaluations             = 3
-Number of equality constraint evaluations            = 3
-Number of inequality constraint evaluations          = 0
-Number of equality constraint Jacobian evaluations   = 3
-Number of inequality constraint Jacobian evaluations = 0
-Number of Lagrangian Hessian evaluations             = 2
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.822
-Total CPU secs in NLP function evaluations           =      0.000
-
-EXIT: Optimal Solution Found.
-               t_proc [s]   t_wall [s]    n_eval
-       nlp_f      1.9e-05      1.9e-05         3
-       nlp_g     0.000103     0.000105         3
-  nlp_grad_f      3.7e-05      3.4e-05         4
-  nlp_hess_l      1.4e-05      1.3e-05         2
-   nlp_jac_g     0.000185     0.000195         4
-      solver         1.09        0.676         1
-Elapsed time is 0.757156 seconds.
-
-
-
-Post-processing
-
-Sol_x = sol.value(X); %% solved controlled trajectory
-Sol_u = sol.value(U); %% solved control function
-
-clf
-Z = zeros(N_size+2,N_size+2);
-Z(2:end-1,2:end-1) = reshape(Sol_x(:,end),N_size,N_size);
-isurf = surf(xmsf,ymsf,Z,'FaceAlpha',0.3);
-isurf.CData = isurf.CData*0 + 10;
-hold on
-Z = zeros(N_size+2,N_size+2);
-Z(2:end-1,2:end-1) = reshape(Y(:,end),N_size,N_size);
-jsurf = surf(xmsf,ymsf,Z,'FaceAlpha',0.7);
-jsurf.CData = jsurf.CData*0 + 1;
-
-Z = zeros(N_size+2,N_size+2);
-Z(2:end-1,2:end-1) = ratio*reshape(Y(:,end),N_size,N_size);
-plot3(xmsf,ymsf,Z,'k*')
-
-jsurf.Parent.Color = 'none';
-lightangle(10,10)
-
-legend({'Controlled final data','Uncontrolled final data','Target'})
-
-
-
-
-Fig 3. The final data of controlled and uncontrolled dynamics. The controlled data coinside with the target points.
-
-%% Free and controlled dynamics in animation
-
-Result_ref = zeros(N_size+2,N_size+2,Nt+1); %% displaying variable
-Result_ref(2:end-1,2:end-1,:) = reshape(Y(:,:),[N_size,N_size,Nt+1]);
-
-Result_con2d = zeros(N_size+2,N_size+2,Nt+1); %% displaying variable
-Result_con2d(2:end-1,2:end-1,:) = reshape(Sol_x(:,:),[N_size,N_size,Nt+1]);
-%% Free dynamics
-fig = figure;
-isurf2= surf(ratio*Result_ref(:,:,end),'FaceAlpha',0.3);
-isurf2.CData = isurf2.CData*0 + 1;
-hold on
-isurf = surf(Result_ref(:,:,1),'FaceAlpha',0.7);
-isurf.CData = isurf.CData*0 + 10;
-title('Free dynamics')
-legend('Target','Solution')
-zlim([-0.5 1.5])
-pause;
-for it = 1:Nt+1
-   isurf.ZData =  Result_ref(:,:,it);
-    pause(0.1)
-end
-%% Controlled dynamics
-clf
-fig = figure;
-isurf2= surf(ratio*Result_ref(:,:,end),'FaceAlpha',0.3);
-isurf2.CData = isurf2.CData*0 + 1;
-hold on
-isurf = surf(Result_con2d(:,:,1),'FaceAlpha',0.7);
-isurf.CData = isurf.CData*0 + 10;
-title('Controlled dynamics')
-legend('Target','Solution')
-zlim([-0.5 1.5])
-pause;
-for it = 1:Nt+1
-   isurf.ZData =  Result_con2d(:,:,it);
-    pause(0.1)
-end
-
-
-
-   
-      
-         
-      
-      
-         
-      
-   
-
-
-Fig 4-5. Animations for the free and controlled dynamics. The target surface is also drawn in both dynamics, where free dynamics goes below than the target.
-
-Structural controllability of the 2D heat equation
-
-For the second part, we simulate another linear system to check the structural controllability of the 2D heat equation. It is known that its interacting network is structurally controllable by one sole node.
-
-The following matrix ‘AS_mat’ links the nodes in a line, for example, 1-2-3-6-5-4-7-8-9 for $N=3$, which is a part of interactions in ‘A_mat’:
-
-AC_mat = diag(ones(N_size-1,1),-1);
-for j=1:2:N_size-2
-    AC_mat = blkdiag(AC_mat,diag(ones(N_size-1,1),1));
-    AC_mat(end,end-N_size)=1;
-    if N_size==2
-        break
-    end
-    AC_mat = blkdiag(AC_mat,diag(ones(N_size-1,1),-1));
-    AC_mat(end-N_size+1,end-2*N_size+1)=1;
-end
-if length(AC_mat) &amp;lt; (N_size.^2)
-    AC_mat = blkdiag(AC_mat,diag(ones(N_size-1,1),1));
-    AC_mat(end,end-N_size)=1;
-end
-
-AS_mat = (AC_mat + AC_mat') - 2*eye(Nx);
-
-options_plot_graphs = {'LineWidth',2,'DisplayName','off','NodeColor','r','ArrowSize',9,'MarkerSize',7,'NodeLabel',{}};
-p = plot(digraph(AS_mat),'XData',xms(:)','YData',yms(:)',options_plot_graphs{:});
-xlabel('x-axis');ylabel('y-axis')
-hold on
-plot(xms(1,1),yms(1,1),'b.','MarkerSize',30) %% Blue dots are controlled nodes
-for i=1:N_size.^2
-    text(p.XData(i)+0.01, p.YData(i)+0.02, num2str(i), 'FontSize', 20);
-end
-
-title('Network')
-grid on
-
-
-
-
-Fig 6. The interaction network of the new matrix 'AS_mat'. The controlled nodes are colored blue.
-
-Since the 1D heat equation is controllable, ‘AS_mat’ is controllable by one node. However, it gets more and more difficult as the number of nodes increases, since it has different scale with the standard 1D heat equation. The length of the 1D domain grows as $N$ since it eventually become space filling curve in $[0,1]^2$.
-
-Note also that ‘AS_mat’ has the nonzero elements in the positions that ‘A_mat’ has. By deleting several interactions of ‘A_mat’, ‘AS_mat’ is now exactly controllable with smaller controlled nodes. This is the idea of the structural controllability in the network system, called ‘network control’.
-
-Problem formulation
-
-B = zeros(N_size^2,1); B(1) = 1;
-A = N_size.^2*AS_mat;
-%% Y' = AY + BU
-
-T = 0.1;
-Nt = 30;
-tline = linspace(0,T,Nt+1); %%uniform time mesh
-dt = tline(2)-tline(1);
-
-%% Simulation of the uncontrolled trajectory
-M = eye(Nx) - 0.5*dt/dx.^2*A;
-L = eye(Nx) + 0.5*dt/dx.^2*A;
-P = 0.5*dt*B;
-
-Y = zeros(Nx,Nt+1);
-Y(:,1) = Y0;
-for k=1:Nt %% loop over time intervals
-   %% Crank-Nicolson method without control
-   Y(:,k+1) = M\L*Y(:,k);
-end
-YT = Y(:,Nt+1);
-Y1 = ratio*YT;
-
-
-Optimization problem in CasADi
-
-opti = casadi.Opti();  %% CasADi function
-
-%% ---- Input variables ---------
-X = opti.variable(Nx,Nt+1); %% state trajectory
-U = opti.variable(1,Nt+1);   %% control
-
-%% ---- Dynamic constraints --------
-for k=1:Nt %% loop over control intervals
-   %% Crank-Nicolson method
-   opti.subject_to(M*X(:,k+1)== L*X(:,k) + P*(U(:,k)+U(:,k+1)));
-end
-
-%% ---- State constraints --------
-opti.subject_to(X(:,1)==Y0);
-opti.subject_to(X(:,Nt+1)==Y1);
-
-%% ---- Optimization objective  ----------
-Cost = (sum(U.^2)*(T/Nt)); %%1e3*dx^2*sum(sum((X(:,Nt+1)-Y1).^2))+;
-opti.minimize(Cost); %% minimizing L2 at the final time
-
-%% ---- Initial guess ----
-opti.set_initial(X, Y);
-opti.set_initial(U, 0);
-
-%% ---- solve NLP              ------
-p_opts = struct('expand',true);
-s_opts = struct('max_iter',1e5); %% cut down the algorithm at the 1000-th iteration.
-opti.solver('ipopt',p_opts,s_opts); %% set numerical backend
-tic
-sol = opti.solve();   %% actual solve
-toc
-
-
-This is Ipopt version 3.12.3, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
-
-Number of nonzeros in equality constraint Jacobian...:     2852
-Number of nonzeros in inequality constraint Jacobian.:        0
-Number of nonzeros in Lagrangian Hessian.............:       31
-
-Total number of variables............................:      527
-                     variables with only lower bounds:        0
-                variables with lower and upper bounds:        0
-                     variables with only upper bounds:        0
-Total number of equality constraints.................:      512
-Total number of inequality constraints...............:        0
-        inequality constraints with only lower bounds:        0
-   inequality constraints with lower and upper bounds:        0
-        inequality constraints with only upper bounds:        0
-
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-   0  0.0000000e+00 1.04e-01 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
-   1  2.9522421e+04 1.33e-15 6.25e-02  -2.5 1.08e+03    -  1.00e+00 1.00e+00h  1
-
-Number of Iterations....: 1
-
-                                   (scaled)                 (unscaled)
-Objective...............:   2.9522420557910038e+04    2.9522420557910038e+04
-Dual infeasibility......:   6.2500000000000000e-02    6.2500000000000000e-02
-Constraint violation....:   1.3322676295501878e-15    1.3322676295501878e-15
-Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
-Overall NLP error.......:   1.4002321948103652e-12    6.2500000000000000e-02
-
-
-Number of objective function evaluations             = 2
-Number of objective gradient evaluations             = 2
-Number of equality constraint evaluations            = 2
-Number of inequality constraint evaluations          = 0
-Number of equality constraint Jacobian evaluations   = 2
-Number of inequality constraint Jacobian evaluations = 0
-Number of Lagrangian Hessian evaluations             = 1
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.516
-Total CPU secs in NLP function evaluations           =      0.000
-
-EXIT: Optimal Solution Found.
-               t_proc [s]   t_wall [s]    n_eval
-       nlp_f      6.2e-05      1.4e-05         2
-       nlp_g     0.000212       0.0001         2
-  nlp_grad_f      4.3e-05      2.9e-05         3
-  nlp_hess_l      3.2e-05      3.3e-05         1
-   nlp_jac_g     0.000147     0.000148         3
-      solver        0.668        0.573         1
-Elapsed time is 0.638270 seconds.
-
-
-Post-processing
-
-Sol_x = sol.value(X); %% solved controlled trajectory
-Sol_u = sol.value(U); %% solved control
-%%Sol_x = opti.debug.value(X);
-%%Sol_u = opti.debug.value(U); %% final data if algorithm stops with error
-
-%%
-clf
-Z = zeros(N_size+2,N_size+2);
-Z(2:end-1,2:end-1) = reshape(Sol_x(:,end),N_size,N_size);
-isurf = surf(xmsf,ymsf,Z,'FaceAlpha',0.3);
-isurf.CData = isurf.CData*0 + 10;
-hold on
-Z = zeros(N_size+2,N_size+2);
-Z(2:end-1,2:end-1) = reshape(Y(:,end),N_size,N_size);
-jsurf = surf(xmsf,ymsf,Z,'FaceAlpha',0.7);
-jsurf.CData = jsurf.CData*0 + 1;
-
-Z = zeros(N_size+2,N_size+2);
-Z(2:end-1,2:end-1) = ratio*reshape(Y(:,end),N_size,N_size);
-plot3(xmsf,ymsf,Z,'k*')
-
-jsurf.Parent.Color = 'none';
-lightangle(10,10)
-
-legend({'Controlled final data','Uncontrolled final data','Target'})
-
-
-
-
-Fig 7. The initial condition and the final data of uncontrolled dynamics. It has a different structure compared to Fig 2.
-
-%% Free and controlled dynamics in animation
-
-Result_ref = zeros(N_size+2,N_size+2,Nt+1); %% displaying variable
-Result_ref(2:end-1,2:end-1,:) = reshape(Y(:,:),[N_size,N_size,Nt+1]);
-
-Result_con2d = zeros(N_size+2,N_size+2,Nt+1); %% displaying variable
-Result_con2d(2:end-1,2:end-1,:) = reshape(Sol_x(:,:),[N_size,N_size,Nt+1]);
-
-fig = figure;
-isurf2= surf(ratio*Result_ref(:,:,end),'FaceAlpha',0.3);
-isurf2.CData = isurf2.CData*0 + 1;
-hold on
-isurf = surf(Result_ref(:,:,1),'FaceAlpha',0.7);
-isurf.CData = isurf.CData*0 + 10;
-title('Free dynamics')
-legend('Target','Solution')
-zlim([-0.5 1.5])
-pause;
-for it = 1:Nt+1
-   isurf.ZData =  Result_ref(:,:,it);
-    pause(0.1)
-end
-
-%%
-clf
-
-fig = figure;
-isurf2= surf(ratio*Result_ref(:,:,end),'FaceAlpha',0.3);
-isurf2.CData = isurf2.CData*0 + 1;
-hold on
-isurf = surf(Result_con2d(:,:,1),'FaceAlpha',0.7);
-isurf.CData = isurf.CData*0 + 10;
-title('Controlled dynamics')
-legend('Target','Solution')
-zlim([-0.5 1.5])
-pause;
-for it = 1:Nt+1
-   isurf.ZData =  Result_con2d(:,:,it);
-    pause(0.1)
-end
-
-
-   
-      
-         
-      
-      
-         
-      
-   
-
-Fig 8-9. Animations for the free and controlled dynamics. The target surface is also drawn in both dynamics, where free dynamics goes below than the target.
-</description>
-        <pubDate>Thu, 07 Nov 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0006</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0006</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP06</category>
-        
-      </item>
-    
-      <item>
-        <title>Movil control strategy for models with memory terms</title>
-        <description>En este tutorial enseñaremos como implentar la estrategía del control interíor móvil para la ecuación del calor. En el ejemplo típico de control interior en la ecuación del calor se pretende llevar al sistema desde un estado inicial, $u_0$ hasta el estado nulo en todo el espacio, $\Omega$. Para ello se define una subconjunto, $\omega \in \Omega$, donde el control, $f(x,t)$ puede actuar, es decir que para puntos, $x \notin \omega$, el control es cero. Este problema se puede escribir como:
-
-
-
-Donde $f$ es el control definido de solo en el subconjunto, $\omega \in \Omega$.
-
-Es conocido que la controlabilidad de la ecuación del calor para todo tiempo esta asegurada, sin embargo en el caso de la ecuación del calor con términos de memoria este resultado no es válido. En este caso, eligiremos un problema con un término de memoria: $\int_0^t u(x,\tau)d\tau$. De esta forma el problema se puede escribir como:
-
-
-
-Este resultado se puede vercuenado aplicamos un control LQR sobre ambos sistemas. El mínimo del funcional LQR en el primer sistema (Equation \ref{heatinterior}) estabiliza la dínamica mientras que el mínimo del funcional en el segundo caso queda muy lejos del equilibrio.
-
-
-
-
-    
-        
-          
-             
-           
-        
-        
-          
-             
-           
-        
-    
-    
-        
-          
-              Video 1: LQR in Heat equation (Equation \ref{heatinterior})
-           
-        
-        
-          
-              Video 2:  LQR in Heat equation with memory (Equation \ref{heatinterior_memory})
-           
-        
-     
-    
-        
-          
-              Podemos ver la evolucion de dos modelos, con un región de control, $\chi_{\omega}$, situado en la posición del elipsoide azul en la parte superior de la simulación. Podemos ver que el control LQR es eficaz para la ecuación del calor, sin embargo débil ante la presencia de término de memoria
-           
-        
-     
-
-
-En el articulo [1], se menciona la idea del control móvil de ….
-….
-….
-
-Definición del función característica dependiente del espacio
-
-Nuestro objetivo en esta sección es la construcción de una función que dado un punto, $\textbf{x} \in \Omega$, devuelva la función carácteristica correspondiente. Para el diseño de la función $\chi_{\omega(t)}$, se ha decidido que ni el tamaño, ni la orientación de $\omega$ cambia en el tiempo. De esta forma, una vez fijados el tamaño en las dos direcciones del espacio y la forma del subconjunto, obtenemos una función que solo depende de un punto $x\in \Omega$.
-
-En esta simulación crearemos el subconjunto como un cuadrado que puede moverse en $\Omega$. este cuadrado se puede construir con una función $W(x)$ definida de la siguiente manera.
-
-
-
-donde $\Theta(x)$ es la fución theta de heaviside. Dado que la función $\Theta(x)$, tiene una aproximación analítica, la función $W(x,a,b)$ puede ser suavizada, detalle que será de vital importancia para que se pueda calcular el gradiente de la restrición asociada a la dinámica cunado realizamos el problema de control óptimo.
-
-Un representación gráfica de $W(x,a,b)$ permiter reconocer a esta función con valor unidad entre los valores $a$ y $b$ y nulo fuera de ellos.
-
-
-  
-    
-      
-    
-  
-  
-    
-      Figure 1: Representación gráfica de $W(x,a,b)$
-    
-  
-
-
-La generalización de esta función en dos dimensiones en inmediata,
-
-
-
-De esta forma dado $(x_{min}, x_{max}, y_{min}, y_{max})$, obtenemos la función característica dependiente solo de la posición de un solo punto.
-
-
-  
-    
-       
-    
-  
-  
-    
-      Video 3: Representación gráfica de  $W_{2D}$
-    
-  
-
-
-Construcción de la dinámica
-
-Para el sistema con memoria (Equation \ref{heatinterior_memory}), podemos introducir una nueva variable, $z(x,t)$ tal que:
-
-
-
-De esta manera el sistema con memoria se convierte en un sistema acoplado de PDEs:
-
-
-
-Dado que $\chi_{\omega}$ puede moverse, y ademas que queremos obtener la trayectoria óptima para el control móvil añadiremos al sistema una partícula que puede moverse en dos dimensiones, su posición vendrá denotada por, $\textbf{d} = (d_x,d_y)$, y su velocidad, $\textbf{v} = (v_x,v_y)$. Además añadiremos un control $\textbf{g}(t) = (g_x(t),g_y(t))$ que actuará como una fuerza que moverá el subconjunto $\chi_{\omega}$.
-
-Entonces, el sistema total queda como:
-
-
-
-Numerical Implementation
-
-En este tutorial necesitaremos DyCon Toolbox, y CasADi. Dado que CasADi es una dependecia de DyCon Toolbox, podemos instalarlo de la siguiente forma
-
-unzip('https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip')
-addpath(genpath(fullfile(cd,'DyCon-toolbox-master'))
-StartDyconPlatform
-
-
-Podemos escribir la ecuación \ref{heatinterior_memory_z_all}, en su forma discreta:
-
-
-
-Creamos las variables de mesh
-
-% Create the mesh variables
-clear;
-Ns = 7;
-Nt = 15;
-xline = linspace(-1,1,Ns);
-yline = linspace(-1,1,Ns);
-[xms,yms] = meshgrid(xline,yline);
-
-
-Creamos la matriz A, que contiene el laplaciano en 2D y la dinámica del control movil
-
-A  = FDLaplacial2D(xline,yline);
-
-Atotal = zeros(2*Ns^2+4,2*Ns^2+4);
-%
-Atotal( 1:Ns^2  , 1:Ns^2 ) = A;
-%
-Atotal( Ns^2+1 : 2*Ns^2   ,   1    :  Ns^2   )  =  eye(Ns^2);
-Atotal(    1   :  Ns^2    , Ns^2+1 : 2*Ns^2  )  =  50*eye(Ns^2); % z = 50*y
-
-RumbaMatrixDynamics = [0 0 1 0; ...
-                       0 0 0 1; ...
-                       0 0 0 0; ...
-                       0 0 0 0 ];
-
-             
-Atotal(2*Ns^2+1:end,2*Ns^2+1:end) = RumbaMatrixDynamics;
-Atotal = sparse(Atotal);
-
-
-Greamos la función $B(\textbf{d}) = B(x_d,y_d)$
-%%
-% We create the B() function 
-xwidth = 0.3;
-ywidth = 0.3;
-B = @(xms,yms,xs,ys) WinWP05(xms,xs,xwidth).*WinWP05(yms,ys,ywidth);
-Bmatrix =  @(xs,ys) [diag(reshape(B(xms,yms,xs,ys),1,Ns^2)) ;zeros(Ns^2)];
-
-
-
-
-Optimal Control Problem
-
-
-
-
-
-opti = casadi.Opti();  % CasADi optimization structure
-
-% ---- Input variables ---------
-Ucas = opti.variable(2*Ns^2+4,Nt+1); % state trajectory
-Fcas = opti.variable(Ns^2+2,Nt+1);   % control
-
-% ---- Dynamic constraints --------
-dUdt = @(y,f) Atotal*u+ [Bmatrix(u(end-3),u(end-2))*f(1:end-2) ; ...
-                                         0                     ; ...
-                                         0                     ; ...
-                                     f(end-1)                  ; ...
-                                     f(end)                    ]; 
-
-% -----Euler backward method-------
-for k=1:Nt % loop over control intervals
-   y_next = Ucas(:,k) + (T/Nt)*dUdt(Ucas(:,k+1),dUdt(:,k+1)); 
-   opti.subject_to(Ucas(:,k+1)==y_next); % close the gaps
-end
-
-% ---- State constraints --------
-opti.subject_to(Ucas(:,1)==[Y0 ; 0.7 ; 0.7; -1.5 ; -1.5]);
-
-% ---- Optimization objective  ----------
-Cost = (Ucas(1:end-4,Nt+1))'*(Ucas(1:end-4,Nt+1));
-
-opti.minimize(Cost); % minimizing L2 at the final time
-
-% ---- initial guesses for solver ---
-opti.set_initial(Ucas, Unum_free);
-opti.set_initial(Fcas, 0);
-
-% ---- solve NLP              ------
-p_opts = struct('expand',false);
-s_opts = struct('acceptable_tol',1e-4,'constr_viol_tol',1e-3,'compl_inf_tol',1e-3);
-opti.solver('ipopt',p_opts,s_opts); % set numerical backend
-tic
-sol = opti.solve();   % actual solve
-toc
-
-
-Mvil Control
-
-
-
-  
-    
-       
-    
-  
-
-
-
-Video 3
-
-
-
-</description>
-        <pubDate>Mon, 04 Nov 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP05</category>
         
       </item>
     

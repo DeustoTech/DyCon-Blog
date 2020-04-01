@@ -202,6 +202,426 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial, we present how to use Pontryagin environment to control a consensus system that models the complex emergent dynamics over a given network. The control basically minimize the cost functional which contains the running cost and desired final state.&lt;/p&gt;
+</code></pre></div></div>
+
+<h3 id="setup">Setup</h3>
+
+<p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+<span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
+</code></pre></div></div>
+<h3 id="model">Model</h3>
+
+<p>The Kuramoto model describes the phases $\theta_i$ of active oscillators, which is described by the following dynamics:</p>
+
+<script type="math/tex; mode=display">\dot \theta_i = \omega_i + \frac{1}{N}\sum_{j=1}^N K_{i,j} \sin(\theta_j-\theta_i),\quad i =1,\cdots,N.</script>
+
+<p>Here, the first constant terms $\omega_i$ denote the natural oscillatory behaviors, and the interactions are nonlinearly affected by the relative phases. The amplitude and connections of interactions are determined by the coupling strength, $K_{i,j}$.</p>
+
+<h3 id="control-strategy">Control strategy</h3>
+
+<p>The control interface is on the coupling strength as follows:</p>
+
+<script type="math/tex; mode=display">\dot \theta_i(t) = \omega_i + \frac{u(t)}{N}\sum_{j=1}^N K_{i,j} \sin(\theta_j(t)-\theta_i(t)),\quad i =1,\cdots,N.</script>
+
+<p>This is a nonlinear version of bi-linear control problem for the Kuramoto interactions. The idea is as follows;</p>
+
+<ol>
+  <li>
+    <p>There are $N$ number of oscillators, oscillating with their own natural frequencies.</p>
+  </li>
+  <li>
+    <p>We want to make a collective behavior using their own decision process. The interaction is given by the Kuramoto model, or may follow other interaction rules. The network can be given or flexible with control.</p>
+  </li>
+  <li>
+    <p>The cost of control will be related to the collective dynamics we want, such as the variance of frequencies or phases.</p>
+  </li>
+</ol>
+
+<h3 id="numerical-simulation">Numerical simulation</h3>
+
+<p>Here, we consider a simple problem: we control the all-to-all network system to get gathered phases at final time $T$. We first need to define the system of ODEs in terms of symbolic variables.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>  <span class="c1">%% [m]: number of oscillators.</span>
+
+<span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
+
+<span class="n">t</span>     <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span>
+<span class="n">symTh</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'y'</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>   <span class="c1">%% [y] :  phases of oscillators, $\theta_i$.</span>
+<span class="n">symOm</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'om'</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">%% [om]:  natural frequencies of osc., $\omega_i$.</span>
+<span class="n">symK</span>  <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'K'</span><span class="p">,[</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">]);</span>    <span class="c1">%% [K] :  the coupling network matrix, $K_{i,j}$.</span>
+<span class="n">symU</span>  <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'u'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>    <span class="c1">%% [u] :  the control function along time, $u(t)$.</span>
+
+
+<span class="n">syms</span> <span class="n">Vsys</span><span class="p">;</span>    <span class="c1">%% [Vsys]: the vector fields of ODEs.</span>
+<span class="n">symThth</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">symTh</span><span class="p">,[</span><span class="mi">1</span> <span class="n">m</span><span class="p">]);</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Vsys</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'V'</span><span class="p">,{</span><span class="n">symOm</span><span class="p">,</span><span class="n">symK</span><span class="p">,</span><span class="n">symTh</span><span class="p">,</span><span class="n">symU</span><span class="p">},</span> <span class="k">...</span>
+<span class="p">{</span> <span class="n">symOm</span> <span class="o">+</span> <span class="p">(</span><span class="n">symU</span><span class="o">.</span><span class="p">/</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">symK</span><span class="o">.*</span><span class="nb">sin</span><span class="p">(</span><span class="nb">repmat</span><span class="p">(</span><span class="n">symTh</span><span class="p">,[</span><span class="mi">1</span> <span class="n">m</span><span class="p">])</span><span class="o">.'</span> <span class="o">-</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">symTh</span><span class="p">,[</span><span class="mi">1</span> <span class="n">m</span><span class="p">])),</span><span class="mi">2</span><span class="p">)</span> <span class="p">});</span> 
+</code></pre></div></div>
+
+<p>The parameter $\omega_i$ and $K_{i,j}$ should be specified for the calculations. Practically, $K_{i,j}u(t) &gt; \vert \max\Omega - \min\Omega \vert$ leads to the synchronization of frequencies. We normalize the coupling strength to 1, and give random values for the natural frequencies from the normal distribution $N(0,0.1)$. We also choose initial data from $N(0,\pi/4)$.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rng</span><span class="p">(</span><span class="s1">'default'</span><span class="p">);</span>
+<span class="nb">rng</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">'twister'</span><span class="p">);</span>
+<span class="n">Om_init</span> <span class="o">=</span> <span class="n">normrnd</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">Om_init</span> <span class="o">=</span> <span class="n">Om_init</span> <span class="o">-</span> <span class="nb">mean</span><span class="p">(</span><span class="n">Om_init</span><span class="p">);</span>  <span class="c1">%% Mean zero frequencies</span>
+<span class="n">Th_init</span> <span class="o">=</span> <span class="n">normrnd</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">pi</span><span class="p">/</span><span class="mi">8</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">K_init</span> <span class="o">=</span> <span class="nb">ones</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">);</span>                 <span class="c1">%% Constant coupling strength, 1.</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>                              <span class="c1">%% We give enough time for the frequency synchronization.</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">symF</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'F'</span><span class="p">,{</span><span class="n">t</span><span class="p">,</span><span class="n">symTh</span><span class="p">,</span><span class="n">symU</span><span class="p">},{</span><span class="n">Vsys</span><span class="p">(</span><span class="n">Om_init</span><span class="p">,</span><span class="n">K_init</span><span class="p">,</span><span class="n">symTh</span><span class="p">,</span><span class="n">symU</span><span class="p">)});</span>
+
+<span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="mi">110</span><span class="p">);</span>
+<span class="n">odeEqn</span> <span class="o">=</span> <span class="n">ode</span><span class="p">(</span><span class="n">symF</span><span class="p">,</span><span class="n">symTh</span><span class="p">,</span><span class="n">symU</span><span class="p">,</span><span class="n">tspan</span><span class="p">);</span>
+<span class="n">SetIntegrator</span><span class="p">(</span><span class="n">odeEqn</span><span class="p">,</span><span class="s1">'RK4'</span><span class="p">)</span>
+<span class="n">odeEqn</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">Th_init</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>We next construct cost functional for the control problem.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">PathCost</span>  <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'L'</span>  <span class="p">,{</span><span class="n">t</span><span class="p">,</span><span class="n">symTh</span><span class="p">,</span><span class="n">symU</span><span class="p">},{</span> <span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">symU</span><span class="o">'*</span><span class="n">symU</span><span class="p">)</span>           <span class="p">});</span>
+<span class="n">FinalCost</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'Psi'</span><span class="p">,{</span><span class="n">symTh</span><span class="p">}</span>      <span class="p">,{</span>  <span class="mf">1e5</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="n">m</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">((</span><span class="n">symThth</span><span class="o">.'</span> <span class="o">-</span> <span class="n">symThth</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">))</span>  <span class="p">});</span>
+
+<span class="n">iCP_1</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">odeEqn</span><span class="p">,</span><span class="n">PathCost</span><span class="p">,</span><span class="n">FinalCost</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="solve-gradient-descent">Solve Gradient descent</h3>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tic</span>
+<span class="n">ControlGuess</span> <span class="o">=</span> <span class="n">ZerosControl</span><span class="p">(</span><span class="n">odeEqn</span><span class="p">);</span>
+<span class="p">[</span><span class="n">OptControl_1</span> <span class="p">,</span><span class="n">OptThetaVector_1</span><span class="p">]</span> <span class="o">=</span>  <span class="n">ArmijoGradient</span><span class="p">(</span><span class="n">iCP_1</span><span class="p">,</span><span class="n">ControlGuess</span><span class="p">);</span>
+<span class="nb">toc</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Length Step has been change: LenghtStep = 0.00025
+iter: 001 | error: 2.215e+02 | LengthStep: 5.00e-04 | J: 1.16893e+03 | Distance2Target: NaN 
+iter: 002 | error: 2.214e+02 | LengthStep: 1.00e-03 | J: 1.16780e+03 | Distance2Target: NaN 
+iter: 003 | error: 2.212e+02 | LengthStep: 2.00e-03 | J: 1.16554e+03 | Distance2Target: NaN 
+iter: 004 | error: 2.207e+02 | LengthStep: 4.00e-03 | J: 1.16103e+03 | Distance2Target: NaN 
+iter: 005 | error: 2.198e+02 | LengthStep: 8.00e-03 | J: 1.15206e+03 | Distance2Target: NaN 
+iter: 006 | error: 2.180e+02 | LengthStep: 1.60e-02 | J: 1.13430e+03 | Distance2Target: NaN 
+iter: 007 | error: 2.144e+02 | LengthStep: 3.20e-02 | J: 1.09950e+03 | Distance2Target: NaN 
+iter: 008 | error: 2.074e+02 | LengthStep: 6.40e-02 | J: 1.03270e+03 | Distance2Target: NaN 
+iter: 009 | error: 1.938e+02 | LengthStep: 1.28e-01 | J: 9.09692e+02 | Distance2Target: NaN 
+iter: 010 | error: 1.682e+02 | LengthStep: 2.56e-01 | J: 7.01968e+02 | Distance2Target: NaN 
+iter: 011 | error: 1.235e+02 | LengthStep: 5.12e-01 | J: 4.10547e+02 | Distance2Target: NaN 
+iter: 012 | error: 6.257e+01 | LengthStep: 1.02e+00 | J: 1.47399e+02 | Distance2Target: NaN 
+Length Step has been change: LenghtStep = 0.256
+iter: 013 | error: 4.113e+01 | LengthStep: 5.12e-01 | J: 1.20852e+02 | Distance2Target: NaN 
+iter: 014 | error: 2.215e+01 | LengthStep: 1.02e+00 | J: 9.58348e+01 | Distance2Target: NaN 
+Length Step has been change: LenghtStep = 0.256
+Length Step has been change: LenghtStep = 0.064
+Length Step has been change: LenghtStep = 0.016
+Length Step has been change: LenghtStep = 0.004
+Length Step has been change: LenghtStep = 0.001
+Length Step has been change: LenghtStep = 0.00025
+Length Step has been change: LenghtStep = 6.25e-05
+Length Step has been change: LenghtStep = 1.5625e-05
+Length Step has been change: LenghtStep = 3.9063e-06
+Length Step has been change: LenghtStep = 9.7656e-07
+Length Step has been change: LenghtStep = 2.4414e-07
+Length Step has been change: LenghtStep = 6.1035e-08
+Length Step has been change: LenghtStep = 1.5259e-08
+Length Step has been change: LenghtStep = 3.8147e-09
+
+    Mininum Length Step have been achive !! 
+
+Elapsed time is 2.131655 seconds.
+
+</code></pre></div></div>
+
+<h3 id="visualization">Visualization</h3>
+
+<p>First, we present the dynamics without control,</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">FreeThetaVector</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">odeEqn</span><span class="p">,</span><span class="n">ControlGuess</span><span class="p">);</span>
+<span class="n">FreeThetaVector</span> <span class="o">=</span> <span class="nb">full</span><span class="p">(</span><span class="n">FreeThetaVector</span><span class="p">);</span>
+<span class="nb">figure</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">FreeThetaVector</span><span class="o">'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [rad]'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'The dynamics without control (incoherence)'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP06/P0007/copiaRM_01.png" alt="" /></p>
+
+<p>and see the controled dynamics.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">OptThetaVector_1</span><span class="o">'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [rad]'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s2">"The dynamics under control L^2 | N_{osc}="</span><span class="o">+</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP06/P0007/copiaRM_02.png" alt="" /></p>
+
+<p>We also can plot the control function along time.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">OptControl_1</span><span class="p">)</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s2">"norm(u(t)) = "</span><span class="o">+</span><span class="nb">norm</span><span class="p">(</span><span class="n">OptControl_1</span><span class="p">))</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'u(t)'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'The control function'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP06/P0007/copiaRM_03.png" alt="" /></p>
+
+<h3 id="the-problem-with-different-regularization">The problem with different regularization</h3>
+
+<p>In this part, we change the regularization into $L^1$-norm and see the difference.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">PathCost</span>  <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'L'</span>  <span class="p">,{</span><span class="n">t</span><span class="p">,</span><span class="n">symTh</span><span class="p">,</span><span class="n">symU</span><span class="p">},{</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">symU</span><span class="o">.^</span><span class="mi">2</span><span class="o">+</span><span class="mf">1e-3</span><span class="p">)});</span>
+<span class="n">iCP_2</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">odeEqn</span><span class="p">,</span><span class="n">PathCost</span><span class="p">,</span><span class="n">FinalCost</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tic</span>
+<span class="p">[</span><span class="n">OptControl_2</span> <span class="p">,</span><span class="n">OptThetaVector_2</span><span class="p">]</span> <span class="o">=</span>  <span class="n">ArmijoGradient</span><span class="p">(</span><span class="n">iCP_2</span><span class="p">,</span><span class="n">ControlGuess</span><span class="p">);</span>
+<span class="nb">toc</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Length Step has been change: LenghtStep = 0.00025
+iter: 001 | error: 2.363e+01 | LengthStep: 5.00e-04 | J: 1.11735e+02 | Distance2Target: NaN 
+iter: 002 | error: 2.363e+01 | LengthStep: 1.00e-03 | J: 1.11730e+02 | Distance2Target: NaN 
+iter: 003 | error: 2.361e+01 | LengthStep: 2.00e-03 | J: 1.11720e+02 | Distance2Target: NaN 
+iter: 004 | error: 2.359e+01 | LengthStep: 4.00e-03 | J: 1.11699e+02 | Distance2Target: NaN 
+iter: 005 | error: 2.353e+01 | LengthStep: 8.00e-03 | J: 1.11659e+02 | Distance2Target: NaN 
+iter: 006 | error: 2.343e+01 | LengthStep: 1.60e-02 | J: 1.11579e+02 | Distance2Target: NaN 
+iter: 007 | error: 2.322e+01 | LengthStep: 3.20e-02 | J: 1.11420e+02 | Distance2Target: NaN 
+iter: 008 | error: 2.282e+01 | LengthStep: 6.40e-02 | J: 1.11109e+02 | Distance2Target: NaN 
+iter: 009 | error: 2.208e+01 | LengthStep: 1.28e-01 | J: 1.10509e+02 | Distance2Target: NaN 
+iter: 010 | error: 2.081e+01 | LengthStep: 2.56e-01 | J: 1.09388e+02 | Distance2Target: NaN 
+iter: 011 | error: 1.890e+01 | LengthStep: 5.12e-01 | J: 1.07391e+02 | Distance2Target: NaN 
+iter: 012 | error: 1.674e+01 | LengthStep: 1.02e+00 | J: 1.04033e+02 | Distance2Target: NaN 
+iter: 013 | error: 1.607e+01 | LengthStep: 2.05e+00 | J: 9.86861e+01 | Distance2Target: NaN 
+iter: 014 | error: 4.081e+01 | LengthStep: 4.10e+00 | J: 9.24707e+01 | Distance2Target: NaN 
+Length Step has been change: LenghtStep = 1.024
+Length Step has been change: LenghtStep = 0.256
+Length Step has been change: LenghtStep = 0.064
+Length Step has been change: LenghtStep = 0.016
+Length Step has been change: LenghtStep = 0.004
+Length Step has been change: LenghtStep = 0.001
+Length Step has been change: LenghtStep = 0.00025
+Length Step has been change: LenghtStep = 6.25e-05
+Length Step has been change: LenghtStep = 1.5625e-05
+Length Step has been change: LenghtStep = 3.9063e-06
+Length Step has been change: LenghtStep = 9.7656e-07
+Length Step has been change: LenghtStep = 2.4414e-07
+Length Step has been change: LenghtStep = 6.1035e-08
+Length Step has been change: LenghtStep = 1.5259e-08
+Length Step has been change: LenghtStep = 3.8147e-09
+
+    Mininum Length Step have been achive !! 
+
+Elapsed time is 2.494788 seconds.
+
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span>
+
+<span class="nb">line</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="n">OptThetaVector_2</span><span class="o">'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Phases [rad]'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s2">"The dynamics under control L^1 | N_{osc}="</span><span class="o">+</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP06/P0007/copiaRM_04.png" alt="" /></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">OptControl_1</span><span class="p">)</span>
+<span class="nb">line</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">OptControl_2</span><span class="p">),</span><span class="n">OptControl_2</span><span class="p">,</span><span class="s1">'Color'</span><span class="p">,</span><span class="s1">'red'</span><span class="p">)</span>
+
+<span class="n">Psi_1</span> <span class="o">=</span> <span class="nb">norm</span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="n">OptThetaVector_1</span><span class="p">(:,</span><span class="k">end</span><span class="p">)</span><span class="o">.</span><span class="s1">' - OptThetaVector_1(:,end)),'</span><span class="n">fro</span><span class="o">'</span><span class="p">);</span>
+<span class="n">Psi_2</span> <span class="o">=</span> <span class="nb">norm</span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="n">OptThetaVector_2</span><span class="p">(:,</span><span class="k">end</span><span class="p">)</span><span class="o">.</span><span class="s1">' - OptThetaVector_2(:,end)),'</span><span class="n">fro</span><span class="o">'</span><span class="p">);</span>
+
+<span class="nb">legend</span><span class="p">(</span><span class="s2">"u(t) with L^2-norm; Terminal cost = "</span><span class="o">+</span><span class="n">Psi_1</span><span class="p">,</span><span class="s2">"u(t) with L^1-norm; Terminal cost = "</span><span class="o">+</span><span class="n">Psi_2</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'The coupling strength (u(t))'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time [sec]'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'The comparison between two different control cost functionals'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP06/P0007/copiaRM_05.png" alt="" /></p>
+
+<p>As one can expected from the regularization functions, the control function from $L^2$-norm acting more smoothly from $0$ to the largest value. The function from $L^2$-norm draws much stiff lines.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">YFr</span> <span class="o">=</span> <span class="n">FreeThetaVector</span><span class="o">'</span><span class="p">;</span>
+<span class="n">YL1</span> <span class="o">=</span> <span class="n">OptThetaVector_1</span><span class="o">'</span><span class="p">;</span>
+<span class="n">YL2</span> <span class="o">=</span> <span class="n">OptThetaVector_2</span><span class="o">'</span><span class="p">;</span>
+<span class="c1">%%</span>
+<span class="n">animationpendulums</span><span class="p">({</span><span class="n">YFr</span><span class="p">,</span><span class="n">YL1</span><span class="p">,</span><span class="n">YL2</span><span class="p">},</span><span class="n">tspan</span><span class="p">,{</span><span class="s1">'Free'</span><span class="p">,</span><span class="s1">'L^2 Control'</span><span class="p">,</span><span class="s1">'L^1 Control'</span><span class="p">})</span>
+</code></pre></div></div>
+
+<p>Finally, we can see the behavior of the two control types against the evolution of free dynamics.</p>
+
+<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP06/P0007/animation.gif" alt="" /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial we will present a simultaneous control problem in a linear system dependent on parameters. We will use the MATLAb DyCon Toolbox library.&lt;/p&gt;
+</code></pre></div></div>
+
+<h3 id="setup">Setup</h3>
+
+<p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+<span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
+</code></pre></div></div>
+<h3 id="problem-definition">Problem definition</h3>
+
+<p>The simultaneous control problem is defined as:</p>
+
+<script type="math/tex; mode=display">\min _{u \in L^2(0,T)} \mathcal{J}\left( u\right) = 
+\min _{u \in L^2(0,T)} \frac{1}{2}  \sum_{\nu \in \mathcal{K}}  || x\left( T, \nu \right) - x_T ||_{\mathbb{R}^ N}^2  + 
+\frac{\beta}{2} \int_0^T u^2 \mathrm{d}t \quad \beta \in \mathbb{R}^+</script>
+
+<p>subject to:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{
+\begin{array}{ll}
+x^\prime \left( t \right) = A \left( \nu \right) x \left( t \right) + B \left( \nu \right) u \left( t \right), \quad 0 < t <T, \\
+x\left( 0 \right) = x^0.
+\end{array}
+\right. %]]></script>
+
+<p>where:</p>
+
+<script type="math/tex; mode=display">\mathcal{K}= \left\{ \nu_i \in \mathbb{R}, \enspace 1\leq i \leq K \right\}</script>
+
+<h3 id="numerical-implementation">Numerical Implementation</h3>
+
+<p>First we import the CasAdi library in order to create symbolic variables</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
+<span class="c1">%% In this case $\nu_i$ are</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="n">M</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Then we create the matrices of linear dynamics.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+A_\nu = \begin{bmatrix}
+  -\nu & 1 \\
+  0    & -\nu
+\end{bmatrix} \ \ \ 
+B_\nu = \begin{bmatrix}
+0 \\
+1 
+\end{bmatrix} %]]></script>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">]</span> <span class="o">=</span> <span class="n">GenMatSim</span><span class="p">(</span><span class="n">nu</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>With these matrices we create the <code class="highlighter-rouge">ode</code> object</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span><span class="n">T</span>  <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
+<span class="c1">%% create linear dynamic</span>
+<span class="n">iode</span> <span class="o">=</span> <span class="n">linearode</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">tspan</span><span class="p">);</span>
+<span class="c1">%% set initial condition</span>
+<span class="n">Y0</span> <span class="o">=</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">iode</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">Y0</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>then we create the optimal control problem</p>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% Get Symbolical variable</span>
+<span class="n">Ys</span>  <span class="o">=</span> <span class="n">iode</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">sym</span><span class="p">;</span>
+<span class="n">Us</span>  <span class="o">=</span> <span class="n">iode</span><span class="o">.</span><span class="n">Control</span><span class="o">.</span><span class="n">sym</span><span class="p">;</span>
+<span class="n">ts</span>  <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span> <span class="c1">%% &lt;= Create a symbolical time</span>
+<span class="c1">% Set Target</span>
+<span class="n">YT</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span><span class="n">YT</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">YT</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="c1">%</span>
+<span class="n">PathCost</span>  <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'L'</span>  <span class="p">,{</span><span class="n">ts</span><span class="p">,</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">},{</span> <span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Us</span><span class="o">'*</span><span class="n">Us</span><span class="p">)</span>           <span class="p">});</span>
+<span class="n">FinalCost</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'Psi'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">}</span>      <span class="p">,{</span>  <span class="mf">1e7</span><span class="o">*</span><span class="p">((</span><span class="n">Ys</span><span class="o">-</span><span class="n">YT</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">Ys</span><span class="o">-</span><span class="n">YT</span><span class="p">))</span> <span class="p">});</span>
+<span class="c1">% Create the optimal control</span>
+<span class="n">iocp</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">PathCost</span><span class="p">,</span><span class="n">FinalCost</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Solve Optimal Control Problem with ipopt solver</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">ZerosControl</span><span class="p">(</span><span class="n">iode</span><span class="p">);</span>
+<span class="p">[</span><span class="n">Uopt</span> <span class="p">,</span><span class="n">Yopt</span><span class="p">]</span> <span class="o">=</span>  <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">iocp</span><span class="p">,</span><span class="n">U0</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
+NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+
+Number of nonzeros in equality constraint Jacobian...:   199700
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:      600
+
+Total number of variables............................:    50500
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:    50000
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  1.0000000e+09 1.12e-02 7.88e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  4.0934345e+06 1.26e-13 5.63e-09  -1.0 1.66e+02    -  1.00e+00 1.00e+00f  1
+
+Number of Iterations....: 1
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.0467172272726700e+01    4.0934344545453396e+06
+Dual infeasibility......:   5.6305735629536002e-09    1.1261147125907198e-03
+Constraint violation....:   1.2612133559741778e-13    1.2612133559741778e-13
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   5.6305735629536002e-09    1.1261147125907198e-03
+
+
+Number of objective function evaluations             = 2
+Number of objective gradient evaluations             = 2
+Number of equality constraint evaluations            = 2
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 2
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 1
+Total CPU secs in IPOPT (w/o function evaluations)   =      1.391
+Total CPU secs in NLP function evaluations           =      0.027
+
+EXIT: Optimal Solution Found.
+               t_proc [s]   t_wall [s]    n_eval
+       nlp_f     0.000381      0.00038         2
+       nlp_g       0.0042       0.0042         2
+  nlp_grad_f      0.00167      0.00167         3
+  nlp_hess_l      0.00331      0.00332         1
+   nlp_jac_g        0.026        0.026         3
+      solver         1.48         1.36         1
+Elapsed time is 3.853462 seconds.
+
+</code></pre></div></div>
+
+<p>Compute Free solution</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Yfree</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">U0</span><span class="o">*</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">Yfree</span> <span class="o">=</span> <span class="nb">full</span><span class="p">(</span><span class="n">Yfree</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="visualization">Visualization</h3>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">Units</span> <span class="o">=</span> <span class="s1">'norm'</span><span class="p">;</span><span class="n">fig</span><span class="o">.</span><span class="n">Position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span> <span class="mf">0.1</span> <span class="mf">0.6</span> <span class="mf">0.5</span><span class="p">];</span>
+<span class="c1">%%</span>
+<span class="n">plotSimu</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">Yopt</span><span class="p">,</span><span class="n">Uopt</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0009/copiaRM_01.png" alt="" /></p>
+
+<center><b>Figure 1. </b>The different colors represent the dynamic system under different parameters. It can be seen how the same control is obtained acting for all the dynamic systems is capable of driving the systems to the target.</center>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;This tutorial is focused on the understanding of of the problem&lt;/p&gt;
 </code></pre></div></div>
 
