@@ -8,7 +8,7 @@
       "date"            : "2020-04-03",
       "author"          : ["CarlosE"],
       "description"     : "In this tutorial we study the inverse design problem for time-evolution Hamilton-Jacobi equations. More precisely, for a given observation of the viscosity solution at time $T>0$, we construct all the possible initial data that could have led the solution to the observed state. We note that these initial data are not in general unique. Indeed, there is a region where all such initial data coincide, while in its complement, they only agree on a lower bound. In addition, we observe that the region where the initial data coincide becomes smaller as we increase the observation-time $T$, meaning that, when the solution is observed after a long time-interval, less information from the inital datum can be recovered.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/08_Vid42.gif"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/ico.gif"
     } ,
   
     {
