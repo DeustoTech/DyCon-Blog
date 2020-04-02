@@ -8,13 +8,10 @@ layout: default
         <img class="index-img" src="{{site.url}}/{{site.baseurl}}/assets/logo_DyCon.png" width="40%" alt="" srcset="">
         <hr class="small">
         <p class="subheading">
-          One of the main outputs of the research conducted within DyCon ERC Project is the development of new computational
-          methods and tools (algorithms, tutorials, sample codes, software, simulations, and so on), all of which are constantly
-          being integrated in our computational platform.
+          One of the main outputs of the research conducted within the DyCon ERC Project is the development of new computational methods and tools (algorithms, tutorials, sample codes, software, numerical simulations), all of which are constantly being integrated within our computational platform.
         </p>
         <p class="subheading" style="margin: 0;">
-
-          DyCon Blog offers a higher layer of the computing platform, bringing together the work done by the DyCon team. The objective of this computational blog is to share the valuable knowledge that was collected and obtained throughout the life cycle of the DyCon ERC Project.
+          The DyCon Blog offers a higher layer of our computational platform, bringing together the work done by our team. The objective of this computational blog is to share the knowledge that was collected and obtained throughout the life cycle of the DyCon ERC Project.
 
           <!-- DyCon Blog offers a higher layer of the computational platform, gathering the work that is currently taking place
           inside the DyCon team. The goal of this computational blog is to share the valuable knowledge that was collected and
@@ -30,7 +27,7 @@ layout: default
   <div class="col-md-10 col-md-offset-1">
     <h1 class="h1-title">Recent Posts</h1>
     {% assign qposts = site.posts | where:"layout","tutorial"|sort |reverse %}
-    {% for post in qposts limit: 8 %}
+    {% for post in qposts limit: 10 %}
         {% include card.html title       = post.title
                              url         = post.url
                              author      = post.author
