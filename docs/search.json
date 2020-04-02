@@ -92,6 +92,16 @@
     } ,
   
     {
+      "title"           : "Simulation of Fractional Heat Equation",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0014",
+      "date"            : "2020-02-01",
+      "author"          : ["UmbertoB"],
+      "description"     : "In this tutorial, we show the simulation of heat fractional equation",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0014/twiterFractional.gif"
+    } ,
+  
+    {
       "title"           : "Optimal Control of the Fokker-Planck Equation with CasADi",
       "categories"      : ["tutorial", "WP05"],
       "url"             : "/tutorial/wp05/P0013",
