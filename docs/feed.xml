@@ -3,10 +3,10 @@
   <channel>
     <title>DyCon Blog</title>
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
-    <link>https://deustotech.github.io/DyCon-Blog/</link>
-    <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 01 Apr 2020 21:32:58 +0200</pubDate>
-    <lastBuildDate>Wed, 01 Apr 2020 21:32:58 +0200</lastBuildDate>
+    <link>http://localhost:4000/DyCon-Blog/</link>
+    <atom:link href="http://localhost:4000/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Wed, 01 Apr 2020 23:00:54 +0200</pubDate>
+    <lastBuildDate>Wed, 01 Apr 2020 23:00:54 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -274,13 +274,364 @@ Finally, we can see the behavior of the two control types against the evolution 
 
 </description>
         <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp06/P0007</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp06/P0007</guid>
         
         
         <category>tutorial</category>
         
         <category>WP06</category>
+        
+      </item>
+    
+      <item>
+        <title>Inverse problem for Hamilton-Jacobi equations</title>
+        <description>Background and motivation
+
+We consider the initial-value problem for a Hamilton-Jacobi equation of the form
+
+where $u_0\in C^{0,1}(\mathbb{R}^n)$ and the Hamiltonian $H: \R^n\rightarrow\R$ is assumed to satisfy the following hypotheses:
+
+Here, the unknown $u$ is a function $[0,T]\times\R^n\longrightarrow\R$,
+and the inequality $H_{pp}(p)&amp;gt;0$ means that the Hessian matrix of $H$ at $p$ is positive definite.
+The study of Hamilton-Jacobi equations
+arises in the context of optimal control theory and calculus of variations,
+where the value function satisfies, in a weak sense, a Hamilton-Jacobi equation.
+In this context, Hamilton-Jacobi equations have applications in a wide range of fields such as
+economics, physics, mathematical finance, traffic flow and geometrical optics.
+
+Our goal in this tutorial is to study the inverse design problem associated to (HJ).
+More precisely, for a given target function $u_T$ and a time horizon $T&amp;gt;0$,
+we want to construct all the initial conditions $u_0$ such that the viscosity solution of (HJ) coincides with $u_T$ at time $T$.
+
+The study of this problem can also be motivated by considering the following question:
+
+Given an observation of the solution to (HJ) at time $T&amp;gt;0$, can we construct all the possible initial data that agree we the observation at time $T$ ?
+
+For this purpose, for a fixed $T&amp;gt;0$, 
+we define the following nonlinear operator, which associates to any initial condition $u_0$, the function
+$u(T,\cdot)$, where $u$ is the viscosity solution of (HJ):
+
+
+The inverse design problem that we are considering is then reduced to, for $u_T$ and $T&amp;gt;0$ given,
+characterize all the initial conditions $u_0$ satisfying $S_T^+ u_0 =u_T$.
+
+Reachability of the target
+
+The first thing one notices when addressing this problem is that not all the Lipschitz targets are reachable.
+Indeed, as it is well known, the viscosity solution to (HJ) is always a semiconcave function (see [2,4]). 
+Therefore, an obvious necessary (but not sufficient) condition for the reachability of $u_T$ is that it must be a semiconcave function.
+See Figures 1 and 2 for some examples of unreachable targets in dimension 1 and 2 respectively. Observe that, in particular, they are not semiconcave functions.
+
+
+
+  
+
+
+
+
+ Figure 1:  Two unreachable target functions in dimension 1.
+
+
+We then start our study by characterizing the set of targets that are reachable.
+In other words, for a given $u_T$ and $T&amp;gt;0$, we aim to determine whether or not there exists at least one initial condition $u_0$ satisfying $S_T^+ u_0=u_T$.
+The natural candidate is the one obtained by reversing the time in the equation, considering $u_T$ as terminal condition. Here, we have to consider the class of backward viscosity solutions, for which the terminal-value problem associated to (HJ) is well-posed (see for example [1]).
+
+We then define the backward operator as follows:
+
+which associates to any terminal condition $u_T$, the function $w(0,\cdot)$,
+i.e. the unique backward viscosity solution at time $0$, with terminal condition $u_T$.
+
+
+
+  
+
+
+
+
+ Figure 2:  Two unreachable target functions in dimension 2.
+
+
+Let us introduce, for a target $u_T$ and a time horizon $T&amp;gt;0$, the set
+
+of initial conditions $u_0$ satisfying $S_T^+ u_0 = u_T$.
+We say that a target $u_T$ is reachable for the time horizon $T$ if $I_T(u_T)\neq \emptyset$.
+We can equivalently say that $u_T$ is an admissible observation at time $T&amp;gt;0$.
+
+Here we give a result that identifies the set of reachable targets (or admissible observations) at time $T$,
+with the fix-points of the composition operator $S_T^+\circ S_T^-$.
+
+
+
+Theorem 1: Let $H$ satisfy (2), $u_T\in C^{0,1}(\R^n)$ and $T&amp;gt;0$. Then, the set $I_T(u_T)$ is nonempty 
+if and only if  $S_T^+ \left( S_T^- u_T\right) = u_T.$
+
+
+
+In other words, a target is reachable if and only if the initial condition $\tilde{u}_0:= S_T^- u_T$, obtained by applying the backward operator, satisfies $\tilde{u}_0\in I_T(u_T)$.
+Or equivalently, an observation $u_T$ at time $T$ is admissible if and only if $S_T^+ \left( S_T^- u_T\right) = u_T.$
+
+Projection on the set of reachable targets
+
+In the case the observation $u_T$ at time $T$ is not admissible, maybe due to noise effects or to errors in the measurements, we can actually project it on the set of admissible observations by applying the operator $S_T^+\circ S_T^-$. For a given $u_T\in C^{0,1}(\R^n)$, we define this projection as follows:
+
+Observe that $I_T(u_T^\ast)\neq \emptyset$ for any $u_T\in C^{0,1}(\R^n)$. 
+Indeed, $\tilde{u}_0:=S_T^- u_T\in I_T (u_T^\ast)$ by definition.
+
+
+
+  
+
+  
+
+
+
+
+ Video 1:  Projection of the examples in Figure 1 on the set of admissible observations at times $T=0.3$ and $T=0.8$ respectively.
+
+
+In the Videos 1 and 2, we observe how the examples in Figures 1 and 2 are projected on the set of reachable targets.
+We recall that the projection is obtained by solving the problem (HJ) backward in time and the forward.
+Observe that, when the time goes backward, the solution is semiconvex, while in the forward resolution, it becomes semiconcave. See [1,4] for the classical results concerning this regularizing effect and [2] for the definition and properties of semiconcave and semiconvex functions.
+
+
+
+  
+
+  
+
+
+
+
+ Video 2:  Projection of the examples in Figure 2 on the set of admissible observations at time $T=1$.
+
+
+Construction of initial data
+
+Once we have projected the observation $u_T$ on the set of reachable targets at time $T$, we proceed to the construction of all the initial data $u_0$ satisfying $S_T^+ u_0 = u_T^\ast$.
+This construction is contained in the recent work [3], and reads as follows:
+
+
+Theorem 2: Let $H$ satisfy (2) and $T&amp;gt;0$.
+Let $u_T\in C^{0,1}(\R^n)$ and define the functions
+
+Then, for any $u_0\in C^{0,1} (\R^n)$, the two following statements are equivalent:
+
+  $u_0\in I_T(u_T^\ast)$;
+  $u_0(x)\geq \tilde{u}_0 (x), \ \forall x\in \R^n \quad \text{and} \quad u_0(x) = \tilde{u}_0(x), \ \forall x\in X_T(u_T^\ast),$
+
+
+where $X_T(u_T^\ast)$ is the subset of $\R^n$ given by 
+
+—
+
+In view of this result, we observe that, for a given admissible observation $u_T^\ast$ at time $T$,
+the construction of the possible initial data can be carried out after obtaining the two following ingredients:
+
+  the function $\tilde{u}_0 = S_T^- u_T^\ast$, obtained as the backward viscosity solution to (HJ) with terminal condition $u_T^\ast$;
+  and the set $X_T(u_T^\ast)\subset \R^n$, that can be deduced from the differentiability points of $u_T^\ast$.
+
+
+In Figures 3 and 4 below, we can see the scheme of the construction of all the initial data for the projection $u_T^\ast = S_T^+ (S_T^- u_T)$ of the non-admissible observations in Figure 1.
+Observe that all the initial data in $I_T(u_T^\ast)$ must coincide with $\tilde{u}_0$ on the red region, while on the black region, they must be greater or equal than $\tilde{u}_0$.
+
+
+
+  
+
+
+
+
+ Figure 3:  Reconstruction scheme for the admissible target obtained in Video 1 at the left.
+
+
+
+
+  
+
+
+
+
+ Figure 4:  Reconstruction scheme for the admissible target obtained in Video 1 at the right.
+
+
+An important consequence of Theorem 2 is that the initial data in $I_T(u_T^\ast)$ are not unique whenever $X_T(u_T^\ast) \neq \R^n$.
+Indeed, the set $I_T(u_T^\ast)$ can be given in the following way:
+
+In the case of the examples illustrated in Figures 3 and 4,
+we can see in the videos 3 below, examples of different initial conditions whose solution coincides with $u_T^\ast$ at time $T$.
+These exmaples have been generated randomly by adding to $\tilde{u}_0$ a nonegative a Lipschitz function vanishing in $X_T(u_T^\ast)$.
+
+
+
+  
+  
+
+
+
+
+ Video 3:  Examples of initial data $u_0\in I_T(u_T^\ast)$ for the reconstruction schemes depicted in Figures 3 and 4.
+
+
+A possible interpretation of this reconstruction result is that the initial datum can only be reconstructed in the region $X_T(u_T^\ast)$, where it is uniquely determined by $\tilde{u}_0$,
+while in the region $\R^n\setminus X_T(u_T^\ast)$, only a lower bound can be deduced.
+In this last region, we can say that the information of the initial data has been partially lost after the time-interval $[0,T]$.
+In the case of smooth solutions (when they exists) we have backward uniqueness, i.e. $I_T(u_T)$ is either empty or a singleton (see [1]).
+In this case it holds that $X_T(u_T)=\R^n$.
+
+Next, we see the reconstruction schemes for the examples depicted in Video 2, that correspond to the projection on the set of admissible observations of $u_T$ from Figure 2.
+Observe the different structure of the set $\R^n\setminus X_T(u_T^\ast)$ (white region in the plot at the right)
+in the surrounding area of bumps and wells of $u_T^\ast$.
+
+  Near a bump, the set where $u_T^\ast$ is not differentiable is an isolated point, and then, it produces a ball for the set $\R^n\setminus X_T(u_T^\ast)$.
+  Near a well, $u_T^\ast$ is non-differentiable on a circumference. This produces an annulus for the set $\R^n\setminus X_T(u_T^\ast)$.
+
+
+
+
+  
+
+
+
+
+ Figure 5:  Reconstruction scheme for the admissible target obtained in Video 2 at the left.
+
+
+
+
+  
+
+
+
+
+ Figure 6:  Reconstruction scheme for the admissible target obtained in Video 2 at the right.
+
+
+Evolution of $X_T(u_T)$
+
+As we have seen in the previous section, given an admissible observation $u_T$ of the solution at time $T$,
+the initial datum can only be reconstructed in a region $X_T(u_T)$, while in its complementary, only a lower bound can be obtained.
+Here, we are interested in the  the role that $T$ plays in this reconstruction issue.
+For this purpose, we fix an initial datum $u_0$ and then, for each $T&amp;gt;0$,
+we construct the set $X_T(u_T)$, where $u_T := S_T^+ u_0$.
+
+Our goal is to observe how $X_T(u_T)$ evolves as we increase $T$,
+or in other words, we want to know what information from $u_0$ can be recoverd when the solution is observed at time $T$.
+As we see in the following videos, $X_T(u_T)$ becomes smaller as we increase $T$, meaning that less information from the initial datum can be recovered if the observation is made after a long time interval.
+
+In Figure 7 we fix two initial data in dimension 1.
+
+
+
+  
+
+
+
+
+ Figure 7:  Two initial data in dimension 1.
+
+
+Next, we can see in in Video 4, how the reconstruction scheme for $u_0$ (at the left in Figure 7) evolves as we increase the observation time.
+For $T$ small, very little information is lost, however, for $T$ large, $X_T(u_T)$ only intersects the nonpositive region of $u_0$, and therefore, the two bumps can no longer be reconstructed.
+
+
+
+  
+
+
+
+
+ Video 4:  Evolution of the target and the reconstruction scheme for the initial datum at the left in Figure 7.
+
+
+In Video 5, we see the evolution of the reconstruction scheme for $u_0$ at the right in Figure 7.
+In this case, $u_0$ is constituted of two wells, however, if the observation is made at time $T$ large enough, only the deepest well can be identified.
+
+
+
+  
+
+
+
+
+ Video 5:  Evolution of the target and the reconstruction scheme for the initial datum at the right in Figure 7.
+
+
+We end this blog post with three examples in the two-dimensional case.
+Here we have the three examples of initial data that we have considered.
+
+
+
+  
+
+
+
+
+ Figure 8:  Two initial data in dimension 2.
+
+
+In Video 6, we see the evolution of the reconstruction scheme for our first 2-dimensional example.
+In this case, $u_0$ has a well and a bump. We observe that, as we increase the observation time $T$,
+the white region, which corresponds to $\R^n\setminus X_T(u_T)$ becomes bigger and bigger.
+This corresponds to the fact that, when the observation is made after a long time-interval, less information from the initial datum can be recovered. In addition, if we look at $u_T^\ast$ and $\tilde{u}_0$ in the two first plots, we see that the bump disappears for $T$ large enough.
+This implies that after a long time-interval, the bump cannot be reconstructed.
+
+
+
+  
+
+
+
+
+ Video 6:  Evolution of the reconstruction scheme for the first initial datum in Figure 8.
+
+
+In Video 7, we see the evolution of the reconstruction scheme for the second example in Figure 8.
+Here, the initial datum has two bumps of different height but same shape and size in their support.
+Observe that, when $T$ is large enough, both bumps look the same, and therefore we cannot guess which one was taller at $t=0$. In fact, only the shape of their support can be reconstructed.
+
+
+
+  
+
+
+
+
+ Video 7:  Evolution of the reconstruction scheme for the second initial datum in Figure 8.
+
+
+In Video 8, we see the evolution of the reconstruction scheme for the third example in Figure 8.
+Here, the initial datum has two wells of different depth.
+We observe the same behaviour as in Video 5, where only the information of the deepest well is preserved for $T$ large enough.
+
+
+
+  
+
+
+
+
+ Video 8:  Evolution of the reconstruction scheme for the third initial datum in Figure 8.
+
+
+References
+
+[1] E. Barron, P. Cannarsa, R. Jensen, C. Sinestrari,  Regularity of Hamilton-Jacobi equations when forward is backward. Indiana University mathematics journal, pages 385-409, 1999.
+
+[2] P. Cannarsa, C. Sinestrari,  Semiconcave functions, Hamilton-Jacobi equations, and optmial control. volume 58. Springer Science &amp;amp; Business Media, 2004.
+
+[3] C. Esteve, E. Zuazua,  The inverse problem for Hamilton-Jacobi equations and semiconcave envelopes. Preprint &amp;lt;https://arxiv.org/abs/2003.06914
+
+[4] P.L. Lions,  Generalized solutions of Hamilton-Jacobi equations. volume 69. London Pitman, 1982.
+</description>
+        <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp04/P0010</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp04/P0010</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP04</category>
         
       </item>
     
@@ -428,8 +779,8 @@ plotSimu(tspan,Yfree,Yopt,Uopt,M)
 Figure 1. The different colors represent the dynamic system under different parameters. It can be seen how the same control is obtained acting for all the dynamic systems is capable of driving the systems to the target.
 </description>
         <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp01/P0009</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp01/P0009</guid>
         
         
         <category>tutorial</category>
@@ -527,8 +878,8 @@ References:
 
 </description>
         <pubDate>Tue, 31 Mar 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp03/P0006</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp03/P0006</guid>
         
         
         <category>tutorial</category>
@@ -669,8 +1020,8 @@ tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
 
 </description>
         <pubDate>Mon, 30 Mar 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp03/P0005</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp03/P0005</guid>
         
         
         <category>tutorial</category>
@@ -1096,8 +1447,8 @@ plotSHE(OptState,OptControl,Yfree,YT,xline,tspan,Nt)
 
 </description>
         <pubDate>Sun, 15 Mar 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0008</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0008</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp06/P0008</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp06/P0008</guid>
         
         
         <category>tutorial</category>
@@ -1439,8 +1790,8 @@ Decomposition: Theory and Applications* arXiv:1312.0041
 
 </description>
         <pubDate>Sat, 07 Mar 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0009</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0009</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp04/P0009</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp04/P0009</guid>
         
         
         <category>tutorial</category>
@@ -1600,8 +1951,8 @@ Video 3. Three approximate optimal solutions of \eqref{opt2} constructed using a
 [9] Thibault Liard and Enrique Zuazua. Inverse design for the one-dimensional Burgers equation. Submitted (2019).
 </description>
         <pubDate>Mon, 02 Mar 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0007</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0007</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp04/P0007</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp04/P0007</guid>
         
         
         <category>tutorial</category>
@@ -1866,8 +2217,8 @@ Numer. Anal. (1982)
 [3] J. Douglas, F. Pereira, L.-M. Yeh, A locally conservative euleriana lagrangian numerical method and its application to nonlinear transport in porous media, Computational Geosciences (2000)
 </description>
         <pubDate>Tue, 18 Feb 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0008</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0008</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp04/P0008</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp04/P0008</guid>
         
         
         <category>tutorial</category>
@@ -2031,323 +2382,13 @@ Interestingly, due to the chaotic character of system (1), the IPOPT routine yie
 
 </description>
         <pubDate>Thu, 13 Feb 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0008</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0008</guid>
+        <link>http://localhost:4000/DyCon-Blog/tutorial/wp01/P0008</link>
+        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp01/P0008</guid>
         
         
         <category>tutorial</category>
         
         <category>WP01</category>
-        
-      </item>
-    
-      <item>
-        <title>Optimal Control of the Fokker-Planck Equation with CasADi</title>
-        <description>In this tutorial, we present an optimal control problem related to the Fokker-Planck equation.
-
-Description of the problem
-
-The Fokker Planck Equation
-
-Let $\Omega$ be an open, bounded, regular subset of $\mathbb{R}^{n}$. Let $T&amp;gt;0$ and denote by $u\in L^2(0,T;H^{1}(\Omega))^n$ a time-dependent vector field in $\Omega$. Consider a particle in $\Omega$ that moves with velocity $u(x,t)$ at each point $x\in\Omega$ in time $t\in(0,T)$. Suppose furthermore that the particle is subject to additive Brownian noise.
-
-Let $p_0(x)$ be the probability density of the position of the particle at time $t=0$. Then, at every time $t&amp;gt;0$, the probability density $p(x,t)$ of the particle satisfies the Fokker-Planck equation [1]:
-
-
-
-Where $\mathrm{n}$ is the outward unit normal vector field on $\partial\Omega$.
-
-Fix a positive real number $a&amp;gt;0$ and introduce the family of admissible controls:
-
-
-
-For every non-negative initial data $p_0\in H^{1}(\Omega)$ and every admissible control $u\in\mathcal{U}_{\mathrm{ad}}$, there is a unique solution $p\in\mathcal{C}([0,T];L^{2}(\Omega))\cap L^{2}(0,T;H^{1}(\Omega))$ to the previous problem such that $p(x,t)\geq 0$ for every $t\geq 0$ and almost every $x\in\Omega$ [2].
-
-If, besides, $\int_{\Omega}p_{0}(x)dx=1$, then integrating by parts it’s easy to check that $\int_{\Omega}p(x,t)dx=1$ for every $t\geq 0$, so $p(.,t)$ is indeed a probability density on $\Omega$ for every $t\geq 0$.
-
-Optimal Control
-
-Fix a smooth reference trajectory $z:[0,T]\rightarrow\Omega$. Our objective is to find an admissible control $u\in\mathcal{U}_{\mathrm{ad}}$ that minimizes the following functional:
-
-
-
-subject to:
-
-
-
-where $\alpha,\beta$ and $\gamma$ are non-negative real 
-numbers. In [2] it is proven that there always exists a $u^{*}\in\mathcal{U}_{\mathrm{ad}}$ minimizing the previous functional among the family of admissible controls.
-
-Numerical Simulation
-
-In the numerical example that we will present in this post, we will work over the one-dimensional domain $\Omega = (-6,6)$ with time horizon $T = 5$, and the oscillating reference trajectory $z(t) = 4\sin(2t)$. We also fix $\alpha=\beta=\gamma=1$, so that our objective will be to minimize the functional:
-
-
-
-subject to
-
-
-
-
-
-We consider the initial probability density function
-
-
-
-where $C&amp;gt;0$ is chosen so that $\int_{-6}^{6}p_0(x)dx=1$.
-
-
-
-We start by defining the mesh sizes and parameters. We discretize the spatial domain with $20$ points and the temporal domain with $80$ points.
-
-%% mesh sizes and parameters
-
-% spatial mesh
-X_max = 6; % length of space domain
-Nx = 20; % number of mesh points
-x_line = linspace(-X_max,X_max,Nx); % discretization of the space domain
-dx = x_line(2) - x_line(1); % space increment
-
-% temporal mesh
-T = 5; % time horizon
-Nt = 80; % number of mesh points
-t_line = linspace(0,T,Nt); % discretization of the time domain
-dt = t_line(2) - t_line(1); % time increment
-
-% parameters
-k = dt/(dx^2);
-b = dt/(2*dx);
-
-
-We define the reference trajectory $z(t)=4\sin(2t)$:
-
-%% reference trajectory
-
-ref = 4*sin(2*t_line);
-
-
-We define the initial probability density $p_0(x) = \frac{1}{C}\exp(-2x^2)$. We compute $C$ using $C = \int_{-6}^{6}\exp(-2x^2)dx = \sqrt{\frac{\pi}{2}}\mathrm{erf}(6\sqrt{2})$, where $\mathrm{erf}$ is the error function.
-
-%% initial density
-
-y0 = exp(-2*x_line.^2);
-
-C = sqrt(pi/2)*erf(sqrt(2)*X_max); % normalizing constant
-y0 = (1/C) * y0'; % normalized initial density
-
-
-The uncontrolled evolution of this probability density is given by the following heat equation with Neumann boundary conditions:
-
-
-
-We discretize and solve this equation:
-
-%% uncontrolled solution
-
-Yf = zeros(Nx,Nt);
-Yf(:,1) = y0;
-
-for n = 1 : Nt-1
-    for j = 2 : Nx-1
-        % euler step
-        Yf(j,n+1) = Yf(j,n) +  k * (Yf(j+1,n) - 2*Yf(j,n) + Yf(j-1,n));
-    end
-    % zero flux boundary conditions
-    Yf(Nx,n+1) = Yf(Nx-1,n+1); 
-    Yf(1,n+1) = Yf(2,n+1);
-end
-
-We display the uncontrolled solution:
-
-
-  
-      
-        
-      
-      
-        
-      
-  
-
-
-The solution $p(x,t)$ of the Heat equation (2) is the probability density associated to a one-dimensional Brownian motion on the real line. This is a particular case of a more general phenomenon: there is a correspondence between certain second order parabolic equations and solutions of stochastic ordinary differential equations [3]. Using the computed value of $p(x,t)$, we can simulate sample paths of a Brownian motion on the real line: the following animation displays the evolution of $100$ Brownian particles without control:
-
-
-
-
-
-We now set up the optimal control problem in CasADi:
-
-%% optimal control problem
-
-opti = casadi.Opti();
-Y = opti.variable(Nx,Nt); % state variable
-U = opti.variable(Nx,Nt); % control variable
-
-
-We specify the system dynamics, discretizing the Fokker-Planck equation using central differences for the spatial derivatives and a forward Euler scheme for the time derivative:
-
-%% system dynamics
-
-for n = 1 : Nt-1
-    for j = 2 : Nx-1
-        term1 = k*(Y(j+1,n)-2*Y(j,n)+Y(j-1,n));
-        term2 = b*Y(j,n)*(U(j+1,n)-U(j-1,n));
-        term3 = b*U(j,n)*(Y(j+1,n)-Y(j-1,n));
-        opti.subject_to(Y(j,n+1) == Y(j,n) + term1 - term2 - term3);
-    end
-end
-
-
-We now set the initial condition and zero flux boundary conditions as constraints:
-
-%% initial conditions and zero flux boundary conditions
-
-% initial condition
-opti.subject_to(Y(:,1) == y0); 
-
-% zero flux boundary conditions
-for n = 2 : Nt
-    opti.subject_to(Y(Nx,n) == Y(Nx-1,n)/(1-dx*U(Nx,n)));
-    opti.subject_to(Y(1,n) == Y(2,n)/(1+dx*U(1,n)));
-end
-
-
-We set the constraints on the control, taking $a = 2$:
-
-%% admissible control constraints
-
-opti.subject_to(-2&amp;lt;=U(:)&amp;lt;=2);
-
-
-We declare the cost functional:
-
-%% cost functional
-
-cost = 0;
-
-% running cost
-for n = 1 : Nt 
-    for i = 1 : Nx
-        cost = cost + (x_line(i)-ref(n))^2*Y(i,n);
-    end
-end
-
-% terminal cost
-for i = 1 : Nx 
-    cost = cost + (x_line(i)-ref(n))^2*Y(i,Nt);
-end
-
-% control cost
-for n = 1 : Nt % control cost
-    for i = 1 : Nx
-        cost = cost + Y(i,n)*U(i,n)^2;
-    end
-end
-
-
-We solve the optimization problem using the IPOPT software:
-
-%% solution of the optimization problem
-
-% set optimization objective
-opti.minimize(cost);
-
-% solution of the optimization problem
-p_opts = struct('expand',true);
-s_opts = struct('max_iter',1000); 
-opti.solver('ipopt',p_opts,s_opts); 
-
-tic
-sol = opti.solve(); 
-toc
-
-
-Obtaining the following display:
-
-This is Ipopt version 3.12.3, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
-
-Number of nonzeros in equality constraint Jacobian...:    10448
-Number of nonzeros in inequality constraint Jacobian.:     1600
-Number of nonzeros in Lagrangian Hessian.............:     6204
-
-Total number of variables............................:     3200
-                     variables with only lower bounds:        0
-                variables with lower and upper bounds:        0
-                     variables with only upper bounds:        0
-Total number of equality constraints.................:     1600
-Total number of inequality constraints...............:     1600
-        inequality constraints with only lower bounds:        0
-   inequality constraints with lower and upper bounds:     1600
-        inequality constraints with only upper bounds:        0
-
-Number of Iterations....: 39
-
-                                   (scaled)                 (unscaled)
-Objective...............:  7.2472498957747769e+002   9.6893349411152292e+002
-Dual infeasibility......:  1.0060574595627259e-010   1.3450657609300798e-010
-Constraint violation....:  1.1102230246251565e-016   1.1102230246251565e-016
-Complementarity.........:  2.5059036929760477e-009   3.3503108849024674e-009
-Overall NLP error.......:  2.5059036929760477e-009   3.3503108849024674e-009
-
-
-Number of objective function evaluations             = 40
-Number of objective gradient evaluations             = 40
-Number of equality constraint evaluations            = 40
-Number of inequality constraint evaluations          = 40
-Number of equality constraint Jacobian evaluations   = 40
-Number of inequality constraint Jacobian evaluations = 40
-Number of Lagrangian Hessian evaluations             = 39
-Total CPU secs in IPOPT (w/o function evaluations)   =      1.062
-Total CPU secs in NLP function evaluations           =      0.047
-
-EXIT: Optimal Solution Found.
-      solver  :   t_proc      (avg)   t_wall      (avg)    n_eval
-       nlp_f  |   3.00ms ( 75.00us)   3.00ms ( 75.00us)        40
-       nlp_g  |  14.00ms (350.00us)  13.99ms (349.85us)        40
-  nlp_grad_f  |   5.00ms (121.95us)   5.00ms (121.90us)        41
-  nlp_hess_l  |  10.00ms (256.41us)  10.01ms (256.74us)        39
-   nlp_jac_g  |  15.00ms (365.85us)  15.98ms (389.78us)        41
-       total  |   1.11 s (  1.11 s)   1.11 s (  1.11 s)         1
-Elapsed time is 1.561797 seconds.
-
-
-The following pictures display the temporal evolution of the controlled solution. The solution follows an oscillatory pattern similar to the one given by the reference trajectory:
-
-
-  
-      
-        
-      
-      
-        
-      
-  
-
-
-Again, by the correspondence between second order parabolic equations and solutions to stochastic ordinary differential equations, the solution $p(x,t)$ to equation (2) is the probability density of a brownian particle on the real line that is subject to the velocity field $u(x,t)$. We use the values of $p(x,t)$ that we have just computed to simulate sample paths of this controlled brownian motion: the following animation displays the evolution of $100$ Brownian particles subject to the control $u(x,t)$:
-
-
-
-
-References
-
-[1] Hannes Risken, Till Frank. The Fokker-Planck Equation: Methods of Solution and Applications, Second Edition. Springer-Verlag Berlin Heidelberg, 1996
-
-[2] Roy, S., Annunziato, M., Borzì, A., and Klingenberg, C. (2018). A Fokker–Planck approach to control collective motion. Computational Optimization and Applications, 69(2), 423-459.
-
-[3] Stroock, Daniel W., Varadhan, S.R.S. Multidimensional Diffusion Processes. Springer-Verlag Berlin Heidelberg, Reprint of the 1997 Edition (Grundlehren der mathematischen Wissenschaften, Vol. 233).
-
-</description>
-        <pubDate>Thu, 19 Dec 2019 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0013</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0013</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP05</category>
         
       </item>
     
