@@ -3,10 +3,10 @@
   <channel>
     <title>DyCon Blog</title>
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
-    <link>http://localhost:4000/DyCon-Blog/</link>
-    <atom:link href="http://localhost:4000/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 01 Apr 2020 23:00:54 +0200</pubDate>
-    <lastBuildDate>Wed, 01 Apr 2020 23:00:54 +0200</lastBuildDate>
+    <link>https://deustotech.github.io/DyCon-Blog/</link>
+    <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 02 Apr 2020 10:12:56 +0200</pubDate>
+    <lastBuildDate>Thu, 02 Apr 2020 10:12:56 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -274,8 +274,8 @@ Finally, we can see the behavior of the two control types against the evolution 
 
 </description>
         <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp06/P0007</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp06/P0007</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007</guid>
         
         
         <category>tutorial</category>
@@ -625,8 +625,8 @@ References
 [4] P.L. Lions,  Generalized solutions of Hamilton-Jacobi equations. volume 69. London Pitman, 1982.
 </description>
         <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp04/P0010</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp04/P0010</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0010</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0010</guid>
         
         
         <category>tutorial</category>
@@ -779,8 +779,8 @@ plotSimu(tspan,Yfree,Yopt,Uopt,M)
 Figure 1. The different colors represent the dynamic system under different parameters. It can be seen how the same control is obtained acting for all the dynamic systems is capable of driving the systems to the target.
 </description>
         <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp01/P0009</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp01/P0009</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009</guid>
         
         
         <category>tutorial</category>
@@ -878,8 +878,8 @@ References:
 
 </description>
         <pubDate>Tue, 31 Mar 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp03/P0006</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp03/P0006</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006</guid>
         
         
         <category>tutorial</category>
@@ -1020,8 +1020,8 @@ tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
 
 </description>
         <pubDate>Mon, 30 Mar 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp03/P0005</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp03/P0005</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005</guid>
         
         
         <category>tutorial</category>
@@ -1447,8 +1447,8 @@ plotSHE(OptState,OptControl,Yfree,YT,xline,tspan,Nt)
 
 </description>
         <pubDate>Sun, 15 Mar 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp06/P0008</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp06/P0008</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0008</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0008</guid>
         
         
         <category>tutorial</category>
@@ -1790,8 +1790,8 @@ Decomposition: Theory and Applications* arXiv:1312.0041
 
 </description>
         <pubDate>Sat, 07 Mar 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp04/P0009</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp04/P0009</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0009</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0009</guid>
         
         
         <category>tutorial</category>
@@ -1951,8 +1951,8 @@ Video 3. Three approximate optimal solutions of \eqref{opt2} constructed using a
 [9] Thibault Liard and Enrique Zuazua. Inverse design for the one-dimensional Burgers equation. Submitted (2019).
 </description>
         <pubDate>Mon, 02 Mar 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp04/P0007</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp04/P0007</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0007</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0007</guid>
         
         
         <category>tutorial</category>
@@ -2217,8 +2217,8 @@ Numer. Anal. (1982)
 [3] J. Douglas, F. Pereira, L.-M. Yeh, A locally conservative euleriana lagrangian numerical method and its application to nonlinear transport in porous media, Computational Geosciences (2000)
 </description>
         <pubDate>Tue, 18 Feb 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp04/P0008</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp04/P0008</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0008</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0008</guid>
         
         
         <category>tutorial</category>
@@ -2382,8 +2382,8 @@ Interestingly, due to the chaotic character of system (1), the IPOPT routine yie
 
 </description>
         <pubDate>Thu, 13 Feb 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp01/P0008</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp01/P0008</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0008</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0008</guid>
         
         
         <category>tutorial</category>
