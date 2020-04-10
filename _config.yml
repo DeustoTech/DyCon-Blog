@@ -25,3 +25,4 @@ highlighter: rouge
 permalink: /:categories/:title
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 future: true
+
