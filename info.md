@@ -5,12 +5,22 @@ description:
 layout: info
 ---
 
-<!-- HTML elements for search -->
-<input type="text" id="search-input" placeholder="Search blog posts..">
-<ul id="results-container"></ul>
-
-<!-- or without installing anything -->
-<script src="https://unpkg.com/simple-jekyll-search/dest/simple-jekyll-search.min.js"></script>
+<h2>Search by Keyword</h2>
+<div class="container">
+  <div id="search-container" class="search-container">
+  <input type="text" class="search-input" id="search-input" placeholder="search...">
+  </div>
+  <ul id="results-container"></ul>
+  <script src="{{site.url}}{{site.baseurl}}/js/simple-jekyll-search.min.js"></script>
+  <script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    searchResultTemplate: '{% include card.min.html avatar="{avatar}" title="{title}" author="{author}" url="{url}" description="{description}" %}',
+    resultsContainer: document.getElementById('results-container'),
+    json: '{{site.url}}{{site.baseurl}}/search.json',
+  })
+  </script>
+</div>
 
 <h1>Posts by month</h1>
 
