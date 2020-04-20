@@ -78,7 +78,7 @@
       "date"            : "2020-03-30",
       "author"          : ["DomenecR"],
       "description"     : "Usually, the unknowns in  reaction-diffusion models are positive by nature. Therefore, for application purposes, any control strategy proposed should preserve this positivity. This group of tutorials is devoted to the understanding of phenomena and techniques arising in reaction-diffusion control problems when  state constraints are present.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0009/ContrState-8.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0009/figures/ContrState-8.png"
     } ,
   
     {
