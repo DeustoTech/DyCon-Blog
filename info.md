@@ -5,7 +5,7 @@ description:
 layout: info
 ---
 
-<h2>Search by Keyword</h2>
+<!-- <h2>Search by Keyword</h2>
 <div class="container">
   <div id="search-container" class="search-container">
   <input type="text" class="search-input" id="search-input" placeholder="search...">
@@ -20,7 +20,22 @@ layout: info
     json: '{{site.url}}{{site.baseurl}}/search.json',
   })
   </script>
-</div>
+</div> -->
+
+<script src="https://unpkg.com/simple-jekyll-search@1.5.0/dest/simple-jekyll-search.min.js"></script>
+
+<input type="text" id="search-input" placeholder="search posts..">
+<br/>
+<div id="results-container"></div>
+<script>
+SimpleJekyllSearch({
+  search-input: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '{{site.url}}{{site.baseurl}}/search.json',
+  searchResultTemplate: '<li><a href="{{ site.url }}{url}">{title}</a></li>'
+})
+</script>
+
 
 <h1>Posts by month</h1>
 

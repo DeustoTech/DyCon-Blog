@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Control of reaction-diffusion under state constraints - DyCon Blog
+    
+  </title>
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0007">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP03">
+            Control under constraints</a> &#8827;</small>
+          </h2>
+          <h1>Control of reaction-diffusion under state constraints</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+                  </span>
+                </span>
+              
+              - 30 March 2020
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0007/Codes.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <p>Reaction-diffusion equations appear frequently in natural phenomena such as:</p>
+<ul>
+  <li>Population dynamics and invasion of species (see [1]).</li>
+  <li>Neuroscience, where models for neuronal impulses exhibit traveling waves (see [2]).</li>
+  <li>Chemical Reactions: modeling the evolution of concentrations of chemicals (see [3]).</li>
+  <li>In evolutionary game theory  (see [4, 5]).</li>
+  <li>Magnetic systems in material science and their phase transitions (see [6]).</li>
+  <li>Linguistics, we refer to [7] where the authors consider reaction-diffusion for analyzing language shift by means of a traveling wave.</li>
+</ul>
+
+<p>In the majority of the systems mentioned above, the state $u$ of an equation of the type</p>
+
+<script type="math/tex; mode=display">u_t-\Delta u=f(u)</script>
+
+<p>represents a population, concentration or proportion. For this reason, any model intending to predict the behavior of such quantity must fulfill a maximum principle [8].</p>
+
+<p>In this group of tutorials, our aim is to explain the phenomenology arising when considering a control problem in the contexts mentioned above.</p>
+
+<p>In general, the controllability of parabolic equations has been widely studied (for instance [9,10,11]). However, in this literature, the requirement that the trajectory has to be positive or between prescribed bounds was not a concern.</p>
+
+<p>In Figure 1 one can see a boundary control of the semilinear equation</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(-L,t)=u(L,t)=a(t)\\
+u(t=0,x)=0
+\end{cases}</script>
+
+<p>with $a$ being the control and the target function $v\equiv 0.33$.</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0007/figures/violation.png" width="100%" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0007/figures/violation2.png" width="100%" />
+        </th>       
+    </tr>
+</table>
+
+</center>
+<center>Control from $u(0)\equiv 0$ to $u(T)\equiv 0.33$.</center>
+
+<p>This model models the evolution of a proportion, and we observe that the control does not preserve the positivity of the state neither the meaningful upper bound.</p>
+
+<p>From the application point of view of several of the applications mentioned, any control action proposed must fulfill that the associated trajectory has meaning.</p>
+
+<p>The ideas exposed in this tutorial group are the following:</p>
+
+<div class="container">
+  <div class="col-md-10 col-md-offset-0">
+    
+    <ul style="padding-inline-start: 0px">
+    
+        <li>The presence of state-constraints can create intrinsic obstructions for achieving the controllability. This is due to the emergence on non-trivial solutions and the comparison principle. The topic is treated in this blog.</li>
+        <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0006/figures/ellipticL20DEF-1.png" />
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp03/P0006" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Control of reaction-diffusion under state constraints - Barriers </h4>
+    </a>
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      This tutorial is part of the control under state constraints. We will show how obstructions to the state constraint controllability can appear.
+    </div>
+    <div class="post-preview-authors ellipsis-one-line">
+      Author:
+      
+      
+        
+          <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+      
+      - 31 March 2020
+    </div>
+  </div>
+</div>
+
+    
+        <li>In order to prove the existence of controls one can use the stair-case method. This method relies on the construction of paths of steady-states that the controlled trajectory can follow. One can find more information about these constructions in this blog.</li>
+        <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0005/figures/completepath02L12-1.png" />
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp03/P0005" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Control of reaction-diffusion under state constraints - Application of the staircase method </h4>
+    </a>
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation
+    </div>
+    <div class="post-preview-authors ellipsis-one-line">
+      Author:
+      
+      
+        
+          <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+      
+      - 03 April 2020
+    </div>
+  </div>
+</div>
+
+    
+        <li>In contrast to the unconstrained case, the presence of constraints induces a minimal controllability time. However, the construction done with the path of steady-states is only a way to control and it requires typically a large time, much larger than the minimal one.  In this blog post, we explore different ways to control the system, a minimal controllability time control, a quasistatic control and we explore numerically the effect of the presence of barriers in an optimal control framework.</li>
+        <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-4.png" />
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp03/P0009" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Control of reaction-diffusion under state constraints - Numerical exploration of controls </h4>
+    </a>
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      This tutorial is part of the control under state constraints. We will simulate different control strategies to the same target by minimizing different functionals.
+    </div>
+    <div class="post-preview-authors ellipsis-one-line">
+      Author:
+      
+      
+        
+          <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+      
+      - 04 April 2020
+    </div>
+  </div>
+</div>
+
+    
+        <li>Many models in population dynamics take care about spatial heterogeneity, this can lead for example to new types obstructions. In the blog, we explain the main features and the influence of an heterogeneous drift in a bistable equation called gene-flow. The heterogeneity in the drift comes from an approximation of a system of a system of two equations with an heterogeneous environment.</li>
+        <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/staircase_perturbed.png" />
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp03/P0008" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow. </h4>
+    </a>
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      This tutorial is part of the control under state constraints. We will present the main features regarding the controllability of bistable reaction-diffusion equations with heterogeneous drifts.
+    </div>
+    <div class="post-preview-authors ellipsis-one-line">
+      Author:
+      
+      
+        
+          <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+      
+      - 19 April 2020
+    </div>
+  </div>
+</div>
+
+    
+    </ul>
+  </div>
+</div>
+
+<h2 id="references">References:</h2>
+
+<p>[1] A. Kolmogorov, Étude de l’équation de la diffusion avec croissance de la quantité de matière et son
+application à un problème biologique, Bull. Univ. Moskow, Ser. Internat., Sec. A 1 (1937) 1–25.</p>
+
+<p>[2] J. Evans, Nerve axon equations 4: the stable and unstable impulse, Indiana Univ. Math. J. 24 (12)
+(1975) 1169–1190.</p>
+
+<p>[3] B. Perthame, Parabolic equations in biology : growth, reaction, movement and diffusion, Lecture
+notes on mathematical modelling in the life sciences, 2015.</p>
+
+<p>[4] Travelling waves for games in economics and biology, Nonlinear Analysis: Theory, Methods and
+Applications 30 (2) (1997) 1235 – 1244, proceedings of the Second World Congress of Nonlinear
+Analysts.</p>
+
+<p>[5] V. Hutson, K. Mischaikow, G. T. Vickers, Multiple travelling waves in evolutionary game dynamics,
+Japan Journal of Industrial and Applied Mathematics 17 (3) (2000) 341.</p>
+
+<p>[6] A. De Masi, P. Ferrari, J. Lebowitz, Reaction diffusion equations for interacting particle systems, J.
+Stat. Phys. 44 (3-4) (1986) 589–644.</p>
+
+<p>[7] K. Prochazka, G. Vogl, Quantifying the driving factors for language shift in a bilingual region 114 (17) (2017) 4365–4369.</p>
+
+<p>[8] M.H. Protter and H.F. Weinberger, Maximum principles in differential equations, Springer Science &amp; Business Media, 2012.</p>
+
+<p>[9] G. Lebeau, L. Robbiano, Contrôle exact de léquation de la chaleur, Communications in Partial
+Differential Equations 20 (1-2) (1995) 335–356.</p>
+
+<p>[10] E. Fernández-Cara and E. Zuazua, Null and approximate controllability for weakly blowing up semilinear heat equations, Ann. Inst. H. Poincaré Anal. Non Linéaire 17 (2000), no. 5, 583 – 616.</p>
+
+<p>[11] A.V. Fursikov and O.Y. Imanuvilov, Controllability of evolution equations, no. 34, Seoul National University, 1996.</p>
+
+<p>[12] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+
+<p>[13]  P.L. Lions, On the existence of positive solutions of semilinear elliptic equations, SIAM Rev. 24 (1982), no. 4, 441–467.</p>
+
+<p>[14] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
+Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.</p>
+
+<p>[15] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.</p>
+
+<p>[16] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
+635 tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.</p>
+
+<p>[17]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case (2019).   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+
+<p>[18] I. Mazari, D. Ruiz-Balet, and E. Zuazua, Constrained control of bistable reaction-diffusion equations: Gene-flow and spatially heterogeneous models, preprint: https://hal.archives-ouvertes.fr/hal-02373668/document (2019).</p>
+
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

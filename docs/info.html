@@ -181,7 +181,7 @@
         ['Charlotte Rodriguez',  1 , new Date(2018,10,29),'Coupled transport equations and LQR control'],
         ['Dario Pighin',  2 , new Date(2019,07,08),'Rotors imbalance suppression by optimal control'],
         ['Debayan Maity',  1 , new Date(2019,06,07),'Controllability of a Class of Infinite Dimensional Systems with Age Structure'],
-        ['Domenec Ruiz',  4 , new Date(2020,03,31),'Control of reaction-diffusion under state constraints - Barriers'],
+        ['Domenec Ruiz',  7 , new Date(2020,04,19),'Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow.'],
         ['Dongnam Ko',  4 , new Date(2020,04,01),'The Optimal control on the Kuramoto adaptative coupling model with DyCon Toolbox'],
         ['Emmanuel Trélat',  2 , new Date(2018,03,05),'Control of the semi-discrete 1D heat equation under nonnegative control constraint'],
         ['Enrique Zuazua',  19 , new Date(2020,02,18),'An eulerian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations'],
@@ -260,7 +260,7 @@
       ['Borjan Geshkovski',  2 , new Date(2019,07,08),'Analysis, numerics and control for the obstacle problem'],
       ['Dario Pighin',  2 , new Date(2019,07,08),'Rotors imbalance suppression by optimal control'],
       ['Debayan Maity',  1 , new Date(2019,06,07),'Controllability of a Class of Infinite Dimensional Systems with Age Structure'],
-      ['Domenec Ruiz',  4 , new Date(2020,03,31),'Control of reaction-diffusion under state constraints - Barriers'],
+      ['Domenec Ruiz',  7 , new Date(2020,04,19),'Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow.'],
       ['Dongnam Ko',  4 , new Date(2020,04,01),'The Optimal control on the Kuramoto adaptative coupling model with DyCon Toolbox'],
       ['Jesus Oroya',  5 , new Date(2020,04,01),'Simultaneous Control with DyCon Toolbox'],
       ['Liard Thibault',  2 , new Date(2019,12,12),'Inverse design for the one-dimensional Burgers equation'],
@@ -343,14 +343,14 @@
 <!-- Main Content -->
 <div class="container">
 	<div class="col-md-10 col-md-offset-1">
-      <p>Number of Post is: 67 and the number of authors is 45. The number of upcoming posts is 5</p>
+      <p>Number of Post is: 70 and the number of authors is 45. The number of upcoming posts is 5</p>
       <h1> Upcoming posts </h1>
       <div id="table_div_upc"></div>
 
-      <h2>Search by Keyword</h2>
+      <!-- <h2>Search by Keyword</h2>
 <div class="container">
   <div id="search-container" class="search-container">
-  <input type="text" class="search-input" id="search-input" placeholder="search..." />
+  <input type="text" class="search-input" id="search-input" placeholder="search...">
   </div>
   <ul id="results-container"></ul>
   <script src="https://deustotech.github.io/DyCon-Blog/js/simple-jekyll-search.min.js"></script>
@@ -362,13 +362,51 @@
     json: 'https://deustotech.github.io/DyCon-Blog/search.json',
   })
   </script>
-</div>
+</div> -->
+
+<script src="https://unpkg.com/simple-jekyll-search@1.5.0/dest/simple-jekyll-search.min.js"></script>
+
+<p><input type="text" id="search-input" placeholder="search posts.." />
+<br /></p>
+<div id="results-container"></div>
+<script>
+SimpleJekyllSearch({
+  search-input: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: 'https://deustotech.github.io/DyCon-Blog/search.json',
+  searchResultTemplate: '<li><a href="https://deustotech.github.io{url}">{title}</a></li>'
+})
+</script>
 
 <h1>Posts by month</h1>
 
 <h2>April-2020</h2>
 
-<h4 class="headline">1.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0010">Inverse problem for Hamilton-Jacobi equations</a></h4>
+<h4 class="headline">1.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0008">Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow.</a></h4>
+<p>Author:
+      
+      
+           
+<a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+       - 19-April-2020</p>
+<div class="ellipsis-two-lines">
+This tutorial is part of the control under state constraints. We will present the main features regarding the controllability of bistable reaction-diffusion equations with heterogeneous drifts.
+</div>
+<hr />
+
+<h4 class="headline">2.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0009">Control of reaction-diffusion under state constraints - Numerical exploration of controls</a></h4>
+<p>Author:
+      
+      
+           
+<a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+       - 04-April-2020</p>
+<div class="ellipsis-two-lines">
+This tutorial is part of the control under state constraints. We will simulate different control strategies to the same target by minimizing different functionals.
+</div>
+<hr />
+
+<h4 class="headline">3.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0010">Inverse problem for Hamilton-Jacobi equations</a></h4>
 <p>Author:
       
       
@@ -380,7 +418,19 @@ In this tutorial we study the inverse design problem for time-evolution Hamilton
 </div>
 <hr />
 
-<h4 class="headline">2.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007">The Optimal control on the Kuramoto adaptative coupling model with DyCon Toolbox</a></h4>
+<h4 class="headline">4.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005">Control of reaction-diffusion under state constraints - Application of the staircase method</a></h4>
+<p>Author:
+      
+      
+           
+<a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+       - 03-April-2020</p>
+<div class="ellipsis-two-lines">
+In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation
+</div>
+<hr />
+
+<h4 class="headline">5.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007">The Optimal control on the Kuramoto adaptative coupling model with DyCon Toolbox</a></h4>
 <p>Author:
       
       
@@ -392,7 +442,7 @@ In this DyCon Toolbox tutorial, we present how to use OptimaControl enviroment t
 </div>
 <hr />
 
-<h4 class="headline">3.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009">Simultaneous Control with DyCon Toolbox</a></h4>
+<h4 class="headline">6.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009">Simultaneous Control with DyCon Toolbox</a></h4>
 <p>Author:
       
       
@@ -418,7 +468,7 @@ This tutorial is part of the control under state constraints. We will show how o
 </div>
 <hr />
 
-<h4 class="headline">2.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005">Control of reaction-diffusion under state constraints - Application of the staircase method</a></h4>
+<h4 class="headline">2.- <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0007">Control of reaction-diffusion under state constraints</a></h4>
 <p>Author:
       
       
@@ -426,7 +476,7 @@ This tutorial is part of the control under state constraints. We will show how o
 <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
        - 30-March-2020</p>
 <div class="ellipsis-two-lines">
-In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation
+Usually, the unknowns in  reaction-diffusion models are positive by nature. Therefore, for application purposes, any control strategy proposed should preserve this positivity. This group of tutorials is devoted to the understanding of phenomena and techniques arising in reaction-diffusion control problems when  state constraints are present.
 </div>
 <hr />
 

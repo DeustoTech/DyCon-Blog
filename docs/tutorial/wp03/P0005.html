@@ -223,7 +223,7 @@
                   </span>
                 </span>
               
-              - 30 March 2020
+              - 03 April 2020
             </div>
 					</p>
         </div>
@@ -285,65 +285,61 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005//Codes.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/Codes.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <p>In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:</p>
 
 <script type="math/tex; mode=display">\begin{cases}
-u_t-\Delta u=u(1-u)(u-\theta)\quad (x,t)\in \Omega\times(0,T)\\
-u=a(x,t)\qquad \qquad\qquad\qquad(x,t)\in \partial\Omega\times(0,T)\\
- 0\leq u(x,0)\leq 1
+u_t-\Delta u=u(1-u)(u-\theta)\quad (x,t)\in \Omega\times(0,T),\\
+u=a(x,t)\qquad \qquad\qquad\qquad(x,t)\in \partial\Omega\times(0,T),\\
+ 0\leq u(x,0)\leq 1.
 \end{cases}</script>
 
 <p>This a key argument for ensuring controllability that has been studied in [2,3,4,5].</p>
 
-<h3 id="stair-case-method">Stair-case method</h3>
+<h2 id="stair-case-method">Stair-case method</h2>
 <p>The stair-case method (see [1]) guarantees the following:</p>
 
 <p>If we have an admissible continuous path of steady states, for any initial datum in the path, any target function in the path and for $T&gt;0$ sufficiently large, there exists a function $a$ such that drives the system from the initial datum to the target fulfilling the state-constraints along the trajectory.</p>
 
-<h3 id="extension-to-ball-and-the-phase-plane-analysis">Extension to ball, and the phase-plane analysis</h3>
+<center>
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Plot_Staircase.png" width="350" height="300" />
+</center>
+<center><b>Figure 1.</b> Qualitative understanding of the Stair-case method. When we have a continuous admissible path of steady-states, one can find a control that is connecting the initial steady state with the target by "jumping" along the continuous path.</center>
+
+<h2 id="extension-to-ball-and-the-phase-plane-analysis">Extension to ball, and the phase-plane analysis</h2>
 
 <p>We will restrict ourselves to the construction of paths that connect the steady state $w\equiv 0$ with the steady state $w\equiv \theta$. For doing such example with our model bistable equation.</p>
 
 <p>In order to construct the paths we will use phase-plane techniques for which we use radial coordinates. Our original domain might not be a ball, for this reason we extend it to a ball and firstly construct the path there.</p>
 
 <center>
-<img width="35%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/ballE-1.png" />
+<img width="25%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/ballE-1.png" />
 </center>
-<center><b>Figure 1.</b> Extension of our domain to a ball.</center>
+<center><b>Figure 2.</b> Extension of our domain to a ball.</center>
 
 <p>Remind that the important issue is to be able to guarantee that for every domain $w\equiv0$ and $w\equiv\theta$ are connected in an admissable way and this is seen in the phase plane representation of the elliptic equation.</p>
 
-<script type="math/tex; mode=display">\begin{cases}
--u_{rr}-\frac{N-1}{r}u_r=u(1-u)(u-\theta)\\
-u(0)=a\\
- u_r(0)=0
-\end{cases}</script>
+<p><script type="math/tex">-u_{rr}-\frac{N-1}{r}u_r=u(1-u)(u-\theta),</script>
+<script type="math/tex">u(0)=a,</script>
+<script type="math/tex">u_r(0)=0.</script></p>
 
 <p>Now, considering the energy
 <script type="math/tex">E(u,v)=\frac{1}{2}v^2+F(u)</script></p>
 
 <p>where $F(u)=\int_0^u f(s)ds$, one can see that the radial ODE dissipates.</p>
 
-<p>Define the following region:</p>
+<p>Define the following region:
+<script type="math/tex">D:=\left\{(u,v)\in\mathbb{R}^2 \quad \text{such that}\quad E(u,v)\leq 0\right\}</script>
+Let $\theta_1$ be defined as:
+<script type="math/tex">\theta_1=\min_{s>0}\{F(s)=0\}</script></p>
 
-<script type="math/tex; mode=display">D:=\{(u,v)\in\mathbb{R}^2 \quad \text{such that}\quad E(u,v)\leq 0\}</script>
+<p>Note that the region defined by 
+<script type="math/tex">\Gamma:=\left\{(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}\right\}</script>
+Note that $\Gamma\subset D$.</p>
 
-<p>Let $\theta_1$ be defined as:</p>
-
-<script type="math/tex; mode=display">\theta_1=\min_{s>0}\{F(s)=0\}</script>
-
-<p>Note that the region defined by</p>
-
-<script type="math/tex; mode=display">\begin{equation*}
- \Gamma:=\left\{(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}\right\}
-\end{equation*}</script>
-
-<p>Note that $\Gamma\subset D$.</p>
-
-<p>Take $(u_0,0)\in \Gamma$, then the solution of radial equation with initial
+<p>Take $(u_0,0)\in \Gamma$, then the solution of the radial equation with initial
 datum $(u_0,0)$ satisfies:</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
@@ -358,7 +354,7 @@ datum $(u_0,0)$ satisfies:</p>
 <center>
 <img width="60%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/ContinuousPathinthePhaseSpace-1.png" />
 </center>
-<center><b>Figure 2.</b> Invariant region and construction of the path.</center>
+<center><b>Figure 3.</b> Invariant region and construction of the path.</center>
 
 <h2 id="animation-of-the-path">Animation of the path</h2>
 
@@ -367,13 +363,13 @@ datum $(u_0,0)$ satisfies:</p>
   <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/video.mp4" type="video/mp4" />
 </video>
 </center>
-<center><b>Figure 3.</b> Path of steady states.</center>
+<center><b>Figure 4.</b> Path of steady states.</center>
 
-<p>If our domain is not a ball we restrict our path to the original domain to obtain the desired path.</p>
+<p>If our domain is not a ball we restrict our path to the original domin to obtain the desired path.</p>
 
 <h2 id="other-features">Other features</h2>
 
-<p>General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibility to control (See <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006">this blog entry </a>).</p>
+<p>General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibity to control.</p>
 
 <p>Here we restrict ourselves in the one dimensional case. In the following figure one can see how can we connect the steady state $w\equiv 0$ with the first nontrivial solution with boundary value $0$.</p>
 
@@ -382,16 +378,16 @@ datum $(u_0,0)$ satisfies:</p>
 <table>
     <tr>
         <th>
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp-1.png" />
+            <img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp-1.png" />
         </th>
          <th>
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp2-1.png" />
+            <img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp2-1.png" />
                     </th>       
     </tr>
 </table>
 </center>
 
-<center><b>Figure 4.</b> Path of steady states.</center>
+<center><b>Figure 5.</b> Path of steady states.</center>
 
 <p>However, since this path touches the boundary of the admissible set controllability cannot be guaranteed due to the comparison principle.</p>
 
@@ -401,15 +397,15 @@ datum $(u_0,0)$ satisfies:</p>
 <table>
     <tr>
         <th>
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/completepath02L12-1.png" />
+            <img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/completepath02L12-1.png" />
         </th>
          <th>
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Completepath01L12-1.png" />
+            <img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Completepath01L12-1.png" />
                     </th>       
     </tr>
 </table>
 </center>
-<center><b>Figure 5.</b> Path of steady states violating constraints.</center>
+<center><b>Figure 6.</b> Path of steady states violating constraints.</center>
 
 <h2 id="references">References:</h2>
 

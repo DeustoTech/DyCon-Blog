@@ -2,6 +2,26 @@
     
     
     {
+      "title"           : "Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow.",
+      "categories"      : ["tutorial", "WP03"],
+      "url"             : "/tutorial/wp03/P0008",
+      "date"            : "2020-04-19",
+      "author"          : ["DomenecR"],
+      "description"     : "This tutorial is part of the control under state constraints. We will present the main features regarding the controllability of bistable reaction-diffusion equations with heterogeneous drifts.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/staircase_perturbed.png"
+    } ,
+  
+    {
+      "title"           : "Control of reaction-diffusion under state constraints - Numerical exploration of controls",
+      "categories"      : ["tutorial", "WP03"],
+      "url"             : "/tutorial/wp03/P0009",
+      "date"            : "2020-04-04",
+      "author"          : ["DomenecR"],
+      "description"     : "This tutorial is part of the control under state constraints. We will simulate different control strategies to the same target by minimizing different functionals.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-4.png"
+    } ,
+  
+    {
       "title"           : "Inverse problem for Hamilton-Jacobi equations",
       "categories"      : ["tutorial", "WP04"],
       "url"             : "/tutorial/wp04/P0010",
@@ -9,6 +29,16 @@
       "author"          : ["CarlosE"],
       "description"     : "In this tutorial we study the inverse design problem for time-evolution Hamilton-Jacobi equations. More precisely, for a given observation of the viscosity solution at time $T>0$, we construct all the possible initial data that could have led the solution to the observed state. We note that these initial data are not in general unique. Indeed, there is a region where all such initial data coincide, while in its complement, they only agree on a lower bound. In addition, we observe that the region where the initial data coincide becomes smaller as we increase the observation-time $T$, meaning that, when the solution is observed after a long time-interval, less information from the inital datum can be recovered.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/ico.gif"
+    } ,
+  
+    {
+      "title"           : "Control of reaction-diffusion under state constraints - Application of the staircase method",
+      "categories"      : ["tutorial", "WP03"],
+      "url"             : "/tutorial/wp03/P0005",
+      "date"            : "2020-04-03",
+      "author"          : ["DomenecR"],
+      "description"     : "In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0005/figures/completepath02L12-1.png"
     } ,
   
     {
@@ -42,13 +72,13 @@
     } ,
   
     {
-      "title"           : "Control of reaction-diffusion under state constraints - Application of the staircase method",
+      "title"           : "Control of reaction-diffusion under state constraints",
       "categories"      : ["tutorial", "WP03"],
-      "url"             : "/tutorial/wp03/P0005",
+      "url"             : "/tutorial/wp03/P0007",
       "date"            : "2020-03-30",
       "author"          : ["DomenecR"],
-      "description"     : "In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0005/figures/completepath02L12-1.png"
+      "description"     : "Usually, the unknowns in  reaction-diffusion models are positive by nature. Therefore, for application purposes, any control strategy proposed should preserve this positivity. This group of tutorials is devoted to the understanding of phenomena and techniques arising in reaction-diffusion control problems when  state constraints are present.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0007/Codes.zip"
     } ,
   
     {
@@ -438,7 +468,7 @@
       "date"            : "2018-06-30",
       "author"          : ["JoseV"],
       "description"     : "",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT01/P0004/avatar.png"
+      "avatar"          : "https://raw.githubusercontent.com/ChairOfComputationalMathematics/shapeOptimizationFoam/master/figs/fig1.png"
     } ,
   
     {

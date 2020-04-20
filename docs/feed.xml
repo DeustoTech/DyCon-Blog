@@ -5,9 +5,305 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 10 Apr 2020 20:36:23 +0200</pubDate>
-    <lastBuildDate>Fri, 10 Apr 2020 20:36:23 +0200</lastBuildDate>
+    <pubDate>Mon, 20 Apr 2020 12:52:22 +0200</pubDate>
+    <lastBuildDate>Mon, 20 Apr 2020 12:52:22 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow.</title>
+        <description>Equation and drift effect
+
+The equation under concern is:
+
+
+
+where $N$ is a positive regular function.
+
+The physical meaning of the equation is a reaction-diffusion process on the proportion $u$ of individuals along a static heterogeneous distribution $N$.
+
+The effect of this heterogeneous drift can be qualitatively understood in Figure 1. The blue line in the figure is the distribution $N$ and the orange one the term $-2\frac{N_x}{N}$. In the picture in the left we have the Gaussian with variance $\sigma$, leading to a drift effect that is pushing $u$ towards the boundary. At the right, we have the function $e^{x^2/\sigma}$ leading to the contrary effect, the population in the boundary is pushed inside the domain.
+
+From the discussion above we expect the boundary control to be enhanced in the case of $N(x)=e^{x^2/\sigma}$ while diminished in the case of $N(x)=e^{-x^2/\sigma}$.
+
+
+
+    
+        
+            
+        
+         
+            
+               
+    
+
+
+Figure 1. In blue the curves $N(x)=e^{\mp x^2/\sigma}$ and in orange the term $-2\frac{N_x}{N}$.
+
+Slowly varying drifts: Perturbed Stair-case method
+
+Whenever the drift term $-2\frac{N_x}{N}$ is small enough, one can consider the already developed path in the homogeneous setting (see Blog staircaise), taka a sequence and apply the implicit function theorem to obtain a sequence close enough to guarantee the controllability (see [1] for details). This guarantees the controllability from the steady state $0$ to the target $\theta$.
+
+In Figure 2 an intuitive sketch of this procedure is represented.
+
+
+
+
+Figure 2. Perturbed staircase method.
+
+Large drifts: New Barriers
+
+One of the main concerns when state-constraints are present is whether or not barriers exist (see Blog Barriers). If $\theta&amp;lt;\frac{1}{2}$ then, for large $L&amp;gt;L_{\sigma}(0)&amp;gt;0$ we will have obstructions to reach $\theta$ and $0$ from $1$.
+
+In the homogeneous case, nontrivial elliptic solutions with boundary value $1$ do not exist. However, in the case of heterogeneous drift this is no longer true in general.
+
+If we set $N(x)=e^{-x^2/\sigma}$ then for every $\sigma$ one can find an $L_{\sigma}(1)&amp;gt;0$ big enough such that for every $L&amp;gt;L_{\sigma}$ there is a nontrivial solution with boundary value $1$. This nontrivial solution does not correspond to a global minima of the associated energy functional since the trivial solution $u=1$ is the global minimizer.
+
+In order to understand how this barrier can exist we have to study the following non-autonomous dynamics in the phase-plane:
+
+
+
+Any solution of the ODE above is an elliptic solution for some boundary condition. What we want to find is that there exist an $L_{\sigma}(1)$ such that the solution of the ODE at $L_{\sigma}(1)$ is $1$.
+
+Making use of the energy of the ODE
+
+
+
+and seting $a$ small one can see that the trajectory of the dynamics will eventually cross $1$. See Figure 3.
+
+
+
+    
+        
+            
+        
+         
+            
+               
+    
+
+
+
+Figure 3. At the left, the trajectory in the phase-plane associated with the elliptic solution. At the right, the resulting nontrivial solution.
+
+In Figure 4 one can see the effect of the nontrivial solution in a simulation. The red lines are snapshots of the controlled trajectory, getting darker when advancing the time, the dotted blue line is the profile $N(x)$.
+
+
+
+
+Figure 4. Simulation of the equation with control $a=1$ with $N(x)=e^{-x^2/\sigma}$.
+
+Minimal controllability time depending on the drift
+
+We have seen that the influence of the drift is key. Figure 5 shows the minimal controllability time for a fixed $L$ depending on the parameter $\frac{1}{\sigma}$. The initial state is the $0$ configuration and the target the constant steady state $\theta$.
+
+When the variance is very big we tend to the homogeneous case, while when the variance decreases the opposite phenomena is observed; when the drift enhances the control the minimal controllability time is reduced making it tend to zero while, when the drift is pushing the population outside the minimal controllability time increases and eventually blows up with the emergence of the barrier.
+
+
+
+    
+        
+            
+        
+         
+            
+               
+    
+
+
+
+Figure 5. Minimal controllability time depending on the variance. At the left for $N(x)=e^{x^2/\sigma}$ and at the right for $N(x)=e^{-x^2/\sigma}$. 
+
+References:
+
+[1] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
+Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.
+
+[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.
+
+[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
+635
+tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
+
+[4]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case.   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.
+
+[5] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
+
+</description>
+        <pubDate>Sun, 19 Apr 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0008</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0008</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP03</category>
+        
+      </item>
+    
+      <item>
+        <title>Control of reaction-diffusion under state constraints - Numerical exploration of controls</title>
+        <description>In this tutorial we will observe different phenomena that arise in the control with state-constraints and moreover we will observe different ways to approach a desired target.
+
+Observation of several phenomena
+
+In the simulations below, we will consider the following optimal control problem:
+
+
+
+In Figure 1, the initial state was $u_0=1$ and we can observe how the solution has been successfully driven to the target $u_1=0.33$. For this length of the domain there is no barrier (see Barriers)), for this reason the optimal solution can achieve the target.
+
+The trajectory of the control can also be understood from the theoretical understanding of the controllability under state constraints.
+
+In the first phase, the control takes values that are below the target $u_1=0.33$. This behavior is necessary because for this length of the domain there exist nontrivial solutions with boundary value $0.33$ that are between $0$ and $1$.
+
+These nontrivial solutions do not constitute an intrinsic obstruction since we know that the equation is controllable for this length of the domain (see [1,3] and Staircase post and Barriers post). However, the strategy of setting boundary equal to $0.33$ for a long time and then doing a local control will not work.
+
+The second oscillatory phase has been already observed in the unconstrained case (see [4]).
+
+
+
+    
+        
+            
+        
+         
+            
+               
+    
+
+
+
+Figure 1. At the left, the controlled state, at the right, the control function. $u_0=1$ and $u_1=0.33$. 
+
+Another important feature is the existence of a minimal controllability time. In Figure 2, $u_0=0$ and the target is $u_1=0.33$. From the theoretical perspective, if the time horizon is large enough we are always able to go from the initial state to the target. This is due to the existence of an admissible continuous path of steady states (Staircase post).
+
+However, in Figure 2, one observes that the target $u_1=0.33$ has been not achieved. The reason is that $T$ is not large enough for the equation to be controllable.
+
+
+
+    
+        
+            
+        
+         
+            
+               
+    
+
+
+
+Figure 2. At the left, the controlled state displayed in space-time, at the right, different snapshots of the state, darker curves are associated with larger times. $u_0=0$ and $u_1=0.33$ .
+
+The other phenomenology already mentioned above and in the blog post Barriers is the lack of controllability due to the emergence of nontrivial solutions. In Figure 3, the initial state is $u_0=1$ and the target is $u_1=0$. We can observe how the state gets stuck to the barrier.
+
+
+
+    
+        
+            
+        
+         
+            
+               
+    
+
+
+
+Figure 3. At the left, the controlled state displayed in space-time, at the right, different snapshots of the state, darker curves are associated with larger times. $u_0=1$ and $u_1=0$ .
+
+Exploration
+
+Now we turn our attention to the exploration of different control strategies.
+
+Quasistatic
+
+In Figure 4, we seek to find a control that is quasistatic, for doing so we penalize the time derivative of the control in the discrete level and we add the restriction $u(x,T)=0.33$.
+
+
+
+
+
+    
+        
+            
+        
+         
+            
+               
+    
+
+
+
+Figure 4. At the left, the controlled state displayed in space-time, at the right, the control function. $u_0=0$ and $u_1=0.33$ . 
+
+Minimal control time
+
+In Figure 5, we compute the control in minimal time by minimizing the functional:
+
+
+
+
+
+    
+        
+            
+        
+         
+            
+               
+    
+
+
+
+Figure 5. At the left, the controlled state displayed in space-time, at the right, the control function. $u_0=0$ and $u_1=0.33$ .
+
+Figure 5 points out that the control in minimal time has the bang-bang property.
+
+Minimal flow control
+
+In Figure 6, we compute the control with minimal flow by minimizing the functional:
+
+
+
+
+
+    
+        
+            
+        
+         
+            
+               
+    
+
+
+
+Figure 6. 
+
+References:
+
+[1] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
+
+[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.
+
+[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac
+tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
+
+[4]  R. Glowinski, J. L. Lions and J. He. “Exact and approximate controllability for distributed parameter systems: a numerical approach.” Encyclopedia of Mathematics and its Applications (2008).
+
+</description>
+        <pubDate>Sat, 04 Apr 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0009</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0009</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP03</category>
+        
+      </item>
     
       <item>
         <title>Inverse problem for Hamilton-Jacobi equations</title>
@@ -374,6 +670,150 @@ References
         <category>tutorial</category>
         
         <category>WP04</category>
+        
+      </item>
+    
+      <item>
+        <title>Control of reaction-diffusion under state constraints - Application of the staircase method</title>
+        <description>In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:
+
+
+
+This a key argument for ensuring controllability that has been studied in [2,3,4,5].
+
+Stair-case method
+The stair-case method (see [1]) guarantees the following:
+
+If we have an admissible continuous path of steady states, for any initial datum in the path, any target function in the path and for $T&amp;gt;0$ sufficiently large, there exists a function $a$ such that drives the system from the initial datum to the target fulfilling the state-constraints along the trajectory.
+
+
+
+
+Figure 1. Qualitative understanding of the Stair-case method. When we have a continuous admissible path of steady-states, one can find a control that is connecting the initial steady state with the target by &quot;jumping&quot; along the continuous path.
+
+Extension to ball, and the phase-plane analysis
+
+We will restrict ourselves to the construction of paths that connect the steady state $w\equiv 0$ with the steady state $w\equiv \theta$. For doing such example with our model bistable equation.
+
+In order to construct the paths we will use phase-plane techniques for which we use radial coordinates. Our original domain might not be a ball, for this reason we extend it to a ball and firstly construct the path there.
+
+
+
+
+Figure 2. Extension of our domain to a ball.
+
+Remind that the important issue is to be able to guarantee that for every domain $w\equiv0$ and $w\equiv\theta$ are connected in an admissable way and this is seen in the phase plane representation of the elliptic equation.
+
+
+
+
+
+Now, considering the energy
+
+
+where $F(u)=\int_0^u f(s)ds$, one can see that the radial ODE dissipates.
+
+Define the following region:
+
+Let $\theta_1$ be defined as:
+
+
+Note that the region defined by 
+
+Note that $\Gamma\subset D$.
+
+Take $(u_0,0)\in \Gamma$, then the solution of the radial equation with initial
+datum $(u_0,0)$ satisfies:
+
+
+
+So $(u,v)\in\Gamma$ for all $r&amp;gt;0$.
+
+We have that the blue line (the border of $\Gamma$) in the following figure determines a positively invariant region.
+
+Then, making $a$ change continuously from $0$ to $\theta$ we generate a continuous path (by the Gromwall inequality) that is admissible since the invariant region $\Gamma$ is inside the admissible set.
+
+
+
+
+Figure 3. Invariant region and construction of the path.
+
+Animation of the path
+
+
+
+  
+
+
+Figure 4. Path of steady states.
+
+If our domain is not a ball we restrict our path to the original domin to obtain the desired path.
+
+Other features
+
+General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibity to control.
+
+Here we restrict ourselves in the one dimensional case. In the following figure one can see how can we connect the steady state $w\equiv 0$ with the first nontrivial solution with boundary value $0$.
+
+
+
+
+    
+        
+            
+        
+         
+            
+                           
+    
+
+
+
+Figure 5. Path of steady states.
+
+However, since this path touches the boundary of the admissible set controllability cannot be guaranteed due to the comparison principle.
+
+Another important remark to be mentioned is that if we forget about the state constraints, more paths can be generated, provided that the ODE representation of the elliptic equation does not blow up. The following figure is an example of a path connecting $w\equiv 0$ with $w\equiv 1$ that violates the constraints:
+
+
+
+    
+        
+            
+        
+         
+            
+                           
+    
+
+
+Figure 6. Path of steady states violating constraints.
+
+References:
+
+[1] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
+Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.
+
+[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.
+
+[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
+635
+tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
+
+[4]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case.   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.
+
+[5] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
+
+</description>
+        <pubDate>Fri, 03 Apr 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP03</category>
         
       </item>
     
@@ -906,139 +1346,224 @@ References:
       </item>
     
       <item>
-        <title>Control of reaction-diffusion under state constraints - Application of the staircase method</title>
-        <description>In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:
+        <title>Control of reaction-diffusion under state constraints</title>
+        <description>Reaction-diffusion equations appear frequently in natural phenomena such as:
+
+  Population dynamics and invasion of species (see [1]).
+  Neuroscience, where models for neuronal impulses exhibit traveling waves (see [2]).
+  Chemical Reactions: modeling the evolution of concentrations of chemicals (see [3]).
+  In evolutionary game theory  (see [4, 5]).
+  Magnetic systems in material science and their phase transitions (see [6]).
+  Linguistics, we refer to [7] where the authors consider reaction-diffusion for analyzing language shift by means of a traveling wave.
+
+
+In the majority of the systems mentioned above, the state $u$ of an equation of the type
 
 
 
-This a key argument for ensuring controllability that has been studied in [2,3,4,5].
+represents a population, concentration or proportion. For this reason, any model intending to predict the behavior of such quantity must fulfill a maximum principle [8].
 
-Stair-case method
-The stair-case method (see [1]) guarantees the following:
+In this group of tutorials, our aim is to explain the phenomenology arising when considering a control problem in the contexts mentioned above.
 
-If we have an admissible continuous path of steady states, for any initial datum in the path, any target function in the path and for $T&amp;gt;0$ sufficiently large, there exists a function $a$ such that drives the system from the initial datum to the target fulfilling the state-constraints along the trajectory.
+In general, the controllability of parabolic equations has been widely studied (for instance [9,10,11]). However, in this literature, the requirement that the trajectory has to be positive or between prescribed bounds was not a concern.
 
-Extension to ball, and the phase-plane analysis
-
-We will restrict ourselves to the construction of paths that connect the steady state $w\equiv 0$ with the steady state $w\equiv \theta$. For doing such example with our model bistable equation.
-
-In order to construct the paths we will use phase-plane techniques for which we use radial coordinates. Our original domain might not be a ball, for this reason we extend it to a ball and firstly construct the path there.
+In Figure 1 one can see a boundary control of the semilinear equation
 
 
 
-
-Figure 1. Extension of our domain to a ball.
-
-Remind that the important issue is to be able to guarantee that for every domain $w\equiv0$ and $w\equiv\theta$ are connected in an admissable way and this is seen in the phase plane representation of the elliptic equation.
+with $a$ being the control and the target function $v\equiv 0.33$.
 
 
 
-Now, considering the energy
-
-
-where $F(u)=\int_0^u f(s)ds$, one can see that the radial ODE dissipates.
-
-Define the following region:
-
-
-
-Let $\theta_1$ be defined as:
-
-
-
-Note that the region defined by
+    
+        
+            
+        
+         
+            
+               
+    
 
 
 
-Note that $\Gamma\subset D$.
+Control from $u(0)\equiv 0$ to $u(T)\equiv 0.33$.
 
-Take $(u_0,0)\in \Gamma$, then the solution of radial equation with initial
-datum $(u_0,0)$ satisfies:
+This model models the evolution of a proportion, and we observe that the control does not preserve the positivity of the state neither the meaningful upper bound.
 
+From the application point of view of several of the applications mentioned, any control action proposed must fulfill that the associated trajectory has meaning.
 
-
-So $(u,v)\in\Gamma$ for all $r&amp;gt;0$.
-
-We have that the blue line (the border of $\Gamma$) in the following figure determines a positively invariant region.
-
-Then, making $a$ change continuously from $0$ to $\theta$ we generate a continuous path (by the Gromwall inequality) that is admissible since the invariant region $\Gamma$ is inside the admissible set.
-
-
-
-
-Figure 2. Invariant region and construction of the path.
-
-Animation of the path
-
+The ideas exposed in this tutorial group are the following:
 
 
   
-
-
-Figure 3. Path of steady states.
-
-If our domain is not a ball we restrict our path to the original domain to obtain the desired path.
-
-Other features
-
-General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibility to control (See this blog entry ).
-
-Here we restrict ourselves in the one dimensional case. In the following figure one can see how can we connect the steady state $w\equiv 0$ with the first nontrivial solution with boundary value $0$.
-
-
+    
+    
+    
+        The presence of state-constraints can create intrinsic obstructions for achieving the controllability. This is due to the emergence on non-trivial solutions and the comparison principle. The topic is treated in this blog.
+        
+  
+  
+    
+  
+  
+  
+    
+       Control of reaction-diffusion under state constraints - Barriers 
+    
+    
+      This tutorial is part of the control under state constraints. We will show how obstructions to the state constraint controllability can appear.
+    
+    
+      Author:
+      
+      
+        
+          Domenec Ruiz
+      
+      - 31 March 2020
+    
+  
 
 
     
+        In order to prove the existence of controls one can use the stair-case method. This method relies on the construction of paths of steady-states that the controlled trajectory can follow. One can find more information about these constructions in this blog.
         
-            
-        
-         
-            
-                           
+  
+  
     
-
-
-
-Figure 4. Path of steady states.
-
-However, since this path touches the boundary of the admissible set controllability cannot be guaranteed due to the comparison principle.
-
-Another important remark to be mentioned is that if we forget about the state constraints, more paths can be generated, provided that the ODE representation of the elliptic equation does not blow up. The following figure is an example of a path connecting $w\equiv 0$ with $w\equiv 1$ that violates the constraints:
-
+  
+  
+  
+    
+       Control of reaction-diffusion under state constraints - Application of the staircase method 
+    
+    
+      In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation
+    
+    
+      Author:
+      
+      
+        
+          Domenec Ruiz
+      
+      - 03 April 2020
+    
+  
 
 
     
+        In contrast to the unconstrained case, the presence of constraints induces a minimal controllability time. However, the construction done with the path of steady-states is only a way to control and it requires typically a large time, much larger than the minimal one.  In this blog post, we explore different ways to control the system, a minimal controllability time control, a quasistatic control and we explore numerically the effect of the presence of barriers in an optimal control framework.
         
-            
-        
-         
-            
-                           
+  
+  
     
+  
+  
+  
+    
+       Control of reaction-diffusion under state constraints - Numerical exploration of controls 
+    
+    
+      This tutorial is part of the control under state constraints. We will simulate different control strategies to the same target by minimizing different functionals.
+    
+    
+      Author:
+      
+      
+        
+          Domenec Ruiz
+      
+      - 04 April 2020
+    
+  
 
 
-Figure 5. Path of steady states violating constraints.
+    
+        Many models in population dynamics take care about spatial heterogeneity, this can lead for example to new types obstructions. In the blog, we explain the main features and the influence of an heterogeneous drift in a bistable equation called gene-flow. The heterogeneity in the drift comes from an approximation of a system of a system of two equations with an heterogeneous environment.
+        
+  
+  
+    
+  
+  
+  
+    
+       Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow. 
+    
+    
+      This tutorial is part of the control under state constraints. We will present the main features regarding the controllability of bistable reaction-diffusion equations with heterogeneous drifts.
+    
+    
+      Author:
+      
+      
+        
+          Domenec Ruiz
+      
+      - 19 April 2020
+    
+  
+
+
+    
+    
+  
+
 
 References:
 
-[1] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
+[1] A. Kolmogorov, Étude de l’équation de la diffusion avec croissance de la quantité de matière et son
+application à un problème biologique, Bull. Univ. Moskow, Ser. Internat., Sec. A 1 (1937) 1–25.
+
+[2] J. Evans, Nerve axon equations 4: the stable and unstable impulse, Indiana Univ. Math. J. 24 (12)
+(1975) 1169–1190.
+
+[3] B. Perthame, Parabolic equations in biology : growth, reaction, movement and diffusion, Lecture
+notes on mathematical modelling in the life sciences, 2015.
+
+[4] Travelling waves for games in economics and biology, Nonlinear Analysis: Theory, Methods and
+Applications 30 (2) (1997) 1235 – 1244, proceedings of the Second World Congress of Nonlinear
+Analysts.
+
+[5] V. Hutson, K. Mischaikow, G. T. Vickers, Multiple travelling waves in evolutionary game dynamics,
+Japan Journal of Industrial and Applied Mathematics 17 (3) (2000) 341.
+
+[6] A. De Masi, P. Ferrari, J. Lebowitz, Reaction diffusion equations for interacting particle systems, J.
+Stat. Phys. 44 (3-4) (1986) 589–644.
+
+[7] K. Prochazka, G. Vogl, Quantifying the driving factors for language shift in a bilingual region 114 (17) (2017) 4365–4369.
+
+[8] M.H. Protter and H.F. Weinberger, Maximum principles in differential equations, Springer Science &amp;amp; Business Media, 2012.
+
+[9] G. Lebeau, L. Robbiano, Contrôle exact de léquation de la chaleur, Communications in Partial
+Differential Equations 20 (1-2) (1995) 335–356.
+
+[10] E. Fernández-Cara and E. Zuazua, Null and approximate controllability for weakly blowing up semilinear heat equations, Ann. Inst. H. Poincaré Anal. Non Linéaire 17 (2000), no. 5, 583 – 616.
+
+[11] A.V. Fursikov and O.Y. Imanuvilov, Controllability of evolution equations, no. 34, Seoul National University, 1996.
+
+[12] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
+
+[13]  P.L. Lions, On the existence of positive solutions of semilinear elliptic equations, SIAM Rev. 24 (1982), no. 4, 441–467.
+
+[14] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
 Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.
 
-[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+[15] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
 tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.
 
-[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
-635
-tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
+[16] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
+635 tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
 
-[4]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case.   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.
+[17]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case (2019).   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.
 
-[5] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
+[18] I. Mazari, D. Ruiz-Balet, and E. Zuazua, Constrained control of bistable reaction-diffusion equations: Gene-flow and spatially heterogeneous models, preprint: https://hal.archives-ouvertes.fr/hal-02373668/document (2019).
 
 </description>
         <pubDate>Mon, 30 Mar 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0007</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0007</guid>
         
         
         <category>tutorial</category>
@@ -1814,598 +2339,6 @@ Decomposition: Theory and Applications* arXiv:1312.0041
         <category>tutorial</category>
         
         <category>WP04</category>
-        
-      </item>
-    
-      <item>
-        <title>Inverse design for the one-dimensional Burgers equation</title>
-        <description>The problem
-
-We consider the following one-dimensional Burgers equation
-
-
-
-where $u$ is the state, $u_0$ is the initial state and  the flux function $f$ is defined by $f(u)=\frac{u^2}{2}$. Kruzkov’s theory  provides existence and uniqueness of a  solution  of \eqref{eq} with initial datum $u_0 \in L^{\infty}(\mathbb R)$. This solution is called a weak-entropy solution, denoted by $(t,x) \to S_t^+(u_0)(x)$. For a given target function $u^T$, we introduce the backward entropy  solution $(t,x) \to S^-_{t}(u^T)(x)$  as follows: 
-for every $t\in [0,T]$, for a.e $x\in \mathbb R$,
-
-
-
-We study the problem of inverse design for \eqref{eq}. This problem consists in  identifying the set of initial data evolving to a given target at a final time.
-
-Due to the time-irreversibility of the Burgers equation, some target functions are unattainable from weak-entropy solutions of this equation, making the inverse problem under consideration ill-posed. To get around this issue, we introduce the following  optimal control problem
-
-
-
-where $u^T$ is a given target function and the class of admissible initial data $\mathcal{U}^0_{\text{ad}}$ in \eqref{opt2} is defined by
-
-
-
-Above,  stands for functions of bounded variation and  $C&amp;gt;0$ is a constant large enough. The study of \eqref{opt2} is motivated by the minimization of the sonic boom effects generated by supersonic aircrafts [2].
-
-To solve the optimal control problem \eqref{opt2}, some difficulties arise from a  theoretical  and  numerical point of view.
-
-  Since the  entropy solution $u$ of \eqref{eq} may contain shocks even if the initial datum is a smooth function, this generates important added difficulties that have been the object of intensive study in the past, see  [3,4] and the references therein. In particular, the authors make sense of the derivative of $J_0$ in \eqref{opt2} in a weak way by requiring  strong conditions on the set of initial data. This leads to require that entropy solutions of \eqref{eq} have a finite number of non-interacting jumps.
-  When $J_0$ is weakly differentiable,  gradient descent  methods have been implemented in [1,5,6] to solve numerically the optimal problem \eqref{opt2}. In the cases where it was applied successfully, only one possible initial datum emerges, namely the backward entropy solution $S_T^-(u^T)$. This is mainly due to the numerical viscosity that numerical schemes introduce to gain stability. To find some multiple minimizers, the authors in  [8]  use a filtering step in the backward adjoint solution.
-
-
-Dans [9], we fully characterize the set of minimizers of the optimal control problem \eqref{opt2}.
-
-Theorem 1.  Let $u^T\in BV(\mathbb R)$. The optimal control problem \eqref{opt2}  admits multiple optimal solutions. Moreover, for a.e $T&amp;gt;0$, the initial datum $u_0\in BV(\mathbb R)$ is an optimal solution of \eqref{opt2} if and only if $u_0 \in BV(\mathbb R)$ verifies $S_T^+(u_0)=S_T^+ (S_T^-(u^T))$.
-
-A characterisation of the set  is given in [7]. An illustration of Theorem 1. is given in Figure 1.
-
-
-Figure 1: The backward-forward  solution $S_T^+(S_T^-(u^T))$ is the projection of $u^T$ onto the set of attainable target functions. The shaded area in red at time $t=0$ represents the set of minimizers of \eqref{opt2} 
-
-The proof of Theorem 1 is structured as follows. From [7, Theorem 3.1, Corollary 3.2] or [8, Corollary 1], there exists $u_0\in BV(\mathbb R)$ such that  if and only if  satisfies  the one-sided Lipschitz condition, i.e 
-
- Thus, the optimal problem \eqref{opt2} can be rewritten as  follows.
-
-
-
-where the admissible set $\mathcal{U}^T_{\text{ad}}$ is defined by
-
-
-
-Above, $K_1$ an open bounded interval large enough.  Note that the optimal problem \eqref{opt5} is not related to the PDE model \eqref{eq}. We prove that $q=S_T^+ (S_T^-(u^T))$ is a critical point of \eqref{opt5} using the first-order optimality conditions applied to \eqref{opt5} and the full characterization of the set  given in [9, Theorem A.2].
-
-Numerical simulations
-
-In [9,Section 3], we  implement a wave-front tracking algorithm to construct numerically the set of  minimizers of \eqref{opt2}.  We consider for instance, a target function   defined by
-
-
-
-From Theorem 1,  the backward solution  is an  optimal solution of \eqref{opt2} and   is an optimal solution of \eqref{opt2} if and only if  . In Figure 2, the target function , the backward solution  and  the backward-forward solution  are plotted.
-
-
-
-    
-        
-        
-        
-        
-        
-        
-    
-    
-        
-        $x\to S^{-}_T(u^T)(x)$ 
-        
-        
-        $(t,x)\to S^{+}_t(S^{-}_T(u^T))(x)$ 
-         
-    
-
-
-
-
-$u^T$  and $\color{red}{x\to S^{+}_T(S^{-}_T(u^T))(x)}$ 
-$ $
-Figure 2. Plotting of the target function $u^T$ defined in \eqref{uT}, the optimal solution $S_T^-(u^T)$ and the backward-forward solution $\color{red}{S^{+}_T(S^{-}_T(u^T))}$.
-
-Note that  has four different shocks located at $x=1.1$, $x=3.1$, $x=5.3$ and $x=7.2$. If we use a conservative numerical method as Godunov scheme,  the approximate solution of  doesn’t have shocks because of numerical viscosity that numerical schemes introduced, see Video 1.
-
-
-
-    
-        
-            
-        
-        
-            
-        
-    
-
-
-Video 1. Approximate solution of $S_T^+(u_0)$ with $u_0$ an $N$-wave constructed with $ \color{red}{\text{a wave-front tracking algorithm}}$ and $\color{blue}{\text{a Godunov scheme}}$ 
-
-This implies that only one minimizer of \eqref{opt2} can be constructed using a Godunov scheme, which is the backward entropy solution $S_T^-(u^T)$. When a wave-front tracking algorithm is implemented, the approximate solution of $S_T^+(S_T^-(u^T))$ has shocks since we track the possible discontinuities from $u^T$ to  $S_T^+(S_T^-(u^T))$. This implies that all initial data $u_0$ that coincide with the approximate solution of $S_T^+ (S_T^-(u^T))$ can be recovered, see [9,Section 3].
-
-In Video 2, we show that the weak-entropy solution of \eqref{eq}  with initial data $S_T^-(u^T)$ coincides with $S_T^+ (S_T^-(u^T))$ at time $T$.
-
-
-Video 2. Approximate solution of $(t,x) \to S_t^+(S_T^-(u^T))(x)$  using a wave-front tracking algorithm. 
-
-In Video 3, three other approximate optimal solutions $u_0$ of \eqref{opt2} are constructed. In particular, we show that  $S_T^+ (u_0)=S_T^+ (S_T^-(u^T))$.
-
-
-
-    
-        
-            
-        
-        
-            
-        
-    
-
-    
-                
-            
-    
-    
-
-
-
-Video 3. Three approximate optimal solutions of \eqref{opt2} constructed using a wave-front tracking algorithm 
-
-[1] Navid Allahverdi,  Alejandro Pozo and Enrique Zuazua. Numerical aspects of large-time optimal control of Burgers equation. ESAIM: Mathematical Modelling and Numerical Analysis, 50 (5):1371-1401,2016.
-
-[2]  Navid Allahverdi,  Alejandro Pozo and Enrique Zuazua. Numerical aspects of sonic-boom minimization. A panorama of Mathematics: Pure and Applied, 658:267,2016.
-
-[3] François Bouchut and François James. One-dimensional transport equations with discontinuous coefficients. Nonlinear Analysis, 32(7):891,1998.
-
-[4] Alberto Bressan and Andrea Marson. A maximum principle for optimally controlled systems of conservation laws. Rendiconti del Seminario Matematico della Universita di Padova, 94:79-94, 1995.
-
-[5] Carlos Castro, Francisco Palacios and Enrique Zuazua. An alternating descent method for the optimal control of the inviscid Burgers equation in the presence of shocks. Mathematical Models and Methods in Applied Sciences, 18(03):369-416,2008.
-
-[6] Carlos Castro, Francisco Palacios and Enrique Zuazua. Optimal control and vanishing viscosity for the Burgers equation. In Integral Methods in Science and Engineering, Volume 2, pages 65-90. Springer, 2010.
-
-[7] Rinaldo Colombo and Vincent Perrollaz. Initial data identification in conservation laws and Hamilton-Jacobi equations. arXiv preprint arXiv:1903.06448,2019.
-
-[8] Laurent Gosse and Enrique Zuazua. Filtered gradient algorithms for inverse design problems of one-dimensional Burgers equation. In Innovative algorithm and analysis, pages 197-227. Springer, 2017.
-
-[9] Thibault Liard and Enrique Zuazua. Inverse design for the one-dimensional Burgers equation. Submitted (2019).
-</description>
-        <pubDate>Mon, 02 Mar 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0007</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0007</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP04</category>
-        
-      </item>
-    
-      <item>
-        <title>An eulerian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations</title>
-        <description>The inverse design of hyperbolic transport equations can be addressed by using gradient-adjoint methodologies. Recently, Morales-Hernandez and Zuazua [1] investigated the convenience of using low order numerical schemes for the adjoint resolution in the gradient-adjoint method. They focused on hyperbolic transport scalar equations with an heterogeneous time-independent vector field.
-
-Morales-Hernandez and Zuazua analysed the numerical resolution of the adjoint equation by means of two methods: a First Order Upwind $(FOU)$ scheme and a Second Order Upwind $(SOU)$ scheme. They concluded that the $FOU$ scheme is the best choice when dealing with smooth functions once the $SOU$ scheme introduces some spurious oscillations. In addition, the $FOU$ scheme requires shorter computational time than the $SOU$ scheme. The non-linear transport problems in which sharp interfaces or discontinuities may appear in the functions has remained to be studied.
-
-The numerical scheme for the adjoint equation determines the direction of descent in the iteration procedure, and consequently the $CPU$ time consumed by the solver. As the $CPU$ time is a decisive factor, we propose an eulerian-lagrangian scheme that uses the Modified Method of Characteristics ($MMOC$) [2] for solving the transport and adjoint equations. The $MMOC$ method is based on the characteristic curves, and so very computationally competitive for linear hyperbolic transport equations. The $MMOC$ was initially developed performing the resolution in a forward sense. In this work, the eulerian-lagrangian scheme is used for the transport and adjoint resolution, employing it in both forward and backward senses.
-
-We perform numerical tests in order to investigate the accuracy and efficiency of the eulerian-lagrangian scheme to solve the problem of inverse design of linear and non-linear hyperbolic transport scalar equations.
-
-The gradient-adjoint method
-
-Consider the following hyperbolic transport scalar equation with a vector flux function ${\bf f} (u)$:
-
-\begin{equation}\label{eq1}
-\frac{\partial u}{\partial t} + \nabla \cdot {\bf f} (u) = 0, ~ ~ u({\bf x},0) = u_0.
-\end{equation}
-
-Given a target function $u^* \in \bf H$, $\bf H$ being a Hilbert space, the problem of inverse design consists of achieving $u_0 \in \bf H$ such that the solution of the former evolution equation satisfies $u(T) = u^*$. This problem is solved via the minimization of the functional
-
-\begin{equation}\label{eq2}
-J(u_0) = \frac{1}{2} \int_{0}^{T} \int_{\Omega} (u(T) - u^*)^2 d\Omega dt
-\end{equation}
-
-by means of the gradient descent method:
-
-\begin{equation}\label{eq3}
-{u_0}^{k+1} = {u_0}^k -  \epsilon {\nabla J}^k,
-\end{equation}
-
-where $\epsilon$ is the step size, and the gradient $\nabla J = \sigma (0)$, in which $\sigma$ is the adjoint variable . The gradient $\sigma (0)$ is achieved by solving the adjoint equation:
-
-
-
-The gradient-adjoint method is based on iterating a loop, where the transport equation (\ref{eq1}) is solved in a forward sense, while the adjoint equation (\ref{eq4}), which is of hyperbolic nature as well, is solved backwards in time.
-
-The $MMOC$ in forward sense
-
-Eulerian-lagrangian approaches provide computationally efficient techniques for approximating the solution of hyperbolic transport equations. Douglas and Russel [2] introduced an eulerian-lagrangian method based on the characteristic curve - the $MMOC$ - to develop fast solvers for hyperbolic transport equations. Despite the $MMOC$ does not provide a local conservation of the identity associated with the function, it present good performance for linear hyperbolic transport equations.
-
-We use the $MMOC$ method for solving the transport and adjoint equations in the context of the problem of inverse design of hyperbolic transport equations. In this problem, the adjoint equation is always a linear differencial equation, worthing the use of the eulerian-lagrangian scheme. The gradient-adjoint iteration requires the adjoint equation to be solved in backward sense. We employ an eulerian-lagrangian scheme that uses the $MMOC$, considering procedures in forward and backward senses.
-
-Consider a scalar hyperbolic transport equation determining the initial value problem
-
-\begin{equation}\label{eq5}
-\frac{\partial u}{\partial t} + \nabla \cdot {\bf f} (u) = 0, ~ ~ u({\bf x},0) = u_0 ,
-\end{equation}
-
-where ${\bf f} (u)$ is a vector flux function. Rewriting the Eq. (\ref{eq5}) in nondivergence form,
-
-\begin{equation}\label{eq6}
-\frac{\partial u}{\partial t} + {\bf f}^\prime (u) \cdot \nabla u  = 0 .
-\end{equation}
-
-The solution of Eq. (\ref{eq6}) is essentially along the characteristic curves of the transport operator $\partial / \partial t + {\bf f}^\prime (u) \cdot \nabla$, so that it is appropriate to introduce differentiation in this characteristic direction. Let
-
-\begin{equation}\label{eq7}
-\partial / \partial t + {\bf f}^\prime (u) \cdot \nabla = \psi \frac{\partial}{\partial \tau} , ~~\psi (u) = \sqrt {1 + {\left \lVert {\bf f}^\prime (u) \right \rVert}^2} , 
-\end{equation}
-
-in which the direction $\tau$ depends on $\bf x$.
-
-Let us consider the discretization of  Eq. (\ref{eq6}) in time. Denote the time step $\Delta t &amp;gt; 0$ and consider the approximation of the solution at times $t^n = n \Delta t$. In the standard $MMOC$, the characteristic derivative is approximated by
-
-\begin{equation}\label{eq8}
-\psi \frac{\partial u}{\partial \tau} \approx \psi (u({\bf x}, t^{n-1})) \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}^n, t^{n-1})}{\sqrt {\left \lVert {\bf x} - \overline {\bf x}^n \right \rVert^2 + (\Delta t)^2 }} =  \frac {u({\bf x}, t^{n}) - u(\overline {\bf x}^n, t^{n-1})}{\Delta t} ,
-\end{equation}
-
-where
-
-\begin{equation}\label{eq9}
-\overline {\bf x}^n =  \overline {\bf x}^n ({\bf x}) = {\bf x} - {\bf f}^\prime (u({\bf x}, t^{n-1}) \Delta t .
-\end{equation}
-
-Let $U^n ({\bf x})$ denote the approximations to $u({\bf x},t^n)$. For a predecessor position
-
-\begin{equation}\label{eq10}
-\overline {\bf X}^n ({\bf x}) = {\bf x} - {\bf f}^\prime (U^{n-1} ({\bf x})) \Delta t,
-\end{equation}
-
-the transported function is defined as
-
-\begin{equation}\label{eq11}
-\overline {U}^n ({\bf x}) =  u (\overline {\bf X}^n ({\bf x}), t^{n-1}) .
-\end{equation}
-
-As the continuous in space approximation for Eq. (\ref{eq6}) is
-
-\begin{equation}\label{eq12}
-\frac{U^n ({\bf x}) - \overline U^{n} ({\bf x})}{\Delta t} = 0 ,
-\end{equation}
-
-the $MMOC$ scheme is given by
-
-
-
-Preliminary results
-
-The performance of the $MMOC$ scheme is checked in numerical tests, where two hyperbolic transport problems are considered. The results by $MMOC$ are compared with the ones by the Lax-Wendroff ($LW$), which is a second-order central scheme.
-
-2D Doswell frontogenesis
-
-The first test case symbolizes the presence of horizontal temperature gradients and fronts in the context of meteorological dynamics. In this linear problem the flux function is
-
-\begin{equation}
-{\bf f} (u) =  {\bf v} (x,y)~ u ,
-\end{equation}
-
-where ${\bf v} (x,y)= g~(-y,~x)$, $g = \frac{1}{r}2.59807~sech^2(r)~tanh(r)$, and $r = \sqrt{x^2 + y^2}$. The exact solution of this problem is given by
-
-\begin{equation}
-u (x,y,t) = tanh(y~cos(gt) - x~sin(gt)).
-\end{equation}
-
-The domain $\Omega = [-5,5]^2$ is discretized in 40000 square cells, a step size $\epsilon = 0.5$ is selected and the Courant number is set to $CFL = 1.0$. The results are shown in Fig.1 for the initial condition and target function at $T = 4s$. The target function in a vortex-type profile is presented by both the $LW$ and $MMOC$ schemes.
-
-
-
-    
-        
-            
-        
-        
-            
-        
-    
-    
-        
-            
-        
-        
-            
-        
-    
-
-
-
- Figure 1. The initial condition and target function by $LW$ (top) and MMOC (bottom).   
-
-
-Results of $CPU$ time and $L_2$ norm of the numerical initial condition with respect to the exact initial condition are displayed in Table [1]. The results are quite the same for the $LW$ and $MMOC$, since we have a linear transport equation.
-
-
-
-
-    
-		  $Scheme$ 
-    
-    
-         $CPU~ time~ (s)$ 
-    
-    
-        $L_2~ norm$ 
-    
-
-
-
-
-        
-		  $LW$ 
-    
-    
-         49.0
-    
-    
-        4.07
-    
-
-
-        
-		  $MMOC$ 
-    
-    
-         80.8
-    
-    
-        3.96
-    
-
-
-
-
-Table 1. Performance for initial condition in the Doswell frontogenesis.
-
-Inviscid Burgers equation
-
-We consider the Burgers equation with zero viscosity term which is called the inviscid Burgers equation. This equation is one of the most useful formulation of the behaviour of the shock waves in which nonlinear advection can be observed. In this nonlinear problem the flux function is
-
-\begin{equation}
-f (u) =  \frac{1}{2} u^2 .
-\end{equation}
-
-The exact solution of this problem is given by
-
-\begin{equation}
-u(x,t) = sin(x - ut) .
-\end{equation}
-
-The domain $\Omega = [0,32]^2$ is discretized in 4096 square cells, a step size $\epsilon = 0.01$ is selected and the Courant number is set to $CFL = 0.1$. The exact and $MMOC$ initial conditions are shown in Fig 2 considering zero values as a guess initial condition. Only with the $MMOC$ scheme the numerical solver was able to converge to the initial condition for the selected step size.
-
-
-    
-    
-        
-    
-    
-        
-    
-    
-
-     Figure 2.The exact (left) and $MMOC$ (right) initial conditions.
-
-
-In order to observe the convergence to the initial condition, we set $u_0(x) = \beta sin(x)$ as a guess initial condition, where $\beta$ is a constant. As $\beta$ is next to one, the guess initial conditions is closer to the exact initial condition. Table 2 displays the $CPU$ time and $L_2$ norm of the numerical initial condition with respect to the exact initial condition for several $\beta$ values. The numerical solver using $MMOC$ scheme converged for any $\beta$ value, showing that the norm is smaller as the $\beta$ is increased.
-
-
-
-    
-        $\beta$    $LW$  $MMOC$
-    
-    
-        0.1    3.68  3.39
-    
-    
-        0.5    2.82  2.70
-        
-    
-        0.9    0.95  1.19
-    
-
-
-
-
-Table 2. Performance for initial condition by $MMOC$ in the Burgers problem.
-
-
-Conclusions
-
-The results achieved and presented here are preliminary ones. The $MMOC$ is a promising eulerian-lagrangian scheme for the problem of inverse design of nonlinear transport equations. More complex problems and another eulerian-lagrangian scheme are to be tested. The next steps are the follows:
-
-
-  simulate and investigate the Buckley-Leverett problem;
-  simulate and investigate the miscible tracer flow; and
-  use the $LCELM$ eulerian-lagrangian scheme [3].
-
-
-References
-
-[1] M. Morales-Hernandez, E. Zuazua, Adjoint computational methods for 2d inverse design of linear transport equations on unstructured grids, Computational and Applied Mathematics (2019)
-
-[2] J. Douglas, T. F. Russell, Numerical methods for convection dominated diffusion problems based on combining the method of characteristics with finite element or finite difference procedures, SIAM J.
-Numer. Anal. (1982)
-
-[3] J. Douglas, F. Pereira, L.-M. Yeh, A locally conservative euleriana lagrangian numerical method and its application to nonlinear transport in porous media, Computational Geosciences (2000)
-</description>
-        <pubDate>Tue, 18 Feb 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0008</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0008</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP04</category>
-        
-      </item>
-    
-      <item>
-        <title>Stabilization of a double pendulum on a cart with DyCon Toolbox</title>
-        <description>The finite-dimensional dynamical system given by a pendulum on a cart (cartpole) is widely considered as a benchmark for comparing the performance of different control strategies. In this blog post, we consider a double pendulum on a cart and we solve the problem of swinging up the pendulum from the downward position to the upward position using optimal control techniques.
-
-Setup
-
-In this tutorial we need DyCon Toolbox, to install it we will have to write the following in our MATLAB console:
-
-unzip('https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip')
-addpath(genpath(fullfile(cd,'DyCon-toolbox-master')))
-
-
-Equations of motion
-
-
-
-  Figure 1. Scheme of system dynamics
-
-
-The physical system defined by the double pendulum in a cart can be modelled as a system of six ordinary differential equations, whose state at each instant of time $t \geq 0$ is the vector $y(t) = \left( x(t), \theta_{1}(t), \theta_{2}(t), v(t), \omega_{1}(t), \omega_{2}(t) \right)$, where:
-
-
-  $x(t) \in \mathbb{R}$ is the position of the cart.
-  $\theta_{i}(t) \in [0, 2\pi]$ is the angle of the $i$-th pendulum.
-  $v(t) \in \mathbb{R}$ is the velocity of the cart.
-  $\omega_{i}(t) \in \mathbb{R}$ is the angular velocity of the $i$-th pendulum.
-
-
-The equations of motion of the system can be derived using the Lagrangian formalism of classical mechanics and are given by:
-
-
-
-where, for each $t \geq 0$, we define:
-
-
-
-and
-
-
-
-We have the fixed parameters:
-
-
-  $d_{i} \in [0,1]$ are damping coefficients.
-  $m &amp;gt; 0$ is the mass of the cart and $m_{i} &amp;gt; 0$ is the mass of the $i$-th pendulum.
-  $l_{i} &amp;gt; 0$ is the length of the $i$-th pendulum.
-
-
-The function $u \in L^{\infty}(0,\infty; \mathbb{R})$ is a time-dependent control that acts on the acceleration term $\dot{v}(t)$ of the cart, and can thus be interpreted as a force that is exerted on the cart.
-
-This dynamical system shows chaotic behaviour. The following animation displays the evolution of the double pendulum on a cart with control $u = 0$ and starting at the two different initial conditions
-
-
-
-
-
-
-
-
-
-
-  Figure 2. Chaotics behaviour
-
-
-  Optimal Control Problem 
-
-We will solve the problem of steering the state of the pendulum from the downward position $y_{0} = (0, \pi, \pi, 0, 0, 0)$ to the upward position $z = (0, 0, 0, 0, 0, 0)$ in a fixed time horizon $T &amp;gt; 0$ using a control $u(t)$.
-
-One way to look for solutions to this problem is to minimize the following functional:
-
-
-
-Where $\alpha &amp;gt;0$ is a fixed parameter, the state vector $y(t)$ is subject to the system of differential equations (1) and $y(0) = y_0$.
-
-  Numerical simulation 
-
-We start by implementing the dynamical system defined in (1) as a MATLAB function. We fix the lengths $l_{i} = 1$, and the mass of the cart $M = 50$. The damping coefficients are set to $d_{i} = 0.1$.
-
-  &amp;gt;&amp;gt; type cartpole_dynamics.m
-
-function ds = cartpole_dynamics(t,s,u,params)
-    L1 = 1;    L2 = 1;    g = 9.8;
-    m1 = params.m1;    m2 = params.m2;
-    M = 50;
-    d1 = 1e-1;    d2 = 1e-1;    d3 = 1e-1;
-    %%%%%%%%%%%%%%%%%%%%%5%%%
-    ds = zeros(6,1,class(s));
-    %
-    q      = s(1);    theta1 = s(2);
-    theta2 = s(3);    dq     = s(4);
-    dtheta1= s(5);    dtheta2= s(6); 
-    % q
-    ds(1) = dq -q;
-    % theta 1
-    ds(2) = dtheta1;
-    % theta 2
-    ds(3) = dtheta2;
-    %
-    Mt = [ M+m1+m2                  L1*(m1+m2)*cos(theta1)     m2*L2*cos(theta2) ; ...
-          L1*(m1+m2)*cos(theta1)     L1^2*(m1+m2)             L1*L2*m2*cos(theta1-theta2) ; ...
-          L2*m2*cos(theta2)          L1*L2*m2*cos(theta1-theta2)  L2^2*m2        ];
-    % v
-    f1 = L1*(m1+m2)*dtheta1^2*sin(theta1) + m2*L2*theta2^2*sin(theta2)      - d1*dq + u  ;
-    f2 = -L1*L2*m2*dtheta2^2*sin(theta1-theta2) + g*(m1+m2)*L1*sin(theta1)  - d2*dtheta1;
-    f3 =  L1*L2*m2*dtheta1^2*sin(theta1-theta2) + g*L2*m2*sin(theta2)       - d3*dtheta2; 
-
-    ds(4:6) = Mt\[f1;f2;f3];
-end
-
-
-This optimal control problem is solved using CasADi with the IPOPT solver. MATLAB’s symbolic toolbox has been used to implement the system dynamics in CasADi.
-
-The time horizon is set to $T = 10$ and the system (1) has been discretized using a Crank-Nicolson scheme. The use of an implicit discretization method with good behaviour with respect to the number of mesh points has been crucial to speed up the optimization process.
-
-import casadi.*
-% define optimal 
-
-Ss = SX.sym('x',6,1);As = SX.sym('u',1,1);ts = SX.sym('t');
-%
-EvolutionFcn = Function('f',{ts,Ss,As},{ cartpole_dynamics(ts,Ss,As,params) });
-%
-dynamics_obj = ode(EvolutionFcn,Ss,As,tspan);
-dynamics_obj.InitialCondition = s0;
-%
-PathCost  = Function('L'  ,{ts,Ss,As},{ (  (Ss.'*Ss) + 1e-3*(As.'*As) ) });
-FinalCost = Function('Psi',{Ss}      ,{ (  (Ss.'*Ss) ) });
-
-ocp_obj = ocp(dynamics_obj,PathCost,FinalCost);
-%
-U0 =0*tspan;
-[OptControl ,OptState] = IpoptSolver(ocp_obj,U0,'integrator','CrankNicolson');
-
-
-
-The following animation displays the resulting evolution of the system’s state:
-
-
-
-
-
-
-  Figure 3. Optimal solution 
-
-
-Interestingly, due to the chaotic character of system (1), the IPOPT routine yields different controlled trajectories if we change the initial guess of the control:
-
-
-
-
-
-
-  Figure 4. Several initial guess of optimization
-
-</description>
-        <pubDate>Thu, 13 Feb 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0008</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0008</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP01</category>
         
       </item>
     

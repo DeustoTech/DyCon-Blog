@@ -202,6 +202,306 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h3 id="equation-and-drift-effect"&gt;Equation and drift effect&lt;/h3&gt;
+</code></pre></div></div>
+
+<p>The equation under concern is:</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+u_t-u_{xx}-2\frac{N_x}{N}u_x-=u(1-u)(u-\theta)\quad (x,t)\in (0,L)\times(0,T),\\
+u(0,t)=a_1(t),\quad u(L,t)=a_2(t)\\
+ 0\leq u(x,0)\leq 1.
+\end{cases}</script>
+
+<p>where $N$ is a positive regular function.</p>
+
+<p>The physical meaning of the equation is a reaction-diffusion process on the proportion $u$ of individuals along a static heterogeneous distribution $N$.</p>
+
+<p>The effect of this heterogeneous drift can be qualitatively understood in Figure 1. The blue line in the figure is the distribution $N$ and the orange one the term $-2\frac{N_x}{N}$. In the picture in the left we have the Gaussian with variance $\sigma$, leading to a drift effect that is pushing $u$ towards the boundary. At the right, we have the function $e^{x^2/\sigma}$ leading to the contrary effect, the population in the boundary is pushed inside the domain.</p>
+
+<p>From the discussion above we expect the boundary control to be enhanced in the case of $N(x)=e^{x^2/\sigma}$ while diminished in the case of $N(x)=e^{-x^2/\sigma}$.</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/drift1.png" width="100%" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/drift2.png" width="100%" />
+        </th>       
+    </tr>
+</table>
+</center>
+<center><b>Figure 1.</b> In blue the curves $N(x)=e^{\mp x^2/\sigma}$ and in orange the term $-2\frac{N_x}{N}$.</center>
+
+<h3 id="slowly-varying-drifts-perturbed-stair-case-method">Slowly varying drifts: Perturbed Stair-case method</h3>
+
+<p>Whenever the drift term $-2\frac{N_x}{N}$ is small enough, one can consider the already developed path in the homogeneous setting (see Blog <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005">staircaise</a>), taka a sequence and apply the implicit function theorem to obtain a sequence close enough to guarantee the controllability (see [1] for details). This guarantees the controllability from the steady state $0$ to the target $\theta$.</p>
+
+<p>In Figure 2 an intuitive sketch of this procedure is represented.</p>
+
+<center>
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/staircase_perturbed.png" width="60%" />
+</center>
+<center><b>Figure 2.</b> Perturbed staircase method.</center>
+
+<h3 id="large-drifts-new-barriers">Large drifts: New Barriers</h3>
+
+<p>One of the main concerns when state-constraints are present is whether or not barriers exist (see Blog <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006">Barriers</a>). If $\theta&lt;\frac{1}{2}$ then, for large $L&gt;L_{\sigma}(0)&gt;0$ we will have obstructions to reach $\theta$ and $0$ from $1$.</p>
+
+<p>In the homogeneous case, nontrivial elliptic solutions with boundary value $1$ do not exist. However, in the case of heterogeneous drift this is no longer true in general.</p>
+
+<p>If we set $N(x)=e^{-x^2/\sigma}$ then for every $\sigma$ one can find an $L_{\sigma}(1)&gt;0$ big enough such that for every $L&gt;L_{\sigma}$ there is a nontrivial solution with boundary value $1$. This nontrivial solution does not correspond to a global minima of the associated energy functional since the trivial solution $u=1$ is the global minimizer.</p>
+
+<p>In order to understand how this barrier can exist we have to study the following non-autonomous dynamics in the phase-plane:</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\frac{d}{dx}\begin{pmatrix}u\\ v \end{pmatrix}=\begin{pmatrix}v\\ -u(1-u)(u-\theta) \end{pmatrix}+\begin{pmatrix}0\\ \frac{4}{\sigma}xv \end{pmatrix}\\
+\begin{pmatrix}u(0)\\ v(0) \end{pmatrix}=\begin{pmatrix}a\\ 0 \end{pmatrix}
+\end{cases}</script>
+
+<p>Any solution of the ODE above is an elliptic solution for some boundary condition. What we want to find is that there exist an $L_{\sigma}(1)$ such that the solution of the ODE at $L_{\sigma}(1)$ is $1$.</p>
+
+<p>Making use of the energy of the ODE</p>
+
+<script type="math/tex; mode=display">E=\frac{1}{2} v^2+\int u s(1-s)(s-\theta)ds</script>
+
+<p>and seting $a$ small one can see that the trajectory of the dynamics will eventually cross $1$. See Figure 3.</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/Drift-L=200a1.png" width="100%" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/Nontrivial-Drift-L=200a1.png" width="100%" />
+        </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 3.</b> At the left, the trajectory in the phase-plane associated with the elliptic solution. At the right, the resulting nontrivial solution.</center>
+
+<p>In Figure 4 one can see the effect of the nontrivial solution in a simulation. The red lines are snapshots of the controlled trajectory, getting darker when advancing the time, the dotted blue line is the profile $N(x)$.</p>
+
+<center>
+<img width="60%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/gaussto12.png" />
+</center>
+<center><b>Figure 4.</b> Simulation of the equation with control $a=1$ with $N(x)=e^{-x^2/\sigma}$.</center>
+
+<h3 id="minimal-controllability-time-depending-on-the-drift">Minimal controllability time depending on the drift</h3>
+
+<p>We have seen that the influence of the drift is key. Figure 5 shows the minimal controllability time for a fixed $L$ depending on the parameter $\frac{1}{\sigma}$. The initial state is the $0$ configuration and the target the constant steady state $\theta$.</p>
+
+<p>When the variance is very big we tend to the homogeneous case, while when the variance decreases the opposite phenomena is observed; when the drift enhances the control the minimal controllability time is reduced making it tend to zero while, when the drift is pushing the population outside the minimal controllability time increases and eventually blows up with the emergence of the barrier.</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img width="100%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/MincontroltimeWELL.png" />
+        </th>
+         <th>
+            <img width="100%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/MincontroltimeGAUSSIAN.png" />
+        </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 5.</b> Minimal controllability time depending on the variance. At the left for $N(x)=e^{x^2/\sigma}$ and at the right for $N(x)=e^{-x^2/\sigma}$. </center>
+
+<h3 id="references">References:</h3>
+
+<p>[1] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
+Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.</p>
+
+<p>[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.</p>
+
+<p>[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
+635
+tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.</p>
+
+<p>[4]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case.   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+
+<p>[5] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial we will observe different phenomena that arise in the control with state-constraints and moreover we will observe different ways to approach a desired target.&lt;/p&gt;
+</code></pre></div></div>
+
+<h1 id="observation-of-several-phenomena">Observation of several phenomena</h1>
+
+<p>In the simulations below, we will consider the following optimal control problem:</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\displaystyle \min_{0\leq a(t)\leq 1}\|u(x,T)-u_1\|_{L^2}\\
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(0,t)=u(L,t)=a(t)\\
+u(x,0)\equiv u_0\in\{0,1\}
+\end{cases}</script>
+
+<p>In Figure 1, the initial state was $u_0=1$ and we can observe how the solution has been successfully driven to the target $u_1=0.33$. For this length of the domain there is no barrier (see <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006">Barriers</a>)), for this reason the optimal solution can achieve the target.</p>
+
+<p>The trajectory of the control can also be understood from the theoretical understanding of the controllability under state constraints.</p>
+
+<p>In the first phase, the control takes values that are below the target $u_1=0.33$. This behavior is necessary because for this length of the domain there exist nontrivial solutions with boundary value $0.33$ that are between $0$ and $1$.</p>
+
+<p>These nontrivial solutions do not constitute an intrinsic obstruction since we know that the equation is controllable for this length of the domain (see [1,3] and <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005">Staircase post</a> and <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006">Barriers post</a>). However, the strategy of setting boundary equal to $0.33$ for a long time and then doing a local control will not work.</p>
+
+<p>The second oscillatory phase has been already observed in the unconstrained case (see [4]).</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-1.png" width="100%" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/Contr-1.png" width="100%" />
+        </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 1.</b> At the left, the controlled state, at the right, the control function. $u_0=1$ and $u_1=0.33$. </center>
+
+<p>Another important feature is the existence of a minimal controllability time. In Figure 2, $u_0=0$ and the target is $u_1=0.33$. From the theoretical perspective, if the time horizon is large enough we are always able to go from the initial state to the target. This is due to the existence of an admissible continuous path of steady states (<a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0005">Staircase post</a>).</p>
+
+<p>However, in Figure 2, one observes that the target $u_1=0.33$ has been not achieved. The reason is that $T$ is not large enough for the equation to be controllable.</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-4.png" width="100%" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/State-4.png" width="100%" />
+        </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 2.</b> At the left, the controlled state displayed in space-time, at the right, different snapshots of the state, darker curves are associated with larger times. $u_0=0$ and $u_1=0.33$ .</center>
+
+<p>The other phenomenology already mentioned above and in the blog post <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006">Barriers</a> is the lack of controllability due to the emergence of nontrivial solutions. In Figure 3, the initial state is $u_0=1$ and the target is $u_1=0$. We can observe how the state gets stuck to the barrier.</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-2.png" width="100%" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/State-2.png" width="100%" />
+        </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 3.</b> At the left, the controlled state displayed in space-time, at the right, different snapshots of the state, darker curves are associated with larger times. $u_0=1$ and $u_1=0$ .</center>
+
+<h2 id="exploration">Exploration</h2>
+
+<p>Now we turn our attention to the exploration of different control strategies.</p>
+
+<h3 id="quasistatic">Quasistatic</h3>
+
+<p>In Figure 4, we seek to find a control that is quasistatic, for doing so we penalize the time derivative of the control in the discrete level and we add the restriction $u(x,T)=0.33$.</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\min_{0\leq a(t)\leq 1}\|a_t\|_{L^2}\\
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(0,t)=u(L,t)=a(t)\\
+u(x,0)\equiv 0\\
+u(x,T)\equiv 0.33
+\end{cases}</script>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-6.png" width="100%" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/Contr-6.png" width="100%" />
+        </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 4.</b> At the left, the controlled state displayed in space-time, at the right, the control function. $u_0=0$ and $u_1=0.33$ . </center>
+
+<h1 id="minimal-control-time">Minimal control time</h1>
+
+<p>In Figure 5, we compute the control in minimal time by minimizing the functional:</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\min_{0\leq a(t)\leq 1}T\\
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(0,t)=u(L,t)=a(t)\\
+u(x,0)\equiv 0\\
+u(x,T)\equiv 0.33
+\end{cases}</script>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-5.png" width="100%" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/Contr-5.png" width="100%" />
+        </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 5.</b> At the left, the controlled state displayed in space-time, at the right, the control function. $u_0=0$ and $u_1=0.33$ .</center>
+
+<p>Figure 5 points out that the control in minimal time has the bang-bang property.</p>
+
+<h3 id="minimal-flow-control">Minimal flow control</h3>
+
+<p>In Figure 6, we compute the control with minimal flow by minimizing the functional:</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\min_{0\leq a(t)\leq 1} \|u_x(0,t)\|_L^2+\|u_x(L,t)\|_L^2 \\
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(0,t)=u(L,t)=a(t)\\
+u(x,0)\equiv 0\\
+u(x,T)\equiv 1-\epsilon
+\end{cases}</script>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-8.png" width="100%" />
+        </th>
+         <th>
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/Contr-8.png" width="100%" />
+        </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 6.</b> </center>
+
+<h2 id="references">References:</h2>
+
+<p>[1] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+
+<p>[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.</p>
+
+<p>[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac
+tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.</p>
+
+<p>[4]  R. Glowinski, J. L. Lions and J. He. “Exact and approximate controllability for distributed parameter systems: a numerical approach.” Encyclopedia of Mathematics and its Applications (2008).</p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h3 id="background-and-motivation"&gt;Background and motivation&lt;/h3&gt;
 </code></pre></div></div>
 
@@ -575,6 +875,142 @@ We observe the same behaviour as in Video 5, where only the information of the d
 <p>[3] C. Esteve, E. Zuazua, <i> The inverse problem for Hamilton-Jacobi equations and semiconcave envelopes</i>. Preprint &lt;https://arxiv.org/abs/2003.06914</p>
 
 <p>[4] P.L. Lions, <i> Generalized solutions of Hamilton-Jacobi equations</i>. volume 69. London Pitman, 1982.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:&lt;/p&gt;
+</code></pre></div></div>
+
+<script type="math/tex; mode=display">\begin{cases}
+u_t-\Delta u=u(1-u)(u-\theta)\quad (x,t)\in \Omega\times(0,T),\\
+u=a(x,t)\qquad \qquad\qquad\qquad(x,t)\in \partial\Omega\times(0,T),\\
+ 0\leq u(x,0)\leq 1.
+\end{cases}</script>
+
+<p>This a key argument for ensuring controllability that has been studied in [2,3,4,5].</p>
+
+<h2 id="stair-case-method">Stair-case method</h2>
+<p>The stair-case method (see [1]) guarantees the following:</p>
+
+<p>If we have an admissible continuous path of steady states, for any initial datum in the path, any target function in the path and for $T&gt;0$ sufficiently large, there exists a function $a$ such that drives the system from the initial datum to the target fulfilling the state-constraints along the trajectory.</p>
+
+<center>
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Plot_Staircase.png" width="350" height="300" />
+</center>
+<center><b>Figure 1.</b> Qualitative understanding of the Stair-case method. When we have a continuous admissible path of steady-states, one can find a control that is connecting the initial steady state with the target by "jumping" along the continuous path.</center>
+
+<h2 id="extension-to-ball-and-the-phase-plane-analysis">Extension to ball, and the phase-plane analysis</h2>
+
+<p>We will restrict ourselves to the construction of paths that connect the steady state $w\equiv 0$ with the steady state $w\equiv \theta$. For doing such example with our model bistable equation.</p>
+
+<p>In order to construct the paths we will use phase-plane techniques for which we use radial coordinates. Our original domain might not be a ball, for this reason we extend it to a ball and firstly construct the path there.</p>
+
+<center>
+<img width="25%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/ballE-1.png" />
+</center>
+<center><b>Figure 2.</b> Extension of our domain to a ball.</center>
+
+<p>Remind that the important issue is to be able to guarantee that for every domain $w\equiv0$ and $w\equiv\theta$ are connected in an admissable way and this is seen in the phase plane representation of the elliptic equation.</p>
+
+<p><script type="math/tex">-u_{rr}-\frac{N-1}{r}u_r=u(1-u)(u-\theta),</script>
+<script type="math/tex">u(0)=a,</script>
+<script type="math/tex">u_r(0)=0.</script></p>
+
+<p>Now, considering the energy
+<script type="math/tex">E(u,v)=\frac{1}{2}v^2+F(u)</script></p>
+
+<p>where $F(u)=\int_0^u f(s)ds$, one can see that the radial ODE dissipates.</p>
+
+<p>Define the following region:
+<script type="math/tex">D:=\left\{(u,v)\in\mathbb{R}^2 \quad \text{such that}\quad E(u,v)\leq 0\right\}</script>
+Let $\theta_1$ be defined as:
+<script type="math/tex">\theta_1=\min_{s>0}\{F(s)=0\}</script></p>
+
+<p>Note that the region defined by 
+<script type="math/tex">\Gamma:=\left\{(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}\right\}</script>
+Note that $\Gamma\subset D$.</p>
+
+<p>Take $(u_0,0)\in \Gamma$, then the solution of the radial equation with initial
+datum $(u_0,0)$ satisfies:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\frac{d}{dr}E(u,v)=vv_r+f(u)v=-\frac{N-1}{r}v^2<0 %]]></script>
+
+<p>So $(u,v)\in\Gamma$ for all $r&gt;0$.</p>
+
+<p>We have that the blue line (the border of $\Gamma$) in the following figure determines a positively invariant region.</p>
+
+<p>Then, making $a$ change continuously from $0$ to $\theta$ we generate a continuous path (by the Gromwall inequality) that is admissible since the invariant region $\Gamma$ is inside the admissible set.</p>
+
+<center>
+<img width="60%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/ContinuousPathinthePhaseSpace-1.png" />
+</center>
+<center><b>Figure 3.</b> Invariant region and construction of the path.</center>
+
+<h2 id="animation-of-the-path">Animation of the path</h2>
+
+<center>
+<video width="80%" controls="">
+  <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/video.mp4" type="video/mp4" />
+</video>
+</center>
+<center><b>Figure 4.</b> Path of steady states.</center>
+
+<p>If our domain is not a ball we restrict our path to the original domin to obtain the desired path.</p>
+
+<h2 id="other-features">Other features</h2>
+
+<p>General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibity to control.</p>
+
+<p>Here we restrict ourselves in the one dimensional case. In the following figure one can see how can we connect the steady state $w\equiv 0$ with the first nontrivial solution with boundary value $0$.</p>
+
+<center>
+
+<table>
+    <tr>
+        <th>
+            <img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp-1.png" />
+        </th>
+         <th>
+            <img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp2-1.png" />
+                    </th>       
+    </tr>
+</table>
+</center>
+
+<center><b>Figure 5.</b> Path of steady states.</center>
+
+<p>However, since this path touches the boundary of the admissible set controllability cannot be guaranteed due to the comparison principle.</p>
+
+<p>Another important remark to be mentioned is that if we forget about the state constraints, more paths can be generated, provided that the ODE representation of the elliptic equation does not blow up. The following figure is an example of a path connecting $w\equiv 0$ with $w\equiv 1$ that violates the constraints:</p>
+
+<center>
+<table>
+    <tr>
+        <th>
+            <img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/completepath02L12-1.png" />
+        </th>
+         <th>
+            <img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Completepath01L12-1.png" />
+                    </th>       
+    </tr>
+</table>
+</center>
+<center><b>Figure 6.</b> Path of steady states violating constraints.</center>
+
+<h2 id="references">References:</h2>
+
+<p>[1] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
+Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.</p>
+
+<p>[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.</p>
+
+<p>[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
+635
+tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.</p>
+
+<p>[4]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case.   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+
+<p>[5] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial, we present how to use Pontryagin environment to control a consensus system that models the complex emergent dynamics over a given network. The control basically minimize the cost functional which contains the running cost and desired final state.&lt;/p&gt;
 </code></pre></div></div>
@@ -1095,145 +1531,223 @@ the solution of the problem:</p>
 
 <p>[3]  P.L. Lions, On the existence of positive solutions of semilinear elliptic equations, SIAM Rev. 24 (1982), no. 4, 441–467.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:&lt;/p&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;Reaction-diffusion equations appear frequently in natural phenomena such as:&lt;/p&gt;
 </code></pre></div></div>
+<ul>
+  <li>Population dynamics and invasion of species (see [1]).</li>
+  <li>Neuroscience, where models for neuronal impulses exhibit traveling waves (see [2]).</li>
+  <li>Chemical Reactions: modeling the evolution of concentrations of chemicals (see [3]).</li>
+  <li>In evolutionary game theory  (see [4, 5]).</li>
+  <li>Magnetic systems in material science and their phase transitions (see [6]).</li>
+  <li>Linguistics, we refer to [7] where the authors consider reaction-diffusion for analyzing language shift by means of a traveling wave.</li>
+</ul>
+
+<p>In the majority of the systems mentioned above, the state $u$ of an equation of the type</p>
+
+<script type="math/tex; mode=display">u_t-\Delta u=f(u)</script>
+
+<p>represents a population, concentration or proportion. For this reason, any model intending to predict the behavior of such quantity must fulfill a maximum principle [8].</p>
+
+<p>In this group of tutorials, our aim is to explain the phenomenology arising when considering a control problem in the contexts mentioned above.</p>
+
+<p>In general, the controllability of parabolic equations has been widely studied (for instance [9,10,11]). However, in this literature, the requirement that the trajectory has to be positive or between prescribed bounds was not a concern.</p>
+
+<p>In Figure 1 one can see a boundary control of the semilinear equation</p>
 
 <script type="math/tex; mode=display">\begin{cases}
-u_t-\Delta u=u(1-u)(u-\theta)\quad (x,t)\in \Omega\times(0,T)\\
-u=a(x,t)\qquad \qquad\qquad\qquad(x,t)\in \partial\Omega\times(0,T)\\
- 0\leq u(x,0)\leq 1
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(-L,t)=u(L,t)=a(t)\\
+u(t=0,x)=0
 \end{cases}</script>
 
-<p>This a key argument for ensuring controllability that has been studied in [2,3,4,5].</p>
-
-<h3 id="stair-case-method">Stair-case method</h3>
-<p>The stair-case method (see [1]) guarantees the following:</p>
-
-<p>If we have an admissible continuous path of steady states, for any initial datum in the path, any target function in the path and for $T&gt;0$ sufficiently large, there exists a function $a$ such that drives the system from the initial datum to the target fulfilling the state-constraints along the trajectory.</p>
-
-<h3 id="extension-to-ball-and-the-phase-plane-analysis">Extension to ball, and the phase-plane analysis</h3>
-
-<p>We will restrict ourselves to the construction of paths that connect the steady state $w\equiv 0$ with the steady state $w\equiv \theta$. For doing such example with our model bistable equation.</p>
-
-<p>In order to construct the paths we will use phase-plane techniques for which we use radial coordinates. Our original domain might not be a ball, for this reason we extend it to a ball and firstly construct the path there.</p>
-
-<center>
-<img width="35%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/ballE-1.png" />
-</center>
-<center><b>Figure 1.</b> Extension of our domain to a ball.</center>
-
-<p>Remind that the important issue is to be able to guarantee that for every domain $w\equiv0$ and $w\equiv\theta$ are connected in an admissable way and this is seen in the phase plane representation of the elliptic equation.</p>
-
-<script type="math/tex; mode=display">\begin{cases}
--u_{rr}-\frac{N-1}{r}u_r=u(1-u)(u-\theta)\\
-u(0)=a\\
- u_r(0)=0
-\end{cases}</script>
-
-<p>Now, considering the energy
-<script type="math/tex">E(u,v)=\frac{1}{2}v^2+F(u)</script></p>
-
-<p>where $F(u)=\int_0^u f(s)ds$, one can see that the radial ODE dissipates.</p>
-
-<p>Define the following region:</p>
-
-<script type="math/tex; mode=display">D:=\{(u,v)\in\mathbb{R}^2 \quad \text{such that}\quad E(u,v)\leq 0\}</script>
-
-<p>Let $\theta_1$ be defined as:</p>
-
-<script type="math/tex; mode=display">\theta_1=\min_{s>0}\{F(s)=0\}</script>
-
-<p>Note that the region defined by</p>
-
-<script type="math/tex; mode=display">\begin{equation*}
- \Gamma:=\left\{(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}\right\}
-\end{equation*}</script>
-
-<p>Note that $\Gamma\subset D$.</p>
-
-<p>Take $(u_0,0)\in \Gamma$, then the solution of radial equation with initial
-datum $(u_0,0)$ satisfies:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\frac{d}{dr}E(u,v)=vv_r+f(u)v=-\frac{N-1}{r}v^2<0 %]]></script>
-
-<p>So $(u,v)\in\Gamma$ for all $r&gt;0$.</p>
-
-<p>We have that the blue line (the border of $\Gamma$) in the following figure determines a positively invariant region.</p>
-
-<p>Then, making $a$ change continuously from $0$ to $\theta$ we generate a continuous path (by the Gromwall inequality) that is admissible since the invariant region $\Gamma$ is inside the admissible set.</p>
-
-<center>
-<img width="60%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/ContinuousPathinthePhaseSpace-1.png" />
-</center>
-<center><b>Figure 2.</b> Invariant region and construction of the path.</center>
-
-<h2 id="animation-of-the-path">Animation of the path</h2>
-
-<center>
-<video width="80%" controls="">
-  <source src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/video.mp4" type="video/mp4" />
-</video>
-</center>
-<center><b>Figure 3.</b> Path of steady states.</center>
-
-<p>If our domain is not a ball we restrict our path to the original domain to obtain the desired path.</p>
-
-<h2 id="other-features">Other features</h2>
-
-<p>General existence of admisible paths is not true due to the comparison principle. Non-trivial steady states can exist that block any possibility to control (See <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006">this blog entry </a>).</p>
-
-<p>Here we restrict ourselves in the one dimensional case. In the following figure one can see how can we connect the steady state $w\equiv 0$ with the first nontrivial solution with boundary value $0$.</p>
-
-<center>
-
-<table>
-    <tr>
-        <th>
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp-1.png" />
-        </th>
-         <th>
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Lcomp2-1.png" />
-                    </th>       
-    </tr>
-</table>
-</center>
-
-<center><b>Figure 4.</b> Path of steady states.</center>
-
-<p>However, since this path touches the boundary of the admissible set controllability cannot be guaranteed due to the comparison principle.</p>
-
-<p>Another important remark to be mentioned is that if we forget about the state constraints, more paths can be generated, provided that the ODE representation of the elliptic equation does not blow up. The following figure is an example of a path connecting $w\equiv 0$ with $w\equiv 1$ that violates the constraints:</p>
+<p>with $a$ being the control and the target function $v\equiv 0.33$.</p>
 
 <center>
 <table>
     <tr>
         <th>
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/completepath02L12-1.png" />
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0007/figures/violation.png" width="100%" />
         </th>
          <th>
-            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0005/figures/Completepath01L12-1.png" />
-                    </th>       
+            <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0007/figures/violation2.png" width="100%" />
+        </th>       
     </tr>
 </table>
+
 </center>
-<center><b>Figure 5.</b> Path of steady states violating constraints.</center>
+<center>Control from $u(0)\equiv 0$ to $u(T)\equiv 0.33$.</center>
+
+<p>This model models the evolution of a proportion, and we observe that the control does not preserve the positivity of the state neither the meaningful upper bound.</p>
+
+<p>From the application point of view of several of the applications mentioned, any control action proposed must fulfill that the associated trajectory has meaning.</p>
+
+<p>The ideas exposed in this tutorial group are the following:</p>
+
+<div class="container">
+  <div class="col-md-10 col-md-offset-0">
+    
+    <ul style="padding-inline-start: 0px">
+    
+        <li>The presence of state-constraints can create intrinsic obstructions for achieving the controllability. This is due to the emergence on non-trivial solutions and the comparison principle. The topic is treated in this blog.</li>
+        <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0006/figures/ellipticL20DEF-1.png" />
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp03/P0006" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Control of reaction-diffusion under state constraints - Barriers </h4>
+    </a>
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      This tutorial is part of the control under state constraints. We will show how obstructions to the state constraint controllability can appear.
+    </div>
+    <div class="post-preview-authors ellipsis-one-line">
+      Author:
+      
+      
+        
+          <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+      
+      - 31 March 2020
+    </div>
+  </div>
+</div>
+
+    
+        <li>In order to prove the existence of controls one can use the stair-case method. This method relies on the construction of paths of steady-states that the controlled trajectory can follow. One can find more information about these constructions in this blog.</li>
+        <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog//assets/imgs/WP03/P0005/figures/completepath02L12-1.png" />
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp03/P0005" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Control of reaction-diffusion under state constraints - Application of the staircase method </h4>
+    </a>
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation
+    </div>
+    <div class="post-preview-authors ellipsis-one-line">
+      Author:
+      
+      
+        
+          <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+      
+      - 03 April 2020
+    </div>
+  </div>
+</div>
+
+    
+        <li>In contrast to the unconstrained case, the presence of constraints induces a minimal controllability time. However, the construction done with the path of steady-states is only a way to control and it requires typically a large time, much larger than the minimal one.  In this blog post, we explore different ways to control the system, a minimal controllability time control, a quasistatic control and we explore numerically the effect of the presence of barriers in an optimal control framework.</li>
+        <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-4.png" />
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp03/P0009" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Control of reaction-diffusion under state constraints - Numerical exploration of controls </h4>
+    </a>
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      This tutorial is part of the control under state constraints. We will simulate different control strategies to the same target by minimizing different functionals.
+    </div>
+    <div class="post-preview-authors ellipsis-one-line">
+      Author:
+      
+      
+        
+          <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+      
+      - 04 April 2020
+    </div>
+  </div>
+</div>
+
+    
+        <li>Many models in population dynamics take care about spatial heterogeneity, this can lead for example to new types obstructions. In the blog, we explain the main features and the influence of an heterogeneous drift in a bistable equation called gene-flow. The heterogeneity in the drift comes from an approximation of a system of a system of two equations with an heterogeneous environment.</li>
+        <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/staircase_perturbed.png" />
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp03/P0008" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow. </h4>
+    </a>
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      This tutorial is part of the control under state constraints. We will present the main features regarding the controllability of bistable reaction-diffusion equations with heterogeneous drifts.
+    </div>
+    <div class="post-preview-authors ellipsis-one-line">
+      Author:
+      
+      
+        
+          <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+      
+      - 19 April 2020
+    </div>
+  </div>
+</div>
+
+    
+    </ul>
+  </div>
+</div>
 
 <h2 id="references">References:</h2>
 
-<p>[1] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
+<p>[1] A. Kolmogorov, Étude de l’équation de la diffusion avec croissance de la quantité de matière et son
+application à un problème biologique, Bull. Univ. Moskow, Ser. Internat., Sec. A 1 (1937) 1–25.</p>
+
+<p>[2] J. Evans, Nerve axon equations 4: the stable and unstable impulse, Indiana Univ. Math. J. 24 (12)
+(1975) 1169–1190.</p>
+
+<p>[3] B. Perthame, Parabolic equations in biology : growth, reaction, movement and diffusion, Lecture
+notes on mathematical modelling in the life sciences, 2015.</p>
+
+<p>[4] Travelling waves for games in economics and biology, Nonlinear Analysis: Theory, Methods and
+Applications 30 (2) (1997) 1235 – 1244, proceedings of the Second World Congress of Nonlinear
+Analysts.</p>
+
+<p>[5] V. Hutson, K. Mischaikow, G. T. Vickers, Multiple travelling waves in evolutionary game dynamics,
+Japan Journal of Industrial and Applied Mathematics 17 (3) (2000) 341.</p>
+
+<p>[6] A. De Masi, P. Ferrari, J. Lebowitz, Reaction diffusion equations for interacting particle systems, J.
+Stat. Phys. 44 (3-4) (1986) 589–644.</p>
+
+<p>[7] K. Prochazka, G. Vogl, Quantifying the driving factors for language shift in a bilingual region 114 (17) (2017) 4365–4369.</p>
+
+<p>[8] M.H. Protter and H.F. Weinberger, Maximum principles in differential equations, Springer Science &amp; Business Media, 2012.</p>
+
+<p>[9] G. Lebeau, L. Robbiano, Contrôle exact de léquation de la chaleur, Communications in Partial
+Differential Equations 20 (1-2) (1995) 335–356.</p>
+
+<p>[10] E. Fernández-Cara and E. Zuazua, Null and approximate controllability for weakly blowing up semilinear heat equations, Ann. Inst. H. Poincaré Anal. Non Linéaire 17 (2000), no. 5, 583 – 616.</p>
+
+<p>[11] A.V. Fursikov and O.Y. Imanuvilov, Controllability of evolution equations, no. 34, Seoul National University, 1996.</p>
+
+<p>[12] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+
+<p>[13]  P.L. Lions, On the existence of positive solutions of semilinear elliptic equations, SIAM Rev. 24 (1982), no. 4, 441–467.</p>
+
+<p>[14] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
 Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.</p>
 
-<p>[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
+<p>[15] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
 tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.</p>
 
-<p>[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
-635
-tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.</p>
+<p>[16] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
+635 tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.</p>
 
-<p>[4]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case.   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+<p>[17]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case (2019).   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.</p>
 
-<p>[5] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.</p>
+<p>[18] I. Mazari, D. Ruiz-Balet, and E. Zuazua, Constrained control of bistable reaction-diffusion equations: Gene-flow and spatially heterogeneous models, preprint: https://hal.archives-ouvertes.fr/hal-02373668/document (2019).</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;In this tutorial we will apply the DyCon toolbox to find a control to the semi-discrete semi-linear heat equation.&lt;/p&gt;
 </code></pre></div></div>
