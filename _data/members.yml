@@ -1,16 +1,23 @@
 # Members
+IdrissM:
+  name: Idriss Mazari
+  description: Idriss Mazari is a visiting member of the DyCon team, is currently a PhD student of Yannick Privat and Grégoire Nadin in Paris Sorbonne Université. His works focus on shape and parametric optimization for reaction-diffusion equations. His main focus is the understanding of the influence of spatial heterogeneity on population dynamics.He mainly studies existence theorems for non-linear shape optimization problems, or quantitative results regarding spectral optimization. For instance, he investigated the maximal population size problem or the optimal survival of species problem.
+  avatar: https://cmc.deusto.eus/wp-content/uploads/2019/11/team-idris-mazari-26nov2019-_500x500-300x300.jpg
 JanH:
   name: Jan Heiland
   description: In my research, I consider control systems and how they can be realized in numerical simulations. Particularly, I’m interested in infinite dimensional and differential-algebraic systems like the incompressible Navier-Stokes equation. In view of numerical implementations, I also investigate model reduction techniques for control systems.
-
+  avatar: https://cmc.deusto.eus/wp-content/uploads/2020/02/ccm-team-jan-heiland-500x500-1-300x300.jpg
 AlexandreS:
   name: Alexandre Francisco
   description: Alexandre Santos Francisco holds a degree in Mechanical Engineering and a PhD degree in Nuclear Engineering. He is Professor of Fluid Mechanics at the Universidade Federal Fluminense in Brazil. On the next two months he will be a Visiting Professor at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (FAU, University of Deusto and Universidad Autónoma de Madrid). His main research interests are porous media, computational mathematics, and computational fluid mechanics.
+  avatar: https://cmc.deusto.eus/wp-content/uploads/2019/12/team-alexandre-santosFrancisco-11dic2019_500x500-300x300.jpg
 JorgeM:
   name: Jorge Mallo
+  avatar: https://cmc.deusto.eus/wp-content/uploads/2019/11/team-jorge-mallo-26nov2019_500x500-300x300.jpg
 CarlosE:
   name: Carlos Esteve
   description: '<p><a href="https://cmc.deusto.eus/Carlos-Esteve-Yague/"><strong>Carlos Esteve Yagüe</strong></a> holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (UAM and DeustoTech). He earned his PhD in analysis of nonlinear parabolic partial differential equations under the supervision of Prof. Philippe Souplet (Université Paris 13). His main research interests are singularity formation for parabolic PDE, Hamilton-Jacobi equations, optimal control theory and differential games.</p>'
+  avatar: https://cmc.deusto.eus/wp-content/uploads/2019/11/team-carlos-esteve-yague-26nov2019_500x500.jpg
 NoboruS:
   name: Noboru Sakamoto
   description: <a name="NoburuSakamoto"></a>Noboru Sakamoto</strong> received the B.Sc. degree in mathematics from Hokkaido University and M.Sc. and Ph.D. degrees in aerospace engineering from Nagoya University, in 1991, 1993, and 1996, respectively. From 1996 until 2015, he held positions in the Graduate School of Engineering in Nagoya University. Currently, he is a Professor with the Science and Engineering of <a href="http;//www.nanzan-u.ac.jp/English/index.html" target="_blank">Nanzan University</a> in Nagoya, Japan. He has held a visiting research position at University of Groningen, The Netherlands, in 2005 and 2006. He received the SICE Best Paper Prizes in 1997, 2006, 2008 and 2011 and SICE Kimura Prize in 2016. His research interests include nonlinear control theory, control of chaotic systems, dynamical system theory and control applications for aerospace engineering.

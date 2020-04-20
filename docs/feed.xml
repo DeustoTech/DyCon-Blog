@@ -5,13 +5,21 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 20 Apr 2020 18:28:55 +0200</pubDate>
-    <lastBuildDate>Mon, 20 Apr 2020 18:28:55 +0200</lastBuildDate>
+    <pubDate>Mon, 20 Apr 2020 20:15:08 +0200</pubDate>
+    <lastBuildDate>Mon, 20 Apr 2020 20:15:08 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
         <title>Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow.</title>
-        <description>Equation and drift effect
+        <description>
+    
+    Control of reaction-diffusion
+    This is a post in a collection of several on control of reaction-diffusion under state constraints
+    See more ...
+    
+
+
+Equation and drift effect
 
 The equation under concern is:
 
@@ -144,7 +152,15 @@ tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
     
       <item>
         <title>Control of reaction-diffusion under state constraints - Numerical exploration of controls</title>
-        <description>In this tutorial we will observe different phenomena that arise in the control with state-constraints and moreover we will observe different ways to approach a desired target.
+        <description>
+    
+    Control of reaction-diffusion
+    This is a post in a collection of several on control of reaction-diffusion under state constraints
+    See more ...
+    
+
+
+In this tutorial we will observe different phenomena that arise in the control with state-constraints and moreover we will observe different ways to approach a desired target.
 
 Observation of several phenomena
 
@@ -676,7 +692,15 @@ References
     
       <item>
         <title>Control of reaction-diffusion under state constraints - Application of the staircase method</title>
-        <description>In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:
+        <description>
+    
+    Control of reaction-diffusion
+    This is a post in a collection of several on control of reaction-diffusion under state constraints
+    See more ...
+    
+
+
+In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:
 
 
 
@@ -1249,7 +1273,15 @@ Figure 1. The different colors represent the dynamic system under different para
     
       <item>
         <title>Control of reaction-diffusion under state constraints - Barriers</title>
-        <description>This tutorial is focused on the understanding of of the problem
+        <description>
+    
+    Control of reaction-diffusion
+    This is a post in a collection of several on control of reaction-diffusion under state constraints
+    See more ...
+    
+
+
+This tutorial is focused on the understanding of of the problem
 
 
 
@@ -1411,18 +1443,26 @@ The ideas exposed in this tutorial group are the following:
     
        Control of reaction-diffusion under state constraints - Barriers 
     
+
     
       This tutorial is part of the control under state constraints. We will show how obstructions to the state constraint controllability can appear.
     
+
     
-      Author:
-      
-      
         
-          Domenec Ruiz
-      
-      - 31 March 2020
+          Author:
+          
+          
+            
+              Domenec Ruiz
+          
+          - 31 March 2020
+        
+        
+        MATLAB-CasADi
     
+    
+
   
 
 
@@ -1438,18 +1478,26 @@ The ideas exposed in this tutorial group are the following:
     
        Control of reaction-diffusion under state constraints - Application of the staircase method 
     
+
     
       In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation
     
+
     
-      Author:
-      
-      
         
-          Domenec Ruiz
-      
-      - 03 April 2020
+          Author:
+          
+          
+            
+              Domenec Ruiz
+          
+          - 03 April 2020
+        
+        
+        MATLAB-CasADi
     
+    
+
   
 
 
@@ -1465,18 +1513,26 @@ The ideas exposed in this tutorial group are the following:
     
        Control of reaction-diffusion under state constraints - Numerical exploration of controls 
     
+
     
       This tutorial is part of the control under state constraints. We will simulate different control strategies to the same target by minimizing different functionals.
     
+
     
-      Author:
-      
-      
         
-          Domenec Ruiz
-      
-      - 04 April 2020
+          Author:
+          
+          
+            
+              Domenec Ruiz
+          
+          - 04 April 2020
+        
+        
+        MATLAB-CasADi
     
+    
+
   
 
 
@@ -1492,18 +1548,29 @@ The ideas exposed in this tutorial group are the following:
     
        Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow. 
     
+
     
       This tutorial is part of the control under state constraints. We will present the main features regarding the controllability of bistable reaction-diffusion equations with heterogeneous drifts.
     
+
     
-      Author:
-      
-      
         
-          Domenec Ruiz
-      
-      - 19 April 2020
+          Authors:
+          
+          
+            
+              Domenec Ruiz,
+          
+            
+              Idriss Mazari
+          
+          - 19 April 2020
+        
+        
+        MATLAB-CasADi
     
+    
+
   
 
 

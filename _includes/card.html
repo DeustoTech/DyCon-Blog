@@ -10,17 +10,25 @@
     <a href="{{ include.url | prepend: site.baseurl }}" class="display-block">
       <h4 class="post-preview-title ellipsis-two-lines"> {{ include.title }} </h4>
     </a>
+
     <div class="post-preview-subtitle ellipsis-two-lines">
       {{ include.description }}
     </div>
-    <div class="post-preview-authors ellipsis-one-line">
-      Author{% if include.author.size > 1 %}s{% endif %}:
-      {% assign counter = 0 %}
-      {% for aut in include.author %}
-        {% assign counter = counter | plus: 1 %}
-          <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>{% unless include.author.size == counter %},{% endunless %}
-      {% endfor %}
-      - {{include.date|date_to_long_string}}
+
+    <div style="display: flex;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author{% if include.author.size > 1 %}s{% endif %}:
+          {% assign counter = 0 %}
+          {% for aut in include.author %}
+            {% assign counter = counter | plus: 1 %}
+              <a href="{{site.url}}{{site.baseurl}}/author/{{aut}}">{{site.data.members[aut].name}}</a>{% unless include.author.size == counter %},{% endunless %}
+          {% endfor %}
+          - {{include.date|date_to_long_string}}
+        </div>
+        {%assign cod = site.data.Code[include.code] %}
+        <button onclick="window.location.href='{{site.url}}{{site.baseurl}}/projects/search.bycode'" type="button" class="btn {{cod.color}} btn-sm" style="margin-left: auto;">{{cod.name}}</button>
+    
     </div>
+
   </div>
 </div>

@@ -6,7 +6,7 @@
       "categories"      : ["tutorial", "WP03"],
       "url"             : "/tutorial/wp03/P0008",
       "date"            : "2020-04-19",
-      "author"          : ["DomenecR"],
+      "author"          : ["DomenecR","IdrissM"],
       "description"     : "This tutorial is part of the control under state constraints. We will present the main features regarding the controllability of bistable reaction-diffusion equations with heterogeneous drifts.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0008/figures/staircase_perturbed.png"
     } ,

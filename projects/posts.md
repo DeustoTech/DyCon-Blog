@@ -27,8 +27,11 @@ description: Here you will find the whole list of guides and tutorials developed
         description = post.description
         avatar      = post.avatar
         date        = post.date
+        code        = post.code
       %}
     {% endfor %}
-  <h3 class="see-more"><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more of {{topic[1].acr}}...</a></h3>
+    <div style="margin-left:auto">
+      <h3 class="see-more" ><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more of {{topic[1].acr}}...</a></h3>
+    </div>
   {% endfor %}
 {:/nomarkdown}
