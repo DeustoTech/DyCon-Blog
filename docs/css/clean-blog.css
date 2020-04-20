@@ -219,6 +219,7 @@ hr.small {
   background: white;
 }
 .post-preview-authors {
+  padding-top: 5px;
   color: grey;
 }
 .post-avatar,
@@ -301,8 +302,7 @@ hr.small {
   .post-preview-authors {
     height: 15px;
     font-size: .65em;
-    top: 0;
-    padding-top: 1px;
+    top: 10px;
   }
   .see-more {
     font-size: 1.1em;
@@ -592,13 +592,27 @@ form .row:first-child .floating-label-form-group {
 }
 .btn {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 7px;
+  font-weight: 800;
   letter-spacing: 1px;
   border-radius: 1;
   padding: 5px 15px;
   border-color: #000000
 }
+
+@media only screen and (min-width: 768px) {
+  .btn {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 1;
+    padding: 5px 15px;
+    border-color: #000000
+  }
+}
+
+
 .btn-lg {
   font-size: 16px;
   padding: 25px 35px;
