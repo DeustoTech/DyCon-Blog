@@ -1,0 +1,28 @@
+.gsc-webResult .gsc-result {
+    margin: 20px !important;
+    padding: .5em 0;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.gs-webResult div.gs-visibleUrl-long, .gs-promotion div.gs-visibleUrl-long {
+    display: none !important;
+}
+
+.cse .gsc-control-cse, .gsc-control-cse {
+    font-family: 'Raleway', sans-serif !important;
+    background-color: #dae0e500 !important;
+    border: 0px solid #dae0e5 !important;
+}
+
+.gsc-control-cse .gs-spelling, .gsc-control-cse .gs-result .gs-title, .gsc-control-cse .gs-result .gs-title * {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #1c2fc2 !important;
+}
+
+
+.gsc-preview-reviews, .gsc-control-cse .gs-snippet, .gsc-control-cse .gs-promotion em, .gsc-control-cse .gs-snippet, .gsc-control-cse .gs-promotion em {
+    color: #333;
+    font-family: 'Raleway', sans-serif !important;
+    font-size: 14px !important;
+}

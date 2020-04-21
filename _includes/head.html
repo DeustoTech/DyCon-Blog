@@ -11,6 +11,7 @@
     {% endif %}
   </title>
 
+
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
   <!-- Bootstrap Core CSS -->
@@ -25,7 +26,10 @@
   <!-- Pygments Github CSS -->
   <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl | prepend: site.url }}">
 
+  <link rel="stylesheet" href="{{ "/css/google-search.css" | prepend: site.baseurl | prepend: site.url }}">
 
+
+  
   <script src="{{ "/lib/js/libgif.js " | prepend: site.baseurl | prepend: site.url }}"></script>
   <script src="{{ "/lib/js/rubbable.js " | prepend: site.baseurl | prepend: site.url }}"></script>
 

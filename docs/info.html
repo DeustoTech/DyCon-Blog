@@ -12,6 +12,11 @@
     
   </title>
 
+  <script>
+    document.cookie = 'same-site-cookie=foo; SameSite=Lax';
+    document.cookie = 'cross-site-cookie=bar; SameSite=None; Secure';
+    </script>
+
   <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/info">
 
   <!-- Bootstrap Core CSS -->
@@ -26,7 +31,10 @@
   <!-- Pygments Github CSS -->
   <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
 
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
 
+
+  
   <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
   <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
 
@@ -318,8 +326,10 @@
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
                 </li>
+                
             </ul>
-        </div>
+
+        
         <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->
@@ -348,38 +358,7 @@
       <h1> Upcoming posts </h1>
       <div id="table_div_upc"></div>
 
-      <!-- <h2>Search by Keyword</h2>
-<div class="container">
-  <div id="search-container" class="search-container">
-  <input type="text" class="search-input" id="search-input" placeholder="search...">
-  </div>
-  <ul id="results-container"></ul>
-  <script src="https://deustotech.github.io/DyCon-Blog/js/simple-jekyll-search.min.js"></script>
-  <script>
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    searchResultTemplate: '<div class="post-preview shadowbox"><div class="post-avatar">    <img src="{avatar}"></div><div class="post-info">    <a href="/DyCon-Blog{url}" class="display-block"><h4 class="post-preview-title ellipsis-two-lines"> {title} </h4>    </a>    <div class="post-preview-subtitle ellipsis-two-lines">{description}</div></div></div>',
-    resultsContainer: document.getElementById('results-container'),
-    json: 'https://deustotech.github.io/DyCon-Blog/search.json',
-  })
-  </script>
-</div> -->
-
-<script src="https://unpkg.com/simple-jekyll-search@1.5.0/dest/simple-jekyll-search.min.js"></script>
-
-<p><input type="text" id="search-input" placeholder="search posts.." />
-<br /></p>
-<div id="results-container"></div>
-<script>
-SimpleJekyllSearch({
-  search-input: document.getElementById('search-input'),
-  resultsContainer: document.getElementById('results-container'),
-  json: 'https://deustotech.github.io/DyCon-Blog/search.json',
-  searchResultTemplate: '<li><a href="https://deustotech.github.io{url}">{title}</a></li>'
-})
-</script>
-
-<h1>Posts by month</h1>
+      <h1>Posts by month</h1>
 
 <h2>April-2020</h2>
 
@@ -916,7 +895,7 @@ Numerical computation of a stabilizing control
 <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
        - 28-October-2018</p>
 <div class="ellipsis-two-lines">
-Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model choosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.
+Summary of example objective The goal of this tutorial is to use LQR theory applied to a model of collective behavior. The model chosen shares a formal structure with the semidiscretization of the semilinear 1d heat equation.
 </div>
 <hr />
 

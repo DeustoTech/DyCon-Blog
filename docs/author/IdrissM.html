@@ -12,6 +12,11 @@
     
   </title>
 
+  <script>
+    document.cookie = 'same-site-cookie=foo; SameSite=Lax';
+    document.cookie = 'cross-site-cookie=bar; SameSite=None; Secure';
+    </script>
+
   <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/author/IdrissM">
 
   <!-- Bootstrap Core CSS -->
@@ -26,7 +31,10 @@
   <!-- Pygments Github CSS -->
   <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
 
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
 
+
+  
   <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
   <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
 
@@ -194,8 +202,10 @@
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
                 </li>
+                
             </ul>
-        </div>
+
+        
         <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->

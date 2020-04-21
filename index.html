@@ -23,8 +23,17 @@ layout: default
     </div>
   </div>
 </header>
+
 <div class="container">
-  <div class="col-md-8 col-md-offset-2">
+<div class="col-md-10 col-md-offset-1">
+
+<script async src="https://cse.google.com/cse.js?cx=013800383795076514665:hik5upyg2yw"></script>
+<div class="gcse-search"></div>
+</div>
+</div>
+
+<div class="container">
+  <div class="col-md-10 col-md-offset-1">
     <h1 class="h1-title">Recent Posts</h1>
     {% assign qposts = site.posts | where:"layout","tutorial"|sort |reverse %}
     {% for post in qposts limit: 15 %}
