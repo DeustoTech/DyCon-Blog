@@ -10,7 +10,7 @@
 
 .cse .gsc-control-cse, .gsc-control-cse {
     font-family: 'Raleway', sans-serif !important;
-    background-color: #dae0e500 !important;
+    background:none !important;
     border: 0px solid #dae0e5 !important;
 }
 
@@ -22,7 +22,22 @@
 
 
 .gsc-preview-reviews, .gsc-control-cse .gs-snippet, .gsc-control-cse .gs-promotion em, .gsc-control-cse .gs-snippet, .gsc-control-cse .gs-promotion em {
-    color: #333;
+    color:#404040;
     font-family: 'Raleway', sans-serif !important;
     font-size: 14px !important;
+}
+
+
+.cse form.gsc-search-box, form.gsc-search-box {
+    background: #52834f url(/cse/images/look/cse_theme_shiny_form_bg.png) repeat-x top left;
+    border: 1px solid #52834f;
+    border-radius: 9px !important; 
+    width: 100%;
+    margin: 0 0 2% 0;
+    box-shadow: 0 1px 2px #999;
+    display: block;
+}
+
+.gsc-expansionArea {
+    background:none !important;
 }

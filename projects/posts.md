@@ -16,7 +16,7 @@ description: Here you will find the whole list of guides and tutorials developed
       <h2 class="topic-title dark-grey">{{topic[1].name}}</h2>
     {% endif %}
     </a>  
-    {% for post in qposts limit:3 %}
+    {% for post in qposts limit:2 %}
       {% unless post %}
         {% continue %}
       {% endunless %}
@@ -30,8 +30,10 @@ description: Here you will find the whole list of guides and tutorials developed
         code        = post.code
       %}
     {% endfor %}
-    <div style="margin-left:auto">
-      <h3 class="see-more" ><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more of {{topic[1].acr}}...</a></h3>
+    <div>
+      <h3 class="see-more" style="padding-left: 85%;" ><a href="{{site.url}}{{site.baseurl}}/workpackage/{{topic[0]}}">See more...</a></h3>
     </div>
+    <hr>
+    <hr>
   {% endfor %}
 {:/nomarkdown}
