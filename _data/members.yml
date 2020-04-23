@@ -18,6 +18,8 @@ CarlosE:
   name: Carlos Esteve
   description: '<p><a href="https://cmc.deusto.eus/Carlos-Esteve-Yague/"><strong>Carlos Esteve Yagüe</strong></a> holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (UAM and DeustoTech). He earned his PhD in analysis of nonlinear parabolic partial differential equations under the supervision of Prof. Philippe Souplet (Université Paris 13). His main research interests are singularity formation for parabolic PDE, Hamilton-Jacobi equations, optimal control theory and differential games.</p>'
   avatar: https://cmc.deusto.eus/wp-content/uploads/2019/11/team-carlos-esteve-yague-26nov2019_500x500.jpg
+  active: "true"
+
 NoboruS:
   name: Noboru Sakamoto
   description: <a name="NoburuSakamoto"></a>Noboru Sakamoto</strong> received the B.Sc. degree in mathematics from Hokkaido University and M.Sc. and Ph.D. degrees in aerospace engineering from Nagoya University, in 1991, 1993, and 1996, respectively. From 1996 until 2015, he held positions in the Graduate School of Engineering in Nagoya University. Currently, he is a Professor with the Science and Engineering of <a href="http;//www.nanzan-u.ac.jp/English/index.html" target="_blank">Nanzan University</a> in Nagoya, Japan. He has held a visiting research position at University of Groningen, The Netherlands, in 2005 and 2006. He received the SICE Best Paper Prizes in 1997, 2006, 2008 and 2011 and SICE Kimura Prize in 2016. His research interests include nonlinear control theory, control of chaotic systems, dynamical system theory and control applications for aerospace engineering.
@@ -196,12 +198,12 @@ DebayanM:
   name: Debayan Maity
   avatar: https://cmc.deusto.eus/wp-content/uploads/2019/04/Debayan.jpg
   description: <p><strong>Debayan Maity</strong> holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of <a href="http://paginaspersonales.deusto.es/enrique.zuazua/" target="_blank">Prof. Enrique Zuazua</a> (UAM and DeustoTech). Before that, he was a Post-Doctoral researcher at the Institut de Mathématiques de BordeauxI under the supervision of Prof. Marius Tucsnak. His main research interests are the fluid-solid interaction problems and the control of partial differential equations, namely fluid motions, population dynamics models, etc.</p>
-  active: "true"
+  active: "false"
 
 ThibaultL:
   avatar: https://cmc.deusto.eus/wp-content/uploads/2019/04/thibault_photo.png
   name: Liard Thibault
   description: <strong>Thibault Liard</strong> holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of <a href="http://paginaspersonales.deusto.es/enrique.zuazua/" target="_blank">Prof. Enrique Zuazua</a> (UAM and DeustoTech). He earned his PhD in observation and control for some conservative systems under the supervision of Alain Haraux and Yannick Privat. His previous Postdoctoral positions were focused on the study of strongly coupled PDE/ODE systems where the PDE consists of a system of conservation laws and the ODE represents the trajectory of particles. Therefore, his main research interests are control theory, calculus of variations, hybrid PDE/ODE, scalar conservation laws with constraints and Wave-front tracking methods.</p>
-  active: "true"
+  active: "false"
 
 
