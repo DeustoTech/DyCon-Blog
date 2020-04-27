@@ -352,16 +352,6 @@
     } ,
   
     {
-      "title"           : "Stability analysis of Power Electronic Converters Connected to AC Grids",
-      "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/P0007",
-      "date"            : "2018-11-15",
-      "author"          : ["UmbertoB","JesusO"],
-      "description"     : "Stability analysis of a simplified model for Power Electronic Converters Connected to AC Grids in dependence on the characteristical physical parameters.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0007/converters.png"
-    } ,
-  
-    {
       "title"           : "The control on the Kuramoto model by handling one oscillator",
       "categories"      : ["tutorial", "WP06"],
       "url"             : "/tutorial/wp06/P0004",
@@ -422,16 +412,6 @@
     } ,
   
     {
-      "title"           : "Synchronized Oscillators",
-      "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/P0006",
-      "date"            : "2018-10-19",
-      "author"          : ["AnaN","JesusO","UmbertoB"],
-      "description"     : "Sincronization of coupled oscillator described by the Kuramoto model, using the Stochastic Conjugate Gradient Method",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/copiaRM_02.png"
-    } ,
-  
-    {
       "title"           : "Optimal Shape Design for Poisson Equation in OpenFOAM",
       "categories"      : ["tutorial", "OT01"],
       "url"             : "/tutorial/ot01/P0006",
@@ -439,16 +419,6 @@
       "author"          : ["JoseV"],
       "description"     : "Optimal Control in OpenFOAM",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT01/P0006/avatar.PNG"
-    } ,
-  
-    {
-      "title"           : "Rays propagation of a fractional Schrodinger Equation",
-      "categories"      : ["tutorial", "WP99"],
-      "url"             : "/tutorial/wp99/P0004",
-      "date"            : "2018-07-21",
-      "author"          : ["UmbertoB"],
-      "description"     : "Solution of a fractional Schordinger equation starting from a concentrated and highly oscillatory initial datum, and display of its propagation properties along the rays of geometric optics",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0004/wave.gif"
     } ,
   
     {
@@ -549,16 +519,6 @@
       "author"          : ["CarlosC","MiguelC","SorinM","ArnaudM","MihaelaN","EnriqueZ"],
       "description"     : "A Matlab guide for the numerical approximation of the exact control and stabilization of the wave equation.",
       "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2018/01/wavecontrol.jpg"
-    } ,
-  
-    {
-      "title"           : "Finite element approximation of the 1-D fractional Poisson equation",
-      "categories"      : ["tutorial", "WP05"],
-      "url"             : "/tutorial/wp05/P0002",
-      "date"            : "2017-12-05",
-      "author"          : ["UmbertoB","VictorH"],
-      "description"     : "A finite element approximation of the one-dimensional fractional Poisson equation with applications to numerical control",
-      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/07/PoissonEqNumericsFeatImg.jpg"
     } ,
   
     {
