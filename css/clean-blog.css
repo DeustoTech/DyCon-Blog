@@ -232,6 +232,12 @@ hr.small {
 .post-avatar > img {
   border-radius: 3px;
 }
+
+
+.index-img {
+    width: 45%;
+}
+
 @media only screen and (max-width: 470px) {
   .post-avatar-wp {
     width: 23%;
@@ -241,6 +247,7 @@ hr.small {
   }
   .index-img {
     padding-top: 20px;
+    width: 75%;
   }
   .post-info {
     width: 74%;
@@ -438,6 +445,12 @@ hr.small {
   display: block;
   font-weight: 300;
   margin: 20px 0 0;
+}
+
+@media only screen and (max-width: 768px){
+  .no-show {
+    display: none !important;
+  }
 }
 
 .post-heading {
