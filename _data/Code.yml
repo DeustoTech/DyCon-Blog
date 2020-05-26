@@ -15,6 +15,10 @@ OpenFOAM:
   name: Open Foam
   color: btn btn-secondary
 
-python:
+fenics:
   name: fenics
+  color: btn btn-secondary
+
+python: 
+  name: python
   color: btn btn-secondary
