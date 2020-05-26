@@ -5,9 +5,362 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 27 Apr 2020 16:26:58 +0200</pubDate>
-    <lastBuildDate>Mon, 27 Apr 2020 16:26:58 +0200</lastBuildDate>
+    <pubDate>Tue, 26 May 2020 10:18:09 +0200</pubDate>
+    <lastBuildDate>Tue, 26 May 2020 10:18:09 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Control and Deep Learning</title>
+        <description>It is superfluous to state the impact deep learning has had on modern technology. From a mathematical point of view however, a large number of the employed models remain rather ad hoc.
+
+When formulated mathematically, deep supervised learning roughly consists in solving an optimal control problem subject to a nonlinear discrete-time dynamical system, called an artificial neural network.
+
+
+
+
+
+1. Setup
+
+Deep supervised learning [1, 3] (and more generally, supervised machine learning), can be summarized by the following scheme. 
+We are interested in approximating a function $f: \R^d \rightarrow \R^m$, of some class, which is unknown a priori. We have data: its values 
+at $S$ distinct points  (possibly noisy).
+We generally split the $S$ data points into training  data  and testing data . In practice, $N\gg S-N-1$.
+
+“Learning” generally consists in:
+
+
+  Proposing a candidate approximation 
+ $f_\Theta( \cdot): \R^d \rightarrow \R^m$, depending on tunable parameters $\Theta$ and fixed hyper-parameters $L\geq 1$, ${ d_k}$;
+  
+    Tune $\Theta$ as to minimize the empirical risk: 
+where $\ell \geq 0$, $\ell(x, x) = 0$ (e.g. $\ell(x, y) = |x-y|^2$). This is called training.
+  
+  A posteriori analysis: check if test error  is small. 
+This is called generalization.
+
+
+Remark:
+
+
+  
+    There are two types of tasks in supervised learning:
+classification ($\vec{y}_i \in {-1,1}^m$ or more generally, a discrete set), and regression ($\vec{y}_i \in \R^m$).
+We will henceforth only present examples of binary classification, namely $\vec{y}_i \in {-1, 1}$, for simple presentation purposes.
+  
+  
+    Point 3 is inherently linked with the size of the control parameters $\Theta$. 
+Namely, a penalisation of the empirical risk in theory provides better generalisation.
+  
+
+
+
+
+
+ Figure 1. 
+Underfitting, good generalization, and overfitting. We wish to recover the function $f(x) = \cos(\frac32 \pi x)$ (blue) on $(0, 1)$ from $S=20$ noisy data samples.
+Constructed approximations using $N=12$ training data, while the remaining $8$ samples are used for testing the results. The most complicated model (right) is not necessarily the best (Occam's razor).
+This is related to the Runge phenomenon.
+
+
+Remark: It is at the point of generalisation where the objective of supervised learning differs slightly from classical optimisation/optimal control. Indeed, whilst in deep learning one too is interested in “matching” the labels $\vec{y}_i$ of the training set, one also needs to guarantee satisfactory performance on points oustide of the training set.
+
+
+
+2. Artificial Neural Networks
+
+There exists an entire jungle (see [1, 3]) of specific neural networks used in practice and studied in theory.
+For the sake of presentation, we will discuss two of the most simple examples.
+
+2.1. Multi-layer perceptron
+
+We henceforth assume that we are given a training dataset 
+.
+
+
+Definition (Neural network):  Let  and  be given. Set $d_0 := d$ and $d_{L+1} :=m$.
+A neural network with $L$ hidden layers is a map
+
+
+
+where $z^L = z^L_i \in \R^m$ being given by the scheme
+
+
+
+Here  are given parameters such that $A^k \in \R^{d_{k+1}\times d_k}$ and $b^k \in \R^{d_k}$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.
+
+
+
+Remark: Several remarks are in order:
+
+
+  The above-defined neural network is usually referred to as the multi-layer perceptron (see Multilayer_perceptron)
+  Observe that $z^k \in \R^{d_k}$ for .
+  The function $\sigma$ is always nonlinear in practice (as otherwise the optimisation problem roughly coincides with least squares for a linear regression). It is called the activation function.
+  Generally, $\sigma(x) = \max(x, 0)$ or $\sigma(x) = \tanh(x)$ (but others work too).
+  Deep learning means optimisation subject to a multi-layered neural net: $L\geq 2$ at least.
+
+
+
+Let us denote $\Lambda_k x :=A^k x + b^k$.
+
+
+
+
+ Figure 2. 
+The commonly used graph representation for a neural net.
+This figure essentially represents the discrete-time dynamics of a single datum from the training set through the nonlinear scheme.
+
+
+
+An MLP scheme with $\sigma(x) = \tanh(x)$ can be coded in pytorch more or less as follows:
+
+import torch.nn as nn
+
+class OneBlock(nn.Module):
+	def __init__(self, d1, d2):
+		super(OneBlock, self).__init__()
+		self.d1 = d1
+		self.d2 = d2
+
+		self.mlp = nn.Sequential(
+			nn.Linear(d1, d2),
+			nn.Tanh()
+		)
+	def forward(self, x): 
+		return self.mlp(x)
+
+class Perceptron(nn.Module):
+	def __init__(self, dimensions, num_layers):
+		super(Perceptron, self).__init__()
+
+		self.dimensions = dimensions
+		_ = \
+			[OneBlock(self.dimensions[k], self.dimensions[k-1]) for k in range(1, num_layers-1)]
+
+		self.blocks = nn.Sequential(*_)
+		self.projector = nn.Linear(self.dimensions[-2], self.dimensions[-1])
+
+	def forward(self, x)_
+		return self.projector(self.blocks(x))
+
+
+We can save this class in a file called model.py.
+Then one may create an instance of a Perceptron model for practical usage as follows:
+
+import torch
+device = torch.device('cpu')
+from model import Perceptron
+
+model = Perceptron(device, dimensions=[1,3,4,3,1], num_layers=5)
+
+
+
+
+How it works.
+
+We now see, in some overly-simplified scenarios, how the forward propagation of the inputs in the context of binary classification.
+
+
+
+
+    
+        
+        
+    
+
+
+ Figure 3. 
+Here $A^0 \in R^{2\times 1}$ and $b^0 \in \R^2$.
+We see how the neural net essentially generates a nonlinear transform, such that the originally mixed points are now linearly separable.
+
+
+An interesting blog on visualising the transitions is the following: https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/.
+
+
+
+2.2. Residual neural networks
+
+We now impose that the dimensions of the iterations and the parameters stay fixed over each step.
+This will allow us to add an addendum term in the scheme.
+
+
+Definition (Residual neural network [2]):  Let  and  be given. Set $d_0 := d$ and $d_{L+1} :=m$.
+A residual neural network (ResNet) with $L$ hidden layers is a map
+
+
+
+where $z^L = z^L_i \in \R^d$ being given by the scheme
+
+
+
+Here $\Theta = {A^k, b^k}_{k=0}^{L}$ are given parameters such that $A^k \in \R^{d\times d}$ and $b^k \in \R^{d}$ for $k&amp;lt;L$ and $A^L \in \R^{m\times d}, b^L \in \R^m$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.
+
+
+
+3. Training
+
+Training consists in solving the optimization problem:
+
+
+
+
+  $\epsilon&amp;gt;0$ is a penalization parameter.
+  It is a non-convex optimization problem because of the non-linearity of $f_L$.
+  Existence of a minimizer may be shown by the direct method.
+
+
+Once training is done, and we have a minimizer $\widehat{\Theta}$, we consider $f_{\widehat{\Theta}}(\cdot)$ and use it on other points of interest $\vec{x} \in \R^d$ outside the training set.
+
+3.1. Computing the minimizer
+
+The functional to be minimized is of the form
+
+
+
+We could do gradient descent:
+
+
+
+$\eta$ is step-size. But often $N \gg 1$ ($N=10^3$ or much more).
+
+Stochastic gradient descent: (Robbins-Monro [7], Bottou et al [8]):
+
+
+  
+    pick $i \in {1, \ldots, N}$ uniformly at random
+  
+  
+    $\Theta^{n+1} := \Theta^n - \eta \nabla J_{i}(\Theta^n)$
+  
+
+
+
+  Mini-batch GD: can also be considered (pick a subset of data instead of just one point)
+  Use chain rule and adjoints to compute these gradients (“backpropagation”)
+  Issues: might not converge to global minimizer; also how does one initialize the weights in the iteration (usually done at random)?
+
+
+
+We come back to the file model.py. Here is a snippet on how to call training modules.
+
+# Given generated data
+# Coded a function def optimize() witin
+# a class Trainer() which
+# does the optimization of paramterss
+
+epochs = input()
+optimizer = torch.optim.SGD(perceptron.parameters(), lr=1e-3, weight_decay=1e-3)
+
+trainer = Trainer(perceptron, optimizer, device)
+trainer.train(data, epochs)
+
+
+
+3.2. Continuous-time optimal control problem
+
+We begin by visualising how the flow map of a continuous-time neural net separates the training data in a linear fashion at time $1$ (even before in fact).
+
+
+  
+   
+
+    
+
+
+ 
+ 
+ 
+
+ Figure 4. 
+The time-steps play the role of layers. We are working with an ode on $(0, 1)$. We see that the points are linearly separable at the final time, so the flow map defines a &quot;linearisation&quot; of the training dataset.
+
+
+Recall that often $\varphi \equiv \sigma$ (classification)  or $\varphi(x) = x$ (regression).
+
+It can be advantageous to consider the continuous-time optimal control problem:
+
+
+
+where $z = z_i$ solves
+
+
+
+
+Remark:
+
+The ResNet neural network can then be seen as the forward Euler discretisation with $\Delta t = 1$.
+The relevance of this scale when passing from continuous to discrete has not been addressed in the litearature.
+
+
+Thus, in the continuous-time limit, deep supervised learning for ResNets can be seen as an optimal control problem for a parametrised, high-dimensional ODE.
+
+This idea of viewing deep learning as finite dimensional optimal control was (mathematically) formulated in [12], and subsequently investigated from a theoretical and computational viewpoint in [11, 10, 5, 6, 13, 14], among others.
+
+
+Remark:
+
+There are many tricks which can be used in the above ODE to improve performance.
+
+
+  For instance, we may embed the initial data in a higher dimensional space at the beginning, and consider the system in an even bigger dimension. It is rather intuitive that the bigger the dimension where the system evolves is, the easier it is to separate the points by a hyperplane.
+  However, characterising the optimal dimension where one needs to consider the evolution of the neural net in terms of the topology of the training data is, up to the best of our knowledge, an open problem. 
+The choice in practice is done by cross-validation.
+
+
+
+
+
+ Figure 5. 
+Analogous scenario as in Figure 4, this time in dimension 3.
+
+
+References:
+
+[1] Ian Goodfellow and Yoshua Bengio and Aaron Courville. (2016). Deep Learning, MIT Press.
+
+[2] He, K., Zhang, X., Ren, S., and Sun, J. (2016). Deep residual learning for image
+recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pages
+770–778.
+
+[3] LeCun, Y., Bengio, Y., and Hinton, G. (2015). Deep learning. Nature,
+521(7553):436–444.
+
+[4] LeCun, Y., Boser, B. E., Denker, J. S., Henderson, D., Howard, R. E., Hubbard,
+W. E., and Jackel, L. D. (1990). Handwritten digit recognition with a back-propagation network. In
+Advances in neural information processing systems, pages 396–404.
+
+[5] Chen, T. Q., Rubanova, Y., Bettencourt, J., and Duvenaud, D. K. (2018). Neural
+ordinary differential equations. In Advances in neural information processing systems, pages 6571–
+6583.
+
+[6] Dupont, E., Doucet, A., and Teh, Y. W. (2019). Augmented neural odes. In
+Advances in Neural Information Processing Systems, pages 3134–3144.
+
+[7] Herbert Robbins and Sutton Monro. A Stochastic Approximation Method. The Annals of Mathematical Statistics, 22(3):400–407, 1951
+
+[8] Léon Bottou, Frank E. Curtis and Jorge Nocedal: Optimization Methods for Large-Scale Machine Learning, Siam Review, 60(2):223-311, 2018.
+
+[9] Matthew Thorpe and Yves van Gennip. Deep limits of residual neural networks. arXiv preprint arXiv:1810.11741, 2018.
+
+[10] Weinan, E., Han, J., and Li, Q. (2019). A mean-field optimal control formulation
+of deep learning. Research in the Mathematical Sciences, 6(1):10.
+
+[11] Li, Q., Chen, L., Tai, C., and Weinan, E. (2017). Maximum principle based algorithms
+for deep learning. The Journal of Machine Learning Research, 18(1):5998–6026.
+
+[12] Weinan, E. (2017). A proposal on machine learning via dynamical systems. Communications in Mathematics and Statistics, 5(1):1–11.
+
+</description>
+        <pubDate>Thu, 30 Apr 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0010</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0010</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP01</category>
+        
+      </item>
     
       <item>
         <title>Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow.</title>
@@ -2064,349 +2417,6 @@ plotSHE(OptState,OptControl,Yfree,YT,xline,tspan,Nt)
         <category>tutorial</category>
         
         <category>WP06</category>
-        
-      </item>
-    
-      <item>
-        <title>POD and DMD Reduced Order Models for a 2D Burgers Equation</title>
-        <description>Burgers equation
-
-For a given viscosity parameter $\nu$ and for time $t&amp;gt;0$, we consider the 2D Burgers equation on the unit square
-
-
-
-with zero Neumann boundary conditions and initial condition
-
-
-
-and its numerical approximation using
-
-
-  Finite Elements in space and Runge-Kutta in time,
-  a POD reduction of the FEM model, and
-  a DMD reduced order model.
-
-
-We present the basic ideas and how they are realized in a basic Python script.
-
-0. The Setup
-
-Please download and run the python file burgers.py to check the
-implementation, to reproduce the presented results, and to the behavior of the
-routines for different parameters.
-
-Here is the start of the script that lists the modules on which the
-implementation bases on.
-
-import dolfin
-
-import scipy.linalg as spla
-import matplotlib.pyplot as plt
-import numpy as np
-
-from scipy.integrate import solve_ivp
-from spacetime_galerkin_pod.ldfnp_ext_cholmod import SparseFactorMassmat
-
-
-The code uses dolfin which is the python interface to
-FEniCS while the other modules scipy, numpy,
-and matplotlib are standard in python, I would say. The module
-ldfnp_ext_cholmod is a little wrapper for the sparsity optimizing Cholesky
-decomposition of sksparse.
-It is available from my github
-repository and falls back
-to numpy routines, in the case that sksparse is not available.
-
-1. The FEM Discretization
-
-The spatial discretization in FEniCS
-
-First, the mesh is defined – here a uniform triangulation of the unit square
-controlled by the parameter N. For the value N=80 and for globally smooth
-and piecewise quadratic ansatz functions, the resulting dimension of the system
-is 51842.
-
-# The mesh
-
-pone = dolfin.Point(-1, -1)
-ptwo = dolfin.Point(1, 1)
-mesh = dolfin.RectangleMesh(pone, ptwo, N, N)
-
-V = dolfin.VectorFunctionSpace(mesh, 'CG', 2)
-
-### The FENICS FEM Discretization
-
-v = dolfin.TestFunction(V)
-u = dolfin.TrialFunction(V)
-
-
-Next, the discrete linear operators are defined and exported as a SciPy sparse
-matrix. Also, we factorize the mass matrix mmat for later use and define the
-norm that is weighted with the mass matrix as this is the discrete $L^2$ norm.
-
-# ## the mass matrix
-
-mform = dolfin.inner(v, u)*dolfin.dx
-massm = dolfin.assemble(mform)
-mmat = dolfin.as_backend_type(massm).sparray()
-mmat.eliminate_zeros()
-
-# factorize it for later
-
-
-mfac = SparseFactorMassmat(mmat)
-
-# norm induced by the mass matrix == discrete L2-norm
-
-def mnorm(uvec):
-    return np.sqrt(np.inner(uvec, mmat.dot(uvec)))
-
-# ## the stiffness matrix
-# as a form in FEniCS
-
-aform = nu*dolfin.inner(dolfin.grad(v), dolfin.grad(u))*dolfin.dx
-aassm = dolfin.assemble(aform)
-
-# as a sparse matrix
-
-amat = dolfin.as_backend_type(aassm).sparray()
-amat.eliminate_zeros()
-
-
-Then we define the convective term as function of the velocity u both in terms
-of an FE-function and as a function of the associated coefficient vector.
-
-# ## the convective term
-
-# as a function in FEniCS
-
-def burgers_nonl_func(ufun):
-    cform = dolfin.inner(dolfin.grad(ufun)*ufun, v)*dolfin.dx
-    cass = dolfin.assemble(cform)
-    return cass
-
-# as a vector to form map
-
-def burgers_nonl_vec(uvec):
-    ufun = dolfin.Function(V)
-    ufun.vector().set_local(uvec)
-    bnlform = burgers_nonl_func(ufun)
-    bnlvec = bnlform.get_local()
-    return bnlvec
-
-
-The Runge-Kutta Time Integration
-
-To apply standard time integration schemes (here, RK23 turned out to be most
-efficient), we define the right hand side $f_h$ of the spatially discretized problem
-
-
-
-In this case the right hand side is an application of the discrete diffusion
-and convection operator and the inverse of the mass matrix that, simply
-speaking, maps a (discrete) form onto a discrete function. Note that there is no
-explicit time dependency in the Burgers equation, but SciPy’s solve_ivp
-requires this parameter. Also, we define the initial value here. The time grid
-is used to store the solution for the snapshots needed later, but the time
-integrator uses his internal time grid.
-
-inivstrg = 'exp(-3.*(x[0]*x[0]+x[1]*x[1]))'
-inivexpr = dolfin.Expression((inivstrg, inivstrg), degree=2)
-inivfunc = dolfin.interpolate(inivexpr, V)
-inivvec = inivfunc.vector().get_local()
-
-burgsol = solve_ivp(brhs, (t0, tE), inivvec, t_eval=timegrid, method='RK23')
-fullsol = burgsol.y
-
-
-Here is the result. Note the sharp front that develops towards the end of the time
-integration.
-
-
-Solution snapshots of the full FEM model 
-
-2. POD Reduced Model
-
-If one has snapshots of the solution $v _ h$ at some time instances $t _ i$ one
-may well think that the span of the matrix of snapshots
-
-
-
-is a good candidate for a space in which the solution evolves in. One may even
-go further and look for a low-dimensional basis of this space. The span of a
-matrix is best approximated by its dominant singular vectors. And this is the idea of
-Proper Orthogonal Decomposition (POD) – use the leading singular vectors as a
-basis for the solution space.
-
-We use the Nts=101 snapshots of the FEM solutions to setup the matrix of
-measurements $X$ and to compute the POD modes as $M^{-1/2}v _ k$, where $v _ k$
-is the $k$-th leading left singular vector of $M^{1/2}X$. This procedure gives a
-low-dimensional orthogonal (in the discrete $L^2$ inner product) basis that
-optimally parametrizes the subspace of $L^2$ that is spanned by the solution
-snapshots1. In this example, we use the poddim=25 leading singular vectors
-to define the reduced model.
-
-snapshotmat = mfac.Ft.dot(burgsol.y)
-podmodes, svals, _ = spla.svd(snapshotmat, full_matrices=False)
-selected_podmodes = podmodes[:, :poddim]
-podvecs = mfac.solve_Ft(selected_podmodes)
-
-In this implementation we use a sparse factor of the mass matrix instead of the
-square root. The singular values (in particular those that correspond to the
-discarded directions) give an indication of how good the approximation is.
-
-
-The singular values of the snapshot matrix 
-
-Here, the decay is comparatively slow, so that a one should not expect a good
-low dimensional approximation by POD.
-
-For the simulation, the state is parametrized by $u_h (t) \approx V \tilde
-u_h(t)$ where $V$ is the matrix of the POD modes (in the code $V$ denoted by
-podvecs), which gives a system in $\tilde u _ h$ with 25 degrees of freedom
-(as opposed to the 51842 of the full order model).
-
-redamat = podvecs.T.dot(amat.dot(podvecs))  # the projected stiffness
-
-def redbrhs(time, redvec):
-    inflatedv = podvecs.dot(redvec)
-    redconv = podvecs.T.dot(burgers_nonl_vec(inflatedv))
-    return -redamat.dot(redvec) - redconv.flatten()
-
-
-Here we define the projected stiffness matrix and the reduced nonlinearity
-through
-
-
-  inflating the reduced state to full dimension
-  applying the nonlinearity
-  projecting down the result.
-
-
-This means that our model is not completely independent of the full dimension.
-For this problem there are hyperreduction techiques like DEIM.
-
-Thus, the right hand side is readily defined the more that the projected mass
-matrix is the identity. Why?
-
-Finally, the initial value is projected into the reduced coordinates and the
-reduced system is integrated in time.
-
-redburgsol = solve_ivp(redbrhs, (t0, tE), prjinivvec,
-                       t_eval=timegrid, method='RK23')
-podredsol = redburgsol.y
-
-
-In the solution we see that the reduced order model gives a decent approximation
-in the smooth regime in the beginning and has its troubles approximating the front as can be seen in the error (log) plot.
-
-
-
-
-Snapshots of the solution of the reduced system 
-
-
-Snapshots of the log of the error between the full and the POD solution
-
-3. DMD Reduced Model
-
-POD is partially data driven – it uses data to create a basis but still
-uses (a projection of) the model. If only snapshots but no model is given, one
-may use the method of Dynamic Mode Decomposition2 (DMD) that tries to identify
-a matrix $A$ that evolves the state like
-
-
-
-In practice, one uses a set of snapshots and the two measurement matrices
-
-
-
-and
-
-
-
-Note that $X’$ is basically $X$ shifted by one time step.
-
-Then the DMD matrix can be found by solving the linear regression problem
-
-
-
-For the reduced DMD model we use the same snapshot matrix as for the POD. The
-regression problem is solved via SVD to compute the needed pseudo inverse since
-this naturally allows for a rank reduction and a factored representation of the
-DMD matrix.
-
-# ### dmd using truncated svd inverse
-
-fburgsol = burgsol.y
-Xmat = fburgsol[:, :-1]
-Xdsh = fburgsol[:, 1:]
-ux, sx, vxh = spla.svd(Xmat, full_matrices=False)
-uxr, sxr, vxhr = ux[:, :poddim], sx[:poddim], vxh[:poddim, :]
-
-# compute the dmd matrix in factored form: `dmda = dmdaone * dmdatwo`
-
-dmdaone = Xdsh.dot(vxhr.T)
-dmdatwo = np.linalg.solve(np.diag(sxr), uxr.T)
-
-
-Once the DMD matrix $A$ is determined, the simulation of the DMD reduced model
-is only a repeated multiplication by $A$.
-
-# simulation of the dmd reduced model
-
-dmdxo = inivvec
-dmdsol = [dmdxo]
-for k in np.arange(Nts):
-    dmdsol.append(dmdaone.dot(dmdatwo.dot(dmdsol[-1])))
-
-dmdsol = np.array(dmdsol).T
-
-
-As can be seen from the results and the error plots, DMD does a good job in the
-initial phase but fails in the region with the sharp front.
-
-
-Snapshots of the DMD solution
-
-
-4. Remarks
-
-It is commonly accepted that POD does not work well for transport dominated
-problems – like the current case with the low viscosity parameter nu=1e-4.
-
-So, I think that the results for POD are quite good noting that the reduced
-order model has 25 degrees of freedom whereas the full model has 51842.
-Nonetheless, in my tests, increasing the number of basis functions did not help
-much. One can use a larger nu to get better POD approximations.
-
-The DMD approach shows a similar performance. If compared to POD, the
-qualitative approximation looks less good but the numbers are slightly better.
-All in all, the DMD approximation seems less reliable as for some parameter
-choices, the performance severely deteriorated.
-
-Differential Equations.* arXiv:1611.04050
-
-Decomposition: Theory and Applications* arXiv:1312.0041
-
-  
-    
-      See, e.g., Lemma 2.5 of Baumann, Benner, and Heiland (2018): *Space-Time Galerkin POD with Application in Optimal Control of Semi-linear Parabolic Partial &amp;#8617;
-    
-    
-      See, e.g., Tu, Rowley, Luchtenburg, Brunton, Kutz (2013): *On Dynamic Mode &amp;#8617;
-    
-  
-
-</description>
-        <pubDate>Sat, 07 Mar 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0009</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0009</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP04</category>
         
       </item>
     

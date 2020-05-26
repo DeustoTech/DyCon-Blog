@@ -209,6 +209,367 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;It is superfluous to state the impact deep learning has had on modern technology. From a mathematical point of view however, a large number of the employed models remain rather ad hoc.&lt;/p&gt;
+</code></pre></div></div>
+
+<p>When formulated mathematically, deep supervised learning roughly consists in solving an <em>optimal control problem</em> subject to a nonlinear discrete-time dynamical system, called an artificial neural network.</p>
+
+<script type="math/tex; mode=display">\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}</script>
+
+<hr />
+
+<h2 id="1-setup">1. <strong>Setup</strong></h2>
+
+<p>Deep supervised learning [1, 3] (and more generally, supervised machine learning), can be summarized by the following scheme. 
+We are interested in approximating a function $f: \R^d \rightarrow \R^m$, of some class, which is unknown a priori. We have data: its values <script type="math/tex">\{ \vec{y}_i \}_{i=1}^S \in \R^{m\times S}</script>
+at $S$ distinct points <script type="math/tex">\{ \vec{x}_i \}_{i=1}^S \in \R^{d\times S}</script> (possibly noisy).
+We generally split the $S$ data points into training  data <script type="math/tex">\{ \vec{x}_i, \vec{y}_i \}_{i=1}^N</script> and testing data <script type="math/tex">\{ \vec{x}_i, \vec{y}_i \}_{i=N+1}^S</script>. In practice, $N\gg S-N-1$.</p>
+
+<p>“Learning” generally consists in:</p>
+
+<ol>
+  <li>Proposing a candidate approximation 
+ $f_\Theta( \cdot): \R^d \rightarrow \R^m$, depending on tunable parameters $\Theta$ and fixed hyper-parameters $L\geq 1$, ${ d_k}$;</li>
+  <li>
+    <p>Tune $\Theta$ as to minimize the empirical risk: <script type="math/tex">\sum_{i=1}^N \ell(f_\Theta(\vec{x}_i), \vec{y}_i),</script>
+where $\ell \geq 0$, $\ell(x, x) = 0$ (e.g. $\ell(x, y) = |x-y|^2$). This is called <em>training</em>.</p>
+  </li>
+  <li>A posteriori analysis: check if test error <script type="math/tex">\sum_{i=N+1}^{S} \ell(f_\Theta(\vec{x}_i), \vec{y}_i)</script> is small. 
+This is called <em>generalization</em>.</li>
+</ol>
+
+<p><strong>Remark:</strong></p>
+
+<ul>
+  <li>
+    <p>There are two types of tasks in supervised learning:
+classification ($\vec{y}_i \in {-1,1}^m$ or more generally, a discrete set), and regression ($\vec{y}_i \in \R^m$).
+We will henceforth only present examples of binary classification, namely $\vec{y}_i \in {-1, 1}$, for simple presentation purposes.</p>
+  </li>
+  <li>
+    <p>Point 3 is inherently linked with the size of the control parameters $\Theta$. 
+Namely, a penalisation of the empirical risk in theory provides better generalisation.</p>
+  </li>
+</ul>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0010/overfitting.png" width="100%" />
+</center>
+<center> <strong>Figure 1.</strong> 
+Underfitting, good generalization, and overfitting. We wish to recover the function $f(x) = \cos(\frac32 \pi x)$ (blue) on $(0, 1)$ from $S=20$ noisy data samples.
+Constructed approximations using $N=12$ training data, while the remaining $8$ samples are used for testing the results. The most complicated model (right) is not necessarily the best (Occam's razor).
+This is related to the Runge phenomenon.
+</center>
+
+<p><strong>Remark:</strong> It is at the point of generalisation where the objective of supervised learning differs slightly from classical optimisation/optimal control. Indeed, whilst in deep learning one too is interested in “matching” the labels $\vec{y}_i$ of the training set, one also needs to guarantee satisfactory performance on points oustide of the training set.</p>
+
+<hr />
+
+<h2 id="2-artificial-neural-networks">2. <strong>Artificial Neural Networks</strong></h2>
+
+<p>There exists an entire jungle (see [1, 3]) of specific neural networks used in practice and studied in theory.
+For the sake of presentation, we will discuss two of the most simple examples.</p>
+
+<h3 id="21-multi-layer-perceptron"><strong>2.1. Multi-layer perceptron</strong></h3>
+
+<p>We henceforth assume that we are given a training dataset 
+<script type="math/tex">\{\vec{x}_i, \vec{y}_i\}_{i=1}^N \subset \R^{d\times N}\times \R^{m\times N}</script>.</p>
+
+<hr />
+
+<p><strong>Definition (Neural network):</strong>  Let <script type="math/tex">L\geq 1</script> and <script type="math/tex">\{ d_k \}_{k=1}^L \in \N^L</script> be given. Set $d_0 := d$ and $d_{L+1} :=m$.
+A neural network with $L$ hidden layers is a map</p>
+
+<script type="math/tex; mode=display">f_\Theta(\vec{x}) = \varphi(A^L z^L + b^L)</script>
+
+<p>where $z^L = z^L_i \in \R^m$ being given by the scheme</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+z^{k+1} = \sigma(A^k z^k + b^k) &\text{ for } k = 0, \ldots, L-1 \\
+z^0 = \vec{x}_i \in \R^d.
+\end{cases} %]]></script>
+
+<p>Here <script type="math/tex">\Theta = \{A^k, b^k\}_{k=0}^{L}</script> are given parameters such that $A^k \in \R^{d_{k+1}\times d_k}$ and $b^k \in \R^{d_k}$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.</p>
+
+<hr />
+
+<p><strong>Remark:</strong> Several remarks are in order:</p>
+
+<ul>
+  <li>The above-defined neural network is usually referred to as the <em>multi-layer perceptron</em> (see <a href="https://en.wikipedia.org/wiki/Multilayer_perceptron">Multilayer_perceptron</a>)</li>
+  <li>Observe that $z^k \in \R^{d_k}$ for <script type="math/tex">k \in \{0, \ldots, L\}</script>.</li>
+  <li>The function $\sigma$ is always nonlinear in practice (as otherwise the optimisation problem roughly coincides with least squares for a linear regression). It is called the <em>activation function</em>.</li>
+  <li>Generally, $\sigma(x) = \max(x, 0)$ or $\sigma(x) = \tanh(x)$ (but others work too).</li>
+  <li>Deep learning means optimisation subject to a multi-layered neural net: $L\geq 2$ at least.</li>
+</ul>
+
+<hr />
+
+<p>Let us denote $\Lambda_k x :=A^k x + b^k$.</p>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0010/graph.png" width="80%" />
+</center>
+<center> <strong>Figure 2.</strong> 
+The commonly used graph representation for a neural net.
+This figure essentially represents the discrete-time dynamics of a single datum from the training set through the nonlinear scheme.
+</center>
+
+<hr />
+
+<p>An MLP scheme with $\sigma(x) = \tanh(x)$ can be coded in <code class="highlighter-rouge">pytorch</code> more or less as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+
+<span class="k">class</span> <span class="nc">OneBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">OneBlock</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">d1</span> <span class="o">=</span> <span class="n">d1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">d2</span> <span class="o">=</span> <span class="n">d2</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mlp</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+			<span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">),</span>
+			<span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span>
+		<span class="p">)</span>
+	<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span> 
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Perceptron</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">,</span> <span class="n">num_layers</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">Perceptron</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="n">dimensions</span>
+		<span class="n">_</span> <span class="o">=</span> \
+			<span class="p">[</span><span class="n">OneBlock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">projector</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+	<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="n">_</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">projector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>We can save this class in a file called <code class="highlighter-rouge">model.py</code>.
+Then one may create an instance of a Perceptron model for practical usage as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s">'cpu'</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">Perceptron</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Perceptron</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<p><strong>How it works.</strong></p>
+
+<p>We now see, in some overly-simplified scenarios, how the forward propagation of the inputs in the context of binary classification.</p>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0010/0-1.png" width="95%" />
+<table>
+    <tr>
+        <th><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0010/1-1.png" width="100%" /></th>
+        <th><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0010/2-5-1.png" width="100%" /></th>
+    </tr>
+</table>
+</center>
+<center> <strong>Figure 3.</strong> 
+Here $A^0 \in R^{2\times 1}$ and $b^0 \in \R^2$.
+We see how the neural net essentially generates a nonlinear transform, such that the originally mixed points are now linearly separable.
+</center>
+
+<p>An interesting blog on visualising the transitions is the following: https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/.</p>
+
+<hr />
+
+<h3 id="22-residual-neural-networks">2.2. <strong>Residual neural networks</strong></h3>
+
+<p>We now impose that the dimensions of the iterations and the parameters stay fixed over each step.
+This will allow us to add an addendum term in the scheme.</p>
+
+<hr />
+
+<p><strong>Definition (Residual neural network [2]):</strong>  Let <script type="math/tex">L\geq 1</script> and <script type="math/tex">\{ d_k \}_{k=1}^L \in \N^L</script> be given. Set $d_0 := d$ and $d_{L+1} :=m$.
+A residual neural network (ResNet) with $L$ hidden layers is a map</p>
+
+<script type="math/tex; mode=display">f_\Theta(\vec{x}) = \varphi(A^L z^L + b^L)</script>
+
+<p>where $z^L = z^L_i \in \R^d$ being given by the scheme</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+z^{k+1} = z^k + \sigma(A^k z^k + b^k) &\text{ for } k = 0, \ldots, L-1 \\
+z^0 = \vec{x}_i \in \R^d.
+\end{cases} %]]></script>
+
+<p>Here $\Theta = {A^k, b^k}_{k=0}^{L}$ are given parameters such that $A^k \in \R^{d\times d}$ and $b^k \in \R^{d}$ for $k&lt;L$ and $A^L \in \R^{m\times d}, b^L \in \R^m$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.</p>
+
+<hr />
+
+<h2 id="3-training">3. <strong>Training</strong></h2>
+
+<p>Training consists in solving the optimization problem:</p>
+
+<script type="math/tex; mode=display">\min_{\Theta = \{ (A^k, b^k) \}_{k=0}^L } \sum_{i=1}^N | \vec{y}_i - f_\Theta(\vec{x}_i)|^2 + \frac{\epsilon}{2} |\Theta|^2;</script>
+
+<ul>
+  <li>$\epsilon&gt;0$ is a penalization parameter.</li>
+  <li>It is a <strong>non-convex</strong> optimization problem because of the non-linearity of $f_L$.</li>
+  <li>Existence of a minimizer may be shown by the direct method.</li>
+</ul>
+
+<p>Once training is done, and we have a minimizer $\widehat{\Theta}$, we consider $f_{\widehat{\Theta}}(\cdot)$ and use it on other points of interest $\vec{x} \in \R^d$ outside the training set.</p>
+
+<h3 id="31-computing-the-minimizer">3.1. <strong>Computing the minimizer</strong></h3>
+
+<p>The functional to be minimized is of the form</p>
+
+<script type="math/tex; mode=display">J(\Theta) = \sum_{i=1}^N J_i(\Theta).</script>
+
+<p>We could do gradient descent:</p>
+
+<script type="math/tex; mode=display">\Theta^{n+1} := \Theta^n - \eta \nabla J(\Theta^n),</script>
+
+<p>$\eta$ is step-size. But often $N \gg 1$ ($N=10^3$ or much more).</p>
+
+<p>Stochastic gradient descent: (Robbins-Monro [7], Bottou et al [8]):</p>
+
+<ol>
+  <li>
+    <p>pick $i \in {1, \ldots, N}$ uniformly at random</p>
+  </li>
+  <li>
+    <p>$\Theta^{n+1} := \Theta^n - \eta \nabla J_{i}(\Theta^n)$</p>
+  </li>
+</ol>
+
+<ul>
+  <li>Mini-batch GD: can also be considered (pick a subset of data instead of just one point)</li>
+  <li>Use chain rule and adjoints to compute these gradients (“backpropagation”)</li>
+  <li>Issues: might not converge to global minimizer; also how does one initialize the weights in the iteration (usually done at random)?</li>
+</ul>
+
+<hr />
+
+<p>We come back to the file <code class="highlighter-rouge">model.py</code>. Here is a snippet on how to call training modules.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Given generated data
+# Coded a function def optimize() witin
+# a class Trainer() which
+# does the optimization of paramterss
+</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">perceptron</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">perceptron</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
+</code></pre></div></div>
+<hr />
+
+<h3 id="32-continuous-time-optimal-control-problem">3.2. <strong>Continuous-time optimal control problem</strong></h3>
+
+<p>We begin by visualising how the flow map of a continuous-time neural net separates the training data in a linear fashion at time $1$ (even before in fact).</p>
+
+<table>
+  <tr>
+   <th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0010/trajectory2.gif" width="100%" />
+    </th>
+<th>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0010/trajectory11.gif" width="100%" />
+ </th>
+ </tr>
+ </table>
+
+<center> <strong>Figure 4.</strong> 
+The time-steps play the role of layers. We are working with an ode on $(0, 1)$. We see that the points are linearly separable at the final time, so the flow map defines a "linearisation" of the training dataset.
+</center>
+
+<p>Recall that often $\varphi \equiv \sigma$ (classification)  or $\varphi(x) = x$ (regression).</p>
+
+<p>It can be advantageous to consider the continuous-time optimal control problem:</p>
+
+<script type="math/tex; mode=display">\inf_{u(t) \in U,\, (\alpha, \beta)} \sum_{i=1}^N |\vec{y}_i - \varphi(\alpha \, z(1)+\beta)|^2 + \frac{\epsilon}{2} \int_0^1 |(A(t), b(t))|^2 dt</script>
+
+<p>where $z = z_i$ solves</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	z'(t) &= \sigma(A(t)z(t)+b(t)) \quad \text{ in } (0, 1) \\
+	z(0) &= \vec{x}_i \in \R^d.
+\end{cases} %]]></script>
+
+<hr />
+
+<p><strong>Remark:</strong></p>
+
+<p>The ResNet neural network can then be seen as the forward Euler discretisation with $\Delta t = 1$.
+The relevance of this scale when passing from continuous to discrete has not been addressed in the litearature.</p>
+
+<hr />
+
+<p><em>Thus, in the continuous-time limit, deep supervised learning for ResNets can be seen as an optimal control problem for a parametrised, high-dimensional ODE.</em></p>
+
+<p>This idea of viewing deep learning as finite dimensional optimal control was (mathematically) formulated in [12], and subsequently investigated from a theoretical and computational viewpoint in [11, 10, 5, 6, 13, 14], among others.</p>
+
+<hr />
+
+<p><strong>Remark:</strong></p>
+
+<p>There are many tricks which can be used in the above ODE to improve performance.</p>
+
+<ul>
+  <li>For instance, we may embed the initial data in a higher dimensional space at the beginning, and consider the system in an even bigger dimension. It is rather intuitive that the bigger the dimension where the system evolves is, the easier it is to separate the points by a hyperplane.</li>
+  <li>However, characterising the optimal dimension where one needs to consider the evolution of the neural net in terms of the topology of the training data is, up to the best of our knowledge, an open problem. 
+The choice in practice is done by cross-validation.</li>
+</ul>
+
+<center>
+<img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0010/trajectory.gif" width="80%" />
+</center>
+<center> <strong>Figure 5.</strong> 
+Analogous scenario as in Figure 4, this time in dimension 3.
+</center>
+
+<h2 id="references">References:</h2>
+
+<p>[1] Ian Goodfellow and Yoshua Bengio and Aaron Courville. (2016). Deep Learning, MIT Press.</p>
+
+<p>[2] He, K., Zhang, X., Ren, S., and Sun, J. (2016). Deep residual learning for image
+recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pages
+770–778.</p>
+
+<p>[3] LeCun, Y., Bengio, Y., and Hinton, G. (2015). Deep learning. Nature,
+521(7553):436–444.</p>
+
+<p>[4] LeCun, Y., Boser, B. E., Denker, J. S., Henderson, D., Howard, R. E., Hubbard,
+W. E., and Jackel, L. D. (1990). Handwritten digit recognition with a back-propagation network. In
+Advances in neural information processing systems, pages 396–404.</p>
+
+<p>[5] Chen, T. Q., Rubanova, Y., Bettencourt, J., and Duvenaud, D. K. (2018). Neural
+ordinary differential equations. In Advances in neural information processing systems, pages 6571–
+6583.</p>
+
+<p>[6] Dupont, E., Doucet, A., and Teh, Y. W. (2019). Augmented neural odes. In
+Advances in Neural Information Processing Systems, pages 3134–3144.</p>
+
+<p>[7] Herbert Robbins and Sutton Monro. A Stochastic Approximation Method. The Annals of Mathematical Statistics, 22(3):400–407, 1951</p>
+
+<p>[8] Léon Bottou, Frank E. Curtis and Jorge Nocedal: Optimization Methods for Large-Scale Machine Learning, Siam Review, 60(2):223-311, 2018.</p>
+
+<p>[9] Matthew Thorpe and Yves van Gennip. Deep limits of residual neural networks. arXiv preprint arXiv:1810.11741, 2018.</p>
+
+<p>[10] Weinan, E., Han, J., and Li, Q. (2019). A mean-field optimal control formulation
+of deep learning. Research in the Mathematical Sciences, 6(1):10.</p>
+
+<p>[11] Li, Q., Chen, L., Tai, C., and Weinan, E. (2017). Maximum principle based algorithms
+for deep learning. The Journal of Machine Learning Research, 18(1):5998–6026.</p>
+
+<p>[12] Weinan, E. (2017). A proposal on machine learning via dynamical systems. Communications in Mathematics and Statistics, 5(1):1–11.</p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div class="card" style="border: 1px solid black;padding:auto;margin:10px;background-color:#a6bdd1"&gt;
 &lt;div class="card-body" style="margin: inherit;"&gt;
 &lt;h5 class="card-title"&gt;Control of reaction-diffusion&lt;/h5&gt;
