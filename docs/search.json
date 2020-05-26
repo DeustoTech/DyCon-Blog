@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Control and Deep Learning",
+      "categories"      : ["tutorial", "WP01"],
+      "url"             : "/tutorial/wp01/P0010",
+      "date"            : "2020-04-30",
+      "author"          : ["BorjanG"],
+      "description"     : "Deep supervised learning roughly consists in solving a discretised optimal control problem subject to a nonlinear, discrete-time dynamical system, called an artificial neural network.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP01/P0010/trajectory.gif"
+    } ,
+  
+    {
       "title"           : "Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow.",
       "categories"      : ["tutorial", "WP03"],
       "url"             : "/tutorial/wp03/P0008",

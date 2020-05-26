@@ -5,21 +5,6 @@ description:
 layout: info
 ---
 
-{::nomarkdown}  
-<div class="container">
-<div class="col-md-10 col-md-offset-1">
-{% assign qposts = site.posts | where:"layout","tutorial"|sort |reverse %}
-{% for post in qposts %}
-<h4>{{post.title}}</h4>
-
-<p>{{post.description}}</p>
-<p><a href="https://deustotech.github.io/DyCon-Blog{{post.url}}">link</a></p>
-
-{% endfor %}
-  </div>
-</div>
-{:/nomarkdown}
-
 
 
 <h1>Posts by month</h1>
