@@ -12,6 +12,16 @@
     } ,
   
     {
+      "title"           : "Synchronized Oscillators",
+      "categories"      : ["tutorial", "WP01"],
+      "url"             : "/tutorial/wp01/P0006",
+      "date"            : "2020-06-03",
+      "author"          : ["UmbertoB","EnriqueZ"],
+      "description"     : "Synchronization of coupled oscillators with the Random Batch Method",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/stateEvolutionStochN1000.jpg"
+    } ,
+  
+    {
       "title"           : "The interplay of control and deep learning",
       "categories"      : ["tutorial", "WP01"],
       "url"             : "/tutorial/wp01/P0010",

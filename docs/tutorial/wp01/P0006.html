@@ -302,72 +302,91 @@ img:active{
             <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/Synchronized_oscillators.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
-        <p>Consider the Kuramoto model for the synchronization of coupled oscillators
-<script type="math/tex">\begin{cases}
+        <p>Consider the Kuramoto model for the synchronization of coupled oscillators</p>
+
+<script type="math/tex; mode=display">\begin{cases}
 \displaystyle \dot{\theta}_i(t) = \omega_i + \frac{Ku(t)}{N}\sum_{j=1}^N \sin \big(\theta_j(t)-\theta_i(t)\big),\quad i = 1,\ldots,N,\quad t>0
 \\
 \theta_i(0) = \theta_i^0.
-\end{cases}\quad (1)</script></p>
+\end{cases}\quad (1)</script>
 
-<p>Here $\theta_i(t)$, $i = 1,\ldots,N$, is the phase of the $i$-th oscillator, $\omega_i$ is its natural frequency and $K$ is the coupling strength. The frequencies $\omega_i$ are distributed with a given probability density $f(\omega)$, unimodal and symmetric around the mean frequency
-<script type="math/tex">\Omega = \frac 1N \sum_{i=1}^N \omega_i,</script>
-that is, $f(\Omega+\omega) = f(\Omega-\omega)$.</p>
+<p>Here $\theta_i(t)$, $i = 1,\ldots,N$, is the phase of the $i$-th oscillator, $\omega_i$ is its natural frequency and $K$ is the coupling strength. The frequencies $\omega_i$ are distributed with a given probability density $f(\omega)$, unimodal and symmetric around the mean frequency</p>
 
-<p>It is known that, if the coupling $K$ is sufficiently strong, the oscillators will synchronize asymptotically, i.e.
-<script type="math/tex">\lim_{t\to +\infty} |\dot{\theta}_i(t)-\dot{\theta}_j(t)| = 0, \quad \textrm{ for all }\; i,j = 1,\ldots,N,</script></p>
+<script type="math/tex; mode=display">\Omega = \frac 1N \sum_{i=1}^N \omega_i,</script>
 
-<p>We want to design a control capable to ensure synchronization in a final time horizon $T$, that is
-<script type="math/tex">|\dot{\theta}_i(T)-\dot{\theta}_j(T)| = 0, \quad \textrm{ for all } i,j = 1,\ldots,N. \quad\quad\quad(2)</script></p>
+<p>that is, $f(\Omega+\omega) = f(\Omega-\omega)$.</p>
 
-<p>To compute this optimal control allowing us to reach the synchronized configuration (3) we can adopt a classical approach based on the resolution of the following optimization problem
-<script type="math/tex">\begin{array}{l}
+<p>It is known that, if the coupling $K$ is sufficiently strong, the oscillators will synchronize asymptotically, i.e.</p>
+
+<script type="math/tex; mode=display">\lim_{t\to +\infty} |\dot{\theta}_i(t)-\dot{\theta}_j(t)| = 0, \quad \textrm{ for all }\; i,j = 1,\ldots,N,</script>
+
+<p>We want to design a control capable to ensure synchronization in a final time horizon $T$, that is</p>
+
+<script type="math/tex; mode=display">|\dot{\theta}_i(T)-\dot{\theta}_j(T)| = 0, \quad \textrm{ for all } i,j = 1,\ldots,N. \quad\quad\quad(2)</script>
+
+<p>To compute this optimal control allowing us to reach the synchronized configuration (3) we can adopt a classical approach based on the resolution of the following optimization problem</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
 \displaystyle\widehat{u} = \min_{u\in L^2(0,T;\mathbb{R})} J(u)
 \\[10pt]
 \displaystyle J(u) = \frac{1}{2} \sum_{i,j=1}^N \sin^2\big(\theta_j(T)-\theta_i(T)\big) + \frac \beta2 \|u\|^2_{L^2(0,T;\mathbb{R})},
 \end{array}\quad (3)</script>
-subject to the dynamics (1).</p>
 
-<p>For the resolution of (3), we use the standard GD method, which looks for the minimum $u$ as the limit $k\to +\infty$ of the following iterative process
-<script type="math/tex">u^{k+1} = u^k - \eta_k\nabla J(u^k). \quad (4)</script></p>
+<p>subject to the dynamics (1).</p>
+
+<p>For the resolution of (3), we use the standard GD method, which looks for the minimum $u$ as the limit $k\to +\infty$ of the following iterative process</p>
+
+<script type="math/tex; mode=display">u^{k+1} = u^k - \eta_k\nabla J(u^k). \quad (4)</script>
 
 <p>This gradient technique is most often chosen because it is very easy to be implemented.</p>
 
 <p>In order to fully define the iterative scheme (4), we need to compute the gradient $\nabla J(u)$. This can be done via the <strong>Pontryagin maximum principle</strong>.</p>
 
-<p>To this end, let us first rewrite the dynamics (1) in a vectorial form as follows
-<script type="math/tex">\begin{cases}
+<p>To this end, let us first rewrite the dynamics (1) in a vectorial form as follows</p>
+
+<script type="math/tex; mode=display">\begin{cases}
 \dot{\Theta}(t) = \Omega + F\big(\Theta(t),u(t)\big), \quad t>0
 \\
 \Theta(0) = \Theta^0,
 \end{cases}</script>
-with $\Theta :=(\theta_1,\ldots,\theta_N)^\top$, $\Theta^0:=(\theta_1^0,\ldots,\theta_N^0)^\top$ and $\Omega :=(\omega_1,\ldots,\omega_N)^\top$, and where $F$ is the vector field given by
-<script type="math/tex">F = (F_1,\ldots,F_N), \quad F_i:= \frac{Ku(t)}{N}\sum_{j=1}^N\sin\big(\theta_j(t)-\theta_i(t)\big), \quad i=1,\ldots,N.</script></p>
 
-<p>Using the notation just introduced, we obtain the following expression for the gradient of $J(u)$
-<script type="math/tex">\nabla J(u) = \beta u + (\mathcal D_uF)^\top p, \quad(5)</script>
-where $\mathcal D_uF$ indicates the Jacobian of the vector field $F$, computed with respect to the variable $u$.</p>
+<p>with $\Theta :=(\theta_1,\ldots,\theta_N)^\top$, $\Theta^0:=(\theta_1^0,\ldots,\theta_N^0)^\top$ and $\Omega :=(\omega_1,\ldots,\omega_N)^\top$, and where $F$ is the vector field given by</p>
 
-<p>In (5), we denoted with $p = (p_1,\ldots,p_N)$ the solution of the adjoint equation associated with (1), which is given by
-<script type="math/tex">\begin{cases}
+<script type="math/tex; mode=display">F = (F_1,\ldots,F_N), \quad F_i:= \frac{Ku(t)}{N}\sum_{j=1}^N\sin\big(\theta_j(t)-\theta_i(t)\big), \quad i=1,\ldots,N.</script>
+
+<p>Using the notation just introduced, we obtain the following expression for the gradient of $J(u)$</p>
+
+<script type="math/tex; mode=display">\nabla J(u) = \beta u + (\mathcal D_uF)^\top p, \quad(5)</script>
+
+<p>where $\mathcal D_uF$ indicates the Jacobian of the vector field $F$, computed with respect to the variable $u$.</p>
+
+<p>In (5), we denoted with $p = (p_1,\ldots,p_N)$ the solution of the adjoint equation associated with (1), which is given by</p>
+
+<script type="math/tex; mode=display">\begin{cases}
 -\dot{p} = (\mathcal D_{\Theta}F)^\top p
 \\
 p(T) = \nabla_{\Theta(T)}\phi(\Theta(T)),
 \end{cases}</script>
-where $\mathcal D_\Theta F$ stands again for the Jacobian of the vector field $F$, this time computed with respect to the variable $\Theta$.</p>
 
-<p>Taking into account the expression of the vector field $F$, we can then see that the iterative scheme (4) becomes
-<script type="math/tex">u^{k+1} = u^k -\eta_k\left[\beta u^k + \frac KN\sum_{i=1}^N p_i\left(\sum_{j=1}^N \sin(\theta_j-\theta_i)\right)\right], \quad (6)</script>
-with
-<script type="math/tex">\begin{cases}
+<p>where $\mathcal D_\Theta F$ stands again for the Jacobian of the vector field $F$, this time computed with respect to the variable $\Theta$.</p>
+
+<p>Taking into account the expression of the vector field $F$, we can then see that the iterative scheme (4) becomes</p>
+
+<script type="math/tex; mode=display">u^{k+1} = u^k -\eta_k\left[\beta u^k + \frac KN\sum_{i=1}^N p_i\left(\sum_{j=1}^N \sin(\theta_j-\theta_i)\right)\right], \quad (6)</script>
+
+<p>with</p>
+
+<script type="math/tex; mode=display">\begin{cases}
 \displaystyle-\dot{p}_i = -\frac{Kup_i}{N}\sum_{i\neq j=1}^N \cos\big(\theta_j-\theta_i\big) + \frac{Ku}{N}\sum_{i\neq j=1}^N p_j \cos\big(\theta_j-\theta_i\big),\quad i = 1,\ldots,N,\quad t>0
 \\[20pt]
 \displaystyle p_i(T) = \frac 12\sum_{i\neq j=1}^N \sin\big(2\theta_i(T)-2\theta_j(T)\big).
-\end{cases}</script></p>
+\end{cases}</script>
 
 <p>We then see that, at each iteration $k$ the optimization scheme (6) requires to solve a $N$-dimensional non-linear dynamical system. This may rapidly become computationally very expensive, especially when the number $N$ of oscillators in our system is large.</p>
 
-<p>In order to reduce this computational burden, we can combine the standard GD algorithm with the so-called <strong>Random Batch Method (RBM)</strong>, which is a recently developed approach (see [2]) allowing for an efficient numerical simulation of high-dimensional collective behavior problems. This technique is based on the following simple idea: at each time step $t_m = m\cdot dt$ in the mesh we employ to solve the dynamics, we divide randomly the $N$ particles into $n$ small batches with size $2\leq P&lt;N$, denoted by $C_q$, $q = 1,\ldots,n$, that is
-<script type="math/tex">% <![CDATA[
+<p>In order to reduce this computational burden, we can combine the standard GD algorithm with the so-called <strong>Random Batch Method (RBM)</strong>, which is a recently developed approach (see [2]) allowing for an efficient numerical simulation of high-dimensional collective behavior problems. This technique is based on the following simple idea: at each time step $t_m = m\cdot dt$ in the mesh we employ to solve the dynamics, we divide randomly the $N$ particles into $n$ small batches with size $2\leq P&lt;N$, denoted by $C_q$, $q = 1,\ldots,n$, that is</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
 \begin{array}{l}
 C_q = \{i_{q_1},\ldots,i_{q_P}\}\subset \{1,\ldots,N\}, & & for\; all\; q = 1,\ldots,n
 \\[8pt]
@@ -375,7 +394,8 @@ C_q\cap C_r = \emptyset, & & for\; all\; q,r = 1,\ldots,n
 \\[8pt]
 \bigcup_{q = 1}^n C_q = \{1,\ldots,N\}.
 \end{array} %]]></script>
-Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics by interacting only particles within the same batch. In this way, we are now dealing with systems of lower dimension and the computational cost of the GD algorithm is reduced.</p>
+
+<p>Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics by interacting only particles within the same batch. In this way, we are now dealing with systems of lower dimension and the computational cost of the GD algorithm is reduced.</p>
 
 <h2 id="numerical-simulations">Numerical simulations</h2>
 
@@ -385,13 +405,17 @@ Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics 
 
 <p>In <strong>Figure 1-top</strong>, we show the evolution of the uncontrolled dynamics, which corresponds to taking $u\equiv 1$ in (1). As we can see, the oscillators are evolving towards a synchronized configuration, but synchronization is not reached in the short time horizon we are providing. In <strong>Figure 1-bottom</strong>, we show the evolution of the same dynamics, this time under the action of the control function $u$ computed through the minimization of $J(u)$. The subplot on the left corresponds to the simulations done with the GD approach, while the one on the right is done employing GD-RBM. We can clearly see how, in both cases, the oscillators are all synchronized at the final time $T=3s$. This means that both algorithms managed to compute an effective control.</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/KuramotoFull.jpg" alt="" />
-<strong>Figure 1</strong>: Top - evolution of the free dynamics of the Kuramoto model (1) with $N=10$ oscillators. Bottom - evolution of the controlled dynamics of the Kuramoto model (1) with $N=10$ oscillators. The control function $\widehat{u}$ is obtained with the GD (left) and the GD-RBM (right) approach.</p>
+<p><img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/KuramotoFull.jpg" /></p>
+<center>
+  <b>Figure 1.</b> Top - evolution of the free dynamics of the Kuramoto model (1) with $N=10$ oscillators. Bottom - evolution of the controlled dynamics of the Kuramoto model (1) with $N=10$ oscillators. The control function $\widehat{u}$ is obtained with the GD (left) and the GD-RBM (right) approach.
+</center>
 
 <p>In <strong>Figure 2</strong>, we display the behavior of the control function $\widehat{u}$ computed via the GD-RBM algorithm. We can see how, at the beginning of the time interval we are considering, this control is close to one and it is increasing with a small slope. On the other hand, this growth becomes more pronounced as we get closer to the final time $T=3s$.</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/control.jpg" alt="" />
-<strong>Figure 2</strong>: control function $\widehat{u}$ obtained through the GD-RBM algorithm applied to the Kuramoto model (1) with $N=10$ oscillators.</p>
+<p><img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/control.jpg" /></p>
+<center>
+  <b>Figure 2.</b> control function $\widehat{u}$ obtained through the GD-RBM algorithm applied to the Kuramoto model (1) with $N=10$ oscillators.
+</center>
 
 <p>Notice that, in (1), $\widehat{u}$ enters as a multiplicative control which modifies the strength of the coupling $K$. Hence, according to the profile displayed in <strong>Figure 2</strong>, the control function $\widehat{u}$ we computed is initially letting the system evolving following its natural dynamics. Then, as the time evolves towards the horizon $T=3s$, $\widehat{u}$ enhances the coupling strength $K$ in order to reach the desired synchronized configuration (2).</p>
 
@@ -399,15 +423,19 @@ Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics 
 
 <p>Figure <strong>Figure 3</strong> shows the computational times required by the two methodologies to solve the optimization problem (3).</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/timePlotComparison.jpg" alt="" />
-<strong>Figure 3</strong>: computational times required by the GD and GD-RBM algorithm to compute the optimal control $\widehat{u}$ with increasing values of $N$.</p>
+<p><img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/timePlotComparison.jpg" /></p>
+<center>
+  <b>Figure 3.</b> computational times required by the GD and GD-RBM algorithm to compute the optimal control $\widehat{u}$ with increasing values of $N$.
+</center>
 
 <p>Our simulations show how, for low values of $N$, the two approaches show similar behaviors. Nevertheless, when increasing the number of oscillators in our system, the advantages of the GD-RBM methodology with respect to GD become evident. In particular, the growth of the computational time for GD-RBM is significantly less pronounced than for GD. As a matter of fact, <strong>Figure 3</strong> is not considering the case of $N=1000$ oscillators with GD, since the behavior with smaller values of $N$ already suggested that this experiment would be computationally too expensive.</p>
 
 <p>On the other hand, even with $N=1000$ oscillators in the system, the GD-RBM approach turns out to be able to compute an effective control for the Kuramoto model (1) in about $29$ seconds (see <strong>Figure 4</strong>).</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/stateEvolutionStochN1000.jpg" alt="" />
-<strong>Figure 4</strong>: evolution of the controlled dynamics of the Kuramoto model (1) with $N=1000$ oscillators. The control has been computed with the GD-RBM algorithm.</p>
+<p><img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/stateEvolutionStochN1000.jpg" /></p>
+<center>
+  <b>Figure 4.</b> evolution of the controlled dynamics of the Kuramoto model (1) with $N=1000$ oscillators. The control has been computed with the GD-RBM algorithm.
+</center>
 
 <p>More details on the contents of this post can be found in [1].</p>
 
@@ -421,6 +449,326 @@ Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics 
       </div>
     </div>
   </div>
+  <div id="content" class="container">
+
+  <div class="relatedPosts">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+    <h2>Related Posts</h2>
+    
+    
+    
+    
+    
+
+    
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/stateEvolution.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0011" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Stochastic optimization for simultaneous control </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      Simultaneous control of parameter-depending systems using stochastic optimization algorithms
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+          
+          - 03 June 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog//assets/imgs/WP01/P0010/trajectory.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0010" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> The interplay of control and deep learning </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      Deep supervised learning roughly consists in solving a discretised optimal control problem subject to a nonlinear, discrete-time dynamical system, called an artificial neural network.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
+          
+          - 30 April 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0009/ico.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0009" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Simultaneous Control with DyCon Toolbox </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial we will present a simultaneous control problem in a linear system dependent on parameters. We will use the MATLAb DyCon Toolbox library.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+          
+          - 01 April 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/icon.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0008" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Stabilization of a double pendulum on a cart with DyCon Toolbox </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this blog post, we consider a double pendulum on a cart and we solve the problem of swinging up the pendulum from the downward position to the upward position using optimal control techniques.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
+          
+          - 13 February 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+            
+    </div>
+  </div> 
+    </div>
+  </div>
+
 </article>
 <hr>
 
