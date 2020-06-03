@@ -5,9 +5,252 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 26 May 2020 12:16:09 +0200</pubDate>
-    <lastBuildDate>Tue, 26 May 2020 12:16:09 +0200</lastBuildDate>
+    <pubDate>Wed, 03 Jun 2020 18:43:05 +0200</pubDate>
+    <lastBuildDate>Wed, 03 Jun 2020 18:43:05 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Stochastic optimization for simultaneous control</title>
+        <description>What is a simultaneous control problem?
+
+Consider the following parameter-dependent linear control system
+
+
+
+with
+
+
+
+The matrix $\mathbf{A}_\nu$ is associated with the Brunovsky canonical form of the linear ODE
+
+
+
+where $x^{(N)}_\nu(t)$ denotes the $N$-th derivative of the function $x(t)$.
+
+In (1)-(2), $x_\nu(t)\in L^2(0,T;\mathbf{R}^N)$, $N\geq 1$, denotes the state, the $N\times N$ matrix $\mathbf{A}_\nu$ describes the dynamics, and the function $u(t)\in L^2(0,T;\mathbb{R}^M)$, $1\leq M\leq N$, is the $M$-component control acting on the system through the $N\times M$ matrix $\mathbf{B}$. Here 
+
+ is a random parameter following a probability law $\mu$, with $(\mathcal K,\mathcal F,\mu)$ the corresponding complete probability space.
+
+With simultaneous controllability we refer to the problem of designing a unique parameter-independent control function capable to steer all the different realizations of (1) to some prescribed final target in time $T$, that is (see Figure 1 and Figure 2):
+
+
+
+
+
+Figure 1: evolution of the free (left) and controlled (right) dynamics of (1)-(2) with $N=4$.
+
+
+
+Figure 2: parameter-independent control function.
+
+How can we solve a simultaneous controllability problem?
+
+The computation of a simultaneous control for (1)-(2) can be carried out through a standard optimal control methodology by solving the following minimization problem
+
+
+
+subject to the dynamics given by (1)-(2). Here $\mathbb{E}[\cdot]$ denotes the expectation operator.
+
+Typical approaches to solve the optimization problem (3) are (see [3]):
+
+
+  The Gradient Descent (GD) algorithm: we find the minimizer $\widehat{u}$ as the limit $k\to +\infty$ of the following iterative process
+
+
+
+
+where for all $\nu\in\mathcal K$ the pair $(x_\nu,p_\nu)$ solves the coupled system
+
+
+
+
+  The Conjugate Gradient (CG) algorithm: the gradient $\nabla F_\nu$ is rewritten in the form
+
+
+
+
+where the operators $\mathcal L_{T,\nu}$ and $\mathcal L_{T,\nu}^\ast$ are defined as
+
+
+
+with $U:=L^2(0,T;\mathbb{R}^M)$ and
+
+
+
+We then use the conjugate gradient algorithm to solve the linear system $\mathbb{A}u = b$.
+
+These two procedures are impractical when the cardinality of the parameter set $\mathcal K$ is large because they require repeated resolutions of the dynamics (4) for all $\nu\in \mathcal K$.
+
+This issue can be bypassed by employing a stochastic optimization method. In particular, we can consider the following approaches:
+
+
+  The Stochastic Gradient Descent (SGD) algorithm (see [2]): it is a drastic simplification of the classical GD in which, instead of computing the gradient of the functional for all parameters $\nu\in\mathcal K$, in each iteration this gradient is estimated on the basis of a single randomly picked configuration. This translates in the following recursion process
+
+
+
+
+with $\nu_k$ selected i.i.d. from $\mathcal K$.
+
+  The Continuous Stochastic Gradient (CSG) algorithm: it is a variant of SGD, based on the idea of reusing previously obtained information to improve the efficiency. The CSG recursion process for optimizing $F_\nu$ is given by
+
+
+
+
+where the weights ${\alpha_\ell}_{\ell = 1}^k$ are obtained through the methodology presented in [4].
+
+Experimental Results: comparison of the algorithms
+
+We can test the efficiency of each one of the four aforementioned algorithms by performing simulations for increasing values of 
+.
+ In these simulations, we have chosen the initial state $x^0 =(1,1,1,1)^\top$ and the final target $x^T=(0,0,0,0)^\top$. The time horizon is set to be $T=1s$. The parameter set is a $|\mathcal K|$ points partition of the interval $[1,6]$: 
+
+ with $\nu_1=1$ and $\nu_{|\mathcal K|}=6$.
+
+Figure 3 displays the computational times (in logarithmic scale) the four algorithms need to compute a simultaneous control for (1)-(2).
+
+
+
+Figure 3: computational time (in logarithmic scale) to converge to the tolerance $\varepsilon = 10^{-4}$ of the GD, CG, SGD and CSG algorithms applied to the problem (1)-(2) with different values of $|\mathcal K|$.
+
+We can observe the following facts:
+
+
+  The GD algorithm is the one showing the worst performances. This because it has to copy with a high per-iteration cost but also with the fact that controllability problems are typically bad conditioned.
+  The CG algorithm is the one requiring the lower number of iterations to converge. This implies that CG is the best approach among the one considered when dealing with a low and moderate amount of parameters.
+  The stochastic approaches SGD and CSG appear to be insensitive to the cardinality of the parameter set. This fact is not surprising if we consider that, no matter how many parameters enter in our control problem, with SGD and CSG each iteration of the optimization process always requires only one resolution of the coupled system (4).
+  The CSG algorithm always outperforms SGD in terms of the number of iterations it requires to converge and, consequently, of the total computational time. This because in CSG the approximated gradient is close to the full gradient $\nabla F_\nu$ of the objective functional when $k\to +\infty$. This translates in a less noisy optimization process with better convergence behavior (see Figure 4).
+
+
+
+
+Figure 4: convergence of the error for SGD and CSG. The plots correspond to $50$ launches of the two algorithms with a tolerance $\varepsilon = 10^{-4}$.
+
+
+All these considerations corroborate the fact that, when dealing with large parameter sets, a stochastic approach is preferable to a deterministic one to address the simultaneous controllability of (1)-(2).
+
+A more complete discussion on the employment of stochastic optimization algorithms for simultaneous controllability can be found in [1].
+
+Bibliography
+
+[1] U. Biccari, A. Navarro-Quiles and E. Zuazua, Stochastic optimization methods for the simultaneous controllability of parameter-dependent systems, preprint (2020).
+
+[2] L. Bottou, F. E. Curtis and J. Nocedal, Optimization methods for large-scale machine learning, SIAM Rev., Vol. 60, No. 2 (2018), pp. 223-311.
+
+[3] J. Nocedal and S. Wright, S, Numerical optimization, Springer Science &amp;amp; Business Media, 2006.
+
+[4] L. Pflug, N. Bernhardt, M. Grieshammer and M. Stingl, A new stochastic gradient method for the efficient solution of structural optimization problems with infinitely many state problems, preprint (2020).
+</description>
+        <pubDate>Wed, 03 Jun 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0011</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0011</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP01</category>
+        
+      </item>
+    
+      <item>
+        <title>Synchronized Oscillators</title>
+        <description>Consider the Kuramoto model for the synchronization of coupled oscillators
+
+
+Here $\theta_i(t)$, $i = 1,\ldots,N$, is the phase of the $i$-th oscillator, $\omega_i$ is its natural frequency and $K$ is the coupling strength. The frequencies $\omega_i$ are distributed with a given probability density $f(\omega)$, unimodal and symmetric around the mean frequency
+
+that is, $f(\Omega+\omega) = f(\Omega-\omega)$.
+
+It is known that, if the coupling $K$ is sufficiently strong, the oscillators will synchronize asymptotically, i.e.
+
+
+We want to design a control capable to ensure synchronization in a final time horizon $T$, that is
+
+
+To compute this optimal control allowing us to reach the synchronized configuration (3) we can adopt a classical approach based on the resolution of the following optimization problem
+
+subject to the dynamics (1).
+
+For the resolution of (3), we use the standard GD method, which looks for the minimum $u$ as the limit $k\to +\infty$ of the following iterative process
+
+
+This gradient technique is most often chosen because it is very easy to be implemented.
+
+In order to fully define the iterative scheme (4), we need to compute the gradient $\nabla J(u)$. This can be done via the Pontryagin maximum principle.
+
+To this end, let us first rewrite the dynamics (1) in a vectorial form as follows
+
+with $\Theta :=(\theta_1,\ldots,\theta_N)^\top$, $\Theta^0:=(\theta_1^0,\ldots,\theta_N^0)^\top$ and $\Omega :=(\omega_1,\ldots,\omega_N)^\top$, and where $F$ is the vector field given by
+
+
+Using the notation just introduced, we obtain the following expression for the gradient of $J(u)$
+
+where $\mathcal D_uF$ indicates the Jacobian of the vector field $F$, computed with respect to the variable $u$.
+
+In (5), we denoted with $p = (p_1,\ldots,p_N)$ the solution of the adjoint equation associated with (1), which is given by
+
+where $\mathcal D_\Theta F$ stands again for the Jacobian of the vector field $F$, this time computed with respect to the variable $\Theta$.
+
+Taking into account the expression of the vector field $F$, we can then see that the iterative scheme (4) becomes
+
+with
+
+
+We then see that, at each iteration $k$ the optimization scheme (6) requires to solve a $N$-dimensional non-linear dynamical system. This may rapidly become computationally very expensive, especially when the number $N$ of oscillators in our system is large.
+
+In order to reduce this computational burden, we can combine the standard GD algorithm with the so-called Random Batch Method (RBM), which is a recently developed approach (see [2]) allowing for an efficient numerical simulation of high-dimensional collective behavior problems. This technique is based on the following simple idea: at each time step $t_m = m\cdot dt$ in the mesh we employ to solve the dynamics, we divide randomly the $N$ particles into $n$ small batches with size $2\leq P&amp;lt;N$, denoted by $C_q$, $q = 1,\ldots,n$, that is
+
+Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics by interacting only particles within the same batch. In this way, we are now dealing with systems of lower dimension and the computational cost of the GD algorithm is reduced.
+
+Numerical simulations
+
+We can check the effectiveness of the proposed approach through some numerical simulations for the computation of the optimal control $\widehat{u}$.
+
+Firstly, we can show that the optimization problem (3) indeed allows to compute an effective control function which is capable to steer the Kuramoto model (1) to a synchronized configuration.
+
+In Figure 1-top, we show the evolution of the uncontrolled dynamics, which corresponds to taking $u\equiv 1$ in (1). As we can see, the oscillators are evolving towards a synchronized configuration, but synchronization is not reached in the short time horizon we are providing. In Figure 1-bottom, we show the evolution of the same dynamics, this time under the action of the control function $u$ computed through the minimization of $J(u)$. The subplot on the left corresponds to the simulations done with the GD approach, while the one on the right is done employing GD-RBM. We can clearly see how, in both cases, the oscillators are all synchronized at the final time $T=3s$. This means that both algorithms managed to compute an effective control.
+
+
+Figure 1: Top - evolution of the free dynamics of the Kuramoto model (1) with $N=10$ oscillators. Bottom - evolution of the controlled dynamics of the Kuramoto model (1) with $N=10$ oscillators. The control function $\widehat{u}$ is obtained with the GD (left) and the GD-RBM (right) approach.
+
+In Figure 2, we display the behavior of the control function $\widehat{u}$ computed via the GD-RBM algorithm. We can see how, at the beginning of the time interval we are considering, this control is close to one and it is increasing with a small slope. On the other hand, this growth becomes more pronounced as we get closer to the final time $T=3s$.
+
+
+Figure 2: control function $\widehat{u}$ obtained through the GD-RBM algorithm applied to the Kuramoto model (1) with $N=10$ oscillators.
+
+Notice that, in (1), $\widehat{u}$ enters as a multiplicative control which modifies the strength of the coupling $K$. Hence, according to the profile displayed in Figure 2, the control function $\widehat{u}$ we computed is initially letting the system evolving following its natural dynamics. Then, as the time evolves towards the horizon $T=3s$, $\widehat{u}$ enhances the coupling strength $K$ in order to reach the desired synchronized configuration (2).
+
+We can now compare the performances of the GD and GD-RBM algorithms for the computation of the optimal control $\widehat{u}$. To this end, we can run simulations for increasing values of $N$, namely $N=10,50,100,250,1000$.
+
+Figure Figure 3 shows the computational times required by the two methodologies to solve the optimization problem (3).
+
+
+Figure 3: computational times required by the GD and GD-RBM algorithm to compute the optimal control $\widehat{u}$ with increasing values of $N$.
+
+Our simulations show how, for low values of $N$, the two approaches show similar behaviors. Nevertheless, when increasing the number of oscillators in our system, the advantages of the GD-RBM methodology with respect to GD become evident. In particular, the growth of the computational time for GD-RBM is significantly less pronounced than for GD. As a matter of fact, Figure 3 is not considering the case of $N=1000$ oscillators with GD, since the behavior with smaller values of $N$ already suggested that this experiment would be computationally too expensive.
+
+On the other hand, even with $N=1000$ oscillators in the system, the GD-RBM approach turns out to be able to compute an effective control for the Kuramoto model (1) in about $29$ seconds (see Figure 4).
+
+
+Figure 4: evolution of the controlled dynamics of the Kuramoto model (1) with $N=1000$ oscillators. The control has been computed with the GD-RBM algorithm.
+
+More details on the contents of this post can be found in [1].
+
+Bibliography
+
+[1] U. Biccari and E. Zuazua, A stochastic approach to the synchronization of coupled oscillators, to appear in Front. Energy Res.
+
+[2] S. Jin, L. Li and J.-G. Liu, Random Batch Methods (RBM) for nteracting particle systems, J. Comput. Phys. 400 (2020), 108877.
+</description>
+        <pubDate>Wed, 03 Jun 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0006</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0006</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP01</category>
+        
+      </item>
     
       <item>
         <title>The interplay of control and deep learning</title>
@@ -1728,695 +1971,6 @@ References:
         <category>tutorial</category>
         
         <category>WP03</category>
-        
-      </item>
-    
-      <item>
-        <title>Control of reaction-diffusion under state constraints</title>
-        <description>Reaction-diffusion equations appear frequently in natural phenomena such as:
-
-  Population dynamics and invasion of species (see [1]).
-  Neuroscience, where models for neuronal impulses exhibit traveling waves (see [2]).
-  Chemical Reactions: modeling the evolution of concentrations of chemicals (see [3]).
-  In evolutionary game theory  (see [4, 5]).
-  Magnetic systems in material science and their phase transitions (see [6]).
-  Linguistics, we refer to [7] where the authors consider reaction-diffusion for analyzing language shift by means of a traveling wave.
-
-
-In the majority of the systems mentioned above, the state $u$ of an equation of the type
-
-
-
-represents a population, concentration or proportion. For this reason, any model intending to predict the behavior of such quantity must fulfill a maximum principle [8].
-
-In this group of tutorials, our aim is to explain the phenomenology arising when considering a control problem in the contexts mentioned above.
-
-In general, the controllability of parabolic equations has been widely studied (for instance [9,10,11]). However, in this literature, the requirement that the trajectory has to be positive or between prescribed bounds was not a concern.
-
-In Figure 1 one can see a boundary control of the semilinear equation
-
-
-
-with $a$ being the control and the target function $v\equiv 0.33$.
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-
-Control from $u(0)\equiv 0$ to $u(T)\equiv 0.33$.
-
-This model models the evolution of a proportion, and we observe that the control does not preserve the positivity of the state neither the meaningful upper bound.
-
-From the application point of view of several of the applications mentioned, any control action proposed must fulfill that the associated trajectory has meaning.
-
-The ideas exposed in this tutorial group are the following:
-
-
-  
-    
-    
-    
-        The presence of state-constraints can create intrinsic obstructions for achieving the controllability. This is due to the emergence on non-trivial solutions and the comparison principle. The topic is treated in this blog.
-        
-  
-  
-    
-  
-  
-  
-    
-       Control of reaction-diffusion under state constraints - Barriers 
-    
-
-    
-      This tutorial is part of the control under state constraints. We will show how obstructions to the state constraint controllability can appear.
-    
-
-    
-        
-          Author:
-          
-          
-            
-              Domenec Ruiz
-          
-          - 31 March 2020
-        
-        
-        MATLAB-CasADi
-    
-    
-
-  
-
-
-    
-        In order to prove the existence of controls one can use the stair-case method. This method relies on the construction of paths of steady-states that the controlled trajectory can follow. One can find more information about these constructions in this blog.
-        
-  
-  
-    
-  
-  
-  
-    
-       Control of reaction-diffusion under state constraints - Application of the staircase method 
-    
-
-    
-      In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation
-    
-
-    
-        
-          Author:
-          
-          
-            
-              Domenec Ruiz
-          
-          - 03 April 2020
-        
-        
-        MATLAB-CasADi
-    
-    
-
-  
-
-
-    
-        In contrast to the unconstrained case, the presence of constraints induces a minimal controllability time. However, the construction done with the path of steady-states is only a way to control and it requires typically a large time, much larger than the minimal one.  In this blog post, we explore different ways to control the system, a minimal controllability time control, a quasistatic control and we explore numerically the effect of the presence of barriers in an optimal control framework.
-        
-  
-  
-    
-  
-  
-  
-    
-       Control of reaction-diffusion under state constraints - Numerical exploration of controls 
-    
-
-    
-      This tutorial is part of the control under state constraints. We will simulate different control strategies to the same target by minimizing different functionals.
-    
-
-    
-        
-          Author:
-          
-          
-            
-              Domenec Ruiz
-          
-          - 04 April 2020
-        
-        
-        MATLAB-CasADi
-    
-    
-
-  
-
-
-    
-        Many models in population dynamics take care about spatial heterogeneity, this can lead for example to new types obstructions. In the blog, we explain the main features and the influence of an heterogeneous drift in a bistable equation called gene-flow. The heterogeneity in the drift comes from an approximation of a system of a system of two equations with an heterogeneous environment.
-        
-  
-  
-    
-  
-  
-  
-    
-       Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow. 
-    
-
-    
-      This tutorial is part of the control under state constraints. We will present the main features regarding the controllability of bistable reaction-diffusion equations with heterogeneous drifts.
-    
-
-    
-        
-          Authors:
-          
-          
-            
-              Domenec Ruiz,
-          
-            
-              Idriss Mazari
-          
-          - 19 April 2020
-        
-        
-        MATLAB-CasADi
-    
-    
-
-  
-
-
-    
-    
-  
-
-
-References:
-
-[1] A. Kolmogorov, Étude de l’équation de la diffusion avec croissance de la quantité de matière et son
-application à un problème biologique, Bull. Univ. Moskow, Ser. Internat., Sec. A 1 (1937) 1–25.
-
-[2] J. Evans, Nerve axon equations 4: the stable and unstable impulse, Indiana Univ. Math. J. 24 (12)
-(1975) 1169–1190.
-
-[3] B. Perthame, Parabolic equations in biology : growth, reaction, movement and diffusion, Lecture
-notes on mathematical modelling in the life sciences, 2015.
-
-[4] Travelling waves for games in economics and biology, Nonlinear Analysis: Theory, Methods and
-Applications 30 (2) (1997) 1235 – 1244, proceedings of the Second World Congress of Nonlinear
-Analysts.
-
-[5] V. Hutson, K. Mischaikow, G. T. Vickers, Multiple travelling waves in evolutionary game dynamics,
-Japan Journal of Industrial and Applied Mathematics 17 (3) (2000) 341.
-
-[6] A. De Masi, P. Ferrari, J. Lebowitz, Reaction diffusion equations for interacting particle systems, J.
-Stat. Phys. 44 (3-4) (1986) 589–644.
-
-[7] K. Prochazka, G. Vogl, Quantifying the driving factors for language shift in a bilingual region 114 (17) (2017) 4365–4369.
-
-[8] M.H. Protter and H.F. Weinberger, Maximum principles in differential equations, Springer Science &amp;amp; Business Media, 2012.
-
-[9] G. Lebeau, L. Robbiano, Contrôle exact de léquation de la chaleur, Communications in Partial
-Differential Equations 20 (1-2) (1995) 335–356.
-
-[10] E. Fernández-Cara and E. Zuazua, Null and approximate controllability for weakly blowing up semilinear heat equations, Ann. Inst. H. Poincaré Anal. Non Linéaire 17 (2000), no. 5, 583 – 616.
-
-[11] A.V. Fursikov and O.Y. Imanuvilov, Controllability of evolution equations, no. 34, Seoul National University, 1996.
-
-[12] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
-
-[13]  P.L. Lions, On the existence of positive solutions of semilinear elliptic equations, SIAM Rev. 24 (1982), no. 4, 441–467.
-
-[14] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
-Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.
-
-[15] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
-tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.
-
-[16] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
-635 tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
-
-[17]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case (2019).   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.
-
-[18] I. Mazari, D. Ruiz-Balet, and E. Zuazua, Constrained control of bistable reaction-diffusion equations: Gene-flow and spatially heterogeneous models, preprint: https://hal.archives-ouvertes.fr/hal-02373668/document (2019).
-
-</description>
-        <pubDate>Mon, 30 Mar 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0007</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0007</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP03</category>
-        
-      </item>
-    
-      <item>
-        <title>Control for a semilinear heat equation and analogies with a collective behavior model</title>
-        <description>In this tutorial we will apply the DyCon toolbox to find a control to the semi-discrete semi-linear heat equation.
-
-
-
-where $N^2A$ is the discretization of the Laplacian in 1d in $N$ nodes. We are looking for a control that after time $T$ steers the system near zero.
-
-Setup
-
-In this tutorial we need DyCon Toolbox, to install it we will have to write the following in our MATLAB console:
-
-unzip('https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip')
-addpath(genpath(fullfile(cd,'DyCon-toolbox-master')))
-
-Methodology
-In order to do so we will frame the problem as a minimization of a functional and we will apply gradient descent to find it. Note that the convexity of the functional is not proven, therefore, we will obtain a local minima for the functional. The functional considered will be:
-
-
-
-where by $| \cdot |_{L^2}$ we understand the discrete $L^2$ norm.
-
-Once this control is computed for a certain N, we will think on a dynamical system that models an opinion dynamics with $N$ agents communicating through a chain.
-
-\begin{equation}\label{m1}y_t-\frac{1}{N}Ay=G(y)+Bv\end{equation}
-
-The goal will be to compute also the control $v$ thinking model \eqref{m1} as if it was a semidiscretization of a heat equation with diffusivity $\frac{1}{N^3}$. Furthermore we will also compute the control for model \eqref{m1} with the non-linearity being non-homogeneous on $N$ and a time horizon being $T_N=N^3T$.
-
-clear all
-import casadi.*
-
-
-Definition of the time
-
-ts = SX.sym('t');
-%% Discretization of the space
-N = 30;
-xi = 0; xf = 1;
-xline = linspace(xi,xf,N);
-
-
-Interior Control region between 0.5 and 0.8
-
-w1 = 0.5; w2 = 0.8;
-D = 1;
-
-
-[A,B,count] = GetABmatrix(N,w1,w2,D);
-
-
-we define symbolically the vectors of the state and the control
-
-Ys = SX.sym('y',[N 1]);
-Us = SX.sym('u',[count 1]);
-
-
-We create the ODE object Our ODE object will have the semi-discretization of the semilinear heat equation. We set also initial conditions, define the non linearity and the interaction of the control to the dynamics.
-
-Initial condition
-
-Y0 = 2*sin(pi*xline');
-
-
-Diffusion part: the discretization of the 1d Laplacian
-
-Definition of the non-linearity 
-
-G = casadi.Function('NLT',{Ys},{10*Ys.*exp(-Ys.^2)});%%
-
-
-and we define the part of the dynamics corresponding to the nonlinearity
-
-Putting all the things together
-
-F = casadi.Function('F',{ts,Ys,Us},{A*Ys + B*Us + G(Ys)});
-%% Creation of the ODE object
-%% Time horizon
-T = 1;
-
-
-We create the ODE-object and we change the resolution to $dt=0.01$ in order to see the variation in a small time scale. We will get the values of the solution in steps of size odeEqn.dt, if we do not care about modifying this parameter in the object, we might get the solution in certain time steps that will hide part of the dynamics.
-
-Nt = 100;
-tspan = linspace(0,T,Nt);
-ipde = semilinearpde1d(Ys,Us,A,B,G,tspan,xline);
-ipde.InitialCondition = Y0;
-
-
-We solve the equation and we plot the free solution applying solve to odeEqn and we plot the free solution.
-
-Yfree = solve(ipde,ZerosControl(ipde));
-Yfree = full(Yfree);
-
-
-figure;
-surf(Yfree','EdgeColor','none');
-title('Free Dynamics')
-xlabel('space discretization')
-ylabel('Time')
-yticks([1 Nt])
-yticklabels([tspan(1) tspan(end)])
-
-
-
-
-We create the object that collects the formulation of an optimal control problem  by means of the object that describes the dynamics odeEqn, the functional to minimize Jfun and the time horizon T
-
-L   = Function('L'  ,{ts,Ys,Us},{ Us.'*Us  });
-Psi = Function('Psi',{Ys}      ,{ 1e6*(Ys.'*Ys) });
-
-iocp = ocp(ipde,L,Psi);
-
-
-We apply the steepest descent method to obtain a local minimum (our functional might not be convex).
-
-U0 =ZerosControl(ipde);
-[OptControl ,OptState]  = IpoptSolver(iocp,U0);
-
-
-This is Ipopt version 3.12.3, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
-
-Number of nonzeros in equality constraint Jacobian...:    19236
-Number of nonzeros in inequality constraint Jacobian.:        0
-Number of nonzeros in Lagrangian Hessian.............:     3900
-
-Total number of variables............................:     3900
-                     variables with only lower bounds:        0
-                variables with lower and upper bounds:        0
-                     variables with only upper bounds:        0
-Total number of equality constraints.................:     3000
-Total number of inequality constraints...............:        0
-        inequality constraints with only lower bounds:        0
-   inequality constraints with lower and upper bounds:        0
-        inequality constraints with only upper bounds:        0
-
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-   0  3.0000000e+07 9.05e+00 9.67e-01  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
-   1  2.4544321e+05 1.22e-01 7.92e+00  -1.0 3.10e+01  -2.0 1.00e+00 1.00e+00f  1
-   2  1.8219937e+06 4.24e-03 1.73e+00  -1.0 1.31e+01  -1.6 1.00e+00 1.00e+00h  1
-   3  7.1220860e+04 1.67e-02 2.92e+00  -1.0 9.12e+00  -2.1 1.00e+00 1.00e+00f  1
-   4  8.9356500e+03 3.97e-04 8.51e-02  -1.0 2.41e+00  -2.5 1.00e+00 1.00e+00f  1
-   5  3.1075917e+03 1.06e-04 3.19e-03  -2.5 2.96e+00  -3.0 1.00e+00 1.00e+00f  1
-   6  1.3016546e+03 5.20e-05 1.19e-03  -3.8 3.60e+00  -3.5 1.00e+00 1.00e+00h  1
-   7  4.5871538e+02 5.64e-05 4.84e-04  -5.7 4.41e+00  -4.0 1.00e+00 1.00e+00h  1
-   8  1.6346578e+02 6.55e-05 1.92e-04  -5.7 5.26e+00  -4.4 1.00e+00 1.00e+00h  1
-   9  9.7049320e+01 1.20e-04 3.78e-05  -5.7 3.10e+00  -4.9 1.00e+00 1.00e+00h  1
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-  10  4.0069187e+01 9.26e-03 1.98e-05  -5.7 1.48e+01    -  1.00e+00 5.00e-01h  2
-  11  1.6748754e+01 4.28e-04 2.92e-06  -5.7 4.34e+00    -  1.00e+00 1.00e+00h  1
-  12  1.6371256e+01 4.58e-06 9.87e-09  -5.7 1.88e-01    -  1.00e+00 1.00e+00h  1
-  13  1.6367177e+01 1.03e-11 1.11e-13  -8.6 7.84e-04    -  1.00e+00 1.00e+00h  1
-
-Number of Iterations....: 13
-
-                                   (scaled)                 (unscaled)
-Objective...............:   8.1835886066017175e-04    1.6367177213203433e+01
-Dual infeasibility......:   1.1096830919432588e-13    2.2193661838865175e-09
-Constraint violation....:   1.0345974077452524e-11    1.0345974077452524e-11
-Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
-Overall NLP error.......:   1.0345974077452524e-11    2.2193661838865175e-09
-
-
-Number of objective function evaluations             = 19
-Number of objective gradient evaluations             = 14
-Number of equality constraint evaluations            = 19
-Number of inequality constraint evaluations          = 0
-Number of equality constraint Jacobian evaluations   = 14
-Number of inequality constraint Jacobian evaluations = 0
-Number of Lagrangian Hessian evaluations             = 13
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.436
-Total CPU secs in NLP function evaluations           =      0.057
-
-EXIT: Optimal Solution Found.
-               t_proc [s]   t_wall [s]    n_eval
-       nlp_f     0.000826     0.000828        19
-       nlp_g      0.00916      0.00917        19
-  nlp_grad_f      0.00139      0.00139        15
-  nlp_hess_l       0.0175       0.0174        13
-   nlp_jac_g       0.0333       0.0333        15
-      solver        0.507        0.501         1
-Elapsed time is 0.636870 seconds.
-
-
-
-plotSHE(OptState,OptControl,Yfree,YT,xline,tspan,Nt)
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-Collective behavior dynamics
-
-Now we apply the same procedure for the collective behavior dynamics. We will employ a function that does the algorithm explained before for the semilinear heat equation having the chance to set a diffusivity constant.
-
-For the simulation of the model in collective behavior we will employ a diffusivity $D=\frac{1}{N^3}$.
-
-D = 1/(N^3);
-[A,B,count] = GetABmatrix(N,w1,w2,D);
-%%
-G = casadi.Function('NLT',{Ys},{10*Ys.*exp(-Ys.^2)});%%
-%%
-T = 1;  Nt = 100;
-tspan = linspace(0,T,Nt);
-%%
-ipde = semilinearpde1d(Ys,Us,A,B,G,tspan,xline);
-ipde.InitialCondition = Y0;
-%%
-iocp = ocp(ipde,L,Psi);
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-U0 =ZerosControl(ipde);
-%%[OptControl ,OptState]  = ArmijoGradient(iocp,U0,'MaxIter',200);
-[OptControl ,OptState]  = IpoptSolver(iocp,U0);
-
-
-This is Ipopt version 3.12.3, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
-
-Number of nonzeros in equality constraint Jacobian...:    19236
-Number of nonzeros in inequality constraint Jacobian.:        0
-Number of nonzeros in Lagrangian Hessian.............:     3900
-
-Total number of variables............................:     3900
-                     variables with only lower bounds:        0
-                variables with lower and upper bounds:        0
-                     variables with only upper bounds:        0
-Total number of equality constraints.................:     3000
-Total number of inequality constraints...............:        0
-        inequality constraints with only lower bounds:        0
-   inequality constraints with lower and upper bounds:        0
-        inequality constraints with only upper bounds:        0
-
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-   0  3.0000000e+07 1.00e+00 9.72e-01  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
-   1  1.1211823e+08 6.93e-02 1.07e+01  -1.7 1.75e+00   0.0 1.00e+00 1.00e+00h  1
-   2  1.0201471e+08 2.53e-02 2.23e+00  -1.7 3.50e+00  -0.5 1.00e+00 1.00e+00f  1
-   3  8.8642262e+07 4.18e-02 5.31e-01  -1.7 2.13e+02    -  1.00e+00 1.00e+00f  1
-   4  8.2505158e+07 1.39e+00 3.13e+00  -1.7 2.72e+03    -  1.00e+00 1.00e+00F  1
-   5  7.9212105e+07 9.68e+00 5.20e+00  -1.7 1.38e+03    -  1.00e+00 1.00e+00f  1
-   6  7.8291279e+07 6.94e-02 2.84e+00  -1.7 2.05e+03    -  1.00e+00 1.00e+00f  1
-   7  7.8090072e+07 1.57e+00 4.98e-01  -1.7 7.87e+02    -  1.00e+00 1.00e+00f  1
-   8  7.8026943e+07 1.54e-01 8.25e-02  -1.7 3.33e+02    -  1.00e+00 1.00e+00f  1
-   9  7.8491521e+07 4.41e-02 7.64e+00  -2.5 2.10e+00  -1.0 1.00e+00 1.00e+00h  1
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-...
-...
-  54  7.8022238e+07 4.03e-07 8.33e-10  -5.7 2.15e-02    -  1.00e+00 1.00e+00h  1
-  55  7.8022238e+07 9.83e-12 1.82e-12  -8.6 1.02e-04    -  1.00e+00 1.00e+00h  1
-
-Number of Iterations....: 55
-
-                                   (scaled)                 (unscaled)
-Objective...............:   3.9011119130960064e+03    7.8022238261920124e+07
-Dual infeasibility......:   1.8189894035458565e-12    3.6379788070917130e-08
-Constraint violation....:   9.8296371042749797e-12    9.8296371042749797e-12
-Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
-Overall NLP error.......:   9.8296371042749797e-12    3.6379788070917130e-08
-
-
-Number of objective function evaluations             = 111
-Number of objective gradient evaluations             = 56
-Number of equality constraint evaluations            = 111
-Number of inequality constraint evaluations          = 0
-Number of equality constraint Jacobian evaluations   = 56
-Number of inequality constraint Jacobian evaluations = 0
-Number of Lagrangian Hessian evaluations             = 55
-Total CPU secs in IPOPT (w/o function evaluations)   =      1.374
-Total CPU secs in NLP function evaluations           =      0.308
-
-EXIT: Optimal Solution Found.
-               t_proc [s]   t_wall [s]    n_eval
-       nlp_f      0.00624      0.00627       111
-       nlp_g       0.0634       0.0633       111
-  nlp_grad_f      0.00762      0.00768        57
-  nlp_hess_l       0.0868       0.0846        55
-   nlp_jac_g        0.149        0.149        57
-      solver         1.74         1.73         1
-Elapsed time is 1.874814 seconds.
-
-
-
-plotSHE(OptState,OptControl,Yfree,YT,xline,tspan,Nt)
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-Now we will change also the time horizon and we will incorporate a non-homogeneous non-linearity, we will just divide the non-linearity $G$ by $N^3$
-
-D = 1/(N^2);
-[A,B,count] = GetABmatrix(N,w1,w2,D);
-%%
-G = casadi.Function('NLT',{Ys},{10*Ys.*exp(-Ys.^2)/N^2} );%%
-%%
-T = N^2;  Nt = 100;
-tspan = linspace(0,T,Nt);
-%%
-ipde = semilinearpde1d(Ys,Us,A,B,G,tspan,xline);
-ipde.InitialCondition = Y0;
-%%
-iocp = ocp(ipde,L,Psi);
-
-
-U0 =ZerosControl(ipde);
-[OptControl ,OptState]  = IpoptSolver(iocp,U0);
-
-
-This is Ipopt version 3.12.3, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
-
-Number of nonzeros in equality constraint Jacobian...:    19236
-Number of nonzeros in inequality constraint Jacobian.:        0
-Number of nonzeros in Lagrangian Hessian.............:     3900
-
-Total number of variables............................:     3900
-                     variables with only lower bounds:        0
-                variables with lower and upper bounds:        0
-                     variables with only upper bounds:        0
-Total number of equality constraints.................:     3000
-Total number of inequality constraints...............:        0
-        inequality constraints with only lower bounds:        0
-   inequality constraints with lower and upper bounds:        0
-        inequality constraints with only upper bounds:        0
-
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-   0  3.0000000e+07 9.05e+00 1.17e+02  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
-   1  2.8754020e+04 1.48e-01 4.01e+00  -1.0 2.73e+00   0.0 1.00e+00 1.00e+00f  1
-   2  3.0839145e+03 1.91e-02 3.08e-01  -1.0 9.19e-01  -0.5 1.00e+00 1.00e+00h  1
-   3  9.2703794e+02 1.17e-03 2.31e-02  -1.7 2.08e-01  -1.0 1.00e+00 1.00e+00h  1
-   4  4.2707593e+02 2.49e-03 9.65e-03  -3.8 2.61e-01  -1.4 1.00e+00 1.00e+00h  1
-   5  2.2851845e+02 1.36e-03 2.60e-03  -3.8 2.10e-01  -1.9 1.00e+00 1.00e+00h  1
-   6  1.5158663e+02 1.25e-03 9.80e-04  -3.8 2.38e-01  -2.4 1.00e+00 1.00e+00h  1
-   7  1.0229631e+02 2.37e-03 4.26e-04  -5.7 3.11e-01  -2.9 1.00e+00 1.00e+00h  1
-   8  8.6220145e+01 1.84e-01 3.73e-04  -5.7 2.84e+01    -  1.00e+00 1.25e-01h  4
-   9  1.6663658e+00 6.98e-02 4.71e-05  -5.7 2.20e+00    -  1.00e+00 1.00e+00h  1
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-  10  1.1303218e-01 1.61e-02 9.28e-07  -5.7 4.53e-01    -  1.00e+00 1.00e+00h  1
-  11  3.7959122e-02 7.79e-03 2.54e-08  -5.7 2.84e-01    -  1.00e+00 1.00e+00h  1
-  12  2.1316195e-02 1.77e-03 4.98e-09  -5.7 1.39e-01    -  1.00e+00 1.00e+00h  1
-  13  1.8447375e-02 6.30e-06 5.26e-11  -5.7 8.15e-03    -  1.00e+00 1.00e+00h  1
-  14  1.8440851e-02 2.26e-09 9.54e-15  -8.6 1.61e-04    -  1.00e+00 1.00e+00h  1
-
-Number of Iterations....: 14
-
-                                   (scaled)                 (unscaled)
-Objective...............:   9.2204254694796125e-07    1.8440850938959225e-02
-Dual infeasibility......:   9.5381182640930876e-15    1.9076236528186175e-10
-Constraint violation....:   2.2559639156760625e-09    2.2559639156760625e-09
-Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
-Overall NLP error.......:   2.2559639156760625e-09    2.2559639156760625e-09
-
-
-Number of objective function evaluations             = 19
-Number of objective gradient evaluations             = 15
-Number of equality constraint evaluations            = 19
-Number of inequality constraint evaluations          = 0
-Number of equality constraint Jacobian evaluations   = 15
-Number of inequality constraint Jacobian evaluations = 0
-Number of Lagrangian Hessian evaluations             = 14
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.415
-Total CPU secs in NLP function evaluations           =      0.065
-
-EXIT: Optimal Solution Found.
-               t_proc [s]   t_wall [s]    n_eval
-       nlp_f     0.000898     0.000903        19
-       nlp_g      0.00904      0.00905        19
-  nlp_grad_f       0.0017      0.00169        16
-  nlp_hess_l       0.0214       0.0214        14
-   nlp_jac_g       0.0354        0.035        16
-      solver        0.489        0.487         1
-Elapsed time is 0.616536 seconds.
-
-
-
-plotSHE(OptState,OptControl,Yfree,YT,xline,tspan,Nt)
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-</description>
-        <pubDate>Sun, 15 Mar 2020 00:00:00 +0100</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0008</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0008</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP06</category>
         
       </item>
     

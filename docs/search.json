@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Stochastic optimization for simultaneous control",
+      "categories"      : ["tutorial", "WP01"],
+      "url"             : "/tutorial/wp01/P0011",
+      "date"            : "2020-06-03",
+      "author"          : ["AnaN","UmbertoB","EnriqueZ"],
+      "description"     : "Simultaneous control of parameter-depending systems using stochastic optimization algorithms",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/stateEvolution.png"
+    } ,
+  
+    {
       "title"           : "The interplay of control and deep learning",
       "categories"      : ["tutorial", "WP01"],
       "url"             : "/tutorial/wp01/P0010",

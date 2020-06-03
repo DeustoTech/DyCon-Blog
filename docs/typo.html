@@ -209,6 +209,294 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2 id="what-is-a-simultaneous-control-problem"&gt;What is a simultaneous control problem?&lt;/h2&gt;
+</code></pre></div></div>
+
+<p>Consider the following parameter-dependent linear control system</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{\begin{array}{ll}
+\displaystyle x'_\nu(t) = \mathbf{A}_\nu x_\nu(t)+\mathbf{B} u(t), & 0<t<T,
+\\[10pt]
+x_\nu(0) = x^0,
+\end{array}\right.\quad (1) %]]></script>
+
+<p>with</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\mathbf{A}_\nu=\left(\begin{array}{cccccc}
+0 & 1 & 0 & \ldots & \ldots & 0
+\\
+0 & 0 & 1 & 0 & \ldots & 0
+\\
+\vdots & & & \ddots & \ddots & \vdots
+\\
+0 & \ldots & \ldots & \ldots & 1 & 0
+\\
+-\nu & 0 & \ldots & \ldots & \ldots & 0
+\end{array}\right)\in \mathbb{R}^{N\times N}, \quad \mathbf{B} = \left(\begin{array}{c} 1 \\ 1 \\ \vdots \\ \vdots \\ 1\end{array}\right)\in \mathbb{R}^{N}. \quad(2) %]]></script>
+
+<p>The matrix $\mathbf{A}_\nu$ is associated with the Brunovsky canonical form of the linear ODE</p>
+
+<script type="math/tex; mode=display">x^{(N)}_\nu(t) + \nu x_\nu(t) = 0,</script>
+
+<p>where $x^{(N)}_\nu(t)$ denotes the $N$-th derivative of the function $x(t)$.</p>
+
+<p>In (1)-(2), $x_\nu(t)\in L^2(0,T;\mathbf{R}^N)$, $N\geq 1$, denotes the state, the $N\times N$ matrix $\mathbf{A}_\nu$ describes the dynamics, and the function $u(t)\in L^2(0,T;\mathbb{R}^M)$, $1\leq M\leq N$, is the $M$-component control acting on the system through the $N\times M$ matrix $\mathbf{B}$. Here 
+<script type="math/tex">\nu\in \{ \nu_1,\nu_2,\ldots,\nu_{|\mathcal K|} \}=:\mathcal K</script>
+ is a random parameter following a probability law $\mu$, with $(\mathcal K,\mathcal F,\mu)$ the corresponding complete probability space.</p>
+
+<p>With <strong>simultaneous controllability</strong> we refer to the problem of designing a unique parameter-independent control function capable to steer all the different realizations of (1) to some prescribed final target in time $T$, that is (see <strong>Figure 1</strong> and <strong>Figure 2</strong>):</p>
+
+<script type="math/tex; mode=display">x_\nu(T)=x^T\in\mathbb{R}^N, \quad \nu\in \mathcal{K} \;\;\;\;\mu-\text{a. e.}</script>
+
+<p><img width="90%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/stateEvolution.png" /></p>
+
+<center><b>Figure 1</b>: evolution of the free (left) and controlled (right) dynamics of (1)-(2) with $N=4$.</center>
+
+<p><img width="70%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/control.png" /></p>
+
+<center><b>Figure 2</b>: parameter-independent control function.</center>
+
+<h2 id="how-can-we-solve-a-simultaneous-controllability-problem">How can we solve a simultaneous controllability problem?</h2>
+
+<p>The computation of a simultaneous control for (1)-(2) can be carried out through a standard optimal control methodology by solving the following minimization problem</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\displaystyle\widehat{u}=\min_{u\in L^2(0,T;\mathbb{R}^M)} F_{\nu}(u)
+\\[10pt]
+\displaystyle F_{\nu}(u):= \frac{1}{2} \mathbb{E}\left[\|x_\nu(T)-x^T\|_{\mathbb{R}^N}^2\right]+\frac{\beta}{2}\|u\|_{L^2(0,T;\mathbb{R}^M)}^2,
+\end{array} \quad (3)</script>
+
+<p>subject to the dynamics given by (1)-(2). Here $\mathbb{E}[\cdot]$ denotes the expectation operator.</p>
+
+<p>Typical approaches to solve the optimization problem (3) are (see [3]):</p>
+
+<ul>
+  <li>The <strong>Gradient Descent (GD)</strong> algorithm: we find the minimizer $\widehat{u}$ as the limit $k\to +\infty$ of the following iterative process</li>
+</ul>
+
+<script type="math/tex; mode=display">\textbf{GD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \frac{1}{|\mathcal K|}\sum_{\nu\in\mathcal K}\mathbf{B}^\top p_\nu^k\right),</script>
+
+<p>where for all $\nu\in\mathcal K$ the pair $(x_\nu,p_\nu)$ solves the coupled system</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{\begin{array}{ll}
+\displaystyle x'_\nu(t) = \mathbf{A}_\nu x_\nu(t)+\mathbf{B}u, & 0<t<T,
+\\[6pt]
+\displaystyle  p'_\nu(t) = -\mathbf{A}_\nu^\top p_\nu(t), & 0<t<T,
+\\[6pt]
+\displaystyle  x_\nu(0) = x^0, \quad p_\nu(T) = -(x_\nu(T)-x^T).
+\end{array}\right. \quad(4) %]]></script>
+
+<ul>
+  <li>The <strong>Conjugate Gradient (CG)</strong> algorithm: the gradient $\nabla F_\nu$ is rewritten in the form</li>
+</ul>
+
+<script type="math/tex; mode=display">\displaystyle\nabla F_\nu(u) = \underbrace{(\beta I + \mathbb{E}[\mathcal L_{T,\nu}^\ast\mathcal L_{T,\nu}])}_{\mathbb{A}}u + \underbrace{\mathbb{E}[\mathcal L_{T,\nu}^\ast(y_\nu(T)-x^T)]}_{-b},</script>
+
+<p>where the operators $\mathcal L_{T,\nu}$ and $\mathcal L_{T,\nu}^\ast$ are defined as</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{cccc}
+\mathcal L_{T,\nu}: & U &\longrightarrow &\mathbb{R}^N
+\\
+& u & \longmapsto & z_\nu(T)
+\end{array}, \quad \quad \quad
+\begin{array}{cccc}
+\mathcal L_{T,\nu}^\ast: & \mathbb{R}^N &\longrightarrow & U
+\\
+& p_{T,\nu} & \longmapsto & \mathbf{B}^\top p_\nu,
+\end{array} %]]></script>
+
+<p>with $U:=L^2(0,T;\mathbb{R}^M)$ and</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{\begin{array}{ll}
+y'_\nu(t) = \mathbf{A}_\nu y_\nu(t), & 0<t<T,
+\\[10pt]
+y_\nu(0) = x_0
+\end{array}\right. \quad
+\begin{cases}
+z'_\nu(t) = \mathbf{A}_\nu z_\nu(t) +\mathbf{B} u(t), & 0<t<T,
+\\[10pt]
+z_\nu(0) = 0.
+\end{cases} %]]></script>
+
+<p>We then use the conjugate gradient algorithm to solve the linear system $\mathbb{A}u = b$.</p>
+
+<p>These two procedures are impractical when the cardinality of the parameter set $\mathcal K$ is large because they require repeated resolutions of the dynamics (4) for all $\nu\in \mathcal K$.</p>
+
+<p>This issue can be bypassed by employing a stochastic optimization method. In particular, we can consider the following approaches:</p>
+
+<ul>
+  <li>The <strong>Stochastic Gradient Descent (SGD)</strong> algorithm (see [2]): it is a drastic simplification of the classical GD in which, instead of computing the gradient of the functional for all parameters $\nu\in\mathcal K$, in each iteration this gradient is estimated on the basis of a single randomly picked configuration. This translates in the following recursion process</li>
+</ul>
+
+<script type="math/tex; mode=display">\textbf{SGD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \mathbf{B}^\top p_{\nu_k}^k\right). \quad (5)</script>
+
+<p>with $\nu_k$ selected i.i.d. from $\mathcal K$.</p>
+<ul>
+  <li>The <strong>Continuous Stochastic Gradient (CSG)</strong> algorithm: it is a variant of SGD, based on the idea of reusing previously obtained information to improve the efficiency. The CSG recursion process for optimizing $F_\nu$ is given by</li>
+</ul>
+
+<script type="math/tex; mode=display">\textbf{CSG:} \quad u^{k+1} = u^k-\eta_k \sum_{\ell = 1}^k \alpha_\ell\left(\beta u^\ell - \mathbf{B}^\top p_{\nu_\ell}^\ell\right), \quad (6)</script>
+
+<p>where the weights ${\alpha_\ell}_{\ell = 1}^k$ are obtained through the methodology presented in [4].</p>
+
+<h2 id="experimental-results-comparison-of-the-algorithms">Experimental Results: comparison of the algorithms</h2>
+
+<p>We can test the efficiency of each one of the four aforementioned algorithms by performing simulations for increasing values of 
+<script type="math/tex">|\mathcal K|</script>.
+ In these simulations, we have chosen the initial state $x^0 =(1,1,1,1)^\top$ and the final target $x^T=(0,0,0,0)^\top$. The time horizon is set to be $T=1s$. The parameter set is a $|\mathcal K|$ points partition of the interval $[1,6]$: 
+<script type="math/tex">\mathcal K=\{\nu_1,\ldots,\nu_{|\mathcal K|}\}</script>
+ with $\nu_1=1$ and $\nu_{|\mathcal K|}=6$.</p>
+
+<p><strong>Figure 3</strong> displays the computational times (in logarithmic scale) the four algorithms need to compute a simultaneous control for (1)-(2).</p>
+
+<p><img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/timePlotComparison.png" /></p>
+
+<center><b>Figure 3</b>: computational time (in logarithmic scale) to converge to the tolerance $\varepsilon = 10^{-4}$ of the GD, CG, SGD and CSG algorithms applied to the problem (1)-(2) with different values of $|\mathcal K|$.</center>
+
+<p>We can observe the following facts:</p>
+
+<ul>
+  <li>The GD algorithm is the one showing the worst performances. This because it has to copy with a high per-iteration cost but also with the fact that controllability problems are typically bad conditioned.</li>
+  <li>The CG algorithm is the one requiring the lower number of iterations to converge. This implies that CG is the best approach among the one considered when dealing with a low and moderate amount of parameters.</li>
+  <li>The stochastic approaches SGD and CSG appear to be insensitive to the cardinality of the parameter set. This fact is not surprising if we consider that, no matter how many parameters enter in our control problem, with SGD and CSG each iteration of the optimization process always requires only one resolution of the coupled system (4).</li>
+  <li>The CSG algorithm always outperforms SGD in terms of the number of iterations it requires to converge and, consequently, of the total computational time. This because in CSG the approximated gradient is close to the full gradient $\nabla F_\nu$ of the objective functional when $k\to +\infty$. This translates in a less noisy optimization process with better convergence behavior (see <strong>Figure 4</strong>).</li>
+</ul>
+
+<p><img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/MeanErrorPlotHor.png" /></p>
+
+<center><b>Figure 4</b>: convergence of the error for SGD and CSG. The plots correspond to $50$ launches of the two algorithms with a tolerance $\varepsilon = 10^{-4}$.
+</center>
+
+<p>All these considerations corroborate the fact that, when dealing with large parameter sets, a stochastic approach is preferable to a deterministic one to address the simultaneous controllability of (1)-(2).</p>
+
+<p>A more complete discussion on the employment of stochastic optimization algorithms for simultaneous controllability can be found in [1].</p>
+
+<h2 id="bibliography">Bibliography</h2>
+
+<p>[1] U. Biccari, A. Navarro-Quiles and E. Zuazua, <em>Stochastic optimization methods for the simultaneous controllability of parameter-dependent systems</em>, preprint (2020).</p>
+
+<p>[2] L. Bottou, F. E. Curtis and J. Nocedal, <em>Optimization methods for large-scale machine learning</em>, SIAM Rev., Vol. 60, No. 2 (2018), pp. 223-311.</p>
+
+<p>[3] J. Nocedal and S. Wright, S, <em>Numerical optimization</em>, Springer Science &amp; Business Media, 2006.</p>
+
+<p>[4] L. Pflug, N. Bernhardt, M. Grieshammer and M. Stingl, <em>A new stochastic gradient method for the efficient solution of structural optimization problems with infinitely many state problems</em>, preprint (2020).</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;Consider the Kuramoto model for the synchronization of coupled oscillators &lt;script type="math/tex"&gt;\begin{cases} \displaystyle \dot{\theta}_i(t) = \omega_i + \frac{Ku(t)}{N}\sum_{j=1}^N \sin \big(\theta_j(t)-\theta_i(t)\big),\quad i = 1,\ldots,N,\quad t&gt;0 \\ \theta_i(0) = \theta_i^0. \end{cases}\quad (1)&lt;/script&gt;&lt;/p&gt;
+</code></pre></div></div>
+
+<p>Here $\theta_i(t)$, $i = 1,\ldots,N$, is the phase of the $i$-th oscillator, $\omega_i$ is its natural frequency and $K$ is the coupling strength. The frequencies $\omega_i$ are distributed with a given probability density $f(\omega)$, unimodal and symmetric around the mean frequency
+<script type="math/tex">\Omega = \frac 1N \sum_{i=1}^N \omega_i,</script>
+that is, $f(\Omega+\omega) = f(\Omega-\omega)$.</p>
+
+<p>It is known that, if the coupling $K$ is sufficiently strong, the oscillators will synchronize asymptotically, i.e.
+<script type="math/tex">\lim_{t\to +\infty} |\dot{\theta}_i(t)-\dot{\theta}_j(t)| = 0, \quad \textrm{ for all }\; i,j = 1,\ldots,N,</script></p>
+
+<p>We want to design a control capable to ensure synchronization in a final time horizon $T$, that is
+<script type="math/tex">|\dot{\theta}_i(T)-\dot{\theta}_j(T)| = 0, \quad \textrm{ for all } i,j = 1,\ldots,N. \quad\quad\quad(2)</script></p>
+
+<p>To compute this optimal control allowing us to reach the synchronized configuration (3) we can adopt a classical approach based on the resolution of the following optimization problem
+<script type="math/tex">\begin{array}{l}
+\displaystyle\widehat{u} = \min_{u\in L^2(0,T;\mathbb{R})} J(u)
+\\[10pt]
+\displaystyle J(u) = \frac{1}{2} \sum_{i,j=1}^N \sin^2\big(\theta_j(T)-\theta_i(T)\big) + \frac \beta2 \|u\|^2_{L^2(0,T;\mathbb{R})},
+\end{array}\quad (3)</script>
+subject to the dynamics (1).</p>
+
+<p>For the resolution of (3), we use the standard GD method, which looks for the minimum $u$ as the limit $k\to +\infty$ of the following iterative process
+<script type="math/tex">u^{k+1} = u^k - \eta_k\nabla J(u^k). \quad (4)</script></p>
+
+<p>This gradient technique is most often chosen because it is very easy to be implemented.</p>
+
+<p>In order to fully define the iterative scheme (4), we need to compute the gradient $\nabla J(u)$. This can be done via the <strong>Pontryagin maximum principle</strong>.</p>
+
+<p>To this end, let us first rewrite the dynamics (1) in a vectorial form as follows
+<script type="math/tex">\begin{cases}
+\dot{\Theta}(t) = \Omega + F\big(\Theta(t),u(t)\big), \quad t>0
+\\
+\Theta(0) = \Theta^0,
+\end{cases}</script>
+with $\Theta :=(\theta_1,\ldots,\theta_N)^\top$, $\Theta^0:=(\theta_1^0,\ldots,\theta_N^0)^\top$ and $\Omega :=(\omega_1,\ldots,\omega_N)^\top$, and where $F$ is the vector field given by
+<script type="math/tex">F = (F_1,\ldots,F_N), \quad F_i:= \frac{Ku(t)}{N}\sum_{j=1}^N\sin\big(\theta_j(t)-\theta_i(t)\big), \quad i=1,\ldots,N.</script></p>
+
+<p>Using the notation just introduced, we obtain the following expression for the gradient of $J(u)$
+<script type="math/tex">\nabla J(u) = \beta u + (\mathcal D_uF)^\top p, \quad(5)</script>
+where $\mathcal D_uF$ indicates the Jacobian of the vector field $F$, computed with respect to the variable $u$.</p>
+
+<p>In (5), we denoted with $p = (p_1,\ldots,p_N)$ the solution of the adjoint equation associated with (1), which is given by
+<script type="math/tex">\begin{cases}
+-\dot{p} = (\mathcal D_{\Theta}F)^\top p
+\\
+p(T) = \nabla_{\Theta(T)}\phi(\Theta(T)),
+\end{cases}</script>
+where $\mathcal D_\Theta F$ stands again for the Jacobian of the vector field $F$, this time computed with respect to the variable $\Theta$.</p>
+
+<p>Taking into account the expression of the vector field $F$, we can then see that the iterative scheme (4) becomes
+<script type="math/tex">u^{k+1} = u^k -\eta_k\left[\beta u^k + \frac KN\sum_{i=1}^N p_i\left(\sum_{j=1}^N \sin(\theta_j-\theta_i)\right)\right], \quad (6)</script>
+with
+<script type="math/tex">\begin{cases}
+\displaystyle-\dot{p}_i = -\frac{Kup_i}{N}\sum_{i\neq j=1}^N \cos\big(\theta_j-\theta_i\big) + \frac{Ku}{N}\sum_{i\neq j=1}^N p_j \cos\big(\theta_j-\theta_i\big),\quad i = 1,\ldots,N,\quad t>0
+\\[20pt]
+\displaystyle p_i(T) = \frac 12\sum_{i\neq j=1}^N \sin\big(2\theta_i(T)-2\theta_j(T)\big).
+\end{cases}</script></p>
+
+<p>We then see that, at each iteration $k$ the optimization scheme (6) requires to solve a $N$-dimensional non-linear dynamical system. This may rapidly become computationally very expensive, especially when the number $N$ of oscillators in our system is large.</p>
+
+<p>In order to reduce this computational burden, we can combine the standard GD algorithm with the so-called <strong>Random Batch Method (RBM)</strong>, which is a recently developed approach (see [2]) allowing for an efficient numerical simulation of high-dimensional collective behavior problems. This technique is based on the following simple idea: at each time step $t_m = m\cdot dt$ in the mesh we employ to solve the dynamics, we divide randomly the $N$ particles into $n$ small batches with size $2\leq P&lt;N$, denoted by $C_q$, $q = 1,\ldots,n$, that is
+<script type="math/tex">% <![CDATA[
+\begin{array}{l}
+C_q = \{i_{q_1},\ldots,i_{q_P}\}\subset \{1,\ldots,N\}, & & for\; all\; q = 1,\ldots,n
+\\[8pt]
+C_q\cap C_r = \emptyset, & & for\; all\; q,r = 1,\ldots,n
+\\[8pt]
+\bigcup_{q = 1}^n C_q = \{1,\ldots,N\}.
+\end{array} %]]></script>
+Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics by interacting only particles within the same batch. In this way, we are now dealing with systems of lower dimension and the computational cost of the GD algorithm is reduced.</p>
+
+<h2 id="numerical-simulations">Numerical simulations</h2>
+
+<p>We can check the effectiveness of the proposed approach through some numerical simulations for the computation of the optimal control $\widehat{u}$.</p>
+
+<p>Firstly, we can show that the optimization problem (3) indeed allows to compute an effective control function which is capable to steer the Kuramoto model (1) to a synchronized configuration.</p>
+
+<p>In <strong>Figure 1-top</strong>, we show the evolution of the uncontrolled dynamics, which corresponds to taking $u\equiv 1$ in (1). As we can see, the oscillators are evolving towards a synchronized configuration, but synchronization is not reached in the short time horizon we are providing. In <strong>Figure 1-bottom</strong>, we show the evolution of the same dynamics, this time under the action of the control function $u$ computed through the minimization of $J(u)$. The subplot on the left corresponds to the simulations done with the GD approach, while the one on the right is done employing GD-RBM. We can clearly see how, in both cases, the oscillators are all synchronized at the final time $T=3s$. This means that both algorithms managed to compute an effective control.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/KuramotoFull.jpg" alt="" />
+<strong>Figure 1</strong>: Top - evolution of the free dynamics of the Kuramoto model (1) with $N=10$ oscillators. Bottom - evolution of the controlled dynamics of the Kuramoto model (1) with $N=10$ oscillators. The control function $\widehat{u}$ is obtained with the GD (left) and the GD-RBM (right) approach.</p>
+
+<p>In <strong>Figure 2</strong>, we display the behavior of the control function $\widehat{u}$ computed via the GD-RBM algorithm. We can see how, at the beginning of the time interval we are considering, this control is close to one and it is increasing with a small slope. On the other hand, this growth becomes more pronounced as we get closer to the final time $T=3s$.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/control.jpg" alt="" />
+<strong>Figure 2</strong>: control function $\widehat{u}$ obtained through the GD-RBM algorithm applied to the Kuramoto model (1) with $N=10$ oscillators.</p>
+
+<p>Notice that, in (1), $\widehat{u}$ enters as a multiplicative control which modifies the strength of the coupling $K$. Hence, according to the profile displayed in <strong>Figure 2</strong>, the control function $\widehat{u}$ we computed is initially letting the system evolving following its natural dynamics. Then, as the time evolves towards the horizon $T=3s$, $\widehat{u}$ enhances the coupling strength $K$ in order to reach the desired synchronized configuration (2).</p>
+
+<p>We can now compare the performances of the GD and GD-RBM algorithms for the computation of the optimal control $\widehat{u}$. To this end, we can run simulations for increasing values of $N$, namely $N=10,50,100,250,1000$.</p>
+
+<p>Figure <strong>Figure 3</strong> shows the computational times required by the two methodologies to solve the optimization problem (3).</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/timePlotComparison.jpg" alt="" />
+<strong>Figure 3</strong>: computational times required by the GD and GD-RBM algorithm to compute the optimal control $\widehat{u}$ with increasing values of $N$.</p>
+
+<p>Our simulations show how, for low values of $N$, the two approaches show similar behaviors. Nevertheless, when increasing the number of oscillators in our system, the advantages of the GD-RBM methodology with respect to GD become evident. In particular, the growth of the computational time for GD-RBM is significantly less pronounced than for GD. As a matter of fact, <strong>Figure 3</strong> is not considering the case of $N=1000$ oscillators with GD, since the behavior with smaller values of $N$ already suggested that this experiment would be computationally too expensive.</p>
+
+<p>On the other hand, even with $N=1000$ oscillators in the system, the GD-RBM approach turns out to be able to compute an effective control for the Kuramoto model (1) in about $29$ seconds (see <strong>Figure 4</strong>).</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/stateEvolutionStochN1000.jpg" alt="" />
+<strong>Figure 4</strong>: evolution of the controlled dynamics of the Kuramoto model (1) with $N=1000$ oscillators. The control has been computed with the GD-RBM algorithm.</p>
+
+<p>More details on the contents of this post can be found in [1].</p>
+
+<h2 id="bibliography">Bibliography</h2>
+
+<p>[1] U. Biccari and E. Zuazua, <em>A stochastic approach to the synchronization of coupled oscillators</em>, to appear in Front. Energy Res.</p>
+
+<p>[2] S. Jin, L. Li and J.-G. Liu, <em>Random Batch Methods (RBM) for nteracting particle systems</em>, J. Comput. Phys. 400 (2020), 108877.</p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;It is superfluous to state the impact deep learning has had on modern technology. From a mathematical point of view however, a large number of the employed models remain rather ad hoc.&lt;/p&gt;
 </code></pre></div></div>
 
@@ -10861,171 +11149,6 @@ ans =
 
 <p>[1]: R. Olfati-Saber, J. A. Fax, and R. M. Murray, "Consensus and cooperation in networked multi-agent systems". Proc. IEEE. vol. 95, pp. 215&#150;233, Jan. 2007.</p>
 <p>[2]: K. J. &Aring;str&ouml;m, and R. M. Murray, "Feedback Systems: An Introduction for Scientists and Engineers". Princeton University Press, 2008, Princeton, NJ.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;We consider a population of N coupled-phase oscillators, $\theta_i(t)$, $i=1,\ldots,N$ and we want to compute a control such that in time $T$ we reach the state $\theta_i(T)=\ldots =\theta_N(T)=:\bar{\theta}$ in which all the oscillators are sincronized.&lt;/p&gt;
-</code></pre></div></div>
-
-<h2 id="the-mathematical-model">The mathematical model</h2>
-
-<p>The dynamics of the oscillators is described by the Kuramoto model</p>
-
-<script type="math/tex; mode=display">\dot{\theta}_i(t) = \frac{1}{N}\sum_{j=1}^N \sin(\theta_j(t)-\theta_i(t)) + b_i(t),\;\;\; i=1,\ldots,N</script>
-
-<script type="math/tex; mode=display">\theta_i(0) = \theta_i^0.</script>
-
-<p>The model is non-linear, then, we apply a standard linearization process around the steady state $\bar{\theta}$ obtaining</p>
-
-<script type="math/tex; mode=display">\dot{\Theta}(t) = A\Theta(t),\;\;\;\Theta(0) = \Theta^0,\;\;\;\Theta =(\theta_1,\ldots,\theta_N)^T.</script>
-
-<p>By classical techniques, the control is obtained by minimizing the following cost functional, subject to the linearized Kuramoto model, for each node</p>
-
-<script type="math/tex; mode=display">J(b_i) = \frac{1}{2N} \sum_{j=1}^N(\theta_j(T)-\theta_i(T))^2+\frac{\beta}{2}\int_0^T b_i(t)^2dt,\;\;\;\beta>0,</script>
-
-<p>in which</p>
-
-<ul>
-  <li>
-    <p>the first term measures the distance between the rest of nodes and the target.</p>
-  </li>
-  <li>
-    <p>the second term is a penalization one introduced in order to   avoid using control with a too large size.</p>
-  </li>
-</ul>
-
-<p>In fact, through the above minimization procedure, we find the control $b = (b_1,\ldots,b_N)$ which has minimum norm among all the controls capable to steer the system to the equilibrium dynamics.</p>
-
-<h2 id="how-do-you-usually-solve-this-type-of-problem">How do you usually solve this type of problem?</h2>
-
-<p>The usual technique for solving minimizing problems based on quadratic functionals is the Gradient Descent Method, which is based on the following iterative algorithm</p>
-
-<script type="math/tex; mode=display">b^{k+1}_i = b^k_i - \eta\nabla J(b_i^k).</script>
-
-<p>This technique is tipycally chosen because: - It is (relatively) easy to implement. - It is not very memory demanding.</p>
-
-<h2 id="what-we-propose">What we propose?</h2>
-
-<p>As the functional J(b_i) depend on all nodes $\Theta_j$, the gradient $\nabla J(b_i)$ too. Therefore, in each iteration of the Gradient Descent algorithm we shall consider all nodes in the network. Then, when the number of nodes is large, the complexity if substantial per iteration. To avoid evaluate the full gradient, we propose to approach the problem by means of the Stochastic Descent Gradient method which only uses a small portion of data.</p>
-
-<p>Matrix $A$ of the linearized Kuramoto model</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
-<span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">ones</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-    <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<span class="k">end</span>
-<span class="n">A</span>
-</code></pre></div></div>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-A =
-
-   -1.0000    0.1429    0.1429    0.1429    0.1429    0.1429    0.1429
-    0.1429   -1.0000    0.1429    0.1429    0.1429    0.1429    0.1429
-    0.1429    0.1429   -1.0000    0.1429    0.1429    0.1429    0.1429
-    0.1429    0.1429    0.1429   -1.0000    0.1429    0.1429    0.1429
-    0.1429    0.1429    0.1429    0.1429   -1.0000    0.1429    0.1429
-    0.1429    0.1429    0.1429    0.1429    0.1429   -1.0000    0.1429
-    0.1429    0.1429    0.1429    0.1429    0.1429    0.1429   -1.0000
-
-
-</code></pre></div></div>
-
-<p>Initial condition: <script type="math/tex">\Theta(0) = \Theta^0.</script></p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mu</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span><span class="n">sigma</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-<span class="n">theta0</span> <span class="o">=</span> <span class="n">normrnd</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-theta0 =
-
-   16.2469
-    3.5642
-    9.8242
-   -6.0650
-    4.6452
-   10.0029
-   -9.6151
-
-
-</code></pre></div></div>
-
-<p>Now, choose initial control,</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">;</span>
-<span class="n">tspan</span> <span class="o">=</span> <span class="n">t0</span><span class="p">:</span><span class="n">dt</span><span class="p">:</span><span class="n">T</span><span class="p">;</span>
-<span class="n">u0</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">tspan</span><span class="p">),</span><span class="n">N</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>We can solve with the StochasticGradient function.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Results_Stochastic</span> <span class="o">=</span>  <span class="n">StochasticGradient</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">theta0</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">u0</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>And see the convergence</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig1</span> <span class="o">=</span> <span class="n">JPlotConvergence</span><span class="p">(</span><span class="n">Results_Stochastic</span><span class="p">,</span><span class="s1">'Convergence of Stochastic Method'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/copiaRM_01.png" alt="" /></p>
-
-<p>We can see the result obtained</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig2</span> <span class="o">=</span> <span class="n">LastThetaPlot</span><span class="p">(</span><span class="n">Results_Stochastic</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/copiaRM_02.png" alt="" /></p>
-
-<h2 id="comparison-clasical-vs-stochastic">Comparison Clasical vs Stochastic</h2>
-
-<p>In this example, we show that stochastic method is faster than the classical descent in a small network.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Results_Classical</span> <span class="o">=</span> <span class="p">{};</span><span class="n">Results_Stochastic</span> <span class="o">=</span> <span class="p">{};</span>
-<span class="c1">%%</span>
-<span class="n">maxN</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="c1">%% &lt;=== Maximal number of oscillator allowed in the model</span>
-<span class="n">iter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="k">for</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="n">maxN</span>
-    <span class="c1">%% We solve the problem for each N</span>
-    <span class="n">iter</span> <span class="o">=</span> <span class="n">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="c1">%% Definition of the linearized Kuramoto problem</span>
-    <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">ones</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-        <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="k">end</span>
-    <span class="c1">%% Initial state</span>
-    <span class="n">mu</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span><span class="n">sigma</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-    <span class="n">theta0</span> <span class="o">=</span> <span class="n">normrnd</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-    <span class="c1">%% Initial control</span>
-    <span class="n">t0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
-    <span class="n">tspan</span> <span class="o">=</span> <span class="n">t0</span><span class="p">:</span><span class="n">dt</span><span class="p">:</span><span class="n">T</span><span class="p">;</span>
-    <span class="n">u0</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">tspan</span><span class="p">),</span><span class="n">N</span><span class="p">);</span>
-
-    <span class="c1">%% Classical Gradient Method</span>
-    <span class="n">Results_Classical</span><span class="p">{</span><span class="n">iter</span><span class="p">}</span>  <span class="o">=</span>  <span class="n">ClassicalGradient</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">theta0</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">u0</span><span class="p">);</span>
-    <span class="c1">%% Stochastic Gradient Method</span>
-    <span class="n">Results_Stochastic</span><span class="p">{</span><span class="n">iter</span><span class="p">}</span> <span class="o">=</span>  <span class="n">StochasticGradient</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">theta0</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">u0</span><span class="p">);</span>
-<span class="k">end</span>
-</code></pre></div></div>
-
-<p>We can graphically see the following result. If the number of nodes increase we can see better the efectiveness of the stochastic gradient descent method with respect to the classical.</p>
-
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% For the next step it is necessary to convert the cells into arrays</span>
-<span class="n">Results_Classical</span>  <span class="o">=</span> <span class="p">[</span><span class="n">Results_Classical</span><span class="p">{:}];</span>
-<span class="n">Results_Stochastic</span> <span class="o">=</span> <span class="p">[</span><span class="n">Results_Stochastic</span><span class="p">{:}];</span>
-<span class="c1">%%</span>
-<span class="n">fig2</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span> <span class="n">ax</span>  <span class="o">=</span> <span class="nb">axes</span><span class="p">;</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">FontSize</span> <span class="o">=</span> <span class="mi">17</span><span class="p">;</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">XLabel</span><span class="o">.</span><span class="n">String</span> <span class="o">=</span> <span class="s1">'Number of Oscillators'</span><span class="p">;</span> <span class="n">ax</span><span class="o">.</span><span class="n">YLabel</span><span class="o">.</span><span class="n">String</span> <span class="o">=</span> <span class="s1">'time(s)'</span><span class="p">;</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">XGrid</span> <span class="o">=</span> <span class="s1">'on'</span><span class="p">;</span> <span class="n">ax</span><span class="o">.</span><span class="n">YGrid</span> <span class="o">=</span> <span class="s1">'on'</span><span class="p">;</span>
-<span class="c1">%%</span>
-<span class="nb">line</span><span class="p">([</span><span class="n">Results_Stochastic</span><span class="o">.</span><span class="n">N</span><span class="p">],[</span><span class="n">Results_Stochastic</span><span class="o">.</span><span class="n">t</span><span class="p">],</span><span class="s1">'Parent'</span><span class="p">,</span><span class="n">ax</span><span class="p">,</span><span class="s1">'Color'</span><span class="p">,</span><span class="s1">'red'</span><span class="p">,</span><span class="s1">'Marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">)</span>
-<span class="nb">line</span><span class="p">([</span><span class="n">Results_Classical</span><span class="o">.</span><span class="n">N</span><span class="p">],[</span><span class="n">Results_Classical</span><span class="o">.</span><span class="n">t</span><span class="p">],</span><span class="s1">'Parent'</span><span class="p">,</span><span class="n">ax</span><span class="p">,</span><span class="s1">'Color'</span><span class="p">,</span><span class="s1">'blue'</span><span class="p">,</span><span class="s1">'Marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">)</span>
-<span class="nb">legend</span><span class="p">({</span><span class="s1">'Stochastic Gradient'</span><span class="p">,</span><span class="s1">'Classical Gradient'</span><span class="p">})</span>
-</code></pre></div></div>
-
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/copiaRM_03.png" alt="" /></p>
-
-<p>Altough in this example we are dealing with a small network, we have shown that stochastic method is faster than the classical descent. If the number of nodes increase we can see better the efectiveness of the stochastic gradient descent method with respect to the classical. <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/ClassicalVStochastic.png" alt="" /></p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;We study the shape design problem through the minimization of the cost functional&lt;/p&gt;
 </code></pre></div></div>

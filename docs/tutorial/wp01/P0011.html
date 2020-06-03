@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Stochastic optimization for simultaneous control - DyCon Blog
+    
+  </title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0011">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+
+
+  
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+                
+            </ul>
+
+        
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP01">
+            Control of parameter dependent problems</a> &#8827;</small>
+          </h2>
+          <h1>Stochastic optimization for simultaneous control</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                  </span>
+                </span>
+              
+              - 03 June 2020
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/Stochastic_optimization.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <h2 id="what-is-a-simultaneous-control-problem">What is a simultaneous control problem?</h2>
+
+<p>Consider the following parameter-dependent linear control system</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{\begin{array}{ll}
+\displaystyle x'_\nu(t) = \mathbf{A}_\nu x_\nu(t)+\mathbf{B} u(t), & 0<t<T,
+\\[10pt]
+x_\nu(0) = x^0,
+\end{array}\right.\quad (1) %]]></script>
+
+<p>with</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\mathbf{A}_\nu=\left(\begin{array}{cccccc}
+0 & 1 & 0 & \ldots & \ldots & 0
+\\
+0 & 0 & 1 & 0 & \ldots & 0
+\\
+\vdots & & & \ddots & \ddots & \vdots
+\\
+0 & \ldots & \ldots & \ldots & 1 & 0
+\\
+-\nu & 0 & \ldots & \ldots & \ldots & 0
+\end{array}\right)\in \mathbb{R}^{N\times N}, \quad \mathbf{B} = \left(\begin{array}{c} 1 \\ 1 \\ \vdots \\ \vdots \\ 1\end{array}\right)\in \mathbb{R}^{N}. \quad(2) %]]></script>
+
+<p>The matrix $\mathbf{A}_\nu$ is associated with the Brunovsky canonical form of the linear ODE</p>
+
+<script type="math/tex; mode=display">x^{(N)}_\nu(t) + \nu x_\nu(t) = 0,</script>
+
+<p>where $x^{(N)}_\nu(t)$ denotes the $N$-th derivative of the function $x(t)$.</p>
+
+<p>In (1)-(2), $x_\nu(t)\in L^2(0,T;\mathbf{R}^N)$, $N\geq 1$, denotes the state, the $N\times N$ matrix $\mathbf{A}_\nu$ describes the dynamics, and the function $u(t)\in L^2(0,T;\mathbb{R}^M)$, $1\leq M\leq N$, is the $M$-component control acting on the system through the $N\times M$ matrix $\mathbf{B}$. Here 
+<script type="math/tex">\nu\in \{ \nu_1,\nu_2,\ldots,\nu_{|\mathcal K|} \}=:\mathcal K</script>
+ is a random parameter following a probability law $\mu$, with $(\mathcal K,\mathcal F,\mu)$ the corresponding complete probability space.</p>
+
+<p>With <strong>simultaneous controllability</strong> we refer to the problem of designing a unique parameter-independent control function capable to steer all the different realizations of (1) to some prescribed final target in time $T$, that is (see <strong>Figure 1</strong> and <strong>Figure 2</strong>):</p>
+
+<script type="math/tex; mode=display">x_\nu(T)=x^T\in\mathbb{R}^N, \quad \nu\in \mathcal{K} \;\;\;\;\mu-\text{a. e.}</script>
+
+<p><img width="90%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/stateEvolution.png" /></p>
+
+<center><b>Figure 1</b>: evolution of the free (left) and controlled (right) dynamics of (1)-(2) with $N=4$.</center>
+
+<p><img width="70%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/control.png" /></p>
+
+<center><b>Figure 2</b>: parameter-independent control function.</center>
+
+<h2 id="how-can-we-solve-a-simultaneous-controllability-problem">How can we solve a simultaneous controllability problem?</h2>
+
+<p>The computation of a simultaneous control for (1)-(2) can be carried out through a standard optimal control methodology by solving the following minimization problem</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\displaystyle\widehat{u}=\min_{u\in L^2(0,T;\mathbb{R}^M)} F_{\nu}(u)
+\\[10pt]
+\displaystyle F_{\nu}(u):= \frac{1}{2} \mathbb{E}\left[\|x_\nu(T)-x^T\|_{\mathbb{R}^N}^2\right]+\frac{\beta}{2}\|u\|_{L^2(0,T;\mathbb{R}^M)}^2,
+\end{array} \quad (3)</script>
+
+<p>subject to the dynamics given by (1)-(2). Here $\mathbb{E}[\cdot]$ denotes the expectation operator.</p>
+
+<p>Typical approaches to solve the optimization problem (3) are (see [3]):</p>
+
+<ul>
+  <li>The <strong>Gradient Descent (GD)</strong> algorithm: we find the minimizer $\widehat{u}$ as the limit $k\to +\infty$ of the following iterative process</li>
+</ul>
+
+<script type="math/tex; mode=display">\textbf{GD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \frac{1}{|\mathcal K|}\sum_{\nu\in\mathcal K}\mathbf{B}^\top p_\nu^k\right),</script>
+
+<p>where for all $\nu\in\mathcal K$ the pair $(x_\nu,p_\nu)$ solves the coupled system</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{\begin{array}{ll}
+\displaystyle x'_\nu(t) = \mathbf{A}_\nu x_\nu(t)+\mathbf{B}u, & 0<t<T,
+\\[6pt]
+\displaystyle  p'_\nu(t) = -\mathbf{A}_\nu^\top p_\nu(t), & 0<t<T,
+\\[6pt]
+\displaystyle  x_\nu(0) = x^0, \quad p_\nu(T) = -(x_\nu(T)-x^T).
+\end{array}\right. \quad(4) %]]></script>
+
+<ul>
+  <li>The <strong>Conjugate Gradient (CG)</strong> algorithm: the gradient $\nabla F_\nu$ is rewritten in the form</li>
+</ul>
+
+<script type="math/tex; mode=display">\displaystyle\nabla F_\nu(u) = \underbrace{(\beta I + \mathbb{E}[\mathcal L_{T,\nu}^\ast\mathcal L_{T,\nu}])}_{\mathbb{A}}u + \underbrace{\mathbb{E}[\mathcal L_{T,\nu}^\ast(y_\nu(T)-x^T)]}_{-b},</script>
+
+<p>where the operators $\mathcal L_{T,\nu}$ and $\mathcal L_{T,\nu}^\ast$ are defined as</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{cccc}
+\mathcal L_{T,\nu}: & U &\longrightarrow &\mathbb{R}^N
+\\
+& u & \longmapsto & z_\nu(T)
+\end{array}, \quad \quad \quad
+\begin{array}{cccc}
+\mathcal L_{T,\nu}^\ast: & \mathbb{R}^N &\longrightarrow & U
+\\
+& p_{T,\nu} & \longmapsto & \mathbf{B}^\top p_\nu,
+\end{array} %]]></script>
+
+<p>with $U:=L^2(0,T;\mathbb{R}^M)$ and</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{\begin{array}{ll}
+y'_\nu(t) = \mathbf{A}_\nu y_\nu(t), & 0<t<T,
+\\[10pt]
+y_\nu(0) = x_0
+\end{array}\right. \quad
+\begin{cases}
+z'_\nu(t) = \mathbf{A}_\nu z_\nu(t) +\mathbf{B} u(t), & 0<t<T,
+\\[10pt]
+z_\nu(0) = 0.
+\end{cases} %]]></script>
+
+<p>We then use the conjugate gradient algorithm to solve the linear system $\mathbb{A}u = b$.</p>
+
+<p>These two procedures are impractical when the cardinality of the parameter set $\mathcal K$ is large because they require repeated resolutions of the dynamics (4) for all $\nu\in \mathcal K$.</p>
+
+<p>This issue can be bypassed by employing a stochastic optimization method. In particular, we can consider the following approaches:</p>
+
+<ul>
+  <li>The <strong>Stochastic Gradient Descent (SGD)</strong> algorithm (see [2]): it is a drastic simplification of the classical GD in which, instead of computing the gradient of the functional for all parameters $\nu\in\mathcal K$, in each iteration this gradient is estimated on the basis of a single randomly picked configuration. This translates in the following recursion process</li>
+</ul>
+
+<script type="math/tex; mode=display">\textbf{SGD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \mathbf{B}^\top p_{\nu_k}^k\right). \quad (5)</script>
+
+<p>with $\nu_k$ selected i.i.d. from $\mathcal K$.</p>
+<ul>
+  <li>The <strong>Continuous Stochastic Gradient (CSG)</strong> algorithm: it is a variant of SGD, based on the idea of reusing previously obtained information to improve the efficiency. The CSG recursion process for optimizing $F_\nu$ is given by</li>
+</ul>
+
+<script type="math/tex; mode=display">\textbf{CSG:} \quad u^{k+1} = u^k-\eta_k \sum_{\ell = 1}^k \alpha_\ell\left(\beta u^\ell - \mathbf{B}^\top p_{\nu_\ell}^\ell\right), \quad (6)</script>
+
+<p>where the weights ${\alpha_\ell}_{\ell = 1}^k$ are obtained through the methodology presented in [4].</p>
+
+<h2 id="experimental-results-comparison-of-the-algorithms">Experimental Results: comparison of the algorithms</h2>
+
+<p>We can test the efficiency of each one of the four aforementioned algorithms by performing simulations for increasing values of 
+<script type="math/tex">|\mathcal K|</script>.
+ In these simulations, we have chosen the initial state $x^0 =(1,1,1,1)^\top$ and the final target $x^T=(0,0,0,0)^\top$. The time horizon is set to be $T=1s$. The parameter set is a $|\mathcal K|$ points partition of the interval $[1,6]$: 
+<script type="math/tex">\mathcal K=\{\nu_1,\ldots,\nu_{|\mathcal K|}\}</script>
+ with $\nu_1=1$ and $\nu_{|\mathcal K|}=6$.</p>
+
+<p><strong>Figure 3</strong> displays the computational times (in logarithmic scale) the four algorithms need to compute a simultaneous control for (1)-(2).</p>
+
+<p><img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/timePlotComparison.png" /></p>
+
+<center><b>Figure 3</b>: computational time (in logarithmic scale) to converge to the tolerance $\varepsilon = 10^{-4}$ of the GD, CG, SGD and CSG algorithms applied to the problem (1)-(2) with different values of $|\mathcal K|$.</center>
+
+<p>We can observe the following facts:</p>
+
+<ul>
+  <li>The GD algorithm is the one showing the worst performances. This because it has to copy with a high per-iteration cost but also with the fact that controllability problems are typically bad conditioned.</li>
+  <li>The CG algorithm is the one requiring the lower number of iterations to converge. This implies that CG is the best approach among the one considered when dealing with a low and moderate amount of parameters.</li>
+  <li>The stochastic approaches SGD and CSG appear to be insensitive to the cardinality of the parameter set. This fact is not surprising if we consider that, no matter how many parameters enter in our control problem, with SGD and CSG each iteration of the optimization process always requires only one resolution of the coupled system (4).</li>
+  <li>The CSG algorithm always outperforms SGD in terms of the number of iterations it requires to converge and, consequently, of the total computational time. This because in CSG the approximated gradient is close to the full gradient $\nabla F_\nu$ of the objective functional when $k\to +\infty$. This translates in a less noisy optimization process with better convergence behavior (see <strong>Figure 4</strong>).</li>
+</ul>
+
+<p><img width="80%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/MeanErrorPlotHor.png" /></p>
+
+<center><b>Figure 4</b>: convergence of the error for SGD and CSG. The plots correspond to $50$ launches of the two algorithms with a tolerance $\varepsilon = 10^{-4}$.
+</center>
+
+<p>All these considerations corroborate the fact that, when dealing with large parameter sets, a stochastic approach is preferable to a deterministic one to address the simultaneous controllability of (1)-(2).</p>
+
+<p>A more complete discussion on the employment of stochastic optimization algorithms for simultaneous controllability can be found in [1].</p>
+
+<h2 id="bibliography">Bibliography</h2>
+
+<p>[1] U. Biccari, A. Navarro-Quiles and E. Zuazua, <em>Stochastic optimization methods for the simultaneous controllability of parameter-dependent systems</em>, preprint (2020).</p>
+
+<p>[2] L. Bottou, F. E. Curtis and J. Nocedal, <em>Optimization methods for large-scale machine learning</em>, SIAM Rev., Vol. 60, No. 2 (2018), pp. 223-311.</p>
+
+<p>[3] J. Nocedal and S. Wright, S, <em>Numerical optimization</em>, Springer Science &amp; Business Media, 2006.</p>
+
+<p>[4] L. Pflug, N. Bernhardt, M. Grieshammer and M. Stingl, <em>A new stochastic gradient method for the efficient solution of structural optimization problems with infinitely many state problems</em>, preprint (2020).</p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div id="content" class="container">
+
+  <div class="relatedPosts">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+    <h2>Related Posts</h2>
+    
+    
+    
+    
+    
+
+    
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog//assets/imgs/WP01/P0010/trajectory.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0010" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> The interplay of control and deep learning </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      Deep supervised learning roughly consists in solving a discretised optimal control problem subject to a nonlinear, discrete-time dynamical system, called an artificial neural network.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
+          
+          - 30 April 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0009/ico.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0009" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Simultaneous Control with DyCon Toolbox </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial we will present a simultaneous control problem in a linear system dependent on parameters. We will use the MATLAb DyCon Toolbox library.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+          
+          - 01 April 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/icon.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0008" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Stabilization of a double pendulum on a cart with DyCon Toolbox </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this blog post, we consider a double pendulum on a cart and we solve the problem of swinging up the pendulum from the downward position to the upward position using optimal control techniques.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
+          
+          - 13 February 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://cmc.deusto.eus/wp-content/uploads/2018/03/xav.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0005" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Averaged Control </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this work, we address the optimal control of parameter-dependent systems.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JoseV">José Vicente</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+          
+          - 12 March 2018
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+            
+    </div>
+  </div> 
+    </div>
+  </div>
+
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
