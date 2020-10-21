@@ -36,9 +36,13 @@ WP06:
 OT01:
   name: Optimal Control in OpenFOAM
   description: <a href="https://www.openfoam.com/" target="_blank">OpenFOAM </a> is a free, open source Computational Fluid Dynamics (CFD) software to solve anything from complex fluid flows involving chemical reactions, turbulence and heat transfer, to acoustics, solid mechanics and electromagnetics. 
-OT02:
-  name: Lineal Quadratic Regulator in MATLAB
+
 WP99:
   name: Other Topics
   acr: Other Topics
   description: <p>Mathematical content not related to the <a href="https://cmc.deusto.eus/work-packages/">Work Packages of the DyCon ERC Project</a>.</p>
+
+DP00: 
+  name: Dynamic Programming and Feedback Optimal Control
+  acr: FOPC
+  description: In this area, the control problem is considered, where state dependent control is sought. This approach allows us to obtain the solution of the control problem for any initial condition. Here we will study the principle of dynamic programming, the Bellman Hamilton Jacobi equation, the Reinforcement Learning methodology.

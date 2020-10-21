@@ -2,6 +2,26 @@
     
     
     {
+      "title"           : "Moving control strategy for memory-type equations",
+      "categories"      : ["tutorial", "WP05"],
+      "url"             : "/tutorial/wp05/P0011",
+      "date"            : "2020-10-20",
+      "author"          : ["JesusO","UmbertoB"],
+      "description"     : "Numerical implementation of the moving control strategy for a two dimensional heat equation with memory",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0011/icon.gif"
+    } ,
+  
+    {
+      "title"           : "Optimal Control Problem vs  Classification Problem in DyCon Toolbox",
+      "categories"      : ["tutorial", "WP01"],
+      "url"             : "/tutorial/wp01/P0012",
+      "date"            : "2020-07-27",
+      "author"          : ["JesusO"],
+      "description"     : "En este blog verémos como se puede implementar un clasificador con DyCon Toolbox. Este esta inspirado en el blog:'The interplay of control and deep learning' donde se muestra como un problema de control puede resolver un problema de clasificación.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP01/P0010/trajectory.gif"
+    } ,
+  
+    {
       "title"           : "Stochastic optimization for simultaneous control",
       "categories"      : ["tutorial", "WP01"],
       "url"             : "/tutorial/wp01/P0011",
@@ -363,12 +383,12 @@
   
     {
       "title"           : "Optimal control for inverted pendulum",
-      "categories"      : ["tutorial", "OT02"],
-      "url"             : "/tutorial/ot02/P0003",
+      "categories"      : ["tutorial", "DP00"],
+      "url"             : "/tutorial/dp00/P0003",
       "date"            : "2019-02-04",
       "author"          : ["NoboruS"],
       "description"     : "Tutorial of optimal control for inverted pendulum with symbolic MATLAB",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0003/Pendulum_pic.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/Pendulum_pic.png"
     } ,
   
     {
@@ -433,12 +453,12 @@
   
     {
       "title"           : "Optimal control of a  graph evolving in discrete time",
-      "categories"      : ["tutorial", "OT02"],
-      "url"             : "/tutorial/ot02/P0002",
+      "categories"      : ["tutorial", "DP00"],
+      "url"             : "/tutorial/dp00/P0002",
       "date"            : "2018-10-26",
       "author"          : ["AlejandroC"],
       "description"     : "Stabilizing the graph by minimizing a discrete LQR and driving it to a reference state.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0002/copiaRM_01.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_01.png"
     } ,
   
     {
@@ -633,12 +653,12 @@
   
     {
       "title"           : "LQR control of a fractional reaction diffusion equation",
-      "categories"      : ["tutorial", "OT02"],
-      "url"             : "/tutorial/ot02/P0001",
+      "categories"      : ["tutorial", "DP00"],
+      "url"             : "/tutorial/dp00/P0001",
       "date"            : "2017-09-18",
       "author"          : ["UmbertoB"],
       "description"     : "Design of a LQR controller for the stabilization of a fractional reaction diffusion equation",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0001/copiaRM_01.png"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0001/copiaRM_01.png"
     } ,
   
     {

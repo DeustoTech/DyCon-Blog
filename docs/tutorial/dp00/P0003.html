@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/ot02/P0003">
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/dp00/P0003">
 
   <!-- Bootstrap Core CSS -->
   <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
@@ -214,8 +214,8 @@
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
         <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/OT02">
-            Lineal Quadratic Regulator in MATLAB</a> &#8827;</small>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/DP00">
+            Dynamic Programming and Feedback Optimal Control</a> &#8827;</small>
           </h2>
           <h1>Optimal control for inverted pendulum</h1>
 					<p class="meta">
@@ -292,14 +292,14 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0003/LQ_control_InvertedPend.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/LQ_control_InvertedPend.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <p>This tutorial aims to show how to build equations of motion, control system model and optimally stabilizing controllers for the inverted pendulum. This tutorial is a standard material in control engineering education. We first derive the equations of motion via Lagrange’s method using Symbolic Math Toolbox. Then, a linear control model is derived. The optimal controller is designed using linear quadratic regulator theory. Simulations are carried out for the inverted pendulum nonlinear model. In Appendix, finite horizon linear optimal control is shown by solving a differential Riccati equation.</p>
 
 <p>A schematic of an inverted pendulum is shown below.</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0003/Pendulum_pic.png" alt="" /></p>
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/Pendulum_pic.png" alt="" /></p>
 
 <p>A pendulum is attached with a cart that moves horizontally due to the force $u$ without friction. The pendulum freely rotates around the pivot on the cart. It is assumed that the cart and pendulum move in the vertical plane. The masses of the pendulum and cart are $m$ and $M$, respectively, and the length of the pendulum is $2l$. The position of the cart is denoted by $x$ and the angle of the pendulum from the vertical axis is $\theta$.</p>
 
@@ -445,7 +445,7 @@ Bmat =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Cart position [m]'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0003/copiaRM_01.png" alt="" /></p>
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_01.png" alt="" /></p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
 <span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">3</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -456,7 +456,7 @@ Bmat =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Pendulum angle [rad]'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0003/copiaRM_02.png" alt="" /></p>
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_02.png" alt="" /></p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
 <span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">input_linear</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -466,7 +466,7 @@ Bmat =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Input response'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0003/copiaRM_03.png" alt="" /></p>
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_03.png" alt="" /></p>
 
 <h2 id="appendix-finite-interval-optimal-control-with-dre-">Appendix (finite interval optimal control with DRE )</h2>
 
@@ -525,7 +525,7 @@ ans =
 <span class="nb">hold</span> <span class="n">off</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0003/copiaRM_04.png" alt="" /></p>
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_04.png" alt="" /></p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">plot</span><span class="p">(</span><span class="n">timedn</span><span class="p">,</span><span class="n">input_dric</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">hold</span> <span class="n">on</span>
@@ -535,7 +535,7 @@ ans =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'input responses with nonlinear model'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0003/copiaRM_05.png" alt="" /></p>
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_05.png" alt="" /></p>
 
         <hr>
       </div>
@@ -948,16 +948,34 @@ ans =
         
     
         
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
           <div>
           
             <div class="post-preview shadowbox">
   <div class="post-avatar-wp">
   
-    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0002/copiaRM_01.png">
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_01.png">
   
   </div>
   <div class="post-info">
-    <a href="/DyCon-Blog/tutorial/ot02/P0002" class="display-block">
+    <a href="/DyCon-Blog/tutorial/dp00/P0002" class="display-block">
       <h4 class="post-preview-title ellipsis-two-lines"> Optimal control of a  graph evolving in discrete time </h4>
     </a>
 
@@ -1173,11 +1191,11 @@ ans =
             <div class="post-preview shadowbox">
   <div class="post-avatar-wp">
   
-    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/OT02/P0001/copiaRM_01.png">
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0001/copiaRM_01.png">
   
   </div>
   <div class="post-info">
-    <a href="/DyCon-Blog/tutorial/ot02/P0001" class="display-block">
+    <a href="/DyCon-Blog/tutorial/dp00/P0001" class="display-block">
       <h4 class="post-preview-title ellipsis-two-lines"> LQR control of a fractional reaction diffusion equation </h4>
     </a>
 

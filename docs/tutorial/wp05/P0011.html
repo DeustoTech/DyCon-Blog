@@ -8,7 +8,7 @@
 	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
 
   <title>
-    Movil control strategy for models with memory terms - DyCon Blog
+    Moving control strategy for memory-type equations - DyCon Blog
     
   </title>
 
@@ -217,7 +217,7 @@
             &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP05">
             Models involving memory terms and hybrid PDE+ODE systems</a> &#8827;</small>
           </h2>
-          <h1>Movil control strategy for models with memory terms</h1>
+          <h1>Moving control strategy for memory-type equations</h1>
 					<p class="meta">
             <div class="post-preview-authors ellipsis-one-line">
               Authors:
@@ -237,7 +237,7 @@
                   </span>
                 </span>
               
-              - 04 November 2019
+              - 20 October 2020
             </div>
 					</p>
         </div>
@@ -302,37 +302,41 @@ img:active{
             <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0011/MovilControlBlog.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
-        <p>En este tutorial enseñaremos como implentar la estrategía del control interíor móvil para la ecuación del calor. En el ejemplo típico de control interior en la ecuación del calor se pretende llevar al sistema desde un estado inicial, $u_0$ hasta el estado nulo en todo el espacio, $\Omega$. Para ello se define una subconjunto, $\omega \in \Omega$, donde el control, $f(x,t)$ puede actuar, es decir que para puntos, $x \notin \omega$, el control es cero. Este problema se puede escribir como:</p>
+        <p>This tutorial shows how to implement the moving control strategy for the heat equation in the presence of a memory term.</p>
+
+<p>The standard null controllability problem for the heat equation reads as follows</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \label{heatinterior}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  \dot{u} = \Delta u + f(x,t) \chi_{\omega} \ & \ \textbf{x} \in \Omega & t \in [0,T] \\
+  u_t = \Delta u + f(x,t) \chi_{\omega} \ & \ \textbf{x} \in \Omega & t \in [0,T] \\
   u(\textbf{x,t}) = 0    & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
   u(\textbf{x},0) = u_0  & \textbf{x} \in \Omega
 \end{matrix}
-\end{cases}
+\end{cases},
 \end{equation} %]]></script>
 
-<p>Donde $f$ es el control definido de solo en el subconjunto, $\omega \in \Omega$.</p>
+<p>where $\Omega$ is a bounded domain, $u_0\in L^2(\Omega)$ and the control $f$ acts on the subdomain $\omega\subset\Omega$. The objective is to steer the system from $u_0$ to zero in time $T$,</p>
 
-<p>Es conocido que la controlabilidad de la ecuación del calor para todo tiempo esta asegurada, sin embargo en el caso de la ecuación del calor con términos de memoria este resultado no es válido. En este caso, eligiremos un problema con un término de memoria: $\int_0^t u(x,\tau)d\tau$. De esta forma el problema se puede escribir como:</p>
+<p>It is known that the null controllability of the heat equation holds in any positive time $T&gt;0$ and for any open control region $\omega$. Nevertheless, the situation changes when in the model appears a memory term:</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \label{heatinterior_memory}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  \dot{u} = \Delta u + f(x,t) \chi_{\omega} + \int_0^t u(x,\tau) d\tau \ & \ \textbf{x} \in \Omega & t \in [0,T] \\
+  u_t = \Delta u + f(x,t) \chi_{\omega} + \int_0^t u(x,\tau) d\tau \ & \ \textbf{x} \in \Omega & t \in [0,T] \\
   u(\textbf{x,t}) = 0    & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
   u(\textbf{x},0) = u_0  & \textbf{x} \in \Omega
 \end{matrix}
 \end{cases}
 \end{equation} %]]></script>
 
-<p>Este resultado se puede vercuenado aplicamos un control LQR sobre ambos sistemas. El mínimo del funcional LQR en el primer sistema (Equation \ref{heatinterior}) estabiliza la dínamica mientras que el mínimo del funcional en el segundo caso queda muy lejos del equilibrio.</p>
+<p>As a matter of fact, when the equation involes a memory term, it is impossible to achive null controllability in the classical sense, unless the control region coincides with the entire domain ($\omega=\Omega$).</p>
+
+<p>This fact can be easily seen when applying a LQR control on both systems (\ref{heatinterior}) and (\ref{heatinterior_memory}). In the former case (without memory) the minimum of the LQR functional is an optimal control stabilizing the dynamics, whereas when the memory enters into the model this minimum leaves the system far from the equilibrium.</p>
 
 <hr />
 
@@ -352,39 +356,76 @@ img:active{
     <tr>
         <th>
           <center>
-              <b>Video 1:</b> LQR in Heat equation (Equation \ref{heatinterior})
+              <b>Video 1:</b> LQR in the heat equation (Equation \ref{heatinterior})
           </center> 
         </th>
         <th>
           <center>
-              <b>Video 2:</b>  LQR in Heat equation with memory (Equation \ref{heatinterior_memory})
+              <b>Video 2:</b>  LQR in the heat equation with memory (Equation \ref{heatinterior_memory})
           </center> 
         </th>
     </tr> 
     <tr>
         <td colspan="2">
           <center>
-              Podemos ver la evolucion de dos modelos, con un región de control, $\chi_{\omega}$, situado en la posición del elipsoide azul en la parte superior de la simulación. Podemos ver que el control LQR es eficaz para la ecuación del calor, sin embargo débil ante la presencia de término de memoria
+              We can see the time evolution of the two models with a control region, $\chi_{\omega}$, located in the position of the blue ellipsoid in the simulation. We observe that the LQR control is effective for the heat equation but not for the heat equation with memory.
           </center> 
         </td>
     </tr> 
 </table>
 
-<p>En el articulo [1], se menciona la idea del control móvil de ….
-….
-….</p>
+<p>To understand the reason behind the lack of null controllability for the memory-type equation (\ref{heatinterior_memory}), we can introduce the new variable</p>
 
-<h2 id="definición-del-función-característica-dependiente-del-espacio">Definición del función característica dependiente del espacio</h2>
+<script type="math/tex; mode=display">z(x,t) = \int_0^t u(x,\tau) d\tau \Rightarrow z_t(x,t) = u(x,t)</script>
 
-<p>Nuestro objetivo en esta sección es la construcción de una función que dado un punto, $\textbf{x} \in \Omega$, devuelva la función carácteristica correspondiente. Para el diseño de la función $\chi_{\omega(t)}$, se ha decidido que ni el tamaño, ni la orientación de $\omega$ cambia en el tiempo. De esta forma, una vez fijados el tamaño en las dos direcciones del espacio y la forma del subconjunto, obtenemos una función que solo depende de un punto $x\in \Omega$.</p>
+<p>In this way, (\ref{heatinterior_memory}) is transformed int a coupled PDE/ODE system:</p>
 
-<p>En esta simulación crearemos el subconjunto como un cuadrado que puede moverse en $\Omega$. este cuadrado se puede construir con una función $W(x)$ definida de la siguiente manera.</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\label{heatinterior_memory_z}
+\begin{equation}
+\begin{cases}
+\begin{matrix}
+  u_t = \Delta u + f(x,t) \chi_{\omega} + z  &     z_t = u        & \textbf{x} \in \Omega & t \in [0,T] \\
+  u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
+  u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega 
+  \end{matrix}
+\end{cases}
+\end{equation} %]]></script>
 
-<script type="math/tex; mode=display">W(x,a,b) = \Theta(x-a) + \Theta(x-b) \\  \{ a,b,x  \}\in \mathbb{R} \\ a>b \\</script>
+<p>In (\ref{heatinterior_memory_z}), the equation $z_t = u$ is an infinte-dimensional ODE which, since it has no diffusion term, introduces non-propagation phenomena in the system. The non propagating components corresponding to this ODE are unable to reach the control region $\omega$ and, therefore, cannot be controlled.</p>
 
-<p>donde $\Theta(x)$ es la fución theta de heaviside. Dado que la función $\Theta(x)$, tiene una aproximación analítica, la función $W(x,a,b)$ puede ser suavizada, detalle que será de vital importancia para que se pueda calcular el gradiente de la restrición asociada a la dinámica cunado realizamos el problema de control óptimo.</p>
+<p>A natural remedy to this issue is to operate with a moving control strategy. If the ODE components of the system cannot reach the control region $\omega$, then is the control region who needs to reach these components. Hence, our control region would be  function of the time variable, $\omega = \omega(t)$, and the corresponding model will be
+<script type="math/tex">% <![CDATA[
+\label{heatinterior_memory_z_moving}
+\begin{equation}
+\begin{cases}
+\begin{matrix}
+  u_t = \Delta u + f(x,t) \chi_{\omega(t)} + z  &     z_t = u        & \textbf{x} \in \Omega & t \in [0,T] \\
+  u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
+  u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega 
+  \end{matrix}
+\end{cases}
+\end{equation} %]]></script></p>
 
-<p>Un representación gráfica de $W(x,a,b)$ permiter reconocer a esta función con valor unidad entre los valores $a$ y $b$ y nulo fuera de ellos.</p>
+<p>This moving control strategy has been proposed and succesfully applied in several contributions of our team [1,2,3,4].</p>
+
+<p>Memory-type equations are one of the core topics of WP5 of the DyCon ERC project. An abridged presentation of this wotking package can be found at the following link:</p>
+
+<p>https://cmc.deusto.eus/dycon-working-package-5-memory-and-hybrid-pdeode-models/</p>
+
+<h2 id="numerical-implementation-of-the-moving-control-strategy">Numerical implementation of the moving control strategy</h2>
+
+<p>We present here the numerical implementation of the moving control strategy for the memory-type heat equation (\ref{heatinterior_memory_z_moving}). All the simulations will be in $2D$.</p>
+
+<h3 id="step-1-construction-of-the-control-region">STEP 1: construction of the control region</h3>
+
+<p>The first step is to construct the moving control region $\omega(t)$, which requires to design the function $\chi_{\omega(t)}$. To this end, we made the assumption that the size and orientation of $\omega(t)$ do not change during the time interval $[0,T]$. Hence, once fixed the size and shape of the control region, we will obtain a function depending only on a point $x\in \Omega$.</p>
+
+<p>In this simulation, we create the control region as a square which moves in the domain $\Omega$. This square can be constructed with a function $W(x)$ defined as</p>
+
+<script type="math/tex; mode=display">W(x,a,b) = H(x-a) + H(x-b) \\  \{ a,b,x  \}\in \mathbb{R} \\ a>b \\</script>
+
+<p>where $H(x)$ is the Heaviside function. Nevertheless, the function $W$ constructed in this way would be non-differentialbe at the points $x=a$ and $x=b$. This would represent a problem when implementing the gradient method to compute the control. To bypass this issue, in the definition of $W(x,a,b)$ we will use a smooth approximation of $H$.</p>
 
 <table>
   <tr>
@@ -394,16 +435,16 @@ img:active{
   </tr>
   <tr>
     <th>
-      <center><b>Figure 1</b>: Representación gráfica de $W(x,a,b)$</center>
+      <center><b>Figure 1</b>: Graphicla representation of $W(x,a,b)$</center>
     </th>
   </tr>
 </table>
 
-<p>La generalización de esta función en dos dimensiones en inmediata,</p>
+<p>Moreover, the generalization of this function to dimension two is immediate</p>
 
 <script type="math/tex; mode=display">W_{2D}(x,y,x_{min},x_{max},y_{min},y_{max}) = W(x,x_{min},x_{max})*W(x,y_{min},y_{max})</script>
 
-<p>De esta forma dado $(x_{min}, x_{max}, y_{min}, y_{max})$, obtenemos la función característica dependiente solo de la posición de un solo punto.</p>
+<p>In this way, given $(x_{min}, x_{max}, y_{min}, y_{max})$, we obtain the corresponding characteristic function which only depends on the position of a single point.</p>
 
 <table>
   <tr>
@@ -418,36 +459,18 @@ img:active{
   </tr>
 </table>
 
-<h2 id="construcción-de-la-dinámica">Construcción de la dinámica</h2>
+<h3 id="step-2-construction-of-the-dynamics">STEP 2: construction of the dynamics</h3>
 
-<p>Para el sistema con memoria (Equation \ref{heatinterior_memory}), podemos introducir una nueva variable, $z(x,t)$ tal que:</p>
+<p>Since $\chi_{\omega}$ can move and, moreover, we want to obtain the optimal trajectory for the control, we will incorporate in our system a moving particle whose position and velocity are denoted by $\textbf{d} = (d_x,d_y)$ and $\textbf{v} = (v_x,v_y)$, respectively. Besides, we will add a control $\textbf{g}(t) = (g_x(t),g_y(t))$ which will act as an exterior force moving the subset $\chi_{\omega}$.</p>
 
-<script type="math/tex; mode=display">z(x) = \int_0^t u(x,\tau) d\tau \Rightarrow \dot{z} = u(x,t)</script>
-
-<p>De esta manera el sistema con memoria se convierte en un sistema acoplado de PDEs:</p>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\label{heatinterior_memory_z}
-\begin{equation}
-\begin{cases}
-\begin{matrix}
-  \dot{u} = \Delta u + f(x,t) \chi_{\omega} + z  &     \dot{z} = u        & \textbf{x} \in \Omega & t \in [0,T] \\
-  u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
-  u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega 
-  \end{matrix}
-\end{cases}
-\end{equation} %]]></script>
-
-<p>Dado que $\chi_{\omega}$ puede moverse, y ademas que queremos obtener la trayectoria óptima para el control móvil añadiremos al sistema una partícula que puede moverse en dos dimensiones, su posición vendrá denotada por, $\textbf{d} = (d_x,d_y)$, y su velocidad, $\textbf{v} = (v_x,v_y)$. Además añadiremos un control $\textbf{g}(t) = (g_x(t),g_y(t))$ que actuará como una fuerza que moverá el subconjunto $\chi_{\omega}$.</p>
-
-<p>Entonces, el sistema total queda como:</p>
+<p>In this way, our model takes the final form</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \label{heatinterior_memory_z_all}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  \dot{u} = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z  &     \dot{z} = u        & \textbf{x} \in \Omega & t \in [0,T] \\
+  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z  &     z_t = u        & \textbf{x} \in \Omega & t \in [0,T] \\
   u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
   u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega \\
     \dot{\textbf{d}} = \textbf{v} & \textbf{d}(0) = \textbf{d}_0    & t \in [0,T]\\
@@ -456,16 +479,32 @@ img:active{
 \end{cases}
 \end{equation} %]]></script>
 
-<h2 id="numerical-implementation">Numerical Implementation</h2>
+<h3 id="step-3-optimal-control-problem">STEP 3: optimal control problem</h3>
 
-<p>En este tutorial necesitaremos DyCon Toolbox, y CasADi. Dado que CasADi es una dependecia de DyCon Toolbox, podemos instalarlo de la siguiente forma</p>
+<p>Following a standard optimal control strategy, the control function for our memory-type equation will be computed throught the minimization problem 
+<script type="math/tex">\min_{f(x,t),g(t)}  \int_{\Omega} ||u(x,T) ||^2dx \\</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\text{subject to: }\quad \begin{cases}
+\begin{matrix}
+  \dot{u} = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z  &     \dot{z} = u        & \textbf{x} \in \Omega & t \in [0,T] \\
+  u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
+  u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega \\
+    \dot{\textbf{d}} = \textbf{v} & \textbf{d}(0) = \textbf{d}_0    & t \in [0,T]\\
+  \dot{\textbf{v}} = \textbf{g}(t)  & \textbf{v}(0) = \textbf{v}_0  & t \in [0,T]\\
+  \end{matrix}
+\end{cases} %]]></script>
+
+<h2 id="simulations">Simulations</h2>
+
+<p>All the simulations in this tutorial have been performed using the DyCon Toolbox and CasADi. Since CasADi is incorporated into the DyCon toolbox, we can install it in the following way</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">))</span>
 <span class="n">StartDyconPlatform</span>
 </code></pre></div></div>
 
-<p>Podemos escribir la ecuación \ref{heatinterior_memory_z_all}, en su forma discreta:</p>
+<p>We shall now write the discrete version of equation (\ref{heatinterior_memory_z_all}):</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \label{heatinterior_memory_z_all_discr}
@@ -516,7 +555,7 @@ img:active{
 \end{bmatrix}
 \end{equation} %]]></script>
 
-<p>Creamos las variables de mesh</p>
+<p>Secondly, let us create the mesh variable</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% Create the mesh variables</span>
 <span class="nb">clear</span><span class="p">;</span>
@@ -527,7 +566,7 @@ img:active{
 <span class="p">[</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="nb">xline</span><span class="p">,</span><span class="nb">yline</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>Creamos la matriz A, que contiene el laplaciano en 2D y la dinámica del control movil</p>
+<p>and the matrix $A$ containing the $2D$ Laplacian and the ODE dynamics</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span>  <span class="o">=</span> <span class="n">FDLaplacial2D</span><span class="p">(</span><span class="nb">xline</span><span class="p">,</span><span class="nb">yline</span><span class="p">);</span>
 
@@ -543,36 +582,20 @@ img:active{
                        <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">;</span> <span class="k">...</span>
                        <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="p">];</span>
 
-             
 <span class="n">Atotal</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">=</span> <span class="n">RumbaMatrixDynamics</span><span class="p">;</span>
 <span class="n">Atotal</span> <span class="o">=</span> <span class="nb">sparse</span><span class="p">(</span><span class="n">Atotal</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>Greamos la función $B(\textbf{d}) = B(x_d,y_d)$</p>
+<p>Finally, we create the function $B(\textbf{d}) = B(x_d,y_d)$ for the dynamics of the moving control</p>
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%%</span>
-<span class="c1">% We create the B() function </span>
+<span class="c1">% We create the B() function</span>
 <span class="n">xwidth</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
 <span class="n">ywidth</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
 <span class="n">B</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">,</span><span class="n">xs</span><span class="p">,</span><span class="n">ys</span><span class="p">)</span> <span class="n">WinWP05</span><span class="p">(</span><span class="n">xms</span><span class="p">,</span><span class="n">xs</span><span class="p">,</span><span class="n">xwidth</span><span class="p">)</span><span class="o">.*</span><span class="n">WinWP05</span><span class="p">(</span><span class="n">yms</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">ywidth</span><span class="p">);</span>
 <span class="n">Bmatrix</span> <span class="o">=</span>  <span class="o">@</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">ys</span><span class="p">)</span> <span class="p">[</span><span class="nb">diag</span><span class="p">(</span><span class="nb">reshape</span><span class="p">(</span><span class="n">B</span><span class="p">(</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">,</span><span class="n">xs</span><span class="p">,</span><span class="n">ys</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="p">))</span> <span class="p">;</span><span class="nb">zeros</span><span class="p">(</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="p">)];</span>
 </code></pre></div></div>
 
-<script type="math/tex; mode=display"></script>
-
-<h2 id="optimal-control-problem">Optimal Control Problem</h2>
-
-<script type="math/tex; mode=display">\min_{f(x,t),g(t)}  \int_{\Omega} ||u(x,T) ||^2dx \\</script>
-
-<script type="math/tex; mode=display">% <![CDATA[
-\text{subject to: }\begin{cases}
-\begin{matrix}
-  \dot{u} = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z  &     \dot{z} = u        & \textbf{x} \in \Omega & t \in [0,T] \\
-  u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
-  u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega \\
-    \dot{\textbf{d}} = \textbf{v} & \textbf{d}(0) = \textbf{d}_0    & t \in [0,T]\\
-  \dot{\textbf{v}} = \textbf{g}(t)  & \textbf{v}(0) = \textbf{v}_0  & t \in [0,T]\\
-  \end{matrix}
-\end{cases} %]]></script>
+<p>We now have everything we need to construct and solve the optimal control problem</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">opti</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Opti</span><span class="p">();</span>  <span class="c1">% CasADi optimization structure</span>
 
@@ -614,7 +637,7 @@ img:active{
 <span class="nb">toc</span>
 </code></pre></div></div>
 
-<p>Mvil Control</p>
+<p>The following video shows the results of our simulations, which allowed to compute an effective moving control steering the dynamics to rest at time $T$.</p>
 
 <table>
 <tr>
@@ -631,10 +654,448 @@ img:active{
 </tr>
 </table>
 
+<h2 id="bibliography">Bibliography</h2>
+
+<p>[1] U. Biccari and S. Micu, <em>Null-controllability properties of the wave equation with a second order memory term</em>, J. Differential Equations, 267(2), 2019, 1376-1422.</p>
+
+<p>[2] U. Biccari and M. Warma, <em>Null-controllability properties of a fractional wave equation with a memory term</em>, Evol. Eq. Control The., 9(2), 2020, 399-430.</p>
+
+<p>[3] F. W. Chaves-Silva, X. Zhang and E. Zuazua, <em>Controllability of evolution equations with memory</em>, SIAM J. Control Optim., 55(4), 2017, 2437–2459.</p>
+
+<p>[4] Q. Lü, X. Zhang and E. Zuazua, <em>Null controllability for wave equations with memory</em>, J. Math. Pures Appl., 108 (4), 2017, 500-531.</p>
+
         <hr>
       </div>
     </div>
   </div>
+  <div id="content" class="container">
+
+  <div class="relatedPosts">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+    <h2>Related Posts</h2>
+    
+    
+    
+    
+    
+
+    
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0014/twiterFractional.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp05/P0014" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Simulation of Fractional Heat Equation </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial, we show the simulation of heat fractional equation
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+          
+          - 01 February 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0013/avatar.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp05/P0013" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Optimal Control of the Fokker-Planck Equation with CasADi </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial, we present an optimal control problem related to the Fokker-Planck equation.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
+          
+          - 19 December 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0012/v1.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp05/P0012" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Numerical simulation of nonlinear Population Dynamics Structuring by age and Spatial diffusion </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial, we propose the Hum method to approximate numerically the control in a null controllability problem for a non linear population dynamics model structuring in age and spatial diffusion.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a>
+          
+          - 30 October 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0010/Fig06.jpg">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp05/P0010" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Controllability of a Class of Infinite Dimensional Systems with Age Structure </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial,  we investigate the linear infinite dimensional system obtained by implementing an age structure to a given  linear dynamical system. We show that if the initial system is null controllable in a time small enough, then the age structured system is also null controllable in a time depending on the various involved parameters.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/DebayanM">Debayan Maity</a>
+          
+          - 07 June 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+            
+    </div>
+  </div> 
+    </div>
+  </div>
+
 </article>
 <hr>
 

@@ -41,6 +41,42 @@ layout: default
 
 <div class="container">
   <div class="col-md-10 col-md-offset-1">
+    <hr>
+    <!-- <h1 class="h1-title">Work Packages</h1> -->
+    <!-- <div class="container">
+
+      <div class="col-md-10 row">
+        {% assign WPS = site.data.WorkPackages  %}
+        {% for iWP in WPS %}
+          <div class="col-md-4">
+            <div class="card mb-3 shadow-sm">
+              <a href="{{site.url}}/{{site.baseurl}}/workpackage/{{iWP[0]}}">
+                <img width="95%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0009/figures/ContrState-4.png"></img>
+              </a>
+              <div class="card-body" >
+                <div style="height:62px">
+                <center>
+                  <h5 class="card-text"><b>{{iWP[0]}}</b>: {{iWP[1].name}}</h5>
+                </center>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <form action="{{site.url}}/{{site.baseurl}}/workpackage/{{iWP[0]}}">
+                      <center><button type="button submit" class="btn btn-sm btn-outline-secondary">View</button>
+                      </center>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div> -->
+
+    <hr>
+
+
     <h1 class="h1-title">Recent Posts</h1>
     {% assign qposts = site.posts | where:"layout","tutorial"|sort |reverse %}
     {% for post in qposts limit: 15 %}

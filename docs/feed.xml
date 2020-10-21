@@ -5,9 +5,420 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 03 Jun 2020 23:45:48 +0200</pubDate>
-    <lastBuildDate>Wed, 03 Jun 2020 23:45:48 +0200</lastBuildDate>
+    <pubDate>Wed, 21 Oct 2020 07:35:41 +0200</pubDate>
+    <lastBuildDate>Wed, 21 Oct 2020 07:35:41 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Moving control strategy for memory-type equations</title>
+        <description>This tutorial shows how to implement the moving control strategy for the heat equation in the presence of a memory term.
+
+The standard null controllability problem for the heat equation reads as follows
+
+
+
+where $\Omega$ is a bounded domain, $u_0\in L^2(\Omega)$ and the control $f$ acts on the subdomain $\omega\subset\Omega$. The objective is to steer the system from $u_0$ to zero in time $T$,
+
+It is known that the null controllability of the heat equation holds in any positive time $T&amp;gt;0$ and for any open control region $\omega$. Nevertheless, the situation changes when in the model appears a memory term:
+
+
+
+As a matter of fact, when the equation involes a memory term, it is impossible to achive null controllability in the classical sense, unless the control region coincides with the entire domain ($\omega=\Omega$).
+
+This fact can be easily seen when applying a LQR control on both systems (\ref{heatinterior}) and (\ref{heatinterior_memory}). In the former case (without memory) the minimum of the LQR functional is an optimal control stabilizing the dynamics, whereas when the memory enters into the model this minimum leaves the system far from the equilibrium.
+
+
+
+
+    
+        
+          
+             
+           
+        
+        
+          
+             
+           
+        
+    
+    
+        
+          
+              Video 1: LQR in the heat equation (Equation \ref{heatinterior})
+           
+        
+        
+          
+              Video 2:  LQR in the heat equation with memory (Equation \ref{heatinterior_memory})
+           
+        
+     
+    
+        
+          
+              We can see the time evolution of the two models with a control region, $\chi_{\omega}$, located in the position of the blue ellipsoid in the simulation. We observe that the LQR control is effective for the heat equation but not for the heat equation with memory.
+           
+        
+     
+
+
+To understand the reason behind the lack of null controllability for the memory-type equation (\ref{heatinterior_memory}), we can introduce the new variable
+
+
+
+In this way, (\ref{heatinterior_memory}) is transformed int a coupled PDE/ODE system:
+
+
+
+In (\ref{heatinterior_memory_z}), the equation $z_t = u$ is an infinte-dimensional ODE which, since it has no diffusion term, introduces non-propagation phenomena in the system. The non propagating components corresponding to this ODE are unable to reach the control region $\omega$ and, therefore, cannot be controlled.
+
+A natural remedy to this issue is to operate with a moving control strategy. If the ODE components of the system cannot reach the control region $\omega$, then is the control region who needs to reach these components. Hence, our control region would be  function of the time variable, $\omega = \omega(t)$, and the corresponding model will be
+
+
+This moving control strategy has been proposed and succesfully applied in several contributions of our team [1,2,3,4].
+
+Memory-type equations are one of the core topics of WP5 of the DyCon ERC project. An abridged presentation of this wotking package can be found at the following link:
+
+https://cmc.deusto.eus/dycon-working-package-5-memory-and-hybrid-pdeode-models/
+
+Numerical implementation of the moving control strategy
+
+We present here the numerical implementation of the moving control strategy for the memory-type heat equation (\ref{heatinterior_memory_z_moving}). All the simulations will be in $2D$.
+
+STEP 1: construction of the control region
+
+The first step is to construct the moving control region $\omega(t)$, which requires to design the function $\chi_{\omega(t)}$. To this end, we made the assumption that the size and orientation of $\omega(t)$ do not change during the time interval $[0,T]$. Hence, once fixed the size and shape of the control region, we will obtain a function depending only on a point $x\in \Omega$.
+
+In this simulation, we create the control region as a square which moves in the domain $\Omega$. This square can be constructed with a function $W(x)$ defined as
+
+
+
+where $H(x)$ is the Heaviside function. Nevertheless, the function $W$ constructed in this way would be non-differentialbe at the points $x=a$ and $x=b$. This would represent a problem when implementing the gradient method to compute the control. To bypass this issue, in the definition of $W(x,a,b)$ we will use a smooth approximation of $H$.
+
+
+  
+    
+      
+    
+  
+  
+    
+      Figure 1: Graphicla representation of $W(x,a,b)$
+    
+  
+
+
+Moreover, the generalization of this function to dimension two is immediate
+
+
+
+In this way, given $(x_{min}, x_{max}, y_{min}, y_{max})$, we obtain the corresponding characteristic function which only depends on the position of a single point.
+
+
+  
+    
+       
+    
+  
+  
+    
+      Video 3: Representación gráfica de  $W_{2D}$
+    
+  
+
+
+STEP 2: construction of the dynamics
+
+Since $\chi_{\omega}$ can move and, moreover, we want to obtain the optimal trajectory for the control, we will incorporate in our system a moving particle whose position and velocity are denoted by $\textbf{d} = (d_x,d_y)$ and $\textbf{v} = (v_x,v_y)$, respectively. Besides, we will add a control $\textbf{g}(t) = (g_x(t),g_y(t))$ which will act as an exterior force moving the subset $\chi_{\omega}$.
+
+In this way, our model takes the final form
+
+
+
+STEP 3: optimal control problem
+
+Following a standard optimal control strategy, the control function for our memory-type equation will be computed throught the minimization problem 
+
+
+
+
+Simulations
+
+All the simulations in this tutorial have been performed using the DyCon Toolbox and CasADi. Since CasADi is incorporated into the DyCon toolbox, we can install it in the following way
+
+unzip('https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip')
+addpath(genpath(fullfile(cd,'DyCon-toolbox-master'))
+StartDyconPlatform
+
+
+We shall now write the discrete version of equation (\ref{heatinterior_memory_z_all}):
+
+
+
+Secondly, let us create the mesh variable
+
+% Create the mesh variables
+clear;
+Ns = 7;
+Nt = 15;
+xline = linspace(-1,1,Ns);
+yline = linspace(-1,1,Ns);
+[xms,yms] = meshgrid(xline,yline);
+
+
+and the matrix $A$ containing the $2D$ Laplacian and the ODE dynamics
+
+A  = FDLaplacial2D(xline,yline);
+
+Atotal = zeros(2*Ns^2+4,2*Ns^2+4);
+%
+Atotal( 1:Ns^2  , 1:Ns^2 ) = A;
+%
+Atotal( Ns^2+1 : 2*Ns^2   ,   1    :  Ns^2   )  =  eye(Ns^2);
+Atotal(    1   :  Ns^2    , Ns^2+1 : 2*Ns^2  )  =  50*eye(Ns^2); % z = 50*y
+
+RumbaMatrixDynamics = [0 0 1 0; ...
+                       0 0 0 1; ...
+                       0 0 0 0; ...
+                       0 0 0 0 ];
+
+Atotal(2*Ns^2+1:end,2*Ns^2+1:end) = RumbaMatrixDynamics;
+Atotal = sparse(Atotal);
+
+
+Finally, we create the function $B(\textbf{d}) = B(x_d,y_d)$ for the dynamics of the moving control
+%%
+% We create the B() function
+xwidth = 0.3;
+ywidth = 0.3;
+B = @(xms,yms,xs,ys) WinWP05(xms,xs,xwidth).*WinWP05(yms,ys,ywidth);
+Bmatrix =  @(xs,ys) [diag(reshape(B(xms,yms,xs,ys),1,Ns^2)) ;zeros(Ns^2)];
+
+
+We now have everything we need to construct and solve the optimal control problem
+
+opti = casadi.Opti();  % CasADi optimization structure
+
+% ---- Input variables ---------
+Ucas = opti.variable(2*Ns^2+4,Nt+1); % state trajectory
+Fcas = opti.variable(Ns^2+2,Nt+1);   % control
+
+% ---- Dynamic constraints --------
+dUdt = @(y,f) Atotal*u+ [Bmatrix(u(end-3),u(end-2))*f(1:end-2) ; ...
+                                         0                     ; ...
+                                         0                     ; ...
+                                     f(end-1)                  ; ...
+                                     f(end)                    ]; 
+
+% -----Euler backward method-------
+for k=1:Nt % loop over control intervals
+   y_next = Ucas(:,k) + (T/Nt)*dUdt(Ucas(:,k+1),dUdt(:,k+1)); 
+   opti.subject_to(Ucas(:,k+1)==y_next); % close the gaps
+end
+
+% ---- State constraints --------
+opti.subject_to(Ucas(:,1)==[Y0 ; 0.7 ; 0.7; -1.5 ; -1.5]);
+
+% ---- Optimization objective  ----------
+Cost = (Ucas(1:end-4,Nt+1))'*(Ucas(1:end-4,Nt+1));
+
+opti.minimize(Cost); % minimizing L2 at the final time
+
+% ---- initial guesses for solver ---
+opti.set_initial(Ucas, Unum_free);
+opti.set_initial(Fcas, 0);
+
+% ---- solve NLP              ------
+p_opts = struct('expand',false);
+s_opts = struct('acceptable_tol',1e-4,'constr_viol_tol',1e-3,'compl_inf_tol',1e-3);
+opti.solver('ipopt',p_opts,s_opts); % set numerical backend
+tic
+sol = opti.solve();   % actual solve
+toc
+
+
+The following video shows the results of our simulations, which allowed to compute an effective moving control steering the dynamics to rest at time $T$.
+
+
+
+  
+    
+       
+    
+  
+
+
+
+Video 3
+
+
+
+
+Bibliography
+
+[1] U. Biccari and S. Micu, Null-controllability properties of the wave equation with a second order memory term, J. Differential Equations, 267(2), 2019, 1376-1422.
+
+[2] U. Biccari and M. Warma, Null-controllability properties of a fractional wave equation with a memory term, Evol. Eq. Control The., 9(2), 2020, 399-430.
+
+[3] F. W. Chaves-Silva, X. Zhang and E. Zuazua, Controllability of evolution equations with memory, SIAM J. Control Optim., 55(4), 2017, 2437–2459.
+
+[4] Q. Lü, X. Zhang and E. Zuazua, Null controllability for wave equations with memory, J. Math. Pures Appl., 108 (4), 2017, 500-531.
+</description>
+        <pubDate>Tue, 20 Oct 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP05</category>
+        
+      </item>
+    
+      <item>
+        <title>Optimal Control Problem vs  Classification Problem in DyCon Toolbox</title>
+        <description>En este tutorial veremos como podemos implementar un problema de clasificación simple mediante la librería de control óptimo DyCon Toolbox
+
+Generación de datos
+
+Para resolver un problema de clasificación supervisada necesitamos datos de entrada ${ \vec{x}{i} }{i=1}^N$ y de salida ${ \vec{y}{i} }{i=1}^N$. Eso lo generaremos de manera sintéctica con las siguientes lineas de código
+clear;
+N = 12;
+xdata = linspace(-1,1,N);
+ydata = [-1, -1, -1, -1, 1, 1, 1, 1, -1, -1, -1, -1];
+
+Podemos ver los datos generados
+f = figure(1)
+plot(xdata,ydata,'o-','LineWidth',2)
+xlabel('x-data')
+ylabel('y-data')
+title('Data')
+print('data.png','-dpng')
+
+
+
+
+Ahora queremos una ecuación diferencial controlada para una variable $z(t)$ tal que cuando reciba una condición inicial $z(0) = x_i$ evolucione durante $t=1$, y devuelva $z(t)=y_i$, esto para $\forall i \in {1,\dots,N}$.
+
+Es decir una ecuación diferencial, tal que
+
+
+
+Donde $\mathcal{P}$ es una proyección del 
+Es decir es una
+sigma = @(x) tanh(x);
+%% Dynamic definition
+import casadi.*
+As = SX.sym('A',[2 2]);
+bs = SX.sym('b',[2 1]);
+zs = SX.sym('z',[2*N 1]);
+% Create a Big matrices
+Afull =  SX.zeros(2*N,2*N);
+for i = 1:N
+   ind = ((i-1)*2+1):(i*2);
+   Afull(ind,ind) = As; 
+end
+%
+bfull = repmat(bs,N,1);
+% sym time
+ts = SX.sym('t');
+% this is the control
+us = [As(:);bs];
+% define the dynamic equation
+Fs = casadi.Function('F',{ts,zs,us},{Afull*sigma(zs) + bfull});
+
+Creamos el objeto ode
+Nt = 50; tspan = linspace(0,1,Nt);
+%
+idyn = ode(Fs,zs,us,tspan); % &amp;lt;- idyn is a ode object of DyCon Toolbox
+SetIntegrator(idyn,'RK4') % &amp;lt;- For solve you need choose a numerical squeme
+% initial condition
+z0          = zeros(2*N,1);
+z0(1:2:2*N) = xdata';
+% put in idyn object 
+idyn.InitialCondition = z0;
+
+Optimal Control Definition
+
+P = [1 1]; % no optimize P
+Pfull = repmat(P,N,1);
+Pzminusy = P*reshape(zs,2,N)-ydata; % &amp;lt;-- (P*z_i - y_i)
+L   = casadi.Function('L',  {ts,zs,us},{ sum(sum(As.^2))  + bs'*bs  });
+Psi = casadi.Function('Psi',{zs}      ,{ 1e5*(Pzminusy*Pzminusy') });
+%
+iocp = ocp(idyn,L,Psi);
+
+
+Solve
+[Uopt,Zopt] = IpoptSolver(iocp,ZerosControl(idyn));
+
+
+%% Plot
+figure(1)
+clf
+subplot(1,2,1)
+l1 = plot(tspan,Zopt(1:2:2*N,:)','b');
+hold on
+l2 = plot(tspan,Zopt(2:2:2*N,:)','r');
+legend([l1(1) l2(1)],{'z_i^1(t)','z_i^2(t)'},'Location','bestoutside')
+
+title('Optimal State')
+ylabel('z_i(t)')
+xlabel('time')
+
+subplot(2,2,2)
+plot(tspan,Uopt(1:4,:)')
+title('Optimal Control - A(t)')
+xlabel('time')
+legend({'A_1','A_2','A_3','A_4'},'Location','bestoutside')
+
+subplot(2,2,4)
+plot(tspan,Uopt(5:end,:)')
+title('Optimal Control - b(t)')
+xlabel('time')
+legend({'b_1','b_2'},'Location','bestoutside')
+
+Animation
+fig = figure(2);
+clf
+hold on
+
+xlim([-5 5])
+
+ylim([-5 5])
+for iter = 1:N
+    if ydata(iter) &amp;gt; 0
+        color = 'r';
+    else
+        color = 'b';
+    end
+    ilines(iter) = plot(Zopt(2*(iter-1)+1,1),Zopt(2*(iter-1)+2,1),'Color',color,'Marker','.','MarkerSize',20);
+    jlines(iter) = plot(Zopt(2*(iter-1)+1,1),Zopt(2*(iter-1)+2,1),'Color',color,'Marker','none','MarkerSize',20);
+
+end
+% 
+for it = 1:length(tspan)
+   for iter = 1:N
+    ilines(iter).XData = Zopt(2*(iter-1)+1,it);
+    ilines(iter).YData = Zopt(2*(iter-1)+2,it);
+    jlines(iter).XData = Zopt(2*(iter-1)+1,1:it);
+    jlines(iter).YData = Zopt(2*(iter-1)+2,1:it);
+   end
+    pause(0.05)
+end
+
+</description>
+        <pubDate>Mon, 27 Jul 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0012</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0012</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP01</category>
+        
+      </item>
     
       <item>
         <title>Stochastic optimization for simultaneous control</title>
@@ -1738,267 +2149,6 @@ Finally, we can see the behavior of the two control types against the evolution 
         <category>tutorial</category>
         
         <category>WP06</category>
-        
-      </item>
-    
-      <item>
-        <title>Simultaneous Control with DyCon Toolbox</title>
-        <description>In this tutorial we will present a simultaneous control problem in a linear system dependent on parameters. We will use the MATLAb DyCon Toolbox library.
-
-Setup
-
-In this tutorial we need DyCon Toolbox, to install it we will have to write the following in our MATLAB console:
-
-unzip('https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip')
-addpath(genpath(fullfile(cd,'DyCon-toolbox-master')))
-
-Problem definition
-
-The simultaneous control problem is defined as:
-
-
-
-subject to:
-
-
-
-where:
-
-
-
-Numerical Implementation
-
-First we import the CasAdi library in order to create symbolic variables
-
-import casadi.*
-%% In this case $\nu_i$ are
-M = 50;
-nu = linspace(1,6,M);
-
-Then we create the matrices of linear dynamics.
-
-
-
-[A,B] = GenMatSim(nu);
-
-
-With these matrices we create the ode object
-
-Nt = 500;T  = 0.8;
-tspan = linspace(0,T,Nt);
-%% create linear dynamic
-iode = linearode(A,B,tspan);
-%% set initial condition
-Y0 = ones(2, 1);
-iode.InitialCondition = repmat(Y0,M,1);
-
-
-then we create the optimal control problem
-% Get Symbolical variable
-Ys  = iode.State.sym;
-Us  = iode.Control.sym;
-ts  = SX.sym('t'); %% &amp;lt;= Create a symbolical time
-% Set Target
-YT = zeros(2, 1);YT = repmat(YT,M,1);
-%
-PathCost  = casadi.Function('L'  ,{ts,Ys,Us},{ (1/2)*(Us'*Us)           });
-FinalCost = casadi.Function('Psi',{Ys}      ,{  1e7*((Ys-YT).'*(Ys-YT)) });
-% Create the optimal control
-iocp = ocp(iode,PathCost,FinalCost);
-
-
-Solve Optimal Control Problem with ipopt solver
-
-U0 = ZerosControl(iode);
-[Uopt ,Yopt] =  IpoptSolver(iocp,U0);
-
-
-This is Ipopt version 3.12.3, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
-
-Number of nonzeros in equality constraint Jacobian...:   199700
-Number of nonzeros in inequality constraint Jacobian.:        0
-Number of nonzeros in Lagrangian Hessian.............:      600
-
-Total number of variables............................:    50500
-                     variables with only lower bounds:        0
-                variables with lower and upper bounds:        0
-                     variables with only upper bounds:        0
-Total number of equality constraints.................:    50000
-Total number of inequality constraints...............:        0
-        inequality constraints with only lower bounds:        0
-   inequality constraints with lower and upper bounds:        0
-        inequality constraints with only upper bounds:        0
-
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-   0  1.0000000e+09 1.12e-02 7.88e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
-   1  4.0934345e+06 1.26e-13 5.63e-09  -1.0 1.66e+02    -  1.00e+00 1.00e+00f  1
-
-Number of Iterations....: 1
-
-                                   (scaled)                 (unscaled)
-Objective...............:   2.0467172272726700e+01    4.0934344545453396e+06
-Dual infeasibility......:   5.6305735629536002e-09    1.1261147125907198e-03
-Constraint violation....:   1.2612133559741778e-13    1.2612133559741778e-13
-Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
-Overall NLP error.......:   5.6305735629536002e-09    1.1261147125907198e-03
-
-
-Number of objective function evaluations             = 2
-Number of objective gradient evaluations             = 2
-Number of equality constraint evaluations            = 2
-Number of inequality constraint evaluations          = 0
-Number of equality constraint Jacobian evaluations   = 2
-Number of inequality constraint Jacobian evaluations = 0
-Number of Lagrangian Hessian evaluations             = 1
-Total CPU secs in IPOPT (w/o function evaluations)   =      1.391
-Total CPU secs in NLP function evaluations           =      0.027
-
-EXIT: Optimal Solution Found.
-               t_proc [s]   t_wall [s]    n_eval
-       nlp_f     0.000381      0.00038         2
-       nlp_g       0.0042       0.0042         2
-  nlp_grad_f      0.00167      0.00167         3
-  nlp_hess_l      0.00331      0.00332         1
-   nlp_jac_g        0.026        0.026         3
-      solver         1.48         1.36         1
-Elapsed time is 3.853462 seconds.
-
-
-
-Compute Free solution
-
-Yfree = solve(iode,U0*0);
-Yfree = full(Yfree);
-
-
-Visualization
-
-fig = figure;
-fig.Units = 'norm';fig.Position = [0.1 0.1 0.6 0.5];
-%%
-plotSimu(tspan,Yfree,Yopt,Uopt,M)
-
-
-
-
-Figure 1. The different colors represent the dynamic system under different parameters. It can be seen how the same control is obtained acting for all the dynamic systems is capable of driving the systems to the target.
-</description>
-        <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP01</category>
-        
-      </item>
-    
-      <item>
-        <title>Control of reaction-diffusion under state constraints - Barriers</title>
-        <description>
-    
-    Control of reaction-diffusion
-    This is a post in a collection of several on control of reaction-diffusion under state constraints
-    See more ...
-    
-
-
-This tutorial is focused on the understanding of of the problem
-
-
-
-The solutions for $a=0$ constitute an intrinsic obstruction to the controllability with state-constraints due to the comparison principle [1]. Indeed, for any control function $0\leq a(x,t)\leq 1$
-the solution of the problem:
-
-
-
-where $u$ is an elliptic nontrivial solution satisfies that $v(x,t)\geq u(x)$. Therefore, we cannot expect to control to any function below $u$.
-
-This is why the understanding of the existence or non-existence of nontrivial solutions is of main importance for the controllability under state-constraints.
-
-Non-trivial solutions around the boundary value $a=\theta$ do not constitute an intrinsic obstruction to the controllability because the boundary value $\theta$ is not in the border of the admissible set. However, the existence of such solutions create a technical difficulty for achieving the controllability to the steady state $w\equiv \theta$ which can be solved by constructing paths of steady states (See this blog entry ).
-
-Elliptic nontrivial solutions with boundary value 1 do not exist. This can be related to the fact that the traveling waves for the Cauchy problem in the real line are approaching the steady state $w\equiv 1$ [2]
-
-The existence of non-trivial solutions can be done either by comparison principles or by understanding the critical points of a functional (see [3]).
-
-Any critical point of the functional:
-
-
-
-
-
-is a weak solution of the main equation.
-
-In order to guarantee that the solution will be between $0$ and $1$, one can extend $f$ by $0$ outside of the interval $[0,1]$.
-
-Restricting ourselves in the one dimensional case (the argument also holds in several dimensions) and making the spatial change fo variables $x\to \frac{x}{L}$, where $L$ is the length of the domain the functional reads:
-
-
-
-In the expression above we see that if $L$ is small the convex part dominates while if $L$ is large and $\int_0^1f(s)ds&amp;gt;0$ it might not be convex.
-
-In the videos below one can see the evolution of the functional depending on the parameter $\lambda=L^2$. The representation is the evaluation of the functional along the first and the third eigenfunction, i.e. $e_1=\sin(\pi x)$ and $e_3=\sin(3\pi x)$,
-
-
-
-Here, one can see the evolution of the functional for $a=0$ and for $a=\theta=1/3$ for values of $\alpha$ and $\beta$.
-
-
-    
-        
-            
-            
-                
-        
-         
-            
-            
-            
-               
-    
-
-Figure 1. Animation of the functional $J$ for diferent values of $\lambda=L^2$. At the left the boundary value is $0$ while at the right the boundary value is $\theta$.
-
-In the next figure a qualitative bifurcation diagram is represented, the red curve represents the nontrivial solutions with boundary value $\theta$ and the blue one the boundary value $0$. $\lambda^\ast$ is the minimum $\lambda=L^2$ for which a nontrivial solution around $0$ exists, analogously $\lambda^*_\theta$.
-
-
-
-
-Figure 2. Bifurcation diagram . The blue line represents the maximum of the nontrivial solutions with boundary value $0$. The red curve represents some nontrivial solutions with boundary value $\theta$, the red line is the maximum of the nontrivial solution whenever the line is above $\theta$ and represents the minimum when the red line is below $\theta$.
-
-The value $\frac{\lambda_1}{f’(\theta)}$ is the critical value for which the stationary solution $\theta$ becomes unstable. After this situation we have a nontrivial solution above and below $\theta$.
-
-There will be further bifurcations around the boundary value $\theta$ when we increase $\lambda$. These bifuractions will lead to oscillatory nontrivial solutions that can be well understood in the phase-plane, see [2].
-
-Here one can see different non-trivial solutions for different boundary values. The green curve corresponds to a section of the nontrivial solution in the whole $\mathbb{R}$:
-
-
-
-
-
-
-Figure 3. Several nontrivial solutions, in blue the ones with boundary value $0$, the red ones have boundary value $\theta$ and the green one is the solution in the whole $\mathbb{R}$. $\theta_1$ is the number such that $\int_0^{\theta_1} f(s)ds = 0 $.
-
-References:
-
-[1] M.H. Protter and H.F. Weinberger, Maximum principles in differential equations, Springer Science &amp;amp; Business Media, 2012.
-
-[2] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
-
-[3]  P.L. Lions, On the existence of positive solutions of semilinear elliptic equations, SIAM Rev. 24 (1982), no. 4, 441–467.
-
-</description>
-        <pubDate>Tue, 31 Mar 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP03</category>
         
       </item>
     
