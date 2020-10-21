@@ -219,9 +219,9 @@
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega} \ & \ \textbf{x} \in \Omega & t \in [0,T] \\
-  u(\textbf{x,t}) = 0    & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
-  u(\textbf{x},0) = u_0  & \textbf{x} \in \Omega
+  u_t = \Delta u + f(x,t) \chi_{\omega} \ & \ x \in \Omega & t \in [0,T] \\
+  u(x,t) = 0    & x \in \partial \Omega  &  t \in [0,T] \\
+  u(x,0) = u_0  & x \in \Omega
 \end{matrix}
 \end{cases},
 \end{equation} %]]></script>
@@ -235,16 +235,16 @@
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega} + \int_0^t u(x,\tau) d\tau \ & \ \textbf{x} \in \Omega & t \in [0,T] \\
-  u(\textbf{x,t}) = 0    & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
-  u(\textbf{x},0) = u_0  & \textbf{x} \in \Omega
+  \displaystyle u_t = \Delta u + f(x,t) \chi_{\omega} + \int_0^t u(x,\tau) d\tau \ & \ x \in \Omega & t \in [0,T] \\
+  u(x,t) = 0    & x \in \partial \Omega  &  t \in [0,T] \\
+  u(x,0) = u_0  & x \in \Omega
 \end{matrix}
 \end{cases}
 \end{equation} %]]></script>
 
 <p>As a matter of fact, when the equation involes a memory term, it is impossible to achive null controllability in the classical sense, unless the control region coincides with the entire domain ($\omega=\Omega$).</p>
 
-<p>This fact can be easily seen when applying a LQR control on both systems (\ref{heatinterior}) and (\ref{heatinterior_memory}). In the former case (without memory) the minimum of the LQR functional is an optimal control stabilizing the dynamics, whereas when the memory enters into the model this minimum leaves the system far from the equilibrium.</p>
+<p>This fact can be easily seen when applying a LQR control on both systems (\ref{heatinterior}) and (\ref{heatinterior_memory}). In the former case (without memory) the minimum of the LQR functional is an optimal control stabilizing the dynamics (Video 1), whereas when the memory enters into the model this minimum leaves the system far from the equilibrium (Vdeo 2).</p>
 
 <hr />
 
@@ -286,38 +286,39 @@
 
 <script type="math/tex; mode=display">z(x,t) = \int_0^t u(x,\tau) d\tau \Rightarrow z_t(x,t) = u(x,t)</script>
 
-<p>In this way, (\ref{heatinterior_memory}) is transformed int a coupled PDE/ODE system:</p>
+<p>In this way, (\ref{heatinterior_memory}) is transformed into a coupled PDE/ODE system:</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \label{heatinterior_memory_z}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega} + z  &     z_t = u        & \textbf{x} \in \Omega & t \in [0,T] \\
-  u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
-  u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega 
+  u_t = \Delta u + f(x,t) \chi_{\omega} + z,  &     z_t = u        & x \in \Omega & t \in [0,T] \\
+  u(x,t) = 0,                        &  z(x,t) = 0   & x \in \partial \Omega  &  t \in [0,T] \\
+  u(x,0) = 0                      &  z(x,0) = 0   & x \in \Omega
   \end{matrix}
 \end{cases}
 \end{equation} %]]></script>
 
 <p>In (\ref{heatinterior_memory_z}), the equation $z_t = u$ is an infinte-dimensional ODE which, since it has no diffusion term, introduces non-propagation phenomena in the system. The non propagating components corresponding to this ODE are unable to reach the control region $\omega$ and, therefore, cannot be controlled.</p>
 
-<p>A natural remedy to this issue is to operate with a moving control strategy. If the ODE components of the system cannot reach the control region $\omega$, then is the control region who needs to reach these components. Hence, our control region would be  function of the time variable, $\omega = \omega(t)$, and the corresponding model will be
-<script type="math/tex">% <![CDATA[
+<p>A natural remedy to this issue is to operate with a moving control strategy. If the ODE components of the system cannot reach the control region $\omega$, then is the control region who needs to reach these components. Hence, our control region would be  function of the time variable, $\omega = \omega(t)$, and the corresponding model will be</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
 \label{heatinterior_memory_z_moving}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega(t)} + z  &     z_t = u        & \textbf{x} \in \Omega & t \in [0,T] \\
-  u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
-  u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega 
+  u_t = \Delta u + f(x,t) \chi_{\omega(t)} + z,  &     z_t = u        & x \in \Omega & t \in [0,T] \\
+  u(x,t) = 0,                        &  z(x,t) = 0   & x \in \partial \Omega  &  t \in [0,T] \\
+  u(x,0) = 0                      &  z(x,0) = 0   & x \in \Omega
   \end{matrix}
 \end{cases}
-\end{equation} %]]></script></p>
+\end{equation} %]]></script>
 
 <p>This moving control strategy has been proposed and succesfully applied in several contributions of our team [1,2,3,4].</p>
 
-<p>Memory-type equations are one of the core topics of WP5 of the DyCon ERC project. An abridged presentation of this wotking package can be found at the following link:</p>
+<p>Memory-type equations are one of the core topics of WP5 of the DyCon ERC project. An abridged presentation of this working package can be found at the following link:</p>
 
 <p>https://cmc.deusto.eus/dycon-working-package-5-memory-and-hybrid-pdeode-models/</p>
 
@@ -331,9 +332,9 @@
 
 <p>In this simulation, we create the control region as a square which moves in the domain $\Omega$. This square can be constructed with a function $W(x)$ defined as</p>
 
-<script type="math/tex; mode=display">W(x,a,b) = H(x-a) + H(x-b) \\  \{ a,b,x  \}\in \mathbb{R} \\ a>b \\</script>
+<script type="math/tex; mode=display">W(x,a,b) = H(x-a) + H(x-b) \\  \{ a,b,x  \}\in \mathbb{R}, \quad a>b \\</script>
 
-<p>where $H(x)$ is the Heaviside function. Nevertheless, the function $W$ constructed in this way would be non-differentialbe at the points $x=a$ and $x=b$. This would represent a problem when implementing the gradient method to compute the control. To bypass this issue, in the definition of $W(x,a,b)$ we will use a smooth approximation of $H$.</p>
+<p>where $H(x)$ is the Heaviside function. Nevertheless, the function $W$ constructed in this way would be non-differentialbe at the points $x=a$ and $x=b$. This would represent a problem when implementing the gradient method to compute the control. To bypass this issue, in the definition of $W(x,a,b)$ we will use a smooth approximation of $H$ (See Figure 1).</p>
 
 <table>
   <tr>
@@ -354,6 +355,10 @@
 
 <p>In this way, given $(x_{min}, x_{max}, y_{min}, y_{max})$, we obtain the corresponding characteristic function which only depends on the position of a single point.</p>
 
+<h3 id="step-2-construction-of-the-dynamics">STEP 2: construction of the dynamics</h3>
+
+<p>Since $\chi_{\omega}$ can move and, moreover, we want to obtain the optimal trajectory for the control, we will incorporate in our system a moving particle whose position and velocity are denoted by $\textbf{d} = (d_x,d_y)$ and $\textbf{v} = (v_x,v_y)$, respectively (Video 3).</p>
+
 <table>
   <tr>
     <th>
@@ -367,9 +372,7 @@
   </tr>
 </table>
 
-<h3 id="step-2-construction-of-the-dynamics">STEP 2: construction of the dynamics</h3>
-
-<p>Since $\chi_{\omega}$ can move and, moreover, we want to obtain the optimal trajectory for the control, we will incorporate in our system a moving particle whose position and velocity are denoted by $\textbf{d} = (d_x,d_y)$ and $\textbf{v} = (v_x,v_y)$, respectively. Besides, we will add a control $\textbf{g}(t) = (g_x(t),g_y(t))$ which will act as an exterior force moving the subset $\chi_{\omega}$.</p>
+<p>Besides, we will add a control $\textbf{g}(t) = (g_x(t),g_y(t))$ which will act as an exterior force moving the subset $\chi_{\omega}$.</p>
 
 <p>In this way, our model takes the final form</p>
 
@@ -378,9 +381,9 @@
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z  &     z_t = u        & \textbf{x} \in \Omega & t \in [0,T] \\
-  u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
-  u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega \\
+  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z,  &     z_t = u        & x \in \Omega & t \in [0,T] \\
+  u(x,t) = 0,                        &  z(x,t) = 0   & x \in \partial \Omega  &  t \in [0,T] \\
+  u(x,0) = 0,                      &  z(x,0) = 0   & x \in \Omega \\
     \dot{\textbf{d}} = \textbf{v} & \textbf{d}(0) = \textbf{d}_0    & t \in [0,T]\\
   \dot{\textbf{v}} = \textbf{g}(t)  & \textbf{v}(0) = \textbf{v}_0  & t \in [0,T]\\
   \end{matrix}
@@ -389,15 +392,16 @@
 
 <h3 id="step-3-optimal-control-problem">STEP 3: optimal control problem</h3>
 
-<p>Following a standard optimal control strategy, the control function for our memory-type equation will be computed throught the minimization problem 
-<script type="math/tex">\min_{f(x,t),g(t)}  \int_{\Omega} ||u(x,T) ||^2dx \\</script></p>
+<p>Following a standard optimal control strategy, the control function for our memory-type equation will be computed throught the minimization problem</p>
+
+<script type="math/tex; mode=display">\min_{f(x,t),g(t)}  \|u(x,T)\|^2_{L^2(\Omega)} \\</script>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \text{subject to: }\quad \begin{cases}
 \begin{matrix}
-  \dot{u} = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z  &     \dot{z} = u        & \textbf{x} \in \Omega & t \in [0,T] \\
-  u(\textbf{x,t}) = u_0                        &  z(\textbf{x,t}) = 0   & \textbf{x} \in \partial \Omega  &  t \in [0,T] \\
-  u(\textbf{x},0) = 0                      &  z(\textbf{x},0) = 0   & \textbf{x} \in \Omega \\
+  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z,  &     z_t = u        & x \in \Omega & t \in [0,T] \\
+  u(x,t) = 0,                        &  z(x,t) = 0   & x \in \partial \Omega  &  t \in [0,T] \\
+  u(x,0) = 0,                      &  z(x,0) = 0   & x \in \Omega \\
     \dot{\textbf{d}} = \textbf{v} & \textbf{d}(0) = \textbf{d}_0    & t \in [0,T]\\
   \dot{\textbf{v}} = \textbf{g}(t)  & \textbf{v}(0) = \textbf{v}_0  & t \in [0,T]\\
   \end{matrix}
@@ -405,7 +409,7 @@
 
 <h2 id="simulations">Simulations</h2>
 
-<p>All the simulations in this tutorial have been performed using the DyCon Toolbox and CasADi. Since CasADi is incorporated into the DyCon toolbox, we can install it in the following way</p>
+<p>All the simulations in this tutorial have been performed using the DyCon Toolbox and CasADi. Since CasADi is incorporated into the DyCon toolbox, we can install it in the following way:</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">))</span>
