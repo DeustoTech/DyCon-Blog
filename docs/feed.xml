@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 21 Oct 2020 12:18:09 +0200</pubDate>
-    <lastBuildDate>Wed, 21 Oct 2020 12:18:09 +0200</lastBuildDate>
+    <pubDate>Fri, 23 Oct 2020 10:44:51 +0200</pubDate>
+    <lastBuildDate>Fri, 23 Oct 2020 10:44:51 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -79,9 +79,7 @@ A natural remedy to this issue is to operate with a moving control strategy. If 
 
 This moving control strategy has been proposed and succesfully applied in several contributions of our team [1,2,3,4].
 
-Memory-type equations are one of the core topics of WP5 of the DyCon ERC project. An abridged presentation of this working package can be found at the following link:
-
-https://cmc.deusto.eus/dycon-working-package-5-memory-and-hybrid-pdeode-models/
+Memory-type equations are one of the core topics of WP5 of the DyCon ERC project. An abridged presentation of this working package can be found at the following link.
 
 Numerical implementation of the moving control strategy
 
