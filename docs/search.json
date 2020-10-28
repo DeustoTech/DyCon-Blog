@@ -22,16 +22,6 @@
     } ,
   
     {
-      "title"           : "Optimal Control Problem vs  Classification Problem in DyCon Toolbox",
-      "categories"      : ["tutorial", "WP01"],
-      "url"             : "/tutorial/wp01/P0012",
-      "date"            : "2020-07-27",
-      "author"          : ["JesusO"],
-      "description"     : "En este blog verémos como se puede implementar un clasificador con DyCon Toolbox. Este esta inspirado en el blog:'The interplay of control and deep learning' donde se muestra como un problema de control puede resolver un problema de clasificación.",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog//assets/imgs/WP01/P0010/trajectory.gif"
-    } ,
-  
-    {
       "title"           : "Stochastic optimization for simultaneous control",
       "categories"      : ["tutorial", "WP01"],
       "url"             : "/tutorial/wp01/P0011",
