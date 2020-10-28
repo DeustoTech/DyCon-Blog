@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Q-learning for finite-dimensional problems - DyCon Blog
+    
+  </title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0011">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+
+
+  
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+                
+            </ul>
+
+        
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">
+            Inverse design of time-irreversible models</a> &#8827;</small>
+          </h2>
+          <h1>Q-learning for finite-dimensional problems</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+                  </span>
+                </span>
+              
+              - 22 October 2020
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        <h2 id="reinforcement-learning">Reinforcement Learning</h2>
+
+<p><strong>Reinforcement Learning</strong> (RL) is, together with Supervised Learning and Unsupervised Learning, one of the three fundamental learning paradigms in Machine Learning. The goal in RL is to enhance the manipulation of a controlled system by using data from past experiments. It differs from supervised learning and unsupervised learning because the algorithms are not trained with a fixed sampled dataset. Rather, they learn through trial and error.</p>
+
+<p>In a generic RL problem, an <strong>agent</strong>, or decision maker, interacts with an unknown <strong>environment</strong> which is influenced and evolves according to the <strong>controls</strong>, or actions, that are chosen by the agent. The control chosen in each situation is then evaluated by means of a <strong>reward</strong> signal. Based on the experience acquired in previous trials, the algorithm has to learn what actions are better in each situation, in the sense that the accumulated long-time reward is maximized.</p>
+
+<h3 id="an-optimal-control-problem">An optimal control problem</h3>
+
+<p>From a mathematical viewpoint, we can see RL as an optimal control problem. The environment is described through a dynamical system of the form</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\tag{1}
+\left\{ \begin{array}{ll}
+x_{t+1} =  f(x_t,u_t) & t= 0,1,2,\ldots \\
+x_0 = x
+\end{array}
+\right. %]]></script>
+
+<p>At each time-step, $x_t$ represents the state of the environment, which evolves according to the function $f: \mathbb{R}^n\times \mathcal{U} \to \mathbb{R}^n$. This function might be unknown by the agent, and depends on the current state $x_t$ and the control $u_t$ chosen by the agent. This choice is then evaluated by a reward $r_t = r(x_t,u_t)$.</p>
+
+<p>The reward function $r: \mathbb{R}^n\times \mathcal{U}\to \mathbb{R}$ has to be designed in such a way that the <em>desired</em> behavior of the system is stimulated by providing greater rewards. It is important to note that the choice of $u_t$ not only affects the reward $r_t$. It also affects the future rewards as they will depend on future states of the system. The goal in RL is not to maximize the reward $r_t$ at each time-step, but rather to maximize the reward accumulated during a certain interval of time.</p>
+
+<p>The optimal control problem that we are considering consists in maximizing, over the control strategy, the rewards accumulated during a process of infinite length</p>
+
+<script type="math/tex; mode=display">\tag{2}
+\max_{\{u_t\}_t} \sum_{t=0}^\infty \gamma^t r(x_t,u_t) \qquad \text{subject to (1)}.</script>
+
+<p>The parameter $\gamma \in (0,1)$ is called a discount factor, and ensures that the sum of rewards over the time-steps is finite. This is the so-called discounted <em>infinite-horizon</em> problem. In many applications, the introduction of the discount factor is also motivated by the fact that the rewards obtained in the near future are considered to be more important than those obtained with a bigger delay.</p>
+
+<p>It is to be pointed out that this general setting is not exhaustive, and other classes of optimal control problems can be considered in the application of RL techniques. For example, it is typical to consider stochastic dynamics,  which is very suitable when the environment is considered to be unknown, or is subject to changes that we cannot control. The reward functional (2) can also have a different form (finite-time horizon, terminal reward, no discount factor,…). Although the discrete-time setting is the most common in RL, continuous-time problems can also considered.</p>
+
+<h3 id="the-value-function">The value function</h3>
+
+<p>The probably most important element in Reinforcement Learning is the <strong>optimal value function</strong>, defined as</p>
+
+<script type="math/tex; mode=display">V^\ast (x) := \max_{\{u_t\}_t} \left\{ \sum_{t=0}^\infty \gamma^t r(x_t,u_t); \quad \text{s.t. (1) with $x_0 = x$} \right\}</script>
+
+<p>It represents the best total reward that one can expect if the initial state is $x$. The value function satisfies the following Dynamic Programming Principle, also known as Bellman equation.</p>
+
+<script type="math/tex; mode=display">V^\ast (x) = \max_{u\in \mathcal{U}} \left\{ r(x,u) + \gamma V^\ast (f(x,u)) \right\}</script>
+
+<p>It allows the design of an optimal control in a feedback form.</p>
+
+<script type="math/tex; mode=display">\tag{3}
+u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} \left\{ r(x,u) + \gamma V^\ast (f(x,u)) \right\}</script>
+
+<h3 id="the-q-function">The $Q$-function</h3>
+
+<p>In view of (3), we can construct a nearly optimal feedback control by approximating the value function $V^\ast$. But even if we were able to exactly compute the value function, the feedback law given in (3) makes use of the dynamics $f$. This means that the choice of the optimal control at a given state relies on the possibility of making predictions of what will be the next state, and as we mentioned, it is not in general the case in RL.</p>
+
+<p>Therefore, rather than approximating the value function, we may concentrate our efforts on approximating the $Q$-function, defined as</p>
+
+<script type="math/tex; mode=display">Q(x,u) := r(x,u) + \gamma V^\ast (f(x,u))</script>
+
+<p>It represents the best total reward that we can expect if the initial state is $x$ and the first control taken is $u$.</p>
+
+<p>Observe that the optimal value function $V^\ast(x)$ determines how <em>good</em> is to be at a certain state $x$, whereas the function $Q(x,u)$ determines the <em>quality</em> of choosing $u$ given that the current state is $x$.</p>
+
+<p>The $Q$-function allows the design of an optimal feedback control without using the dynamics $f$.</p>
+
+<script type="math/tex; mode=display">u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} Q(x,u)</script>
+
+<p>Using the identity $V^\ast (x) = \max_{u\in \mathcal{U}} Q(x,u)$, we can deduce the Bellman equation for the $Q$-function.</p>
+
+<script type="math/tex; mode=display">\tag{4}
+Q(x,u) = r(x,u) + \gamma \max_{u\in \mathcal{U}} Q(x,u)</script>
+
+<h2 id="q-learning">$Q$-learning</h2>
+
+<p><strong>$Q$-learning</strong> is a RL algorithm, introduced by Watkins in 1989, that seeks to approximate the $Q$-function by exploring the state-control space $\mathbb{R}^n\times \mathcal{U}$. The exploration is made by running experiments of finite time-steps considering a randomized initial state. At each step, the approximation of the $Q$-function is improved by using the Dynamic Programming equation (4). During the learning process, an $\varepsilon$-greedy policy with respect to the current approximation of $Q$ is used. This policy ensures the exploration of the whole state-control space at the same time that it exploits the information obtained in previous experiments to enhance the approximation of $Q$ in regions that seem to be better in terms of total reward.</p>
+
+<p>These are the main steps in the $Q$-learning algorithm.</p>
+<ol>
+  <li>Initialize an arbitrary $Q$-function, $\widehat{Q}_0(x,u)$.</li>
+  <li>Run a number $N$ of experiments (episodes) of $T$ steps each one.</li>
+  <li>In total there will be $N\, T$ number of steps.</li>
+  <li><strong>$\varepsilon$-greedy policy:</strong></li>
+</ol>
+
+<script type="math/tex; mode=display">u_t = \max_{u\in\mathcal{U}}  \widehat{Q}_k(x_t,\, u)\quad \text{with probability $1-\varepsilon$}</script>
+
+<p>and $u_k$ is chosen randomly with probability $\varepsilon$ (exploration vs exploitation).</p>
+
+<ol>
+  <li><strong>Improvement of $\widehat{Q}(x_t, u_t)$:</strong> after each time-step, we use the observed $(x_{t+1}, r_t)$ to improve the approximation of $Q(x_t,u_t)$ in the following way</li>
+</ol>
+
+<script type="math/tex; mode=display">\widehat{Q}_{k+1} (x_t,u_t) = (1-\alpha) \widehat{Q}_k(x_t,u_t) + \alpha \big(  r_t + \gamma \max_{u\in\mathcal{U}} \widehat{Q}_k(x_{t+1}, u) \big)</script>
+
+<p>here, $\alpha&gt;0$ is called the learning rate.</p>
+
+<center>
+<figure>
+ <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP04/P0011/QlearningScheme.png" height="200" width="550" /> 
+</figure>
+</center>
+
+<h2 id="example">Example</h2>
+
+<p>We illustrate the $Q$-learning algorithm through a simple example. In a given two-dimensional discrete domain, we consider the problem of finding the shortest path between any position of the domain and a prescribed target area.</p>
+
+<p>Let us first define the environment. We consider a discretized rectangular domain:</p>
+
+<script type="math/tex; mode=display">\Omega := \{ 1,2,3, \ldots, 40 \}^2</script>
+
+<p>We want to find the shortest path between any starting position in the domain and the top center of the domain, white area in the video below. The position can be moved, at each time-step, one unit up, down, right or left, i.e. the underlying dynamics are given by</p>
+
+<script type="math/tex; mode=display">\left\{ \begin{array}{l}
+x_{t+1} = x_t + u_t \quad t = 0,1,2, \ldots ,\tau \\
+x_0 = x
+\end{array} \right.</script>
+
+<p>where $\tau$ is the first time the state reaches the limits of the domain. The experiment is considered a success if the terminal position is in the target area, and a defeat otherwise. The possible controls are</p>
+
+<script type="math/tex; mode=display">\mathcal{U}:= \{ (0,1), -(0,1), (1,0), -(1,0)  \}</script>
+
+<p>We denote by $\partial \Omega$ the limits of the domain (blue squares in the video), i.e.</p>
+
+<script type="math/tex; mode=display">\partial \Omega := \{ (i,j) \in \Omega\, ;  \text{with} \ \{ i, j\} \cap \{1,40\} \neq \emptyset \}</script>
+
+<p>We denote by $\mathcal{T}$ the target area (white squares)</p>
+
+<script type="math/tex; mode=display">\mathcal{T} := \{ (1,j) \in \Omega\, ;  j\in [18,22] \}</script>
+
+<p>Now we need to define a reward that makes the agent move the position from the initial one $x$ to the target area in the minimum number of steps, without reaching the limits of the domain.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+r(x_t,u_t):= \left\{ \begin{array}{ll}
+-1 & \text{if} \ x_t \in \Omega \\
+100 & \text{if} \ x_t \in \mathcal{T} \\
+-100 & \text{if} \ x_t \in \partial\Omega \setminus \mathcal{T}
+\end{array} \right. %]]></script>
+
+<p>Giving a negative reward when $x_t\in \Omega$ stimulates the agent to take the minimum possible number of steps until the target area.</p>
+
+<p>Since the state-space $\Omega$ and the set of possible actions $\mathcal{U}$ are both finite. The $Q$-function can be represented by a table with $40\times 40$ rows and $4$ columns. The entries in this table can be learned from experiments using the $Q$-learning algorithm described above. Once we have a good approximation of $Q$, for a given position $x$, we can determine the best possible action by looking at the corresponding row in the table and taking the action corresponding to the minimum value in that row.</p>
+
+<p>In the following video we see the obtained behavior after applying the $Q$-learning algorithm with 10000 experiments, with a discount factor $\gamma =0.9$, learning rate $\alpha =0.9$ and an $\varepsilon-$greedy policy with $\varepsilon = 0.9$.
+The plot represents the evolution of the success rate with the number of experiments during the training.</p>
+
+<center>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video1.gif" height="230" width="300" />
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/training_evolution1.png" height="230" width="300" />
+</center>
+
+<p>We can change the environment by adding a potential that moves the position to the right when it is in a certain region (dark green area)</p>
+
+<script type="math/tex; mode=display">P: = \{ (i,j)\in \Omega \, ; j\in [5,15]  \}</script>
+
+<p>In the new environment, the agent do not know how to get to the target area.</p>
+
+<p>In the following video, the agent uses the $Q$-function obtained in the original environment. However, the new dynamics are given by</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+x_{t+1} = \left\{ \begin{array}{ll}
+x_t + u_t & \text{if} \ x_t\in \Omega\setminus P \\
+x_t +3+ u_t & \text{if} \ x_t\in P
+\end{array} \right. %]]></script>
+
+<center>
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video2.gif" height="230" width="300" />
+</figure>
+</center>
+
+<p>After training the $Q$-function in the new environment, it learns how to deal with the potential to get to the target area. Observe that the success rate never reaches one. This is due to the fact that there is a region in the domain (the dark green area near the right-hand limit of the domain) from which it is impossible to reach the target.</p>
+
+<center>
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video3.gif" height="230" width="300" />
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/training_evolution2.png" height="230" width="300" />
+</center>
+
+<p>We can also add obstacles in the domain, or even combine obstacles with a potential.</p>
+
+<center>
+<figure>
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video4.gif" height="230" width="300" />
+<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video5.gif" height="230" width="300" />
+</figure>
+</center>
+
+
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div id="content" class="container">
+
+  <div class="relatedPosts">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+    <h2>Related Posts</h2>
+    
+    
+    
+    
+    
+
+    
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video4.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp04/P0010" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Inverse problem for Hamilton-Jacobi equations </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial we study the inverse design problem for time-evolution Hamilton-Jacobi equations. More precisely, for a given observation of the viscosity solution at time $T>0$, we construct all the possible initial data that could have led the solution to the observed state. We note that these initial data are not in general unique. 
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+          
+          - 03 April 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0009/ico.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp04/P0009" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> POD and DMD Reduced Order Models for a 2D Burgers Equation </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      A short python implementation of POD and DMD for a 2D Burgers equation using FEniCS and Scipy
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JanH">Jan Heiland</a>,
+          
+          - 07 March 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0008/bilbao_LW_4.jpg">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp04/P0008" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> An eulerian-lagrangian scheme for the problem of the inverse design of hyperbolic transport equations </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      The inverse design of hyperbolic transport equations can be addressed by using gradient-adjoint methodologies. Recently, Morales-Hernandez and Zuazua [1] investigated the convenience of using low order numerical schemes for the adjoint resolution in the gradient-adjoint method. They focused on hyperbolic transport scalar equations with an heterogeneous time-independent vector field.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/AlexandreS">Alexandre Francisco</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+          
+          - 18 February 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0006/Projection2.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp04/P0006" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Inverse design for the one-dimensional Burgers equation </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      Our aim is to study an optimal control problem  which consists in minimizing the difference between the predictions of the Burgers equation  and the observations of the system at a final time  in $L^2(\mathbb{R})$ norm.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/ThibaultL">Liard Thibault</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+          
+          - 12 December 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+            
+    </div>
+  </div> 
+    </div>
+  </div>
+
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

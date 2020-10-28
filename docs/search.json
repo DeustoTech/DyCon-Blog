@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Q-learning for finite-dimensional problems",
+      "categories"      : ["tutorial", "WP04"],
+      "url"             : "/tutorial/wp04/P0011",
+      "date"            : "2020-10-22",
+      "author"          : ["CarlosE"],
+      "description"     : "In this tutorial we show how to implement the Q-learning algorithm in simple settings where the state-space and the control-space are finite. In this case, the Q-function can be represented by a table, and therefore, it belongs to a finite-dimensional vector space. We illustrate the algorithm by solving the problem of finding the shortest path between any arbitrary point in a discretized domain and a target area. We then consider the same problem in a domain affected by a potential.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/QlearningScheme.png"
+    } ,
+  
+    {
       "title"           : "Moving control strategy for memory-type equations",
       "categories"      : ["tutorial", "WP05"],
       "url"             : "/tutorial/wp05/P0011",
@@ -78,7 +88,7 @@
       "date"            : "2020-04-03",
       "author"          : ["CarlosE"],
       "description"     : "In this tutorial we study the inverse design problem for time-evolution Hamilton-Jacobi equations. More precisely, for a given observation of the viscosity solution at time $T>0$, we construct all the possible initial data that could have led the solution to the observed state. We note that these initial data are not in general unique. ",
-      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/ico.gif"
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video4.gif"
     } ,
   
     {

@@ -5,9 +5,183 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 23 Oct 2020 10:44:51 +0200</pubDate>
-    <lastBuildDate>Fri, 23 Oct 2020 10:44:51 +0200</lastBuildDate>
+    <pubDate>Wed, 28 Oct 2020 13:28:47 +0100</pubDate>
+    <lastBuildDate>Wed, 28 Oct 2020 13:28:47 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Q-learning for finite-dimensional problems</title>
+        <description>Reinforcement Learning
+
+Reinforcement Learning (RL) is, together with Supervised Learning and Unsupervised Learning, one of the three fundamental learning paradigms in Machine Learning. The goal in RL is to enhance the manipulation of a controlled system by using data from past experiments. It differs from supervised learning and unsupervised learning because the algorithms are not trained with a fixed sampled dataset. Rather, they learn through trial and error.
+
+In a generic RL problem, an agent, or decision maker, interacts with an unknown environment which is influenced and evolves according to the controls, or actions, that are chosen by the agent. The control chosen in each situation is then evaluated by means of a reward signal. Based on the experience acquired in previous trials, the algorithm has to learn what actions are better in each situation, in the sense that the accumulated long-time reward is maximized.
+
+An optimal control problem
+
+From a mathematical viewpoint, we can see RL as an optimal control problem. The environment is described through a dynamical system of the form
+
+
+
+At each time-step, $x_t$ represents the state of the environment, which evolves according to the function $f: \mathbb{R}^n\times \mathcal{U} \to \mathbb{R}^n$. This function might be unknown by the agent, and depends on the current state $x_t$ and the control $u_t$ chosen by the agent. This choice is then evaluated by a reward $r_t = r(x_t,u_t)$.
+
+The reward function $r: \mathbb{R}^n\times \mathcal{U}\to \mathbb{R}$ has to be designed in such a way that the desired behavior of the system is stimulated by providing greater rewards. It is important to note that the choice of $u_t$ not only affects the reward $r_t$. It also affects the future rewards as they will depend on future states of the system. The goal in RL is not to maximize the reward $r_t$ at each time-step, but rather to maximize the reward accumulated during a certain interval of time.
+
+The optimal control problem that we are considering consists in maximizing, over the control strategy, the rewards accumulated during a process of infinite length
+
+
+
+The parameter $\gamma \in (0,1)$ is called a discount factor, and ensures that the sum of rewards over the time-steps is finite. This is the so-called discounted infinite-horizon problem. In many applications, the introduction of the discount factor is also motivated by the fact that the rewards obtained in the near future are considered to be more important than those obtained with a bigger delay.
+
+It is to be pointed out that this general setting is not exhaustive, and other classes of optimal control problems can be considered in the application of RL techniques. For example, it is typical to consider stochastic dynamics,  which is very suitable when the environment is considered to be unknown, or is subject to changes that we cannot control. The reward functional (2) can also have a different form (finite-time horizon, terminal reward, no discount factor,…). Although the discrete-time setting is the most common in RL, continuous-time problems can also considered.
+
+The value function
+
+The probably most important element in Reinforcement Learning is the optimal value function, defined as
+
+
+
+It represents the best total reward that one can expect if the initial state is $x$. The value function satisfies the following Dynamic Programming Principle, also known as Bellman equation.
+
+
+
+It allows the design of an optimal control in a feedback form.
+
+
+
+The $Q$-function
+
+In view of (3), we can construct a nearly optimal feedback control by approximating the value function $V^\ast$. But even if we were able to exactly compute the value function, the feedback law given in (3) makes use of the dynamics $f$. This means that the choice of the optimal control at a given state relies on the possibility of making predictions of what will be the next state, and as we mentioned, it is not in general the case in RL.
+
+Therefore, rather than approximating the value function, we may concentrate our efforts on approximating the $Q$-function, defined as
+
+
+
+It represents the best total reward that we can expect if the initial state is $x$ and the first control taken is $u$.
+
+Observe that the optimal value function $V^\ast(x)$ determines how good is to be at a certain state $x$, whereas the function $Q(x,u)$ determines the quality of choosing $u$ given that the current state is $x$.
+
+The $Q$-function allows the design of an optimal feedback control without using the dynamics $f$.
+
+
+
+Using the identity $V^\ast (x) = \max_{u\in \mathcal{U}} Q(x,u)$, we can deduce the Bellman equation for the $Q$-function.
+
+
+
+$Q$-learning
+
+$Q$-learning is a RL algorithm, introduced by Watkins in 1989, that seeks to approximate the $Q$-function by exploring the state-control space $\mathbb{R}^n\times \mathcal{U}$. The exploration is made by running experiments of finite time-steps considering a randomized initial state. At each step, the approximation of the $Q$-function is improved by using the Dynamic Programming equation (4). During the learning process, an $\varepsilon$-greedy policy with respect to the current approximation of $Q$ is used. This policy ensures the exploration of the whole state-control space at the same time that it exploits the information obtained in previous experiments to enhance the approximation of $Q$ in regions that seem to be better in terms of total reward.
+
+These are the main steps in the $Q$-learning algorithm.
+
+  Initialize an arbitrary $Q$-function, $\widehat{Q}_0(x,u)$.
+  Run a number $N$ of experiments (episodes) of $T$ steps each one.
+  In total there will be $N\, T$ number of steps.
+  $\varepsilon$-greedy policy:
+
+
+
+
+and $u_k$ is chosen randomly with probability $\varepsilon$ (exploration vs exploitation).
+
+
+  Improvement of $\widehat{Q}(x_t, u_t)$: after each time-step, we use the observed $(x_{t+1}, r_t)$ to improve the approximation of $Q(x_t,u_t)$ in the following way
+
+
+
+
+here, $\alpha&amp;gt;0$ is called the learning rate.
+
+
+
+  
+
+
+
+Example
+
+We illustrate the $Q$-learning algorithm through a simple example. In a given two-dimensional discrete domain, we consider the problem of finding the shortest path between any position of the domain and a prescribed target area.
+
+Let us first define the environment. We consider a discretized rectangular domain:
+
+
+
+We want to find the shortest path between any starting position in the domain and the top center of the domain, white area in the video below. The position can be moved, at each time-step, one unit up, down, right or left, i.e. the underlying dynamics are given by
+
+
+
+where $\tau$ is the first time the state reaches the limits of the domain. The experiment is considered a success if the terminal position is in the target area, and a defeat otherwise. The possible controls are
+
+
+
+We denote by $\partial \Omega$ the limits of the domain (blue squares in the video), i.e.
+
+
+
+We denote by $\mathcal{T}$ the target area (white squares)
+
+
+
+Now we need to define a reward that makes the agent move the position from the initial one $x$ to the target area in the minimum number of steps, without reaching the limits of the domain.
+
+
+
+Giving a negative reward when $x_t\in \Omega$ stimulates the agent to take the minimum possible number of steps until the target area.
+
+Since the state-space $\Omega$ and the set of possible actions $\mathcal{U}$ are both finite. The $Q$-function can be represented by a table with $40\times 40$ rows and $4$ columns. The entries in this table can be learned from experiments using the $Q$-learning algorithm described above. Once we have a good approximation of $Q$, for a given position $x$, we can determine the best possible action by looking at the corresponding row in the table and taking the action corresponding to the minimum value in that row.
+
+In the following video we see the obtained behavior after applying the $Q$-learning algorithm with 10000 experiments, with a discount factor $\gamma =0.9$, learning rate $\alpha =0.9$ and an $\varepsilon-$greedy policy with $\varepsilon = 0.9$.
+The plot represents the evolution of the success rate with the number of experiments during the training.
+
+
+ 
+ 
+
+
+We can change the environment by adding a potential that moves the position to the right when it is in a certain region (dark green area)
+
+
+
+In the new environment, the agent do not know how to get to the target area.
+
+In the following video, the agent uses the $Q$-function obtained in the original environment. However, the new dynamics are given by
+
+
+
+
+
+ 
+
+
+
+After training the $Q$-function in the new environment, it learns how to deal with the potential to get to the target area. Observe that the success rate never reaches one. This is due to the fact that there is a region in the domain (the dark green area near the right-hand limit of the domain) from which it is impossible to reach the target.
+
+
+
+
+
+
+We can also add obstacles in the domain, or even combine obstacles with a potential.
+
+
+
+
+
+
+
+
+</description>
+        <pubDate>Thu, 22 Oct 2020 00:00:00 +0200</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0011</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0011</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP04</category>
+        
+      </item>
     
       <item>
         <title>Moving control strategy for memory-type equations</title>
@@ -1876,281 +2050,6 @@ tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
         <category>tutorial</category>
         
         <category>WP03</category>
-        
-      </item>
-    
-      <item>
-        <title>The Optimal control on the Kuramoto adaptative coupling model with DyCon Toolbox</title>
-        <description>In this tutorial, we present how to use Pontryagin environment to control a consensus system that models the complex emergent dynamics over a given network. The control basically minimize the cost functional which contains the running cost and desired final state.
-
-Setup
-
-In this tutorial we need DyCon Toolbox, to install it we will have to write the following in our MATLAB console:
-
-unzip('https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip')
-addpath(genpath(fullfile(cd,'DyCon-toolbox-master')))
-
-Model
-
-The Kuramoto model describes the phases $\theta_i$ of active oscillators, which is described by the following dynamics:
-
-
-
-Here, the first constant terms $\omega_i$ denote the natural oscillatory behaviors, and the interactions are nonlinearly affected by the relative phases. The amplitude and connections of interactions are determined by the coupling strength, $K_{i,j}$.
-
-Control strategy
-
-The control interface is on the coupling strength as follows:
-
-
-
-This is a nonlinear version of bi-linear control problem for the Kuramoto interactions. The idea is as follows;
-
-
-  
-    There are $N$ number of oscillators, oscillating with their own natural frequencies.
-  
-  
-    We want to make a collective behavior using their own decision process. The interaction is given by the Kuramoto model, or may follow other interaction rules. The network can be given or flexible with control.
-  
-  
-    The cost of control will be related to the collective dynamics we want, such as the variance of frequencies or phases.
-  
-
-
-Numerical simulation
-
-Here, we consider a simple problem: we control the all-to-all network system to get gathered phases at final time $T$. We first need to define the system of ODEs in terms of symbolic variables.
-
-clear all
-m = 50;  %% [m]: number of oscillators.
-
-import casadi.*
-
-t     = SX.sym('t');
-symTh = SX.sym('y', [m,1]);   %% [y] :  phases of oscillators, $\theta_i$.
-symOm = SX.sym('om', [m,1]);  %% [om]:  natural frequencies of osc., $\omega_i$.
-symK  = SX.sym('K',[m,m]);    %% [K] :  the coupling network matrix, $K_{i,j}$.
-symU  = SX.sym('u',[1,1]);    %% [u] :  the control function along time, $u(t)$.
-
-
-syms Vsys;    %% [Vsys]: the vector fields of ODEs.
-symThth = repmat(symTh,[1 m]);
-
-
-Vsys = casadi.Function('V',{symOm,symK,symTh,symU}, ...
-{ symOm + (symU./m)*sum(symK.*sin(repmat(symTh,[1 m]).' - repmat(symTh,[1 m])),2) }); 
-
-
-The parameter $\omega_i$ and $K_{i,j}$ should be specified for the calculations. Practically, $K_{i,j}u(t) &amp;gt; \vert \max\Omega - \min\Omega \vert$ leads to the synchronization of frequencies. We normalize the coupling strength to 1, and give random values for the natural frequencies from the normal distribution $N(0,0.1)$. We also choose initial data from $N(0,\pi/4)$.
-
-rng('default');
-rng(1,'twister');
-Om_init = normrnd(0,0.2,m,1);
-Om_init = Om_init - mean(Om_init);  %% Mean zero frequencies
-Th_init = normrnd(0,pi/8,m,1);
-
-
-K_init = ones(m,m);                 %% Constant coupling strength, 1.
-T = 5;                              %% We give enough time for the frequency synchronization.
-
-
-symF = casadi.Function('F',{t,symTh,symU},{Vsys(Om_init,K_init,symTh,symU)});
-
-tspan = linspace(0,T,110);
-odeEqn = ode(symF,symTh,symU,tspan);
-SetIntegrator(odeEqn,'RK4')
-odeEqn.InitialCondition = Th_init;
-
-
-We next construct cost functional for the control problem.
-
-PathCost  = casadi.Function('L'  ,{t,symTh,symU},{ (1/2)*(symU'*symU)           });
-FinalCost = casadi.Function('Psi',{symTh}      ,{  1e5*(1/m^2)*sum(sum((symThth.' - symThth).^2))  });
-
-iCP_1 = ocp(odeEqn,PathCost,FinalCost);
-
-
-Solve Gradient descent
-
-tic
-ControlGuess = ZerosControl(odeEqn);
-[OptControl_1 ,OptThetaVector_1] =  ArmijoGradient(iCP_1,ControlGuess);
-toc
-
-
-Length Step has been change: LenghtStep = 0.00025
-iter: 001 | error: 2.215e+02 | LengthStep: 5.00e-04 | J: 1.16893e+03 | Distance2Target: NaN 
-iter: 002 | error: 2.214e+02 | LengthStep: 1.00e-03 | J: 1.16780e+03 | Distance2Target: NaN 
-iter: 003 | error: 2.212e+02 | LengthStep: 2.00e-03 | J: 1.16554e+03 | Distance2Target: NaN 
-iter: 004 | error: 2.207e+02 | LengthStep: 4.00e-03 | J: 1.16103e+03 | Distance2Target: NaN 
-iter: 005 | error: 2.198e+02 | LengthStep: 8.00e-03 | J: 1.15206e+03 | Distance2Target: NaN 
-iter: 006 | error: 2.180e+02 | LengthStep: 1.60e-02 | J: 1.13430e+03 | Distance2Target: NaN 
-iter: 007 | error: 2.144e+02 | LengthStep: 3.20e-02 | J: 1.09950e+03 | Distance2Target: NaN 
-iter: 008 | error: 2.074e+02 | LengthStep: 6.40e-02 | J: 1.03270e+03 | Distance2Target: NaN 
-iter: 009 | error: 1.938e+02 | LengthStep: 1.28e-01 | J: 9.09692e+02 | Distance2Target: NaN 
-iter: 010 | error: 1.682e+02 | LengthStep: 2.56e-01 | J: 7.01968e+02 | Distance2Target: NaN 
-iter: 011 | error: 1.235e+02 | LengthStep: 5.12e-01 | J: 4.10547e+02 | Distance2Target: NaN 
-iter: 012 | error: 6.257e+01 | LengthStep: 1.02e+00 | J: 1.47399e+02 | Distance2Target: NaN 
-Length Step has been change: LenghtStep = 0.256
-iter: 013 | error: 4.113e+01 | LengthStep: 5.12e-01 | J: 1.20852e+02 | Distance2Target: NaN 
-iter: 014 | error: 2.215e+01 | LengthStep: 1.02e+00 | J: 9.58348e+01 | Distance2Target: NaN 
-Length Step has been change: LenghtStep = 0.256
-Length Step has been change: LenghtStep = 0.064
-Length Step has been change: LenghtStep = 0.016
-Length Step has been change: LenghtStep = 0.004
-Length Step has been change: LenghtStep = 0.001
-Length Step has been change: LenghtStep = 0.00025
-Length Step has been change: LenghtStep = 6.25e-05
-Length Step has been change: LenghtStep = 1.5625e-05
-Length Step has been change: LenghtStep = 3.9063e-06
-Length Step has been change: LenghtStep = 9.7656e-07
-Length Step has been change: LenghtStep = 2.4414e-07
-Length Step has been change: LenghtStep = 6.1035e-08
-Length Step has been change: LenghtStep = 1.5259e-08
-Length Step has been change: LenghtStep = 3.8147e-09
-
-    Mininum Length Step have been achive !! 
-
-Elapsed time is 2.131655 seconds.
-
-
-
-Visualization
-
-First, we present the dynamics without control,
-
-FreeThetaVector = solve(odeEqn,ControlGuess);
-FreeThetaVector = full(FreeThetaVector);
-figure
-plot(FreeThetaVector')
-ylabel('Phases [rad]')
-xlabel('Time [sec]')
-title('The dynamics without control (incoherence)')
-
-
-
-
-and see the controled dynamics.
-
-figure
-plot(OptThetaVector_1')
-ylabel('Phases [rad]')
-xlabel('Time [sec]')
-title(&quot;The dynamics under control L^2 | N_{osc}=&quot;+m)
-
-
-
-
-We also can plot the control function along time.
-
-figure
-plot(OptControl_1)
-legend(&quot;norm(u(t)) = &quot;+norm(OptControl_1))
-ylabel('u(t)')
-xlabel('Time [sec]')
-title('The control function')
-
-
-
-
-The problem with different regularization
-
-In this part, we change the regularization into $L^1$-norm and see the difference.
-
-PathCost  = casadi.Function('L'  ,{t,symTh,symU},{ sqrt(symU.^2+1e-3)});
-iCP_2 = ocp(odeEqn,PathCost,FinalCost);
-
-
-tic
-[OptControl_2 ,OptThetaVector_2] =  ArmijoGradient(iCP_2,ControlGuess);
-toc
-
-
-Length Step has been change: LenghtStep = 0.00025
-iter: 001 | error: 2.363e+01 | LengthStep: 5.00e-04 | J: 1.11735e+02 | Distance2Target: NaN 
-iter: 002 | error: 2.363e+01 | LengthStep: 1.00e-03 | J: 1.11730e+02 | Distance2Target: NaN 
-iter: 003 | error: 2.361e+01 | LengthStep: 2.00e-03 | J: 1.11720e+02 | Distance2Target: NaN 
-iter: 004 | error: 2.359e+01 | LengthStep: 4.00e-03 | J: 1.11699e+02 | Distance2Target: NaN 
-iter: 005 | error: 2.353e+01 | LengthStep: 8.00e-03 | J: 1.11659e+02 | Distance2Target: NaN 
-iter: 006 | error: 2.343e+01 | LengthStep: 1.60e-02 | J: 1.11579e+02 | Distance2Target: NaN 
-iter: 007 | error: 2.322e+01 | LengthStep: 3.20e-02 | J: 1.11420e+02 | Distance2Target: NaN 
-iter: 008 | error: 2.282e+01 | LengthStep: 6.40e-02 | J: 1.11109e+02 | Distance2Target: NaN 
-iter: 009 | error: 2.208e+01 | LengthStep: 1.28e-01 | J: 1.10509e+02 | Distance2Target: NaN 
-iter: 010 | error: 2.081e+01 | LengthStep: 2.56e-01 | J: 1.09388e+02 | Distance2Target: NaN 
-iter: 011 | error: 1.890e+01 | LengthStep: 5.12e-01 | J: 1.07391e+02 | Distance2Target: NaN 
-iter: 012 | error: 1.674e+01 | LengthStep: 1.02e+00 | J: 1.04033e+02 | Distance2Target: NaN 
-iter: 013 | error: 1.607e+01 | LengthStep: 2.05e+00 | J: 9.86861e+01 | Distance2Target: NaN 
-iter: 014 | error: 4.081e+01 | LengthStep: 4.10e+00 | J: 9.24707e+01 | Distance2Target: NaN 
-Length Step has been change: LenghtStep = 1.024
-Length Step has been change: LenghtStep = 0.256
-Length Step has been change: LenghtStep = 0.064
-Length Step has been change: LenghtStep = 0.016
-Length Step has been change: LenghtStep = 0.004
-Length Step has been change: LenghtStep = 0.001
-Length Step has been change: LenghtStep = 0.00025
-Length Step has been change: LenghtStep = 6.25e-05
-Length Step has been change: LenghtStep = 1.5625e-05
-Length Step has been change: LenghtStep = 3.9063e-06
-Length Step has been change: LenghtStep = 9.7656e-07
-Length Step has been change: LenghtStep = 2.4414e-07
-Length Step has been change: LenghtStep = 6.1035e-08
-Length Step has been change: LenghtStep = 1.5259e-08
-Length Step has been change: LenghtStep = 3.8147e-09
-
-    Mininum Length Step have been achive !! 
-
-Elapsed time is 2.494788 seconds.
-
-
-
-figure
-
-line(tspan,OptThetaVector_2')
-ylabel('Phases [rad]')
-xlabel('Time [sec]')
-title(&quot;The dynamics under control L^1 | N_{osc}=&quot;+m)
-
-
-
-
-figure
-plot(OptControl_1)
-line(1:length(OptControl_2),OptControl_2,'Color','red')
-
-Psi_1 = norm(sin(OptThetaVector_1(:,end).' - OptThetaVector_1(:,end)),'fro');
-Psi_2 = norm(sin(OptThetaVector_2(:,end).' - OptThetaVector_2(:,end)),'fro');
-
-legend(&quot;u(t) with L^2-norm; Terminal cost = &quot;+Psi_1,&quot;u(t) with L^1-norm; Terminal cost = &quot;+Psi_2)
-ylabel('The coupling strength (u(t))')
-xlabel('Time [sec]')
-title('The comparison between two different control cost functionals')
-
-
-
-
-As one can expected from the regularization functions, the control function from $L^2$-norm acting more smoothly from $0$ to the largest value. The function from $L^2$-norm draws much stiff lines.
-
-YFr = FreeThetaVector';
-YL1 = OptThetaVector_1';
-YL2 = OptThetaVector_2';
-%%
-animationpendulums({YFr,YL1,YL2},tspan,{'Free','L^2 Control','L^1 Control'})
-
-
-Finally, we can see the behavior of the two control types against the evolution of free dynamics.
-
-
-
-</description>
-        <pubDate>Wed, 01 Apr 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp06/P0007</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP06</category>
         
       </item>
     
