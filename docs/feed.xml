@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 28 Oct 2020 15:34:07 +0100</pubDate>
-    <lastBuildDate>Wed, 28 Oct 2020 15:34:07 +0100</lastBuildDate>
+    <pubDate>Wed, 28 Oct 2020 15:50:42 +0100</pubDate>
+    <lastBuildDate>Wed, 28 Oct 2020 15:50:42 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -454,7 +454,7 @@ Bibliography
     
       <item>
         <title>Optimal Control Problem vs  Classification Problem in DyCon Toolbox</title>
-        <description>En este tutorial veremos como podemos implementar un problema de clasificación simple mediante la librería de control óptimo DyCon Toolbox
+        <description>En este tutorial veremos como podemos implementar un problema de clasificación simple mediante la librería de control óptimo DyCon-Toolbox.
 
 Generación de datos
 
@@ -586,11 +586,11 @@ end
 
 </description>
         <pubDate>Mon, 27 Jul 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0012</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0012</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/pretutorial/wp01/P0012</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/pretutorial/wp01/P0012</guid>
         
         
-        <category>tutorial</category>
+        <category>pretutorial</category>
         
         <category>WP01</category>
         
