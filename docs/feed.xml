@@ -5,31 +5,33 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 29 Oct 2020 13:18:18 +0100</pubDate>
-    <lastBuildDate>Thu, 29 Oct 2020 13:18:18 +0100</lastBuildDate>
+    <pubDate>Thu, 29 Oct 2020 19:40:49 +0100</pubDate>
+    <lastBuildDate>Thu, 29 Oct 2020 19:40:49 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
-        <title>ResNet stabilzation in MNIST dataset</title>
+        <title>ResNet stabilization in MNIST dataset</title>
         <description>
-
-Consideramos el problema de clasificación MNIST. Este problema tiene  datos de entrada tal que $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida  tal que $y \in  \mathbb{R}^{10}$. Los elementos de la base canónica de $\mathbb{R}^{10}$ representa el conjunto de dígitos $ \{0,1,2,\dots,8,9 \}$.
-
-
-figura 1. Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida $y \in  \mathbb{R}^{10}$ en la parte superior de cada una.   
-
-Buscamos una función $f_{\Omega}: \mathcal{M}_{28 \times 28}(\mathbb{R}) \rightarrow \mathbb{R}^{10}$ que sea capaz de reproducir el comportamiento que vemos en los datos. Tomarémos como modelo una red ResNet
+MNIST dataset
+Consideramos el problema de clasificación MNIST. Este problema tiene  datos de entrada tal que $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida  tal que $y \in  \mathbb{R}^{10}$. Los elementos de la base canónica de $\mathbb{R}^{10}$, $ \{e_1,e_2,\dots,e_{10}\} $, representa el conjunto de dígitos $ \{0,1,2,\dots,8,9 \}$.
 
 
+figura 1. Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y sus correspondientes datos de salida $y \in  \mathbb{R}^{10}$ en la parte superior de cada una.   
+
+2. Modelo
+Buscamos una función $f_{\Omega}: \mathcal{M}_{28 \times 28}(\mathbb{R}) \rightarrow \mathbb{R}^{10}$ que sea capaz de reproducir el comportamiento que vemos en los datos. Consideraremos el modelo $\color{red}{y} = f_\Omega (\color{green}{x})$ como:
 
 
-  $\Omega = \{ A_t,b_t\}_{t=0}^T$
-  Con $\{z_t\}_{t=1}^{N} \in \mathbb{R}^n \ / \ n &amp;lt; 28^2$.
-  La primera matriz es distintas de las demás, $A_0 \in \mathcal{M}_{28^2 \times n}$
-  Las siguientes matrices son cuadradas: $ \{A_t\}_{t=1}^{N} \in \mathcal{M}_{n \times n} $
 
 
-Plantemos el problema de control
+  Con $\{z_t\}_{t=0}^{T} \in \mathbb{R}^n \ / \ n &amp;lt; 28^2$.
+  $\mathcal{P} \in \mathcal{M}_{n\times 10}$ es una matriz constante que proyecta el estado $z_t \in \mathbb{R}^n$ a $\mathbb{R}^{10}$
+  Donde las variables $\Omega = \{ A_t,b_t\}_{t=0}^T$ pueden verse como variables de control del sistema (\ref{sys}).
+  Notar que  $A_0 \in \mathcal{M}_{28^2 \times n}(\mathbb{R})$ y $b_0 \in \mathbb{R}^{28^2}$; mientras que las siguientes matrices son cuadradas $ \{A_t\}_{t=1}^{N} \in \mathcal{M}_{n \times n}(\mathbb{R}) $ y los siguientes bias son $ \{b_t\}_{t=1}^N \in \mathbb{R}^n $
+
+
+3. Problema de Control
+Si llamamos $M$ al número total de datos de entrenamiento y considerando los datos de entrenamiento $\{ x_m,y_m\}_{m=1}^M$, podemos plantear el siguiente problema de control.
 
 
 </description>

@@ -211,32 +211,34 @@
     
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Consideraremos el problema de clasificación MNIST --&gt;
 </code></pre></div></div>
-
-<p>Consideramos el problema de clasificación MNIST. Este problema tiene  datos de entrada tal que $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida  tal que $y \in  \mathbb{R}^{10}$. Los elementos de la base canónica de $\mathbb{R}^{10}$ representa el conjunto de dígitos $ \{0,1,2,\dots,8,9 \}$.</p>
+<h4>MNIST dataset</h4>
+<p>Consideramos el problema de clasificación MNIST. Este problema tiene  datos de entrada tal que $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida  tal que $y \in  \mathbb{R}^{10}$. Los elementos de la base canónica de $\mathbb{R}^{10}$, $ \{e_1,e_2,\dots,e_{10}\} $, representa el conjunto de dígitos $ \{0,1,2,\dots,8,9 \}$.</p>
 
 <p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP02/P0005/ex.png" width="70%" /></p>
-<center>figura 1. Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida $y \in  \mathbb{R}^{10}$ en la parte superior de cada una.   </center>
+<center>figura 1. Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y sus correspondientes datos de salida $y \in  \mathbb{R}^{10}$ en la parte superior de cada una.   </center>
 
-<p>Buscamos una función $f_{\Omega}: \mathcal{M}_{28 \times 28}(\mathbb{R}) \rightarrow \mathbb{R}^{10}$ que sea capaz de reproducir el comportamiento que vemos en los datos. Tomarémos como modelo una red ResNet</p>
+<h4>2. Modelo</h4>
+<p>Buscamos una función $f_{\Omega}: \mathcal{M}_{28 \times 28}(\mathbb{R}) \rightarrow \mathbb{R}^{10}$ que sea capaz de reproducir el comportamiento que vemos en los datos. Consideraremos el modelo $\color{red}{y} = f_\Omega (\color{green}{x})$ como:</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{equation}\label{sys}
-y = \mathcal{P} z_T \\ 
-z_T  \leftarrow \begin{cases}z_{t+1} = z_{t} + dt \ \sigma(A_t z_t+ b_t) & t \in \{1,2,\dots,T\} \\
-z_0 = A_0 x
+\color{red}{y} = \mathcal{P} z_T \leftarrow \begin{cases}z_{t+1} = z_{t} + dt \ \sigma(A_t z_t+ b_t) & t \in \{1,2,\dots,T\} \\
+z_0 = A_0 \color{green}{x}
 \end{cases}
 \end{equation} %]]></script>
 
 <ul>
-  <li>$\Omega = \{ A_t,b_t\}_{t=0}^T$</li>
-  <li>Con $\{z_t\}_{t=1}^{N} \in \mathbb{R}^n \ / \ n &lt; 28^2$.</li>
-  <li>La primera matriz es distintas de las demás, $A_0 \in \mathcal{M}_{28^2 \times n}$</li>
-  <li>Las siguientes matrices son cuadradas: $ \{A_t\}_{t=1}^{N} \in \mathcal{M}_{n \times n} $</li>
+  <li>Con $\{z_t\}_{t=0}^{T} \in \mathbb{R}^n \ / \ n &lt; 28^2$.</li>
+  <li>$\mathcal{P} \in \mathcal{M}_{n\times 10}$ es una matriz constante que proyecta el estado $z_t \in \mathbb{R}^n$ a $\mathbb{R}^{10}$</li>
+  <li>Donde las variables $\Omega = \{ A_t,b_t\}_{t=0}^T$ pueden verse como variables de control del sistema (\ref{sys}).</li>
+  <li>Notar que  $A_0 \in \mathcal{M}_{28^2 \times n}(\mathbb{R})$ y $b_0 \in \mathbb{R}^{28^2}$; mientras que las siguientes matrices son cuadradas $ \{A_t\}_{t=1}^{N} \in \mathcal{M}_{n \times n}(\mathbb{R}) $ y los siguientes bias son $ \{b_t\}_{t=1}^N \in \mathbb{R}^n $</li>
 </ul>
 
-<p>Plantemos el problema de control</p>
+<h4>3. Problema de Control</h4>
+<p>Si llamamos $M$ al número total de datos de entrenamiento y considerando los datos de entrenamiento $\{ x_m,y_m\}_{m=1}^M$, podemos plantear el siguiente problema de control.</p>
 
-<script type="math/tex; mode=display">\min_{\omega} \frac{1}{M}\sum_{m=1}^M\sum_{t=0}^T || \mathcal{P}z_t - y_m ||^2 + \beta || \Omega||^2</script>
+<script type="math/tex; mode=display">\min_{\Omega} \Big[ \frac{1}{M}\sum_{m=1}^M\sum_{t=0}^T || f_\Omega(x_m) - y_m ||^2 + \beta || \Omega||^2 \Big] \\
+suject \ to: (\ref{sys})</script>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2 id="reinforcement-learning"&gt;Reinforcement Learning&lt;/h2&gt;
 </code></pre></div></div>
