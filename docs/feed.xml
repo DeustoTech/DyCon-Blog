@@ -5,15 +5,15 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 30 Oct 2020 08:50:07 +0100</pubDate>
-    <lastBuildDate>Fri, 30 Oct 2020 08:50:07 +0100</lastBuildDate>
+    <pubDate>Fri, 30 Oct 2020 11:42:23 +0100</pubDate>
+    <lastBuildDate>Fri, 30 Oct 2020 11:42:23 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
         <title>ResNet stabilization in MNIST dataset</title>
         <description>
 MNIST dataset
-Consideramos el problema de clasificación MNIST. Este problema tiene  datos de entrada tal que $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida  tal que $y \in  \mathbb{R}^{10}$. Los elementos de la base canónica de $\mathbb{R}^{10}$, $ \{e_1,e_2,\dots,e_{10}\} $, representa el conjunto de dígitos $ \{0,1,2,\dots,8,9 \}$.
+Consideramos el problema de clasificación MNIST. Este problema tiene  datos de entrada tal que $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida  tal que $y \in  \mathbb{R}^{10}$. Los elementos de la base canónica de $\mathbb{R}^{10}$, $ \{e_1,e_2,\dots,e_{10}\} $, representa el conjunto de dígitos $ \{0,1,2,\dots,8,9 \}$ en ese orden.
 
 
 Figura 1. Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y sus correspondientes datos de salida $y \in  \mathbb{R}^{10}$ en la parte superior de cada una.   
@@ -37,6 +37,15 @@ Figura 2. Arquitectura de la red
 3. Problema de Control
 Si llamamos $M$ al número total de datos de entrenamiento y considerando los datos de entrenamiento $\{ x_m,y_m\}_{m=1}^M$, podemos plantear el siguiente problema de control.
 
+
+
+4. Resultados numéricos
+
+
+Figura 3. Comportamiento de la proyección $\mathcal{P}z_t$ para un dado de entrada concreto. 
+
+
+Figura 4. Evolución  $||\mathcal{P}z_t||_{L^2}^2$ para los distintos datos de entrada $x$ 
 
 </description>
         <pubDate>Thu, 29 Oct 2020 00:00:00 +0100</pubDate>
