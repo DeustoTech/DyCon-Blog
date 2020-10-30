@@ -215,7 +215,7 @@
 <p>Consideramos el problema de clasificación MNIST. Este problema tiene  datos de entrada tal que $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida  tal que $y \in  \mathbb{R}^{10}$. Los elementos de la base canónica de $\mathbb{R}^{10}$, $ \{e_1,e_2,\dots,e_{10}\} $, representa el conjunto de dígitos $ \{0,1,2,\dots,8,9 \}$.</p>
 
 <p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP02/P0005/ex.png" width="70%" /></p>
-<center>figura 1. Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y sus correspondientes datos de salida $y \in  \mathbb{R}^{10}$ en la parte superior de cada una.   </center>
+<center><b>Figura 1.</b> Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y sus correspondientes datos de salida $y \in  \mathbb{R}^{10}$ en la parte superior de cada una.   </center>
 
 <h4>2. Modelo</h4>
 <p>Buscamos una función $f_{\Omega}: \mathcal{M}_{28 \times 28}(\mathbb{R}) \rightarrow \mathbb{R}^{10}$ que sea capaz de reproducir el comportamiento que vemos en los datos. Consideraremos el modelo $\color{red}{y} = f_\Omega (\color{green}{x})$ como:</p>
@@ -227,17 +227,21 @@ z_0 = A_0 \color{green}{x}
 \end{cases}
 \end{equation} %]]></script>
 
-<ul>
-  <li>Con $\{z_t\}_{t=0}^{T} \in \mathbb{R}^n \ / \ n &lt; 28^2$.</li>
+<p>Donde:</p>
+<ol>
+  <li>$\{z_t\}_{t=0}^{T} \in \mathbb{R}^n \ / \ n &lt; 28^2$.</li>
   <li>$\mathcal{P} \in \mathcal{M}_{n\times 10}$ es una matriz constante que proyecta el estado $z_t \in \mathbb{R}^n$ a $\mathbb{R}^{10}$</li>
-  <li>Donde las variables $\Omega = \{ A_t,b_t\}_{t=0}^T$ pueden verse como variables de control del sistema (\ref{sys}).</li>
-  <li>Notar que  $A_0 \in \mathcal{M}_{28^2 \times n}(\mathbb{R})$ y $b_0 \in \mathbb{R}^{28^2}$; mientras que las siguientes matrices son cuadradas $ \{A_t\}_{t=1}^{N} \in \mathcal{M}_{n \times n}(\mathbb{R}) $ y los siguientes bias son $ \{b_t\}_{t=1}^N \in \mathbb{R}^n $</li>
-</ul>
+  <li>Las variables $\Omega = \{ A_t,b_t\}_{t=0}^T$ pueden verse como variables de control del sistema (\ref{sys}).</li>
+  <li>$A_0 \in \mathcal{M}_{28^2 \times n}(\mathbb{R})$ y $b_0 \in \mathbb{R}^{28^2}$; mientras que $ \{A_t\}_{t=1}^{N} \in \mathcal{M}_{n \times n}(\mathbb{R}) $ y los siguientes $b_t$ bias son $ \{b_t\}_{t=1}^N \in \mathbb{R}^n $</li>
+</ol>
+
+<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP02/P0005/arch.png" width="85%" /></p>
+<center><b>Figura 2.</b> Arquitectura de la red </center>
 
 <h4>3. Problema de Control</h4>
 <p>Si llamamos $M$ al número total de datos de entrenamiento y considerando los datos de entrenamiento $\{ x_m,y_m\}_{m=1}^M$, podemos plantear el siguiente problema de control.</p>
 
-<script type="math/tex; mode=display">\min_{\Omega} \Big[ \frac{1}{M}\sum_{m=1}^M\sum_{t=0}^T || f_\Omega(x_m) - y_m ||^2 + \beta || \Omega||^2 \Big] \\
+<script type="math/tex; mode=display">\min_{\Omega} \Big[ \frac{1}{M}\sum_{m=1}^M\sum_{t=0}^T || \mathcal{P}z_t(x_m,\Omega) - y_m ||^2 + \beta || \Omega||^2 \Big] \\
 suject \ to: (\ref{sys})</script>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2 id="reinforcement-learning"&gt;Reinforcement Learning&lt;/h2&gt;
@@ -333,9 +337,16 @@ Q(x,u) = r(x,u) + \gamma \max_{u\in \mathcal{U}} Q(x,u)</script>
 <p>here, $\alpha&gt;0$ is called the learning rate.</p>
 
 <center>
-<figure>
- <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP04/P0011/QlearningScheme.png" height="200" width="550" /> 
-</figure>
+<table>
+<tr>
+<th> 
+ <img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/DP00/P0004/QlearningScheme.png" height="200" width="550" /> 
+</th>
+</tr>
+<tr>
+<th style="text-align:center"> Figure 1.</th>
+</tr>
+</table>
 </center>
 
 <h2 id="example">Example</h2>
@@ -382,8 +393,16 @@ r(x_t,u_t):= \left\{ \begin{array}{ll}
 The plot represents the evolution of the success rate with the number of experiments during the training.</p>
 
 <center>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video1.gif" height="230" width="300" />
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/training_evolution1.png" height="230" width="300" />
+<table>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0004/video1.gif" width="90%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0004/training_evolution1.png" width="90%" /></th>
+</tr>
+<tr>
+<th style="text-align:center"> Figure 2a.</th>
+<th style="text-align:center">Figure 2b.</th>
+</tr>
+</table>
 </center>
 
 <p>We can change the environment by adding a potential that moves the position to the right when it is in a certain region (dark green area)</p>
@@ -401,25 +420,44 @@ x_t +3+ u_t & \text{if} \ x_t\in P
 \end{array} \right. %]]></script>
 
 <center>
-<figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video2.gif" height="230" width="300" />
-</figure>
+<table>
+<tr>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0004/video2.gif" width="60%" />
+</tr>
+<tr>
+<th style="text-align:center"> Figure 3.</th>
+</tr>
+</table>
 </center>
 
 <p>After training the $Q$-function in the new environment, it learns how to deal with the potential to get to the target area. Observe that the success rate never reaches one. This is due to the fact that there is a region in the domain (the dark green area near the right-hand limit of the domain) from which it is impossible to reach the target.</p>
 
 <center>
-<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video3.gif" height="230" width="300" />
-<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/training_evolution2.png" height="230" width="300" />
+<table>
+<tr>
+<th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0004/video3.gif" width="90%" /></th>
+<th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0004/training_evolution2.png" width="90%" /></th>
+</tr>
+<tr>
+<th style="text-align:center"> Figure 4a.</th>
+<th style="text-align:center">Figure 4b.</th>
+</tr>
+</table>
 </center>
 
 <p>We can also add obstacles in the domain, or even combine obstacles with a potential.</p>
 
 <center>
-<figure>
-<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video4.gif" height="230" width="300" />
-<img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0011/video5.gif" height="230" width="300" />
-</figure>
+<table>
+<tr>
+<th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0004/video4.gif" width="90%" /></th>
+<th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0004/video5.gif" width="90%" /></th>
+</tr>
+<tr>
+<th style="text-align:center"> Figure 5a.</th>
+<th style="text-align:center">Figure 5b.</th>
+</tr>
+</table>
 </center>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;This tutorial shows how to implement the moving control strategy for the heat equation in the presence of a memory term.&lt;/p&gt;

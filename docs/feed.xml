@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 29 Oct 2020 19:40:49 +0100</pubDate>
-    <lastBuildDate>Thu, 29 Oct 2020 19:40:49 +0100</lastBuildDate>
+    <pubDate>Fri, 30 Oct 2020 08:50:07 +0100</pubDate>
+    <lastBuildDate>Fri, 30 Oct 2020 08:50:07 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -16,19 +16,23 @@ MNIST dataset
 Consideramos el problema de clasificación MNIST. Este problema tiene  datos de entrada tal que $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y datos de salida  tal que $y \in  \mathbb{R}^{10}$. Los elementos de la base canónica de $\mathbb{R}^{10}$, $ \{e_1,e_2,\dots,e_{10}\} $, representa el conjunto de dígitos $ \{0,1,2,\dots,8,9 \}$.
 
 
-figura 1. Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y sus correspondientes datos de salida $y \in  \mathbb{R}^{10}$ en la parte superior de cada una.   
+Figura 1. Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R})$ y sus correspondientes datos de salida $y \in  \mathbb{R}^{10}$ en la parte superior de cada una.   
 
 2. Modelo
 Buscamos una función $f_{\Omega}: \mathcal{M}_{28 \times 28}(\mathbb{R}) \rightarrow \mathbb{R}^{10}$ que sea capaz de reproducir el comportamiento que vemos en los datos. Consideraremos el modelo $\color{red}{y} = f_\Omega (\color{green}{x})$ como:
 
 
 
+Donde:
 
-  Con $\{z_t\}_{t=0}^{T} \in \mathbb{R}^n \ / \ n &amp;lt; 28^2$.
+  $\{z_t\}_{t=0}^{T} \in \mathbb{R}^n \ / \ n &amp;lt; 28^2$.
   $\mathcal{P} \in \mathcal{M}_{n\times 10}$ es una matriz constante que proyecta el estado $z_t \in \mathbb{R}^n$ a $\mathbb{R}^{10}$
-  Donde las variables $\Omega = \{ A_t,b_t\}_{t=0}^T$ pueden verse como variables de control del sistema (\ref{sys}).
-  Notar que  $A_0 \in \mathcal{M}_{28^2 \times n}(\mathbb{R})$ y $b_0 \in \mathbb{R}^{28^2}$; mientras que las siguientes matrices son cuadradas $ \{A_t\}_{t=1}^{N} \in \mathcal{M}_{n \times n}(\mathbb{R}) $ y los siguientes bias son $ \{b_t\}_{t=1}^N \in \mathbb{R}^n $
+  Las variables $\Omega = \{ A_t,b_t\}_{t=0}^T$ pueden verse como variables de control del sistema (\ref{sys}).
+  $A_0 \in \mathcal{M}_{28^2 \times n}(\mathbb{R})$ y $b_0 \in \mathbb{R}^{28^2}$; mientras que $ \{A_t\}_{t=1}^{N} \in \mathcal{M}_{n \times n}(\mathbb{R}) $ y los siguientes $b_t$ bias son $ \{b_t\}_{t=1}^N \in \mathbb{R}^n $
 
+
+
+Figura 2. Arquitectura de la red 
 
 3. Problema de Control
 Si llamamos $M$ al número total de datos de entrenamiento y considerando los datos de entrenamiento $\{ x_m,y_m\}_{m=1}^M$, podemos plantear el siguiente problema de control.
@@ -132,7 +136,14 @@ here, $\alpha&amp;gt;0$ is called the learning rate.
 
 
 
+
+ 
   
+
+
+
+ Figure 1.
+
 
 
 
@@ -172,8 +183,16 @@ In the following video we see the obtained behavior after applying the $Q$-learn
 The plot represents the evolution of the success rate with the number of experiments during the training.
 
 
+
+
  
  
+
+
+ Figure 2a.
+Figure 2b.
+
+
 
 
 We can change the environment by adding a potential that moves the position to the right when it is in a certain region (dark green area)
@@ -188,13 +207,26 @@ In the following video, the agent uses the $Q$-function obtained in the original
 
 
 
+
  
+
+
+ Figure 3.
+
 
 
 
 After training the $Q$-function in the new environment, it learns how to deal with the potential to get to the target area. Observe that the success rate never reaches one. This is due to the fact that there is a region in the domain (the dark green area near the right-hand limit of the domain) from which it is impossible to reach the target.
 
 
+
+
+
+
+
+
+ Figure 4a.
+Figure 4b.
 
 
 
@@ -208,15 +240,21 @@ We can also add obstacles in the domain, or even combine obstacles with a potent
 
 
 
+ Figure 5a.
+Figure 5b.
+
+
+
+
 </description>
         <pubDate>Thu, 22 Oct 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0011</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0011</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/dp00/P0004</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/dp00/P0004</guid>
         
         
         <category>tutorial</category>
         
-        <category>WP04</category>
+        <category>DP00</category>
         
       </item>
     
