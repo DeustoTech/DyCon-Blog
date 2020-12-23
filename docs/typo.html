@@ -209,6 +209,541 @@
 </nav>
 
     
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h3 id="background-and-motivation"&gt;Background and motivation&lt;/h3&gt;
+</code></pre></div></div>
+
+<p>Let us consider the random heat equation described 
+by the following system:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}\tag{1}
+y_t-\alpha \Delta y =f1_{G_0}, &\text{ in } (0,T)\times G,\\
+y=0, & \text{ on } (0,T)\times \partial G,\\
+y(0,\cdot)=y^0,  & \text{ on } G,
+\end{cases} %]]></script>
+
+<p>for $G$  a domain, $G_0\subset G$ a subdomain, 
+$f$ a control,  $y^0$  the initial configuration 
+and $\alpha$ the diffusivity coefficient, which is a positive 
+random variable with density function $\rho$.
+We have that the averaged solution of (1)
+is given by:</p>
+
+<script type="math/tex; mode=display">\tilde y(t,x;y^0,f):=\int_0^{+\infty} y(t,x;\alpha,y^0,f)\rho(\alpha)d\alpha.</script>
+
+<p>We want to determine if, given a positive random variable 
+$\alpha$ and an initial configuration $y^0\in L^2(G)$, there 
+is some $f\in L^2((0,T)\times G_0)$ such that $\tilde y(T,\cdot)=0$.</p>
+
+<p>In order to illustrate the effect of averaging in
+ the dynamics, let us study the dynamics of
+(1) when $G=\mathbb R^d$ and $f=0$.
+As averaging and the Fourier transform commute, we work on the
+Fourier transform of the fundamental solution of the
+heat equation, which is given by:</p>
+
+<script type="math/tex; mode=display">\exp(-\alpha |\xi|^2t).</script>
+
+<p>Consequently, the Fourier transform of the average
+of the fundamental solutions is given by:</p>
+
+<script type="math/tex; mode=display">\int_0^{+\infty} \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha;</script>
+
+<p>i.e. the Laplace transform of $\rho$ evaluated in $|\xi|^2t$. 
+In particular, for $r\in(0,1)$ if $\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-\frac{r}{1-r}}}$
+we have that:</p>
+
+<script type="math/tex; mode=display">\tag{2}
+\int \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha\sim \exp(-C|\xi|^{2r}t^r)</script>
+
+<p>when $|\xi|^2t\to+\infty$, which can be proved by the Laplace method.
+Thus, for those density functions 
+the averaged dynamics in $\mathbb R^d$ has a fractional nature. As it is proved in [1],
+for $G$ bounded this is also true and we have the usual controllability 
+and observability results of fractional dynamics;
+that is, (2) implies that
+the averaged unique continuation is preserved,
+but (2) preserves the null averaged observability
+if and only if $r&gt;1/2$, being the threshold density functions  those
+which satisfy:</p>
+
+<script type="math/tex; mode=display">\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-1}}.</script>
+
+<h3 id="some-numerical-simulations">Some numerical simulations</h3>
+
+<p>Let us now illustrate the difference between several probability distributions for the diffusion through numerical simulations. For that, we recall that 
+the optimal control is given by $\varphi(t,x;\phi)1_{G_0}$, for $\varphi$ the 
+averaged solution of</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+-\varphi_t-\alpha \Delta \varphi=0, &\text{ in } (0,T)\times G,\\
+\varphi=0, & \text{ on } (0,T)\times\partial G,\\
+\varphi(T,\cdot)=\phi,  & \text{ on } G.
+\end{cases} %]]></script>
+
+<p>and $\phi$ the state which minimizes the functional:</p>
+
+<script type="math/tex; mode=display">J(\phi)= \frac{1}{2}\int_0^T\int_{G_0}
+\left|\int_0^{+\infty}\varphi(t,x;\alpha,\phi)\rho(\alpha)d\alpha\right|^2dxdt 
+ \\+\left\langle  y^0, \int_0^{+\infty}\varphi(0;\alpha,\phi)\rho(\alpha)d\alpha\right\rangle.</script>
+
+<p>Due to the hardness of the numerical computations in higher dimensions and to get
+better illustrations we work in $d=1$, and in particular in $G=(0,\pi)$.
+We also consider $G_0=(1,2)$, $T=1$ and $y^0=\frac{1}{2}$. 
+Moreover, to illustrate the difference between diffusivities inside and 
+outside the null controllability regime, we consider $\rho=1_{(1,2)}$, which is inside,
+and $\rho=1_{(0,1)}$, which is outside.</p>
+
+<p>In order to numerically implement this problem, we approximate it by
+minimizing $J$ in $V_M:=\langle e_i \rangle_{i=1}^M$ 
+for ${e_i}$ the eigenfunctions of the Dirichlet Laplacian
+ and for $M\in{40,50,60}$. 
+Since $V_M$ is a finite dimensional space, computing the 
+minimum of $J$ is equivalent to solving numerically a linear system,
+which can be easily done by using any numerical computing environment
+(in our case MATLAB). We have the following illustrations:</p>
+
+<p>First, we illustrate in Figure 1 
+(resp. in Figure 2)
+the controls induced by the minimum of $J$ for $\rho=1_{(1,2)}$
+(resp. for $\rho=1_{(0,1)}$).
+For  $\rho=1_{(1,2)}$ the 
+sequence of controls converges, which is something that can be seen in an even 
+more clear way when $t\in[0,1/2]$. Of course, the closer the time is to $1$,
+the more slowly the punctual values of the control converges pointwise with $M$ 
+(and in $t=1$ it diverges),
+which is a well-known behaviour when
+controlling a parabolic dynamics (see, for instance,
+[2], [3] and [4]).
+ However, for $\rho=1_{(0,1)}$ the sequence of  controls 
+diverges, which is something that we can appreciate in a more 
+detailed way when $t\in[0,1/2]$.</p>
+
+<center>
+<table>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V40.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V40t05.jpg" width="100%" /></th>
+</tr>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V50.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V50t05.jpg" width="100%" /></th>
+</tr>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V60.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V60t05.jpg" width="100%" /></th>
+</tr>
+</table>
+
+
+<strong> Figure 1: </strong>
+ The optimal control for  $\rho=1\_{(1,2)}$ and $y^0=\frac{1}{2}$ 
+induced by the minimum of the functional $J$ in $V_{40}$, $V_{50}$
+and $V_{60}$.
+In the left column we illustrate the whole controls, whereas in the right 
+column we illustrate the controls with the time variable zoomed in $[0,1/2]$.
+</center>
+
+<center>
+<table>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V40.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V40t05.jpg" width="100%" /></th>
+</tr>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V50.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V50t05.jpg" width="100%" /></th>
+</tr>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V60.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V60t05.jpg" width="100%" /></th>
+</tr>
+</table>
+
+
+<strong> Figure 2: </strong>
+ The optimal control for  $\rho=1\_{(0,1)}$ and $y^0=\frac{1}{2}$ 
+induced by the minimum of the functional $J$ in $V_{40}$, $V_{50}$
+and $V_{60}$.
+In the left column we illustrate the whole controls, whereas in the right 
+column we illustrate the controls with the time variable zoomed in $[0,1/2]$.
+</center>
+
+<p>Next, we show in Figure 3
+the canonical prolongation of the previously obtained controls to $t=0$.
+ Again, for $\rho=1_{(1,2)}$  we have a clear convergence,
+whereas for $\rho=1_{(0,1)}$  it diverges.</p>
+
+<center>
+<table>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12t0.jpg" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01t0.jpg" /></th>
+</tr>
+</table>
+
+<strong> Figure 3: </strong>
+The natural extensions to $t=0$ of the controls 
+induced by the minimum of the functional $J$ in $V_{40}$, $V_{50}$ 
+and $V_{60}$ with $y^0=\frac{1}{2}$. In the left figure
+we have considered $\rho =1\_{(1,2)}$ and in the right one $\rho=1\_{(0,1)}$.
+</center>
+
+<p>Finally, we illustrate in Figure 4 the state at $t=1$
+of the respective solutions of the averaged heat equation
+ with the previously obtained controls.
+For $\rho=1_{(1,2)}$ the solution converges smoothly to $0$,
+whereas for $\rho=1_{(0,1)}$ the solution diverges.</p>
+
+<center>
+<table>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12t1.jpg" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01t1.jpg" /></th>
+</tr>
+</table>
+
+<strong> Figure 4: </strong>
+The state in time $t=1$ of the averaged solutions of the heat equation after
+applying the control induced by the minimum of $J$ in $V_{40}$, $V_{50}$
+and $V_{60}$ with $y^0=\frac{1}{2}$. In the left figure
+we have considered $\rho =1\_{(1,2)}$ and in the right one $\rho=1\_{(0,1)}$.
+</center>
+
+<h3 id="bibliography">Bibliography</h3>
+<p>[1] J. A. Bárcena-Petisco, E. Zuazua, <i> Averaged dynamics and control for heat equations with random diffusion </i>. Preprint <a href="https://hal.archives-ouvertes.fr/hal-02958671/">https://hal.archives-ouvertes.fr/hal-02958671/</a></p>
+
+<p>[2] E. Fernández-Cara and A. Münch. <i>Strong convergent approximations of null controls for the 1D
+heat equation.</i> SeMA journal, 61(1):49-78, 2013.</p>
+
+<p>[3] R. Glowinski and J. L. Lions.<i> Exact and approximate controllability for distributed parameter
+systems. </i> Acta Numer., 1:269-378, 1994.</p>
+
+<p>[4] A. Münch and E. Zuazua. <i>Numerical approximation of null controls for the heat equation: illposedness
+and remedies.</i> Inverse Probl., 26(8):085018, 2010.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2 id="data-and-classification"&gt;Data and classification&lt;/h2&gt;
+</code></pre></div></div>
+<h3 id="supervised-learning">Supervised Learning</h3>
+
+<p>Consider a dataset $\mathcal{D}$ consisting on $S$ distinct points ${x_i}_{i=1}^{S}$, each of them with a corresponding value $y_i$ such that</p>
+
+<script type="math/tex; mode=display">\mathcal{D} = \{(x_i , y_i)\}_{i=1}^S</script>
+
+<script type="math/tex; mode=display">y_i = \mathcal{F} (x_i) + \epsilon _i \quad \forall i \in \{1, ... S\}</script>
+
+<p>where $\epsilon _i$ is included so as to consider, in principle, noisy data.</p>
+
+<p>The aim of supervised learning is to recover the function $\mathcal{F}(\cdot)$ such that not only fits well in the database $\mathcal{D}$ but also generalises to previously unseen data.</p>
+
+<p>That is, it is inferred the existence of</p>
+
+<script type="math/tex; mode=display">\tilde{\mathcal{D}} = \{ (\tilde{x}_i , \tilde{y}_i) \}_{i=1}^{\infty}</script>
+
+<p>where</p>
+
+<script type="math/tex; mode=display">\tilde{y}_i \approx \mathcal{F}(\tilde{x}_i) \quad \forall i</script>
+
+<p>being $\mathcal{F} (\cdot)$ the desired previous application, and $\mathcal{D} \subset \tilde{\mathcal{D}}$.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/generaliseddataset.jpg" alt="GeneralisedDataset" /></p>
+
+<p><br /></p>
+
+<h3 id="noisy-vs-noisless-data">Noisy vs. noisless data</h3>
+
+<p>The generalised dataset $\tilde{\mathcal{D}}$ can be seen as the realisation of a random vector $(\mathbf{x}, \mathbf{y})$ generated by an unknown multivariate joint distribution between $\mathcal{X}$ and  $\mathcal{Y}$.</p>
+
+<p>Then, the datasets used in Supervised Learning can be seen as a finite sample of the random vector $(\mathbf{x}, \mathbf{y})$, and so the underlying joint distribution between $\mathcal{X}$ and $\mathcal{Y}$ could be in principle recovered in the limit of infinitely many samples, $\tilde{\mathcal{D}}$ .</p>
+
+<p>We refer to noisy data when the samples in our dataset $\mathcal{D}$ actually comes from a random vector $(\mathbf{x}, \mathbf{y})$ with a non-deterministic joint distribution, such that it is not possible to find a function $\mathcal{F}$ such that $\mathcal{F}(\mathbf{x}) = \mathbf{y}$.</p>
+
+<p>The aim of supervised learning, in this case, would be to find a function such that $\mathcal{F}(\tilde{x}_i) \approx \tilde{y}_i$ for almost every sample, as with respect to a given loss function.</p>
+
+<p>In case the data is considered to be noisless (which does not happen in most practical situations, but it makes things far simpler) then the joint distribution between $\mathcal{X}$ and $\mathcal{Y}$ of the random vector $(\mathbf{x}, \mathbf{y})$ is rather deterministic. In this case, it is possible to find a function $F$ such that $\mathcal{F}(\tilde{x}_i) = \tilde{y}_i \; \forall i$, or equivalently $\mathcal{F}(\mathbf{x}) = \mathbf{y}$.</p>
+
+<p>Note that, given that the probability of a collision (of having two different data-points such that $x_i = x_j$ for $i \neq j$) is practically $0$, it is in principle possible to find a function $\mathcal{F}$ such that $\mathcal{F}(x_i)=y_i \; \forall i = { 1, …  ,S }$, even in the noisy case (i.e. we may use interpolation). 
+However, the aim of <em>Supervised Learning</em> is to be able to generalise well to previously unseen data, $\tilde{\mathcal{D}}$, and so interpolation is not effective.</p>
+
+<p>Some systems are often approximated as being noisless. Since the aim of supervised learning is finding functions $\mathcal{F}$, there is always the implicit assumption that the generalised dataset $\tilde{\mathcal{D}}$ can be approximately represented by a function $\mathcal{F}$, and so the noise is expected to be small, compared to the “real data”. Distinguishing data from noise is often far a from trivial issue.</p>
+
+<p>The idea of working with noisy data can be recasted as a Mean-Field problem, as proposed by Weinan E. et al [2]. The idea is to control a distribution, instead of a set of points in an euclidean space. Although understanding Supervised Learning with noisless data from a Dynamical Control perspective is often enough ill-posed, considering noisy data unlocks the full theoretical experience.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/generalnoisless.gif" alt="Noisless" /></p>
+
+<p><br /></p>
+
+<h3 id="binary-classification">Binary classification</h3>
+<p>In most cases, the data points $x_i$ are in $\mathbb{R}^{n}$. In general, $x_i \in X \; \forall i$, with $X \subset \mathbb{R}^{n}$. So as to ease the training of the models, it is usually considered $X = [-1,+1]^{n}$, with $n$ an arbitrary dimension. This is called <em>data normalization</em> in the Machine Learning literature.</p>
+
+<p>There are different supervised learning problems depending on the space $Y$ of the corresponding labels, such that $y_i \in Y$.<br />
+If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with the problem of classification. If $L=2$, then it is a binary classification problem.</p>
+
+<p>In this particular setting, the aim is to find a function $F (\cdot)$ such that it returns $0$ whenever the corresponding data point is of class $0$, and $1$ conversely. 
+Note that such a function cannot be continuous except for trivial cases, given that  the data points in $X$ cover all the space $[-1, +1]$, due to the existence of a boundary between points of class $0$ and $1$.</p>
+
+<h3 id="data-subspaces-and-manifolds">Data, subspaces and manifolds</h3>
+
+<p>Considering $X^0$ the subset of $X$ such that $F(\tilde{x}_i) =0 \; \; \forall \tilde{x}_i \in X^0$ and $X^1$ s.t.  $\, F(\tilde{x}_i)=1 \; \; \forall \tilde{x}_i \in X^1$, it is often useful to consider $d(X^0 , X^1) &gt; \delta \in \mathbb{R}^{+}$. 
+Consider that the $x-$points in the dataset $\tilde{\mathcal{D}}$ are in $X= X^0 \cup X^1$.</p>
+
+<p>In this aforementioned case, it is in principle possible to find a continuous function $F(\cdot)$ such that $F(\tilde{x}_i) = \tilde{y}_i \; \forall i$ , since it does not need to be defined in the boundary (the boundary is not in $X$).</p>
+
+<p>The simpler case is one in which $X^0$ and $X^1$ are connected spaces.</p>
+
+<p><br /></p>
+
+<h2 id="deep-learning">Deep Learning</h2>
+<h3 id="neural-networks">Neural Networks</h3>
+
+<p>The problem is now how to obtain the functions $\mathcal{F}$.</p>
+
+<p>In classical settings, an hypothesis space is often proposed as</p>
+
+<script type="math/tex; mode=display">\mathcal{H} = \left\{  f (\cdot \, ; \mathbf{\theta }) \; \bigg\vert  f(\cdot ; \theta ) = \phi \left(\sum_{i=1}^{m} a_i \psi _i (\cdot) \right) \right\}</script>
+
+<p>where $\theta = { a_i }_{i=1}^{m}$ are the coefficients, ${ \psi _i}$ are the proposed functions (for example, they would be monomials if we are doing polynomial regression, sine and cosines if using Fourier, …) and the function $\phi$ is the terminal loss function, that is used to match the dimensionality of $f(x_i \; ;  \theta)$ with $y_i$; for example, in the case of binary classification, $\phi (  \cdot )$ can be chosen to be the function $sign ( \cdot )$, and so $\phi (\cdot ) : \mathbb{R} \to {0,1 }$.</p>
+
+<p>The function $\mathcal{F}$ correspondent to the dataset $\mathcal{D}$ is then defined as</p>
+
+<script type="math/tex; mode=display">\mathcal{F}(\cdot ) \equiv f(\cdot \, ; \theta ^*) \in \mathcal{H} \quad s.t. \quad \theta ^* = \arg \min \sum_{i=1}^{S} d(\phi (f(x_i \, ; \theta )) , y_i)</script>
+
+<p>where $d ( , )$ is a distance defined by a loss function. 
+That is, it is the function in the hypothesis space that minimizes the “distance” with the target function, which connects the datapoints $x_i$ with their correspondent labels $y_i$.</p>
+
+<p>When using Neural Networks, the hypothesis space $\mathcal{H}$ is generated by the composition of functions, such that</p>
+
+<script type="math/tex; mode=display">\mathcal{H} =  \left\{  \text{NN}(\cdot \, ; \Theta ) \; \bigg\vert  \text{NN}(\cdot ; \Theta ) = \phi \circ f_{\theta_L}^L \circ f_{\theta_{L-1}}^{L-1} \circ ... \circ f_{\theta_1}^1 (\cdot) \right\}</script>
+
+<p>where $\Theta = { \theta_k }_{k=1}^{L}$ are the training weights of the network and $L$ the number of hidden layers.</p>
+
+<h4 id="multilayer-perceptrons">Multilayer perceptrons</h4>
+
+<p>In the case of the so-called multilayer perceptrons, the functions $f^k_{\theta_k}$ are constructed as</p>
+
+<script type="math/tex; mode=display">f^k_{\theta_k} (\cdot) = \sigma (A^k  (\cdot) +  b^k)</script>
+
+<p>being $A^k$ a matrix,$b^k$ a vector and $\sigma \in C^{0,1}(\mathbb{R})$ a fixed nondecreasing function.</p>
+
+<p>Since we restrict to the case in which the number of neurons is constant through the layers, we have that $A^k \in \mathbb{R}^{d \times d}$ and $b^k \in \mathbb{R}^d$.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/multilayerdiagram.jpg" alt="Multilayer" /></p>
+
+<h4 id="residual-neural-networks">Residual Neural Networks</h4>
+<p>In the simple case of a Residual Neural Network (often referred to as ResNets) the functions $f_{\theta_k}^{k} (\cdot)$ are constructed as</p>
+
+<script type="math/tex; mode=display">f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + \sigma (A^k  (\cdot) +  b^k)</script>
+
+<p>where $\mathbb{I}$ is the identity function. The parameters $\sigma$, $A^k$ and $b^k$ are equivalent to those of the multilayer perceptrons.</p>
+
+<p>It is sometimes convenient to numerically add a parameter $h$ to the residual block, such that</p>
+
+<script type="math/tex; mode=display">f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + h  \, \sigma (A^k  (\cdot) +  b^k)</script>
+
+<p>being $h \in \mathbb{R}$ a scalar.</p>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/resnetsdiagram.jpg" alt="ResNet" /></p>
+
+<h3 id="training-neural-networks">Training Neural Networks</h3>
+
+<p>The aim is to find the weights ${ A, b }$ of every layer such that the final function represented by the Neural Network minimizes a given loss function.</p>
+
+<p>The weights are initialized randomly, and the algorithms (i.e. gradient descent) are aimed at updating them, such that eventually the Neural Network represents a function  $\hat{F}$  such that $\hat{F} (x_i) \approx y_i \, \forall i$.</p>
+
+<p><br /></p>
+
+<h2 id="visualizing-deep-learning">Visualizing Deep Learning</h2>
+
+<table style="width:100%">
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/layertransformation0.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/layertransformation1.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/layertransformation2.gif" /></th>
+  </tr>
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/layertransformation3.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/layertransformation4.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/layertransformation5.gif" /></th>
+  </tr>
+</table>
+
+<h3 id="classification">Classification</h3>
+
+<p>When dealing with data classification, it is very useful to just assign a color / shape to every label, and so be able to visualize data in a lower-dimensional plot.</p>
+
+<p>The aim of classification is to associate different classes to different regions of the initial space,
+When using Neural Networks, the initial space $X$ is propagated by the Neural Network as $f ^L \circ  f^{L-1} \circ … \circ f^1 (X)$. 
+Then the function $\phi$ would be the one in charge of associating different classes to different regions, but the functions $\phi$ are pretty simple (essentially linear separators)!</p>
+
+<p>So, while it may be difficult to classificate the datapoints in the initial space $X$, the Neural Networks should make things simpler and just propagate the data so as to make it linearly separable (and we would see this in real action!).</p>
+
+<h3 id="neural-networks-as-homeomorphisms">Neural Networks as homeomorphisms</h3>
+
+<p><strong><em>Lemma 1.1</em></strong>
+<em>A Neural Network represents a continuous function if each one of its blocks are continuous.</em></p>
+
+<p><strong><em>Lemma 1.2</em></strong> 
+<em>A Neural Network represents a bijection if each one of its blocks are bijective.</em></p>
+
+<p>These come trivially from the fact that the composite of continuous functions is continuous, and that the composite of bijections is a bijection.</p>
+
+<p><strong><em>Theorem 1</em></strong> <strong>(Sufficient condition for invertible ResNets [1]):</strong></p>
+
+<p>Let $\hat{\mathcal{F}} \, : \, \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ with $\hat{\mathcal{F}} (\cdot ) = ( L^{1}_{\theta} \, \circ … \circ \, L^{T}_{\theta}  )$ denote a <em>ResNet</em> with blocks defined by 
+<script type="math/tex">L^{t} _{ \theta } = \mathbb{I} + h \cdot g_{\theta _t}</script></p>
+
+<p>Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+h \cdot \text{Lip} (g_{\theta_t}) < 1 \text{ for all } t = 1, ..., T %]]></script>
+
+<p><strong><em>Proof</em></strong> 
+Consider that each block of the <em>ResNet</em> is given by</p>
+
+<script type="math/tex; mode=display">Z(x) =  x + h\cdot G(x)</script>
+
+<p>where $x$ is the input of the block, and $G(x)$ given by the residual block.
+That can be rewritten as</p>
+
+<script type="math/tex; mode=display">x_{t+1} = x_t + g(x)</script>
+
+<p>We can construct the inverse function of the block as</p>
+
+<script type="math/tex; mode=display">x_t = x_{t+1} - g(x)</script>
+
+<p>Which is not an explicit inverse, since $g(x)$ depends on $x$. Approximating the solution as an interation,</p>
+
+<script type="math/tex; mode=display">x^{0}_{t}  \doteq x_{t+1} \quad \text{and} \quad x_t ^{k+1} \doteq x_{t+1} - g (x_{t}^{k})</script>
+
+<p>where $\lim_{k \to \infty} x_t ^{k} = x_t$ if the iteration converges. 
+Since $g(\cdot) : \mathbb{R}^{d} \to \mathbb{R}^{d}$ is an operator on a Banach space, due to the Banach fixed point theorem is it enough that $Lip(g) &lt; 1$, or equally that $Lip(h\cdot G) &lt;1$ for the iteration to converge, and so for the block of the <em>ResNet</em> to be invertible. [1]</p>
+
+<p><strong><em>Comment:</em></strong> <em>In the limit $h \to 0$, and $G(x)$ Lipschitz, we have a trivial explicit expression of the inverse of the function represented by the ResNet.</em></p>
+
+<p>Consider the <em>ResNet</em> as generated by the iteration of blocks</p>
+
+<script type="math/tex; mode=display">Z(x) =  x + h\cdot G(x)</script>
+
+<p>where $G(x)$ is generated by a residual block <a href=""></a>. We consider $G(x)$ Lipschitz.</p>
+
+<p>Then,</p>
+
+<script type="math/tex; mode=display">Z^{-1} (x) \equiv x - h\cdot G(x)</script>
+
+<p>is an second order approximation of the inverse function of $Z$ in terms of $h$, since</p>
+
+<script type="math/tex; mode=display">Z^{-1} (Z(x)) = Z^{-1}  (x + h\cdot G(x) ) =</script>
+
+<script type="math/tex; mode=display">= x + h\cdot G(x) - h \cdot G(x + h \cdot G(x)) =</script>
+
+<script type="math/tex; mode=display">= x + \mathcal{o}(h^2)</script>
+
+<p>Indeed, if we express the residual blocks as</p>
+
+<script type="math/tex; mode=display">x_{t+1} = x_{t} + h\cdot G(x_t)</script>
+
+<p>the limit $h\to 0$ can be recasted as</p>
+
+<script type="math/tex; mode=display">\lim_{h \to 0} \frac{x_{t+1}-x_{t}}{h} = \dot{x}_t = G(x_t)</script>
+
+<p>and, since the discrete index $t$ becomes continuous in this limit, it is useful to express it as</p>
+
+<script type="math/tex; mode=display">\dot{x}(t) = G(x(t), t)</script>
+
+<p>where in this case we make explicit the dependence of $G$ on $t$, that was hidden in the previous notation.</p>
+
+<p><br /></p>
+
+<table style="width:100%">
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/3dmultilayer_.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/3dmultilayer_spiral.gif" /></th>
+  </tr>
+</table>
+
+<h2 id="setup">Setup</h2>
+
+<p>Consider a binary classification problem with noisless data, such that</p>
+
+<script type="math/tex; mode=display">\mathcal{D} =  \{ ( x_i , y_i = \mathcal{F}(x_i) )\} _{i=1}^{S}</script>
+
+<script type="math/tex; mode=display">x_i \in [-1,+1]^{n} , \; \; y_i \in \{0,1\} \quad \forall i \in \{1, ... , S\}</script>
+
+<table style="width:100%">
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/2dbending0.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/2dbending1.gif" /></th>
+  </tr>
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/2dbending2.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/2dbending3.gif" /></th>
+  </tr>
+</table>
+
+<p><br /></p>
+
+<table style="width:100%">
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/2dbendingspiral0.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/2dbendingspiral1.gif" /></th>
+  </tr>
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/2dbendingspiral2.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/2dbendingspiral3.gif" /></th>
+  </tr>
+</table>
+
+<p><br /></p>
+
+<table style="width:100%">
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/3dbendingspiral2.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/3dbendingspiral3.gif" /></th>
+  </tr>
+</table>
+
+<p><br /></p>
+
+<table style="width:100%">
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/bending0.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/bending1.gif" /></th>
+  </tr>
+  <tr>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/bending2.gif" /></th>
+    <th><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/bending3.gif" /></th>
+  </tr>
+</table>
+
+<p><br /></p>
+
+<h2 id="open-questions-issues-and-perspectives">Open questions, issues and perspectives</h2>
+
+<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0011/NoisyRing.gif" alt="NoisyDistribution" /></p>
+
+<h2 id="references">References</h2>
+
+<p>[1] J. Behrmann, W. Grathwohl, R. T. Q. Chen, D. Duvenaud, J. Jacobsen (2018). <i> Invertible Residual Networks</i> <a href="https://arxiv.org/abs/1811.00995">pdf</a></p>
+
+<p>[2] Weinan E, Jiequn Han, Qianxiao Li, (2018). <i> A Mean-Field Optimal Control Formulation of Deep Learning</i>. volume 6. Research in the Mathematical Sciences<a href="https://doi.org/10.1007/s40687-018-0172-y">pdf</a></p>
+
+<p>[3] S. Shalev-Shwartz, S. Ben-David, <i> The Understanding Machine Learning: From Theory to Algorithms </i>. <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/">pdf</a></p>
+
+<p>[4] B. Hanin, (2018). <i> Which Neural Net Architectures Give Rise to Exploding and Vanishing Gradients? </i>  <a href="https://arxiv.org/abs/1801.03744">pdf</a></p>
+
+<p>[5] C. Olah, <i> Neural Networks, Manifolds and Topology </i>. <a href="https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/">blog post</a></p>
+
+<p>[6] G. Naitzat, A. Zhitnikov, L-H. Lim, (2020). <i> Topology of Deep Neural Networks </i> <a href="https://arxiv.org/abs/2004.06093">pdf</a></p>
+
+<p>[7] Q. Li, T. Lin, Z. Shen, (2019). <i> Deep Learning via Dynamical Systems: An Approximation Perspective </i><a href="https://arxiv.org/abs/1912.10382">pdf</a></p>
+
+<p>[8] B. Geshkovski, <i> The interplay of control and deep learning </i>. <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0010">blog post</a></p>
+
+<p>[9] C. Fefferman, S. Mitter, H. Narayanan, <i> Testing the manifold hypothesis </i>. <a href="http://www.mit.edu/~mitter/publications/121_Testing_Manifold.pdf">pdf</a></p>
+
+<p>[10] R. T. Q. Chen, Y. Rubanova, J. Bettencourt, D. Duvenaud, (2018). <i> Neural Ordinary Differential Equations </i> <a href="https://arxiv.org/abs/1806.07366">pdf</a></p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Consideraremos el problema de clasificación MNIST --&gt;
 </code></pre></div></div>
 <h4>MNIST dataset</h4>

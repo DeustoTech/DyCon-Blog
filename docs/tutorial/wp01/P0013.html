@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Averaged dynamics and control for heat equations with random diffusion - DyCon Blog
+    
+  </title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0013">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+
+
+  
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                <li>
+                    <a href="/DyCon-Blog/projects/authors">Authors</a>
+                </li>
+                
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+                
+            </ul>
+
+        
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP01">
+            Control of parameter dependent problems</a> &#8827;</small>
+          </h2>
+          <h1>Averaged dynamics and control for heat equations with random diffusion</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JBarcena">Jon Asier Bárcena-Petisco</a>
+                  </span>
+                </span>
+              
+              - 23 November 2020
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/ControlsobtainV3.m""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <h3 id="background-and-motivation">Background and motivation</h3>
+
+<p>Let us consider the random heat equation described 
+by the following system:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}\tag{1}
+y_t-\alpha \Delta y =f1_{G_0}, &\text{ in } (0,T)\times G,\\
+y=0, & \text{ on } (0,T)\times \partial G,\\
+y(0,\cdot)=y^0,  & \text{ on } G,
+\end{cases} %]]></script>
+
+<p>for $G$  a domain, $G_0\subset G$ a subdomain, 
+$f$ a control,  $y^0$  the initial configuration 
+and $\alpha$ the diffusivity coefficient, which is a positive 
+random variable with density function $\rho$.
+We have that the averaged solution of (1)
+is given by:</p>
+
+<script type="math/tex; mode=display">\tilde y(t,x;y^0,f):=\int_0^{+\infty} y(t,x;\alpha,y^0,f)\rho(\alpha)d\alpha.</script>
+
+<p>We want to determine if, given a positive random variable 
+$\alpha$ and an initial configuration $y^0\in L^2(G)$, there 
+is some $f\in L^2((0,T)\times G_0)$ such that $\tilde y(T,\cdot)=0$.</p>
+
+<p>In order to illustrate the effect of averaging in
+ the dynamics, let us study the dynamics of
+(1) when $G=\mathbb R^d$ and $f=0$.
+As averaging and the Fourier transform commute, we work on the
+Fourier transform of the fundamental solution of the
+heat equation, which is given by:</p>
+
+<script type="math/tex; mode=display">\exp(-\alpha |\xi|^2t).</script>
+
+<p>Consequently, the Fourier transform of the average
+of the fundamental solutions is given by:</p>
+
+<script type="math/tex; mode=display">\int_0^{+\infty} \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha;</script>
+
+<p>i.e. the Laplace transform of $\rho$ evaluated in $|\xi|^2t$. 
+In particular, for $r\in(0,1)$ if $\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-\frac{r}{1-r}}}$
+we have that:</p>
+
+<script type="math/tex; mode=display">\tag{2}
+\int \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha\sim \exp(-C|\xi|^{2r}t^r)</script>
+
+<p>when $|\xi|^2t\to+\infty$, which can be proved by the Laplace method.
+Thus, for those density functions 
+the averaged dynamics in $\mathbb R^d$ has a fractional nature. As it is proved in [1],
+for $G$ bounded this is also true and we have the usual controllability 
+and observability results of fractional dynamics;
+that is, (2) implies that
+the averaged unique continuation is preserved,
+but (2) preserves the null averaged observability
+if and only if $r&gt;1/2$, being the threshold density functions  those
+which satisfy:</p>
+
+<script type="math/tex; mode=display">\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-1}}.</script>
+
+<h3 id="some-numerical-simulations">Some numerical simulations</h3>
+
+<p>Let us now illustrate the difference between several probability distributions for the diffusion through numerical simulations. For that, we recall that 
+the optimal control is given by $\varphi(t,x;\phi)1_{G_0}$, for $\varphi$ the 
+averaged solution of</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+-\varphi_t-\alpha \Delta \varphi=0, &\text{ in } (0,T)\times G,\\
+\varphi=0, & \text{ on } (0,T)\times\partial G,\\
+\varphi(T,\cdot)=\phi,  & \text{ on } G.
+\end{cases} %]]></script>
+
+<p>and $\phi$ the state which minimizes the functional:</p>
+
+<script type="math/tex; mode=display">J(\phi)= \frac{1}{2}\int_0^T\int_{G_0}
+\left|\int_0^{+\infty}\varphi(t,x;\alpha,\phi)\rho(\alpha)d\alpha\right|^2dxdt 
+ \\+\left\langle  y^0, \int_0^{+\infty}\varphi(0;\alpha,\phi)\rho(\alpha)d\alpha\right\rangle.</script>
+
+<p>Due to the hardness of the numerical computations in higher dimensions and to get
+better illustrations we work in $d=1$, and in particular in $G=(0,\pi)$.
+We also consider $G_0=(1,2)$, $T=1$ and $y^0=\frac{1}{2}$. 
+Moreover, to illustrate the difference between diffusivities inside and 
+outside the null controllability regime, we consider $\rho=1_{(1,2)}$, which is inside,
+and $\rho=1_{(0,1)}$, which is outside.</p>
+
+<p>In order to numerically implement this problem, we approximate it by
+minimizing $J$ in $V_M:=\langle e_i \rangle_{i=1}^M$ 
+for ${e_i}$ the eigenfunctions of the Dirichlet Laplacian
+ and for $M\in{40,50,60}$. 
+Since $V_M$ is a finite dimensional space, computing the 
+minimum of $J$ is equivalent to solving numerically a linear system,
+which can be easily done by using any numerical computing environment
+(in our case MATLAB). We have the following illustrations:</p>
+
+<p>First, we illustrate in Figure 1 
+(resp. in Figure 2)
+the controls induced by the minimum of $J$ for $\rho=1_{(1,2)}$
+(resp. for $\rho=1_{(0,1)}$).
+For  $\rho=1_{(1,2)}$ the 
+sequence of controls converges, which is something that can be seen in an even 
+more clear way when $t\in[0,1/2]$. Of course, the closer the time is to $1$,
+the more slowly the punctual values of the control converges pointwise with $M$ 
+(and in $t=1$ it diverges),
+which is a well-known behaviour when
+controlling a parabolic dynamics (see, for instance,
+[2], [3] and [4]).
+ However, for $\rho=1_{(0,1)}$ the sequence of  controls 
+diverges, which is something that we can appreciate in a more 
+detailed way when $t\in[0,1/2]$.</p>
+
+<center>
+<table>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V40.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V40t05.jpg" width="100%" /></th>
+</tr>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V50.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V50t05.jpg" width="100%" /></th>
+</tr>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V60.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V60t05.jpg" width="100%" /></th>
+</tr>
+</table>
+
+
+<strong> Figure 1: </strong>
+ The optimal control for  $\rho=1\_{(1,2)}$ and $y^0=\frac{1}{2}$ 
+induced by the minimum of the functional $J$ in $V_{40}$, $V_{50}$
+and $V_{60}$.
+In the left column we illustrate the whole controls, whereas in the right 
+column we illustrate the controls with the time variable zoomed in $[0,1/2]$.
+</center>
+
+<center>
+<table>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V40.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V40t05.jpg" width="100%" /></th>
+</tr>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V50.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V50t05.jpg" width="100%" /></th>
+</tr>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V60.jpg" width="100%" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V60t05.jpg" width="100%" /></th>
+</tr>
+</table>
+
+
+<strong> Figure 2: </strong>
+ The optimal control for  $\rho=1\_{(0,1)}$ and $y^0=\frac{1}{2}$ 
+induced by the minimum of the functional $J$ in $V_{40}$, $V_{50}$
+and $V_{60}$.
+In the left column we illustrate the whole controls, whereas in the right 
+column we illustrate the controls with the time variable zoomed in $[0,1/2]$.
+</center>
+
+<p>Next, we show in Figure 3
+the canonical prolongation of the previously obtained controls to $t=0$.
+ Again, for $\rho=1_{(1,2)}$  we have a clear convergence,
+whereas for $\rho=1_{(0,1)}$  it diverges.</p>
+
+<center>
+<table>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12t0.jpg" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01t0.jpg" /></th>
+</tr>
+</table>
+
+<strong> Figure 3: </strong>
+The natural extensions to $t=0$ of the controls 
+induced by the minimum of the functional $J$ in $V_{40}$, $V_{50}$ 
+and $V_{60}$ with $y^0=\frac{1}{2}$. In the left figure
+we have considered $\rho =1\_{(1,2)}$ and in the right one $\rho=1\_{(0,1)}$.
+</center>
+
+<p>Finally, we illustrate in Figure 4 the state at $t=1$
+of the respective solutions of the averaged heat equation
+ with the previously obtained controls.
+For $\rho=1_{(1,2)}$ the solution converges smoothly to $0$,
+whereas for $\rho=1_{(0,1)}$ the solution diverges.</p>
+
+<center>
+<table>
+<tr>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12t1.jpg" /></th>
+<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01t1.jpg" /></th>
+</tr>
+</table>
+
+<strong> Figure 4: </strong>
+The state in time $t=1$ of the averaged solutions of the heat equation after
+applying the control induced by the minimum of $J$ in $V_{40}$, $V_{50}$
+and $V_{60}$ with $y^0=\frac{1}{2}$. In the left figure
+we have considered $\rho =1\_{(1,2)}$ and in the right one $\rho=1\_{(0,1)}$.
+</center>
+
+<h3 id="bibliography">Bibliography</h3>
+<p>[1] J. A. Bárcena-Petisco, E. Zuazua, <i> Averaged dynamics and control for heat equations with random diffusion </i>. Preprint <a href="https://hal.archives-ouvertes.fr/hal-02958671/">https://hal.archives-ouvertes.fr/hal-02958671/</a></p>
+
+<p>[2] E. Fernández-Cara and A. Münch. <i>Strong convergent approximations of null controls for the 1D
+heat equation.</i> SeMA journal, 61(1):49-78, 2013.</p>
+
+<p>[3] R. Glowinski and J. L. Lions.<i> Exact and approximate controllability for distributed parameter
+systems. </i> Acta Numer., 1:269-378, 1994.</p>
+
+<p>[4] A. Münch and E. Zuazua. <i>Numerical approximation of null controls for the heat equation: illposedness
+and remedies.</i> Inverse Probl., 26(8):085018, 2010.</p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div id="content" class="container">
+
+  <div class="relatedPosts">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+    <h2>Related Posts</h2>
+    
+    
+    
+    
+    
+
+    
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/stateEvolution.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0011" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Stochastic optimization for simultaneous control </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      Simultaneous control of parameter-depending systems using stochastic optimization algorithms
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+          
+          - 03 June 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0006/stateEvolutionStochN1000.jpg">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0006" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Synchronized Oscillators </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      Synchronization of coupled oscillators with the Random Batch Method
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+          
+          - 03 June 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog//assets/imgs/WP01/P0010/trajectory.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0010" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> The interplay of control and deep learning </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      Deep supervised learning roughly consists in solving a discretised optimal control problem subject to a nonlinear, discrete-time dynamical system, called an artificial neural network.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
+          
+          - 30 April 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0009/ico.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp01/P0009" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Simultaneous Control with DyCon Toolbox </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial we will present a simultaneous control problem in a linear system dependent on parameters. We will use the MATLAb DyCon Toolbox library.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+          
+          - 01 April 2020
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+            
+    </div>
+  </div> 
+    </div>
+  </div>
+
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Averaged dynamics and control for heat equations with random diffusion",
+      "categories"      : ["tutorial", "WP01"],
+      "url"             : "/tutorial/wp01/P0013",
+      "date"            : "2020-11-23",
+      "author"          : ["JBarcena"],
+      "description"     : "In this work we address the optimal control of parameter-dependent systems. In particular, we study the dynamics and averaged controllability properties of heat equations with random non-negative diffusivites.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V40.jpg"
+    } ,
+  
+    {
       "title"           : "Q-learning for finite-dimensional problems",
       "categories"      : ["tutorial", "DP00"],
       "url"             : "/tutorial/dp00/P0004",

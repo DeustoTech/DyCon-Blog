@@ -5,9 +5,555 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 30 Oct 2020 11:42:23 +0100</pubDate>
-    <lastBuildDate>Fri, 30 Oct 2020 11:42:23 +0100</lastBuildDate>
+    <pubDate>Wed, 23 Dec 2020 21:14:40 +0100</pubDate>
+    <lastBuildDate>Wed, 23 Dec 2020 21:14:40 +0100</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Averaged dynamics and control for heat equations with random diffusion</title>
+        <description>Background and motivation
+
+Let us consider the random heat equation described 
+by the following system:
+
+
+
+for $G$  a domain, $G_0\subset G$ a subdomain, 
+$f$ a control,  $y^0$  the initial configuration 
+and $\alpha$ the diffusivity coefficient, which is a positive 
+random variable with density function $\rho$.
+We have that the averaged solution of (1)
+is given by:
+
+
+
+We want to determine if, given a positive random variable 
+$\alpha$ and an initial configuration $y^0\in L^2(G)$, there 
+is some $f\in L^2((0,T)\times G_0)$ such that $\tilde y(T,\cdot)=0$.
+
+In order to illustrate the effect of averaging in
+ the dynamics, let us study the dynamics of
+(1) when $G=\mathbb R^d$ and $f=0$.
+As averaging and the Fourier transform commute, we work on the
+Fourier transform of the fundamental solution of the
+heat equation, which is given by:
+
+
+
+Consequently, the Fourier transform of the average
+of the fundamental solutions is given by:
+
+
+
+i.e. the Laplace transform of $\rho$ evaluated in $|\xi|^2t$. 
+In particular, for $r\in(0,1)$ if $\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-\frac{r}{1-r}}}$
+we have that:
+
+
+
+when $|\xi|^2t\to+\infty$, which can be proved by the Laplace method.
+Thus, for those density functions 
+the averaged dynamics in $\mathbb R^d$ has a fractional nature. As it is proved in [1],
+for $G$ bounded this is also true and we have the usual controllability 
+and observability results of fractional dynamics;
+that is, (2) implies that
+the averaged unique continuation is preserved,
+but (2) preserves the null averaged observability
+if and only if $r&amp;gt;1/2$, being the threshold density functions  those
+which satisfy:
+
+
+
+Some numerical simulations
+
+Let us now illustrate the difference between several probability distributions for the diffusion through numerical simulations. For that, we recall that 
+the optimal control is given by $\varphi(t,x;\phi)1_{G_0}$, for $\varphi$ the 
+averaged solution of
+
+
+
+and $\phi$ the state which minimizes the functional:
+
+
+
+Due to the hardness of the numerical computations in higher dimensions and to get
+better illustrations we work in $d=1$, and in particular in $G=(0,\pi)$.
+We also consider $G_0=(1,2)$, $T=1$ and $y^0=\frac{1}{2}$. 
+Moreover, to illustrate the difference between diffusivities inside and 
+outside the null controllability regime, we consider $\rho=1_{(1,2)}$, which is inside,
+and $\rho=1_{(0,1)}$, which is outside.
+
+In order to numerically implement this problem, we approximate it by
+minimizing $J$ in $V_M:=\langle e_i \rangle_{i=1}^M$ 
+for ${e_i}$ the eigenfunctions of the Dirichlet Laplacian
+ and for $M\in{40,50,60}$. 
+Since $V_M$ is a finite dimensional space, computing the 
+minimum of $J$ is equivalent to solving numerically a linear system,
+which can be easily done by using any numerical computing environment
+(in our case MATLAB). We have the following illustrations:
+
+First, we illustrate in Figure 1 
+(resp. in Figure 2)
+the controls induced by the minimum of $J$ for $\rho=1_{(1,2)}$
+(resp. for $\rho=1_{(0,1)}$).
+For  $\rho=1_{(1,2)}$ the 
+sequence of controls converges, which is something that can be seen in an even 
+more clear way when $t\in[0,1/2]$. Of course, the closer the time is to $1$,
+the more slowly the punctual values of the control converges pointwise with $M$ 
+(and in $t=1$ it diverges),
+which is a well-known behaviour when
+controlling a parabolic dynamics (see, for instance,
+[2], [3] and [4]).
+ However, for $\rho=1_{(0,1)}$ the sequence of  controls 
+diverges, which is something that we can appreciate in a more 
+detailed way when $t\in[0,1/2]$.
+
+
+
+
+ 
+ 
+
+
+ 
+ 
+
+
+ 
+ 
+
+
+
+
+ Figure 1: 
+ The optimal control for  $\rho=1\_{(1,2)}$ and $y^0=\frac{1}{2}$ 
+induced by the minimum of the functional $J$ in $V_{40}$, $V_{50}$
+and $V_{60}$.
+In the left column we illustrate the whole controls, whereas in the right 
+column we illustrate the controls with the time variable zoomed in $[0,1/2]$.
+
+
+
+
+
+ 
+ 
+
+
+ 
+ 
+
+
+ 
+ 
+
+
+
+
+ Figure 2: 
+ The optimal control for  $\rho=1\_{(0,1)}$ and $y^0=\frac{1}{2}$ 
+induced by the minimum of the functional $J$ in $V_{40}$, $V_{50}$
+and $V_{60}$.
+In the left column we illustrate the whole controls, whereas in the right 
+column we illustrate the controls with the time variable zoomed in $[0,1/2]$.
+
+
+Next, we show in Figure 3
+the canonical prolongation of the previously obtained controls to $t=0$.
+ Again, for $\rho=1_{(1,2)}$  we have a clear convergence,
+whereas for $\rho=1_{(0,1)}$  it diverges.
+
+
+
+
+ 
+ 
+
+
+
+ Figure 3: 
+The natural extensions to $t=0$ of the controls 
+induced by the minimum of the functional $J$ in $V_{40}$, $V_{50}$ 
+and $V_{60}$ with $y^0=\frac{1}{2}$. In the left figure
+we have considered $\rho =1\_{(1,2)}$ and in the right one $\rho=1\_{(0,1)}$.
+
+
+Finally, we illustrate in Figure 4 the state at $t=1$
+of the respective solutions of the averaged heat equation
+ with the previously obtained controls.
+For $\rho=1_{(1,2)}$ the solution converges smoothly to $0$,
+whereas for $\rho=1_{(0,1)}$ the solution diverges.
+
+
+
+
+ 
+ 
+
+
+
+ Figure 4: 
+The state in time $t=1$ of the averaged solutions of the heat equation after
+applying the control induced by the minimum of $J$ in $V_{40}$, $V_{50}$
+and $V_{60}$ with $y^0=\frac{1}{2}$. In the left figure
+we have considered $\rho =1\_{(1,2)}$ and in the right one $\rho=1\_{(0,1)}$.
+
+
+Bibliography
+[1] J. A. Bárcena-Petisco, E. Zuazua,  Averaged dynamics and control for heat equations with random diffusion . Preprint https://hal.archives-ouvertes.fr/hal-02958671/
+
+[2] E. Fernández-Cara and A. Münch. Strong convergent approximations of null controls for the 1D
+heat equation. SeMA journal, 61(1):49-78, 2013.
+
+[3] R. Glowinski and J. L. Lions. Exact and approximate controllability for distributed parameter
+systems.  Acta Numer., 1:269-378, 1994.
+
+[4] A. Münch and E. Zuazua. Numerical approximation of null controls for the heat equation: illposedness
+and remedies. Inverse Probl., 26(8):085018, 2010.
+</description>
+        <pubDate>Mon, 23 Nov 2020 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0013</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0013</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP01</category>
+        
+      </item>
+    
+      <item>
+        <title>Understanding Deep Learning: Neural Networks as bending manifolds</title>
+        <description>Data and classification
+Supervised Learning
+
+Consider a dataset $\mathcal{D}$ consisting on $S$ distinct points ${x_i}_{i=1}^{S}$, each of them with a corresponding value $y_i$ such that
+
+
+
+
+
+where $\epsilon _i$ is included so as to consider, in principle, noisy data.
+
+The aim of supervised learning is to recover the function $\mathcal{F}(\cdot)$ such that not only fits well in the database $\mathcal{D}$ but also generalises to previously unseen data.
+
+That is, it is inferred the existence of
+
+
+
+where
+
+
+
+being $\mathcal{F} (\cdot)$ the desired previous application, and $\mathcal{D} \subset \tilde{\mathcal{D}}$.
+
+
+
+
+
+Noisy vs. noisless data
+
+The generalised dataset $\tilde{\mathcal{D}}$ can be seen as the realisation of a random vector $(\mathbf{x}, \mathbf{y})$ generated by an unknown multivariate joint distribution between $\mathcal{X}$ and  $\mathcal{Y}$.
+
+Then, the datasets used in Supervised Learning can be seen as a finite sample of the random vector $(\mathbf{x}, \mathbf{y})$, and so the underlying joint distribution between $\mathcal{X}$ and $\mathcal{Y}$ could be in principle recovered in the limit of infinitely many samples, $\tilde{\mathcal{D}}$ .
+
+We refer to noisy data when the samples in our dataset $\mathcal{D}$ actually comes from a random vector $(\mathbf{x}, \mathbf{y})$ with a non-deterministic joint distribution, such that it is not possible to find a function $\mathcal{F}$ such that $\mathcal{F}(\mathbf{x}) = \mathbf{y}$.
+
+The aim of supervised learning, in this case, would be to find a function such that $\mathcal{F}(\tilde{x}_i) \approx \tilde{y}_i$ for almost every sample, as with respect to a given loss function.
+
+In case the data is considered to be noisless (which does not happen in most practical situations, but it makes things far simpler) then the joint distribution between $\mathcal{X}$ and $\mathcal{Y}$ of the random vector $(\mathbf{x}, \mathbf{y})$ is rather deterministic. In this case, it is possible to find a function $F$ such that $\mathcal{F}(\tilde{x}_i) = \tilde{y}_i \; \forall i$, or equivalently $\mathcal{F}(\mathbf{x}) = \mathbf{y}$.
+
+Note that, given that the probability of a collision (of having two different data-points such that $x_i = x_j$ for $i \neq j$) is practically $0$, it is in principle possible to find a function $\mathcal{F}$ such that $\mathcal{F}(x_i)=y_i \; \forall i = { 1, …  ,S }$, even in the noisy case (i.e. we may use interpolation). 
+However, the aim of Supervised Learning is to be able to generalise well to previously unseen data, $\tilde{\mathcal{D}}$, and so interpolation is not effective.
+
+Some systems are often approximated as being noisless. Since the aim of supervised learning is finding functions $\mathcal{F}$, there is always the implicit assumption that the generalised dataset $\tilde{\mathcal{D}}$ can be approximately represented by a function $\mathcal{F}$, and so the noise is expected to be small, compared to the “real data”. Distinguishing data from noise is often far a from trivial issue.
+
+The idea of working with noisy data can be recasted as a Mean-Field problem, as proposed by Weinan E. et al [2]. The idea is to control a distribution, instead of a set of points in an euclidean space. Although understanding Supervised Learning with noisless data from a Dynamical Control perspective is often enough ill-posed, considering noisy data unlocks the full theoretical experience.
+
+
+
+
+
+Binary classification
+In most cases, the data points $x_i$ are in $\mathbb{R}^{n}$. In general, $x_i \in X \; \forall i$, with $X \subset \mathbb{R}^{n}$. So as to ease the training of the models, it is usually considered $X = [-1,+1]^{n}$, with $n$ an arbitrary dimension. This is called data normalization in the Machine Learning literature.
+
+There are different supervised learning problems depending on the space $Y$ of the corresponding labels, such that $y_i \in Y$.
+If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with the problem of classification. If $L=2$, then it is a binary classification problem.
+
+In this particular setting, the aim is to find a function $F (\cdot)$ such that it returns $0$ whenever the corresponding data point is of class $0$, and $1$ conversely. 
+Note that such a function cannot be continuous except for trivial cases, given that  the data points in $X$ cover all the space $[-1, +1]$, due to the existence of a boundary between points of class $0$ and $1$.
+
+Data, subspaces and manifolds
+
+Considering $X^0$ the subset of $X$ such that $F(\tilde{x}_i) =0 \; \; \forall \tilde{x}_i \in X^0$ and $X^1$ s.t.  $\, F(\tilde{x}_i)=1 \; \; \forall \tilde{x}_i \in X^1$, it is often useful to consider $d(X^0 , X^1) &amp;gt; \delta \in \mathbb{R}^{+}$. 
+Consider that the $x-$points in the dataset $\tilde{\mathcal{D}}$ are in $X= X^0 \cup X^1$.
+
+In this aforementioned case, it is in principle possible to find a continuous function $F(\cdot)$ such that $F(\tilde{x}_i) = \tilde{y}_i \; \forall i$ , since it does not need to be defined in the boundary (the boundary is not in $X$).
+
+The simpler case is one in which $X^0$ and $X^1$ are connected spaces.
+
+
+
+Deep Learning
+Neural Networks
+
+The problem is now how to obtain the functions $\mathcal{F}$.
+
+In classical settings, an hypothesis space is often proposed as
+
+
+
+where $\theta = { a_i }_{i=1}^{m}$ are the coefficients, ${ \psi _i}$ are the proposed functions (for example, they would be monomials if we are doing polynomial regression, sine and cosines if using Fourier, …) and the function $\phi$ is the terminal loss function, that is used to match the dimensionality of $f(x_i \; ;  \theta)$ with $y_i$; for example, in the case of binary classification, $\phi (  \cdot )$ can be chosen to be the function $sign ( \cdot )$, and so $\phi (\cdot ) : \mathbb{R} \to {0,1 }$.
+
+The function $\mathcal{F}$ correspondent to the dataset $\mathcal{D}$ is then defined as
+
+
+
+where $d ( , )$ is a distance defined by a loss function. 
+That is, it is the function in the hypothesis space that minimizes the “distance” with the target function, which connects the datapoints $x_i$ with their correspondent labels $y_i$.
+
+When using Neural Networks, the hypothesis space $\mathcal{H}$ is generated by the composition of functions, such that
+
+
+
+where $\Theta = { \theta_k }_{k=1}^{L}$ are the training weights of the network and $L$ the number of hidden layers.
+
+Multilayer perceptrons
+
+In the case of the so-called multilayer perceptrons, the functions $f^k_{\theta_k}$ are constructed as
+
+
+
+being $A^k$ a matrix,$b^k$ a vector and $\sigma \in C^{0,1}(\mathbb{R})$ a fixed nondecreasing function.
+
+Since we restrict to the case in which the number of neurons is constant through the layers, we have that $A^k \in \mathbb{R}^{d \times d}$ and $b^k \in \mathbb{R}^d$.
+
+
+
+Residual Neural Networks
+In the simple case of a Residual Neural Network (often referred to as ResNets) the functions $f_{\theta_k}^{k} (\cdot)$ are constructed as
+
+
+
+where $\mathbb{I}$ is the identity function. The parameters $\sigma$, $A^k$ and $b^k$ are equivalent to those of the multilayer perceptrons.
+
+It is sometimes convenient to numerically add a parameter $h$ to the residual block, such that
+
+
+
+being $h \in \mathbb{R}$ a scalar.
+
+
+
+Training Neural Networks
+
+The aim is to find the weights ${ A, b }$ of every layer such that the final function represented by the Neural Network minimizes a given loss function.
+
+The weights are initialized randomly, and the algorithms (i.e. gradient descent) are aimed at updating them, such that eventually the Neural Network represents a function  $\hat{F}$  such that $\hat{F} (x_i) \approx y_i \, \forall i$.
+
+
+
+Visualizing Deep Learning
+
+
+  
+    
+    
+    
+  
+  
+    
+    
+    
+  
+
+
+Classification
+
+When dealing with data classification, it is very useful to just assign a color / shape to every label, and so be able to visualize data in a lower-dimensional plot.
+
+The aim of classification is to associate different classes to different regions of the initial space,
+When using Neural Networks, the initial space $X$ is propagated by the Neural Network as $f ^L \circ  f^{L-1} \circ … \circ f^1 (X)$. 
+Then the function $\phi$ would be the one in charge of associating different classes to different regions, but the functions $\phi$ are pretty simple (essentially linear separators)!
+
+So, while it may be difficult to classificate the datapoints in the initial space $X$, the Neural Networks should make things simpler and just propagate the data so as to make it linearly separable (and we would see this in real action!).
+
+Neural Networks as homeomorphisms
+
+Lemma 1.1
+A Neural Network represents a continuous function if each one of its blocks are continuous.
+
+Lemma 1.2 
+A Neural Network represents a bijection if each one of its blocks are bijective.
+
+These come trivially from the fact that the composite of continuous functions is continuous, and that the composite of bijections is a bijection.
+
+Theorem 1 (Sufficient condition for invertible ResNets [1]):
+
+Let $\hat{\mathcal{F}} \, : \, \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ with $\hat{\mathcal{F}} (\cdot ) = ( L^{1}_{\theta} \, \circ … \circ \, L^{T}_{\theta}  )$ denote a ResNet with blocks defined by 
+
+
+Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
+
+
+
+Proof 
+Consider that each block of the ResNet is given by
+
+
+
+where $x$ is the input of the block, and $G(x)$ given by the residual block.
+That can be rewritten as
+
+
+
+We can construct the inverse function of the block as
+
+
+
+Which is not an explicit inverse, since $g(x)$ depends on $x$. Approximating the solution as an interation,
+
+
+
+where $\lim_{k \to \infty} x_t ^{k} = x_t$ if the iteration converges. 
+Since $g(\cdot) : \mathbb{R}^{d} \to \mathbb{R}^{d}$ is an operator on a Banach space, due to the Banach fixed point theorem is it enough that $Lip(g) &amp;lt; 1$, or equally that $Lip(h\cdot G) &amp;lt;1$ for the iteration to converge, and so for the block of the ResNet to be invertible. [1]
+
+Comment: In the limit $h \to 0$, and $G(x)$ Lipschitz, we have a trivial explicit expression of the inverse of the function represented by the ResNet.
+
+Consider the ResNet as generated by the iteration of blocks
+
+
+
+where $G(x)$ is generated by a residual block . We consider $G(x)$ Lipschitz.
+
+Then,
+
+
+
+is an second order approximation of the inverse function of $Z$ in terms of $h$, since
+
+
+
+
+
+
+
+Indeed, if we express the residual blocks as
+
+
+
+the limit $h\to 0$ can be recasted as
+
+
+
+and, since the discrete index $t$ becomes continuous in this limit, it is useful to express it as
+
+
+
+where in this case we make explicit the dependence of $G$ on $t$, that was hidden in the previous notation.
+
+
+
+
+  
+    
+    
+  
+
+
+Setup
+
+Consider a binary classification problem with noisless data, such that
+
+
+
+
+
+
+  
+    
+    
+  
+  
+    
+    
+  
+
+
+
+
+
+  
+    
+    
+  
+  
+    
+    
+  
+
+
+
+
+
+  
+    
+    
+  
+
+
+
+
+
+  
+    
+    
+  
+  
+    
+    
+  
+
+
+
+
+Open questions, issues and perspectives
+
+
+
+References
+
+[1] J. Behrmann, W. Grathwohl, R. T. Q. Chen, D. Duvenaud, J. Jacobsen (2018).  Invertible Residual Networks pdf
+
+[2] Weinan E, Jiequn Han, Qianxiao Li, (2018).  A Mean-Field Optimal Control Formulation of Deep Learning. volume 6. Research in the Mathematical Sciencespdf
+
+[3] S. Shalev-Shwartz, S. Ben-David,  The Understanding Machine Learning: From Theory to Algorithms . pdf
+
+[4] B. Hanin, (2018).  Which Neural Net Architectures Give Rise to Exploding and Vanishing Gradients?   pdf
+
+[5] C. Olah,  Neural Networks, Manifolds and Topology . blog post
+
+[6] G. Naitzat, A. Zhitnikov, L-H. Lim, (2020).  Topology of Deep Neural Networks  pdf
+
+[7] Q. Li, T. Lin, Z. Shen, (2019).  Deep Learning via Dynamical Systems: An Approximation Perspective pdf
+
+[8] B. Geshkovski,  The interplay of control and deep learning . blog post
+
+[9] C. Fefferman, S. Mitter, H. Narayanan,  Testing the manifold hypothesis . pdf
+
+[10] R. T. Q. Chen, Y. Rubanova, J. Bettencourt, D. Duvenaud, (2018).  Neural Ordinary Differential Equations  pdf
+
+</description>
+        <pubDate>Sun, 01 Nov 2020 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/pretutorial/wp99/P0011</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/pretutorial/wp99/P0011</guid>
+        
+        
+        <category>pretutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
     
       <item>
         <title>ResNet stabilization in MNIST dataset</title>
@@ -1442,546 +1988,6 @@ tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
         <category>tutorial</category>
         
         <category>WP03</category>
-        
-      </item>
-    
-      <item>
-        <title>Control of reaction-diffusion under state constraints - Numerical exploration of controls</title>
-        <description>
-    
-    Control of reaction-diffusion
-    This is a post in a collection of several on control of reaction-diffusion under state constraints
-    See more ...
-    
-
-
-In this tutorial we will observe different phenomena that arise in the control with state-constraints and moreover we will observe different ways to approach a desired target.
-
-Observation of several phenomena
-
-In the simulations below, we will consider the following optimal control problem:
-
-
-
-In Figure 1, the initial state was $u_0=1$ and we can observe how the solution has been successfully driven to the target $u_1=0.33$. For this length of the domain there is no barrier (see Barriers)), for this reason the optimal solution can achieve the target.
-
-The trajectory of the control can also be understood from the theoretical understanding of the controllability under state constraints.
-
-In the first phase, the control takes values that are below the target $u_1=0.33$. This behavior is necessary because for this length of the domain there exist nontrivial solutions with boundary value $0.33$ that are between $0$ and $1$.
-
-These nontrivial solutions do not constitute an intrinsic obstruction since we know that the equation is controllable for this length of the domain (see [1,3] and Staircase post and Barriers post). However, the strategy of setting boundary equal to $0.33$ for a long time and then doing a local control will not work.
-
-The second oscillatory phase has been already observed in the unconstrained case (see [4]).
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-
-Figure 1. At the left, the controlled state, at the right, the control function. $u_0=1$ and $u_1=0.33$. 
-
-Another important feature is the existence of a minimal controllability time. In Figure 2, $u_0=0$ and the target is $u_1=0.33$. From the theoretical perspective, if the time horizon is large enough we are always able to go from the initial state to the target. This is due to the existence of an admissible continuous path of steady states (Staircase post).
-
-However, in Figure 2, one observes that the target $u_1=0.33$ has been not achieved. The reason is that $T$ is not large enough for the equation to be controllable.
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-
-Figure 2. At the left, the controlled state displayed in space-time, at the right, different snapshots of the state, darker curves are associated with larger times. $u_0=0$ and $u_1=0.33$ .
-
-The other phenomenology already mentioned above and in the blog post Barriers is the lack of controllability due to the emergence of nontrivial solutions. In Figure 3, the initial state is $u_0=1$ and the target is $u_1=0$. We can observe how the state gets stuck to the barrier.
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-
-Figure 3. At the left, the controlled state displayed in space-time, at the right, different snapshots of the state, darker curves are associated with larger times. $u_0=1$ and $u_1=0$ .
-
-Exploration
-
-Now we turn our attention to the exploration of different control strategies.
-
-Quasistatic
-
-In Figure 4, we seek to find a control that is quasistatic, for doing so we penalize the time derivative of the control in the discrete level and we add the restriction $u(x,T)=0.33$.
-
-
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-
-Figure 4. At the left, the controlled state displayed in space-time, at the right, the control function. $u_0=0$ and $u_1=0.33$ . 
-
-Minimal control time
-
-In Figure 5, we compute the control in minimal time by minimizing the functional:
-
-
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-
-Figure 5. At the left, the controlled state displayed in space-time, at the right, the control function. $u_0=0$ and $u_1=0.33$ .
-
-Figure 5 points out that the control in minimal time has the bang-bang property.
-
-Minimal flow control
-
-In Figure 6, we compute the control with minimal flow by minimizing the functional:
-
-
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-
-Figure 6. 
-
-References:
-
-[1] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
-
-[2] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
-tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.
-
-[3] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac
-tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
-
-[4]  R. Glowinski, J. L. Lions and J. He. “Exact and approximate controllability for distributed parameter systems: a numerical approach.” Encyclopedia of Mathematics and its Applications (2008).
-
-</description>
-        <pubDate>Sat, 04 Apr 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0009</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0009</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP03</category>
-        
-      </item>
-    
-      <item>
-        <title>Inverse problem for Hamilton-Jacobi equations</title>
-        <description>Background and motivation
-
-We consider the initial-value problem for a Hamilton-Jacobi equation of the form
-
-
-
-where $u_0\in C^{0,1}(\mathbb{R}^n)$ and the Hamiltonian $H: \mathbb{R}^n\rightarrow\mathbb{R}$ is assumed to satisfy the following hypotheses:
-
-
-
-Here, the unknown $u$ is a function $[0,T]\times\mathbb{R}^n\longrightarrow\mathbb{R}$,
-and the inequality $H_{pp}(p)&amp;gt;0$ means that the Hessian matrix of $H$ at $p$ is positive definite.
-The study of Hamilton-Jacobi equations
-arises in the context of optimal control theory and calculus of variations,
-where the value function satisfies, in a weak sense, a Hamilton-Jacobi equation.
-In this context, Hamilton-Jacobi equations have applications in a wide range of fields such as
-economics, physics, mathematical finance, traffic flow and geometrical optics.
-
-Our goal in this tutorial is to study the inverse design problem associated to (HJ).
-More precisely, for a given target function $u_T$ and a time horizon $T&amp;gt;0$,
-we want to construct all the initial conditions $u_0$ such that the viscosity solution of (HJ) coincides with $u_T$ at time $T$.
-
-The study of this problem can also be motivated by considering the following question:
-
-Given an observation of the solution to (HJ) at time $T&amp;gt;0$, can we construct all the possible initial data that agree we the observation at time $T$ ?
-
-For this purpose, for a fixed $T&amp;gt;0$, 
-we define the following nonlinear operator, which associates to any initial condition $u_0$, the function
-$u(T,\cdot)$, where $u$ is the viscosity solution of (HJ):
-
-
-
-The inverse design problem that we are considering is then reduced to, for $u_T$ and $T&amp;gt;0$ given,
-characterize all the initial conditions $u_0$ satisfying $S_T^+ u_0 =u_T$.
-
-Reachability of the target
-
-The first thing one notices when addressing this problem is that not all the Lipschitz targets are reachable.
-Indeed, as it is well known, the viscosity solution to (HJ) is always a semiconcave function (see [2,4]). 
-Therefore, an obvious necessary (but not sufficient) condition for the reachability of $u_T$ is that it must be a semiconcave function.
-See Figures 1 and 2 for some examples of unreachable targets in dimension 1 and 2 respectively. Observe that, in particular, they are not semiconcave functions.
-
-
-
-  
-
-
-
-
- Figure 1:  Two unreachable target functions in dimension 1.
-
-
-We then start our study by characterizing the set of targets that are reachable.
-In other words, for a given $u_T$ and $T&amp;gt;0$, we aim to determine whether or not there exists at least one initial condition $u_0$ satisfying $S_T^+ u_0=u_T$.
-The natural candidate is the one obtained by reversing the time in the equation, considering $u_T$ as terminal condition. Here, we have to consider the class of backward viscosity solutions, for which the terminal-value problem associated to (HJ) is well-posed (see for example [1]).
-
-We then define the backward operator as follows:
-
-
-
-which associates to any terminal condition $u_T$, the function $w(0,\cdot)$,
-i.e. the unique backward viscosity solution at time $0$, with terminal condition $u_T$.
-
-
-
-  
-
-
-
-
- Figure 2:  Two unreachable target functions in dimension 2.
-
-
-Let us introduce, for a target $u_T$ and a time horizon $T&amp;gt;0$, the set
-
-
-
-of initial conditions $u_0$ satisfying $S_T^+ u_0 = u_T$.
-We say that a target $u_T$ is reachable for the time horizon $T$ if $I_T(u_T)\neq \emptyset$.
-We can equivalently say that $u_T$ is an admissible observation at time $T&amp;gt;0$.
-
-Here we give a result that identifies the set of reachable targets (or admissible observations) at time $T$,
-with the fix-points of the composition operator $S_T^+\circ S_T^-$.
-
-
-
-Theorem 1: Let $H$ satisfy (2), $u_T\in C^{0,1}(\mathbb{R}^n)$ and $T&amp;gt;0$. Then, the set $I_T(u_T)$ is nonempty 
-if and only if  $S_T^+ \left( S_T^- u_T\right) = u_T.$
-
-
-
-In other words, a target is reachable if and only if the initial condition $\tilde{u}_0:= S_T^- u_T$, obtained by applying the backward operator, satisfies $\tilde{u}_0\in I_T(u_T)$.
-Or equivalently, an observation $u_T$ at time $T$ is admissible if and only if $S_T^+ \left( S_T^- u_T\right) = u_T.$
-
-Projection on the set of reachable targets
-
-In the case the observation $u_T$ at time $T$ is not admissible, maybe due to noise effects or to errors in the measurements, we can actually project it on the set of admissible observations by applying the operator $S_T^+\circ S_T^-$. For a given $u_T\in C^{0,1}(\mathbb{R}^n)$, we define this projection as follows:
-
-
-
-Observe that $I_T(u_T^\ast)\neq \emptyset$ for any $u_T\in C^{0,1}(\mathbb{R}^n)$. 
-Indeed, $\tilde{u}_0:=S_T^- u_T\in I_T (u_T^\ast)$ by definition.
-
-
-
-  
-
-  
-
-
-
-
- Video 1:  Projection of the examples in Figure 1 on the set of admissible observations at times $T=0.3$ and $T=0.8$ respectively.
-
-
-In the Videos 1 and 2, we observe how the examples in Figures 1 and 2 are projected on the set of reachable targets.
-We recall that the projection is obtained by solving the problem (HJ) backward in time and the forward.
-Observe that, when the time goes backward, the solution is semiconvex, while in the forward resolution, it becomes semiconcave. See [1,4] for the classical results concerning this regularizing effect and [2] for the definition and properties of semiconcave and semiconvex functions.
-
-
-
-  
-
-  
-
-
-
-
- Video 2:  Projection of the examples in Figure 2 on the set of admissible observations at time $T=1$.
-
-
-Construction of initial data
-
-Once we have projected the observation $u_T$ on the set of reachable targets at time $T$, we proceed to the construction of all the initial data $u_0$ satisfying $S_T^+ u_0 = u_T^\ast$.
-This construction is contained in the recent work [3], and reads as follows:
-
-
-Theorem 2: Let $H$ satisfy (2) and $T&amp;gt;0$.
-Let $u_T\in C^{0,1}(\mathbb{R}^n)$ and define the functions
-
-
-
-Then, for any $u_0\in C^{0,1} (\mathbb{R}^n)$, the two following statements are equivalent:
-
-  $u_0\in I_T(u_T^\ast)$;
-  $u_0(x)\geq \tilde{u}_0 (x), \ \forall x\in \mathbb{R}^n \quad \text{and} \quad u_0(x) = \tilde{u}_0(x), \ \forall x\in X_T(u_T^\ast),$
-
-
-where $X_T(u_T^\ast)$ is the subset of $\mathbb{R}^n$ given by
-
-
-
-
-
-In view of this result, we observe that, for a given admissible observation $u_T^\ast$ at time $T$,
-the construction of the possible initial data can be carried out after obtaining the two following ingredients:
-
-  the function $\tilde{u}_0 = S_T^- u_T^\ast$, obtained as the backward viscosity solution to (HJ) with terminal condition $u_T^\ast$;
-  and the set $X_T(u_T^\ast)\subset \mathbb{R}^n$, that can be deduced from the differentiability points of $u_T^\ast$.
-
-
-In Figures 3 and 4 below, we can see the scheme of the construction of all the initial data for the projection $u_T^\ast = S_T^+ (S_T^- u_T)$ of the non-admissible observations in Figure 1.
-Observe that all the initial data in $I_T(u_T^\ast)$ must coincide with $\tilde{u}_0$ on the red region, while on the black region, they must be greater or equal than $\tilde{u}_0$.
-
-
-
-  
-
-
-
-
- Figure 3:  Reconstruction scheme for the admissible target obtained in Video 1 at the left.
-
-
-
-
-  
-
-
-
-
- Figure 4:  Reconstruction scheme for the admissible target obtained in Video 1 at the right.
-
-
-An important consequence of Theorem 2 is that the initial data in $I_T(u_T^\ast)$ are not unique whenever $X_T(u_T^\ast) \neq \mathbb{R}^n$.
-Indeed, the set $I_T(u_T^\ast)$ can be given in the following way:
-
-
-
-In the case of the examples illustrated in Figures 3 and 4,
-we can see in the videos 3 below, examples of different initial conditions whose solution coincides with $u_T^\ast$ at time $T$.
-These exmaples have been generated randomly by adding to $\tilde{u}_0$ a nonegative a Lipschitz function vanishing in $X_T(u_T^\ast)$.
-
-
-
-  
-  
-
-
-
-
- Video 3:  Examples of initial data $u_0\in I_T(u_T^\ast)$ for the reconstruction schemes depicted in Figures 3 and 4.
-
-
-A possible interpretation of this reconstruction result is that the initial datum can only be reconstructed in the region $X_T(u_T^\ast)$, where it is uniquely determined by $\tilde{u}_0$,
-while in the region $\mathbb{R}^n\setminus X_T(u_T^\ast)$, only a lower bound can be deduced.
-In this last region, we can say that the information of the initial data has been partially lost after the time-interval $[0,T]$.
-In the case of smooth solutions (when they exists) we have backward uniqueness, i.e. $I_T(u_T)$ is either empty or a singleton (see [1]).
-In this case it holds that $X_T(u_T)=\mathbb{R}^n$.
-
-Next, we see the reconstruction schemes for the examples depicted in Video 2, that correspond to the projection on the set of admissible observations of $u_T$ from Figure 2.
-Observe the different structure of the set $\mathbb{R}^n\setminus X_T(u_T^\ast)$ (white region in the plot at the right)
-in the surrounding area of bumps and wells of $u_T^\ast$.
-
-  Near a bump, the set where $u_T^\ast$ is not differentiable is an isolated point, and then, it produces a ball for the set $\mathbb{R}^n\setminus X_T(u_T^\ast)$.
-  Near a well, $u_T^\ast$ is non-differentiable on a circumference. This produces an annulus for the set $\mathbb{R}^n\setminus X_T(u_T^\ast)$.
-
-
-
-
-  
-
-
-
-
- Figure 5:  Reconstruction scheme for the admissible target obtained in Video 2 at the left.
-
-
-
-
-  
-
-
-
-
- Figure 6:  Reconstruction scheme for the admissible target obtained in Video 2 at the right.
-
-
-Evolution of $X_T(u_T)$
-
-As we have seen in the previous section, given an admissible observation $u_T$ of the solution at time $T$,
-the initial datum can only be reconstructed in a region $X_T(u_T)$, while in its complementary, only a lower bound can be obtained.
-Here, we are interested in the  the role that $T$ plays in this reconstruction issue.
-For this purpose, we fix an initial datum $u_0$ and then, for each $T&amp;gt;0$,
-we construct the set $X_T(u_T)$, where $u_T := S_T^+ u_0$.
-
-Our goal is to observe how $X_T(u_T)$ evolves as we increase $T$,
-or in other words, we want to know what information from $u_0$ can be recoverd when the solution is observed at time $T$.
-As we see in the following videos, $X_T(u_T)$ becomes smaller as we increase $T$, meaning that less information from the initial datum can be recovered if the observation is made after a long time interval.
-
-In Figure 7 we fix two initial data in dimension 1.
-
-
-
-  
-
-
-
-
- Figure 7:  Two initial data in dimension 1.
-
-
-Next, we can see in in Video 4, how the reconstruction scheme for $u_0$ (at the left in Figure 7) evolves as we increase the observation time.
-For $T$ small, very little information is lost, however, for $T$ large, $X_T(u_T)$ only intersects the nonpositive region of $u_0$, and therefore, the two bumps can no longer be reconstructed.
-
-
-
-  
-
-
-
-
- Video 4:  Evolution of the target and the reconstruction scheme for the initial datum at the left in Figure 7.
-
-
-In Video 5, we see the evolution of the reconstruction scheme for $u_0$ at the right in Figure 7.
-In this case, $u_0$ is constituted of two wells, however, if the observation is made at time $T$ large enough, only the deepest well can be identified.
-
-
-
-  
-
-
-
-
- Video 5:  Evolution of the target and the reconstruction scheme for the initial datum at the right in Figure 7.
-
-
-We end this blog post with three examples in the two-dimensional case.
-Here we have the three examples of initial data that we have considered.
-
-
-
-  
-
-
-
-
- Figure 8:  Three initial data in dimension 2.
-
-
-In Video 6, we see the evolution of the reconstruction scheme for our first 2-dimensional example.
-In this case, $u_0$ has a well and a bump. We observe that, as we increase the observation time $T$,
-the white region, which corresponds to $\mathbb{R}^n\setminus X_T(u_T)$ becomes bigger and bigger.
-This corresponds to the fact that, when the observation is made after a long time-interval, less information from the initial datum can be recovered. In addition, if we look at $u_T^\ast$ and $\tilde{u}_0$ in the two first plots, we see that the bump disappears for $T$ large enough.
-This implies that after a long time-interval, the bump cannot be reconstructed.
-
-
-
-  
-
-
-
-
- Video 6:  Evolution of the reconstruction scheme for the first initial datum in Figure 8.
-
-
-In Video 7, we see the evolution of the reconstruction scheme for the second example in Figure 8.
-Here, the initial datum has two bumps of different height but same shape and size in their support.
-Observe that, when $T$ is large enough, both bumps look the same, and therefore we cannot guess which one was taller at $t=0$. In fact, only the shape of their support can be reconstructed.
-
-
-
-  
-
-
-
-
- Video 7:  Evolution of the reconstruction scheme for the second initial datum in Figure 8.
-
-
-In Video 8, we see the evolution of the reconstruction scheme for the third example in Figure 8.
-Here, the initial datum has two wells of different depth.
-We observe the same behaviour as in Video 5, where only the information of the deepest well is preserved for $T$ large enough.
-
-
-
-  
-
-
-
-
- Video 8:  Evolution of the reconstruction scheme for the third initial datum in Figure 8.
-
-
-References
-
-[1] E. Barron, P. Cannarsa, R. Jensen, C. Sinestrari,  Regularity of Hamilton-Jacobi equations when forward is backward. Indiana University mathematics journal, pages 385-409, 1999.
-
-[2] P. Cannarsa, C. Sinestrari,  Semiconcave functions, Hamilton-Jacobi equations, and optmial control. volume 58. Springer Science &amp;amp; Business Media, 2004.
-
-[3] C. Esteve, E. Zuazua,  The inverse problem for Hamilton-Jacobi equations and semiconcave envelopes. Preprint &amp;lt;https://arxiv.org/abs/2003.06914
-
-[4] P.L. Lions,  Generalized solutions of Hamilton-Jacobi equations. volume 69. London Pitman, 1982.
-</description>
-        <pubDate>Fri, 03 Apr 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0010</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0010</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP04</category>
         
       </item>
     
