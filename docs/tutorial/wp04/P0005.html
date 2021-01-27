@@ -299,27 +299,27 @@ img:active{
 
 <p>We consider the numerical approximation of the inverse problem for the linear advection-diffusion equation,</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{modeleq} \begin{cases} \partial_t u - d \Delta u + v \nabla \cdot u = 0, \  \  \textbf{x}  \in \Omega, t \in [0,T],\\ u(\textbf{x},t) = 0,  \  \  \textbf{x}  \in \partial \Omega, t \in [0,T],\\ u(\textbf{x},0) = u_0(\textbf{x}), \  \  \textbf{x}  \in \Omega,\\ \end{cases} \end{equation}</script>
+<p>[\begin{equation}\label{modeleq} \begin{cases} \partial_t u - d \Delta u + v \nabla \cdot u = 0, \  \  \textbf{x}  \in \Omega, t \in [0,T],\ u(\textbf{x},t) = 0,  \  \  \textbf{x}  \in \partial \Omega, t \in [0,T],\ u(\textbf{x},0) = u_0(\textbf{x}), \  \  \textbf{x}  \in \Omega,\ \end{cases} \end{equation}]</p>
 
 <p>with $d$ being the diffusivity of the material and $v$ the direction of the advection.</p>
 
 <p>Given a final time $T&gt;0$ and a target function $u^\ast$ the aim is to identify the initial condition $u_0$ such that the solution, at time $t=T$, reaches the target $u^*$ or gets as close as possible to it. We assume that the initial condition $u_0$ is characterized as a combined set of sparse sources. This means that $u_0$ is a linear combination of unitary deltas with certain and possibly different weights, i.e:</p>
 
-<script type="math/tex; mode=display">\begin{align} u_0 = \sum_{i=1}^{l} \alpha_i \delta(x_i). \end{align}</script>
+<p>[\begin{align} u_0 = \sum_{i=1}^{l} \alpha_i \delta(x_i). \end{align}]</p>
 
 <p>We formulate the inverse problem using optimal control techniques. In particular, we consider the minimization of the following functional:</p>
 
-<script type="math/tex; mode=display">\begin{align} J(u_0) := J(u(\cdot,0)) = \frac{1}{2} \int_{\Omega} (u(\cdot, T) - u^*)^2 d \Omega + \tau \int_{\Omega} \vert u(\cdot,0) \vert d \Omega. \end{align}</script>
+<p>[\begin{align} J(u_0) := J(u(\cdot,0)) = \frac{1}{2} \int_{\Omega} (u(\cdot, T) - u^*)^2 d \Omega + \tau \int_{\Omega} \vert u(\cdot,0) \vert d \Omega. \end{align}]</p>
 
 <h2 id="space-and-time-discretization">Space and time discretization</h2>
 
 <p>Letting $\textbf{u} : [0, T] \rightarrow \mathbb{R}^s$ where $s$ is the number of grid points on $\Omega$, we can write a general finite element (FE) discretization of the diffusion–advection equation in \eqref{modeleq} in a compact form as:</p>
 
-<script type="math/tex; mode=display">\begin{align} \textbf{M} \dot{\textbf{u}}(t) + d \textbf{A} \textbf{u}(t) + v \textbf{V} \textbf{u}(t) = 0. \end{align}</script>
+<p>[\begin{align} \textbf{M} \dot{\textbf{u}}(t) + d \textbf{A} \textbf{u}(t) + v \textbf{V} \textbf{u}(t) = 0. \end{align}]</p>
 
 <p>In order to get a time discretized version of the previous equation, we apply implicit Euler method with stepsize $\Delta t := T/N$ where $N$ is the total number of time steps. The numerical approximations to the solution are given by the vectors $\textbf{u}^n \approx \textbf{u}(t_n) \in \mathbb{R}^s$ with respect to the index $n=i\Delta t$ for $i=1,2,..,N$. Therefore, the fully discrete version of model equation is as follows,</p>
 
-<script type="math/tex; mode=display">\begin{align} (\textbf{M} + d \Delta t \textbf{A} + v \Delta t \textbf{V}) \textbf{u}^{n+1} = \textbf{M} \textbf{u}^n. \end{align}</script>
+<p>[\begin{align} (\textbf{M} + d \Delta t \textbf{A} + v \Delta t \textbf{V}) \textbf{u}^{n+1} = \textbf{M} \textbf{u}^n. \end{align}]</p>
 
 <h2 id="adjoint-algorithm-for-sparse-source-identification">Adjoint Algorithm for sparse source identification</h2>
 
@@ -366,7 +366,7 @@ img:active{
 
 <p>As the initial condition $u_0$ is assumed to be a linear combination between the locations and the intensities, once we have fixed the locations using the adjoint methodology we can solve a least squares problem to get the remaining intensities. We assemble a matrix $\textbf{L} \in \mathbb{R}^{s \times l}$ where at each column we have the forward solution for a single unitary delta placed at each of the locations already identified. We then solve the following linear system of equations for the vector of unknowns $\alpha = (\alpha_1, \alpha_2, …, \alpha_l)^T$:</p>
 
-<script type="math/tex; mode=display">\begin{align} \textbf{L}^T \textbf{L} \alpha = \textbf{L}^T u^*, \end{align}</script>
+<p>[\begin{align} \textbf{L}^T \textbf{L} \alpha = \textbf{L}^T u^*, \end{align}]</p>
 
 <p>to find the intensities vector $\alpha$.</p>
 

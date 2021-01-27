@@ -312,77 +312,71 @@ img:active{
         <h3>Introduction</h3>
 <p>We introduce the following notation: $L^2=L^2\left(\Omega\right)$, $L^2_T=L^2\left(\Omega\times \left(0,T\right)\right)$,</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{eqnarray*}
-	\langle u,v \rangle&=&\int_{\Omega}^{} u(x)v(x) \ dx;\\
-	\langle u,v \rangle_T^2&=&\int_{0}^{T} \int_{\Omega}^{} u(x,t)v(x,t) \ dx \ dt
-\end{eqnarray*} %]]></script>
+<p>[\begin{eqnarray<em>}
+	\langle u,v \rangle&amp;=&amp;\int_{\Omega}^{} u(x)v(x) \ dx;<br />
+	\langle u,v \rangle_T^2&amp;=&amp;\int_{0}^{T} \int_{\Omega}^{} u(x,t)v(x,t) \ dx \ dt
+\end{eqnarray</em>}]</p>
 
 <p>and the correspondent norms $\norm{\cdot}=\langle \cdot,\cdot\rangle$ and $\norm{\cdot}_T=\langle \cdot,\cdot\rangle_T$. Moreover, we define the norms</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{eqnarray*}
-	\norm{v}_{1}&=&\int_{\Omega}^{} \abs{v(x)} \ dx;\\
-	\norm{v}_{1,T}&=&\int_{0}^{T} \int_{\Omega}^{} \abs{v(x,t)} \ dx \ dt.
-\end{eqnarray*} %]]></script>
+<p>[\begin{eqnarray<em>}
+	\norm{v}_{1}&amp;=&amp;\int_{\Omega}^{} \abs{v(x)} \ dx;<br />
+	\norm{v}_{1,T}&amp;=&amp;\int_{0}^{T} \int_{\Omega}^{} \abs{v(x,t)} \ dx \ dt.
+\end{eqnarray</em>}]</p>
 
 <p>We want to study the following optimal control problem:</p>
 
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{P}\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left\{J\left(u\right)=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{Lu}_{1,T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right\},
-\end{equation*}</script>
+<p>[\begin{equation<em>}
+\left(\mathcal{P}\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left{J\left(u\right)=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{Lu}_{1,T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right},
+\end{equation</em>}]</p>
 
 <p>where $L: \ L^2_T \to L^2_T$ is defined by</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{eqnarray*}
-Lu&=&y
-\end{eqnarray*} %]]></script>
+<p>[\begin{eqnarray<em>}
+Lu&amp;=&amp;y
+\end{eqnarray</em>}]</p>
 
 <p>and $y$ is the solution of the PDE given by</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
-y'+Ay=Bu & \left(\Omega \times \left(0,T\right)\right)\\
-y=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-y(0)=0 & \left(\Omega\right).
+y’+Ay=Bu &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+y=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)<br />
+y(0)=0 &amp; \left(\Omega\right).
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>Notice that, by integration by parts, $ L^*\mu=B^\ast p $, where $\varphi$ is solution of the adjoint equation:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
--p'+A^* p =\mu & \left(\Omega \times \left(0,T\right)\right)\\
-p=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-p(T)=0 & \left(\Omega\right).
+-p’+A^</em> p =\mu &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+p=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)<br />
+p(T)=0 &amp; \left(\Omega\right).
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation*}]</p>
 
 <h3>Sparse control: $\alpha_c&gt;0$ ($\alpha_s=0$)</h3>
 <h3>The stationary problem</h3>
 
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{S}\mathcal{P}_c\right) \ \ \ \ \ \ \ \bar{u}\in argmin_{u\in L^2} \left\{J_s\left(u\right)=\alpha_c \norm{u}_{1} + \frac{\beta}{2}\norm{u}^2+ \frac{\gamma}{2}\norm{y-z}^2: \ \ \ Ay=Bu \right\}.
-\end{equation*}</script>
+<p>[\begin{equation<em>}
+\left(\mathcal{S}\mathcal{P}_c\right) \ \ \ \ \ \ \ \bar{u}\in argmin_{u\in L^2} \left{J_s\left(u\right)=\alpha_c \norm{u}_{1} + \frac{\beta}{2}\norm{u}^2+ \frac{\gamma}{2}\norm{y-z}^2: \ \ \ Ay=Bu \right}.
+\end{equation</em>}]</p>
 
 <h4>Optimality conditions</h4>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
-A\bar{y}=B \ shrink(-B^*\bar{p},\frac{\alpha_c}{\beta}) & \left(\Omega\right)\\
-A^*\bar{p}=\gamma\left(\bar{y}-z\right) & \left(\Omega\right)\\
-\bar{y}=0, \ \bar{p}=0 & \left(\partial\Omega\right).
+A\bar{y}=B \ shrink(-B^</em>\bar{p},\frac{\alpha_c}{\beta}) &amp; \left(\Omega\right)<br />
+A^<em>\bar{p}=\gamma\left(\bar{y}-z\right) &amp; \left(\Omega\right)<br />
+\bar{y}=0, \ \bar{p}=0 &amp; \left(\partial\Omega\right).
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <h4>Numerical algorithm</h4>
 <p>In order to compute a numerical solution of problem</p>
 
-<script type="math/tex; mode=display">\left(\mathcal{S}\mathcal{P}_c\right)</script>
+<p>[\left(\mathcal{S}\mathcal{P}_c\right)]</p>
 
 <p>after a discretization by finite differences, we use a prox-prox splitting: first write the state as $y=A^{-1}Bu$, then</p>
 <ul>
@@ -411,86 +405,80 @@ $$
 </ul>
 <p><strong>Remark:</strong> Notice that, when $\alpha_s=0$, the solution of $\left(\mathcal{P}^c_s\right)$ is simply given by</p>
 
-<script type="math/tex; mode=display">\bar{u}=\gamma \left[\beta I+\gamma B^*A^{-*}A^{-1}B\right]^{-1}B^*A^{-*}z.</script>
+<p>[\bar{u}=\gamma \left[\beta I+\gamma B^<em>A^{-</em>}A^{-1}B\right]^{-1}B^<em>A^{-</em>}z.]</p>
 
 <h3>Evolutionary problem</h3>
 
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{P}_c\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left\{J\left(u\right)=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right\}.
-\end{equation*}</script>
+<p>[\begin{equation<em>}
+\left(\mathcal{P}_c\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left{J\left(u\right)=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right}.
+\end{equation</em>}]</p>
 
 <h4>Optimality conditions</h4>
 <p>Define the classical Lagrangian</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{split}
-\mathcal{L}\left(u,y,p\right)&=J\left(u\right)+\langle p, Bu-y'-Ay\rangle_T.
+\mathcal{L}\left(u,y,p\right)&amp;=J\left(u\right)+\langle p, Bu-y’-Ay\rangle_T.
 \end{split}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>By integration by parts, we have</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{split}
-\mathcal{L}\left(u,y,p\right)&=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T}+ \frac{\gamma}{2}\norm{y-z}_{T}^2 + \langle B^*p, u\rangle_T \\
-& \quad + \langle p'-A^*p,y\rangle_T + \langle p(0),y(0)\rangle - \langle p(T),y(T)\rangle.
+\mathcal{L}\left(u,y,p\right)&amp;=\alpha_c \norm{u}_{1,T} + \frac{\beta}{2}\norm{u}^2_{T}+ \frac{\gamma}{2}\norm{y-z}_{T}^2 + \langle B^</em>p, u\rangle_T <br />
+&amp; \quad + \langle p’-A^<em>p,y\rangle_T + \langle p(0),y(0)\rangle - \langle p(T),y(T)\rangle.
 \end{split}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>Deriving with respect to the three variables $\left(u,y,p\right)$, we obtain the optimality system:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
-\hat{y}'+A\hat{y}=B\hat{u} & \left(\Omega \times \left(0,T\right)\right)\\
--\hat{p}'+A^*\hat{p}=\gamma\left(y-z\right) & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right),
+\hat{y}’+A\hat{y}=B\hat{u} &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+-\hat{p}’+A^</em>\hat{p}=\gamma\left(y-z\right) &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+\hat{y}=0, \ \hat{p}=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)<br />
+\hat{y}(0)=0, \ \hat{p}(T)=0 &amp; \left(\Omega\right),
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation*}]</p>
 
 <p>where the relation between the optimal control and the dual state is given by</p>
 
-<script type="math/tex; mode=display">\begin{equation*}
-0\in \alpha_c \ \partial \norm{\cdot}_{1,T} \left(\hat{u}\right) + \beta \hat{u} + B^*\hat{p}.
-\end{equation*}</script>
+<p>[\begin{equation<em>}
+0\in \alpha_c \ \partial \norm{\cdot}_{1,T} \left(\hat{u}\right) + \beta \hat{u} + B^</em>\hat{p}.
+\end{equation*}]</p>
 
 <p>The latter is equivalent to</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{split}
-\hat{u}&=\left(\beta I+\alpha_c \ \partial \norm{\cdot}_{1,T} \right)^{-1}\left(-B^*\hat{p}\right)\\
-&=argmin_{v\in L^2_T} \left\{ \alpha_c \norm{v}_{1,T}+\frac{1}{2\beta}\norm{v+B^*\hat{p}}_T^2 \right\}\\
-&=shrink(-B^*\hat{p},\frac{\alpha_c}{\beta}),
+\hat{u}&amp;=\left(\beta I+\alpha_c \ \partial \norm{\cdot}_{1,T} \right)^{-1}\left(-B^</em>\hat{p}\right)<br />
+&amp;=argmin_{v\in L^2<em>T} \left{ \alpha_c \norm{v}</em>{1,T}+\frac{1}{2\beta}\norm{v+B^<em>\hat{p}}_T^2 \right}<br />
+&amp;=shrink(-B^</em>\hat{p},\frac{\alpha_c}{\beta}),
 \end{split}
-\end{equation*} %]]></script>
+\end{equation*}]</p>
 
 <p>where the operator of $soft-shrinkage$ is defined by</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 shrink(t,\alpha)=
 \begin{cases}
-t+\alpha & (t<-\alpha)\\
-0 & (-\alpha\leq t \leq \alpha)\\
-t-\alpha & (t>\alpha).
+t+\alpha &amp; (t&lt;-\alpha)<br />
+0 &amp; (-\alpha\leq t \leq \alpha)<br />
+t-\alpha &amp; (t&gt;\alpha).
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>Finally,</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
-\hat{y}'+A\hat{y}=B \ shrink(-B^*\hat{p},\frac{\alpha_c}{\beta})& \left(\Omega \times \left(0,T\right)\right)\\
--\hat{p}'+A^*\hat{p}=\gamma\left(y-z\right) & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right).
+\hat{y}’+A\hat{y}=B \ shrink(-B^</em>\hat{p},\frac{\alpha_c}{\beta})&amp; \left(\Omega \times \left(0,T\right)\right)<br />
+-\hat{p}’+A^<em>\hat{p}=\gamma\left(y-z\right) &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+\hat{y}=0, \ \hat{p}=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)<br />
+\hat{y}(0)=0, \ \hat{p}(T)=0 &amp; \left(\Omega\right).
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <h4>Numerical algorithm</h4>
 <p>In order to compute a numerical solution of problem $\left(\mathcal{P}_c\right)$, after a discretization by finite differences, we use a grad-prox splitting:</p>
@@ -545,87 +533,81 @@ $$
 <p><strong>Remarks:</strong> Another possibility is to include the term $\frac{\beta}{2}\norm{u}^2_{T}$ in the proximal step.
 Notice that, for</p>
 
-<script type="math/tex; mode=display">f(u)=\frac{\beta}{2}\norm{u}^2_{T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2,</script>
+<p>[f(u)=\frac{\beta}{2}\norm{u}^2<em>{T} + \frac{\gamma}{2}\norm{Lu-z}</em>{T}^2,]</p>
 
 <p>then $\nabla f$ is Lipschitz continuous. Indeed, for $u_i\in L^2_T$ ($i=1,2$), then</p>
 
-<script type="math/tex; mode=display">\nabla f (u_i)=\beta u_i+\gamma B^{*}p_i,</script>
+<p>[\nabla f (u_i)=\beta u_i+\gamma B^{*}p_i,]</p>
 
 <p>where</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
-y_i'+Ay_i=Bu_i & \left(\Omega \times \left(0,T\right)\right)\\
-y_i=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-y_i(0)=0 & \left(\Omega\right)
+y_i’+Ay_i=Bu_i &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+y_i=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)<br />
+y_i(0)=0 &amp; \left(\Omega\right)
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>and</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
--p_i'+A^* p_i=y_i-z & \left(\Omega \times \left(0,T\right)\right)\\
-p_i=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-p_i(T)=0 & \left(\Omega\right).
+-p_i’+A^</em> p_i=y_i-z &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+p_i=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)<br />
+p_i(T)=0 &amp; \left(\Omega\right).
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation*}]</p>
 
 <p>By linearity $\delta y=y_2-y_1$ and $\delta p=p_2-p_1$ solve the same equations with right-hand-sides $B(u_2-u_1)$ and $\delta y$, respectively. Then</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{split}
-\norm{\nabla f(u_2)-\nabla f(u_1)}&\leq \beta\norm{u_2-u_1}_T + \gamma \norm{B^*}\norm{\delta p}_T\\
-&\leq \beta\norm{u_2-u_1}_T + \gamma \ C_{adj} \norm{B} \norm{\delta y}_T\\
-& \leq \beta\norm{u_2-u_1}_T + \gamma \ C_{adj} C \ \norm{B} \norm{B(u_2-u_1)}_T\\
-& \leq L \norm{u_2-u_1}_T,
+\norm{\nabla f(u_2)-\nabla f(u_1)}&amp;\leq \beta\norm{u_2-u_1}_T + \gamma \norm{B^</em>}\norm{\delta p}<em>T<br />
+&amp;\leq \beta\norm{u_2-u_1}_T + \gamma \ C</em>{adj} \norm{B} \norm{\delta y}<em>T<br />
+&amp; \leq \beta\norm{u_2-u_1}_T + \gamma \ C</em>{adj} C \ \norm{B} \norm{B(u_2-u_1)}_T<br />
+&amp; \leq L \norm{u_2-u_1}_T,
 \end{split}
-\end{equation*} %]]></script>
+\end{equation*}]</p>
 
 <p>where we defined</p>
 
-<script type="math/tex; mode=display">L=\beta+\gamma \ C_{adj} C \ \norm{B}^2.</script>
+<p>[L=\beta+\gamma \ C_{adj} C \ \norm{B}^2.]</p>
 
 <p>In order the prox-grad method to converge, the restriction on the step size is given by</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-0<\lambda \leq \lambda_k \leq \Lambda <\frac{2}{L}. %]]></script>
+<p>[0&lt;\lambda \leq \lambda_k \leq \Lambda &lt;\frac{2}{L}.]</p>
 
 <h3>Sparse state: $\alpha_s&gt;0$ ($\alpha_c=0$)</h3>
 
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{P}_s\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left\{J\left(u\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{Lu}_{1,T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right\}.
-\end{equation*}</script>
+<p>[\begin{equation<em>}
+\left(\mathcal{P}_s\right) \ \ \ \ \ \ \ \hat{u}\in argmin_{u\in L^2_T} \left{J\left(u\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{Lu}_{1,T} + \frac{\gamma}{2}\norm{Lu-z}_{T}^2\right}.
+\end{equation</em>}]</p>
 
 <h3>The stationary problem</h3>
 
-<script type="math/tex; mode=display">\begin{equation*}
-\left(\mathcal{S}\mathcal{P}_s\right) \ \ \ \ \ \ \ \bar{u}\in argmin_{u\in L^2} \left\{J_s\left(u\right)=\alpha_c \norm{u}_{1} + \frac{\beta}{2}\norm{u}^2+ \frac{\gamma}{2}\norm{y-z}^2: \ \ \ Ay=Bu \right\}.
-\end{equation*}</script>
+<p>[\begin{equation<em>}
+\left(\mathcal{S}\mathcal{P}_s\right) \ \ \ \ \ \ \ \bar{u}\in argmin_{u\in L^2} \left{J_s\left(u\right)=\alpha_c \norm{u}_{1} + \frac{\beta}{2}\norm{u}^2+ \frac{\gamma}{2}\norm{y-z}^2: \ \ \ Ay=Bu \right}.
+\end{equation</em>}]</p>
 
 <h4>Optimality conditions</h4>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
-A\bar{y}=-\frac{1}{\beta}BB^*\hat{p} & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=shrink(A^*\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}) & \left(\Omega \times \left(0,T\right)\right)\\
-\bar{y}=0, \ \bar{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right).
+A\bar{y}=-\frac{1}{\beta}BB^</em>\hat{p} &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+\hat{y}=shrink(A^<em>\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}) &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+\bar{y}=0, \ \bar{p}=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right).
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>Finally, we obtain a single equation in the dual variable $p$:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
-A \ shrink(A^*\bar{p}+\gamma z,\frac{\alpha_s}{\gamma})=-\frac{1}{\beta}BB^*\bar{p} & \left(\Omega \times \left(0,T\right)\right)\\
-\bar{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right).
+A \ shrink(A^</em>\bar{p}+\gamma z,\frac{\alpha_s}{\gamma})=-\frac{1}{\beta}BB^<em>\bar{p} &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+\bar{p}=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right).
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <h4>Numerical algorithm</h4>
 <p>In order to compute a numerical solution of problem $\left(\mathcal{P}_s\right)$, after a discretization by finite differences, we use a prox-prox splitting on the Augmented Energy: first write the state as $y=A^{-1}Bu$, then</p>
@@ -663,75 +645,70 @@ $$
 </ul>
 <p><strong>Remark:</strong> Notice that again, when $\alpha_s=0$, the solution of $\left(\mathcal{P}_s\right)$ is simply given by</p>
 
-<script type="math/tex; mode=display">\bar{u}=\gamma \left[\beta I+\gamma B^*A^{-*}A^{-1}B\right]^{-1}B^*A^{-*}z.</script>
+<p>[\bar{u}=\gamma \left[\beta I+\gamma B^<em>A^{-</em>}A^{-1}B\right]^{-1}B^<em>A^{-</em>}z.]</p>
 
 <h3>Evolutionary problem</h3>
 <h4>Optimality conditions</h4>
 <p>Define the classical Lagrangian</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{split}
-\mathcal{L}\left(u,y,p\right)&=J\left(u\right)+\langle p, Bu-y'-Ay\rangle_T.
+\mathcal{L}\left(u,y,p\right)&amp;=J\left(u\right)+\langle p, Bu-y’-Ay\rangle_T.
 \end{split}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>By integration by parts, we have</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{split}
-\mathcal{L}\left(u,y,p\right)&=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T} +  \frac{\gamma}{2}\norm{y-z}_{T}^2 + \langle B^*p, u\rangle_T \\
-& \quad + \langle p'-A^*p,y\rangle_T + \langle p(0),y(0)\rangle - \langle p(T),y(T)\rangle.
+\mathcal{L}\left(u,y,p\right)&amp;=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T} +  \frac{\gamma}{2}\norm{y-z}_{T}^2 + \langle B^</em>p, u\rangle_T <br />
+&amp; \quad + \langle p’-A^<em>p,y\rangle_T + \langle p(0),y(0)\rangle - \langle p(T),y(T)\rangle.
 \end{split}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>Deriving with respect to the three variables $\left(u,y,p\right)$, we obtain the optimality system:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
-\hat{y}'+A\hat{y}=B\hat{u} & \left(\Omega \times \left(0,T\right)\right)\\
--\hat{p}'+A^*\hat{p}\in\gamma\left(\hat{y}-z\right)+\alpha_s \ \partial \norm{\cdot}_{1,T} \left(\hat{y}\right) & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right),
+\hat{y}’+A\hat{y}=B\hat{u} &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+-\hat{p}’+A^</em>\hat{p}\in\gamma\left(\hat{y}-z\right)+\alpha_s \ \partial \norm{\cdot}_{1,T} \left(\hat{y}\right) &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+\hat{y}=0, \ \hat{p}=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)<br />
+\hat{y}(0)=0, \ \hat{p}(T)=0 &amp; \left(\Omega\right),
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation*}]</p>
 
 <p>where the relation between the optimal control and the dual state is given by</p>
 
-<script type="math/tex; mode=display">\begin{equation*}
-\hat{u} = -\frac{1}{\beta}B^*\hat{p}.
-\end{equation*}</script>
+<p>[\begin{equation<em>}
+\hat{u} = -\frac{1}{\beta}B^</em>\hat{p}.
+\end{equation*}]</p>
 
 <p>The adjoint equation is equivalent to</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{split}
-\hat{y}&=\left(\gamma I+\alpha_s \ \partial \norm{\cdot}_{1,T} \right)^{-1}\left(-\hat{p}'+A^*\hat{p}+\gamma z\right)\\
-&=shrink(-\hat{p}'+A^*\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}).
+\hat{y}&amp;=\left(\gamma I+\alpha_s \ \partial \norm{\cdot}_{1,T} \right)^{-1}\left(-\hat{p}’+A^</em>\hat{p}+\gamma z\right)<br />
+&amp;=shrink(-\hat{p}’+A^<em>\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}).
 \end{split}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>Finally,</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \begin{cases}
-\hat{y}'+A\hat{y}=-\frac{1}{\beta}B B^*\hat{p} & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=shrink(-\hat{p}'+A^*\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}) & \left(\Omega \times \left(0,T\right)\right)\\
-\hat{y}=0, \ \hat{p}=0 & \left(\partial\Omega\times \left(0,T\right)\right)\\
-\hat{y}(0)=0, \ \hat{p}(T)=0 & \left(\Omega\right),
+\hat{y}’+A\hat{y}=-\frac{1}{\beta}B B^</em>\hat{p} &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+\hat{y}=shrink(-\hat{p}’+A^<em>\hat{p}+\gamma z,\frac{\alpha_s}{\gamma}) &amp; \left(\Omega \times \left(0,T\right)\right)<br />
+\hat{y}=0, \ \hat{p}=0 &amp; \left(\partial\Omega\times \left(0,T\right)\right)<br />
+\hat{y}(0)=0, \ \hat{p}(T)=0 &amp; \left(\Omega\right),
 \end{cases}
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <h4>Numerical algorithm</h4>
 <p>In order to compute a numerical solution of problem $\left(\mathcal{P}_s\right)$, after a discretization by finite differences, we use a grad-prox splitting on the following Augmented Energy:</p>
 
-<script type="math/tex; mode=display">\begin{equation*}
+<p>[\begin{equation<em>}
 \mathcal{L}_{\lambda}\left(u,y\right)=\frac{\beta}{2}\norm{u}^2_{T}+\alpha_s \norm{y}_{1,T}+ \frac{\gamma}{2}\norm{Lu-z}_{T}^2+\frac{\delta}{2\lambda}\norm{Lu-y}_{T}^2.
-\end{equation*}</script>
+\end{equation</em>}]</p>
 
 <p>Then,</p>
 <ul>

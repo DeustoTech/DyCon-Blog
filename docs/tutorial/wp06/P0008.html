@@ -297,7 +297,7 @@ img:active{
         
         <p>In this tutorial we will apply the DyCon toolbox to find a control to the semi-discrete semi-linear heat equation.</p>
 
-<script type="math/tex; mode=display">y_t-N^2Ay=G(y)+Bu</script>
+<p>[y_t-N^2Ay=G(y)+Bu]</p>
 
 <p>where $N^2A$ is the discretization of the Laplacian in 1d in $N$ nodes. We are looking for a control that after time $T$ steers the system near zero.</p>
 
@@ -307,11 +307,22 @@ img:active{
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
+<span class="n">StartDyConToolbox</span>
 </code></pre></div></div>
 <h3 id="methodology">Methodology</h3>
 <p>In order to do so we will frame the problem as a minimization of a functional and we will apply gradient descent to find it. Note that the convexity of the functional is not proven, therefore, we will obtain a local minima for the functional. The functional considered will be:</p>
 
-<script type="math/tex; mode=display">J(\boldsymbol{y},\boldsymbol{u})= | \boldsymbol{y}(t) |_{L^2}^2+\int_0^T | \boldsymbol{u}(t) |_{L^2}^2 dt</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[J(\boldsymbol{y},\boldsymbol{u})=</td>
+      <td>\boldsymbol{y}(t)</td>
+      <td>_{L^2}^2+\int_0^T</td>
+      <td>\boldsymbol{u}(t)</td>
+      <td>_{L^2}^2 dt]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>where by $| \cdot |_{L^2}$ we understand the discrete $L^2$ norm.</p>
 
@@ -358,7 +369,7 @@ img:active{
 
 <p>Diffusion part: the discretization of the 1d Laplacian</p>
 
-<p>Definition of the non-linearity <script type="math/tex">\partial_y[-5\exp(-y^2)]</script></p>
+<p>Definition of the non-linearity \(\partial_y[-5\exp(-y^2)]\)</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'NLT'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">},{</span><span class="mi">10</span><span class="o">*</span><span class="n">Ys</span><span class="o">.*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Ys</span><span class="o">.^</span><span class="mi">2</span><span class="p">)});</span><span class="c1">%%</span>
 </code></pre></div></div>

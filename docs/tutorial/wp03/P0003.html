@@ -297,24 +297,31 @@ img:active{
         
         <p>In [2], we analyzed the controllablity properties under non-negative control and state constraints of the following heat-like equation involving the fractional Laplacian on $(-1,1)$</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\label{frac_heat}
+<p>[\begin{equation}\label{frac_heat}
     \begin{cases}
-        z_t+(-d_x^2)^s z = u\chi_{\omega}, & (x,t)\in (-1,1)\times(0,T)
-        \\
-        z = 0, & (x,t)\in (-1,1)^c\times(0,T)
-        \\
-        z(\cdot,0)=z_0, & x\in (-1,1).
+        z_t+(-d_x^2)^s z = u\chi_{\omega}, &amp; (x,t)\in (-1,1)\times(0,T)
+        <br />
+        z = 0, &amp; (x,t)\in (-1,1)^c\times(0,T)
+        <br />
+        z(\cdot,0)=z_0, &amp; x\in (-1,1).
     \end{cases}
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>In \ref{frac_heat}, $\omega\subset (-1,1)$ is the control region in which the distributed control $u$ acts. Moreover, we denote by $(-d_x^2)^s$ the fractional Laplace operator defined, for all $s\in(0,1)$, as the following singular integral</p>
 
-<script type="math/tex; mode=display">(-d_x^2)^s z(x) := c_s \,P.V.\,\int_{\mathbb{R}} \frac{z(x)-z(y)}{|x-y|^{1+2s}}\,dy,</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[(-d_x^2)^s z(x) := c_s \,P.V.\,\int_{\mathbb{R}} \frac{z(x)-z(y)}{</td>
+      <td>x-y</td>
+      <td>^{1+2s}}\,dy,]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>with $c_s$ an explicit normalization constant given by</p>
 
-<script type="math/tex; mode=display">c_s = \frac{s2^{2s}\Gamma\left(\frac{1+2s}{2}\right)}{\sqrt{\pi}\Gamma(1-s)},</script>
+<p>[c_s = \frac{s2^{2s}\Gamma\left(\frac{1+2s}{2}\right)}{\sqrt{\pi}\Gamma(1-s)},]</p>
 
 <p>Gamma being the usual Euler Gamma function.</p>
 
@@ -329,9 +336,9 @@ img:active{
   </li>
 </ol>
 
-<script type="math/tex; mode=display">\begin{align}
-    T_{min}(z_0,\widehat{z}):= \inf\Big\{T>0:\exists\;\; 0\leq u\in L^\infty(\omega\times(0,T)) \\ \hspace{5cm} such\;that\; z(\cdot,0)=z_0\; and\; z(\cdot,T)=\widehat{z}(\cdot,T)\Big\},
-\end{align}</script>
+<p>[\begin{align}
+    T_{min}(z_0,\widehat{z}):= \inf\Big{T&gt;0:\exists\;\; 0\leq u\in L^\infty(\omega\times(0,T)) \ \hspace{5cm} such\;that\; z(\cdot,0)=z_0\; and\; z(\cdot,T)=\widehat{z}(\cdot,T)\Big},
+\end{align}]</p>
 
 <p>we have $T_{min}&gt;0$.</p>
 
@@ -348,42 +355,41 @@ fractional heat equation with non-negative control constraint and to confirm our
 
 <p>In particular, we will consider the problem of steering the initial datum</p>
 
-<script type="math/tex; mode=display">z_0(x) = \frac 12\cos\left(\frac \pi2 x\right)</script>
+<p>[z_0(x) = \frac 12\cos\left(\frac \pi2 x\right)]</p>
 
 <p>to the target trajectroy $\widehat{z}$ solution of \ref{frac_heat} with initial datum</p>
 
-<script type="math/tex; mode=display">\widehat{z}_0(x) = 6\cos\left(\frac \pi2 x\right)</script>
+<p>[\widehat{z}_0(x) = 6\cos\left(\frac \pi2 x\right)]</p>
 
 <p>and right-hand side $\widehat{u}\equiv 1$.</p>
 
 <p>We choose $s=0.8$ and $\omega=(-0.3,0.8)\subset (-1,1)$ as the control region. The approximation of the minimal controllability time is obtained by solving the following constrained minimization problem.</p>
 
-<script type="math/tex; mode=display">minimize\;T</script>
+<p>[minimize\;T]</p>
 
 <p>subject to</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases}
-T>0
-\\
-z_t+(-d_x^2)^s z=u\chi_\omega, & a.\,e.\;in\; (-1,1)\times(0,T)
-\\
-z(\cdot,0)=z_0\geq 0, & a.\,e.\;in\; (-1,1)
-\\
-z\geq 0, & a.\,e.\;in\; (-1,1)\times(0,T)
-\\
-u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
-\end{cases} %]]></script>
+<p>[\begin{cases}
+T&gt;0
+<br />
+z_t+(-d_x^2)^s z=u\chi_\omega, &amp; a.\,e.\;in\; (-1,1)\times(0,T)
+<br />
+z(\cdot,0)=z_0\geq 0, &amp; a.\,e.\;in\; (-1,1)
+<br />
+z\geq 0, &amp; a.\,e.\;in\; (-1,1)\times(0,T)
+<br />
+u\geq 0, &amp; a.\,e.\;in\; \omega\times(0,T).
+\end{cases}]</p>
 
 <p>To solve this problem numerically, we employ the expert interior-point optimization routine <a href="https://github.com/coin-or/Ipopt">IpOpt</a> combined with automatic differentiation and the modeling language <a href="https://ampl.com/">AMPL</a>. The interest of using <strong>AMPL</strong> together with <strong>IpOpt</strong> is that the gradient of the cost function and the constraints is automatically generated. Solving problems with <strong>IpOpt</strong> and AMPL can be made online through the <a href="https://neos-server.org/neos/">NEOS</a> solvers.</p>
 
 <p>To perform our simulations, we apply a FE method for the space discretization of the fractional Laplacian (see [1]) on a uniform space-grid</p>
 
-<script type="math/tex; mode=display">x_i = -1 + \frac{2i}{N_x}, \quad i = 1,\ldots,N_x,</script>
+<p>[x_i = -1 + \frac{2i}{N_x}, \quad i = 1,\ldots,N_x,]</p>
 
 <p>with $N_x=20$ . Moreover, we use an explicit Euler scheme for the time integration on the time-grid</p>
 
-<script type="math/tex; mode=display">t_j = \frac{Tj}{N_t}, \quad j = 0,\ldots,N_t,</script>
+<p>[t_j = \frac{Tj}{N_t}, \quad j = 0,\ldots,N_t,]</p>
 
 <p>with $N_t$ satisfying the <strong>Courant-Friedrich-Lewy</strong> condition. In particular, we choose here $N_t=100$.</p>
 
@@ -399,7 +405,7 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 </span>
 <span class="n">param</span> <span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>              <span class="c1"># number of time discretization points
 </span>
-<span class="n">param</span> <span class="n">y0</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>            <span class="c1"># initial condition
+<span class="n">param</span> <span class="n">y0</span> <span class="p">{</span><span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">};</span>            <span class="c1"># initial condition
 </span>
 <span class="n">param</span> <span class="n">y1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                <span class="c1"># target
 </span>
@@ -407,16 +413,16 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 </span>
 <span class="n">param</span> <span class="n">C</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>                 <span class="c1"># Bound on the controls
 </span>
-<span class="n">param</span> <span class="n">A</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Stiffness or rigidity matrix
+<span class="n">param</span> <span class="n">A</span> <span class="p">{</span><span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Stiffness or rigidity matrix
 </span>
-<span class="n">param</span> <span class="n">B</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Control matrix
+<span class="n">param</span> <span class="n">B</span> <span class="p">{</span><span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Control matrix
 </span>
-<span class="n">param</span> <span class="n">M</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Mass matrix  
+<span class="n">param</span> <span class="n">M</span> <span class="p">{</span><span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Mass matrix  
 </span>
 <span class="c1"># 2: define the variables
 </span>
-<span class="n">var</span> <span class="n">y</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># State
-</span><span class="n">var</span> <span class="n">u</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span><span class="o">&gt;=-</span><span class="n">C</span><span class="p">;</span>   <span class="c1"># Control
+<span class="n">var</span> <span class="n">y</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="p">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># State
+</span><span class="n">var</span> <span class="n">u</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="p">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">}</span><span class="o">&gt;=-</span><span class="n">C</span><span class="p">;</span>   <span class="c1"># Control
 </span><span class="n">var</span> <span class="n">T</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span>                            <span class="c1"># Time horizon
 </span><span class="n">var</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="n">Nt</span><span class="p">;</span>                        <span class="c1"># Time step
 </span>
@@ -433,7 +439,7 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 </span>
 <span class="n">param</span> <span class="n">A</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
 <span class="mi">1</span> <span class="o">-</span><span class="mf">5.551728</span> <span class="mf">2.242487</span> <span class="mf">0.359689</span> <span class="mf">0.077115</span> <span class="mf">0.033148</span> <span class="mf">0.017829</span> <span class="mf">0.010871</span> <span class="mf">0.007193</span> <span class="mf">0.005044</span> <span class="mf">0.003694</span> <span class="mf">0.002798</span> <span class="mf">0.002178</span> <span class="mf">0.001733</span> <span class="mf">0.001405</span> <span class="mf">0.001158</span> <span class="mf">0.000966</span> <span class="mf">0.000816</span> <span class="mf">0.000697</span> <span class="mf">0.000600</span> <span class="mf">0.000521</span>
-<span class="o">...</span>
+<span class="p">...</span>
 <span class="mi">20</span> <span class="mf">0.000521</span> <span class="mf">0.000600</span> <span class="mf">0.000697</span> <span class="mf">0.000816</span> <span class="mf">0.000966</span> <span class="mf">0.001158</span> <span class="mf">0.001405</span> <span class="mf">0.001733</span> <span class="mf">0.002178</span> <span class="mf">0.002798</span> <span class="mf">0.003694</span> <span class="mf">0.005044</span> <span class="mf">0.007193</span> <span class="mf">0.010871</span> <span class="mf">0.017829</span> <span class="mf">0.033148</span> <span class="mf">0.077115</span> <span class="mf">0.359689</span> <span class="mf">2.242487</span> <span class="o">-</span><span class="mf">5.551728</span><span class="p">;</span>
 </code></pre></div></div>
 
@@ -441,7 +447,7 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 </span>
 <span class="n">param</span> <span class="n">B</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
 <span class="mi">1</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span>
-<span class="o">...</span>
+<span class="p">...</span>
 <span class="mi">20</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span><span class="p">;</span>
 </code></pre></div></div>
 
@@ -449,7 +455,7 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 </span>
 <span class="n">param</span> <span class="n">M</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
 <span class="mi">1</span> <span class="mf">0.070175</span> <span class="mf">0.017544</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span>
-<span class="o">...</span>
+<span class="p">...</span>
 <span class="mi">20</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.017544</span> <span class="mf">0.070175</span><span class="p">;</span>
 </code></pre></div></div>
 
@@ -461,21 +467,21 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 </span>
 <span class="c1"># 5.a: dynamics y' = Ay + Bu, implemented through an Explicit Euler method.
 </span>
-<span class="n">subject</span> <span class="n">to</span> <span class="n">y_dyn</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">2.</span><span class="o">.</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">}:</span>
-<span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">dt</span><span class="o">*</span><span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]);</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">y_dyn</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">2.</span><span class="p">.</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">}:</span>
+<span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">}</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">}</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">dt</span><span class="o">*</span><span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">}(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]);</span>
 
 <span class="c1"># 5.b: homogeneous Dirichlet boundary conditions in -1 and 1.
 </span>
-<span class="n">subject</span> <span class="n">to</span> <span class="n">left_boundary</span>  <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">subject</span> <span class="n">to</span> <span class="n">right_boundary</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">Nx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">left_boundary</span>  <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="p">.</span><span class="n">Nt</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">right_boundary</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="p">.</span><span class="n">Nt</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">Nx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
 <span class="c1"># 5.c: initial condition.
 </span>
-<span class="n">subject</span> <span class="n">to</span> <span class="n">y_init</span> <span class="p">{</span><span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y0</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">y_init</span> <span class="p">{</span><span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y0</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
 
 <span class="c1"># 5.d: target.
 </span>
-<span class="n">subject</span> <span class="n">to</span> <span class="n">y_end1</span> <span class="p">{</span><span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">Nt</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y1</span><span class="p">;</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">y_end1</span> <span class="p">{</span><span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">Nt</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y1</span><span class="p">;</span>
 
 <span class="c1"># 6: solve the problem with IpOpt
 </span>
@@ -485,11 +491,11 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 
 <span class="c1"># 7: print the results.
 </span>
-<span class="n">printf</span><span class="p">:</span> <span class="s">"T  = </span><span class="si">%24.16</span><span class="s">e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">T</span><span class="p">;</span>
-<span class="n">printf</span><span class="p">:</span> <span class="s">"Nx = </span><span class="si">%</span><span class="s">d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">Nx</span><span class="p">;</span>
-<span class="n">printf</span><span class="p">:</span> <span class="s">"Nt = </span><span class="si">%</span><span class="s">d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">Nt</span><span class="p">;</span>
-<span class="n">printf</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="s">" </span><span class="si">%24.16</span><span class="s">e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">];</span>
-<span class="n">printf</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="s">" </span><span class="si">%24.16</span><span class="s">e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">];</span>
+<span class="n">printf</span><span class="p">:</span> <span class="s">"T  = %24.16e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">T</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">:</span> <span class="s">"Nx = %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">Nx</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">:</span> <span class="s">"Nt = %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">Nt</span><span class="p">;</span>
+<span class="n">printf</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="p">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="s">" %24.16e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">];</span>
+<span class="n">printf</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="p">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="s">" %24.16e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">];</span>
 
 <span class="n">end</span><span class="p">;</span>
 </code></pre></div></div>
@@ -536,20 +542,19 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 
 <p>This control has been computed by employing once again <strong>IpOpt</strong> for solving the following minimization problem:</p>
 
-<script type="math/tex; mode=display">\min\;\|z(\cdot,T)-\widehat{z}(\cdot,T)\|_{L^2(-1,1)}</script>
+<p>[\min\;|z(\cdot,T)-\widehat{z}(\cdot,T)|_{L^2(-1,1)}]</p>
 
 <p>subject to</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases}
-z_t+(-d_x^2)^s z=u\chi_\omega, & a.\,e.\;in\; (-1,1)\times(0,T)
-\\
-z(x,0)=z_0\geq 0, & a.\,e.\;in\; (-1,1)
-\\
-z(x,t)\geq 0, & a.\,e.\;in\; (-1,1)\times(0,T)
-\\
-u(x,t)\geq 0, & a.\,e.\;in\; \omega\times(0,T).
-\end{cases} %]]></script>
+<p>[\begin{cases}
+z_t+(-d_x^2)^s z=u\chi_\omega, &amp; a.\,e.\;in\; (-1,1)\times(0,T)
+<br />
+z(x,0)=z_0\geq 0, &amp; a.\,e.\;in\; (-1,1)
+<br />
+z(x,t)\geq 0, &amp; a.\,e.\;in\; (-1,1)\times(0,T)
+<br />
+u(x,t)\geq 0, &amp; a.\,e.\;in\; \omega\times(0,T).
+\end{cases}]</p>
 
 <p>As we can observe, the action of this control is now more distributed in $\omega$. Neverthelss, in accordance with our theoretical results, the equation is still controllable in the prescribed time horizon (see <strong>Figure 4</strong>)</p>
 

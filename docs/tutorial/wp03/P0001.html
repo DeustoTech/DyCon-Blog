@@ -371,50 +371,57 @@ IpOpt can be used together with <a href="https://www.mathworks.com/products/matl
 <p>Let us now turn to a time optimal control problem.
 Given a dynamical system,</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:1a}
+<p>[\begin{equation}\label{eq:1a}
 \dot{y}=f(y,u)\, ,
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>some initial condition $\mathrm{y}^0\in \mathbb{R}^n$ and some terminal condition $\mathrm{y}^1\in\mathbb{R}^n$ and some bound $M&gt;0$, the aim is to find the minimal time $T\geqslant 0$ such that there exist a control $u\in L^\infty(0,T)^m$ such that,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
-|u_i(t)|\leqslant M  (t\in(0,T)\ \text{a.e.}\, ,\ i\in\{1,\dots,m\}),
-\end{equation}</script>
+<p>[\begin{equation}
+|u_i(t)|\leqslant M  (t\in(0,T)\ \text{a.e.}\, ,\ i\in{1,\dots,m}),
+\end{equation}]</p>
 
 <p>and the solution $y$ of (1) satisfies the constraint,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 g(y(t))\leqslant 0 (t\in(0,T)),
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>and the terminal condition,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 y(T)=\mathrm{y}^1\, ,
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>where $g$ is given and define constraints of the state variable $y$. Of course to be able to solve this system, one needs to have $g(\mathrm{y}^0)\leqslant0$ and $g(\mathrm{y}^1)\leqslant0$.
 The above optimal control problem, can be recast as an optimisation problem under constraints similar to (P0). More precisely, it is</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{array}{cl}
-	\min & T\\
-	 & \begin{array}{l}
-		u\in L^\infty(0,T)^M\, ,\\
-		\dot{y}=f(y,u)\, , y(0)=\mathrm{y}^0\, ,\\
-		y(T)=\mathrm{y}^1\, ,\\
+<p>[\begin{array}{cl}
+	\min &amp; T<br />
+	 &amp; \begin{array}{l}
+		u\in L^\infty(0,T)^M\, ,<br />
+		\dot{y}=f(y,u)\, , y(0)=\mathrm{y}^0\, ,<br />
+		y(T)=\mathrm{y}^1\, ,<br />
 		g(y(t))\leqslant 0 (t\in(0,T)).
 	\end{array}
-\end{array} %]]></script>
+\end{array}]</p>
 
 <p>In order to handle numerically, this problem, we will use a time discretization. Let us explain it with the explicit Euler method. But any other time discretization can be used.
 Fix some parameter $N_t\in\mathbb{N}^*$ (the number of time steps) and for $T&gt;0$ given, define $y_i$ the estimation of $y(iT/N_t)$ for $i\in{0,\dots,N_t}$. The explicit Euler scheme, gives the relation,</p>
 
-<script type="math/tex; mode=display">y_{i+1}=y_i+\frac{T}{N_t}f(y_i,u_i)\, ,</script>
+<p>[y_{i+1}=y_i+\frac{T}{N_t}f(y_i,u_i)\, ,]</p>
 
 <p>with $u_i\simeq u(iT/N_t)$. Then the state and control constraints are replaced by:</p>
 
-<script type="math/tex; mode=display">g(y_i)\leqslant 0 \text{and} |u_i|\leqslant M\, .</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[g(y_i)\leqslant 0 \text{and}</td>
+      <td>u_i</td>
+      <td>\leqslant M\, .]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Consequently, in discretized version, we end up with a finite dimensional control problem under constraints, whose AMPL version is:</p>
 <pre><span style="color: green;"># Define the parameters of the problem</span>
@@ -463,102 +470,101 @@ Fix some parameter $N_t\in\mathbb{N}^*$ (the number of time steps) and for $T&gt
 <p>Now we can turn to the control of the heat equation with nonnegative state constraint.
 To this end, we consider the controlled 1D heat equation with Neumann boundary control.</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2}
-\left\{
-\begin{array}{r@{\>}l@{}l}
-\dot{y}(t,x)  =\partial_x^2y(t,x)  (t>0\, ,\ x\in(0,1)),\\[2mm]
-\partial_xy(t,0)  =v_0(t)  (t>0),\\[2mm]
-\partial_xy(t,1)  =v_1(t)  (t>0),
+<p>[\begin{equation}\label{eq:doc2}
+\left{
+\begin{array}{r@{\&gt;}l@{}l}
+\dot{y}(t,x)  =\partial_x^2y(t,x)  (t&gt;0\, ,\ x\in(0,1)),\[2mm]
+\partial_xy(t,0)  =v_0(t)  (t&gt;0),\[2mm]
+\partial_xy(t,1)  =v_1(t)  (t&gt;0),
 \end{array}
 \right.
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>To this problem, we add the control constraints,</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2CC}
-|v_0(t)|\leqslant M \text{and} |v_1(t)|\leqslant M (t>0\ \text{a.e.}),
-\end{equation}</script>
+<p>[\begin{equation}\label{eq:doc2CC}
+|v_0(t)|\leqslant M \text{and} |v_1(t)|\leqslant M (t&gt;0\ \text{a.e.}),
+\end{equation}]</p>
 
 <p>with some $M&gt;0$ given and we add the state constraint,</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2SC}
+<p>[\begin{equation}\label{eq:doc2SC}
 y(t,x)\geqslant 0 ( (t,x)\in \mathbb{R}_+^*\times(0,1)\ \text{a.e.}).
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>To the system (5) we add the initial condition</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2IC}
+<p>[\begin{equation}\label{eq:doc2IC}
 y(0,x)=y^0(x) (x\in(0,1)),
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>and the terminal condition</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:doc2TC}
+<p>[\begin{equation}\label{eq:doc2TC}
 y(T,x)=y^1(x) (x\in(0,1)).
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>In <a href="#LTZheat">[3]</a>, it has been proved that every positive constant state $\mathrm{y}^0$ can be steered to some over positive constant state $\mathrm{y}^1$ in a large enough time $T$. Our goal here is to find numerically the minimal time $T$ such there exist controls satisfying (6) such that the corresponding solution $y$ of (5) and (8) satisfies the constraint (6) and the terminal condition (9), i.e.~ we aim to minimize</p>
 
-<script type="math/tex; mode=display">\begin{array}{cl}
-\min  T\\
+<p>[\begin{array}{cl}
+\min  T<br />
   \begin{array}{l}
-T>0\, ,\\
+T&gt;0\, ,<br />
 v_0,\, v_1\in L^\infty(0,T)\, ,
-y \text{ solution of (5) and (8) satisfies}\\
- y(T,\cdot)=y^1 \text{and} y(t,x)\geqslant 0 (t>0,\ x\in(0,1)\ $\text{a.e.}$).
+y \text{ solution of (5) and (8) satisfies}<br />
+ y(T,\cdot)=y^1 \text{and} y(t,x)\geqslant 0 (t&gt;0,\ x\in(0,1)\ $\text{a.e.}$).
 \end{array}
-\end{array}</script>
+\end{array}]</p>
 
 <p>Firstly, we will use a space discretization to reduce the system (5). To this end, we define $N\in\mathbb{N}^*$ and for every $n\in{0,\dots,N}$, $x_n=\frac{n}{N}$. Based on this discretization of $[0,1]$, we will discretized (5) using centered finite differences. That is to say, given $V(t)=(v_0(t)\, ,\ v_1(t))^\top$ and $Y(t)\in \mathbb{R}^{N+1}$, a vector approaching $\bigl( y(t,x_0),\ \dots,\ y(t,x_N)\bigr)^\top$, $Y$ is solution of</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:doc3a}
-	\dot{Y}=AY+BV (t>0)\, ,
-\end{equation}</script>
+<p>[\begin{equation}\label{eq:doc3a}
+	\dot{Y}=AY+BV (t&gt;0)\, ,
+\end{equation}]</p>
 
 <p>with the initial condition</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 	Y(0)=\mathrm{y}^0e_{N+1}
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>the target state,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 	Y(T)=\mathrm{y}^1e_{N+1}
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>the state constraint,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
-	Y(t)\geqslant 0  (t>0\ \text{a.e.})
-\end{equation}</script>
+<p>[\begin{equation}
+	Y(t)\geqslant 0  (t&gt;0\ \text{a.e.})
+\end{equation}]</p>
 
 <p>and the control constraint,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
-	|V_0(t)|\leqslant M\text{and} |V_1(t)|\leqslant M (t>0\ \text{a.e.})\, ,
-\end{equation}</script>
+<p>[\begin{equation}
+	|V_0(t)|\leqslant M\text{and} |V_1(t)|\leqslant M (t&gt;0\ \text{a.e.})\, ,
+\end{equation}]</p>
 
 <p>where we have set $e_{N+1}=(1,\dots,1)^\top\in\mathbb{R}^{N+1}$,</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-A=N^2\begin{pmatrix}
-2 & -2  & 0 & \hdots &\hdots & \hdots & 0\\
-1 & -2  & 1 & 0  & \hdots &  \hdots & 0\\
-0 & \ddots & \ddots &  \ddots &  \ddots  & \vdots\\
-\vdots & \ddots & \ddots  & \ddots & \ddots & \ddots & \vdots\\
-\vdots & \ddots & \ddots & \ddots  & \ddots & 0\\
-0  & \hdots & \hdots & 0 & 1 & -2 & 1\\
-0  & \hdots & \hdots & \hdots & 0  &2 & -2\\
+<p>[A=N^2\begin{pmatrix}
+2 &amp; -2  &amp; 0 &amp; \hdots &amp;\hdots &amp; \hdots &amp; 0<br />
+1 &amp; -2  &amp; 1 &amp; 0  &amp; \hdots &amp;  \hdots &amp; 0<br />
+0 &amp; \ddots &amp; \ddots &amp;  \ddots &amp;  \ddots  &amp; \vdots<br />
+\vdots &amp; \ddots &amp; \ddots  &amp; \ddots &amp; \ddots &amp; \ddots &amp; \vdots<br />
+\vdots &amp; \ddots &amp; \ddots &amp; \ddots  &amp; \ddots &amp; 0<br />
+0  &amp; \hdots &amp; \hdots &amp; 0 &amp; 1 &amp; -2 &amp; 1<br />
+0  &amp; \hdots &amp; \hdots &amp; \hdots &amp; 0  &amp;2 &amp; -2<br />
 \end{pmatrix}\in M_{N+1}(R)\text{and} B=2N\begin{pmatrix}
-1 & 0\\
-0 & \vdots\\
-\vdots & \vdots\\
-\vdots & \vdots\\
-\vdots & \vdots\\
-\vdots& 0\\
-0  &  1
-\end{pmatrix}\in M_{N+1,2}(\mathbb{R})\, . %]]></script>
+1 &amp; 0<br />
+0 &amp; \vdots<br />
+\vdots &amp; \vdots<br />
+\vdots &amp; \vdots<br />
+\vdots &amp; \vdots<br />
+\vdots&amp; 0<br />
+0  &amp;  1
+\end{pmatrix}\in M_{N+1,2}(\mathbb{R})\, .]</p>
 
 <p>Now we can discretize (10) using explicit Euler scheme and similarly to the previous example, we obtain an optimisation problem of finite dimension with constraints whose AMPL formulation is</p>
 <pre><span style="color: green;"># Parameters of the problem</span>
@@ -652,26 +658,26 @@ Your browser does not support the video tag.
 </ul>
 <p>Similarly, we can consider the time optimal control problem,</p>
 
-<script type="math/tex; mode=display">\begin{array}{cl}
-\min  T\\
+<p>[\begin{array}{cl}
+\min  T<br />
   \begin{array}{l}
-T>0\, ,\\
-u_0,\, u_1\in L^\infty(0,T)\\
-u_0(t)\geqslant0\text{and} u_1(t)\geqslant 0  (t\in(0,T)\ \text{a.e.}),\\
+T&gt;0\, ,<br />
+u_0,\, u_1\in L^\infty(0,T)<br />
+u_0(t)\geqslant0\text{and} u_1(t)\geqslant 0  (t\in(0,T)\ \text{a.e.}),<br />
 y \text{ solution of (11) satisfies } y(T,\cdot)=y^1\, ,
 \end{array}
-\end{array}</script>
+\end{array}]</p>
 
 <p>with (11) given by,</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:doc4}
-\left\{\begin{array}{r@{\>}l@{}l}
-\dot{y}(t,x)  =\partial_x^2y(t,x)  (t>0\, ,\ x\in(0,1)),\\[2mm]
-y(t,0)  =u_0(t)  (t>0),\\[2mm]
-y(t,1)  =u_1(t)  (t>0),\\[2mm]
+<p>[\begin{equation}\label{eq:doc4}
+\left{\begin{array}{r@{\&gt;}l@{}l}
+\dot{y}(t,x)  =\partial_x^2y(t,x)  (t&gt;0\, ,\ x\in(0,1)),\[2mm]
+y(t,0)  =u_0(t)  (t&gt;0),\[2mm]
+y(t,1)  =u_1(t)  (t&gt;0),\[2mm]
 y(0,x)  =y^0(x)  (x\in(0,1).
 \end{array}\right.
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>Numerically, we obtain</p>
 <ul>

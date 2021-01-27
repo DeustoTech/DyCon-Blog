@@ -297,12 +297,11 @@ img:active{
         
         <p>We design a LQR controller for stabilyzing the fractional reaction diffusion equation</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases} y_t + (-d_x^2)^s y-\delta y = u\chi_\omega, & (x,t) \in(-L,L)\times(0,T) \\ y = 0, & (x,t)\in [\mathbb{R}\setminus(-L,L)]\times(0,T) \\ y(x,0) = y_0(x), & x\in(-L,L), \end{cases} %]]></script>
+<p>[\begin{cases} y_t + (-d_x^2)^s y-\delta y = u\chi_\omega, &amp; (x,t) \in(-L,L)\times(0,T) \ y = 0, &amp; (x,t)\in [\mathbb{R}\setminus(-L,L)]\times(0,T) \ y(x,0) = y_0(x), &amp; x\in(-L,L), \end{cases}]</p>
 
 <p>where $\delta&gt;0$ is a given constant, $\omega = (a,b)\subset(-L,L)$ and $(-d_x^2)^s$, $s\in(0,1)$ denotes the one-dimensional fractional Laplacian defined as</p>
 
-<script type="math/tex; mode=display">(-d_x^2)^s y(x) = c(s) P.V. \int_{\mathbb{R}} \frac{y(x)-y(z)}{\vert x-z\vert^{1+2s}}dz,</script>
+<p>[(-d_x^2)^s y(x) = c(s) P.V. \int_{\mathbb{R}} \frac{y(x)-y(z)}{\vert x-z\vert^{1+2s}}dz,]</p>
 
 <p>with $c(s)$ an explicit normalization constant.</p>
 
@@ -314,7 +313,7 @@ img:active{
 
 <p>We start by discretizing our original system on a uniform mesh $x_i$, $i=1,\ldots,N$, thus obtaining a N-dimensional system of the type</p>
 
-<script type="math/tex; mode=display">\begin{cases} \dot{y} = Ay+Bu \\ y(0) = y_0 \end{cases}</script>
+<p>[\begin{cases} \dot{y} = Ay+Bu \ y(0) = y_0 \end{cases}]</p>
 
 <p>where:</p>
 
@@ -375,11 +374,11 @@ img:active{
 
 <p>Once we have the semi-discretization of our original problem, the control we are looking for is computed by minimizing the following cost functional</p>
 
-<script type="math/tex; mode=display">J_{\infty} = \int_{0}^{+\infty} \Big(y^TQy + u^TRu\Big)dt,</script>
+<p>[J_{\infty} = \int_{0}^{+\infty} \Big(y^TQy + u^TRu\Big)dt,]</p>
 
 <p>where $Q\geq 0$ and $R&gt;0$ are given matrices. Moreover, we know that this control is given in a feedback form by $u^*=-R^{-1}B^TPy$, where $P$ is the solution of the algebraic Riccati equation</p>
 
-<script type="math/tex; mode=display">PA + A^TP-PBB^TP+Q = 0.</script>
+<p>[PA + A^TP-PBB^TP+Q = 0.]</p>
 
 <h2 id="implementation">Implementation</h2>
 

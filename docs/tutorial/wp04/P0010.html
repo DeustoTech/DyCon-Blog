@@ -299,18 +299,17 @@ img:active{
 
 <p>We consider the initial-value problem for a Hamilton-Jacobi equation of the form</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\tag{HJ}
-\left\{ \begin{array}{ll}
-\partial_t u + H(D_x u) = 0, & \text{in} \ [0,T]\times \mathbb{R}^n, \\
-u(0,x) = u_0(x), & \text{in} \ \mathbb{R}^n,
-\end{array}\right. %]]></script>
+<p>[\tag{HJ}
+\left{ \begin{array}{ll}
+\partial_t u + H(D_x u) = 0, &amp; \text{in} \ [0,T]\times \mathbb{R}^n, <br />
+u(0,x) = u_0(x), &amp; \text{in} \ \mathbb{R}^n,
+\end{array}\right.]</p>
 
 <p>where $u_0\in C^{0,1}(\mathbb{R}^n)$ and the Hamiltonian $H: \mathbb{R}^n\rightarrow\mathbb{R}$ is assumed to satisfy the following hypotheses:</p>
 
-<script type="math/tex; mode=display">\tag{2}
-H\in C^2(\mathbb{R}^n), \quad H_{pp}(p) >0, \ \forall p\in\mathbb{R}^n, \quad \text{and} \quad 
-\lim_{|p|\to\infty} \dfrac{H(p)}{|p|} = +\infty.</script>
+<p>[\tag{2}
+H\in C^2(\mathbb{R}^n), \quad H_{pp}(p) &gt;0, \ \forall p\in\mathbb{R}^n, \quad \text{and} \quad 
+\lim_{|p|\to\infty} \dfrac{H(p)}{|p|} = +\infty.]</p>
 
 <p>Here, the unknown $u$ is a function $[0,T]\times\mathbb{R}^n\longrightarrow\mathbb{R}$,
 and the inequality $H_{pp}(p)&gt;0$ means that the Hessian matrix of $H$ at $p$ is positive definite.
@@ -332,11 +331,10 @@ we want to construct all the <strong>initial conditions</strong> $u_0$ such that
 we define the following nonlinear operator, which associates to any initial condition $u_0$, the function
 $u(T,\cdot)$, where $u$ is the viscosity solution of (HJ):</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{array}{cccl}
-S^+_T : & C^{0,1}(\mathbb{R}^n) & \longrightarrow & C^{0,1}(\mathbb{R}^n) \\
- & u_0 & \longmapsto & S^+_T u_0 := u(T,\cdot)
-\end{array} %]]></script>
+<p>[\begin{array}{cccl}
+S^+_T : &amp; C^{0,1}(\mathbb{R}^n) &amp; \longrightarrow &amp; C^{0,1}(\mathbb{R}^n) <br />
+ &amp; u_0 &amp; \longmapsto &amp; S^+_T u_0 := u(T,\cdot)
+\end{array}]</p>
 
 <p>The inverse design problem that we are considering is then reduced to, for $u_T$ and $T&gt;0$ given,
 characterize all the initial conditions $u_0$ satisfying $S_T^+ u_0 =u_T$.</p>
@@ -364,11 +362,10 @@ The natural candidate is the one obtained by reversing the time in the equation,
 
 <p>We then define the <strong>backward operator</strong> as follows:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{array}{cccl}
-S^-_T : & C^{0,1}(\mathbb{R}^n) & \longrightarrow & C^{0,1}(\mathbb{R}^n) \\
- & u_T & \longmapsto & S^-_T u_T := w(0,\cdot)
-\end{array} %]]></script>
+<p>[\begin{array}{cccl}
+S^-_T : &amp; C^{0,1}(\mathbb{R}^n) &amp; \longrightarrow &amp; C^{0,1}(\mathbb{R}^n) <br />
+ &amp; u_T &amp; \longmapsto &amp; S^-_T u_T := w(0,\cdot)
+\end{array}]</p>
 
 <p>which associates to any terminal condition $u_T$, the function $w(0,\cdot)$,
 i.e. the unique backward viscosity solution at time $0$, with terminal condition $u_T$.</p>
@@ -385,7 +382,7 @@ i.e. the unique backward viscosity solution at time $0$, with terminal condition
 
 <p>Let us introduce, for a target $u_T$ and a time horizon $T&gt;0$, the set</p>
 
-<script type="math/tex; mode=display">I_T (u_T) := \left\{ u_0\in C^{0,1}(\mathbb{R}^n) \, ; \ S_T^+ u_0 = u_T\right\}</script>
+<p>[I_T (u_T) := \left{ u_0\in C^{0,1}(\mathbb{R}^n) \, ; \ S_T^+ u_0 = u_T\right}]</p>
 
 <p>of initial conditions $u_0$ satisfying $S_T^+ u_0 = u_T$.
 We say that a target $u_T$ is <strong>reachable</strong> for the time horizon $T$ if $I_T(u_T)\neq \emptyset$.
@@ -408,7 +405,7 @@ Or equivalently, an observation $u_T$ at time $T$ is admissible if and only if $
 
 <p>In the case the observation $u_T$ at time $T$ is <strong>not admissible</strong>, maybe due to noise effects or to errors in the measurements, we can actually project it on the set of admissible observations by applying the operator $S_T^+\circ S_T^-$. For a given $u_T\in C^{0,1}(\mathbb{R}^n)$, we define this projection as follows:</p>
 
-<script type="math/tex; mode=display">u_T^\ast := S_T^+(S_T^- u_T).</script>
+<p>[u_T^\ast := S_T^+(S_T^- u_T).]</p>
 
 <p>Observe that $I_T(u_T^\ast)\neq \emptyset$ for any $u_T\in C^{0,1}(\mathbb{R}^n)$. 
 Indeed, $\tilde{u}_0:=S_T^- u_T\in I_T (u_T^\ast)$ by definition.</p>
@@ -451,7 +448,7 @@ This construction is contained in the recent work [3], and reads as follows:</p>
 <p><strong>Theorem 2:</strong> Let $H$ satisfy (2) and $T&gt;0$.
 Let $u_T\in C^{0,1}(\mathbb{R}^n)$ and define the functions</p>
 
-<script type="math/tex; mode=display">u_T^\ast := S_T^+(S_T^- u_T) \qquad \text{and} \qquad \tilde{u}_0 := S_T^- u^\ast_T.</script>
+<p>[u_T^\ast := S_T^+(S_T^- u_T) \qquad \text{and} \qquad \tilde{u}_0 := S_T^- u^\ast_T.]</p>
 
 <p>Then, for any $u_0\in C^{0,1} (\mathbb{R}^n)$, the two following statements are equivalent:</p>
 <ol>
@@ -461,8 +458,8 @@ Let $u_T\in C^{0,1}(\mathbb{R}^n)$ and define the functions</p>
 
 <p>where $X_T(u_T^\ast)$ is the subset of $\mathbb{R}^n$ given by</p>
 
-<script type="math/tex; mode=display">X_T(u_T^\ast) : = \left\{ z- T\, H_p (\nabla u_T^\ast(z)); \ \forall z\in\mathbb{R}^n \ \text{such that} \ 
-u_T^\ast(\cdot) \ \text{is differentiable at} \ z\right\}.</script>
+<p>[X_T(u_T^\ast) : = \left{ z- T\, H_p (\nabla u_T^\ast(z)); \ \forall z\in\mathbb{R}^n \ \text{such that} \ 
+u_T^\ast(\cdot) \ \text{is differentiable at} \ z\right}.]</p>
 
 <hr />
 
@@ -499,8 +496,8 @@ Observe that all the initial data in $I_T(u_T^\ast)$ must coincide with $\tilde{
 <p>An important consequence of Theorem 2 is that the initial data in $I_T(u_T^\ast)$ are not unique whenever $X_T(u_T^\ast) \neq \mathbb{R}^n$.
 Indeed, the set $I_T(u_T^\ast)$ can be given in the following way:</p>
 
-<script type="math/tex; mode=display">I_T(u_T) = \left\{ \tilde{u}_0 + \varphi \, ; \, \varphi\in C^{0,1}(\mathbb{R}^n)\ 
-\text{such that} \ \varphi\geq 0\ \text{and}\ \text{supp} (\varphi) \subset \mathbb{R}^n\setminus X_T(u_T)\right\}.</script>
+<p>[I_T(u_T) = \left{ \tilde{u}_0 + \varphi \, ; \, \varphi\in C^{0,1}(\mathbb{R}^n)\ 
+\text{such that} \ \varphi\geq 0\ \text{and}\ \text{supp} (\varphi) \subset \mathbb{R}^n\setminus X_T(u_T)\right}.]</p>
 
 <p>In the case of the examples illustrated in Figures 3 and 4,
 we can see in the videos 3 below, examples of different initial conditions whose solution coincides with $u_T^\ast$ at time $T$.

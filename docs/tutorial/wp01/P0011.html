@@ -313,41 +313,39 @@ img:active{
 
 <p>Consider the following parameter-dependent linear control system</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\left\{\begin{array}{ll}
-\displaystyle x'_\nu(t) = \mathbf{A}_\nu x_\nu(t)+\mathbf{B} u(t), & 0<t<T,
-\\[10pt]
+<p>[\left{\begin{array}{ll}
+\displaystyle x’<em>\nu(t) = \mathbf{A}</em>\nu x_\nu(t)+\mathbf{B} u(t), &amp; 0&lt;t&lt;T,
+\[10pt]
 x_\nu(0) = x^0,
-\end{array}\right.\quad (1) %]]></script>
+\end{array}\right.\quad (1)]</p>
 
 <p>with</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\mathbf{A}_\nu=\left(\begin{array}{cccccc}
-0 & 1 & 0 & \ldots & \ldots & 0
-\\
-0 & 0 & 1 & 0 & \ldots & 0
-\\
-\vdots & & & \ddots & \ddots & \vdots
-\\
-0 & \ldots & \ldots & \ldots & 1 & 0
-\\
--\nu & 0 & \ldots & \ldots & \ldots & 0
-\end{array}\right)\in \mathbb{R}^{N\times N}, \quad \mathbf{B} = \left(\begin{array}{c} 1 \\ 1 \\ \vdots \\ \vdots \\ 1\end{array}\right)\in \mathbb{R}^{N}. \quad(2) %]]></script>
+<p>[\mathbf{A}_\nu=\left(\begin{array}{cccccc}
+0 &amp; 1 &amp; 0 &amp; \ldots &amp; \ldots &amp; 0
+<br />
+0 &amp; 0 &amp; 1 &amp; 0 &amp; \ldots &amp; 0
+<br />
+\vdots &amp; &amp; &amp; \ddots &amp; \ddots &amp; \vdots
+<br />
+0 &amp; \ldots &amp; \ldots &amp; \ldots &amp; 1 &amp; 0
+<br />
+-\nu &amp; 0 &amp; \ldots &amp; \ldots &amp; \ldots &amp; 0
+\end{array}\right)\in \mathbb{R}^{N\times N}, \quad \mathbf{B} = \left(\begin{array}{c} 1 \ 1 \ \vdots \ \vdots \ 1\end{array}\right)\in \mathbb{R}^{N}. \quad(2)]</p>
 
 <p>The matrix $\mathbf{A}_\nu$ is associated with the Brunovsky canonical form of the linear ODE</p>
 
-<script type="math/tex; mode=display">x^{(N)}_\nu(t) + \nu x_\nu(t) = 0,</script>
+<p>[x^{(N)}<em>\nu(t) + \nu x</em>\nu(t) = 0,]</p>
 
 <p>where $x^{(N)}_\nu(t)$ denotes the $N$-th derivative of the function $x(t)$.</p>
 
 <p>In (1)-(2), $x_\nu(t)\in L^2(0,T;\mathbf{R}^N)$, $N\geq 1$, denotes the state, the $N\times N$ matrix $\mathbf{A}_\nu$ describes the dynamics, and the function $u(t)\in L^2(0,T;\mathbb{R}^M)$, $1\leq M\leq N$, is the $M$-component control acting on the system through the $N\times M$ matrix $\mathbf{B}$. Here 
-<script type="math/tex">\nu\in \{ \nu_1,\nu_2,\ldots,\nu_{|\mathcal K|} \}=:\mathcal K</script>
+\(\nu\in \{ \nu_1,\nu_2,\ldots,\nu_{|\mathcal K|} \}=:\mathcal K\)
  is a random parameter following a probability law $\mu$, with $(\mathcal K,\mathcal F,\mu)$ the corresponding complete probability space.</p>
 
 <p>With <strong>simultaneous controllability</strong> we refer to the problem of designing a unique parameter-independent control function capable to steer all the different realizations of (1) to some prescribed final target in time $T$, that is (see <strong>Figure 1</strong> and <strong>Figure 2</strong>):</p>
 
-<script type="math/tex; mode=display">x_\nu(T)=x^T\in\mathbb{R}^N, \quad \nu\in \mathcal{K} \;\;\;\;\mu-\text{a. e.}</script>
+<p>[x_\nu(T)=x^T\in\mathbb{R}^N, \quad \nu\in \mathcal{K} \;\;\;\;\mu-\text{a. e.}]</p>
 
 <p><img width="90%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0011/stateEvolution.png" /></p>
 
@@ -361,11 +359,11 @@ x_\nu(0) = x^0,
 
 <p>The computation of a simultaneous control for (1)-(2) can be carried out through a standard optimal control methodology by solving the following minimization problem</p>
 
-<script type="math/tex; mode=display">\begin{array}{l}
+<p>[\begin{array}{l}
 \displaystyle\widehat{u}=\min_{u\in L^2(0,T;\mathbb{R}^M)} F_{\nu}(u)
-\\[10pt]
-\displaystyle F_{\nu}(u):= \frac{1}{2} \mathbb{E}\left[\|x_\nu(T)-x^T\|_{\mathbb{R}^N}^2\right]+\frac{\beta}{2}\|u\|_{L^2(0,T;\mathbb{R}^M)}^2,
-\end{array} \quad (3)</script>
+\[10pt]
+\displaystyle F_{\nu}(u):= \frac{1}{2} \mathbb{E}\left[|x_\nu(T)-x^T|<em>{\mathbb{R}^N}^2\right]+\frac{\beta}{2}|u|</em>{L^2(0,T;\mathbb{R}^M)}^2,
+\end{array} \quad (3)]</p>
 
 <p>subject to the dynamics given by (1)-(2). Here $\mathbb{E}[\cdot]$ denotes the expectation operator.</p>
 
@@ -375,52 +373,57 @@ x_\nu(0) = x^0,
   <li>The <strong>Gradient Descent (GD)</strong> algorithm: we find the minimizer $\widehat{u}$ as the limit $k\to +\infty$ of the following iterative process</li>
 </ul>
 
-<script type="math/tex; mode=display">\textbf{GD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \frac{1}{|\mathcal K|}\sum_{\nu\in\mathcal K}\mathbf{B}^\top p_\nu^k\right),</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[\textbf{GD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \frac{1}{</td>
+      <td>\mathcal K</td>
+      <td>}\sum_{\nu\in\mathcal K}\mathbf{B}^\top p_\nu^k\right),]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>where for all $\nu\in\mathcal K$ the pair $(x_\nu,p_\nu)$ solves the coupled system</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\left\{\begin{array}{ll}
-\displaystyle x'_\nu(t) = \mathbf{A}_\nu x_\nu(t)+\mathbf{B}u, & 0<t<T,
-\\[6pt]
-\displaystyle  p'_\nu(t) = -\mathbf{A}_\nu^\top p_\nu(t), & 0<t<T,
-\\[6pt]
+<p>[\left{\begin{array}{ll}
+\displaystyle x’<em>\nu(t) = \mathbf{A}</em>\nu x_\nu(t)+\mathbf{B}u, &amp; 0&lt;t&lt;T,
+\[6pt]
+\displaystyle  p’<em>\nu(t) = -\mathbf{A}</em>\nu^\top p_\nu(t), &amp; 0&lt;t&lt;T,
+\[6pt]
 \displaystyle  x_\nu(0) = x^0, \quad p_\nu(T) = -(x_\nu(T)-x^T).
-\end{array}\right. \quad(4) %]]></script>
+\end{array}\right. \quad(4)]</p>
 
 <ul>
   <li>The <strong>Conjugate Gradient (CG)</strong> algorithm: the gradient $\nabla F_\nu$ is rewritten in the form</li>
 </ul>
 
-<script type="math/tex; mode=display">\displaystyle\nabla F_\nu(u) = \underbrace{(\beta I + \mathbb{E}[\mathcal L_{T,\nu}^\ast\mathcal L_{T,\nu}])}_{\mathbb{A}}u + \underbrace{\mathbb{E}[\mathcal L_{T,\nu}^\ast(y_\nu(T)-x^T)]}_{-b},</script>
+<p>[\displaystyle\nabla F_\nu(u) = \underbrace{(\beta I + \mathbb{E}[\mathcal L_{T,\nu}^\ast\mathcal L_{T,\nu}])}<em>{\mathbb{A}}u + \underbrace{\mathbb{E}[\mathcal L</em>{T,\nu}^\ast(y_\nu(T)-x^T)]}_{-b},]</p>
 
 <p>where the operators $\mathcal L_{T,\nu}$ and $\mathcal L_{T,\nu}^\ast$ are defined as</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{array}{cccc}
-\mathcal L_{T,\nu}: & U &\longrightarrow &\mathbb{R}^N
-\\
-& u & \longmapsto & z_\nu(T)
+<p>[\begin{array}{cccc}
+\mathcal L_{T,\nu}: &amp; U &amp;\longrightarrow &amp;\mathbb{R}^N
+<br />
+&amp; u &amp; \longmapsto &amp; z_\nu(T)
 \end{array}, \quad \quad \quad
 \begin{array}{cccc}
-\mathcal L_{T,\nu}^\ast: & \mathbb{R}^N &\longrightarrow & U
-\\
-& p_{T,\nu} & \longmapsto & \mathbf{B}^\top p_\nu,
-\end{array} %]]></script>
+\mathcal L_{T,\nu}^\ast: &amp; \mathbb{R}^N &amp;\longrightarrow &amp; U
+<br />
+&amp; p_{T,\nu} &amp; \longmapsto &amp; \mathbf{B}^\top p_\nu,
+\end{array}]</p>
 
 <p>with $U:=L^2(0,T;\mathbb{R}^M)$ and</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\left\{\begin{array}{ll}
-y'_\nu(t) = \mathbf{A}_\nu y_\nu(t), & 0<t<T,
-\\[10pt]
+<p>[\left{\begin{array}{ll}
+y’<em>\nu(t) = \mathbf{A}</em>\nu y_\nu(t), &amp; 0&lt;t&lt;T,
+\[10pt]
 y_\nu(0) = x_0
 \end{array}\right. \quad
 \begin{cases}
-z'_\nu(t) = \mathbf{A}_\nu z_\nu(t) +\mathbf{B} u(t), & 0<t<T,
-\\[10pt]
+z’<em>\nu(t) = \mathbf{A}</em>\nu z_\nu(t) +\mathbf{B} u(t), &amp; 0&lt;t&lt;T,
+\[10pt]
 z_\nu(0) = 0.
-\end{cases} %]]></script>
+\end{cases}]</p>
 
 <p>We then use the conjugate gradient algorithm to solve the linear system $\mathbb{A}u = b$.</p>
 
@@ -432,23 +435,23 @@ z_\nu(0) = 0.
   <li>The <strong>Stochastic Gradient Descent (SGD)</strong> algorithm (see [2]): it is a drastic simplification of the classical GD in which, instead of computing the gradient of the functional for all parameters $\nu\in\mathcal K$, in each iteration this gradient is estimated on the basis of a single randomly picked configuration. This translates in the following recursion process</li>
 </ul>
 
-<script type="math/tex; mode=display">\textbf{SGD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \mathbf{B}^\top p_{\nu_k}^k\right). \quad (5)</script>
+<p>[\textbf{SGD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \mathbf{B}^\top p_{\nu_k}^k\right). \quad (5)]</p>
 
 <p>with $\nu_k$ selected i.i.d. from $\mathcal K$.</p>
 <ul>
   <li>The <strong>Continuous Stochastic Gradient (CSG)</strong> algorithm: it is a variant of SGD, based on the idea of reusing previously obtained information to improve the efficiency. The CSG recursion process for optimizing $F_\nu$ is given by</li>
 </ul>
 
-<script type="math/tex; mode=display">\textbf{CSG:} \quad u^{k+1} = u^k-\eta_k \sum_{\ell = 1}^k \alpha_\ell\left(\beta u^\ell - \mathbf{B}^\top p_{\nu_\ell}^\ell\right), \quad (6)</script>
+<p>[\textbf{CSG:} \quad u^{k+1} = u^k-\eta_k \sum_{\ell = 1}^k \alpha_\ell\left(\beta u^\ell - \mathbf{B}^\top p_{\nu_\ell}^\ell\right), \quad (6)]</p>
 
 <p>where the weights ${\alpha_\ell}_{\ell = 1}^k$ are obtained through the methodology presented in [4].</p>
 
 <h2 id="experimental-results-comparison-of-the-algorithms">Experimental Results: comparison of the algorithms</h2>
 
 <p>We can test the efficiency of each one of the four aforementioned algorithms by performing simulations for increasing values of 
-<script type="math/tex">|\mathcal K|</script>.
+\(|\mathcal K|\).
  In these simulations, we have chosen the initial state $x^0 =(1,1,1,1)^\top$ and the final target $x^T=(0,0,0,0)^\top$. The time horizon is set to be $T=1s$. The parameter set is a $|\mathcal K|$ points partition of the interval $[1,6]$: 
-<script type="math/tex">\mathcal K=\{\nu_1,\ldots,\nu_{|\mathcal K|}\}</script>
+\(\mathcal K=\{\nu_1,\ldots,\nu_{|\mathcal K|}\}\)
  with $\nu_1=1$ and $\nu_{|\mathcal K|}=6$.</p>
 
 <p><strong>Figure 3</strong> displays the computational times (in logarithmic scale) the four algorithms need to compute a simultaneous control for (1)-(2).</p>

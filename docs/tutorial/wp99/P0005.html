@@ -299,33 +299,31 @@ img:active{
 
 <p>Solving 1-d wave equation with RPS semi-discretization method Considering 1-d wave equation,</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation} 	\begin{cases} 	&u_{tt}- u_{xx} =0,  0\leq x\leq 1, t\in[0,T] \\ 	& u(x,T)=u_0(x),\, \, 0\leq x\leq 1, \\ 	& u_t(x,T)=u_1(x),\,\,0\leq x\leq 1,  \\ 	& u(0,t)=u(1,t)=0, \,\, t\in[0,T], 	\end{cases} 	\label{wave} 	\end{equation} %]]></script>
+<p>[\begin{equation} 	\begin{cases} 	&amp;u_{tt}- u_{xx} =0,  0\leq x\leq 1, t\in[0,T] \ 	&amp; u(x,T)=u_0(x),\, \, 0\leq x\leq 1, \ 	&amp; u_t(x,T)=u_1(x),\,\,0\leq x\leq 1,  \ 	&amp; u(0,t)=u(1,t)=0, \,\, t\in[0,T], 	\end{cases} 	\label{wave} 	\end{equation}]</p>
 
 <p>When $(u_0,u_1) \in H_0^1(0,1)\times L^2(0,1)$, it admits a unique solution $u(x,t) \in C^0([0,T],H_0^1(0,1)) \cap C^1([0,T],L^2(0,1))$. 	The energy of solution to \eqref{wave} $E(t)$</p>
 
-<script type="math/tex; mode=display">\begin{equation} 	E(t)=\frac{1}{2}\int_{0}^{1} \vert u_x(x,t) \vert^2+ \vert u_t(x,t)\vert^2 dx, 	\end{equation}</script>
+<p>[\begin{equation} 	E(t)=\frac{1}{2}\int_{0}^{1} \vert u_x(x,t) \vert^2+ \vert u_t(x,t)\vert^2 dx, 	\end{equation}]</p>
 
 <p>is time conserved .</p>
 
 <p>With Hilbert Uniqueness Method, the exact controllability of \eqref{wave} is  equal to the observability of the adjoint \eqref{wave}, Observability of \eqref{wave} reads as: Given $T\geq 2$, there exist a positive constant $C(T)\geq 0$ such that</p>
 
-<script type="math/tex; mode=display">\begin{equation}       E(0)\leq C(T) \int_{0}^{T} \vert u_x(1,t) \vert ^2 dt. \end{equation}</script>
+<p>[\begin{equation}       E(0)\leq C(T) \int_{0}^{T} \vert u_x(1,t) \vert ^2 dt. \end{equation}]</p>
 
 <p>holds for every solution $u(x,t)$ to adjoint system \eqref{wave}</p>
 
 <p>RPS semi-discretization of  weak variation formulation  of \eqref{wave} is written as</p>
 
-<script type="math/tex; mode=display">\begin{equation} 	M \frac{d^2 \boldsymbol{u}}{dt^2}=-R\boldsymbol{u}, 	\label{fem_wave} 	\end{equation}</script>
+<p>[\begin{equation} 	M \frac{d^2 \boldsymbol{u}}{dt^2}=-R\boldsymbol{u}, 	\label{fem_wave} 	\end{equation}]</p>
 
 <p>where $M_{i,j}:=\int_{-\infty}^{+\infty}\phi_i\phi_j dx$ and $R_{i,j}=\int_{-\infty}^{+\infty}\frac{d}{dx}\phi_i\frac{d}{dx}\phi_j dx $ and  the corresponding $\hat{A}(\omega)$ defined as</p>
 
-<script type="math/tex; mode=display">\begin{equation}       \hat{A}(\omega)= \frac{R e^{i\omega x_n}}{M e^{i\omega x_n} }. 	\end{equation}</script>
+<p>[\begin{equation}       \hat{A}(\omega)= \frac{R e^{i\omega x_n}}{M e^{i\omega x_n} }. 	\end{equation}]</p>
 
 <p>As for this problem, the rps basis $\phi_i(x)$ corresponding  $x_i$ is defined by</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation} 	\phi_i =\left\{ 	\begin{aligned} 	\arg &\min_{v \in H_0^2[-1,1]}  \int_{-1}^{1}(\frac{d^2}{dx^2} v)^2 dx  \\ 	&s.t.\  v(x_j) = \delta_{i,j},\ \ j = \{1,...,N\}, \\ 	\end{aligned} 	\right. 	\label{basis} 	\end{equation} %]]></script>
+<p>[\begin{equation} 	\phi_i =\left{ 	\begin{aligned} 	\arg &amp;\min_{v \in H_0^2[-1,1]}  \int_{-1}^{1}(\frac{d^2}{dx^2} v)^2 dx  \ 	&amp;s.t.\  v(x_j) = \delta_{i,j},\ \ j = {1,…,N}, \ 	\end{aligned} 	\right. 	\label{basis} 	\end{equation}]</p>
 
 <p>Set up uniform fine mesh and coarse mesh</p>
 
@@ -427,19 +425,19 @@ img:active{
 
 <p>RPS semi-discretization of  weak variation formulation  of \eqref{wave} is written as</p>
 
-<script type="math/tex; mode=display">\begin{equation}    M \frac{d^2 \boldsymbol{u}}{dt^2}=-R\boldsymbol{u} \end{equation}</script>
+<p>[\begin{equation}    M \frac{d^2 \boldsymbol{u}}{dt^2}=-R\boldsymbol{u} \end{equation}]</p>
 
 <p>where $M_{i,j}:=\int_{-\infty}^{+\infty}\phi_i\phi_j dx$ and $R_{i,j}=\int_{-\infty}^{+\infty}\frac{d}{dx}\phi_i\frac{d}{dx}\phi_j dx $ and the corresponding $\hat{A}(\omega)$ defined as</p>
 
-<script type="math/tex; mode=display">\begin{equation} \hat{A}(\omega)= \frac{R e^{i\omega x_n}}{M e^{i\omega x_n} }. 	\end{equation}</script>
+<p>[\begin{equation} \hat{A}(\omega)= \frac{R e^{i\omega x_n}}{M e^{i\omega x_n} }. 	\end{equation}]</p>
 
 <p>Since there’s no explicit formulation for matrix $M$ and $R$, We can only calculate the fourier symbol of $M$ and $R$ numerically. Assuming the matrix $M$ is symmetric and toplitze and dimension $N$ of $M$ being a odd number, then fourier symbol of $M$   could be written as</p>
 
-<script type="math/tex; mode=display">\begin{equation} \hat{M}(\omega)= M_{(N+1)/2,(N+1)/2}-2\sum_{i=1}^{(N+1)/2-1}M_{(N+1)/2,i}cos(i\omega h ),\ \omega h = 0,\frac{1}{N+1}\pi,..., 2\pi. \end{equation}</script>
+<p>[\begin{equation} \hat{M}(\omega)= M_{(N+1)/2,(N+1)/2}-2\sum_{i=1}^{(N+1)/2-1}M_{(N+1)/2,i}cos(i\omega h ),\ \omega h = 0,\frac{1}{N+1}\pi,…, 2\pi. \end{equation}]</p>
 
 <p>For example, let $M$  be mass matrix corresponding p1 finite element semi-descretization. the fourier symbol of $M$ is</p>
 
-<script type="math/tex; mode=display">\begin{equation} \hat{M}(\omega)=2/3+1/3cos(\omega h)  \end{equation}</script>
+<p>[\begin{equation} \hat{M}(\omega)=2/3+1/3cos(\omega h)  \end{equation}]</p>
 
 <p>Construct the discrete $cos(i\omega h)$ with $\omega h$ sampled at 1000 points at interval $[0,2\pi]$</p>
 

@@ -413,7 +413,7 @@ Bmat =
 
 <p>We design a linear feedback controller that minimizes the cost function</p>
 
-<script type="math/tex; mode=display">J =\int_0^{\infty} x^TQx + u^2\,dt</script>
+<p>[J =\int_0^{\infty} x^TQx + u^2\,dt]</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>
 <span class="p">[</span><span class="n">ricsol</span><span class="p">,</span><span class="n">cleig</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">Q</span><span class="p">);</span>

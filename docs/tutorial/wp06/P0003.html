@@ -305,29 +305,27 @@ img:active{
 
 <p>The model considered is the following:</p>
 
-<p><script type="math/tex">\dot{y}=Ay+\vec{G}(y)=:F(y)</script> where $A$ is a matrix of the form:</p>
+<p>\(\dot{y}=Ay+\vec{G}(y)=:F(y)\) where $A$ is a matrix of the form:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-A:=\begin{pmatrix}  -1 & 1& 0& & &\cdots & & & 0\\  1 & -2& 1& 0& &\cdots & & & 0\\  0 & 1& -2& 1& 0 &\cdots & & & 0\\  \\  \vdots\\  \\  0 & 0& 0& &\cdots & 0& 1& -2& 1\\  0 & 0& 0& &\cdots & & 0& 1& -1 \end{pmatrix}_{N\times N} %]]></script>
+<p>[A:=\begin{pmatrix}  -1 &amp; 1&amp; 0&amp; &amp; &amp;\cdots &amp; &amp; &amp; 0\  1 &amp; -2&amp; 1&amp; 0&amp; &amp;\cdots &amp; &amp; &amp; 0\  0 &amp; 1&amp; -2&amp; 1&amp; 0 &amp;\cdots &amp; &amp; &amp; 0\  \  \vdots\  \  0 &amp; 0&amp; 0&amp; &amp;\cdots &amp; 0&amp; 1&amp; -2&amp; 1\  0 &amp; 0&amp; 0&amp; &amp;\cdots &amp; &amp; 0&amp; 1&amp; -1 \end{pmatrix}_{N\times N}]</p>
 
 <p>and $\vec{G}:\mathbb{R}^N\to\mathbb{R}^N$ is a non linear function of the form</p>
 
-<script type="math/tex; mode=display">\begin{equation} \vec{G}(x)=\begin{pmatrix}  G(x_1)\\  G(x_2)\\  \vdots\\  G(x_N) \end{pmatrix}, \end{equation}</script>
+<p>[\begin{equation} \vec{G}(x)=\begin{pmatrix}  G(x_1)\  G(x_2)\  \vdots\  G(x_N) \end{pmatrix}, \end{equation}]</p>
 
 <p>where $G$ is a non-linear function, matrix $A$ models the interaction between agents. Agent $i$ changes its state according to the state of agent $i+1$ and $i-1$ in a linear way plus a non-linear effect that depends only on his state.</p>
 
 <p>Note that the manifold</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\mathcal{M}_N=\{x\in\mathbb{R}^N\text{ such that }x=\alpha \begin{pmatrix}&1\\&1\\&\vdots\\&1\end{pmatrix}\quad\alpha\in\mathbb{R}\} %]]></script>
+<p>[\mathcal{M}_N={x\in\mathbb{R}^N\text{ such that }x=\alpha \begin{pmatrix}&amp;1\&amp;1\&amp;\vdots\&amp;1\end{pmatrix}\quad\alpha\in\mathbb{R}}]</p>
 
 <p>is invariant under $F$. Indeed, taking $x\in\mathcal{M}_N$ we have that</p>
 
-<script type="math/tex; mode=display">Ax=0.</script>
+<p>[Ax=0.]</p>
 
 <p>Therefore, the mean will follow the following 1-d dynamical system</p>
 
-<script type="math/tex; mode=display">\dot{\alpha}=G(\alpha)</script>
+<p>[\dot{\alpha}=G(\alpha)]</p>
 
 <p>Here we will consider that $G(0)=0$ and that $DG(0)&gt;0$, we have an unstable critical point at 0. Let N=20,</p>
 
@@ -339,7 +337,7 @@ A:=\begin{pmatrix}  -1 & 1& 0& & &\cdots & & & 0\\  1 & -2& 1& 0& &\cdots & & & 
 
 <p>and that</p>
 
-<script type="math/tex; mode=display">\vec{G}(x)\in \mathcal{M}_N</script>
+<p>[\vec{G}(x)\in \mathcal{M}_N]</p>
 
 <p>here $G$ is taken in the following form (and we compute also its derivative).</p>
 
@@ -383,8 +381,7 @@ F =
 
 <p>We will choose the matrix $Q$ in a way that the vector that defines $\mathcal{M}_N$ is an eigenvector of the matrix $Q$, we have seen that the manifold $\mathcal{M}_N$ is invariant under the flow. Our cost functional will take into account if we are not in this manifold.</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-Q=\begin{pmatrix}1-\frac{1}{N}&-\frac{1}{N}&-\frac{1}{N}&\cdots&-\frac{1}{N}\\-\frac{1}{N}&1-\frac{1}{N}&-\frac{1}{N}&\cdots&-\frac{1}{N}\\ \vdots&\vdots&\vdots& &\vdots\\ -\frac{1}{N}&-\frac{1}{N}&-\frac{1}{N}&\cdots&1-\frac{1}{N}\end{pmatrix} %]]></script>
+<p>[Q=\begin{pmatrix}1-\frac{1}{N}&amp;-\frac{1}{N}&amp;-\frac{1}{N}&amp;\cdots&amp;-\frac{1}{N}\-\frac{1}{N}&amp;1-\frac{1}{N}&amp;-\frac{1}{N}&amp;\cdots&amp;-\frac{1}{N}\ \vdots&amp;\vdots&amp;\vdots&amp; &amp;\vdots\ -\frac{1}{N}&amp;-\frac{1}{N}&amp;-\frac{1}{N}&amp;\cdots&amp;1-\frac{1}{N}\end{pmatrix}]</p>
 
 <p>We check that its eigenvalues are non-negative</p>
 

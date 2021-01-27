@@ -314,11 +314,11 @@ img:active{
 
 <p>The equation under concern is:</p>
 
-<script type="math/tex; mode=display">\begin{cases}
-u_t-u_{xx}-2\frac{N_x}{N}u_x-=u(1-u)(u-\theta)\quad (x,t)\in (0,L)\times(0,T),\\
-u(0,t)=a_1(t),\quad u(L,t)=a_2(t)\\
+<p>[\begin{cases}
+u_t-u_{xx}-2\frac{N_x}{N}u_x-=u(1-u)(u-\theta)\quad (x,t)\in (0,L)\times(0,T),<br />
+u(0,t)=a_1(t),\quad u(L,t)=a_2(t)<br />
  0\leq u(x,0)\leq 1.
-\end{cases}</script>
+\end{cases}]</p>
 
 <p>where $N$ is a positive regular function.</p>
 
@@ -363,16 +363,16 @@ u(0,t)=a_1(t),\quad u(L,t)=a_2(t)\\
 
 <p>In order to understand how this barrier can exist we have to study the following non-autonomous dynamics in the phase-plane:</p>
 
-<script type="math/tex; mode=display">\begin{cases}
-\frac{d}{dx}\begin{pmatrix}u\\ v \end{pmatrix}=\begin{pmatrix}v\\ -u(1-u)(u-\theta) \end{pmatrix}+\begin{pmatrix}0\\ \frac{4}{\sigma}xv \end{pmatrix}\\
-\begin{pmatrix}u(0)\\ v(0) \end{pmatrix}=\begin{pmatrix}a\\ 0 \end{pmatrix}
-\end{cases}</script>
+<p>[\begin{cases}
+\frac{d}{dx}\begin{pmatrix}u\ v \end{pmatrix}=\begin{pmatrix}v\ -u(1-u)(u-\theta) \end{pmatrix}+\begin{pmatrix}0\ \frac{4}{\sigma}xv \end{pmatrix}<br />
+\begin{pmatrix}u(0)\ v(0) \end{pmatrix}=\begin{pmatrix}a\ 0 \end{pmatrix}
+\end{cases}]</p>
 
 <p>Any solution of the ODE above is an elliptic solution for some boundary condition. What we want to find is that there exist an $L_{\sigma}(1)$ such that the solution of the ODE at $L_{\sigma}(1)$ is $1$.</p>
 
 <p>Making use of the energy of the ODE</p>
 
-<script type="math/tex; mode=display">E=\frac{1}{2} v^2+\int u s(1-s)(s-\theta)ds</script>
+<p>[E=\frac{1}{2} v^2+\int u s(1-s)(s-\theta)ds]</p>
 
 <p>and seting $a$ small one can see that the trajectory of the dynamics will eventually cross $1$. See Figure 3.</p>
 

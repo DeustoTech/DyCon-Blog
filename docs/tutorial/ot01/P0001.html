@@ -315,45 +315,43 @@ img:active{
 
 <p>In this work, we will solve the optimal control problem</p>
 
-<script type="math/tex; mode=display">\begin{equation} \label{eq:CostFunctional}
-\min _{u \in L^2 \left( \Omega \right)} \mathcal{J}\left( u\right) = \min _{u \in L^2 \left( \Omega \right)} \frac{1}{2} \int_{\Omega} \left( y - y_d \right) ^2 \mathrm{d} \Omega + \frac{\beta}{2} \int_{\Omega} u ^2 \mathrm{d} \Omega,
-\end{equation}</script>
+<p>[\begin{equation} \label{eq:CostFunctional}
+\min <em>{u \in L^2 \left( \Omega \right)} \mathcal{J}\left( u\right) = \min _{u \in L^2 \left( \Omega \right)} \frac{1}{2} \int</em>{\Omega} \left( y - y_d \right) ^2 \mathrm{d} \Omega + \frac{\beta}{2} \int_{\Omega} u ^2 \mathrm{d} \Omega,
+\end{equation}]</p>
 
 <p>where $u$ is the control variable, $y$ the state variable and $y_d$ a target function. The minimization problem is subject to the elliptic partial differential equation</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align}
--\Delta y &  = f + u && \mathrm{in} \enspace \Omega \label{eq:PoissonEq}, \\
-\end{align} %]]></script>
+<p>[\begin{align}
+-\Delta y &amp;  = f + u &amp;&amp; \mathrm{in} \enspace \Omega \label{eq:PoissonEq}, <br />
+\end{align}]</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align}
-y & = 0 && \mathrm{on} \enspace \Gamma \label{eq:PoissonBC}.
-\end{align} %]]></script>
+<p>[\begin{align}
+y &amp; = 0 &amp;&amp; \mathrm{on} \enspace \Gamma \label{eq:PoissonBC}.
+\end{align}]</p>
 
 <p>We use some classical gradient descent methods based on the adjoint methodology, namely the steepest descent and conjugate gradient methods. The corresponding adjoint system for \ref{eq:PoissonEq} writes as,</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align}
-- \Delta \lambda & = y - y_d && \mathrm{in} \enspace \Omega, \label{eq:PoissonAdjointEq} \\
-\end{align} %]]></script>
+<p>[\begin{align}</p>
+<ul>
+  <li>\Delta \lambda &amp; = y - y_d &amp;&amp; \mathrm{in} \enspace \Omega, \label{eq:PoissonAdjointEq} <br />
+\end{align}]</li>
+</ul>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align}
-\lambda & = 0 \ && \mathrm{on} \enspace \Gamma. \label{eq:PoissonAdjointBC}
-\end{align} %]]></script>
+<p>[\begin{align}
+\lambda &amp; = 0 \ &amp;&amp; \mathrm{on} \enspace \Gamma. \label{eq:PoissonAdjointBC}
+\end{align}]</p>
 
 <p>In the steepest descent gradient method, we compute the directional derivative of the cost function in \ref{eq:CostFunctional},</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 J^\prime \left( u \right) \delta u = \int_{\Omega} \left( \lambda + \beta u \right) \delta u \mathrm{d} \Omega,
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>where $\lambda$ is solution to the elliptic problem in \ref{eq:PoissonAdjointEq}, and use the gradient to update the control variable as</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 u^{\left( n + 1 \right)} = u^{\left( n \right)} - \gamma \left( \lambda^{\left( n \right)} + \beta u^{\left( n \right)} \right),
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>for some value of $\gamma$.</p>
 
@@ -396,47 +394,43 @@ scalarField volField <span style="color: #000080;">=</span> mesh.<span style="co
 
 <p>In order to improve the convergence to the optimal control, the conjugate gradient method is applied also to the problem. First, the state variable must be separated in two terms as</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 y = y_u + y_{f},
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>where $y_u$ solves the state equation with zero Dirichlet boundary conditions,</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align}
--\Delta y_u &  = u && \mathrm{in} \enspace \Omega \label{eq:PoissonEqu}, \\
-\end{align} %]]></script>
+<p>[\begin{align}
+-\Delta y_u &amp;  = u &amp;&amp; \mathrm{in} \enspace \Omega \label{eq:PoissonEqu}, <br />
+\end{align}]</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align}
-y_u & = 0 && \mathrm{on} \enspace \Gamma \label{eq:PoissonBCu},
-\end{align} %]]></script>
+<p>[\begin{align}
+y_u &amp; = 0 &amp;&amp; \mathrm{on} \enspace \Gamma \label{eq:PoissonBCu},
+\end{align}]</p>
 
 <p>and $y_{f}$ is the control-free solution to the state equation,</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align}
--\Delta y_{f} &  = f && \mathrm{in} \enspace \Omega \label{eq:PoissonEq0}, \\
-\end{align} %]]></script>
+<p>[\begin{align}
+-\Delta y_{f} &amp;  = f &amp;&amp; \mathrm{in} \enspace \Omega \label{eq:PoissonEq0}, <br />
+\end{align}]</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align}
-y_{f} & = 0 && \mathrm{on} \enspace \Gamma \label{eq:PoissonBC0}.
-\end{align} %]]></script>
+<p>[\begin{align}
+y_{f} &amp; = 0 &amp;&amp; \mathrm{on} \enspace \Gamma \label{eq:PoissonBC0}.
+\end{align}]</p>
 
 <p>Now, using the above separation of the state variable, one part depending on the control and the other part on a known source term, the cost functional in \ref{eq:CostFunctional} can be expressed as</p>
 
-<script type="math/tex; mode=display">\begin{equation} \label{eq:CostFunctionalcg}
+<p>[\begin{equation} \label{eq:CostFunctionalcg}
 J \left( u \right) = \frac{1}{2} \left( y_u + y_f - y_d, y_u + y_f - y_d \right)_{L^2\left( \Omega \right)} + \frac{\beta}{2} \left( u , u \right) _{L^2\left( \Omega \right)}.
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>We define a linear operator $\Lambda: L^2\left( \Omega \right) \rightarrow L^2\left( \Omega \right)$ that takes a control $u$ and returns the solution to problem \ref{eq:PoissonEqu}-\ref{eq:PoissonBCu}, so that $y_u = \Lambda u$. We introduce as well its adjoint operator $\Lambda^<em>: L^2\left( \Omega \right) \rightarrow L^2\left( \Omega \right)$ that takes the source term in \ref{eq:PoissonAdjointEq} and solves the Poisson equation, so that $\lambda = \Lambda^</em> \left( y - y_d \right)$.</p>
 
 <p>The directional derivative of the functional \ref{eq:CostFunctionalcg} then reads as</p>
 
-<script type="math/tex; mode=display">\begin{equation}
-J^\prime\left( u \right) \delta u = \left( \underbrace{ \left(  \Lambda^* \Lambda + \beta I  \right)}_{A_{cg}} u - \underbrace{ \Lambda^* \left( y_d - y_f \right)}_{b_{cg}}, \delta u \right) _{L^2\left( \Omega \right)}.
-\end{equation}</script>
+<p>[\begin{equation}
+J^\prime\left( u \right) \delta u = \left( \underbrace{ \left(  \Lambda^* \Lambda + \beta I  \right)}<em>{A</em>{cg}} u - \underbrace{ \Lambda^* \left( y_d - y_f \right)}<em>{b</em>{cg}}, \delta u \right) _{L^2\left( \Omega \right)}.
+\end{equation}]</p>
 
 <p>After having identified $A_{cg}$ and $b_{cg}$ we can use the conjugate gradient method to reach the optimal control faster.</p>
 

@@ -318,23 +318,22 @@ or a fuse.</p>
 <p>We consider a well-known <b>model for micro-electromechanical systems (MEMS)
 with variable dielectric permittivity</b>, based on the following parabolic equation with singular nonlinearity:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\label{quenching problem}
+<p>[\begin{equation}\label{quenching problem}
 \left\lbrace \begin{array}{rrl}
-u_t - \Delta u = \dfrac{f(x)}{(1-u)^2}, & x\in \Omega, & t>0, \\
-u = 0, & x\in \partial \Omega, & t>0, \\
-u(0,x) = 0, & x \in \Omega, &
+u_t - \Delta u = \dfrac{f(x)}{(1-u)^2}, &amp; x\in \Omega, &amp; t&gt;0, <br />
+u = 0, &amp; x\in \partial \Omega, &amp; t&gt;0, <br />
+u(0,x) = 0, &amp; x \in \Omega, &amp;
 \end{array} \right.
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>where $\Omega$ is a smoothly bounded domain of $\mathbb{R}^2$ and 
-<script type="math/tex">f\geq 0</script> is a Hölder continuous function in <script type="math/tex">\overline{\Omega}</script>.</p>
+\(f\geq 0\) is a Hölder continuous function in \(\overline{\Omega}\).</p>
 
 <p>In this mathematical model, the domain $\Omega$ represents the shape of the elastic plate in the horizontal direction, the solution $u=u(t,x)$ measures its vertical deflection,
 while the function $f(x)$ is proportional to the constant voltage and characterizes the varying dielectric permittivity of the elastic plate.
 We can write the permittivity profile $f$ as follows:</p>
 
-<script type="math/tex; mode=display">f(x) = \lambda\dfrac{\varepsilon_0}{\varepsilon_1(x)},</script>
+<p>[f(x) = \lambda\dfrac{\varepsilon_0}{\varepsilon_1(x)},]</p>
 
 <p>where $\lambda&gt;0$ is the applied voltage, $\varepsilon_0&gt;0$ is the permittivity of the vacuum and $\varepsilon_1(x)$ is the dielectric permittivity of the material. 
 As a key feature, in our model the permittivity of the elastic plate may be inhomogeneous,
@@ -363,7 +362,7 @@ Our approach to achieve this last goal is to consider a material with varying di
 <p>We start by the definition of touchdown point.
 A point $x = x_0$ is called a <i> touchdown</i> or <i> quenching point</i> if there exists a sequence ${(x_n , t_n )} \in \Omega\times (0, T)$ such that</p>
 
-<script type="math/tex; mode=display">x_n\to x_0,\ \ t_n\uparrow T\ \ \hbox{and}\ \ u(x_n,t_n)\to 1 \ \hbox{as}\ n\to\infty.</script>
+<p>[x_n\to x_0,\ \ t_n\uparrow T\ \ \hbox{and}\ \ u(x_n,t_n)\to 1 \ \hbox{as}\ n\to\infty.]</p>
 
 <p>The set of all such points is called the <i> touchdown</i> or <i> quenching set</i>, denoted by $\mathcal{T}=\mathcal{T}_f\subset\overline{\Omega}$.</p>
 
@@ -373,13 +372,12 @@ where $f$ is positive but suitably small, below a positive threshold</b>.</p>
 <p><b> Theorem 1:</b>
 Let $\Omega\subset \mathbb{R}^n$ a smooth bounded domain and $f$ a function satisfying</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation*}
+<p>[\begin{equation<em>}
 \left\lbrace \begin{array}{rrl}
-&&T_f<\infty,\quad \|f\|_\infty\le M,\quad f\ge \mu\chi_B, \\
-&&\hbox{where $M,\mu , r>0$ and $B\subset\Omega$ is a ball of radius $r$.}
+&amp;&amp;T_f&lt;\infty,\quad |f|_\infty\le M,\quad f\ge \mu\chi_B, <br />
+&amp;&amp;\hbox{where $M,\mu , r&gt;0$ and $B\subset\Omega$ is a ball of radius $r$.}
 \end{array} \right.
-\end{equation*} %]]></script>
+\end{equation</em>}]</p>
 
 <p>There exists $\gamma_0&gt;0$ depending only on $\Omega,M,\mu,r$ such that:</p>
 
@@ -399,16 +397,15 @@ It is well known that if the dielectric permittivity is constant, the unique tou
 <p>As consequence of Theorem 1 (i), we can <b>prevent touchdown to occur at the origin</b> by choosing a permittivity profile $f$ such that $f(0)$ is sufficiently small.
 Let’s assume that the applied voltage $\lambda$, together with the permittivity of the vacuum $\varepsilon_0$ and the permittivity of the material $\varepsilon_1$ are such that</p>
 
-<script type="math/tex; mode=display">\lambda\dfrac{\varepsilon_0}{\varepsilon_1} = 8.</script>
+<p>[\lambda\dfrac{\varepsilon_0}{\varepsilon_1} = 8.]</p>
 
 <p>In this case, we might cover the center of the disk with a material with higher permittivity so that the value of $\varepsilon_1(x)$ in $B(0,1/4)$ is (for example) twice its value in $\Omega\setminus B(0,1/4)$.
 That is, we consider the following permittivity profile:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-f(x) = \left\lbrace \begin{array}{ll}
-4 &  |x|< 0.25 \\
-8 &  |x|\geq 0.25.
-\end{array}\right. %]]></script>
+<p>[f(x) = \left\lbrace \begin{array}{ll}
+4 &amp;  |x|&lt; 0.25 <br />
+8 &amp;  |x|\geq 0.25.
+\end{array}\right.]</p>
 
 <p>The following video represents the evolution of the elastic plate from the rest position to the pull-in instability.
 For the numerical simulation we have applied an implicit Crank-Nicolson scheme in polar coordinates with number of meshpoint $N=100$ in the radial interval $[0,1]$.</p>
@@ -428,12 +425,11 @@ In the schematic video, we remove the upper plate of the MEMS device in order to
 <p>Let us suppose now that we want our system to touch down in a circumference of radius near $0.7$.
 This time we can use Theorem 1 (ii). We will choose a <b>permittivity profile $f$ sufficiently concentrated near a circumference of radius $0.7$</b>. Consider for example:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-f(x) = \left\lbrace \begin{array}{ll}
-2 &  |x|< 0.65 \\
-8 &  0.65\geq |x|\leq 0.75 \\
-2 &  0.75< |x|.
-\end{array}\right. %]]></script>
+<p>[f(x) = \left\lbrace \begin{array}{ll}
+2 &amp;  |x|&lt; 0.65 <br />
+8 &amp;  0.65\geq |x|\leq 0.75 <br />
+2 &amp;  0.75&lt; |x|.
+\end{array}\right.]</p>
 
 <p>The following video represents the evolution of the elastic plate from the rest position to the pull-in instability. 
 In Figure 2 below, we plot the radial final touchdown profile.
@@ -468,7 +464,17 @@ single-point touchdown at the origin.</p>
 
 <p>For this example, we have considered the following radial <b>M-shaped profile</b> in a disk of radius 1:</p>
 
-<script type="math/tex; mode=display">f(x)=8-(1/4-|x|^2)^2, \qquad \text{for} \ |x|\in B(0,1).</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[f(x)=8-(1/4-</td>
+      <td>x</td>
+      <td>^2)^2, \qquad \text{for} \</td>
+      <td>x</td>
+      <td>\in B(0,1).]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>For this profile, <b>the unique touchdown point is at the origin</b>, far away from the maxima of $f$.
 Therefore, if we want to prevent touchdown at the origin, we need to choose a permittivity profile $f$ such that $f(0)$ is small enough (below a certain thershold).
@@ -488,7 +494,15 @@ In the schematic video, we remove the upper plate of the MEMS device in order to
 
 <p>Another rather surprising example is the following <b>radially increasing profile</b>:</p>
 
-<script type="math/tex; mode=display">f(x)= 8 + \dfrac{|x|^2}{4}.</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[f(x)= 8 + \dfrac{</td>
+      <td>x</td>
+      <td>^2}{4}.]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>For this example, <b>the unique touchdown point is the origin, which is actually the global minimum of </b> $f$. In [2], we give a rigorous proof of the existence of this kind of behaviors. It is based on a stability result of the touchdown set combined with the fact that single-point touchdown occurs for constant permittivity profiles.</p>
 
@@ -516,7 +530,7 @@ Rather surprisingly, it turns out that, under suitable assumptions on $f$,
 our methods yield values of
  the <b>threshold-ratio</b> $\rho$ which are not ‘‘small’’ but can actually be up to the order</p>
 
-<script type="math/tex; mode=display">\rho\sim 0.3,</script>
+<p>[\rho\sim 0.3,]</p>
 
 <p>which could hence be quite appropriate for robust practical use.</p>
 
@@ -564,12 +578,11 @@ Here, the figure represents the permittivity profile $f$ and <b> not </b> the pr
 <p>We give an example of a one-bump permittivity profile, similar to the one in Figure 3.
 Although our result applies to a large class of profiles, here we consider, for computational simplicity, the following <b>bang-bang profile</b>:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-f(x) = \left\lbrace\begin{array}{ll}
-0.42 & x<-2 \\
-2 & -2\leq x\leq 0 \\
-0.42 & x>0.
-\end{array}\right. %]]></script>
+<p>[f(x) = \left\lbrace\begin{array}{ll}
+0.42 &amp; x&lt;-2 <br />
+2 &amp; -2\leq x\leq 0 <br />
+0.42 &amp; x&gt;0.
+\end{array}\right.]</p>
 
 <p>The following video represents <b> the evolution of a 1-dimensional membrane</b>
 with a one-bump permittivity profile $f$. 
@@ -590,14 +603,13 @@ For the numerical simulation we have applied an implicit Crank-Nicolson scheme w
 Although our result applies to a large class of profiles, here we consider, for computational simplicity,
 the following bang-bang profile:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-f(x) = \left\lbrace\begin{array}{ll}
-0.42 & x<-1 \\
-2 & -1\leq x\leq 1 \\
-0.42 & 1<x<4 \\
-2 & 4\leq x \leq 6 \\
-0.42 & x > 6.
-\end{array}\right. %]]></script>
+<p>[f(x) = \left\lbrace\begin{array}{ll}
+0.42 &amp; x&lt;-1 <br />
+2 &amp; -1\leq x\leq 1 <br />
+0.42 &amp; 1&lt;x&lt;4 <br />
+2 &amp; 4\leq x \leq 6 <br />
+0.42 &amp; x &gt; 6.
+\end{array}\right.]</p>
 
 <p>The following video represents <b> the evolution of a 1-dimensional membrane</b>
 with a two-bump permittivity profile $f$.

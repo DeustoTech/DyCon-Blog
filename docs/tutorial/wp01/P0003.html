@@ -306,16 +306,16 @@ img:active{
 
 <p>Consider the one dimensional linear Vlasov-Fokker-Planck (VPFP) as following.</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 \begin{cases}
-	\delta_tf + \sigma_1v\delta_x f - \frac{\sigma_2}{\epsilon} \delta_x\phi\delta_v f =\frac{\sigma_3}{\epsilon}\delta_v\ (v f +\delta_vf\ ),  t>0, x\in[0,2\pi], v\in \mathbb{R}, \label{eq: VPFP}\\
+	\delta_tf + \sigma_1v\delta_x f - \frac{\sigma_2}{\epsilon} \delta_x\phi\delta_v f =\frac{\sigma_3}{\epsilon}\delta_v\ (v f +\delta_vf\ ),  t&gt;0, x\in[0,2\pi], v\in \mathbb{R}, \label{eq: VPFP}<br />
 	f(0, x,v,z) = f_0(x,v,z),  z\in [a,b].
 	\end{cases}
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>In the numerical experiments, <strong>we compare the results from the greedy algorithm with the results from the polynomial interpolation of the quadrature points.</strong> we set $\epsilon = 1, T = 0.5$ for all examples. More specifically, we set</p>
 
-<script type="math/tex; mode=display">\text{error} = \sum_{i=1}^{50}\int{ {( \hat{f}(T, x, v, z_i) - f(T, x,v,z_i) )}^2} dxdv \hat{f}(T, x,v,z_i)</script>
+<p>[\text{error} = \sum_{i=1}^{50}\int{ {( \hat{f}(T, x, v, z_i) - f(T, x,v,z_i) )}^2} dxdv \hat{f}(T, x,v,z_i)]</p>
 
 <p>is the approximation solution obtained from either method, $f(T, x,v,z_i)$ is the exact solution. $z_i$ is uniformly chosen from $[a,b]$. ${\textbf{Dimension}}$ refers to the number of snap shots.</p>
 
@@ -325,77 +325,84 @@ img:active{
 
 <p>For <strong>Dimension</strong> $= n$, ${\alpha_i}_{i=1}^n$ is the n roots of $n$-th order Legendre polynomial, and let</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 	z_i ^\ast= \frac{b-a}{2}\alpha_i + \frac{a+b}{2},  1\leq i \leq n.\label{}
-\end{equation}</script>
+\end{equation}]</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 	f_i = f(T, x,v, z_i ^\ast) \text{ be the exact solution at time T}.\label{}
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>Then by Lagrange interpolation,</p>
 
-<script type="math/tex; mode=display">\begin{align}
+<p>[\begin{align}
 	\hat{f}(T,x,v,z) = \sum_{i=1}^n l_i(z)f_i, l_i = \prod_{j\neq i} \frac{z-z_j ^\ast}{z_i ^\ast - z_j ^\ast}
-\end{align}</script>
+\end{align}]</p>
 
 <h3>1.1 Linear VFP with parametric initial data</h3>
 <p>In the first experiment, we consider the case where the parameter $z\in[1,5]$ only involved in the initial data,
-<script type="math/tex">\begin{equation}
+\(\begin{equation}
 \sigma_1 = \sigma_2 = \sigma_3 = 1, \delta _x\phi = \cos(x),   
-\end{equation}</script></p>
+\end{equation}\)</p>
 
 <p>Figure 1:</p>
 
-<script type="math/tex; mode=display">\begin{equation} f_0(x,v,z) = \frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z}{10} |^2}{2} ).\end{equation}</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[\begin{equation} f_0(x,v,z) = \frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{</td>
+      <td>v+\cos(x) + \frac{z}{10}</td>
+      <td>^2}{2} ).\end{equation}]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Figure 2:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation} f_0(x,v,z) =\left\{
+<p>[\begin{equation} f_0(x,v,z) =\left{
 \begin{array}{rl}
-\frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z}{10} |^2}{2} ), z<3\\
+\frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z}{10} |^2}{2} ), z&lt;3<br />
 \frac{1}{\sqrt{2\pi}} (2+\frac{\sin(x)}{z}) \text{exp} (-\frac{ |v+\cos(x) + \frac{z+1}{10} |^2}{2} ), z\geq3.
 \end{array}
-\right.\end{equation} %]]></script>
+\right.\end{equation}]</p>
 
 <p><strong>Algorithm 1.2. The algorithm for PDE with only parameter in initial data:</strong>
 <strong>Offline:</strong></p>
 
 <p>Step 1: Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 100$ in this case.</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 z_1^\ast = \text{argmax}_{z\in N} || f_0(x,v,z) || ^2,
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>where $ \vert f \vert^2 = \int f^2 dxdv$.</p>
 
 <p>Step 2: After obtaining $z_i^\ast, f_i = f_0(x,v,z_i^\ast)$, $i =1, \dots, n-1$,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
-z_n^\ast = \text{argmax}_{z\in N\backslash\{z_i^\ast \}_{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z) ||^2,
-\end{equation}</script>
+<p>[\begin{equation}
+z_n^\ast = \text{argmax}<em>{z\in N\backslash{z_i^\ast }</em>{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z) ||^2,
+\end{equation}]</p>
 
 <p>where $P^{n-1} f_0$ is the projection onto the subspace spanned by $f_1, \dots, f_{n-1}$</p>
 
 <p>Step 3: Stops when</p>
 
-<script type="math/tex; mode=display">\begin{equation}
-\max_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z)||^2 \leq \epsilon
-\end{equation}</script>
+<p>[\begin{equation}
+\max_{z\in N\backslash{z_i^\ast}_{i=1}^{n-1} } || f_0(x,v,z) - P^{n-1} f_0(x,v,z)||^2 \leq \epsilon
+\end{equation}]</p>
 
 <p><strong>Online:</strong> After we obtained the snap shots ${z_i^\ast}_{i=1}^n$,</p>
 
 <p>Step 1: Orthogonalize ${f_i}_{i=1}^n$,
          and calculate the corresponding</p>
 
-<script type="math/tex; mode=display">{f^T_i = f(T,x,v,z_i)}_{i=1}^n</script>
+<p>[{f^T_i = f(T,x,v,z_i)}_{i=1}^n]</p>
 
 <p>Step 2: for any given $z$, one can approximate $f(T, x,v,z)$ by</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 a_i = \langle f_0(x,v,z), f_i\rangle,  \hat{f}(x,v, z) = \sum_{i = 1}^na_if^T_i.
-\end{equation}</script>
+\end{equation}]</p>
 
 <p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq1_cts.jpg" alt="figure1" class="size-full wp-image-01" /><i align="aligncenter">Figure 1: Continuous initial data</i></p>
 
@@ -404,48 +411,57 @@ a_i = \langle f_0(x,v,z), f_i\rangle,  \hat{f}(x,v, z) = \sum_{i = 1}^na_if^T_i.
 <h3>1.2 Linear parametric VFP with deterministic initial data</h3>
 <p>In the second experiment, we consider the case where the parameter $z\in[1,5]$ only involved in the PDE,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
  f_0(x,v,z) = \frac{1}{\sqrt{2\pi}} ( 2+\sin(x) ) \text{exp} ( -\frac{|v+\cos(x)|^2}{2} )
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>Figure 3:</p>
 
-<script type="math/tex; mode=display">\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi = \cos(x)+\frac{z}{10};\end{equation}</script>
+<p>[\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi = \cos(x)+\frac{z}{10};\end{equation}]</p>
 
 <p>Figure 4:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi =\left\{
+<p>[\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, \delta_x\phi =\left{
 \begin{array}{rl}
-& \cos(x)+\frac{z}{10}, z<3\\
-&\cos(x)+\frac{z+1}{10}, z\geq3
+&amp; \cos(x)+\frac{z}{10}, z&lt;3<br />
+&amp;\cos(x)+\frac{z+1}{10}, z\geq3
 \end{array}
 \right.
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p><strong>Algorithm 1.3. The algorithm for PDE with only parameters in PDE:</strong>
 <strong>Offline:</strong> Set $N = {z_i: z_i = i\delta_z, \delta_z = \frac{b-a}{N_z}, i = 0,1, \dots, N_z}$, we set $N_z = 100$ in this case.</p>
 
 <p>Step 1: choose</p>
 
-<script type="math/tex; mode=display">z_1^\ast = argmax_{z \in N} || ( \sigma_1,\sigma_2,\sigma_3 )||^2</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[z_1^\ast = argmax_{z \in N}</td>
+      <td> </td>
+      <td>( \sigma_1,\sigma_2,\sigma_3 )</td>
+      <td> </td>
+      <td>^2]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Step 2: After obtaining $z_i^\ast, f_i = f(T,x,v,z_i^\ast)$, $i =1, \dots, n-1$,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
-z_n^\ast = argmax_{z\in N\backslash\{z_i^\ast\}_{i=1}^{n-1}} [ \min_{\hat{f} = \sum a_if_i,  \sum a_i = 1}
+<p>[\begin{equation}
+z_n^\ast = argmax_{z\in N\backslash{z_i^\ast}<em>{i=1}^{n-1}} [ \min</em>{\hat{f} = \sum a_if_i,  \sum a_i = 1}
 || \delta_t\hat{f} + \underbrace{ \sigma_1(z)v\delta_x \hat{f} - \frac{\sigma_2(z)}{\epsilon} \delta_x\phi\delta_v \hat{f} - \frac{\sigma_3(z)}{\epsilon}\delta_v ( v \hat{f} + \delta_v\hat{f} ) }_{A(z)\hat{f} } ||^2 ],
 \label{linear z_star}
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>Step 3: Stops when the above maximum residual smaller than $\epsilon$.</p>
 
 <p><strong>Online:</strong> After we obtained the snap shots ${z_i}_{i=1}^n$,
 and the corresponding $f_i = f(T, x,v,z_i)$,</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 \hat{f} = argmin_{\hat{f} = \sum a_if_i,  \sum a_i = 1} || \delta_t\hat{f} + \underbrace{\sigma_1(z)v\delta_x \hat{f} - \frac{\sigma_2(z)}{\epsilon} \delta_x\phi\delta_v \hat{f} - \frac{\sigma_3(z)}{\epsilon}\delta_v (v \hat{f} +\delta_v\hat{f} ) }_{A(z)\hat{f} } ||^2
-\end{equation}</script>
+\end{equation}]</p>
 
 <p><img src="https://cmc.deusto.eus/wp-content/uploads/2017/12/eq2_cts.jpg" alt="figure3" class="size-full wp-image-03" /><i align="aligncenter">Figure 3: Continuous parameter in PDE</i></p>
 
@@ -454,17 +470,16 @@ and the corresponding $f_i = f(T, x,v,z_i)$,</p>
 <h3>1.3 Linear parametric VFP with parametric initial data</h3>
 <p>In the third experiment, we consider the case where the parameter $z\in[1,5]$ involved in both the initial data and the PDE</p>
 
-<script type="math/tex; mode=display">\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, f_0(x,v,z) = \frac{1}{\sqrt{2\pi}}(2+\frac{\sin(x)}{z}) \text{exp}(-\frac{|v+\delta_x\phi|^2}{2})
-\end{equation}</script>
+<p>[\begin{equation}\sigma_1 = 1+\frac{1.5}{z}, \sigma_2 = \sigma_3 = 1+5e^{\frac{1}{z}}, f_0(x,v,z) = \frac{1}{\sqrt{2\pi}}(2+\frac{\sin(x)}{z}) \text{exp}(-\frac{|v+\delta_x\phi|^2}{2})
+\end{equation}]</p>
 
 <p>Figure 5:</p>
 
-<script type="math/tex; mode=display">\begin{equation}\delta_x\phi = \cos(x) + \frac{z}{10}, \text{for }t\geq 0,\end{equation}</script>
+<p>[\begin{equation}\delta_x\phi = \cos(x) + \frac{z}{10}, \text{for }t\geq 0,\end{equation}]</p>
 
 <p>Figure 6:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\delta_x\phi =\left\{\begin{array}{rl}& \cos(x)+\frac{z}{10}, z<3\\&\cos(x)+\frac{z+1}{10}, z\geq3\end{array}\right. \text{for }t\geq 0.\end{equation} %]]></script>
+<p>[\begin{equation}\delta_x\phi =\left{\begin{array}{rl}&amp; \cos(x)+\frac{z}{10}, z&lt;3\&amp;\cos(x)+\frac{z+1}{10}, z\geq3\end{array}\right. \text{for }t\geq 0.\end{equation}]</p>
 
 <p><strong>Algorithm 1.4. The algorithm for PDE with parameters in PDE and initial data:</strong></p>
 
@@ -480,14 +495,22 @@ Step 2: Using Algorithm 1.3 to get snap shot ${ z_i^\ast }_{i=1}^n$</p>
 refers to the numerical solution to VFP, that is, $f(T,x,v,z)$ is a
 $N_x\times N_v$ dimensional vector obtained by the following scheme</p>
 
-<script type="math/tex; mode=display">\begin{equation}
-\frac{f^{n+1}_{i,j} - f^n_{i,j}}{\delta_t} +\sigma_1 (v\delta_xf)^n_{i,j} = \frac{\sigma_3}{\epsilon}P(f^{n+1}_{i,j})
-\end{equation}</script>
+<p>[\begin{equation}
+\frac{f^{n+1}<em>{i,j} - f^n</em>{i,j}}{\delta_t} +\sigma_1 (v\delta_xf)^n_{i,j} = \frac{\sigma_3}{\epsilon}P(f^{n+1}_{i,j})
+\end{equation}]</p>
 
 <p>where $P(f)$ is the discretization of
 $\delta_v (M\delta_v (\frac{f}{M}))$,</p>
 
-<script type="math/tex; mode=display">M = \frac{1}{\sqrt{2\pi}}e^{-\frac{|v+\frac{\sigma_2}{\sigma_3}\delta_x\phi|^2}{2}}</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[M = \frac{1}{\sqrt{2\pi}}e^{-\frac{</td>
+      <td>v+\frac{\sigma_2}{\sigma_3}\delta_x\phi</td>
+      <td>^2}{2}}]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p><strong>Remark 1.6.</strong> For the matlab coding, the algorithm for the examples is in the “graph.m” file of the folder “eq1”, “eq2”, “eq3” respectively.  You can change the coefficients in “sig_1”, “sig_2”, “sig_3”, and the electric field in “fcn_phi_x”, and initial data in “fcn_phi_x_0”, “fcn_rho_0”.</p>
 

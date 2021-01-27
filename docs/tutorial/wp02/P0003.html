@@ -299,12 +299,11 @@ img:active{
 
 <p>We consider the optimal control problem:</p>
 
-<script type="math/tex; mode=display">\min_{u\in L^2(0,T;\mathbb{R}^m)}J^{T}(u)=\frac12 \left[ \int_0^T  \vert u(t)-q(t) \vert ^2 dt+\beta\int_0^T  \vert C(x(t)-z(t))\vert ^2 dt+\gamma \vert D(x(T)-z(T))\vert ^2\right],</script>
+<p>[\min_{u\in L^2(0,T;\mathbb{R}^m)}J^{T}(u)=\frac12 \left[ \int_0^T  \vert u(t)-q(t) \vert ^2 dt+\beta\int_0^T  \vert C(x(t)-z(t))\vert ^2 dt+\gamma \vert D(x(T)-z(T))\vert ^2\right],]</p>
 
 <p>where:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases} \frac{d}{dt}x(t)+Ax(t)=Bu(t)\hspace{0.6 cm} & t\in (0,T)\\ x(0)=x_0. \end{cases} %]]></script>
+<p>[\begin{cases} \frac{d}{dt}x(t)+Ax(t)=Bu(t)\hspace{0.6 cm} &amp; t\in (0,T)\ x(0)=x_0. \end{cases}]</p>
 
 <p>In the above control problem, $A \in M_{n \times n}$, $B \in M_{n \times m}$, $C \in M_{r\times n}$ and $D\in M_{r\times n}$. The control $u:[0,T]\longrightarrow R^m$, while the state $x:[0,T]\longrightarrow R^n$. The control target is $q\in C^1([0,T];R^m)$ and the state target is $z\in C^1([0,T];R^n)$. $\beta\geq 0$ and $\gamma\geq 0$ are positive parameters.</p>
 

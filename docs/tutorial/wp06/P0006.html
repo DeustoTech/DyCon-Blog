@@ -303,14 +303,13 @@ img:active{
 
 <p>In this post, we simulate structural controllability for the two-dimensional heat equation. First, we start with the finite difference scheme of the 2D Heat equation and the control on one boundary of the square domain $[0,1]^2$.</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases} \displaystyle\frac{dz_{i,j}}{dt} = (N+1)^2(z_{i+1,j}+z_{i-1,j}+z_{i,j+1}+z_{i,j-1}-4z_{i,j}) + u_{i,j}\delta(i-1), & i,j = 1,\ldots,N,~ t \in (0,T) \\ z_{i,j}(t) = 0, & i = 0, N+1, ~\text{or}~ j=0, N+1,~ t \in (0,T) \\ z_{i,j}(0)=z^0_{i,j}, & i,j=1,\ldots,N. \end{cases} %]]></script>
+<p>[\begin{cases} \displaystyle\frac{dz_{i,j}}{dt} = (N+1)^2(z_{i+1,j}+z_{i-1,j}+z_{i,j+1}+z_{i,j-1}-4z_{i,j}) + u_{i,j}\delta(i-1), &amp; i,j = 1,\ldots,N,~ t \in (0,T) \ z_{i,j}(t) = 0, &amp; i = 0, N+1, ~\text{or}~ j=0, N+1,~ t \in (0,T) \ z_{i,j}(0)=z^0_{i,j}, &amp; i,j=1,\ldots,N. \end{cases}]</p>
 
 <p>A similar problem has been treated in another <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/WP03-P0022">DyCon Blog post</a> using AMPL and IpOpt, which deals with the one-dimensional fractional heat equation under positivity constraints. Here we use CasADi and IpOpt in Matlab language.</p>
 
 <p>We will consider the problem of steering the initial datum:</p>
 
-<script type="math/tex; mode=display">z^0_{i,j} = \sin(\pi x_i)\sin(\pi y_j),\quad x_i = i/(N+1) \quad\text{and}\quad y_j = j/(N+1).</script>
+<p>[z^0_{i,j} = \sin(\pi x_i)\sin(\pi y_j),\quad x_i = i/(N+1) \quad\text{and}\quad y_j = j/(N+1).]</p>
 
 <p>to the final target $(1.5 \cdot \bar z_{i,j}(T))$, where $\bar z_{i,j}(T)$ is a reference solution from $z^0_{i,j}$ without control.</p>
 

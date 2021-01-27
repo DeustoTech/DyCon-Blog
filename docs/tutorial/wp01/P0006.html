@@ -304,39 +304,55 @@ img:active{
         
         <p>Consider the Kuramoto model for the synchronization of coupled oscillators</p>
 
-<script type="math/tex; mode=display">\begin{cases}
-\displaystyle \dot{\theta}_i(t) = \omega_i + \frac{Ku(t)}{N}\sum_{j=1}^N \sin \big(\theta_j(t)-\theta_i(t)\big),\quad i = 1,\ldots,N,\quad t>0
-\\
+<p>[\begin{cases}
+\displaystyle \dot{\theta}<em>i(t) = \omega_i + \frac{Ku(t)}{N}\sum</em>{j=1}^N \sin \big(\theta_j(t)-\theta_i(t)\big),\quad i = 1,\ldots,N,\quad t&gt;0
+<br />
 \theta_i(0) = \theta_i^0.
-\end{cases}\quad (1)</script>
+\end{cases}\quad (1)]</p>
 
 <p>Here $\theta_i(t)$, $i = 1,\ldots,N$, is the phase of the $i$-th oscillator, $\omega_i$ is its natural frequency and $K$ is the coupling strength. The frequencies $\omega_i$ are distributed with a given probability density $f(\omega)$, unimodal and symmetric around the mean frequency</p>
 
-<script type="math/tex; mode=display">\Omega = \frac 1N \sum_{i=1}^N \omega_i,</script>
+<p>[\Omega = \frac 1N \sum_{i=1}^N \omega_i,]</p>
 
 <p>that is, $f(\Omega+\omega) = f(\Omega-\omega)$.</p>
 
 <p>It is known that, if the coupling $K$ is sufficiently strong, the oscillators will synchronize asymptotically, i.e.</p>
 
-<script type="math/tex; mode=display">\lim_{t\to +\infty} |\dot{\theta}_i(t)-\dot{\theta}_j(t)| = 0, \quad \textrm{ for all }\; i,j = 1,\ldots,N,</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[\lim_{t\to +\infty}</td>
+      <td>\dot{\theta}_i(t)-\dot{\theta}_j(t)</td>
+      <td>= 0, \quad \textrm{ for all }\; i,j = 1,\ldots,N,]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>We want to design a control capable to ensure synchronization in a final time horizon $T$, that is</p>
 
-<script type="math/tex; mode=display">|\dot{\theta}_i(T)-\dot{\theta}_j(T)| = 0, \quad \textrm{ for all } i,j = 1,\ldots,N. \quad\quad\quad(2)</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[</td>
+      <td>\dot{\theta}_i(T)-\dot{\theta}_j(T)</td>
+      <td>= 0, \quad \textrm{ for all } i,j = 1,\ldots,N. \quad\quad\quad(2)]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>To compute this optimal control allowing us to reach the synchronized configuration (3) we can adopt a classical approach based on the resolution of the following optimization problem</p>
 
-<script type="math/tex; mode=display">\begin{array}{l}
+<p>[\begin{array}{l}
 \displaystyle\widehat{u} = \min_{u\in L^2(0,T;\mathbb{R})} J(u)
-\\[10pt]
-\displaystyle J(u) = \frac{1}{2} \sum_{i,j=1}^N \sin^2\big(\theta_j(T)-\theta_i(T)\big) + \frac \beta2 \|u\|^2_{L^2(0,T;\mathbb{R})},
-\end{array}\quad (3)</script>
+\[10pt]
+\displaystyle J(u) = \frac{1}{2} \sum_{i,j=1}^N \sin^2\big(\theta_j(T)-\theta_i(T)\big) + \frac \beta2 |u|^2_{L^2(0,T;\mathbb{R})},
+\end{array}\quad (3)]</p>
 
 <p>subject to the dynamics (1).</p>
 
 <p>For the resolution of (3), we use the standard GD method, which looks for the minimum $u$ as the limit $k\to +\infty$ of the following iterative process</p>
 
-<script type="math/tex; mode=display">u^{k+1} = u^k - \eta_k\nabla J(u^k). \quad (4)</script>
+<p>[u^{k+1} = u^k - \eta_k\nabla J(u^k). \quad (4)]</p>
 
 <p>This gradient technique is most often chosen because it is very easy to be implemented.</p>
 
@@ -344,56 +360,55 @@ img:active{
 
 <p>To this end, let us first rewrite the dynamics (1) in a vectorial form as follows</p>
 
-<script type="math/tex; mode=display">\begin{cases}
-\dot{\Theta}(t) = \Omega + F\big(\Theta(t),u(t)\big), \quad t>0
-\\
+<p>[\begin{cases}
+\dot{\Theta}(t) = \Omega + F\big(\Theta(t),u(t)\big), \quad t&gt;0
+<br />
 \Theta(0) = \Theta^0,
-\end{cases}</script>
+\end{cases}]</p>
 
 <p>with $\Theta :=(\theta_1,\ldots,\theta_N)^\top$, $\Theta^0:=(\theta_1^0,\ldots,\theta_N^0)^\top$ and $\Omega :=(\omega_1,\ldots,\omega_N)^\top$, and where $F$ is the vector field given by</p>
 
-<script type="math/tex; mode=display">F = (F_1,\ldots,F_N), \quad F_i:= \frac{Ku(t)}{N}\sum_{j=1}^N\sin\big(\theta_j(t)-\theta_i(t)\big), \quad i=1,\ldots,N.</script>
+<p>[F = (F_1,\ldots,F_N), \quad F_i:= \frac{Ku(t)}{N}\sum_{j=1}^N\sin\big(\theta_j(t)-\theta_i(t)\big), \quad i=1,\ldots,N.]</p>
 
 <p>Using the notation just introduced, we obtain the following expression for the gradient of $J(u)$</p>
 
-<script type="math/tex; mode=display">\nabla J(u) = \beta u + (\mathcal D_uF)^\top p, \quad(5)</script>
+<p>[\nabla J(u) = \beta u + (\mathcal D_uF)^\top p, \quad(5)]</p>
 
 <p>where $\mathcal D_uF$ indicates the Jacobian of the vector field $F$, computed with respect to the variable $u$.</p>
 
 <p>In (5), we denoted with $p = (p_1,\ldots,p_N)$ the solution of the adjoint equation associated with (1), which is given by</p>
 
-<script type="math/tex; mode=display">\begin{cases}
+<p>[\begin{cases}
 -\dot{p} = (\mathcal D_{\Theta}F)^\top p
-\\
+<br />
 p(T) = \nabla_{\Theta(T)}\phi(\Theta(T)),
-\end{cases}</script>
+\end{cases}]</p>
 
 <p>where $\mathcal D_\Theta F$ stands again for the Jacobian of the vector field $F$, this time computed with respect to the variable $\Theta$.</p>
 
 <p>Taking into account the expression of the vector field $F$, we can then see that the iterative scheme (4) becomes</p>
 
-<script type="math/tex; mode=display">u^{k+1} = u^k -\eta_k\left[\beta u^k + \frac KN\sum_{i=1}^N p_i\left(\sum_{j=1}^N \sin(\theta_j-\theta_i)\right)\right], \quad (6)</script>
+<p>[u^{k+1} = u^k -\eta_k\left[\beta u^k + \frac KN\sum_{i=1}^N p_i\left(\sum_{j=1}^N \sin(\theta_j-\theta_i)\right)\right], \quad (6)]</p>
 
 <p>with</p>
 
-<script type="math/tex; mode=display">\begin{cases}
-\displaystyle-\dot{p}_i = -\frac{Kup_i}{N}\sum_{i\neq j=1}^N \cos\big(\theta_j-\theta_i\big) + \frac{Ku}{N}\sum_{i\neq j=1}^N p_j \cos\big(\theta_j-\theta_i\big),\quad i = 1,\ldots,N,\quad t>0
-\\[20pt]
+<p>[\begin{cases}
+\displaystyle-\dot{p}<em>i = -\frac{Kup_i}{N}\sum</em>{i\neq j=1}^N \cos\big(\theta_j-\theta_i\big) + \frac{Ku}{N}\sum_{i\neq j=1}^N p_j \cos\big(\theta_j-\theta_i\big),\quad i = 1,\ldots,N,\quad t&gt;0
+\[20pt]
 \displaystyle p_i(T) = \frac 12\sum_{i\neq j=1}^N \sin\big(2\theta_i(T)-2\theta_j(T)\big).
-\end{cases}</script>
+\end{cases}]</p>
 
 <p>We then see that, at each iteration $k$ the optimization scheme (6) requires to solve a $N$-dimensional non-linear dynamical system. This may rapidly become computationally very expensive, especially when the number $N$ of oscillators in our system is large.</p>
 
 <p>In order to reduce this computational burden, we can combine the standard GD algorithm with the so-called <strong>Random Batch Method (RBM)</strong>, which is a recently developed approach (see [2]) allowing for an efficient numerical simulation of high-dimensional collective behavior problems. This technique is based on the following simple idea: at each time step $t_m = m\cdot dt$ in the mesh we employ to solve the dynamics, we divide randomly the $N$ particles into $n$ small batches with size $2\leq P&lt;N$, denoted by $C_q$, $q = 1,\ldots,n$, that is</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{array}{l}
-C_q = \{i_{q_1},\ldots,i_{q_P}\}\subset \{1,\ldots,N\}, & & for\; all\; q = 1,\ldots,n
-\\[8pt]
-C_q\cap C_r = \emptyset, & & for\; all\; q,r = 1,\ldots,n
-\\[8pt]
-\bigcup_{q = 1}^n C_q = \{1,\ldots,N\}.
-\end{array} %]]></script>
+<p>[\begin{array}{l}
+C_q = {i_{q_1},\ldots,i_{q_P}}\subset {1,\ldots,N}, &amp; &amp; for\; all\; q = 1,\ldots,n
+\[8pt]
+C_q\cap C_r = \emptyset, &amp; &amp; for\; all\; q,r = 1,\ldots,n
+\[8pt]
+\bigcup_{q = 1}^n C_q = {1,\ldots,N}.
+\end{array}]</p>
 
 <p>Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics by interacting only particles within the same batch. In this way, we are now dealing with systems of lower dimension and the computational cost of the GD algorithm is reduced.</p>
 

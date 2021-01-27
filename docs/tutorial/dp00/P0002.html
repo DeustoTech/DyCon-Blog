@@ -299,23 +299,23 @@ img:active{
 
 <p>Let us consider a graph G that consists on $N$ nodes $x_i\in\mathbb{R}$, $i={1,2,…,N}$ that evolve in discrete time steps according to the following equation:</p>
 
-<script type="math/tex; mode=display">x_i[k+1] = x_i[k] + \gamma\sum_{j\neq i}(x_j[k]-x_i[k]),\ k\in\mathbb{N}\cup \{0\},\ \forall i=1,2,...N \\ x_i[0] = x_{i,0},\ \forall i=1,2,...N</script>
+<p>[x_i[k+1] = x_i[k] + \gamma\sum_{j\neq i}(x_j[k]-x_i[k]),\ k\in\mathbb{N}\cup {0},\ \forall i=1,2,…N \ x_i[0] = x_{i,0},\ \forall i=1,2,…N]</p>
 
 <p>where $\gamma &gt; 0$ is a coupling parameter.</p>
 
 <p>We can simplify this equation by using the Perron matrix $P$ of the graph, this matrix is defined as $P = I - \gamma L$, where $L$ is the Laplacian of the graph and $I$ is the identity matrix. Let $x$ be $[x_1,…,x_N]^T$, the vector of states of the nodes. Moreover, we may add a control</p>
 
-<script type="math/tex; mode=display">\{u[k]\}_{k=0,1,...}, u\in\mathbb{R}^M, 1\leq M \leq N</script>
+<p>[{u[k]}_{k=0,1,…}, u\in\mathbb{R}^M, 1\leq M \leq N]</p>
 
 <p>to drive the states of the nodes to a desired state.</p>
 
-<script type="math/tex; mode=display">x[k+1]=Px[k]+Bu[k] \\    y[k] = Cx[k]        \\    x[0] = x_0 = [x_{1,0},...,x_{N,0}]^T</script>
+<p>[x[k+1]=Px[k]+Bu[k] \    y[k] = Cx[k]        \    x[0] = x_0 = [x_{1,0},…,x_{N,0}]^T]</p>
 
 <p>were $B$ and $C$ are two fixed matrices and $y\in\mathbb{R}^S$ are the observed states of $1\leq S\leq N$ nodes.</p>
 
 <p>We aim to design a control policy ${u[k]}_{k=0,1,…}$ such that minimizes the following functional $J(x,u)$ while stabilizing the system.</p>
 
-<script type="math/tex; mode=display">J(x,u) = \sum_{k=0}^\infty\left(x[k]^TQx[k]+u[k]^TRu[k]\right)</script>
+<p>[J(x,u) = \sum_{k=0}^\infty\left(x[k]^TQx[k]+u[k]^TRu[k]\right)]</p>
 
 <p>where $Q$ and $R$ are semidefinite positive and definite positive matrices respectively. We can choose these two matrices in order to penalize aggressive or slow controls. To do so, we will use MATLAB’s control system toolbox.</p>
 
@@ -412,7 +412,7 @@ ans =
 
 <p>Recall that the system dynamics can be written as</p>
 
-<script type="math/tex; mode=display">x[k+1] = Px[k]+Bu[k] \\    y[k] = Cx[k]</script>
+<p>[x[k+1] = Px[k]+Bu[k] \    y[k] = Cx[k]]</p>
 
 <p>for any $k =0,1,…$.</p>
 

@@ -305,11 +305,11 @@ img:active{
 
 <p>We focus on the following ordinary differential equations:</p>
 
-<script type="math/tex; mode=display">\begin{cases}    \dot{x} = f(x,u) \\    x(0)=x_0 \end{cases}</script>
+<p>[\begin{cases}    \dot{x} = f(x,u) \    x(0)=x_0 \end{cases}]</p>
 
 <p>where $x$ belongs to a subset $X$ of $\mathbb{R}^n$ and $u$ to a subset $U$ of $\mathbb{R}^m$. We assume that $f$ is a polynomial of $x$ and $u$. Moreover, we assume that $X$ and $U$ can be written with finitely many polynomial inequalities. The Gloptipoly toolbox allows to solve the following kind of optimal control problem:</p>
 
-<script type="math/tex; mode=display">\begin{cases} \rho^\star = \inf_u \int_{t_0}^T l(x(t),u(t))dt + l_T(x(T)) \\ \text{    s.t }  \dot{x} = f(x,u), x(t_0)=x_0 \\                  x(t) \in X,\: t\in  [t_0,T] \\                  u(t) \in U,\: t\in [t_0,T] \\                  x(T) \in X_T, \end{cases}</script>
+<p>[\begin{cases} \rho^\star = \inf_u \int_{t_0}^T l(x(t),u(t))dt + l_T(x(T)) \ \text{    s.t }  \dot{x} = f(x,u), x(t_0)=x_0 \                  x(t) \in X,: t\in  [t_0,T] \                  u(t) \in U,: t\in [t_0,T] \                  x(T) \in X_T, \end{cases}]</p>
 
 <p>where $X_T$ is also a subset of $\mathbb{R}^n$ defined with finitely many polynomial inequalities and $l$ is also a polynomial in the variables $x$ and $u$.</p>
 
@@ -317,16 +317,15 @@ img:active{
 
 <p>We focus on a specific example to make the reading of thenote easier. We have</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-x=\begin{bmatrix} x_1 & x_2\end{bmatrix}\in\mathbb{R}^2 %]]></script>
+<p>[x=\begin{bmatrix} x_1 &amp; x_2\end{bmatrix}\in\mathbb{R}^2]</p>
 
 <p>$u\in\mathbb{R}$ and:</p>
 
-<script type="math/tex; mode=display">f(x,u):=\begin{bmatrix} x_1\\ u \end{bmatrix}</script>
+<p>[f(x,u):=\begin{bmatrix} x_1\ u \end{bmatrix}]</p>
 
 <p>It is a simple chain of integrators, really well-known in automatic control theory. As described in [1], the related system can be equivalently rewritten as follows:</p>
 
-<script type="math/tex; mode=display">\int_{K_2} g(x) d\mu_2(x) -g(x_0) = \int_{K_1} \frac{d}{dx}g(x) f(x,u) d\mu_1(x),</script>
+<p>[\int_{K_2} g(x) d\mu_2(x) -g(x_0) = \int_{K_1} \frac{d}{dx}g(x) f(x,u) d\mu_1(x),]</p>
 
 <p>where $g$ is any test function in $C^1(X)$, $\mu_1(x)$ is a measure supported on a compact set $K_1$ representing the constraints on $x$ and $u$, $\mu_2(x)=$ is supported on a given compact set $K_2$ corresponding to performance requirements. For example $K_2 = 0$ indicates that state $x$ must reach the origin.</p>
 
@@ -405,7 +404,7 @@ x=\begin{bmatrix} x_1 & x_2\end{bmatrix}\in\mathbb{R}^2 %]]></script>
 
 <p>We have also to define the cost function of the problem under consideration. The one we are considering is quite simple and just reduces to being</p>
 
-<script type="math/tex; mode=display">\int_{K_1} d\mu_1</script>
+<p>[\int_{K_1} d\mu_1]</p>
 
 <p>In terms of functions, this means that you are minizing $x_1(t)$. This implies in particular that you are looking for the minimal time such that the trajectory $(x_1(t),x_2(t))$ will converge to $(0,0)$.</p>
 

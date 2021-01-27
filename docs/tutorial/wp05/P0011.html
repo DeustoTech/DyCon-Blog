@@ -306,33 +306,31 @@ img:active{
 
 <p>The standard null controllability problem for the heat equation reads as follows</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\label{heatinterior}
+<p>[\label{heatinterior}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega} \ & \ x \in \Omega & t \in [0,T] \\
-  u(x,t) = 0    & x \in \partial \Omega  &  t \in [0,T] \\
-  u(x,0) = u_0  & x \in \Omega
+  u_t = \Delta u + f(x,t) \chi_{\omega} \ &amp; \ x \in \Omega &amp; t \in [0,T] <br />
+  u(x,t) = 0    &amp; x \in \partial \Omega  &amp;  t \in [0,T] <br />
+  u(x,0) = u_0  &amp; x \in \Omega
 \end{matrix}
 \end{cases},
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>where $\Omega$ is a bounded domain, $u_0\in L^2(\Omega)$ and the control $f$ acts on the subdomain $\omega\subset\Omega$. The objective is to steer the system from $u_0$ to zero in time $T$,</p>
 
 <p>It is known that the null controllability of the heat equation holds in any positive time $T&gt;0$ and for any open control region $\omega$. Nevertheless, the situation changes when in the model appears a memory term:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\label{heatinterior_memory}
+<p>[\label{heatinterior_memory}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  \displaystyle u_t = \Delta u + f(x,t) \chi_{\omega} + \int_0^t u(x,\tau) d\tau \ & \ x \in \Omega & t \in [0,T] \\
-  u(x,t) = 0    & x \in \partial \Omega  &  t \in [0,T] \\
-  u(x,0) = u_0  & x \in \Omega
+  \displaystyle u_t = \Delta u + f(x,t) \chi_{\omega} + \int_0^t u(x,\tau) d\tau \ &amp; \ x \in \Omega &amp; t \in [0,T] <br />
+  u(x,t) = 0    &amp; x \in \partial \Omega  &amp;  t \in [0,T] <br />
+  u(x,0) = u_0  &amp; x \in \Omega
 \end{matrix}
 \end{cases}
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>As a matter of fact, when the equation involes a memory term, it is impossible to achive null controllability in the classical sense, unless the control region coincides with the entire domain ($\omega=\Omega$).</p>
 
@@ -376,37 +374,35 @@ img:active{
 
 <p>To understand the reason behind the lack of null controllability for the memory-type equation (\ref{heatinterior_memory}), we can introduce the new variable</p>
 
-<script type="math/tex; mode=display">z(x,t) = \int_0^t u(x,\tau) d\tau \Rightarrow z_t(x,t) = u(x,t)</script>
+<p>[z(x,t) = \int_0^t u(x,\tau) d\tau \Rightarrow z_t(x,t) = u(x,t)]</p>
 
 <p>In this way, (\ref{heatinterior_memory}) is transformed into a coupled PDE/ODE system:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\label{heatinterior_memory_z}
+<p>[\label{heatinterior_memory_z}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega} + z,  &     z_t = u        & x \in \Omega & t \in [0,T] \\
-  u(x,t) = 0,                        &  z(x,t) = 0   & x \in \partial \Omega  &  t \in [0,T] \\
-  u(x,0) = 0                      &  z(x,0) = 0   & x \in \Omega
+  u_t = \Delta u + f(x,t) \chi_{\omega} + z,  &amp;     z_t = u        &amp; x \in \Omega &amp; t \in [0,T] <br />
+  u(x,t) = 0,                        &amp;  z(x,t) = 0   &amp; x \in \partial \Omega  &amp;  t \in [0,T] <br />
+  u(x,0) = 0                      &amp;  z(x,0) = 0   &amp; x \in \Omega
   \end{matrix}
 \end{cases}
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>In (\ref{heatinterior_memory_z}), the equation $z_t = u$ is an infinte-dimensional ODE which, since it has no diffusion term, introduces non-propagation phenomena in the system. The non propagating components corresponding to this ODE are unable to reach the control region $\omega$ and, therefore, cannot be controlled.</p>
 
 <p>A natural remedy to this issue is to operate with a moving control strategy. If the ODE components of the system cannot reach the control region $\omega$, then is the control region who needs to reach these components. Hence, our control region would be  function of the time variable, $\omega = \omega(t)$, and the corresponding model will be</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\label{heatinterior_memory_z_moving}
+<p>[\label{heatinterior_memory_z_moving}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega(t)} + z,  &     z_t = u        & x \in \Omega & t \in [0,T] \\
-  u(x,t) = 0,                        &  z(x,t) = 0   & x \in \partial \Omega  &  t \in [0,T] \\
-  u(x,0) = 0                      &  z(x,0) = 0   & x \in \Omega
+  u_t = \Delta u + f(x,t) \chi_{\omega(t)} + z,  &amp;     z_t = u        &amp; x \in \Omega &amp; t \in [0,T] <br />
+  u(x,t) = 0,                        &amp;  z(x,t) = 0   &amp; x \in \partial \Omega  &amp;  t \in [0,T] <br />
+  u(x,0) = 0                      &amp;  z(x,0) = 0   &amp; x \in \Omega
   \end{matrix}
 \end{cases}
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>This moving control strategy has been proposed and succesfully applied in several contributions of our team [1,2,3,4].</p>
 
@@ -422,7 +418,7 @@ img:active{
 
 <p>In this simulation, we create the control region as a square which moves in the domain $\Omega$. This square can be constructed with a function $W(x)$ defined as</p>
 
-<script type="math/tex; mode=display">W(x,a,b) = H(x-a) + H(x-b) \\  \{ a,b,x  \}\in \mathbb{R}, \quad a>b \\</script>
+<p>[W(x,a,b) = H(x-a) + H(x-b) \  { a,b,x  }\in \mathbb{R}, \quad a&gt;b \]</p>
 
 <p>where $H(x)$ is the Heaviside function. Nevertheless, the function $W$ constructed in this way would be non-differentialbe at the points $x=a$ and $x=b$. This would represent a problem when implementing the gradient method to compute the control. To bypass this issue, in the definition of $W(x,a,b)$ we will use a smooth approximation of $H$ (See Figure 1).</p>
 
@@ -441,7 +437,7 @@ img:active{
 
 <p>Moreover, the generalization of this function to dimension two is immediate</p>
 
-<script type="math/tex; mode=display">W_{2D}(x,y,x_{min},x_{max},y_{min},y_{max}) = W(x,x_{min},x_{max})*W(x,y_{min},y_{max})</script>
+<p>[W_{2D}(x,y,x_{min},x_{max},y_{min},y_{max}) = W(x,x_{min},x_{max})*W(x,y_{min},y_{max})]</p>
 
 <p>In this way, given $(x_{min}, x_{max}, y_{min}, y_{max})$, we obtain the corresponding characteristic function which only depends on the position of a single point.</p>
 
@@ -466,36 +462,34 @@ img:active{
 
 <p>In this way, our model takes the final form</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\label{heatinterior_memory_z_all}
+<p>[\label{heatinterior_memory_z_all}
 \begin{equation}
 \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z,  &     z_t = u        & x \in \Omega & t \in [0,T] \\
-  u(x,t) = 0,                        &  z(x,t) = 0   & x \in \partial \Omega  &  t \in [0,T] \\
-  u(x,0) = 0,                      &  z(x,0) = 0   & x \in \Omega \\
-    \dot{\textbf{d}} = \textbf{v} & \textbf{d}(0) = \textbf{d}_0    & t \in [0,T]\\
-  \dot{\textbf{v}} = \textbf{g}(t)  & \textbf{v}(0) = \textbf{v}_0  & t \in [0,T]\\
+  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z,  &amp;     z_t = u        &amp; x \in \Omega &amp; t \in [0,T] <br />
+  u(x,t) = 0,                        &amp;  z(x,t) = 0   &amp; x \in \partial \Omega  &amp;  t \in [0,T] <br />
+  u(x,0) = 0,                      &amp;  z(x,0) = 0   &amp; x \in \Omega <br />
+    \dot{\textbf{d}} = \textbf{v} &amp; \textbf{d}(0) = \textbf{d}_0    &amp; t \in [0,T]<br />
+  \dot{\textbf{v}} = \textbf{g}(t)  &amp; \textbf{v}(0) = \textbf{v}_0  &amp; t \in [0,T]<br />
   \end{matrix}
 \end{cases}
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <h3 id="step-3-optimal-control-problem">STEP 3: optimal control problem</h3>
 
 <p>Following a standard optimal control strategy, the control function for our memory-type equation will be computed throught the minimization problem</p>
 
-<script type="math/tex; mode=display">\min_{f(x,t),g(t)}  \|u(x,T)\|^2_{L^2(\Omega)} \\</script>
+<p>[\min_{f(x,t),g(t)}  |u(x,T)|^2_{L^2(\Omega)} \]</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\text{subject to: }\quad \begin{cases}
+<p>[\text{subject to: }\quad \begin{cases}
 \begin{matrix}
-  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z,  &     z_t = u        & x \in \Omega & t \in [0,T] \\
-  u(x,t) = 0,                        &  z(x,t) = 0   & x \in \partial \Omega  &  t \in [0,T] \\
-  u(x,0) = 0,                      &  z(x,0) = 0   & x \in \Omega \\
-    \dot{\textbf{d}} = \textbf{v} & \textbf{d}(0) = \textbf{d}_0    & t \in [0,T]\\
-  \dot{\textbf{v}} = \textbf{g}(t)  & \textbf{v}(0) = \textbf{v}_0  & t \in [0,T]\\
+  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z,  &amp;     z_t = u        &amp; x \in \Omega &amp; t \in [0,T] <br />
+  u(x,t) = 0,                        &amp;  z(x,t) = 0   &amp; x \in \partial \Omega  &amp;  t \in [0,T] <br />
+  u(x,0) = 0,                      &amp;  z(x,0) = 0   &amp; x \in \Omega <br />
+    \dot{\textbf{d}} = \textbf{v} &amp; \textbf{d}(0) = \textbf{d}_0    &amp; t \in [0,T]<br />
+  \dot{\textbf{v}} = \textbf{g}(t)  &amp; \textbf{v}(0) = \textbf{v}_0  &amp; t \in [0,T]<br />
   \end{matrix}
-\end{cases} %]]></script>
+\end{cases}]</p>
 
 <h2 id="simulations">Simulations</h2>
 
@@ -508,54 +502,53 @@ img:active{
 
 <p>We shall now write the discrete version of equation (\ref{heatinterior_memory_z_all}):</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\label{heatinterior_memory_z_all_discr}
+<p>[\label{heatinterior_memory_z_all_discr}
 \begin{equation}
 \frac{d}{dt} \begin{bmatrix}\begin{array}{c|c}
-\textbf{U} \\
+\textbf{U} <br />
 \hline
-\textbf{Z} \\
+\textbf{Z} <br />
 \hline
-\textbf{D} \\
+\textbf{D} <br />
 \hline
-\textbf{V} \\
+\textbf{V} <br />
 \end{array}
 \end{bmatrix}
 =
 \begin{bmatrix}\begin{array}{c|c|c}
-\mathcal{A} & \textbf{1} & \textbf{0} & \textbf{0} \\
+\mathcal{A} &amp; \textbf{1} &amp; \textbf{0} &amp; \textbf{0} <br />
 \hline
-\textbf{1} & \textbf{0}  & \textbf{0} & \textbf{0} \\
+\textbf{1} &amp; \textbf{0}  &amp; \textbf{0} &amp; \textbf{0} <br />
 \hline
-\textbf{0} & \textbf{0}  & \textbf{0} & \textbf{1} \\
+\textbf{0} &amp; \textbf{0}  &amp; \textbf{0} &amp; \textbf{1} <br />
 \hline
-\textbf{0} & \textbf{0}  & \textbf{0} & \textbf{0} \\
+\textbf{0} &amp; \textbf{0}  &amp; \textbf{0} &amp; \textbf{0} <br />
 \end{array}
 \end{bmatrix}
 %%
 \begin{bmatrix}\begin{array}{c|c}
-\textbf{U} \\
+\textbf{U} <br />
 \hline
-\textbf{Z} \\
+\textbf{Z} <br />
 \hline
-\textbf{D} \\
+\textbf{D} <br />
 \hline
-\textbf{V} \\
+\textbf{V} <br />
 \end{array}
 \end{bmatrix}
 +
 %%
 \begin{bmatrix}\begin{array}{c|c}
-\textbf{B}(\textbf{D})*\textbf{F}(t) \\
+\textbf{B}(\textbf{D})*\textbf{F}(t) <br />
 \hline
-\textbf{0} \\
+\textbf{0} <br />
 \hline
-\textbf{0} \\
+\textbf{0} <br />
 \hline
-\textbf{G}(t) \\
+\textbf{G}(t) <br />
 \end{array}
 \end{bmatrix}
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>Secondly, let us create the mesh variable</p>
 

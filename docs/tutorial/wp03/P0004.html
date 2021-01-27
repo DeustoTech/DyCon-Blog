@@ -308,40 +308,47 @@ img:active{
 <h3 id="11-elliptic-problem">1.1. Elliptic problem</h3>
 <p>Let $\Omega \subset \mathbb{R}^d$ be open, regular and bounded, let $\psi \in H^2(\Omega)$ (the <em>obstacle</em>) and $g \in H^1(\Omega)$ (boundary data) with $\psi \leq g$ on $\partial \Omega$ be given. We consider the functional</p>
 
-<script type="math/tex; mode=display">\mathcal{F}_{\text{OB}}(u):= \frac12 \int_\Omega |\nabla u|^2 dx - \int_\Omega fu \, dx</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[\mathcal{F}<em>{\text{OB}}(u):= \frac12 \int</em>\Omega</td>
+      <td>\nabla u</td>
+      <td>^2 dx - \int_\Omega fu \, dx]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>where $f \in L^2(\Omega)$ is given, and the closed convex set</p>
 
-<script type="math/tex; mode=display">\mathcal{K}^g_{\text{OB}} := \{ u \in H^1(\Omega): u - g \in H^1_0(\Omega), \, u \geq \psi \, \text{ in } \, \Omega  \}.</script>
+<p>[\mathcal{K}^g_{\text{OB}} := { u \in H^1(\Omega): u - g \in H^1_0(\Omega), \, u \geq \psi \, \text{ in } \, \Omega  }.]</p>
 
 <p>The <strong>classical obstacle problem</strong> can be written as</p>
 
-<script type="math/tex; mode=display">\min_{u \in \mathcal{K}^g_{\text{OB}}} \mathcal{F}_{\text{OB}}(u)</script>
+<p>[\min_{u \in \mathcal{K}^g_{\text{OB}}} \mathcal{F}_{\text{OB}}(u)]</p>
 
 <p>and admits a unique minimizer $\phi \in \mathcal{K}^g_{\text{OB}}$, which is also a solution of the <strong>variational inequality</strong></p>
 
-<script type="math/tex; mode=display">\nabla \mathcal{F}_{\text{OB}}(\phi) \cdot (v-\phi) \geq 0 \quad \text{ for every } \quad v \in \mathcal{K}^g_{\text{OB}}.</script>
+<p>[\nabla \mathcal{F}<em>{\text{OB}}(\phi) \cdot (v-\phi) \geq 0 \quad \text{ for every } \quad v \in \mathcal{K}^g</em>{\text{OB}}.]</p>
 
 <p>The terminology “<em>obstacle problem</em>” comes from the physical origin of the model $-$ the solution $\phi$ represents the equilibrium position of an elastic membrane, which is constrained to lie above an obstacle (given by the graph of the function $\psi$).</p>
 
 <p><strong>Notation:</strong>  The notation</p>
 
-<script type="math/tex; mode=display">\nabla \mathcal{F}_{\text{OB}}(\phi)\cdot\zeta</script>
+<p>[\nabla \mathcal{F}_{\text{OB}}(\phi)\cdot\zeta]</p>
 
 <p>designates the Gateaux derivative ($L^2$-gradient) of the functional ${F}_{\text{OB}}$ at the point $\phi$ in the direction $\zeta$; in occurence,</p>
 
-<script type="math/tex; mode=display">\nabla \mathcal{F}_{\text{OB}}(\phi)\cdot\zeta = (\nabla \phi, \nabla \zeta)_{L^2(\Omega)}-(f, \zeta)_{L^2(\Omega)}-(g,\zeta)_{L^2(\partial \Omega)}</script>
+<p>[\nabla \mathcal{F}<em>{\text{OB}}(\phi)\cdot\zeta = (\nabla \phi, \nabla \zeta)</em>{L^2(\Omega)}-(f, \zeta)<em>{L^2(\Omega)}-(g,\zeta)</em>{L^2(\partial \Omega)}]</p>
 
 <p>Most of the regularity theory for the obstacle problem has been developed for the model case $\Delta \psi=-1$. We refer to [3,4] for a detailed presentation. 
 For simplicity of the presentation, let us thus assume for a moment that $f \equiv -1$ and $\psi \equiv 0$. Choosing appropriate test functions bring us from the variational inequality for $\phi$ to</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases}
-\Delta \phi = 1 	&\text{ in }  \{\phi>0\}  \\
-\phi \geq 0 &\text{ in } \Omega \\
-\phi = |\nabla \phi| = 0 &\text{ on } \partial \{\phi>0\} \\
-\phi = g &\text{ on } \partial \Omega.
-\end{cases} %]]></script>
+<p>[\begin{cases}
+\Delta \phi = 1 	&amp;\text{ in }  {\phi&gt;0}  <br />
+\phi \geq 0 &amp;\text{ in } \Omega <br />
+\phi = |\nabla \phi| = 0 &amp;\text{ on } \partial {\phi&gt;0} <br />
+\phi = g &amp;\text{ on } \partial \Omega.
+\end{cases}]</p>
 
 <p>The set ${ \phi=0 }$ is called <em>contact set</em>, while $\partial { \phi&gt;0 }$ is the <em>free boundary</em>.</p>
 
@@ -352,7 +359,15 @@ For simplicity of the presentation, let us thus assume for a moment that $f \equ
 
 <p><strong>Remark:</strong> At this point, we may see why solving the elliptic obstacle problem is different to just solving the Poisson equation for $\phi$ in a subdomain of $\Omega$ and setting $\phi=\psi$ elsewhere. Indeed, solving the latter problem does not guarantee that we would have</p>
 
-<script type="math/tex; mode=display">|\nabla (\phi-\psi)| =0</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[</td>
+      <td>\nabla (\phi-\psi)</td>
+      <td>=0]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>along the boundary.</p>
 
@@ -360,12 +375,11 @@ For simplicity of the presentation, let us thus assume for a moment that $f \equ
 
 <p>The parabolic counterpart onsists in finding $u \in H^1(]0, +\infty[; L^2(\Omega))\cap L^2(]0,+\infty[; H^2(\Omega) \cap \mathcal{K}^g_{\text{OB}})$ satisfying</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases}
-	\big(\, u'(t), v-u(t) \big)_{L^2(\Omega)} + 
-	\nabla \mathcal{F}_{\text{OB}}(u(t))\cdot (v-u(t)) \geq 0 &\text{ for every } v \in \mathcal{K}^g_{\text{OB}}, \, t>0 \\
+<p>[\begin{cases}
+	\big(\, u’(t), v-u(t) \big)<em>{L^2(\Omega)} + 
+	\nabla \mathcal{F}</em>{\text{OB}}(u(t))\cdot (v-u(t)) \geq 0 &amp;\text{ for every } v \in \mathcal{K}^g_{\text{OB}}, \, t&gt;0 <br />
 	u(0, x) = u_0 \in \mathcal{K}^g_{\text{OB}}.
-\end{cases} %]]></script>
+\end{cases}]</p>
 
 <p>The name “<em>parabolic obstacle problem</em>” for the above system <strong>may be misleading</strong>. 
 While the mathematical formulation is similar, the physical interpretation of the elliptic and parabolic problem is different. In the parabolic setting, seeing $\psi$ as a physical obstacle in space is not correct. Rather, one should interpret $\psi$ as a <em>barrier</em> for the temperature $u$. More accurately, we are dealing with a parabolic variational inequality with an obstacle-type constraint.</p>
@@ -399,14 +413,13 @@ Finally, the solution of the parabolic problem (left, blue) converges to that of
 
 <p>For $\psi \equiv 0$ and $f\equiv-1$ (or more generally $f + \Delta \psi = -1$), a manifestation of the parabolic variational inequality above is as a “weak form” of the one-phase Stefan problem (see [3,4]). In this setting, we may pass from the variational inequality to the equivalent problem with <strong>two boundary conditions</strong> at the free boundary</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases}
-	u_t - \Delta u = -1 &\text{ in } \quad \{ u(t)>0\} \times ]0, +\infty[ \\
-	u \geq 0 &\text{ in } \quad \Omega \times ]0, +\infty[ \\
-	u = |\nabla u| = 0 &\text{ on } \quad \partial \{ u(t)>0 \} \times ]0, +\infty[\\
-	u = g &\text{ on } \quad  \partial \Omega \times ]0, +\infty[ \\
-	u = u_0 &\text{ on } \quad \Omega \times \{ t = 0\}
-\end{cases} %]]></script>
+<p>[\begin{cases}
+	u_t - \Delta u = -1 &amp;\text{ in } \quad { u(t)&gt;0} \times ]0, +\infty[ <br />
+	u \geq 0 &amp;\text{ in } \quad \Omega \times ]0, +\infty[ <br />
+	u = |\nabla u| = 0 &amp;\text{ on } \quad \partial { u(t)&gt;0 } \times ]0, +\infty[<br />
+	u = g &amp;\text{ on } \quad  \partial \Omega \times ]0, +\infty[ <br />
+	u = u_0 &amp;\text{ on } \quad \Omega \times { t = 0}
+\end{cases}]</p>
 
 <p>This is an overdetermined problem, which means that the <em>free boundary/the contact set ${u=0}$ has to change with time</em> to ensure that both BC hold for every time. The evolution of the contact set may be observed in the numerics of Figures 3,4,5.</p>
 
@@ -468,11 +481,11 @@ initial datum supported outside $B_{1.5}$.</p>
 
 <p>A common approach for proving the well-posedness and $W^{2,p}$ regularity for variational inequalities is a technique called penalization, which consists of approximating by a sequence of semilinear equations [8]. For any $\epsilon&gt;0$, we will consider</p>
 
-<script type="math/tex; mode=display">u' - \Delta u + \frac{1}{\epsilon} (u-\psi)_{-} = f \quad \text{ in } \quad \Omega \times ]0,\infty[</script>
+<p>[u’ - \Delta u + \frac{1}{\epsilon} (u-\psi)_{-} = f \quad \text{ in } \quad \Omega \times ]0,\infty[]</p>
 
 <p>to approximate the parabolic problem, and remove $u’$ and time dependence for the elliptic one. As $\epsilon\rightarrow0$, the solution $u_\epsilon$ of the above equation converges to the variational inequality.  Here</p>
 
-<script type="math/tex; mode=display">\beta_\epsilon(u) = \frac{1}{\epsilon}(u)_- = \frac{1}{\epsilon}\min \{u, 0 \}</script>
+<p>[\beta_\epsilon(u) = \frac{1}{\epsilon}(u)_- = \frac{1}{\epsilon}\min {u, 0 }]</p>
 
 <p>may be replaced by another penalty function, for instance $\beta_\epsilon(u) = -\exp(-u/\epsilon)$.</p>
 
@@ -570,23 +583,30 @@ for n in range(num_steps):
 
 <p>Given a target $\phi_d$ and a regularization parameter $\delta&gt;0$ (we usually use $\delta = 10^{-2}$), we seek to minimize</p>
 
-<script type="math/tex; mode=display">J(u) = \frac12 \|\phi-\phi_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| u \|^2_{L^2(\Omega)}</script>
+<p>[J(u) = \frac12 |\phi-\phi_d |<em>{L^2(\Omega)}^2 + \frac{\delta}{2} | u |^2</em>{L^2(\Omega)}]</p>
 
 <p>subject to</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases}
-	-\Delta \phi + \frac{1}{\epsilon} (\phi-\psi)_- = f+u &\text{ in } \Omega \\
-	\phi = g &\text{ on } \partial \Omega.
-\end{cases} %]]></script>
+<p>[\begin{cases}
+	-\Delta \phi + \frac{1}{\epsilon} (\phi-\psi)_- = f+u &amp;\text{ in } \Omega <br />
+	\phi = g &amp;\text{ on } \partial \Omega.
+\end{cases}]</p>
 
 <p>For simplicity of the presentation, we will consider</p>
 
-<script type="math/tex; mode=display">f\equiv-1</script>
+<p>[f\equiv-1]</p>
 
-<script type="math/tex; mode=display">g\equiv0\</script>
+<p>[g\equiv0\]</p>
 
-<script type="math/tex; mode=display">\psi(x) = \sqrt{(1-|x|^2)_+}</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[\psi(x) = \sqrt{(1-</td>
+      <td>x</td>
+      <td>^2)_+}]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>on the domain $\Omega = [-2,2]^2$. The target is the function $\phi_d(x) = \frac12(\cos(x_1)+\cos(x_2))$.</p>
 
@@ -653,8 +673,8 @@ for n in range(num_steps):
 
 <p>The tape is modified such that the initial guess for y (to be used in the Newton solver in the forward problem) is set to y_opt.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_opt</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">block_variable</span><span class="o">.</span><span class="n">saved_output</span>
-<span class="n">Control</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_opt</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_opt</span> <span class="o">=</span> <span class="n">y</span><span class="p">.</span><span class="n">block_variable</span><span class="p">.</span><span class="n">saved_output</span>
+<span class="n">Control</span><span class="p">(</span><span class="n">y</span><span class="p">).</span><span class="n">update</span><span class="p">(</span><span class="n">y_opt</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>The algorithm converged after 8 iterations, and the value of the functional at the final iteration is $0.0967$.</p>
@@ -663,16 +683,15 @@ for n in range(num_steps):
 
 <p>Given a final time $T&gt;0$, a target $u_d$ and a regularization parameter $\delta&gt;0$, we seek to minimize</p>
 
-<script type="math/tex; mode=display">J(u) = \frac12 \|u(T)-u_d \|_{L^2(\Omega)}^2 + \frac{\delta}{2} \| v \|_{L^2(\Omega)}</script>
+<p>[J(u) = \frac12 |u(T)-u_d |<em>{L^2(\Omega)}^2 + \frac{\delta}{2} | v |</em>{L^2(\Omega)}]</p>
 
 <p>subject to</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases}
-	u'-\Delta u + \frac{1}{\epsilon} (u)_- = f+v &\text{ in } \Omega \times (0, T) \\
-	u = g &\text{ on } \partial \Omega \times (0, T) \\
-	u = u_0 &\text{ in } \Omega \times \{ t = 0 \}
-\end{cases} %]]></script>
+<p>[\begin{cases}
+	u’-\Delta u + \frac{1}{\epsilon} (u)_- = f+v &amp;\text{ in } \Omega \times (0, T) <br />
+	u = g &amp;\text{ on } \partial \Omega \times (0, T) <br />
+	u = u_0 &amp;\text{ in } \Omega \times { t = 0 }
+\end{cases}]</p>
 
 <p>For simplicity of the presentation, we will consider the same setting as in Figure 3, namely $f\equiv-1\,$,  $g\equiv0.8\,$, on the domain $\Omega = [-2,2]$. The target temperature is $u_d(x) = 0.8$. This would correspond to “melting”, as this target is never equal to zero, thus has no contact set. We would thus expect the action of the control $v$ to lift-up $u$ from $0$ and thus the contact set (and free boundary) to vanish.</p>
 
@@ -722,17 +741,17 @@ For comparison, we recall that the uncontroled free dynamics have a very differe
 </code></pre></div></div>
 <p>We set the mesh, and other relevant parameters such as the final time and initial data. We consider the same data as in the free problem.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">mesh</span>   <span class="o">=</span> <span class="n">xline</span><span class="p">;</span>
-<span class="n">Dyn</span><span class="o">.</span><span class="n">Solver</span> <span class="o">=</span> <span class="o">@</span><span class="n">ode23</span><span class="p">;</span>
-<span class="n">Dyn</span><span class="o">.</span><span class="n">Nt</span>     <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
-<span class="n">Dyn</span><span class="o">.</span><span class="n">FinalTime</span>        <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
-<span class="n">Dyn</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">InitialConditionFcn</span><span class="p">(</span><span class="n">xline</span><span class="p">);</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="p">.</span><span class="n">mesh</span>   <span class="o">=</span> <span class="n">xline</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="p">.</span><span class="n">Solver</span> <span class="o">=</span> <span class="o">@</span><span class="n">ode23</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="p">.</span><span class="n">Nt</span>     <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="p">.</span><span class="n">FinalTime</span>        <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="p">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">InitialConditionFcn</span><span class="p">(</span><span class="n">xline</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>We now compute the necessary Jacobian matrices.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">Control</span><span class="o">.</span><span class="n">Num</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
-<span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">Num</span>   <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">dF</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">);</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="p">.</span><span class="n">Derivatives</span><span class="p">.</span><span class="n">Control</span><span class="p">.</span><span class="n">Num</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="n">Dyn</span><span class="p">.</span><span class="n">Derivatives</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Num</span>   <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">dF</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>We may solve the free problem over the given time interval. We recall that we have used finite differences to discretize in space (but finite elements can be used as well in more complicated settings), and the underlying solve command solves the system of ODEs by means of some Runge-Kutta scheme.</p>

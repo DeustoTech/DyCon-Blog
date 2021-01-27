@@ -312,12 +312,11 @@ img:active{
 <h4>2. Modelo</h4>
 <p>Buscamos una función $f_{\Omega}: \mathcal{M}_{28 \times 28}(\mathbb{R}) \rightarrow \mathbb{R}^{10}$ que sea capaz de reproducir el comportamiento que vemos en los datos. Consideraremos el modelo $\color{red}{y} = f_\Omega (\color{green}{x})$ como:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\label{sys}
-\color{red}{y} = \mathcal{P} z_T \leftarrow \begin{cases}z_{t+1} = z_{t} + dt \ \sigma(A_t z_t+ b_t) & t \in \{1,2,\dots,T\} \\
+<p>[\begin{equation}\label{sys}
+\color{red}{y} = \mathcal{P} z_T \leftarrow \begin{cases}z_{t+1} = z_{t} + dt \ \sigma(A_t z_t+ b_t) &amp; t \in {1,2,\dots,T} <br />
 z_0 = A_0 \color{green}{x}
 \end{cases}
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>Donde:</p>
 <ol>
@@ -333,8 +332,8 @@ z_0 = A_0 \color{green}{x}
 <h4>3. Problema de Control</h4>
 <p>Si llamamos $M$ al número total de datos de entrenamiento y considerando los datos de entrenamiento $\{ x_m,y_m\}_{m=1}^M$, podemos plantear el siguiente problema de control.</p>
 
-<script type="math/tex; mode=display">\min_{\Omega} \Big[ \frac{1}{M}\sum_{m=1}^M\sum_{t=0}^T || \mathcal{P}z_t(x_m,\Omega) - y_m ||^2 + \beta || \Omega||^2 \Big] \\
-suject \ to: (\ref{sys})</script>
+<p>[\min_{\Omega} \Big[ \frac{1}{M}\sum_{m=1}^M\sum_{t=0}^T || \mathcal{P}z_t(x_m,\Omega) - y_m ||^2 + \beta || \Omega||^2 \Big] <br />
+suject \ to: (\ref{sys})]</p>
 
 <h4>4. Resultados numéricos</h4>
 
