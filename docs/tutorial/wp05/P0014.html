@@ -295,6 +295,15 @@ img:active{
             <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0014/T0001_FractionalLaplacianDynamics.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
+            <h3 id="setup">Setup</h3>
+
+            <p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
+            
+            <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+            <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
+            <span>StartDyConToolbox</span>
+            </code></pre></div></div>
+            
         <p>We use DyCon Toolbox for solving numerically the following control problem: given any $T&gt;0$, find a control function $g\in L^2( ( -1 , 1) \times (0,T))$ such that the corresponding solution to the parabolic problem</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
