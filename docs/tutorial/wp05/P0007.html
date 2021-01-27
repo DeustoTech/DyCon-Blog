@@ -301,7 +301,7 @@ img:active{
 
 <p>We consider the following one-dimentional reaction-diffusion equation with logistic production and delayed term,</p>
 
-<p>[\frac{\partial u}{ \partial t} = D \frac{\partial^2 u}{\partial x^2} + r u( 1-u -  f(u_{\tau})),]</p>
+<script type="math/tex; mode=display">\frac{\partial u}{ \partial t} = D \frac{\partial^2 u}{\partial x^2} + r u( 1-u -  f(u_{\tau})),</script>
 
 <p>this equation was suggested in [1] as a model of viral infection spreading in tissues. For the existence of solution and Global stability of the homogeneous in space equilibrium we refer the reader to [2]. Here, $u(x,t)$ is the concentration of virus with respect to the space variable $x$ and time $t$. The parameters $D$ and $r$ are respectively the diffusion coefficient and replication rate constant. The function $f(u_{\tau})$ describes the concentration of immune cells as a function of the virus concentration at time $t-\tau, u_{\tau}(x, t) = u(x, t - \tau)$.</p>
 
@@ -309,37 +309,41 @@ img:active{
 
 <p>We rewrite the one-dimentional reaction-diffusion equation with a constant time delay described above with Neumann boundary condition:</p>
 
-<p>[\begin{equation} \begin{cases} \frac{\partial u}{ \partial t} = D \frac{\partial^2 u}{\partial x^2} + r u( 1-u -  f(u_{\tau})), &amp; (x,t) \in (0,L) \times (0,T), \ \frac{\partial u(x,t)}{ \partial n}=0, &amp; x \in {0,L}, \quad t \in (0,T), \ u(x,t)=u_0(x,t),     &amp; (x,t) \in [0,L] \times [- \tau,0]. \end{cases} \label{equa1} \end{equation}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \begin{cases} \frac{\partial u}{ \partial t} = D \frac{\partial^2 u}{\partial x^2} + r u( 1-u -  f(u_{\tau})), & (x,t) \in (0,L) \times (0,T), \\ \frac{\partial u(x,t)}{ \partial n}=0, & x \in \{0,L\}, \quad t \in (0,T), \\ u(x,t)=u_0(x,t),     & (x,t) \in [0,L] \times [- \tau,0]. \end{cases} \label{equa1} \end{equation} %]]></script>
 
 <p>where the delay $\tau$ is a positive constant. we use an implicit finite difference approximation for the diffusion term and classical approach of the resolution of delay equations.  let N and M denote the number of space steps and time steps with the notations $\Delta x= L/N$ and $\Delta t= T/M$, respectively.</p>
 
 <p>The discretization of space $x_i$ and time $t_n$ are given by</p>
 
-<p>[x_i=i\Delta x, \qquad i=0,…,N,]</p>
+<script type="math/tex; mode=display">x_i=i\Delta x, \qquad i=0,...,N,</script>
 
-<p>[t_n=n\Delta t, \qquad n=0,…,M.]</p>
+<script type="math/tex; mode=display">t_n=n\Delta t, \qquad n=0,...,M.</script>
 
 <p>Let $u^n_i$  be the approximation of the function $u$ at $(x,t)=(x_i,t_n)$, moreover,</p>
 
-<p>[\left( \frac{\partial u}{ \partial t} \right)^{n+1}<em>i= \frac{u^{n+1}_i-u^{n}_i}{\Delta t}, \qquad \left( \frac{\partial^2 u}{ \partial x^2} \right)^{n+1}_i= \frac{u^{n+1}</em>{i+1}-2 u^{n+1}<em>i+u^{n+1}</em>{i-1}}{\Delta x},]</p>
+<script type="math/tex; mode=display">\left( \frac{\partial u}{ \partial t} \right)^{n+1}_i= \frac{u^{n+1}_i-u^{n}_i}{\Delta t}, \qquad \left( \frac{\partial^2 u}{ \partial x^2} \right)^{n+1}_i= \frac{u^{n+1}_{i+1}-2 u^{n+1}_i+u^{n+1}_{i-1}}{\Delta x},</script>
 
 <p>We write the scheme of the equation (\ref{equa1}) at the point $u^n_i$,</p>
 
-<p>[\begin{cases} \frac{ u^{n+1}<em>i- u^n_i}{  \Delta t} = D \frac{u^{n+1}</em>{i+1}-2 u^{n+1}<em>i+u^{n+1}</em>{i-1}}{\Delta x} + r u^n_i( 1-u^n_i -  f(u^{n-k}<em>i)), &amp; i=1,..,N-1, \quad n=0,..,M-1 \ u^{n+1}_1=u^{n+1}_0, \quad u^{n+1}</em>{N}=u^{n+1}_{N-1} , &amp; n=0,..,M-1, \ u^{n-k}_i=u_0(x_i,t_n-\tau),     &amp; i=0,..,N, \quad n=1,..,k.\ \end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases} \frac{ u^{n+1}_i- u^n_i}{  \Delta t} = D \frac{u^{n+1}_{i+1}-2 u^{n+1}_i+u^{n+1}_{i-1}}{\Delta x} + r u^n_i( 1-u^n_i -  f(u^{n-k}_i)), & i=1,..,N-1, \quad n=0,..,M-1 \\ u^{n+1}_1=u^{n+1}_0, \quad u^{n+1}_{N}=u^{n+1}_{N-1} , & n=0,..,M-1, \\ u^{n-k}_i=u_0(x_i,t_n-\tau),     & i=0,..,N, \quad n=1,..,k.\\ \end{cases} %]]></script>
 
 <p>Where, $u^{n-k}_i \approx u(x_i,t_n-\tau)$ is the delay variable and $k$ is determined by the equality $\tau= k \Delta t$. For simplicity of notation, we denote by $F^{n-k}_i := f(u^{n-k}_i)$ and $G^{n,k}_i:=r u^n_i( 1-u^n_i -  F^{n-k}_i)$, for $i=0,..,N-1, \quad n=1,..,k$ and $n=0,..,M-1$.</p>
 
 <p>The simplest form of this expression is given as follows</p>
 
-<p>[- \lambda u^{n+1}<em>{i+1} + (1+2\lambda) u^{n+1}_i - \lambda u^{n+1}</em>{i-1} = u^n_i + G^{n,k}_i, \text{ for } i=0,..,N-1,]</p>
+<script type="math/tex; mode=display">- \lambda u^{n+1}_{i+1} + (1+2\lambda) u^{n+1}_i - \lambda u^{n+1}_{i-1} = u^n_i + G^{n,k}_i, \text{ for } i=0,..,N-1,</script>
 
 <p>where $\lambda= D \Delta t /(\Delta x)^2$.</p>
 
 <p>Now, we can write the following semi-linear system with Neumann boundary condition</p>
 
-<p>[\begin{equation*} \begin{array}{lll} \left( \begin{array}{ccccc} 1+\lambda 	&amp;-\lambda	  &amp;             &amp;		\dots 		&amp; 0		\ -\lambda 		&amp;1+2\lambda 	  		&amp; -\lambda 	&amp;    &amp; 	\vdots	\ \vdots		&amp;\ddots       &amp; \ddots		&amp;       \ddots 		&amp;	\ &amp;             &amp;  -\lambda   &amp;       1+2\lambda	&amp; -\lambda	 \ 0 &amp; 		\dots		&amp; 	&amp;-\lambda	&amp; 1+\lambda \end{array} \right) \left( \begin{array}{c} U_1 \ U_2 \ \vdots \ \ U_{N-2} \ U_{N-1}	 . \end{array} \right)^{n+1} =  \left( \begin{array}{c} U_1 \ U_2 \ \vdots \  \  U_{N-2} \ U_{N-1}	 .  \end{array} \right)^{n} +  \left( \begin{array}{c} G_1 \ G_2 \ \vdots \ \ G_{N-2} \ G_{N-1}	 . \end{array} \right)^{n,k}</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*} \begin{array}{lll} \left( \begin{array}{ccccc} 1+\lambda 	&-\lambda	  &             &		\dots 		& 0		\\ -\lambda 		&1+2\lambda 	  		& -\lambda 	&    & 	\vdots	\\ \vdots		&\ddots       & \ddots		&       \ddots 		&	\\ &             &  -\lambda   &       1+2\lambda	& -\lambda	 \\ 0 & 		\dots		& 	&-\lambda	& 1+\lambda \end{array} \right) \left( \begin{array}{c} U_1 \\ U_2 \\ \vdots \\ \\ U_{N-2} \\ U_{N-1}	 . \end{array} \right)^{n+1} =  \left( \begin{array}{c} U_1 \\ U_2 \\ \vdots \\  \\  U_{N-2} \\ U_{N-1}	 .  \end{array} \right)^{n} +  \left( \begin{array}{c} G_1 \\ G_2 \\ \vdots \\ \\ G_{N-2} \\ G_{N-1}	 . \end{array} \right)^{n,k}
 
-<p>\end{array} \end{equation*}]</p>
+
+\end{array} \end{equation*} %]]></script>
 
 <p>First, we fix the parametrs as follows $T=10$, $\tau=1$, $L=1$, $D=1$, $r=1$,</p>
 

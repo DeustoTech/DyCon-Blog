@@ -309,12 +309,12 @@ img:active{
 
 <p>In the simulations below, we will consider the following optimal control problem:</p>
 
-<p>[\begin{cases}
-\displaystyle \min_{0\leq a(t)\leq 1}|u(x,T)-u_1|<em>{L^2}<br />
-u_t-u</em>{xx}=u(1-u)(u-0.33)<br />
-u(0,t)=u(L,t)=a(t)<br />
-u(x,0)\equiv u_0\in{0,1}
-\end{cases}]</p>
+<script type="math/tex; mode=display">\begin{cases}
+\displaystyle \min_{0\leq a(t)\leq 1}\|u(x,T)-u_1\|_{L^2}\\
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(0,t)=u(L,t)=a(t)\\
+u(x,0)\equiv u_0\in\{0,1\}
+\end{cases}</script>
 
 <p>In Figure 1, the initial state was $u_0=1$ and we can observe how the solution has been successfully driven to the target $u_1=0.33$. For this length of the domain there is no barrier (see <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0006">Barriers</a>)), for this reason the optimal solution can achieve the target.</p>
 
@@ -385,13 +385,13 @@ u(x,0)\equiv u_0\in{0,1}
 
 <p>In Figure 4, we seek to find a control that is quasistatic, for doing so we penalize the time derivative of the control in the discrete level and we add the restriction $u(x,T)=0.33$.</p>
 
-<p>[\begin{cases}
-\min_{0\leq a(t)\leq 1}|a_t|<em>{L^2}<br />
-u_t-u</em>{xx}=u(1-u)(u-0.33)<br />
-u(0,t)=u(L,t)=a(t)<br />
-u(x,0)\equiv 0<br />
+<script type="math/tex; mode=display">\begin{cases}
+\min_{0\leq a(t)\leq 1}\|a_t\|_{L^2}\\
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(0,t)=u(L,t)=a(t)\\
+u(x,0)\equiv 0\\
 u(x,T)\equiv 0.33
-\end{cases}]</p>
+\end{cases}</script>
 
 <center>
 <table>
@@ -412,13 +412,13 @@ u(x,T)\equiv 0.33
 
 <p>In Figure 5, we compute the control in minimal time by minimizing the functional:</p>
 
-<p>[\begin{cases}
-\min_{0\leq a(t)\leq 1}T<br />
-u_t-u_{xx}=u(1-u)(u-0.33)<br />
-u(0,t)=u(L,t)=a(t)<br />
-u(x,0)\equiv 0<br />
+<script type="math/tex; mode=display">\begin{cases}
+\min_{0\leq a(t)\leq 1}T\\
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(0,t)=u(L,t)=a(t)\\
+u(x,0)\equiv 0\\
 u(x,T)\equiv 0.33
-\end{cases}]</p>
+\end{cases}</script>
 
 <center>
 <table>
@@ -441,13 +441,13 @@ u(x,T)\equiv 0.33
 
 <p>In Figure 6, we compute the control with minimal flow by minimizing the functional:</p>
 
-<p>[\begin{cases}
-\min_{0\leq a(t)\leq 1} |u_x(0,t)|<em>L^2+|u_x(L,t)|_L^2 <br />
-u_t-u</em>{xx}=u(1-u)(u-0.33)<br />
-u(0,t)=u(L,t)=a(t)<br />
-u(x,0)\equiv 0<br />
+<script type="math/tex; mode=display">\begin{cases}
+\min_{0\leq a(t)\leq 1} \|u_x(0,t)\|_L^2+\|u_x(L,t)\|_L^2 \\
+u_t-u_{xx}=u(1-u)(u-0.33)\\
+u(0,t)=u(L,t)=a(t)\\
+u(x,0)\equiv 0\\
 u(x,T)\equiv 1-\epsilon
-\end{cases}]</p>
+\end{cases}</script>
 
 <center>
 <table>

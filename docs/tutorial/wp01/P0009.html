@@ -303,28 +303,28 @@ img:active{
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
-<span class="n">StartDyConToolbox</span>
 </code></pre></div></div>
 <h3 id="problem-definition">Problem definition</h3>
 
 <p>The simultaneous control problem is defined as:</p>
 
-<p>[\min <em>{u \in L^2(0,T)} \mathcal{J}\left( u\right) = 
-\min _{u \in L^2(0,T)} \frac{1}{2}  \sum</em>{\nu \in \mathcal{K}}  || x\left( T, \nu \right) - x_T ||_{\mathbb{R}^ N}^2  + 
-\frac{\beta}{2} \int_0^T u^2 \mathrm{d}t \quad \beta \in \mathbb{R}^+]</p>
+<script type="math/tex; mode=display">\min _{u \in L^2(0,T)} \mathcal{J}\left( u\right) = 
+\min _{u \in L^2(0,T)} \frac{1}{2}  \sum_{\nu \in \mathcal{K}}  || x\left( T, \nu \right) - x_T ||_{\mathbb{R}^ N}^2  + 
+\frac{\beta}{2} \int_0^T u^2 \mathrm{d}t \quad \beta \in \mathbb{R}^+</script>
 
 <p>subject to:</p>
 
-<p>[\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{
 \begin{array}{ll}
-x^\prime \left( t \right) = A \left( \nu \right) x \left( t \right) + B \left( \nu \right) u \left( t \right), \quad 0 &lt; t &lt;T, <br />
+x^\prime \left( t \right) = A \left( \nu \right) x \left( t \right) + B \left( \nu \right) u \left( t \right), \quad 0 < t <T, \\
 x\left( 0 \right) = x^0.
 \end{array}
-\right.]</p>
+\right. %]]></script>
 
 <p>where:</p>
 
-<p>[\mathcal{K}= \left{ \nu_i \in \mathbb{R}, \enspace 1\leq i \leq K \right}]</p>
+<script type="math/tex; mode=display">\mathcal{K}= \left\{ \nu_i \in \mathbb{R}, \enspace 1\leq i \leq K \right\}</script>
 
 <h3 id="numerical-implementation">Numerical Implementation</h3>
 
@@ -337,14 +337,15 @@ x\left( 0 \right) = x^0.
 </code></pre></div></div>
 <p>Then we create the matrices of linear dynamics.</p>
 
-<p>[A_\nu = \begin{bmatrix}
-  -\nu &amp; 1 <br />
-  0    &amp; -\nu
+<script type="math/tex; mode=display">% <![CDATA[
+A_\nu = \begin{bmatrix}
+  -\nu & 1 \\
+  0    & -\nu
 \end{bmatrix} \ \ \ 
 B_\nu = \begin{bmatrix}
-0 <br />
+0 \\
 1 
-\end{bmatrix}]</p>
+\end{bmatrix} %]]></script>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">]</span> <span class="o">=</span> <span class="n">GenMatSim</span><span class="p">(</span><span class="n">nu</span><span class="p">);</span>
 </code></pre></div></div>

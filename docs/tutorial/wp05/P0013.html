@@ -305,17 +305,18 @@ img:active{
 
 <p>Let $p_0(x)$ be the probability density of the position of the particle at time $t=0$. Then, at every time $t&gt;0$, the probability density $p(x,t)$ of the particle satisfies the Fokker-Planck equation [1]:</p>
 
-<p>[\begin{cases}
-\partial_t p - \Delta p + \mathrm{div}(pu) = 0 \quad \mathrm{in}\,\,\Omega\times(0,T)<br />
-p(x,0) = p_0(x) \quad \mathrm{in}\,\,\Omega<br />
+<script type="math/tex; mode=display">\begin{cases}
+\partial_t p - \Delta p + \mathrm{div}(pu) = 0 \quad \mathrm{in}\,\,\Omega\times(0,T)\\
+p(x,0) = p_0(x) \quad \mathrm{in}\,\,\Omega\\
 (\nabla p-pu)\cdot\mathrm{n} = 0 \quad \mathrm{on}\,\,\partial\Omega\times(0,T)
-\end{cases}]</p>
+\end{cases}</script>
 
 <p>Where $\mathrm{n}$ is the outward unit normal vector field on $\partial\Omega$.</p>
 
 <p>Fix a positive real number $a&gt;0$ and introduce the family of admissible controls:</p>
 
-<p>[\mathcal{U}_{\mathrm{ad}}:={u\in L^{2}(0,T;H^{1}(\Omega))^n : -a &lt; u(x,t) &lt; a\,\,\mathrm{a.e.}\,\,\mathrm{in}\,\,\Omega\times(0,T)}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\mathcal{U}_{\mathrm{ad}}:=\{u\in L^{2}(0,T;H^{1}(\Omega))^n : -a < u(x,t) < a\,\,\mathrm{a.e.}\,\,\mathrm{in}\,\,\Omega\times(0,T)\} %]]></script>
 
 <p>For every non-negative initial data $p_0\in H^{1}(\Omega)$ and every admissible control $u\in\mathcal{U}_{\mathrm{ad}}$, there is a unique solution $p\in\mathcal{C}([0,T];L^{2}(\Omega))\cap L^{2}(0,T;H^{1}(\Omega))$ to the previous problem such that $p(x,t)\geq 0$ for every $t\geq 0$ and almost every $x\in\Omega$ [2].</p>
 
@@ -325,15 +326,15 @@ p(x,0) = p_0(x) \quad \mathrm{in}\,\,\Omega<br />
 
 <p>Fix a smooth reference trajectory $z:[0,T]\rightarrow\Omega$. Our objective is to find an admissible control $u\in\mathcal{U}_{\mathrm{ad}}$ that minimizes the following functional:</p>
 
-<p>[J(u):=\alpha\int_{0}^{T}\int_{\Omega}\Vert x-z(t)\Vert^2p(x,t)dxdt+\beta\int_{\Omega}\Vert x - z(T)\Vert^2p(x,T)dx + \gamma \int_{0}^{T}\int_{\Omega}\vert u(x,t)\vert^2p(x,t)dxdt]</p>
+<script type="math/tex; mode=display">J(u):=\alpha\int_{0}^{T}\int_{\Omega}\Vert x-z(t)\Vert^2p(x,t)dxdt+\beta\int_{\Omega}\Vert x - z(T)\Vert^2p(x,T)dx + \gamma \int_{0}^{T}\int_{\Omega}\vert u(x,t)\vert^2p(x,t)dxdt</script>
 
 <p>subject to:</p>
 
-<p>[\begin{cases}
-\partial_t p - \Delta p + \mathrm{div}(pu) = 0 \quad \mathrm{in}\,\,\Omega\times(0,T)<br />
-p(x,0) = p_0(x) \quad \mathrm{in}\,\,(-6,6)<br />
+<script type="math/tex; mode=display">\begin{cases}
+\partial_t p - \Delta p + \mathrm{div}(pu) = 0 \quad \mathrm{in}\,\,\Omega\times(0,T)\\
+p(x,0) = p_0(x) \quad \mathrm{in}\,\,(-6,6)\\
 (\nabla p-pu)\cdot\mathrm{n} = 0 \quad \mathrm{on}\,\,\partial\Omega\times(0,T)
-\end{cases}]</p>
+\end{cases}</script>
 
 <p>where $\alpha,\beta$ and $\gamma$ are non-negative real 
 numbers. In [2] it is proven that there always exists a $u^{*}\in\mathcal{U}_{\mathrm{ad}}$ minimizing the previous functional among the family of admissible controls.</p>
@@ -342,23 +343,23 @@ numbers. In [2] it is proven that there always exists a $u^{*}\in\mathcal{U}_{\m
 
 <p>In the numerical example that we will present in this post, we will work over the one-dimensional domain $\Omega = (-6,6)$ with time horizon $T = 5$, and the oscillating reference trajectory $z(t) = 4\sin(2t)$. We also fix $\alpha=\beta=\gamma=1$, so that our objective will be to minimize the functional:</p>
 
-<p>[J(u) = \int_{0}^{T}\int_{\Omega}\vert x - 4\sin(2t)\vert^2 p(x,t)dxdt + \int_{\Omega}\vert x - 4sin(2T)\vert^2p(x,T)dx + \int_{0}^{T}\int_{\Omega}\vert u(x,t)\vert^{2}dxdt]</p>
+<script type="math/tex; mode=display">J(u) = \int_{0}^{T}\int_{\Omega}\vert x - 4\sin(2t)\vert^2 p(x,t)dxdt + \int_{\Omega}\vert x - 4sin(2T)\vert^2p(x,T)dx + \int_{0}^{T}\int_{\Omega}\vert u(x,t)\vert^{2}dxdt</script>
 
 <p>subject to</p>
 
-<p>[(1)
+<script type="math/tex; mode=display">(1)
 \begin{cases}
-\partial_t p - \partial_x^2 p + \partial_x(pu) = 0 \quad \mathrm{in}\,\, (-6,6)\times(0,T)<br />
-p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)<br />
-\partial_x^{-}p(6,t) - u(6,t)p(6,t) = 0 \quad \mathrm{in} \,\,(0,T)<br />
+\partial_t p - \partial_x^2 p + \partial_x(pu) = 0 \quad \mathrm{in}\,\, (-6,6)\times(0,T)\\
+p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)\\
+\partial_x^{-}p(6,t) - u(6,t)p(6,t) = 0 \quad \mathrm{in} \,\,(0,T)\\
 \partial_x^{+}p(6,t) - u(6,t)p(6,t) = 0 \quad \mathrm{in} \,\,(0,T)
-\end{cases}]</p>
+\end{cases}</script>
 
 <p><img width="80%" src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP05/P0013/ref.png" /></p>
 
 <p>We consider the initial probability density function</p>
 
-<p>[p_0(x) = \frac{1}{C}\exp(-2x^2)]</p>
+<script type="math/tex; mode=display">p_0(x) = \frac{1}{C}\exp(-2x^2)</script>
 
 <p>where $C&gt;0$ is chosen so that $\int_{-6}^{6}p_0(x)dx=1$.</p>
 
@@ -404,13 +405,13 @@ p(x,0) = p_0(x) \quad \mathrm{in}\,\,(0,T)<br />
 
 <p>The uncontrolled evolution of this probability density is given by the following heat equation with Neumann boundary conditions:</p>
 
-<p>[(2)
+<script type="math/tex; mode=display">(2)
 \begin{cases}
-\partial_t p - \partial_{x}^{2}p = 0 \quad \mathrm{in}\,\,(-6,6)\times(0,T)<br />
-p(x,0)=p_0(x)\quad\mathrm{in}\,\,(-6,6)<br />
-\partial_{x}^{-}p(6,t) = 0\quad\mathrm{in}\,\,(0,T)<br />
+\partial_t p - \partial_{x}^{2}p = 0 \quad \mathrm{in}\,\,(-6,6)\times(0,T)\\
+p(x,0)=p_0(x)\quad\mathrm{in}\,\,(-6,6)\\
+\partial_{x}^{-}p(6,t) = 0\quad\mathrm{in}\,\,(0,T)\\
 \partial_{x}^{+}p(-6,t) = 0\quad\mathrm{in}\,\,(0,T)
-\end{cases}]</p>
+\end{cases}</script>
 
 <p>We discretize and solve this equation:</p>
 

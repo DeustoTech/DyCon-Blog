@@ -299,17 +299,17 @@ img:active{
 
 <p>When formulated mathematically, deep supervised learning roughly consists in solving an <em>optimal control problem</em> subject to a nonlinear discrete-time dynamical system, called an artificial neural network.</p>
 
-<p>[\newcommand{\R}{\mathbb{R}}
-\newcommand{\N}{\mathbb{N}}]</p>
+<script type="math/tex; mode=display">\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}</script>
 
 <hr />
 
 <h2 id="1-setup">1. <strong>Setup</strong></h2>
 
 <p>Deep supervised learning [1, 3] (and more generally, supervised machine learning), can be summarized by the following scheme. 
-We are interested in approximating a function $f: \R^d \rightarrow \R^m$, of some class, which is unknown a priori. We have data: its values \(\{ \vec{y}_i \}_{i=1}^S \in \R^{m\times S}\)
-at $S$ distinct points \(\{ \vec{x}_i \}_{i=1}^S \in \R^{d\times S}\) (possibly noisy).
-We generally split the $S$ data points into training  data \(\{ \vec{x}_i, \vec{y}_i \}_{i=1}^N\) and testing data \(\{ \vec{x}_i, \vec{y}_i \}_{i=N+1}^S\). In practice, $N\gg S-N-1$.</p>
+We are interested in approximating a function $f: \R^d \rightarrow \R^m$, of some class, which is unknown a priori. We have data: its values <script type="math/tex">\{ \vec{y}_i \}_{i=1}^S \in \R^{m\times S}</script>
+at $S$ distinct points <script type="math/tex">\{ \vec{x}_i \}_{i=1}^S \in \R^{d\times S}</script> (possibly noisy).
+We generally split the $S$ data points into training  data <script type="math/tex">\{ \vec{x}_i, \vec{y}_i \}_{i=1}^N</script> and testing data <script type="math/tex">\{ \vec{x}_i, \vec{y}_i \}_{i=N+1}^S</script>. In practice, $N\gg S-N-1$.</p>
 
 <p>“Learning” generally consists in:</p>
 
@@ -317,10 +317,10 @@ We generally split the $S$ data points into training  data \(\{ \vec{x}_i, \vec{
   <li>Proposing a candidate approximation 
  $f_\Theta( \cdot): \R^d \rightarrow \R^m$, depending on tunable parameters $\Theta$ and fixed hyper-parameters $L\geq 1$, ${ d_k}$;</li>
   <li>
-    <p>Tune $\Theta$ as to minimize the empirical risk: \(\sum_{i=1}^N \ell(f_\Theta(\vec{x}_i), \vec{y}_i),\)
+    <p>Tune $\Theta$ as to minimize the empirical risk: <script type="math/tex">\sum_{i=1}^N \ell(f_\Theta(\vec{x}_i), \vec{y}_i),</script>
 where $\ell \geq 0$, $\ell(x, x) = 0$ (e.g. $\ell(x, y) = |x-y|^2$). This is called <em>training</em>.</p>
   </li>
-  <li>A posteriori analysis: check if test error \(\sum_{i=N+1}^{S} \ell(f_\Theta(\vec{x}_i), \vec{y}_i)\) is small. 
+  <li>A posteriori analysis: check if test error <script type="math/tex">\sum_{i=N+1}^{S} \ell(f_\Theta(\vec{x}_i), \vec{y}_i)</script> is small. 
 This is called <em>generalization</em>.</li>
 </ol>
 
@@ -359,23 +359,24 @@ For the sake of presentation, we will discuss two of the most simple examples.</
 <h3 id="21-multi-layer-perceptron"><strong>2.1. Multi-layer perceptron</strong></h3>
 
 <p>We henceforth assume that we are given a training dataset 
-\(\{\vec{x}_i, \vec{y}_i\}_{i=1}^N \subset \R^{d\times N}\times \R^{m\times N}\).</p>
+<script type="math/tex">\{\vec{x}_i, \vec{y}_i\}_{i=1}^N \subset \R^{d\times N}\times \R^{m\times N}</script>.</p>
 
 <hr />
 
-<p><strong>Definition (Neural network):</strong>  Let \(L\geq 1\) and \(\{ d_k \}_{k=1}^L \in \N^L\) be given. Set $d_0 := d$ and $d_{L+1} :=m$.
+<p><strong>Definition (Neural network):</strong>  Let <script type="math/tex">L\geq 1</script> and <script type="math/tex">\{ d_k \}_{k=1}^L \in \N^L</script> be given. Set $d_0 := d$ and $d_{L+1} :=m$.
 A neural network with $L$ hidden layers is a map</p>
 
-<p>[f_\Theta(\vec{x}) = \varphi(A^L z^L + b^L)]</p>
+<script type="math/tex; mode=display">f_\Theta(\vec{x}) = \varphi(A^L z^L + b^L)</script>
 
 <p>where $z^L = z^L_i \in \R^m$ being given by the scheme</p>
 
-<p>[\begin{cases}
-z^{k+1} = \sigma(A^k z^k + b^k) &amp;\text{ for } k = 0, \ldots, L-1 <br />
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+z^{k+1} = \sigma(A^k z^k + b^k) &\text{ for } k = 0, \ldots, L-1 \\
 z^0 = \vec{x}_i \in \R^d.
-\end{cases}]</p>
+\end{cases} %]]></script>
 
-<p>Here \(\Theta = \{A^k, b^k\}_{k=0}^{L}\) are given parameters such that $A^k \in \R^{d_{k+1}\times d_k}$ and $b^k \in \R^{d_k}$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.</p>
+<p>Here <script type="math/tex">\Theta = \{A^k, b^k\}_{k=0}^{L}</script> are given parameters such that $A^k \in \R^{d_{k+1}\times d_k}$ and $b^k \in \R^{d_k}$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.</p>
 
 <hr />
 
@@ -383,7 +384,7 @@ z^0 = \vec{x}_i \in \R^d.
 
 <ul>
   <li>The above-defined neural network is usually referred to as the <em>multi-layer perceptron</em> (see <a href="https://en.wikipedia.org/wiki/Multilayer_perceptron">Multilayer_perceptron</a>)</li>
-  <li>Observe that $z^k \in \R^{d_k}$ for \(k \in \{0, \ldots, L\}\).</li>
+  <li>Observe that $z^k \in \R^{d_k}$ for <script type="math/tex">k \in \{0, \ldots, L\}</script>.</li>
   <li>The function $\sigma$ is always nonlinear in practice (as otherwise the optimisation problem roughly coincides with least squares for a linear regression). It is called the <em>activation function</em>.</li>
   <li>Generally, $\sigma(x) = \max(x, 0)$ or $\sigma(x) = \tanh(x)$ (but others work too).</li>
   <li>Deep learning means optimisation subject to a multi-layered neural net: $L\geq 2$ at least.</li>
@@ -407,39 +408,39 @@ This figure essentially represents the discrete-time dynamics of a single datum 
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
 
-<span class="k">class</span> <span class="nc">OneBlock</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">OneBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
-		<span class="nb">super</span><span class="p">(</span><span class="n">OneBlock</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
-		<span class="bp">self</span><span class="p">.</span><span class="n">d1</span> <span class="o">=</span> <span class="n">d1</span>
-		<span class="bp">self</span><span class="p">.</span><span class="n">d2</span> <span class="o">=</span> <span class="n">d2</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">OneBlock</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">d1</span> <span class="o">=</span> <span class="n">d1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">d2</span> <span class="o">=</span> <span class="n">d2</span>
 
-		<span class="bp">self</span><span class="p">.</span><span class="n">mlp</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
-			<span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">),</span>
-			<span class="n">nn</span><span class="p">.</span><span class="n">Tanh</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mlp</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+			<span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">),</span>
+			<span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span>
 		<span class="p">)</span>
 	<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span> 
-		<span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">mlp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">Perceptron</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Perceptron</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">,</span> <span class="n">num_layers</span><span class="p">):</span>
-		<span class="nb">super</span><span class="p">(</span><span class="n">Perceptron</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">Perceptron</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
-		<span class="bp">self</span><span class="p">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="n">dimensions</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="n">dimensions</span>
 		<span class="n">_</span> <span class="o">=</span> \
-			<span class="p">[</span><span class="n">OneBlock</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="bp">self</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+			<span class="p">[</span><span class="n">OneBlock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
 
-		<span class="bp">self</span><span class="p">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span>
-		<span class="bp">self</span><span class="p">.</span><span class="n">projector</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">projector</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
 	<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="n">_</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">projector</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">blocks</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">projector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </code></pre></div></div>
 
 <p>We can save this class in a file called <code class="highlighter-rouge">model.py</code>.
 Then one may create an instance of a Perceptron model for practical usage as follows:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">'cpu'</span><span class="p">)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s">'cpu'</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">Perceptron</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">Perceptron</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -476,17 +477,18 @@ This will allow us to add an addendum term in the scheme.</p>
 
 <hr />
 
-<p><strong>Definition (Residual neural network [2]):</strong>  Let \(L\geq 1\) and \(\{ d_k \}_{k=1}^L \in \N^L\) be given. Set $d_0 := d$ and $d_{L+1} :=m$.
+<p><strong>Definition (Residual neural network [2]):</strong>  Let <script type="math/tex">L\geq 1</script> and <script type="math/tex">\{ d_k \}_{k=1}^L \in \N^L</script> be given. Set $d_0 := d$ and $d_{L+1} :=m$.
 A residual neural network (ResNet) with $L$ hidden layers is a map</p>
 
-<p>[f_\Theta(\vec{x}) = \varphi(A^L z^L + b^L)]</p>
+<script type="math/tex; mode=display">f_\Theta(\vec{x}) = \varphi(A^L z^L + b^L)</script>
 
 <p>where $z^L = z^L_i \in \R^d$ being given by the scheme</p>
 
-<p>[\begin{cases}
-z^{k+1} = z^k + \sigma(A^k z^k + b^k) &amp;\text{ for } k = 0, \ldots, L-1 <br />
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+z^{k+1} = z^k + \sigma(A^k z^k + b^k) &\text{ for } k = 0, \ldots, L-1 \\
 z^0 = \vec{x}_i \in \R^d.
-\end{cases}]</p>
+\end{cases} %]]></script>
 
 <p>Here $\Theta = {A^k, b^k}_{k=0}^{L}$ are given parameters such that $A^k \in \R^{d\times d}$ and $b^k \in \R^{d}$ for $k&lt;L$ and $A^L \in \R^{m\times d}, b^L \in \R^m$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.</p>
 
@@ -496,17 +498,7 @@ z^0 = \vec{x}_i \in \R^d.
 
 <p>Training consists in solving the optimization problem:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[\min_{\Theta = { (A^k, b^k) }<em>{k=0}^L } \sum</em>{i=1}^N</td>
-      <td>\vec{y}<em>i - f</em>\Theta(\vec{x}_i)</td>
-      <td>^2 + \frac{\epsilon}{2}</td>
-      <td>\Theta</td>
-      <td>^2;]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">\min_{\Theta = \{ (A^k, b^k) \}_{k=0}^L } \sum_{i=1}^N | \vec{y}_i - f_\Theta(\vec{x}_i)|^2 + \frac{\epsilon}{2} |\Theta|^2;</script>
 
 <ul>
   <li>$\epsilon&gt;0$ is a penalization parameter.</li>
@@ -520,11 +512,11 @@ z^0 = \vec{x}_i \in \R^d.
 
 <p>The functional to be minimized is of the form</p>
 
-<p>[J(\Theta) = \sum_{i=1}^N J_i(\Theta).]</p>
+<script type="math/tex; mode=display">J(\Theta) = \sum_{i=1}^N J_i(\Theta).</script>
 
 <p>We could do gradient descent:</p>
 
-<p>[\Theta^{n+1} := \Theta^n - \eta \nabla J(\Theta^n),]</p>
+<script type="math/tex; mode=display">\Theta^{n+1} := \Theta^n - \eta \nabla J(\Theta^n),</script>
 
 <p>$\eta$ is step-size. But often $N \gg 1$ ($N=10^3$ or much more).</p>
 
@@ -555,10 +547,10 @@ z^0 = \vec{x}_i \in \R^d.
 # does the optimization of paramterss
 </span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">perceptron</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">perceptron</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
 
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">perceptron</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
-<span class="n">trainer</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
 </code></pre></div></div>
 <hr />
 
@@ -585,24 +577,15 @@ The time-steps play the role of layers. We are working with an ode on $(0, 1)$. 
 
 <p>It can be advantageous to consider the continuous-time optimal control problem:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[\inf_{u(t) \in U,\, (\alpha, \beta)} \sum_{i=1}^N</td>
-      <td>\vec{y}_i - \varphi(\alpha \, z(1)+\beta)</td>
-      <td>^2 + \frac{\epsilon}{2} \int_0^1</td>
-      <td>(A(t), b(t))</td>
-      <td>^2 dt]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">\inf_{u(t) \in U,\, (\alpha, \beta)} \sum_{i=1}^N |\vec{y}_i - \varphi(\alpha \, z(1)+\beta)|^2 + \frac{\epsilon}{2} \int_0^1 |(A(t), b(t))|^2 dt</script>
 
 <p>where $z = z_i$ solves</p>
 
-<p>[\begin{cases}
-	z’(t) &amp;= \sigma(A(t)z(t)+b(t)) \quad \text{ in } (0, 1) <br />
-	z(0) &amp;= \vec{x}_i \in \R^d.
-\end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+	z'(t) &= \sigma(A(t)z(t)+b(t)) \quad \text{ in } (0, 1) \\
+	z(0) &= \vec{x}_i \in \R^d.
+\end{cases} %]]></script>
 
 <hr />
 

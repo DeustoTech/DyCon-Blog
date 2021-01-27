@@ -311,56 +311,57 @@ img:active{
 </ul>
 
 <p>Structured deformations <a href="#DPO1993">[DPO1993]</a> provide a multiscale geometry that captures the contributions at the macroscopic level of both smooth and non-smooth geometrical changes at sub-macroscopic levels. The latter are called <em>disarrangements</em>. <br />
-To encode information of phenomena happening at different length scales in one mathematical object, a (first-order) structured deformation is defined as a pair \((g,G)\), where \(g\) is the macroscopic deformation, the tensor field \(G\) is a measure of deformations without disarrangements (the smooth microscopic deformation), and \(M:=\nabla g-G\) is a measure of deformations due to disarrangements (the smooth microscopic deformation).
+To encode information of phenomena happening at different length scales in one mathematical object, a (first-order) structured deformation is defined as a pair <script type="math/tex">(g,G)</script>, where <script type="math/tex">g</script> is the macroscopic deformation, the tensor field <script type="math/tex">G</script> is a measure of deformations without disarrangements (the smooth microscopic deformation), and <script type="math/tex">M:=\nabla g-G</script> is a measure of deformations due to disarrangements (the smooth microscopic deformation).
 <br />
-One can recover the standard notions of plastic deformation from \(G\) and \(M\), as well as information on the Burgers vector field associated with closed
-curves in the body and the dislocation density field used in describing geometrical changes in bodies with defects from \(M\) and \(\mathrm{curl}M\) <a href="O2017">[O2017]</a>.</p>
+One can recover the standard notions of plastic deformation from <script type="math/tex">G</script> and <script type="math/tex">M</script>, as well as information on the Burgers vector field associated with closed
+curves in the body and the dislocation density field used in describing geometrical changes in bodies with defects from <script type="math/tex">M</script> and <script type="math/tex">\mathrm{curl}M</script> <a href="O2017">[O2017]</a>.</p>
 
-<p>Structured deformations have been set in an energetic formulation framework <a href="#CF1997">[CF1997]</a>, therefore rendering them apt to be studied with variational techniques. In this context, considering suitable function spaces was fundamental to give \((g,G)\) citizenship in the realm of the calculus of variations. The functional-analytic choice of the space \(SD(\Omega;\mathbb{R}^d)\), the set of \(\mathbb{R}^d\)-valued structured deformations on \(\Omega\subset\mathbb{R}^N\), was dictated by the necessity of treating the non-smooth behaviours described by the disarrangement tensor \(M\). Being able to describe the discontinuities of the deformation suggested that a good space for \(g\) be \(SBV(\Omega;\mathbb{R}^d)\), the space of \(\mathbb{R}^d\)-valued <em>special functions of bounded variation</em>. Consequently, the matrix-valued field \(G\) is assumed to live in \(L^1(\Omega;\mathbb{R}^{d\times N})\), so that</p>
+<p>Structured deformations have been set in an energetic formulation framework <a href="#CF1997">[CF1997]</a>, therefore rendering them apt to be studied with variational techniques. In this context, considering suitable function spaces was fundamental to give <script type="math/tex">(g,G)</script> citizenship in the realm of the calculus of variations. The functional-analytic choice of the space <script type="math/tex">SD(\Omega;\mathbb{R}^d)</script>, the set of <script type="math/tex">\mathbb{R}^d</script>-valued structured deformations on <script type="math/tex">\Omega\subset\mathbb{R}^N</script>, was dictated by the necessity of treating the non-smooth behaviours described by the disarrangement tensor <script type="math/tex">M</script>. Being able to describe the discontinuities of the deformation suggested that a good space for <script type="math/tex">g</script> be <script type="math/tex">SBV(\Omega;\mathbb{R}^d)</script>, the space of <script type="math/tex">\mathbb{R}^d</script>-valued <em>special functions of bounded variation</em>. Consequently, the matrix-valued field <script type="math/tex">G</script> is assumed to live in <script type="math/tex">L^1(\Omega;\mathbb{R}^{d\times N})</script>, so that</p>
 
-<p>[SD(\Omega;\mathbb{R}^d):= SBV(\Omega;\mathbb{R}^d) \times L^1(\Omega;\mathbb{R}^{d\times N}).]</p>
+<script type="math/tex; mode=display">SD(\Omega;\mathbb{R}^d):= SBV(\Omega;\mathbb{R}^d) \times L^1(\Omega;\mathbb{R}^{d\times N}).</script>
 
-<h3 id="aside-on-bv-functions">Aside on \(BV\) functions</h3>
+<h3 id="aside-on-bv-functions">Aside on <script type="math/tex">BV</script> functions</h3>
 <p>Functions of bounded variation are integrable functions whose distributional derivative is a finite Radon measure, in symbols</p>
 
-<p>[BV(\Omega;\mathbb{R}^d):=\big{u\in L^1(\Omega;\mathbb{R}^d): Du\in\mathcal{M}(\Omega;\mathbb{R}^{d\times N})\big}.]</p>
+<script type="math/tex; mode=display">BV(\Omega;\mathbb{R}^d):=\big\{u\in L^1(\Omega;\mathbb{R}^d): Du\in\mathcal{M}(\Omega;\mathbb{R}^{d\times N})\big\}.</script>
 
-<p>It is known that the distributional derivative \(Du\) admits a decomposition into three pieces, namely an absolutely continuous part with respect to the Lebesgue measure \(\mathcal{L}^N\), whose density is given by the gradient \(\nabla u\); a jump part, which is concentrated on an \((N-1)\)-dimensional set \(S_u\) and whose density with respect to the Hausdorff measure \(\mathcal{H}^{N-1}\) is given by \([u]\otimes\nu_u\) (\([u]\) being the jump of \(u\) across the <em>singular set</em> \(S_u\), and \(\nu_u\) being the normal vector to \(S_u\)); and a part \(D^c u\) which is singular with respect to both \(\mathcal{L}^N\) and \(\mathcal{H}^{N-1}\), called the <em>Cantor part</em>. To summarise,</p>
+<p>It is known that the distributional derivative <script type="math/tex">Du</script> admits a decomposition into three pieces, namely an absolutely continuous part with respect to the Lebesgue measure <script type="math/tex">\mathcal{L}^N</script>, whose density is given by the gradient <script type="math/tex">\nabla u</script>; a jump part, which is concentrated on an <script type="math/tex">(N-1)</script>-dimensional set <script type="math/tex">S_u</script> and whose density with respect to the Hausdorff measure <script type="math/tex">\mathcal{H}^{N-1}</script> is given by <script type="math/tex">[u]\otimes\nu_u</script> (<script type="math/tex">[u]</script> being the jump of <script type="math/tex">u</script> across the <em>singular set</em> <script type="math/tex">S_u</script>, and <script type="math/tex">\nu_u</script> being the normal vector to <script type="math/tex">S_u</script>); and a part <script type="math/tex">D^c u</script> which is singular with respect to both <script type="math/tex">\mathcal{L}^N</script> and <script type="math/tex">\mathcal{H}^{N-1}</script>, called the <em>Cantor part</em>. To summarise,</p>
 
-<p>[Du=\nabla u\mathcal{L}^N+[u]\otimes\nu_u\mathcal{H}^{N-1}\lfloor S_u+D^c u.]</p>
+<script type="math/tex; mode=display">Du=\nabla u\mathcal{L}^N+[u]\otimes\nu_u\mathcal{H}^{N-1}\lfloor S_u+D^c u.</script>
 
 <p>Special functions of bounded variations are those whose distributional derivative has no Cantor part,</p>
 
-<p>[SBV(\Omega;\mathbb{R}^d):=\big{u\in BV(\Omega;\mathbb{R}^d): D^c u=0\big},]</p>
+<script type="math/tex; mode=display">SBV(\Omega;\mathbb{R}^d):=\big\{u\in BV(\Omega;\mathbb{R}^d): D^c u=0\big\},</script>
 
-<p>so that, for \(u\in SBV(\Omega;\mathbb{R}^d)\) we have \(Du=\nabla u\mathcal{L}^N+[u]\otimes\nu_u\mathcal{H}^{N-1}\lfloor S_u\).</p>
+<p>so that, for <script type="math/tex">u\in SBV(\Omega;\mathbb{R}^d)</script> we have <script type="math/tex">Du=\nabla u\mathcal{L}^N+[u]\otimes\nu_u\mathcal{H}^{N-1}\lfloor S_u</script>.</p>
 
 <p><br /></p>
 
-<p>One of the fundamental results contained in the seminal paper <a href="#DPO1993">[DPO1993]</a> is the <em>Approximation Theorem</em>, stating that any structured deformation \((g,G)\) can be approximated by a sequence of simple deformations; in the language of <a href="#CF1997">[CF1997]</a>, the approximation theorem reads
+<p>One of the fundamental results contained in the seminal paper <a href="#DPO1993">[DPO1993]</a> is the <em>Approximation Theorem</em>, stating that any structured deformation <script type="math/tex">(g,G)</script> can be approximated by a sequence of simple deformations; in the language of <a href="#CF1997">[CF1997]</a>, the approximation theorem reads
 <br />
-<strong>Approximation Theorem</strong>: <em>Given \((g,G)\in SD(\Omega;\mathbb{R}^d)\), there exists a sequence \(u_n\in SBV(\Omega;\mathbb{R}^d)\) such that</em></p>
+<strong>Approximation Theorem</strong>: <em>Given <script type="math/tex">(g,G)\in SD(\Omega;\mathbb{R}^d)</script>, there exists a sequence <script type="math/tex">u_n\in SBV(\Omega;\mathbb{R}^d)</script> such that</em></p>
 
-<p>[u_n\to g\quad \text{in $L^1(\Omega;\mathbb{R}^d)$} \qquad \text{and} \qquad \nabla u_n\stackrel{*}{\rightharpoonup}G\quad \text{in $\mathcal{M}(\Omega;\mathbb{R}^{d\times N})$.}]</p>
+<script type="math/tex; mode=display">u_n\to g\quad \text{in $L^1(\Omega;\mathbb{R}^d)$} \qquad \text{and} \qquad \nabla u_n\stackrel{*}{\rightharpoonup}G\quad \text{in $\mathcal{M}(\Omega;\mathbb{R}^{d\times N})$.}</script>
 
-<p>Given the structure of the distributional derivative, it is not difficult to see that the singular part \(D^s u\) of \(Du\) behaves as below</p>
+<p>Given the structure of the distributional derivative, it is not difficult to see that the singular part <script type="math/tex">D^s u</script> of <script type="math/tex">Du</script> behaves as below</p>
 
-<p>[D^s u_n\stackrel{*}{\rightharpoonup} (\nabla g-G)\mathcal{L}^N+ D^s g,]</p>
+<script type="math/tex; mode=display">D^s u_n\stackrel{*}{\rightharpoonup} (\nabla g-G)\mathcal{L}^N+ D^s g,</script>
 
-<p>stating that the discontinuities of the approximating sequence \(u_n\) converge, in the sense of measures, to a limiting measure which is both diffuse and singular. Therefore, if a structured deformation is such that its disarrangement tensor \(M=\nabla g-G\) is non-trivial, it can be approximated by functions with discontinuities which, in the limit, diffuse in the bulk. This has the effect of making the approximating sequence achieve the given structured deformation \((g,G)\) while also achieving \(M\). In a sense, the disarrangement tensor \(M\) is a measure of how non-classical a deformation is.</p>
+<p>stating that the discontinuities of the approximating sequence <script type="math/tex">u_n</script> converge, in the sense of measures, to a limiting measure which is both diffuse and singular. Therefore, if a structured deformation is such that its disarrangement tensor <script type="math/tex">M=\nabla g-G</script> is non-trivial, it can be approximated by functions with discontinuities which, in the limit, diffuse in the bulk. This has the effect of making the approximating sequence achieve the given structured deformation <script type="math/tex">(g,G)</script> while also achieving <script type="math/tex">M</script>. In a sense, the disarrangement tensor <script type="math/tex">M</script> is a measure of how non-classical a deformation is.</p>
 
-<h2 id="an-example-of-a-1d-structured-deformation">An example of a \(1D\) structured deformation</h2>
-<p>In this example, we consider a one-dimensional structured deformation and show how it can be approximated. Let \(\Omega=(0,1)\), and let \(g(x)=2x\), \(G(x)=1\). This pair \((g,G)\) describes the deformation of a material which is stretched macroscopically to twice its size by the \(g\), whereas the smooth part of the microscopic deformation has a gradient \(G\) equal to the identity.</p>
+<h2 id="an-example-of-a-1d-structured-deformation">An example of a <script type="math/tex">1D</script> structured deformation</h2>
+<p>In this example, we consider a one-dimensional structured deformation and show how it can be approximated. Let <script type="math/tex">\Omega=(0,1)</script>, and let <script type="math/tex">g(x)=2x</script>, <script type="math/tex">G(x)=1</script>. This pair <script type="math/tex">(g,G)</script> describes the deformation of a material which is stretched macroscopically to twice its size by the <script type="math/tex">g</script>, whereas the smooth part of the microscopic deformation has a gradient <script type="math/tex">G</script> equal to the identity.</p>
 
-<p>How is it possible, then, to approximate \((g,G)\) with a sequence of deformations which behave microscopically like the identity, but achieve the overall effect to stretch the material? Such an approximating sequence should have jumps to allow the material to deform macroscopically, while keeping a microscopical deformation gradient of \(1\). The sequence</p>
+<p>How is it possible, then, to approximate <script type="math/tex">(g,G)</script> with a sequence of deformations which behave microscopically like the identity, but achieve the overall effect to stretch the material? Such an approximating sequence should have jumps to allow the material to deform macroscopically, while keeping a microscopical deformation gradient of <script type="math/tex">1</script>. The sequence</p>
 
-<p>[u_n(x):=x+{k\over n},\qquad \text{for ${k\over n}\leq x&lt;{k+1\over n}$},\qquad k\in{0,1,\ldots, n-1}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+u_n(x):=x+{k\over n},\qquad \text{for ${k\over n}\leq x<{k+1\over n}$},\qquad k\in\{0,1,\ldots, n-1\} %]]></script>
 
-<p>behaves as desired and approximates \((g,G)\) in the sense described in the Approximation Theorem above. As a matter of fact, \(u_n\to g\) and \(u_n'\to G\) (even) in \(L^\infty(0,1)\). We can get more information on how the jumps of \(u_n\) diffuse in the whole interval \((0,1)\) by looking at the distributional gradient</p>
+<p>behaves as desired and approximates <script type="math/tex">(g,G)</script> in the sense described in the Approximation Theorem above. As a matter of fact, <script type="math/tex">u_n\to g</script> and <script type="math/tex">u_n'\to G</script> (even) in <script type="math/tex">L^\infty(0,1)</script>. We can get more information on how the jumps of <script type="math/tex">u_n</script> diffuse in the whole interval <script type="math/tex">(0,1)</script> by looking at the distributional gradient</p>
 
-<p>[Du_n=1\cdot\mathcal{L}^{N}+D^s u_n=1+\sum_{k=1}^{n-1}{1\over n}\delta_{k/n}]</p>
+<script type="math/tex; mode=display">Du_n=1\cdot\mathcal{L}^{N}+D^s u_n=1+\sum_{k=1}^{n-1}{1\over n}\delta_{k/n}</script>
 
-<p>Since \(D^s g=0\), the limit of \(D^s u_n=\sum_{k=1}^{n-1} {1\over n}\delta_{k/n}\) recovers just the difference \(u_n'-G=1\). A stronger link between these two quantities is evident considering that \(\sum_{k=1}^{n-1} {1\over n}\delta_{k/n}\) is the Riemann sum of the function \(f(x)=1\) on \((0,1)\). A depiction of the first elements of the sequence \(u_n\) is provided in the picture below.</p>
+<p>Since <script type="math/tex">D^s g=0</script>, the limit of <script type="math/tex">D^s u_n=\sum_{k=1}^{n-1} {1\over n}\delta_{k/n}</script> recovers just the difference <script type="math/tex">u_n'-G=1</script>. A stronger link between these two quantities is evident considering that <script type="math/tex">\sum_{k=1}^{n-1} {1\over n}\delta_{k/n}</script> is the Riemann sum of the function <script type="math/tex">f(x)=1</script> on <script type="math/tex">(0,1)</script>. A depiction of the first elements of the sequence <script type="math/tex">u_n</script> is provided in the picture below.</p>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0007/p0018_50.png" alt="" /></p>
 

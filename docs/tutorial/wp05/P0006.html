@@ -297,13 +297,14 @@ img:active{
         
         <p>The time dependent transmission problem is as follows, where we consider a domain $\Omega \subset \mathbb{R}^2$ which is cut into two subdomains $\Omega_1 \cup \Omega_2 = \Omega$ with transmission conditions at the interface $\Gamma = \Omega_1 \cap \Omega_2$:</p>
 
-<p>[\begin{align} \begin{split} &amp; \alpha_m \frac{\partial u_m(\textbf{x},t)}{\partial t} - \nabla \cdot (\lambda_m  \nabla u_m(\textbf{x},t)) = 0,\  \  t \in [t_0, t_f],  \  \  \textbf{x} \in \Omega_m \subset \mathbb{R}^2, \ &amp; u_m(\textbf{x},t) = 0, \  \  t \in [t_0, t_f], \  \  \textbf{x} \in \partial \Omega_m \backslash \Gamma, \ &amp; u_1(\textbf{x},t) = u_2(\textbf{x},t), \  \  \textbf{x} \in \Gamma, \ &amp; \lambda_2 \frac{\partial u_2(\textbf{x},t)}{\partial \textbf{n}_2} = -\lambda_1 \frac{\partial u_1(\textbf{x},t)}{\partial \textbf{n}_1}, \  \  \textbf{x} \in \Gamma, \ &amp; u_m(\textbf{x},0) = u_m^0(\textbf{x}), \  \  \textbf{x} \in \Omega_m, \end{split} \end{align}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} \begin{split} & \alpha_m \frac{\partial u_m(\textbf{x},t)}{\partial t} - \nabla \cdot (\lambda_m  \nabla u_m(\textbf{x},t)) = 0,\  \  t \in [t_0, t_f],  \  \  \textbf{x} \in \Omega_m \subset \mathbb{R}^2, \\ & u_m(\textbf{x},t) = 0, \  \  t \in [t_0, t_f], \  \  \textbf{x} \in \partial \Omega_m \backslash \Gamma, \\ & u_1(\textbf{x},t) = u_2(\textbf{x},t), \  \  \textbf{x} \in \Gamma, \\ & \lambda_2 \frac{\partial u_2(\textbf{x},t)}{\partial \textbf{n}_2} = -\lambda_1 \frac{\partial u_1(\textbf{x},t)}{\partial \textbf{n}_1}, \  \  \textbf{x} \in \Gamma, \\ & u_m(\textbf{x},0) = u_m^0(\textbf{x}), \  \  \textbf{x} \in \Omega_m, \end{split} \end{align} %]]></script>
 
 <p>where $\textbf{n}_m$ is the outward normal to $\Omega_m$ for $m=1,2$.</p>
 
 <p>The constants $\lambda_1$ and $\lambda_2$ describe the thermal conductivities of the materials on $\Omega_1$ and $\Omega_2$ respectively. $D_1$ and $D_2$ represent the thermal diffusivities of the materials and they are defined by</p>
 
-<p>[\begin{align} D_m = \frac{\lambda_m}{\alpha_m}, \  \  \mbox{with} \  \  \alpha_m = \rho_m c_{p_m} \end{align}]</p>
+<script type="math/tex; mode=display">\begin{align} D_m = \frac{\lambda_m}{\alpha_m}, \  \  \mbox{with} \  \  \alpha_m = \rho_m c_{p_m} \end{align}</script>
 
 <p>where $\rho_m$ represents the density and $c_{p_m}$ the heat capacity of the material placed in $\Omega_m$, $m=1,2$.</p>
 
@@ -311,39 +312,41 @@ img:active{
 
 <p>Let $u_I^{(1)}$ and $u_I^{(2)}$ correspond to the unknowns on $\Omega_1$ and $\Omega_2$ respectively and $u_{\Gamma}$ correspond to the unknows at the interface $\Gamma$, then the compact 2D finite difference (FD) formulation on equidistant meshes of (1) for the vector of unknowns</p>
 
-<p>[\textbf{u} = (\textbf{u}<em>I^{(1)}, \textbf{u}_I^{(2)}, \textbf{u}</em>{\Gamma})^T]</p>
+<script type="math/tex; mode=display">\textbf{u} = (\textbf{u}_I^{(1)}, \textbf{u}_I^{(2)}, \textbf{u}_{\Gamma})^T</script>
 
 <p>will be</p>
 
-<p>[\begin{equation} \tilde{\textbf{M}} \dot{\textbf{u}} - \tilde{\textbf{A}} \textbf{u} = 0 \  \  \mbox{where} \  \  \tilde{\textbf{M}} = \left( \begin{array}{ccc} \textbf{M}<em>1 &amp; \textbf{0} &amp; \textbf{M}</em>{I \Gamma}^{(1)} \ \textbf{0} &amp; \textbf{M}<em>2 &amp; \textbf{M}</em>{I \Gamma}^{(2)} \ \textbf{M}<em>{\Gamma I}^{(1)} &amp; \textbf{M}</em>{\Gamma I}^{(2)} &amp; \textbf{M}<em>{\Gamma \Gamma}^{(1)} + \textbf{M}</em>{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \tilde{\textbf{A}} = \left( \begin{array}{ccc} \textbf{A}<em>1 &amp; \textbf{0} &amp; \textbf{A}</em>{I \Gamma}^{(1)} \ \textbf{0} &amp; \textbf{A}<em>2 &amp; \textbf{A}</em>{I \Gamma}^{(2)} \ \textbf{A}<em>{\Gamma I}^{(1)} &amp; \textbf{A}</em>{\Gamma I}^{(2)} &amp; -\textbf{A}<em>{\Gamma \Gamma}^{(1)} - \textbf{A}</em>{\Gamma \Gamma}^{(2)} \end{array} \right), \end{equation}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \tilde{\textbf{M}} \dot{\textbf{u}} - \tilde{\textbf{A}} \textbf{u} = 0 \  \  \mbox{where} \  \  \tilde{\textbf{M}} = \left( \begin{array}{ccc} \textbf{M}_1 & \textbf{0} & \textbf{M}_{I \Gamma}^{(1)} \\ \textbf{0} & \textbf{M}_2 & \textbf{M}_{I \Gamma}^{(2)} \\ \textbf{M}_{\Gamma I}^{(1)} & \textbf{M}_{\Gamma I}^{(2)} & \textbf{M}_{\Gamma \Gamma}^{(1)} + \textbf{M}_{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \tilde{\textbf{A}} = \left( \begin{array}{ccc} \textbf{A}_1 & \textbf{0} & \textbf{A}_{I \Gamma}^{(1)} \\ \textbf{0} & \textbf{A}_2 & \textbf{A}_{I \Gamma}^{(2)} \\ \textbf{A}_{\Gamma I}^{(1)} & \textbf{A}_{\Gamma I}^{(2)} & -\textbf{A}_{\Gamma \Gamma}^{(1)} - \textbf{A}_{\Gamma \Gamma}^{(2)} \end{array} \right), \end{equation} %]]></script>
 
 <p>for the mass matrices $M_m$, $M_{\Gamma \Gamma}^{(m)}$, $M_{I \Gamma}^{(m)}$, $M_{\Gamma I}^{(m)}$ and the stiffness matrices</p>
 
-<p>[\textbf{A}<em>m, \textbf{A}</em>{\Gamma \Gamma}^{(m)}, \textbf{A}<em>{I \Gamma}^{(m)}, \textbf{A}</em>{\Gamma I}^{(m)}]</p>
+<script type="math/tex; mode=display">\textbf{A}_m, \textbf{A}_{\Gamma \Gamma}^{(m)}, \textbf{A}_{I \Gamma}^{(m)}, \textbf{A}_{\Gamma I}^{(m)}</script>
 
 <p>for $m=1,2$.</p>
 
 <p>Applying the implicit Euler method with time step $\Delta t$ to the system (3), we get for the vector of unknowns</p>
 
-<p>[u^{n+1} = (u_I^{(1),n+1}, u_I^{(2),n+1}, u_{\Gamma}^{n+1})^T]</p>
+<script type="math/tex; mode=display">u^{n+1} = (u_I^{(1),n+1}, u_I^{(2),n+1}, u_{\Gamma}^{n+1})^T</script>
 
-<p>[\begin{equation} \textbf{A} \textbf{u}^{n+1} = \tilde{\textbf{M}} \textbf{u}^n \  \  \mbox{where} \  \  \textbf{A} = \tilde{\textbf{M}} - \Delta t \tilde{\textbf{A}}. \end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation} \textbf{A} \textbf{u}^{n+1} = \tilde{\textbf{M}} \textbf{u}^n \  \  \mbox{where} \  \  \textbf{A} = \tilde{\textbf{M}} - \Delta t \tilde{\textbf{A}}. \end{equation}</script>
 
 <h2 id="dirichlet-neumann-iteration">DIRICHLET-NEUMANN ITERATION</h2>
 
 <p>We now employ a standard Dirichlet-Neumann iteration to solve the discrete system (4), getting in the $k$-th iteration the two equation systems</p>
 
-<p>[\begin{equation} (\textbf{M}<em>1 - \Delta t \textbf{A}_1) \textbf{u}_I^{(1),n+1,k+1} = -(\textbf{M}</em>{I \Gamma}^{(1)} - \Delta t \textbf{A}<em>{I \Gamma}^{(1)}) \textbf{u}</em>{\Gamma}^{n+1,k} + \textbf{M}<em>1 \textbf{u}_I^{(1),n} + \textbf{M}</em>{I \Gamma}^{(1)} \textbf{u}_{\Gamma}^n, \end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation} (\textbf{M}_1 - \Delta t \textbf{A}_1) \textbf{u}_I^{(1),n+1,k+1} = -(\textbf{M}_{I \Gamma}^{(1)} - \Delta t \textbf{A}_{I \Gamma}^{(1)}) \textbf{u}_{\Gamma}^{n+1,k} + \textbf{M}_1 \textbf{u}_I^{(1),n} + \textbf{M}_{I \Gamma}^{(1)} \textbf{u}_{\Gamma}^n, \end{equation}</script>
 
-<p>[\begin{equation} \hat{\textbf{A}} \hat{\textbf{u}}^{k+1} = \hat{\textbf{M}} \textbf{u}^n - \textbf{b}^k, \end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation} \hat{\textbf{A}} \hat{\textbf{u}}^{k+1} = \hat{\textbf{M}} \textbf{u}^n - \textbf{b}^k, \end{equation}</script>
 
 <p>to be solved in succession. Here,</p>
 
-<p>[\begin{equation} \begin{split} \hat{\textbf{A}} = \left( \begin{array}{cc} \textbf{M}<em>2 - \Delta t \textbf{A}_2 &amp; \textbf{M}</em>{I \Gamma}^{(2)} - \Delta t \textbf{A}<em>{I \Gamma}^{(2)} \ \textbf{M}</em>{\Gamma I}^{(2)} - \Delta t \textbf{A}<em>{\Gamma I}^{(2)} &amp; \textbf{M}</em>{\Gamma \Gamma}^{(2)} + \Delta t \textbf{A}<em>{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \hat{\textbf{M}} = \left( \begin{array}{ccc} \textbf{0} &amp; \textbf{M}_2 &amp; \textbf{M}</em>{I \Gamma}^{(2)} \ \textbf{M}<em>{\Gamma I}^{(1)} &amp; \textbf{M}</em>{\Gamma I}^{(2)} &amp; \textbf{M}<em>{\Gamma \Gamma}^{(1)} + \textbf{M}</em>{\Gamma \Gamma}^{(2)} \end{array} \right) \  \  \mbox{and} \ \textbf{b}^k = \left( \begin{array}{c} \textbf{0} \ (\textbf{M}<em>{\Gamma I}^{(1)} - \Delta t \textbf{A}</em>{\Gamma I}^{(1)}) \textbf{u}<em>I^{(1),n+1,k+1} + (\textbf{M}</em>{\Gamma \Gamma}^{(1)} + \Delta t \textbf{A}<em>{\Gamma \Gamma}^{(1)}) \textbf{u}</em>{\Gamma}^{n+1,k} \end{array} \right),  \  \  \hat{\textbf{u}}^{k+1} = \left( \begin{array}{c} \textbf{u}<em>I^{(2),n+1,k+1} \ \textbf{u}</em>{\Gamma}^{n+1,k+1} \end{array} \right) \nonumber \end{split} \end{equation}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \begin{split} \hat{\textbf{A}} = \left( \begin{array}{cc} \textbf{M}_2 - \Delta t \textbf{A}_2 & \textbf{M}_{I \Gamma}^{(2)} - \Delta t \textbf{A}_{I \Gamma}^{(2)} \\ \textbf{M}_{\Gamma I}^{(2)} - \Delta t \textbf{A}_{\Gamma I}^{(2)} & \textbf{M}_{\Gamma \Gamma}^{(2)} + \Delta t \textbf{A}_{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \hat{\textbf{M}} = \left( \begin{array}{ccc} \textbf{0} & \textbf{M}_2 & \textbf{M}_{I \Gamma}^{(2)} \\ \textbf{M}_{\Gamma I}^{(1)} & \textbf{M}_{\Gamma I}^{(2)} & \textbf{M}_{\Gamma \Gamma}^{(1)} + \textbf{M}_{\Gamma \Gamma}^{(2)} \end{array} \right) \  \  \mbox{and} \\ \textbf{b}^k = \left( \begin{array}{c} \textbf{0} \\ (\textbf{M}_{\Gamma I}^{(1)} - \Delta t \textbf{A}_{\Gamma I}^{(1)}) \textbf{u}_I^{(1),n+1,k+1} + (\textbf{M}_{\Gamma \Gamma}^{(1)} + \Delta t \textbf{A}_{\Gamma \Gamma}^{(1)}) \textbf{u}_{\Gamma}^{n+1,k} \end{array} \right),  \  \  \hat{\textbf{u}}^{k+1} = \left( \begin{array}{c} \textbf{u}_I^{(2),n+1,k+1} \\ \textbf{u}_{\Gamma}^{n+1,k+1} \end{array} \right) \nonumber \end{split} \end{equation} %]]></script>
 
 <p>with some initial condition, here $u_{\Gamma}^{n+1,0} = u_{\Gamma}^{n}$. The iteration is terminated according to the standard criterion</p>
 
-<p>[\vert \textbf{u}<em>{\Gamma}^{k+1} - \textbf{u}</em>{\Gamma}^k \vert \leq \tau]</p>
+<script type="math/tex; mode=display">\vert \textbf{u}_{\Gamma}^{k+1} - \textbf{u}_{\Gamma}^k \vert \leq \tau</script>
 
 <p>where $\tau$ is a user defined tolerance.</p>
 

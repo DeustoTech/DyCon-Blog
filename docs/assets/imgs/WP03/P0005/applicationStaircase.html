@@ -293,11 +293,11 @@ img:active{
         
         <p>In this tutorial, we will present how to generate admissible paths of steady states for the homogeneous reaction-diffusion equation:</p>
 
-<p>[\begin{cases}
-u_t-\Delta u=u(1-u)(u-\theta)\quad (x,t)\in \Omega\times(0,T),<br />
-u=a(x,t)\qquad \qquad\qquad\qquad(x,t)\in \partial\Omega\times(0,T),<br />
+<script type="math/tex; mode=display">\begin{cases}
+u_t-\Delta u=u(1-u)(u-\theta)\quad (x,t)\in \Omega\times(0,T),\\
+u=a(x,t)\qquad \qquad\qquad\qquad(x,t)\in \partial\Omega\times(0,T),\\
  0\leq u(x,0)\leq 1.
-\end{cases}]</p>
+\end{cases}</script>
 
 <p>This a key argument for ensuring controllability that has been studied in [2,3,4,5].</p>
 
@@ -325,28 +325,29 @@ u=a(x,t)\qquad \qquad\qquad\qquad(x,t)\in \partial\Omega\times(0,T),<br />
 
 <p>Remind that the important issue is to be able to guarantee that for every domain $w\equiv0$ and $w\equiv\theta$ are connected in an admissable way and this is seen in the phase plane representation of the elliptic equation.</p>
 
-<p>\(-u_{rr}-\frac{N-1}{r}u_r=u(1-u)(u-\theta),\)
-\(u(0)=a,\)
-\(u_r(0)=0.\)</p>
+<p><script type="math/tex">-u_{rr}-\frac{N-1}{r}u_r=u(1-u)(u-\theta),</script>
+<script type="math/tex">u(0)=a,</script>
+<script type="math/tex">u_r(0)=0.</script></p>
 
 <p>Now, considering the energy
-\(E(u,v)=\frac{1}{2}v^2+F(u)\)</p>
+<script type="math/tex">E(u,v)=\frac{1}{2}v^2+F(u)</script></p>
 
 <p>where $F(u)=\int_0^u f(s)ds$, one can see that the radial ODE dissipates.</p>
 
 <p>Define the following region:
-\(D:=\left\{(u,v)\in\mathbb{R}^2 \quad \text{such that}\quad E(u,v)\leq 0\right\}\)
+<script type="math/tex">D:=\left\{(u,v)\in\mathbb{R}^2 \quad \text{such that}\quad E(u,v)\leq 0\right\}</script>
 Let $\theta_1$ be defined as:
-\(\theta_1=\min_{s&gt;0}\{F(s)=0\}\)</p>
+<script type="math/tex">\theta_1=\min_{s>0}\{F(s)=0\}</script></p>
 
 <p>Note that the region defined by 
-\(\Gamma:=\left\{(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}\right\}\)
+<script type="math/tex">\Gamma:=\left\{(u,v)\in[0,\theta_1]\times\mathbb{R}\quad\text{such that}\quad |v|\leq \sqrt{-2F(u)}\right\}</script>
 Note that $\Gamma\subset D$.</p>
 
 <p>Take $(u_0,0)\in \Gamma$, then the solution of the radial equation with initial
 datum $(u_0,0)$ satisfies:</p>
 
-<p>[\frac{d}{dr}E(u,v)=vv_r+f(u)v=-\frac{N-1}{r}v^2&lt;0]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\frac{d}{dr}E(u,v)=vv_r+f(u)v=-\frac{N-1}{r}v^2<0 %]]></script>
 
 <p>So $(u,v)\in\Gamma$ for all $r&gt;0$.</p>
 

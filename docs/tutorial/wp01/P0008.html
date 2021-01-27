@@ -310,7 +310,6 @@ img:active{
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
-<span class="n">StartDyConToolbox</span>
 </code></pre></div></div>
 
 <h3>Equations of motion</h3>
@@ -331,35 +330,36 @@ img:active{
 
 <p>The equations of motion of the system can be derived using the Lagrangian formalism of classical mechanics and are given by:</p>
 
-<p>[(1)
+<script type="math/tex; mode=display">(1)
   \begin{cases}
-  \dot{x}(t) = v(t) <br />
-  \dot{\theta}<em>{1}(t) = \omega</em>{1}(t) <br />
-  \dot{\theta}<em>{2}(t) = \omega</em>{2}(t) <br />
+  \dot{x}(t) = v(t) \\
+  \dot{\theta}_{1}(t) = \omega_{1}(t) \\
+  \dot{\theta}_{2}(t) = \omega_{2}(t) \\
   M(\theta_1(t),\theta_2(t)) \cdot \begin{bmatrix} 
-         \dot{v}(t) \ \dot{\omega}_1(t) \ \dot{\omega}_2(t) 
+         \dot{v}(t) \\ \dot{\omega}_1(t) \\ \dot{\omega}_2(t) 
     \end{bmatrix} = G(\theta_1(t),\theta_2(t),\omega_1(t),\omega_2(t))  -  \begin{bmatrix}
-      d_1 \cdot v(t) \ d_2 \cdot \omega_1(t) \ d_3 \cdot \omega_2(t)
+      d_1 \cdot v(t) \\ d_2 \cdot \omega_1(t) \\ d_3 \cdot \omega_2(t)
     \end{bmatrix} + \begin{bmatrix}
-      u(t) \ 0 \ 0
+      u(t) \\ 0 \\ 0
     \end{bmatrix}
-    \end{cases}]</p>
+    \end{cases}</script>
 
 <p>where, for each $t \geq 0$, we define:</p>
 
-<p>[G(\theta_1(t),\theta_2(t),\omega_1(t),\omega_2(t)) = \begin{bmatrix}
-    l_1(m_1+m_2) \cdot \omega_1(t)^2 \sin(\theta_1(t)) + m_2l_2\cdot \omega_2(t)^2 \sin(\omega_2(t)) <br />
-    -l_1l_2m_2\cdot\omega_2(t)^2 \sin(\theta_1(t)-\theta_2(t)) + g(m_1+m_2)l_1 \cdot \sin(\theta_1(t)) <br />
+<script type="math/tex; mode=display">G(\theta_1(t),\theta_2(t),\omega_1(t),\omega_2(t)) = \begin{bmatrix}
+    l_1(m_1+m_2) \cdot \omega_1(t)^2 \sin(\theta_1(t)) + m_2l_2\cdot \omega_2(t)^2 \sin(\omega_2(t)) \\
+    -l_1l_2m_2\cdot\omega_2(t)^2 \sin(\theta_1(t)-\theta_2(t)) + g(m_1+m_2)l_1 \cdot \sin(\theta_1(t)) \\
     l_1l_2m_2 \cdot \omega_1(t)^2\sin(\theta_1(t)-\theta_2(t)) + g l_2 m_2 \cdot \sin(\theta_2(t))
-  \end{bmatrix}]</p>
+  \end{bmatrix}</script>
 
 <p>and</p>
 
-<p>[M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
-      m+m_1+m_2 &amp; l_1(m_1 +m_2 )\cdot\cos(\theta_1(t)) &amp; m_2l_2\cdot\cos(\theta_2(t)) <br />
-      l_1(m_1+m_2)\cdot\cos(\theta_1(t)) &amp; l_1^2(m_1+m_2) &amp; l_1l_2m_2\cdot \cos(\theta_1(t)-\theta_2(t)) <br />
-      l2 m_2\cdot\cos(\theta_2(t)) &amp; l_1 l_2 m_2 \cos(\theta_1(t)-\theta_2(t)) &amp; l_2^2 m_2
-    \end{bmatrix}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
+      m+m_1+m_2 & l_1(m_1 +m_2 )\cdot\cos(\theta_1(t)) & m_2l_2\cdot\cos(\theta_2(t)) \\
+      l_1(m_1+m_2)\cdot\cos(\theta_1(t)) & l_1^2(m_1+m_2) & l_1l_2m_2\cdot \cos(\theta_1(t)-\theta_2(t)) \\
+      l2 m_2\cdot\cos(\theta_2(t)) & l_1 l_2 m_2 \cos(\theta_1(t)-\theta_2(t)) & l_2^2 m_2
+    \end{bmatrix} %]]></script>
 
 <p>We have the fixed parameters:</p>
 
@@ -373,9 +373,9 @@ img:active{
 
 <p>This dynamical system shows chaotic behaviour. The following animation displays the evolution of the double pendulum on a cart with control $u = 0$ and starting at the two different initial conditions</p>
 
-<p>[y_{0,1} = (0, 0, 0.1, 0, 0.5, 0.5)]</p>
+<script type="math/tex; mode=display">y_{0,1} = (0, 0, 0.1, 0, 0.5, 0.5)</script>
 
-<p>[y_{0,2} = (0, 0, 0.05, 0, 0.5, 0.5)]</p>
+<script type="math/tex; mode=display">y_{0,2} = (0, 0, 0.05, 0, 0.5, 0.5)</script>
 
 <center>
 <video controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_thetadiff.mp4">
@@ -391,25 +391,7 @@ img:active{
 
 <p>One way to look for solutions to this problem is to minimize the following functional:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[J(u) =  \int_0^T</td>
-      <td> </td>
-      <td>y(t)</td>
-      <td> </td>
-      <td>^2 dt +</td>
-      <td> </td>
-      <td>y(T)</td>
-      <td> </td>
-      <td>^2  + \alpha \int_0^T</td>
-      <td> </td>
-      <td>u(t)</td>
-      <td> </td>
-      <td>^2dt]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">J(u) =  \int_0^T ||y(t)||^2 dt +  ||y(T)||^2  + \alpha \int_0^T ||u(t)||^2dt</script>
 
 <p>Where $\alpha &gt;0$ is a fixed parameter, the state vector $y(t)$ is subject to the system of differential equations (1) and $y(0) = y_0$.</p>
 

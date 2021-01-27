@@ -301,9 +301,11 @@ img:active{
 
 <p>We consider the numerical approximation of the following coupled thermoelastic wave models</p>
 
-<p>[\begin{equation} \label{eq1} \tag{1}  \left{\begin{array}{llll}                       u_{tt}(x,t)- \Delta u(x,t)+\gamma\theta_x(x,t)=0\quad &amp;in\;\Omega\times(0, \infty)\ 		      \theta_{t}(x,t)-\Delta\theta(x,t)-\gamma u_{tx}(x,t) =0\quad &amp;in\;\Omega\times(0, \infty)\ 		      u(x,t)=0=\theta(x,t)\qquad &amp;\text{on } \partial\Omega\times(0,\infty)\ u(x,0)=u_{0}(x),\; u_{t}(x,0)=u_{1}(x),\; \theta(x,0)=\theta_{0}(x) \quad &amp;on \;\Omega                      \end{array}                    \right. \end{equation}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \label{eq1} \tag{1}  \left\{\begin{array}{llll}                       u_{tt}(x,t)- \Delta u(x,t)+\gamma\theta_x(x,t)=0\quad &in\;\Omega\times(0, \infty)\\ 		      \theta_{t}(x,t)-\Delta\theta(x,t)-\gamma u_{tx}(x,t) =0\quad &in\;\Omega\times(0, \infty)\\ 		      u(x,t)=0=\theta(x,t)\qquad &\text{on } \partial\Omega\times(0,\infty)\\ u(x,0)=u_{0}(x),\; u_{t}(x,0)=u_{1}(x),\; \theta(x,0)=\theta_{0}(x) \quad &on \;\Omega                      \end{array}                    \right. \end{equation} %]]></script>
 
-<p>[\begin{equation} \label{eq2} \tag{2}  \left{\begin{array}{llll}                       u_{tt}(x,t)- \Delta u(x,t)+\gamma\theta(x,t)=0\quad &amp;in\;\Omega\times(0, \infty)\ 		      \theta_{t}(x,t)-\Delta\theta(x,t)-\gamma u_{t}(x,t) =0\quad &amp;in\;\Omega\times(0, \infty)\ 		      u(x,t)=0=\theta(x,t)\qquad &amp;\text{on } \partial\Omega\times(0,\infty)\ u(x,0)=u_{0}(x),\; u_{t}(x,0)=u_{1}(x),\; \theta(x,0)=\theta_{0}(x) \quad &amp;on \;\Omega                      \end{array}                    \right. \end{equation}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \label{eq2} \tag{2}  \left\{\begin{array}{llll}                       u_{tt}(x,t)- \Delta u(x,t)+\gamma\theta(x,t)=0\quad &in\;\Omega\times(0, \infty)\\ 		      \theta_{t}(x,t)-\Delta\theta(x,t)-\gamma u_{t}(x,t) =0\quad &in\;\Omega\times(0, \infty)\\ 		      u(x,t)=0=\theta(x,t)\qquad &\text{on } \partial\Omega\times(0,\infty)\\ u(x,0)=u_{0}(x),\; u_{t}(x,0)=u_{1}(x),\; \theta(x,0)=\theta_{0}(x) \quad &on \;\Omega                      \end{array}                    \right. \end{equation} %]]></script>
 
 <p>where $u(x,t)$ is the displacement (longitudinal or transverse, depending upon the application) at position $x$ along a bounded smooth domain $\Omega\subset\mathbb{R}$ and time $t$ , and $\theta(x,t)$ is the temperature deviation from the reference temperature at position $x$ and time $t$, $u_0(x)$, $v_0(x)$ and $\theta_0(x)$ are initial data in a suitable space. The small positive constant $\gamma$ is a thermo-mechanical coupling parameter and is generally small in comparison to 1. System (\ref{eq1}) differs from system $\eqref{eq2}$ at the coupling terms, where we have replaced the strong coupling ($\gamma\theta_x$ and $\gamma u_{tx}$) by a weak coupling ($\gamma\theta$ and $\gamma u_{t}$).</p>
 
@@ -313,15 +315,17 @@ img:active{
 
 <p>To do this, we consider a semi discretization version of both systems (\ref{eq1}) and (\ref{eq2}), obtained with finite element method, which has the following form</p>
 
-<p>[\begin{equation} \label{eq3} \tag{3}  (S_i)\left{\begin{array}{ll}  z’<em>n(t)=A</em>{i,n} z_n(t),\quad t\geq 0,\;n\in\mathbb{N},\;i=1,2\  z_n(0)=z_{n0},\;n\in\mathbb{N}\ \end{array} \right. \end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation} \label{eq3} \tag{3}  (S_i)\left\{\begin{array}{ll}  z'_n(t)=A_{i,n} z_n(t),\quad t\geq 0,\;n\in\mathbb{N},\;i=1,2\\  z_n(0)=z_{n0},\;n\in\mathbb{N}\\ \end{array} \right. \end{equation}</script>
 
 <p>where for all $n\in\mathbb{N}$, $z_n=(u_n,v_n,\theta_n)^T$ is the semi discrete solution, $z_{n0}$ is the discretized initial data, $A_{i,n}$ the discretized dynamic and the subscript $\cdot_i$ refers to system (\ref{eq1}) and (\ref{eq2}) with</p>
 
-<p>[\begin{align} A_{i,n}=\left(\begin{matrix}                     0 &amp; D_n &amp; 0\ 	       -D_n &amp; 0 &amp; -\gamma F_{i,n}\ 		    0 &amp; \gamma F_{i,n} &amp; -D_n^2                    \end{matrix} \right),\quad i=1,2 \end{align}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} A_{i,n}=\left(\begin{matrix}                     0 & D_n & 0\\ 	       -D_n & 0 & -\gamma F_{i,n}\\ 		    0 & \gamma F_{i,n} & -D_n^2                    \end{matrix} \right),\quad i=1,2 \end{align} %]]></script>
 
 <p>and $F_{2,n}=I_n$,</p>
 
-<p>[\begin{align} D_n=\left(\begin{matrix}                     1 &amp;  &amp; \ 	        &amp; \ddots &amp;  \ 		     &amp;   &amp; n                    \end{matrix} \right),\quad (F_{1,n})_{ij}=\left{\begin{array}{ll}  -\frac{4}{\pi}\frac{ij}{i^2-j^2},\quad <code class="highlighter-rouge">i-j</code>=\text{odd},\  0,\qquad\qquad\text{otherwise}. \end{array} \right. \end{align}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} D_n=\left(\begin{matrix}                     1 &  & \\ 	        & \ddots &  \\ 		     &   & n                    \end{matrix} \right),\quad (F_{1,n})_{ij}=\left\{\begin{array}{ll}  -\frac{4}{\pi}\frac{ij}{i^2-j^2},\quad `i-j`=\text{odd},\\  0,\qquad\qquad\text{otherwise}. \end{array} \right. \end{align} %]]></script>
 
 <h2 id="spectral-properties-of-thermoelastic-systems">Spectral properties of thermoelastic systems</h2>
 
@@ -379,15 +383,15 @@ error
 
 <p>The discrete energy associated to system (\ref{eq3}) is given by</p>
 
-<p>[\begin{equation} \label{eq4} \tag{4} E_{i,n}(t)=\frac{1}{2}\sum_{j=1}^n\Big{ \vert u_j(t)\vert^{2} + \vert v_j(t)\vert^{2}+ \vert \theta_j(t)\vert^{2}\Big},\;i=1,2. \end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation} \label{eq4} \tag{4} E_{i,n}(t)=\frac{1}{2}\sum_{j=1}^n\Big\{ \vert u_j(t)\vert^{2} + \vert v_j(t)\vert^{2}+ \vert \theta_j(t)\vert^{2}\Big\},\;i=1,2. \end{equation}</script>
 
 <p>The discrete energy $E_{1,n}$ associated to system (ref{eq1}) decays exponentially to zero, see Figure 3, in the following sense: $\exists M,\alpha$ positive constants such that</p>
 
-<p>[E_{1,n}(t)\leqslant Me^{-\alpha t}E_{1,n}(0),\;n\in\mathbb{N},\;t&gt;0.]</p>
+<script type="math/tex; mode=display">E_{1,n}(t)\leqslant Me^{-\alpha t}E_{1,n}(0),\;n\in\mathbb{N},\;t>0.</script>
 
 <p>However, the introduction of the weak coupling term in system (ref{eq1}) has changed the dynamic and consequently the behavior of energy (\ref{eq4}). In this case, we say that system (\ref{eq2}) decays polynomially to zero, see Figure 4, in the following sense: $\exists M,\alpha$ positive constants such that</p>
 
-<p>[E_{2,n}(t)\leqslant \frac{M}{t} \vert A_{2,n} z_{n0} \vert^2  ; n \in \mathbb{N},\;t&gt;0.]</p>
+<script type="math/tex; mode=display">E_{2,n}(t)\leqslant \frac{M}{t} \vert A_{2,n} z_{n0} \vert^2  ; n \in \mathbb{N},\;t>0.</script>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/exp.png" alt="" /> Exponential decay of $E_{1,n}(t)$</p>
 

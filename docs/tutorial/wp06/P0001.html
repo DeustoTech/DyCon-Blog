@@ -306,14 +306,15 @@ img:active{
 
 <p>We are interested in the numerical discretization of the  Kolmogorov equation [12]</p>
 
-<p>[\begin{equation}\label{kolmo}
-\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{kolmo}
+\left\{
 \begin{array}{lll}
-\partial_t f - \mu \partial_{xx} f - v(x) \partial_y f =0, &amp; (x,y)\in\RR^2, t&gt;0,<br />
-f(x,y,0) =f_0(x,y),      &amp; (x,y)\in\RR^2
+\partial_t f - \mu \partial_{xx} f - v(x) \partial_y f =0, & (x,y)\in\RR^2, t>0,\\
+f(x,y,0) =f_0(x,y),      & (x,y)\in\RR^2
 \end{array}
 \right.
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <p>where $\mu&gt;0$ is a diffusive  function and  $v$ a potential function.<br />
 This is one example of degenerate advection-diffusion equations which have the property of hypo-ellipticity (see for instance, [6, 13, 14]), ensuring the $C^\infty$ regularity of solutions for $t&gt;0$ ([6]).<br />
@@ -323,7 +324,7 @@ In the present case, the generator of the semigroup is constituted by the superp
 
 <p>In this particular case $\mu=1$ and $v(x)=x$, using the Fourier transform, the fundamental solution of (1) (starting from an initial Dirac mass $\delta_{(x_0, y_0)}$) can be computed explicitly getting the following anisotropic Gaussian kernel</p>
 
-<p>[\begin{equation<em>}\label{kernel}
+<script type="math/tex; mode=display">\begin{equation*}\label{kernel}
     K_{(x_0, y_0)}(x,y,t)  =
      \frac{1}{3\pi^2 t^2}
           exp \bigg[ -\frac{1}{\pi^2}\left(
@@ -332,14 +333,14 @@ In the present case, the generator of the semigroup is constituted by the superp
                                     \frac{| x-x_0 |^2}{t}
                                     \right)
                 \bigg]
-  \end{equation</em>}]</p>
+  \end{equation*}</script>
 
 <p>which exhibits different diffusivity and decay scales in the variables $x$ and $y$.
 In view of the structure of the fundamental solution, one can deduce the following decay rates:</p>
 
-<p>[\begin{equation}\label{decay}
-| f(t)|<em>{L^2}+ \sqrt t\,  | \partial_x f(t) |</em>{L^2}+ t^{\frac 32} |\partial_y f(t)| <em>{L^2}\leq C ||f_0||</em>{L^2}
-\end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation}\label{decay}
+\| f(t)\|_{L^2}+ \sqrt t\,  \| \partial_x f(t) \|_{L^2}+ t^{\frac 32} \|\partial_y f(t)\| _{L^2}\leq C ||f_0||_{L^2}
+\end{equation}</script>
 
 <p>for solutions with initial data $f_0$ in $L^2$. Similar decay properties can be predicted by scaling arguments, due to the invariance properties of the equation in (\ref{kolmo}).</p>
 
@@ -361,93 +362,97 @@ In view of the structure of the fundamental solution, one can deduce the followi
 <!--\label{SectionTransport}-->
 <p>Let us consider the following scalar two dimensional transport equation</p>
 
-<p>[\begin{equation}\label{transport}
+<script type="math/tex; mode=display">\begin{equation}\label{transport}
 \partial_t f +  c \cdot \nabla f = g, \quad  c \in\RR^2 \textrm{ in } \Omega \subset\RR^2 \times (0,T)
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>for some function $g$. Let (x,y,t)$\in \mathbb{R}^2 \times \mathbb{R}^+$. This transport equation can be written using the total derivative</p>
 
-<p>[\begin{equation}\label{td}
+<script type="math/tex; mode=display">\begin{equation}\label{td}
 \frac{d}{ds} f( X_{x,y,t}(s),s) = g
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>if and only if the curve $( X_{x,y,t}(s),s)$ satisfies the system of ordinary differential equation</p>
 
-<p>[\begin{equation}\label{odec}
-\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{odec}
+\left\{
 \begin{array}{ll}
-\frac{d}{ds} X_{x,y,t}(s) =  c( X_{x,y,t}(s),s),&amp;  \forall s\in(0,t), <br />
- X_{x,y,t}(t) = (x,y) <br />
+\frac{d}{ds} X_{x,y,t}(s) =  c( X_{x,y,t}(s),s),&  \forall s\in(0,t), \\
+ X_{x,y,t}(t) = (x,y) \\
 \end{array}\right.
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <p>Under suitable assumptions on $ c$, the problem is well defined and there exists a unique solution to (6) $ X_{x,y,t}$, called the characteristic curve reaching (or passing from)  the point $(x,y)$ at time $t$.
 Since we cannot compute explicitly, in general,  the solution of the equation (6), hence (4), we look for an approximate solution. Noting $\delta t&gt;0$ the time step and $t_{n+1} = t_n + \delta t$, an easy manner to approximate the solution of Equation (4) is to perform a backward convection by the method of characteristic</p>
 
-<p>[\begin{equation}\label{approxMOC}
+<script type="math/tex; mode=display">\begin{equation}\label{approxMOC}
  \frac{1}{\delta t} \left(f^{n+1}(x,y)-f^{n}( X_{x,y,t_n}(x))\right) = g^n(x,y)
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>where $f^n(x,y) = f(x,y,t_n)$ and $ X_{x,y,t_n}(x)$ is an approximation, as shown  below, of the solution at time $t_n=n \delta t$ of the ordinary differential equation (6) for $s\in(t_n,t_{n+1})$ with  the final data $ X_{x,y,t}(t_{n+1}) = (x,y)$.</p>
 
 <p>Assuming $f$ regular enough, by Taylor expansion, one can write</p>
 
-<p>[f^n( X_{x,y,t}(t_{n}))=f^n( X_{x,y,t}(t_{n+1})) - \delta t \  c( X_{x,y,t_n}(t_n),t_n) \cdot \nabla f^n(x)  + O(\delta t^2)]</p>
+<script type="math/tex; mode=display">f^n( X_{x,y,t}(t_{n}))=f^n( X_{x,y,t}(t_{n+1})) - \delta t \  c( X_{x,y,t_n}(t_n),t_n) \cdot \nabla f^n(x)  + O(\delta t^2)</script>
 
 <p>Applying also a Taylor expansion to the function $t\mapsto f^n((x,y)-t  c( X_{x,y,t_n}(t_n),t_n))$, we get</p>
 
-<p>[f^n((x,y)-t  c( X_{x,y,t_n}(t_n),t_n)) = f^n( X_{x,y,t}(t_{n+1})) - \delta t \  c( X_{x,y,t_n}(t_n),t_n) \cdot \nabla f^n(x)  + O(\delta t^2)]</p>
+<script type="math/tex; mode=display">f^n((x,y)-t  c( X_{x,y,t_n}(t_n),t_n)) = f^n( X_{x,y,t}(t_{n+1})) - \delta t \  c( X_{x,y,t_n}(t_n),t_n) \cdot \nabla f^n(x)  + O(\delta t^2)</script>
 
 <p>and therefore one can approximate $f^n( X_{x,y,t}(t_{n}))$   by $f^n((x,y)- \delta t \  c( X_{x,y,t_n}(t_n),t_n))$. For the sake of clarity, in the sequel, we note $X(t)$ the characteristic curve passing through the point $(x,y)$ at time $t$.</p>
 
 <h3>2.2 Numerical algorithm</h3>
 <p>For numerical purpose, we consider Equation (1) in $\Omega \subset \mathbb{R}^2$ with homogeneous Neumann boundary conditions. Keeping in mind the characteristic method,  Equation (1) can be written</p>
 
-<p>[\begin{equation}\label{kolmo2}
-\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{kolmo2}
+\left\{
 \begin{array}{lll}
-\frac{d}{dt} f( X(t)) - \mbox{div}(A \nabla f) =0, &amp; (x,y)\in\Omega, t\in (0,T), T&gt;0<br />
-A \nabla f \cdot  n =0, &amp; \textrm{ in } \partial\Omega<br />
-f(x,y,0) =f_0(x,y),      &amp; (x,y)\in\Omega
+\frac{d}{dt} f( X(t)) - \mbox{div}(A \nabla f) =0, & (x,y)\in\Omega, t\in (0,T), T>0\\
+A \nabla f \cdot  n =0, & \textrm{ in } \partial\Omega\\
+f(x,y,0) =f_0(x,y),      & (x,y)\in\Omega
 \end{array}
 \right.
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <p>where $ n$ stands for the outward unit normal to $\Omega$, and  for all $s\in(0,t)$,   $ X$ is the solution of</p>
 
-<p>[\begin{equation}\label{odekolmo}
-\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{odekolmo}
+\left\{
 \begin{array}{ll}
-\frac{d}{ds} X(s) =  v( X_{x,y,t}(s)),&amp;  \forall s\in(0,t), <br />
- X(t) = (x,y) \ .<br />
+\frac{d}{ds} X(s) =  v( X_{x,y,t}(s)),&  \forall s\in(0,t), \\
+ X(t) = (x,y) \ .\\
 \end{array}\right.
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <p>Here, we use the following notations</p>
 
-<p>[v = \left(\begin{array}{c}            0\-v           \end{array}\right)$ and $A = \left(\begin{array}{cc}            \mu&amp; 0\0&amp;0           \end{array}\right)]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+v = \left(\begin{array}{c}            0\\-v           \end{array}\right)$ and $A = \left(\begin{array}{cc}            \mu& 0\\0&0           \end{array}\right) %]]></script>
 
 <p>Formally, thus, one can write, for any $\varphi \in V$ for some functional space, the weak form of Equation (8) as follows</p>
 
-<p>[\begin{equation}\label{weakform1}
+<script type="math/tex; mode=display">\begin{equation}\label{weakform1}
 \int_{\Omega}  \frac{d}{dt} f(X(t)) \varphi \ dx dy + \int_{\Omega} A \nabla f \cdot \nabla \varphi \ dx dy  = 0
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>Let us denote $t_0&lt;t_1&lt;\ldots &lt; t_M = T$ be the discrete time with $t_n = n \delta t$ where $\delta t$ denotes the time step. We set  $M = T/\delta t$. <br />
 Using the method of characteristic for the total derivative (see section 2.1), the weak form (10) can be approximated by</p>
 
-<p>[\begin{equation<em>}
+<script type="math/tex; mode=display">\begin{equation*}
 \int_{\Omega}  \frac{1}{\delta t}\left(f^{n+1}-f^n \circ  X^n  \right)\varphi  \ dx dy + \int_{\Omega} A \nabla f^{n+1} \cdot \nabla \varphi \ dx dy  = 0
-\end{equation</em>}]</p>
+\end{equation*}</script>
 
 <p>or</p>
 
-<p>[\begin{equation}\label{weakform2}
+<script type="math/tex; mode=display">\begin{equation}\label{weakform2}
 a(f^{n+1},\varphi) = (f^n,\varphi)
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>where
-\(a(f,\varphi) = ((I/ \delta t+A\nabla)f,\varphi) \ .\)
+<script type="math/tex">a(f,\varphi) = ((I/ \delta t+A\nabla)f,\varphi) \ .</script>
 Here $(\cdot,\cdot)$ is the inner product in $L^2(\Omega)$.</p>
 
 <p>Therefore, denoting $\tau_h$ a partition of $\Omega$ by triangles and $V_h$ the $P_k$-finite element space (of degree $k$),
@@ -455,7 +460,7 @@ the weak discrete form of the problem (8) is</p>
 
 <p>Find ${f_h^n}_{n=1}^{M=T/\delta t} \subset V_h$ such that for $n=1,\dots, M$,</p>
 
-<p>[a(f_h^n,\varphi_h) = (f^n,\varphi_h), \ \forall \varphi_h \in V_h \ .]</p>
+<script type="math/tex; mode=display">a(f_h^n,\varphi_h) = (f^n,\varphi_h), \ \forall \varphi_h \in V_h \ .</script>
 
 <p>The Freefem++ script corresponding to the problem may as follows
 &lt;/ol&gt;

@@ -295,16 +295,17 @@ img:active{
 
 <p>This tutorial is focused on the understanding of of the problem</p>
 
-<p>\(-\Delta u=f(u) \qquad x\in\Omega\)
-\(0&lt; u&lt; 1 \qquad x\in\Omega\)
-\(u=a\in\{0,\theta\} \qquad x\in\partial\Omega\)</p>
+<p><script type="math/tex">-\Delta u=f(u) \qquad x\in\Omega</script>
+<script type="math/tex">% <![CDATA[
+0< u< 1 \qquad x\in\Omega %]]></script>
+<script type="math/tex">u=a\in\{0,\theta\} \qquad x\in\partial\Omega</script></p>
 
 <p>The solutions for $a=0$ constitute an instrisic obstruction to the controllability with state-constraints due to the comparison principle [1]. Indeed, for any control function $0\leq a(x,t)\leq 1$
 the solution of the problem:</p>
 
-<p>\(v_t-\Delta v=f(v) \qquad x\in\Omega\times(0,T)\)
-\(v=a(x,t) \qquad x\in\partial\Omega\times(0,T)\)
-\(v(x,0)\geq u \qquad x\in\Omega\)</p>
+<p><script type="math/tex">v_t-\Delta v=f(v) \qquad x\in\Omega\times(0,T)</script>
+<script type="math/tex">v=a(x,t) \qquad x\in\partial\Omega\times(0,T)</script>
+<script type="math/tex">v(x,0)\geq u \qquad x\in\Omega</script></p>
 
 <p>where $u$ is an elliptic nontrivial solution satisfies that $v(x,t)\geq u(x)$. Therefore, we cannot expect to control to any function below $u$.</p>
 
@@ -318,8 +319,8 @@ the solution of the problem:</p>
 
 <p>Any critical point of the functional:</p>
 
-<p>\(J: H^1_0\to  \mathbb{R}\)
-\(J(u)=\int_\Omega \frac{1}{2}|\nabla u|^2-\int_0^uf(s)ds dx\)</p>
+<p><script type="math/tex">J: H^1_0\to  \mathbb{R}</script>
+<script type="math/tex">J(u)=\int_\Omega \frac{1}{2}|\nabla u|^2-\int_0^uf(s)ds dx</script></p>
 
 <p>is a weak solution of the main equation.</p>
 
@@ -327,15 +328,7 @@ the solution of the problem:</p>
 
 <p>Restricting ourselves in the one dimensional case (the argument also holds in several dimensions) and making the spatial change fo variables $x\to \frac{x}{L}$, where $L$ is the length of the domain the functional reads:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[J(u)=\int_0^1 \frac{1}{2}</td>
-      <td>u_x</td>
-      <td>^2-L^2\int_0^uf(s)ds dx]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">J(u)=\int_0^1 \frac{1}{2}| u_x|^2-L^2\int_0^uf(s)ds dx</script>
 
 <p>In the expresion above we see that if $L$ is small the convex part dominates while if $L$ is large and $\int_0^1f(s)ds&gt;0$ it might not be convex.</p>
 

@@ -315,12 +315,13 @@ img:active{
 
 <p>In the present post, we are going to present a numerical development in order to find the minimal controllability time for the discretized heat equation with unilateral (non-negative) control constraint. More precisely, we consider the controllability of a discretized version of the 1D heat equation under nonnegative Dirichlet control constraint. The infinite dimensional system, we consider is</p>
 
-<p>[\begin{array}
-	\dot{\psi}(t,x) = \partial_x^2 \psi(t,x)              &amp;&amp;              ( t&gt;0,\, x\in(0,1)),<br />
-	\partial_x\psi(t,0) = 0            &amp;&amp;          (t&gt;0),<br />
-	\psi(t,1) = u(t)            &amp;&amp;          (t&gt;0),<br />
-	\psi(0,x) = \psi^0(x)            &amp;&amp;          (x\in(0,1)),<br />
-	\end{array}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}
+	\dot{\psi}(t,x) = \partial_x^2 \psi(t,x)              &&              ( t>0,\, x\in(0,1)),\\
+	\partial_x\psi(t,0) = 0            &&          (t>0),\\
+	\psi(t,1) = u(t)            &&          (t>0),\\
+	\psi(0,x) = \psi^0(x)            &&          (x\in(0,1)),\\
+	\end{array} %]]></script>
 
 <p>where $\psi$ is the state to control $\psi^0$ the initial state and $u$ the Dirichlet control.
 The continuous version of this problem has been analysed in <a href="https://cmc.deusto.eus/control-of-the-semi-discrete-1d-heat-equation-under-nonnegative-control-constraint#ref2">[2]</a> and it has been shown that for every initial state $\psi^0\in L^2(0,1)$ and every positive constant target $\psi^1$, the controllability of this system under the control constraint
@@ -331,54 +332,56 @@ requires a positive waiting time as soon as the target state $\psi^1$ is differe
 
 <p>In this post, we consider a spatially discretized version with has the form</p>
 
-<p>[\begin{equation}\label{eq:SysGen}
-	\dot{y}(t)=Ay(t)+B u(t) (t&gt;0),
-\end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation}\label{eq:SysGen}
+	\dot{y}(t)=Ay(t)+B u(t) (t>0),
+\end{equation}</script>
 
 <p>where the matrices $A$ and $B$ are</p>
 
-<p>[\begin{equation}\label{eq:ABheat}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{eq:ABheat}
 	A=(n+1)^2\begin{pmatrix}
-		-2		&amp; 2			&amp; 0			&amp; \hdots&amp; \hdots&amp; 0<br />
-		1			&amp; -2		&amp; 1			&amp; 0			&amp; \hdots&amp; 0<br />
-		0			&amp; \ddots&amp; \ddots&amp; \ddots&amp;	\ddots&amp; \vdots<br />
-		\vdots&amp; \ddots&amp; \ddots&amp; \ddots&amp; \ddots&amp; 0<br />
-		\vdots&amp;				&amp; \ddots&amp; \ddots&amp; \ddots&amp; 1<br />
-		0			&amp;	\hdots&amp;	\hdots&amp;	0			&amp; 1			&amp; -2
+		-2		& 2			& 0			& \hdots& \hdots& 0\\
+		1			& -2		& 1			& 0			& \hdots& 0\\
+		0			& \ddots& \ddots& \ddots&	\ddots& \vdots\\
+		\vdots& \ddots& \ddots& \ddots& \ddots& 0\\
+		\vdots&				& \ddots& \ddots& \ddots& 1\\
+		0			&	\hdots&	\hdots&	0			& 1			& -2
 	\end{pmatrix}\in M_{n}(\mathbb{R})\quad\text{and}\quad B=(n+1)^2\begin{pmatrix}
-		0<br />
-		\vdots<br />
-		\vdots<br />
-		\vdots<br />
-		0<br />
+		0\\
+		\vdots\\
+		\vdots\\
+		\vdots\\
+		0\\
 		1
 	\end{pmatrix}\in M_{n,1}(\mathbb{R}).
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <p>where $n+1&gt;2$ is the number of discretization points and $[y]_i(t)$ (the $i^\text{th}$ component of $y(t)\in\mathbb{R}^n$) stands for $\psi(t,(i-1)/n)$.
 To obtain the above finite dimensional system, we have used centred finite differences.</p>
 
 <p>The aim is then to minimize the time $T$ such that there exist a control $u:[0,T]\to\mathbb{R}_+$ steering the solution of (\ref{eq:SysGen}) from $y^0\in\mathbb{R}^n$ to $y^1\in\mathbb{R}^n$ in time $T$. For the sake of simplicity, we assume that $y^0$ and $y^1$ are constant vectors of $\mathbb{R}^n$, that is to say that</p>
 
-<p>[\begin{equation}\label{eq:y0y1}
-	y^0=u^0\begin{pmatrix}1\\vdots\1\end{pmatrix}\in\mathbb{R}^n\quad\text{ and }\quad y^1=u^1\begin{pmatrix}1\\vdots\1\end{pmatrix}\in\mathbb{R}^n,
-\end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation}\label{eq:y0y1}
+	y^0=u^0\begin{pmatrix}1\\\vdots\\1\end{pmatrix}\in\mathbb{R}^n\quad\text{ and }\quad y^1=u^1\begin{pmatrix}1\\\vdots\\1\end{pmatrix}\in\mathbb{R}^n,
+\end{equation}</script>
 
 <p>for some $u^0\in\mathbb{R}$ and $u^1\in\mathbb{R}$ Since the control $u$ shall satisfy the constraint (\ref{eq:ContConst}), it is easy to see, using a discrete version of the comparison principle, that in order to have the existence of a solution, then we need $u^1&gt;0$.
 Note that, using again the comparison principle, we can also show that if $u^0\geqslant 0$ then, whatever the control $u\geqslant 0$ is, the solution of (\ref{eq:SysGen}) always satisfies $y(t)\geqslant 0$.</p>
 
 <p>To conclude, the optimization problem we aim to solve is</p>
 
-<p>[\begin{equation}\label{eq:optim0}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{eq:optim0}
 	\begin{array}{cl}
-		\inf &amp; T<br />
-		 &amp; \begin{array}{l}
-			T\geqslant 0,<br />
-			y(T;u;y^0)=y^1,<br />
+		\inf & T\\
+		 & \begin{array}{l}
+			T\geqslant 0,\\
+			y(T;u;y^0)=y^1,\\
 			u\in L^\infty(0,T),\quad u(t)\geqslant 0\quad (t\in[0,T]\text{ a.e.}),
 		\end{array}
 	\end{array}
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <p>where $y^0$ and $y^1$ are given by (\ref{eq:y0y1}) for some $u^0\in\mathbb{R}$ and $u^1\in\mathbb{R}_+^*$, and where $y(t;u;y^0)$ stands for the solution of (\ref{eq:SysGen}) at time $t$, with control $u$ and initial condition $y^0$.</p>
 
@@ -390,25 +393,26 @@ Note that, using again the comparison principle, we can also show that if $u^0\g
 Furthermore, it is proved in this article that at the minimal controllability time, there exists one and only one non-negative Radon measure and this time optimal control is a convex sum of at most $\lfloor (n+1)/2 \rfloor$ Dirac masses.
 In other words, the non-negative time optimal control takes the form:</p>
 
-<p>[u=\sum_{k=1}^N\alpha_k\delta_{t_k},]</p>
+<script type="math/tex; mode=display">u=\sum_{k=1}^N\alpha_k\delta_{t_k},</script>
 
 <p>with $N=\lfloor (n+1)/2 \rfloor$, $0\leqslant \alpha_k$ and $0\leqslant t_1\leqslant\dots\leqslant t_N\leqslant T$.
 For a control of this form, the solution of (\ref{eq:SysGen}) at time $T$, with initial condition $y^0$, is:</p>
 
-<p>[y(T)=e^{TA}y^0+\sum_{k=1}^N \alpha_i e^{(T-t_k)A}B.]</p>
+<script type="math/tex; mode=display">y(T)=e^{TA}y^0+\sum_{k=1}^N \alpha_i e^{(T-t_k)A}B.</script>
 
 <p>Consequently, the minimal time $\underline{T}(y^0,y^1)$ given by (\ref{eq:optim0}) is a minimizer of:</p>
 
-<p>[\begin{equation}\label{eq:optim1}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{eq:optim1}
 	\begin{array}{cl}
-		\inf &amp; T <br />
-		 &amp; \begin{array}{l}
-			0\leqslant t_1\leqslant\dots\leqslant t_N\leqslant T, <br />
-			\alpha_1,\dots,\alpha_N\geqslant 0, <br />
+		\inf & T \\
+		 & \begin{array}{l}
+			0\leqslant t_1\leqslant\dots\leqslant t_N\leqslant T, \\
+			\alpha_1,\dots,\alpha_N\geqslant 0, \\
 			\displaystyle{y^1-e^{TA}y^0=\sum_{k=1}^N \alpha_k e^{(T-t_k)A}B}.
 		\end{array}
 	\end{array}
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <h4>3 Numerical implementation</h4>
 
@@ -417,70 +421,76 @@ Thus, instead we will solve the discretized heat equation on each time interval 
 Let us then set $\tau_k=t_{k+1}-t_k$ for every $k\in{0,\dots,N}$.
 We have $T=\sum_{k=0}^N\tau_k$ and the optimization problem (\ref{eq:optim1}) also writes</p>
 
-<p>[\begin{array}{cl}
-		\inf &amp; \displaystyle{\sum_{k=0}^N\tau_k} <br />
-		 &amp; \begin{array}{l}
-			0\leqslant \tau_k (k\in{0,\dots,N}),<br />
-			0\leqslant \alpha_k (k\in{1,\dots,N}),<br />
-			y_0(0)=y^0,<br />
-			y_{k+1}(0)=y_k(\tau_k)+\alpha_{k+1}B(k\in{0,\dots,N-1}),<br />
-			y_{N}(\tau_N)=y^1,<br />
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{cl}
+		\inf & \displaystyle{\sum_{k=0}^N\tau_k} \\
+		 & \begin{array}{l}
+			0\leqslant \tau_k (k\in\{0,\dots,N\}),\\
+			0\leqslant \alpha_k (k\in\{1,\dots,N\}),\\
+			y_0(0)=y^0,\\
+			y_{k+1}(0)=y_k(\tau_k)+\alpha_{k+1}B(k\in\{0,\dots,N-1\}),\\
+			y_{N}(\tau_N)=y^1,\\
 			\text{~ where $y_k(t)=e^{tA}y_k(0)$, i.e.~$y_k$ is solution of (2) with null control.}
 		\end{array}
-	\end{array}]</p>
+	\end{array} %]]></script>
 
 <p>In the above constraints, $y_k(\tau)=y(\tau+t_k)$ for every $\tau\in(0,\tau_k)$, where $y$ is the solution of (\ref{eq:SysGen}), with control $u=\sum_{k=1}^N\alpha_k\delta_{t_k}$ and initial condition $y(0)=y^0$. Notice that since $\alpha_k$ is only constrained to be non-negative, and since the vector $B$ (given by (\ref{eq:ABheat})) is of the form $(0,\dots,0,b_n)^\top$, with $b_n\geqslant 0$, the constraint $y_{k+1}(0)=y_k(\tau_k)+\alpha_{k+1}B$ can be expressed as</p>
 
-<p>[\begin{equation<em>}
+<script type="math/tex; mode=display">\begin{equation*}
 	[y_{k+1}]_n(0)\geqslant [y_k]_n(\tau_k)
 	\text{and}
-	[y_{k+1}]_i(0)=[y_k]_i(\tau_k) (i\in{1,\dots,n-1}).
-\end{equation</em>}]</p>
+	[y_{k+1}]_i(0)=[y_k]_i(\tau_k) (i\in\{1,\dots,n-1\}).
+\end{equation*}</script>
 
 <p>Consequently, the parameters $\alpha_1,\dots,\alpha_N$ can be forgotten.</p>
 
 <p>In order to numerically compute $y_k(t)=e^{tA}y_k(0)$ for $t\in[0,\tau_k]$, we are going to use the Crank-Nicholson method.
 More precisely, given $N_t\in\mathbb{N}^*$, we approximate $y_k(j\tau_k/N_t)$ by $y_k^j$, with $y_k^j$ solution of</p>
 
-<p>[y_k^0=y_k(0), \left( \mathrm{I}_n-\frac{\tau_k}{2N_t}A \right)y_k^{j+1}=\left( \mathrm{I}_n+\frac{\tau_k}{2N_t}A \right)y_k^j (j\in{0,\dots,N_t-1})]</p>
+<script type="math/tex; mode=display">y_k^0=y_k(0), \left( \mathrm{I}_n-\frac{\tau_k}{2N_t}A \right)y_k^{j+1}=\left( \mathrm{I}_n+\frac{\tau_k}{2N_t}A \right)y_k^j (j\in\{0,\dots,N_t-1\})</script>
 
 <p>All in all, the fully discretized optimization problem, is</p>
 
-<p>[\begin{equation}\label{eq:optD1}
+<script type="math/tex; mode=display">\begin{equation}\label{eq:optD1}
 		\min\ \sum_{k=0}^N \tau_k,
-	\end{equation}]</p>
+	\end{equation}</script>
 
 <p>subject to the constraints</p>
 
-<p>[\begin{align}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
 		\label{eq:optD2}
-		&amp; 0\leqslant \tau_k (k\in{0,\dots,N}),<br />
-	\end{align}]</p>
+		& 0\leqslant \tau_k (k\in\{0,\dots,N\}),\\
+	\end{align} %]]></script>
 
-<p>[\begin{align}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
 		\label{eq:optD3}
-		&amp; [y_0^0]_i=u^0 (i\in{1,\dots,n}),<br />
-	\end{align}]</p>
+		& [y_0^0]_i=u^0 (i\in\{1,\dots,n\}),\\
+	\end{align} %]]></script>
 
-<p>[\begin{align}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
 		\label{eq:optD4}
-		&amp; [y_{k+1}^0]_j=[y_k^{N_t}]_j(k\in{0,\dots,N-1},\ j\in{1,\dots,n}),<br />
-	\end{align}]</p>
+		& [y_{k+1}^0]_j=[y_k^{N_t}]_j(k\in\{0,\dots,N-1\},\ j\in\{1,\dots,n\}),\\
+	\end{align} %]]></script>
 
-<p>[\begin{align}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
 		\label{eq:optD5}
-		&amp; [y_{k+1}^0]_n\geqslant [y_k^{N_t}]_n(k\in{0,\dots,N-1}),<br />
-	\end{align}]</p>
+		& [y_{k+1}^0]_n\geqslant [y_k^{N_t}]_n(k\in\{0,\dots,N-1\}),\\
+	\end{align} %]]></script>
 
-<p>[\begin{align}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
 		\label{eq:optD6}
-		&amp; \max_{i\in{1,\dots,n}}\left|[y_{N}^{N_t}]_i-u^1\right|\leqslant \varepsilon,<br />
-	\end{align}]</p>
+		& \max_{i\in\{1,\dots,n\}}\left|[y_{N}^{N_t}]_i-u^1\right|\leqslant \varepsilon,\\
+	\end{align} %]]></script>
 
-<p>[\begin{align}
+<script type="math/tex; mode=display">\begin{align}
 		\label{eq:optD7}
-		 \left( \mathrm{I}_n-\frac{\tau_k}{2N_t}A \right)y_k^{j+1}=\left( \mathrm{I}_n+\frac{\tau_k}{2N_t}A \right)y_k^j (k\in{0,\dots,N},\ j\in{0,\dots,N_t-1}).
-	\end{align}]</p>
+		 \left( \mathrm{I}_n-\frac{\tau_k}{2N_t}A \right)y_k^{j+1}=\left( \mathrm{I}_n+\frac{\tau_k}{2N_t}A \right)y_k^j (k\in\{0,\dots,N\},\ j\in\{0,\dots,N_t-1\}).
+	\end{align}</script>
 
 <p>Note that instead of imposing $[y_{N}^{N_t}]_i=u^1$, we chose to relax this condition in the constraint (\ref{eq:optD6}).
 This choice has been a maid since we do not expect that the numerical solution exactly reaches the target $y^1$. In practice, we will take, $\varepsilon=1/(n\, N_t)$.</p>

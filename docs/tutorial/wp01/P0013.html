@@ -300,11 +300,12 @@ img:active{
 <p>Let us consider the random heat equation described 
 by the following system:</p>
 
-<p>[\begin{cases}\tag{1}
-y_t-\alpha \Delta y =f1_{G_0}, &amp;\text{ in } (0,T)\times G,<br />
-y=0, &amp; \text{ on } (0,T)\times \partial G,<br />
-y(0,\cdot)=y^0,  &amp; \text{ on } G,
-\end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}\tag{1}
+y_t-\alpha \Delta y =f1_{G_0}, &\text{ in } (0,T)\times G,\\
+y=0, & \text{ on } (0,T)\times \partial G,\\
+y(0,\cdot)=y^0,  & \text{ on } G,
+\end{cases} %]]></script>
 
 <p>for $G$  a domain, $G_0\subset G$ a subdomain, 
 $f$ a control,  $y^0$  the initial configuration 
@@ -313,7 +314,7 @@ random variable with density function $\rho$.
 We have that the averaged solution of (1)
 is given by:</p>
 
-<p>[\tilde y(t,x;y^0,f):=\int_0^{+\infty} y(t,x;\alpha,y^0,f)\rho(\alpha)d\alpha.]</p>
+<script type="math/tex; mode=display">\tilde y(t,x;y^0,f):=\int_0^{+\infty} y(t,x;\alpha,y^0,f)\rho(\alpha)d\alpha.</script>
 
 <p>We want to determine if, given a positive random variable 
 $\alpha$ and an initial configuration $y^0\in L^2(G)$, there 
@@ -326,35 +327,19 @@ As averaging and the Fourier transform commute, we work on the
 Fourier transform of the fundamental solution of the
 heat equation, which is given by:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[\exp(-\alpha</td>
-      <td>\xi</td>
-      <td>^2t).]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">\exp(-\alpha |\xi|^2t).</script>
 
 <p>Consequently, the Fourier transform of the average
 of the fundamental solutions is given by:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[\int_0^{+\infty} \exp (-\alpha</td>
-      <td>\xi</td>
-      <td>^2t)\rho(\alpha)d\alpha;]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">\int_0^{+\infty} \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha;</script>
 
 <p>i.e. the Laplace transform of $\rho$ evaluated in $|\xi|^2t$. 
 In particular, for $r\in(0,1)$ if $\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-\frac{r}{1-r}}}$
 we have that:</p>
 
-<p>[\tag{2}
-\int \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha\sim \exp(-C|\xi|^{2r}t^r)]</p>
+<script type="math/tex; mode=display">\tag{2}
+\int \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha\sim \exp(-C|\xi|^{2r}t^r)</script>
 
 <p>when $|\xi|^2t\to+\infty$, which can be proved by the Laplace method.
 Thus, for those density functions 
@@ -367,7 +352,7 @@ but (2) preserves the null averaged observability
 if and only if $r&gt;1/2$, being the threshold density functions  those
 which satisfy:</p>
 
-<p>[\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-1}}.]</p>
+<script type="math/tex; mode=display">\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-1}}.</script>
 
 <h3 id="some-numerical-simulations">Some numerical simulations</h3>
 
@@ -375,17 +360,18 @@ which satisfy:</p>
 the optimal control is given by $\varphi(t,x;\phi)1_{G_0}$, for $\varphi$ the 
 averaged solution of</p>
 
-<p>[\begin{cases}
--\varphi_t-\alpha \Delta \varphi=0, &amp;\text{ in } (0,T)\times G,<br />
-\varphi=0, &amp; \text{ on } (0,T)\times\partial G,<br />
-\varphi(T,\cdot)=\phi,  &amp; \text{ on } G.
-\end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+-\varphi_t-\alpha \Delta \varphi=0, &\text{ in } (0,T)\times G,\\
+\varphi=0, & \text{ on } (0,T)\times\partial G,\\
+\varphi(T,\cdot)=\phi,  & \text{ on } G.
+\end{cases} %]]></script>
 
 <p>and $\phi$ the state which minimizes the functional:</p>
 
-<p>[J(\phi)= \frac{1}{2}\int_0^T\int_{G_0}
+<script type="math/tex; mode=display">J(\phi)= \frac{1}{2}\int_0^T\int_{G_0}
 \left|\int_0^{+\infty}\varphi(t,x;\alpha,\phi)\rho(\alpha)d\alpha\right|^2dxdt 
- \+\left\langle  y^0, \int_0^{+\infty}\varphi(0;\alpha,\phi)\rho(\alpha)d\alpha\right\rangle.]</p>
+ \\+\left\langle  y^0, \int_0^{+\infty}\varphi(0;\alpha,\phi)\rho(\alpha)d\alpha\right\rangle.</script>
 
 <p>Due to the hardness of the numerical computations in higher dimensions and to get
 better illustrations we work in $d=1$, and in particular in $G=(0,\pi)$.

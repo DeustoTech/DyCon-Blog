@@ -299,49 +299,51 @@ img:active{
 
 <p>For given the positive function $F$, we consider the following Population Dynamics Model Structuring by age and spatial diffusion:</p>
 
-<p>[(1):\left{ 
+<script type="math/tex; mode=display">% <![CDATA[
+(1):\left\{ 
 \begin{array}{ccc}
-\partial_{t} y+\partial_{a}y-Δ y+\mu y&amp;=\chi_{\Theta}V&amp;\text{ in }\Omega\times(0,A)\times (0,T) ,\ 
-\dfrac{\partial y}{\partial \nu}&amp;=0&amp; \partial \Omega \times (0,A)\times (0,T)<br />
-y\left( x,0,t\right) &amp;=F\left(\int_{0}^{A}\beta(a)yda\right) &amp;\text{ in }  \Omega\times(0,T) <br />
-y\left(x,a,0\right)&amp;=y_{0}&amp;
+\partial_{t} y+\partial_{a}y-Δ y+\mu y&=\chi_{\Theta}V&\text{ in }\Omega\times(0,A)\times (0,T) ,\\ 
+\dfrac{\partial y}{\partial \nu}&=0& \partial \Omega \times (0,A)\times (0,T)\\
+y\left( x,0,t\right) &=F\left(\int_{0}^{A}\beta(a)yda\right) &\text{ in }  \Omega\times(0,T) \\
+y\left(x,a,0\right)&=y_{0}&
 \text{ in } \Omega\times(0,A).
 \end{array}
-\right.]</p>
+\right. %]]></script>
 
 <p>where, $\Omega$ is a boundary subset of $\mathbb{R}^{N}$, $A$ is the maximal age and $T&gt;0$ the final time. Also, $\Theta=\omega× (a_1,a_2)× (0,T),$ is the control support. Here, $\beta$ is the fertility rate depending also the age a, $\mu$ the mortality rate depending of the age a, $y_0$ the initial condition in $L^2(\Omega× (0,A)),$ $V$ is the control term and $y$ represent the density of the population of age $a$ at time $t$ and location $x∈ \Omega.$</p>
 
 <p>We assume that the fertility rate $\beta$ and the mortality rate $\mu$ satisfy the demographic property:</p>
 
-<p>[(H_1)=
-\left{
+<script type="math/tex; mode=display">(H_1)=
+\left\{
 \begin{array}{c}
-\mu(a)\geq 0 \text{ for every } a\in (0,A)<br />
-\mu\in L^{1}<em>{loc}(0,A)\quad \int</em>{0}^{A}\mu(a)da=+\infty
-\end{array} \right.,]</p>
+\mu(a)\geq 0 \text{ for every } a\in (0,A)\\
+\mu\in L^{1}_{loc}(0,A)\quad \int_{0}^{A}\mu(a)da=+\infty
+\end{array} \right.,</script>
 
 <p>and</p>
 
-<p>[(H_2)=\left{
+<script type="math/tex; mode=display">(H_2)=\left\{
 \begin{array}{ccc}
-\beta(a)\geq 0\quad a.e \quad (0,A)<br />
-\beta(a)\in C^{1}([0,A])<br />
-	\beta(a)=0 \text{ } \forall a\in (0,\hat{a}) \text{ where } \hat{a}\in (0,A), <br />
+\beta(a)\geq 0\quad a.e \quad (0,A)\\
+\beta(a)\in C^{1}([0,A])\\
+	\beta(a)=0 \text{ } \forall a\in (0,\hat{a}) \text{ where } \hat{a}\in (0,A), \\
 \end{array}
-\right.]</p>
+\right.</script>
 
 <p>where</p>
 
-<p>[0≤ a_1&lt;a_2≤ A \text{ and }  a_1≤ \hat{a}.]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+0≤ a_1<a_2≤ A \text{ and }  a_1≤ \hat{a}. %]]></script>
 
 <p>The function $F,$ verify:</p>
 
-<p>[(H_3)=
-\left{
+<script type="math/tex; mode=display">(H_3)=
+\left\{
 \begin{array}{c}
-F \quad \text{ positive, globally Lipchitz }<br />
+F \quad \text{ positive, globally Lipchitz }\\
 F(0)=0,\quad F \text{ continuous and differentiable in } 0.
-\end{array} \right..]</p>
+\end{array} \right..</script>
 
 <h1 id="numerical-simulations">Numerical Simulations</h1>
 
@@ -349,58 +351,60 @@ F(0)=0,\quad F \text{ continuous and differentiable in } 0.
 
 <p>Indeed, we consider the following system:</p>
 
-<p>[(4):\left{ 
+<script type="math/tex; mode=display">% <![CDATA[
+(4):\left\{ 
 \begin{array}{ccc}
-\partial_{t} y+\partial_{a}y-\partial^{2}<em>{xx}y+\mu y&amp;=\chi</em>{\Theta}V&amp;\text{ in }(0,1)\times(0,A)\times (0,T) ,\ 
-y’(0)=y’(1)&amp;=0&amp; \text{ in } (0,A)\times (0,T)<br />
-y\left( x,0,t\right) &amp;=F\left(\int_{0}^{A}\beta(a)yda\right) &amp;\text{ in }  (0,1)\times(0,T) <br />
-y\left(x,a,0\right)&amp;=y_{0}&amp;
+\partial_{t} y+\partial_{a}y-\partial^{2}_{xx}y+\mu y&=\chi_{\Theta}V&\text{ in }(0,1)\times(0,A)\times (0,T) ,\\ 
+y'(0)=y'(1)&=0& \text{ in } (0,A)\times (0,T)\\
+y\left( x,0,t\right) &=F\left(\int_{0}^{A}\beta(a)yda\right) &\text{ in }  (0,1)\times(0,T) \\
+y\left(x,a,0\right)&=y_{0}&
 \text{ in } (0,1)\times(0,A).
 \end{array}
-\right.]</p>
+\right. %]]></script>
 
 <h3 id="discretization-and-simulation-of-uncontrolled-system">Discretization and simulation of uncontrolled system</h3>
 
 <p>The idea in this part is to highlight the numerical simimulation of the nonlinear problem. The first parts is to reduce the PDE to the finite dimensional system of the form</p>
 
-<p>[\dot{U_l}=A_lU_l+vectorF+BV,]</p>
+<script type="math/tex; mode=display">\dot{U_l}=A_lU_l+vectorF+BV,</script>
 
 <p>where $A_l$ and $B$ are matrices, and</p>
 
-<p>[\begin{pmatrix}
-U_l(t) <br />
-V(t) <br />
-\end{pmatrix}]</p>
+<script type="math/tex; mode=display">\begin{pmatrix}
+U_l(t) \\
+V(t) \\
+\end{pmatrix}</script>
 
 <p>is the finite dimensional state and control vector. Here, VectorF is the contribution of the nonlinear part, which comes from births. So let’s consider the following system</p>
 
-<p>[(5):\left{ 
+<script type="math/tex; mode=display">% <![CDATA[
+(5):\left\{ 
 \begin{array}{ccc}
-\dfrac{\partial y}{\partial t}+\textbf{A}y+\mu y&amp;=\chi_{\Theta}V&amp;\text{ in }\Omega\times(0,A)\times (0,T) ,\ 
-\dfrac{\partial y}{\partial \nu}&amp;=0&amp; \partial \Omega \times (0,A)\times (0,T)<br />
-y\left( x,0,t\right) &amp;=F\left(\int_{0}^{A}\beta(a)yda\right) &amp;\text{ in }  \Omega\times(0,T) <br />
-y\left(x,a,0\right)&amp;=y_{0}&amp;
+\dfrac{\partial y}{\partial t}+\textbf{A}y+\mu y&=\chi_{\Theta}V&\text{ in }\Omega\times(0,A)\times (0,T) ,\\ 
+\dfrac{\partial y}{\partial \nu}&=0& \partial \Omega \times (0,A)\times (0,T)\\
+y\left( x,0,t\right) &=F\left(\int_{0}^{A}\beta(a)yda\right) &\text{ in }  \Omega\times(0,T) \\
+y\left(x,a,0\right)&=y_{0}&
 \text{ in } \Omega\times(0,A).
 \end{array}
-\right.]</p>
+\right. %]]></script>
 
 <p>where</p>
 
-<p>[\textbf{A}y=\partial_{a}y-\partial^{2}_{xx}y.]</p>
+<script type="math/tex; mode=display">\textbf{A}y=\partial_{a}y-\partial^{2}_{xx}y.</script>
 
 <p>To solve $(4)$, the space (dimension 1) and age discretization is performed with finite difference method on rectangular grid 
 on $[0,L]\times [0,A]$. For a given rectangular grid $\mathcal{T}$ with vertex $(x_i,a_j)\quad 1\leq i\leq N,\quad 1\leq j\leq M$ and uniform step size (without loss of generality) $\Delta x$ in $x-$direction and $\Delta a$ in $a-$direction, we denote by  the diameter of the grid
 The finite difference approximation of the diffusion term of the operator $\textbf{A}$ is given by</p>
 
-<p>[\dfrac{\partial^2 y}{\partial x^2}(x_i,a_j,t)=\dfrac{y(x_{i+1},a_j,t)-2y(x_i,a_j,t)+y(x_{i-1},a_j,t)}{(\Delta x)^2}.]</p>
+<script type="math/tex; mode=display">\dfrac{\partial^2 y}{\partial x^2}(x_i,a_j,t)=\dfrac{y(x_{i+1},a_j,t)-2y(x_i,a_j,t)+y(x_{i-1},a_j,t)}{(\Delta x)^2}.</script>
 
 <p>The finite difference approximation of the aging term of the operator A is given by</p>
 
-<p>[\dfrac{\partial y}{\partial a}(x_i,a_j,t)=\dfrac{y(x_{i},a_{j},t)-y(x_i,a_{j-1},t)}{\Delta a}.]</p>
+<script type="math/tex; mode=display">\dfrac{\partial y}{\partial a}(x_i,a_j,t)=\dfrac{y(x_{i},a_{j},t)-y(x_i,a_{j-1},t)}{\Delta a}.</script>
 
 <p>Let $y_{i,j}(t)$ be the approximation of $y(x_i,a_j)$ and</p>
 
-<p>[U_{l}(t) = (y_{i,j}(t))_{1\leq i\leq N,\quad 1\leq j\leq M}]</p>
+<script type="math/tex; mode=display">U_{l}(t) = (y_{i,j}(t))_{1\leq i\leq N,\quad 1\leq j\leq M}</script>
 
 <p>where $y_{i,j}$ is at the position $i+j*(N-1)$ and $A_l$ the matrix of the mortality approximation, the diffusion approximation and the aging approximation.</p>
 
@@ -408,40 +412,40 @@ The finite difference approximation of the diffusion term of the operator $\text
 
 <p>We denote by $\beta(a),$ the fertility rate, the newborn is given by:</p>
 
-<p>[y(x,0,t)=F\left(\int_{0}^{A}\beta(a)y(x,a,t)da\right).]</p>
+<script type="math/tex; mode=display">y(x,0,t)=F\left(\int_{0}^{A}\beta(a)y(x,a,t)da\right).</script>
 
 <p>We approximate $\int_{0}^{A}\beta(a)y(x,a,t)da$ by</p>
 
-<p>[\int_{0}^{A}\beta(a)y(x,a,t)da=(A/n)\sum_{j=1}^{n-1}\beta(a_j)y(x,a_j,t)+\dfrac{\beta(0)y(x,0,t)+\beta(A)y(x,A,t)}{2}.]</p>
+<script type="math/tex; mode=display">\int_{0}^{A}\beta(a)y(x,a,t)da=(A/n)\sum_{j=1}^{n-1}\beta(a_j)y(x,a_j,t)+\dfrac{\beta(0)y(x,0,t)+\beta(A)y(x,A,t)}{2}.</script>
 
 <p>Then</p>
 
-<p>[y_{i,0}=A/n\sum_{k=1}^{n-1}\beta(a_k)y(x_i,a_k,t)+\dfrac{\beta(0)y(x_i,0,t)+\beta(A)y(x_i,A,t)}{2}\text{ for } i=1:n.]</p>
+<script type="math/tex; mode=display">y_{i,0}=A/n\sum_{k=1}^{n-1}\beta(a_k)y(x_i,a_k,t)+\dfrac{\beta(0)y(x_i,0,t)+\beta(A)y(x_i,A,t)}{2}\text{ for } i=1:n.</script>
 
 <p>But as</p>
 
-<p>[\dfrac{\partial y_{i,1}(t)}{\partial a}=\dfrac{y_{i,1}(t)-y_{i,0}(t)}{\Delta a}\text{ } i=1:n,]</p>
+<script type="math/tex; mode=display">\dfrac{\partial y_{i,1}(t)}{\partial a}=\dfrac{y_{i,1}(t)-y_{i,0}(t)}{\Delta a}\text{ } i=1:n,</script>
 
 <p>then</p>
 
-<p>[\dfrac{\partial y_{i,1}(t)}{\partial a}=\dfrac{-A/n\sum_{k=1}^{n-1}\beta(a_k)y_{i,k}(t)+y_{i,1}(t)+\dfrac{\beta(0)y(x_i,0,t)+\beta(A)y(x_i,A,t)}{2}}{\Delta a}\quad i=1:n,]</p>
+<script type="math/tex; mode=display">\dfrac{\partial y_{i,1}(t)}{\partial a}=\dfrac{-A/n\sum_{k=1}^{n-1}\beta(a_k)y_{i,k}(t)+y_{i,1}(t)+\dfrac{\beta(0)y(x_i,0,t)+\beta(A)y(x_i,A,t)}{2}}{\Delta a}\quad i=1:n,</script>
 
 <p>We create also the nonlinear vectorF from the births. Indeed, if we denote by</p>
 
-<p>[(N_l)_{1\leq i\leq n<em>n;\leq j\leq n</em>n}]</p>
+<script type="math/tex; mode=display">(N_l)_{1\leq i\leq n*n;\leq j\leq n*n}</script>
 
 <p>the matrix of the births,</p>
 
-<p>[P_l=N_lU_l\quad where\quad  \left(\dfrac{A\sum_{k=1}^{n-1}\beta(a_k)y_{i,k}(t)+\dfrac{\beta(0)y(x_i,0,t)+\beta(A)y(x_i,A,t)}{2}}{n\Delta a}\right)<em>{1\leq i\leq n}=\left(P_l\right)</em>{1\leq i\leq n}\text{ } and \text{ } 
-\left(P_l\right)_{n+1\leq i\leq n*n}=0]</p>
+<script type="math/tex; mode=display">P_l=N_lU_l\quad where\quad  \left(\dfrac{A\sum_{k=1}^{n-1}\beta(a_k)y_{i,k}(t)+\dfrac{\beta(0)y(x_i,0,t)+\beta(A)y(x_i,A,t)}{2}}{n\Delta a}\right)_{1\leq i\leq n}=\left(P_l\right)_{1\leq i\leq n}\text{ } and \text{ } 
+\left(P_l\right)_{n+1\leq i\leq n*n}=0</script>
 
 <p>and we define the vectorF by:</p>
 
-<p>[vectorF=F(N_lU_l).]</p>
+<script type="math/tex; mode=display">vectorF=F(N_lU_l).</script>
 
 <p>The corresponding discrete system is given for a continuous initial solution $y_0$ by</p>
 
-<p>[\dfrac{dU_l}{dt}=A_lU_l+vectorF\quad y(0)=y_0(x,a)]</p>
+<script type="math/tex; mode=display">\dfrac{dU_l}{dt}=A_lU_l+vectorF\quad y(0)=y_0(x,a)</script>
 
 <h3 id="example-1">Example 1</h3>
 
@@ -449,21 +453,22 @@ The finite difference approximation of the diffusion term of the operator $\text
 
 <p>For the simulation, we take $L=1,\text{ } A=10\text{, }\Delta x=1/54\quad \Delta a= 5/54$ and $T=40$. Moreover $F(t)=t\Phi(t)$ a Globally Lipchitz function where</p>
 
-<p>[\Phi(t)=0.75\exp(-t)]</p>
+<script type="math/tex; mode=display">\Phi(t)=0.75\exp(-t)</script>
 
 <p>The fertility $\beta$ is given by:</p>
 
-<p>[\beta(a) = 
+<script type="math/tex; mode=display">% <![CDATA[
+\beta(a) = 
  \begin{cases}
-0 &amp; \text { if } a&lt;A/18 <br />
+0 & \text { if } a<A/18 \\
  \frac{\alpha(a-5/18)^{\gamma-1}e^{-(a-5/18)/v}}{v^{\gamma}\Gamma(\gamma)}
-\text{ if } A/18\leq a\leq 17A/18<br />
- 0 &amp;\text{ if } a&gt;17A/18.
-  \end{cases}]</p>
+\text{ if } A/18\leq a\leq 17A/18\\
+ 0 &\text{ if } a>17A/18.
+  \end{cases} %]]></script>
 
 <p>here $v=1$, $\gamma=5$, $\alpha=7$ and the mortality rate $\mu$ by</p>
 
-<p>[\mu(a)=\dfrac{1}{10(A-a)}]</p>
+<script type="math/tex; mode=display">\mu(a)=\dfrac{1}{10(A-a)}</script>
 
 <hr />
 
@@ -479,39 +484,40 @@ The finite difference approximation of the diffusion term of the operator $\text
 
 <p>We construct the control problem, which consists in minimizing the functional and we choose the classical Hum functional and the control matrix $B=\chi_{\Theta}$ where $\Theta=(x_1,x_2)\times (a_1,a_2)\times (0,T),$ and we suppose that $U_T$ is the desired state:</p>
 
-<p>[J_{\epsilon}(U_l,V_l)=\dfrac{1}{\epsilon}\int_{0}^{A}\int_{0}^{L}\left(U_l(x,a,T)-U_T\right)^2dxda+\int_{0}^{T}\int_{a_1}^{a_2}\int_{x_1}^{x_2}V_{l}^{2}dxdadt.]</p>
+<script type="math/tex; mode=display">J_{\epsilon}(U_l,V_l)=\dfrac{1}{\epsilon}\int_{0}^{A}\int_{0}^{L}\left(U_l(x,a,T)-U_T\right)^2dxda+\int_{0}^{T}\int_{a_1}^{a_2}\int_{x_1}^{x_2}V_{l}^{2}dxdadt.</script>
 
 <p>Here $U_T=0.$<br />
 The approximate null controllability become the minimization of  the functional $J,$ where $(U_l,V_l)$ verify the following system</p>
 
-<p>[\dfrac{dU_l}{dt}=A_lU_l+vectorF+BV_l\quad U_l(0)=(y_0(x_i,a_j))_{1\leq i\leq N,1\leq j\leq M}]</p>
+<script type="math/tex; mode=display">\dfrac{dU_l}{dt}=A_lU_l+vectorF+BV_l\quad U_l(0)=(y_0(x_i,a_j))_{1\leq i\leq N,1\leq j\leq M}</script>
 
 <p>In this part the fertility $\beta$ is given by:</p>
 
-<p>[\beta(a) = 
+<script type="math/tex; mode=display">% <![CDATA[
+\beta(a) = 
  \begin{cases}
-0 &amp; \text { if } a&lt;A/5 <br />
+0 & \text { if } a<A/5 \\
  \frac{\alpha(a-/8)^{\gamma-1}e^{-(a-/8)/v}}{v^{\gamma}\Gamma(\gamma)}
-\text{ if } A/5\leq a\leq 4A/5<br />
- 0 &amp;\text{ if } a&gt; 4A/5,
-  \end{cases}]</p>
+\text{ if } A/5\leq a\leq 4A/5\\
+ 0 &\text{ if } a> 4A/5,
+  \end{cases} %]]></script>
 
 <p>here $v=1$, $\gamma=5$, $\alpha=7$
  and</p>
 
-<p>[\mu(a)=\dfrac{1}{15(A-a)}]</p>
+<script type="math/tex; mode=display">\mu(a)=\dfrac{1}{15(A-a)}</script>
 
 <p>and $VectorF=(P_lU_l).^2$.This means that we consider that $F(t)=t^2$ which is globally lipchizt on a compact which is our case.</p>
 
 <p>The system becomes:</p>
 
-<p>[\dfrac{dU_l}{dt}=A_lU_l+(P_lU_l).^2+BV_l\quad U_l(0)=(y_0(x_i,a_j))_{1\leq i\leq N,1\leq j\leq M}.]</p>
+<script type="math/tex; mode=display">\dfrac{dU_l}{dt}=A_lU_l+(P_lU_l).^2+BV_l\quad U_l(0)=(y_0(x_i,a_j))_{1\leq i\leq N,1\leq j\leq M}.</script>
 
 <h3 id="example-2">Example 2</h3>
 
 <p>In this example, we take $ε=0.05$, $\Delta x=0.05$ and $\Delta a= 0.5$, with the initial condition</p>
 
-<p>[y_0(x,a)=e^{-(10(a-3/10)^2+70(x-4/10))}]</p>
+<script type="math/tex; mode=display">y_0(x,a)=e^{-(10(a-3/10)^2+70(x-4/10))}</script>
 
 <p>the following numerical results were obtained for $T=12$ and $\Delta t=120$.</p>
 

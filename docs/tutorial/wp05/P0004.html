@@ -297,13 +297,15 @@ img:active{
         
         <p>We consider the semilinear hyperbolic system</p>
 
-<p>[\begin{cases} \partial_t y + \lambda \partial_x y = c_1 v + yv \quad &amp; (x,t)\in (0,L)\times (0,T) \ \partial_t v + \lambda \partial_x v = c_2 y + yv  &amp; (x,t)\in (0,L)\times (0,T) \ y(0,t) = v(0,t) &amp; t \in (0,T) \ v(L,t) = u(t) &amp; t \in (0,T) \ y(x,0) = y^0(x) &amp; x \in (0,L) \ v(x,0) = v^0(x) &amp; x \in (0,L), \end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases} \partial_t y + \lambda \partial_x y = c_1 v + yv \quad & (x,t)\in (0,L)\times (0,T) \\ \partial_t v + \lambda \partial_x v = c_2 y + yv  & (x,t)\in (0,L)\times (0,T) \\ y(0,t) = v(0,t) & t \in (0,T) \\ v(L,t) = u(t) & t \in (0,T) \\ y(x,0) = y^0(x) & x \in (0,L) \\ v(x,0) = v^0(x) & x \in (0,L), \end{cases} %]]></script>
 
 <p>where $\lambda &gt; 0$ and $u$ is the control. The stability and boundary stabilization of such 1D hyperbolic systems is studied in [1]. The aim of this tutorial is to semi-discretize in space this system of equations and design a stabilizing control by using the LQR method.</p>
 
 <p>The above system linearized around $(y,v) = (0,0)$ has the form</p>
 
-<p>[\begin{cases} \partial_t y + \lambda \partial_x y = c_1 v  \quad &amp; (x,t)\in (0,L)\times (0,T) \ \partial_t v + \lambda \partial_x v = c_2 y  &amp; (x,t)\in (0,L)\times (0,T) \ y(0,t) = v(0,t) &amp; t \in (0,T) \ v(L,t) = u(t) &amp; t \in (0,T) \ y(x,0) = y^0(x) &amp; x \in (0,L) \ v(x,0) = v^0(x) &amp; x \in (0,L). \end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases} \partial_t y + \lambda \partial_x y = c_1 v  \quad & (x,t)\in (0,L)\times (0,T) \\ \partial_t v + \lambda \partial_x v = c_2 y  & (x,t)\in (0,L)\times (0,T) \\ y(0,t) = v(0,t) & t \in (0,T) \\ v(L,t) = u(t) & t \in (0,T) \\ y(x,0) = y^0(x) & x \in (0,L) \\ v(x,0) = v^0(x) & x \in (0,L). \end{cases} %]]></script>
 
 <p>We will first use the LQR method to design a stabilizing control for the semi-discretized linear system, and then this control will be applied to the semi-discretized semilinear system.</p>
 
@@ -325,32 +327,34 @@ img:active{
 
 <p>Finite differences for the space derivative give</p>
 
-<p>[\partial_x y(x_k,t) \approx \begin{cases} \frac{y_1(t)}{h_x} - \frac{v_0(t)}{h_x} \quad &amp; k=1\ \frac{y_k(t)-y_{k-1}(t)}{h_x} \quad  &amp;\forall k \in {2, \ldots, n+1 } \end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\partial_x y(x_k,t) \approx \begin{cases} \frac{y_1(t)}{h_x} - \frac{v_0(t)}{h_x} \quad & k=1\\ \frac{y_k(t)-y_{k-1}(t)}{h_x} \quad  &\forall k \in \{2, \ldots, n+1 \} \end{cases} %]]></script>
 
 <p>and</p>
 
-<p>[\partial_x v(x_k,t) \approx \begin{cases} \frac{v_{k+1}(t)-v_{k}(t)}{h_x} &amp;\forall k \in {0, \ldots, n-1 } \ \frac{-v_n(t)}{h_x} + \frac{u(t)}{h_x} \quad &amp;k=n. \end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\partial_x v(x_k,t) \approx \begin{cases} \frac{v_{k+1}(t)-v_{k}(t)}{h_x} &\forall k \in \{0, \ldots, n-1 \} \\ \frac{-v_n(t)}{h_x} + \frac{u(t)}{h_x} \quad &k=n. \end{cases} %]]></script>
 
 <p>The sign of $\lambda$ in each equation must be taken into account to choose the approximation of $\partial_x y$ and $\partial_x v$.</p>
 
 <p>Let $d = 2(n+1)$ represent the dimension of the state space for the semi-discretized systems. Defining the state variable $z \colon (0,T) \mapsto \mathbb{R}^d$ by</p>
 
-<p>[z = \big(y_1, y_2, \ldots, y_{n+1}, v_0, v_1, \ldots, v_n \big)^\mathrm{T},]</p>
+<script type="math/tex; mode=display">z = \big(y_1, y_2, \ldots, y_{n+1}, v_0, v_1, \ldots, v_n \big)^\mathrm{T},</script>
 
 <p>the semilinear system writes as</p>
 
-<p>[\begin{cases} \dot{z} = Az+ Bu + f(z,u) \qquad t \in (0,T)\ z(0) = z_0, \end{cases}]</p>
+<script type="math/tex; mode=display">\begin{cases} \dot{z} = Az+ Bu + f(z,u) \qquad t \in (0,T)\\ z(0) = z_0, \end{cases}</script>
 
 <p>and the linearized system writes as</p>
 
-<p>[\begin{cases} \dot{z} = Az+ Bu \qquad t \in (0,T)\ z(0) = z^0. \end{cases}]</p>
+<script type="math/tex; mode=display">\begin{cases} \dot{z} = Az+ Bu \qquad t \in (0,T)\\ z(0) = z^0. \end{cases}</script>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">d</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>We pick the initial condition</p>
 
-<p>[z^0 := \big(y^0<em>1, y^0_2, \ldots, y^0</em>{n+1}, v^0_0, v^0_1, \ldots, v^0_n \big)^\mathrm{T}.]</p>
+<script type="math/tex; mode=display">z^0 := \big(y^0_1, y^0_2, \ldots, y^0_{n+1}, v^0_0, v^0_1, \ldots, v^0_n \big)^\mathrm{T}.</script>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y0</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x1</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
 <span class="n">v0</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x2</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
@@ -371,15 +375,18 @@ img:active{
 
 <p>The matrix $A$ of size $d \times d$ is given by</p>
 
-<p>[A = \begin{pmatrix} A_{11} &amp; A_{12} \ A_{21} &amp; A_{22} \end{pmatrix},]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+A = \begin{pmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{pmatrix}, %]]></script>
 
 <p>where $A_{11}, A_{12}, A_{21}, A_{22}$, of size $(n+1)\times(n+1)$, are defined by</p>
 
-<p>[A_{11} = \begin{pmatrix} \frac{-\lambda}{h_x} &amp; &amp; &amp; \ \frac{\lambda}{h_x} &amp; \ddots &amp; &amp; &amp; \  &amp; \ddots &amp; \ddots &amp;  \  &amp; &amp; \frac{\lambda}{h_x} &amp; \frac{-\lambda}{h_x} \end{pmatrix}, \quad A_{12} = \begin{pmatrix} \frac{\lambda}{h_x} &amp; c_1 &amp; &amp; \  &amp; 0 &amp; \ddots &amp; \  &amp; &amp; \ddots &amp; c_1 \  &amp; &amp; &amp; 0 \ \end{pmatrix}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+A_{11} = \begin{pmatrix} \frac{-\lambda}{h_x} & & & \\ \frac{\lambda}{h_x} & \ddots & & & \\  & \ddots & \ddots &  \\  & & \frac{\lambda}{h_x} & \frac{-\lambda}{h_x} \end{pmatrix}, \quad A_{12} = \begin{pmatrix} \frac{\lambda}{h_x} & c_1 & & \\  & 0 & \ddots & \\  & & \ddots & c_1 \\  & & & 0 \\ \end{pmatrix} %]]></script>
 
 <p>and</p>
 
-<p>[A_{21} = \begin{pmatrix} 0 &amp; &amp; &amp; \ c_2 &amp; \ddots &amp; &amp; \  &amp; \ddots &amp; \ddots &amp; \  &amp; &amp; c_2 &amp; 0 \end{pmatrix}, \quad A_{22}= \begin{pmatrix}  \big(\frac{-\lambda}{h_x}+c_2\big) &amp; \frac{\lambda}{h_x} &amp; &amp; \  &amp; \frac{-\lambda}{h_x} &amp; \ddots &amp; \  &amp; &amp; \ddots &amp; \frac{\lambda}{h_x} \  &amp; &amp; &amp; \frac{-\lambda}{h_x} \end{pmatrix}.]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+A_{21} = \begin{pmatrix} 0 & & & \\ c_2 & \ddots & & \\  & \ddots & \ddots & \\  & & c_2 & 0 \end{pmatrix}, \quad A_{22}= \begin{pmatrix}  \big(\frac{-\lambda}{h_x}+c_2\big) & \frac{\lambda}{h_x} & & \\  & \frac{-\lambda}{h_x} & \ddots & \\  & & \ddots & \frac{\lambda}{h_x} \\  & & & \frac{-\lambda}{h_x} \end{pmatrix}. %]]></script>
 
 <p>They are constructed as follows.</p>
 
@@ -398,11 +405,11 @@ img:active{
 
 <p>The matrix $B$ is of size $d \times 1$ and is given by</p>
 
-<p>[B = \begin{pmatrix} B_1 \ B_2 \end{pmatrix},]</p>
+<script type="math/tex; mode=display">B = \begin{pmatrix} B_1 \\ B_2 \end{pmatrix},</script>
 
 <p>where $B_1, B_2$, of size $(n+1)\times 1$, are defined by</p>
 
-<p>[B_1 = \begin{pmatrix} 0 \ \vdots \ 0 \ c_1 \end{pmatrix}, \quad B_2 = \begin{pmatrix} 0 \ \vdots \ 0 \ \frac{\lambda}{h_x} \end{pmatrix}.]</p>
+<script type="math/tex; mode=display">B_1 = \begin{pmatrix} 0 \\ \vdots \\ 0 \\ c_1 \end{pmatrix}, \quad B_2 = \begin{pmatrix} 0 \\ \vdots \\ 0 \\ \frac{\lambda}{h_x} \end{pmatrix}.</script>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span><span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">B</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">c1</span><span class="p">;</span> <span class="n">B</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">lambda</span><span class="p">/</span><span class="n">hx</span><span class="p">;</span>
@@ -447,7 +454,8 @@ stabilizable.
 
 <p>Then, we verify that the eigenvalues of the Hamiltonian matrix</p>
 
-<p>[H = \begin{pmatrix} A &amp; -BB^* \ -Q &amp; -A^* \end{pmatrix}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+H = \begin{pmatrix} A & -BB^* \\ -Q & -A^* \end{pmatrix} %]]></script>
 
 <p>are not purely imzginary. Here, $Q$ is a matrix of size $d \times d$ to be chosen.</p>
 
@@ -469,7 +477,7 @@ stabilizable.
 
 <p>To finish, we verify that $(Q, A)$ is stabilizable, meaning that the rank of</p>
 
-<p>[\begin{pmatrix} Q \ sI-A \end{pmatrix}]</p>
+<script type="math/tex; mode=display">\begin{pmatrix} Q \\ sI-A \end{pmatrix}</script>
 
 <p>is equal to $d$, for any eigenvalue $s$ of $A$ with a nonnegative real part.</p>
 
