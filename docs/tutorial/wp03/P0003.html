@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -391,100 +390,103 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 
 <p>It is important to remark that we are interested in the controllability to the trajectory $\widehat{z}(\cdot,T)$ but, at the same time, $T$ is a variable in our code since it is the cost functional we aim to minimize. In view of that, our final target changes during the minimization process. Nevertheless this issue can be bypassed by taking advance of the linear nature of our equation and solving the <em>traslated</em> constrained minimization problem consisting in finding the minimial time for steering the inital datum $z_0-\widehat{z}_0$ by employing a control $u\geq\widehat{u}$ ($\widehat{z}_0$ and $\widehat{u}$ are the same given above).</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Minimal time for the constrained controllability of the fractional heat equation.
-</span>
-<span class="c1"># 1: define the parameters
-</span>
-<span class="n">param</span> <span class="n">Nx</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>               <span class="c1"># number of spatial discretization points
-</span>
-<span class="n">param</span> <span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>              <span class="c1"># number of time discretization points
-</span>
-<span class="n">param</span> <span class="n">y0</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>            <span class="c1"># initial condition
-</span>
-<span class="n">param</span> <span class="n">y1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                <span class="c1"># target
-</span>
-<span class="n">param</span> <span class="n">dx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="n">Nx</span><span class="p">;</span>             <span class="c1"># Space step
-</span>
-<span class="n">param</span> <span class="n">C</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>                 <span class="c1"># Bound on the controls
-</span>
-<span class="n">param</span> <span class="n">A</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Stiffness or rigidity matrix
-</span>
-<span class="n">param</span> <span class="n">B</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Control matrix
-</span>
-<span class="n">param</span> <span class="n">M</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># Mass matrix  
-</span>
-<span class="c1"># 2: define the variables
-</span>
-<span class="n">var</span> <span class="n">y</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c1"># State
-</span><span class="n">var</span> <span class="n">u</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span><span class="o">&gt;=-</span><span class="n">C</span><span class="p">;</span>   <span class="c1"># Control
-</span><span class="n">var</span> <span class="n">T</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span>                            <span class="c1"># Time horizon
-</span><span class="n">var</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="n">Nt</span><span class="p">;</span>                        <span class="c1"># Time step
-</span>
-<span class="c1"># 3: define the data
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Minimal time for the constrained controllability of the fractional heat equation.</span>
+
+<span class="c"># 1: define the parameters</span>
+
+<span class="n">param</span> <span class="n">Nx</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>               <span class="c"># number of spatial discretization points</span>
+
+<span class="n">param</span> <span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>              <span class="c"># number of time discretization points</span>
+
+<span class="n">param</span> <span class="n">y0</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>            <span class="c"># initial condition</span>
+
+<span class="n">param</span> <span class="n">y1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                <span class="c"># target</span>
+
+<span class="n">param</span> <span class="n">dx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="n">Nx</span><span class="p">;</span>             <span class="c"># Space step</span>
+
+<span class="n">param</span> <span class="n">C</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>                 <span class="c"># Bound on the controls</span>
+
+<span class="n">param</span> <span class="n">A</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c"># Stiffness or rigidity matrix</span>
+
+<span class="n">param</span> <span class="n">B</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c"># Control matrix</span>
+
+<span class="n">param</span> <span class="n">M</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span><span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c"># Mass matrix  </span>
+
+<span class="c"># 2: define the variables</span>
+
+<span class="n">var</span> <span class="n">y</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">};</span>       <span class="c"># State</span>
+<span class="n">var</span> <span class="n">u</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span><span class="o">&gt;=-</span><span class="n">C</span><span class="p">;</span>   <span class="c"># Control</span>
+<span class="n">var</span> <span class="n">T</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span>                            <span class="c"># Time horizon</span>
+<span class="n">var</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="n">Nt</span><span class="p">;</span>                        <span class="c"># Time step</span>
+
+<span class="c"># 3: define the data</span>
+
 <span class="n">data</span><span class="p">;</span>
 
-<span class="c1"># Initial datum
-</span>
+<span class="c"># Initial datum</span>
+
 <span class="n">param</span> <span class="n">y0</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
 <span class="mi">1</span> <span class="o">-</span><span class="mf">0.000000</span> <span class="o">-</span><span class="mf">0.905270</span> <span class="o">-</span><span class="mf">1.785847</span> <span class="o">-</span><span class="mf">2.617711</span> <span class="o">-</span><span class="mf">3.378170</span> <span class="o">-</span><span class="mf">4.046482</span> <span class="o">-</span><span class="mf">4.604416</span> <span class="o">-</span><span class="mf">5.036753</span> <span class="o">-</span><span class="mf">5.331701</span> <span class="o">-</span><span class="mf">5.481215</span> <span class="o">-</span><span class="mf">5.481215</span> <span class="o">-</span><span class="mf">5.331701</span> <span class="o">-</span><span class="mf">5.036753</span> <span class="o">-</span><span class="mf">4.604416</span> <span class="o">-</span><span class="mf">4.046482</span> <span class="o">-</span><span class="mf">3.378170</span> <span class="o">-</span><span class="mf">2.617711</span> <span class="o">-</span><span class="mf">1.785847</span> <span class="o">-</span><span class="mf">0.905270</span> <span class="o">-</span><span class="mf">0.000000</span><span class="p">;</span>
 
-<span class="c1"># Stiffness or rigidity matrix A
-</span>
+<span class="c"># Stiffness or rigidity matrix A</span>
+
 <span class="n">param</span> <span class="n">A</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
 <span class="mi">1</span> <span class="o">-</span><span class="mf">5.551728</span> <span class="mf">2.242487</span> <span class="mf">0.359689</span> <span class="mf">0.077115</span> <span class="mf">0.033148</span> <span class="mf">0.017829</span> <span class="mf">0.010871</span> <span class="mf">0.007193</span> <span class="mf">0.005044</span> <span class="mf">0.003694</span> <span class="mf">0.002798</span> <span class="mf">0.002178</span> <span class="mf">0.001733</span> <span class="mf">0.001405</span> <span class="mf">0.001158</span> <span class="mf">0.000966</span> <span class="mf">0.000816</span> <span class="mf">0.000697</span> <span class="mf">0.000600</span> <span class="mf">0.000521</span>
 <span class="o">...</span>
 <span class="mi">20</span> <span class="mf">0.000521</span> <span class="mf">0.000600</span> <span class="mf">0.000697</span> <span class="mf">0.000816</span> <span class="mf">0.000966</span> <span class="mf">0.001158</span> <span class="mf">0.001405</span> <span class="mf">0.001733</span> <span class="mf">0.002178</span> <span class="mf">0.002798</span> <span class="mf">0.003694</span> <span class="mf">0.005044</span> <span class="mf">0.007193</span> <span class="mf">0.010871</span> <span class="mf">0.017829</span> <span class="mf">0.033148</span> <span class="mf">0.077115</span> <span class="mf">0.359689</span> <span class="mf">2.242487</span> <span class="o">-</span><span class="mf">5.551728</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Control matrix B
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Control matrix B</span>
+
 <span class="n">param</span> <span class="n">B</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
 <span class="mi">1</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span>
 <span class="o">...</span>
 <span class="mi">20</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Mass matrix M
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Mass matrix M</span>
+
 <span class="n">param</span> <span class="n">M</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="p">:</span><span class="o">=</span>
 <span class="mi">1</span> <span class="mf">0.070175</span> <span class="mf">0.017544</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span>
 <span class="o">...</span>
 <span class="mi">20</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.017544</span> <span class="mf">0.070175</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 4: define the cost functional to minimize
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 4: define the cost functional to minimize</span>
+
 <span class="n">minimize</span> <span class="n">cost</span><span class="p">:</span> <span class="n">T</span><span class="p">;</span>
 
-<span class="c1"># 5: define the constraints
-</span>
-<span class="c1"># 5.a: dynamics y' = Ay + Bu, implemented through an Explicit Euler method.
-</span>
+<span class="c"># 5: define the constraints</span>
+
+<span class="c"># 5.a: dynamics y' = Ay + Bu, implemented through an Explicit Euler method.</span>
+
 <span class="n">subject</span> <span class="n">to</span> <span class="n">y_dyn</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">2.</span><span class="o">.</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">}:</span>
 <span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">dt</span><span class="o">*</span><span class="nb">sum</span> <span class="p">{</span><span class="n">l</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">]);</span>
 
-<span class="c1"># 5.b: homogeneous Dirichlet boundary conditions in -1 and 1.
-</span>
+<span class="c"># 5.b: homogeneous Dirichlet boundary conditions in -1 and 1.</span>
+
 <span class="n">subject</span> <span class="n">to</span> <span class="n">left_boundary</span>  <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">subject</span> <span class="n">to</span> <span class="n">right_boundary</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">Nx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-<span class="c1"># 5.c: initial condition.
-</span>
+<span class="c"># 5.c: initial condition.</span>
+
 <span class="n">subject</span> <span class="n">to</span> <span class="n">y_init</span> <span class="p">{</span><span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y0</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
 
-<span class="c1"># 5.d: target.
-</span>
+<span class="c"># 5.d: target.</span>
+
 <span class="n">subject</span> <span class="n">to</span> <span class="n">y_end1</span> <span class="p">{</span><span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="n">y</span><span class="p">[</span><span class="n">Nt</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y1</span><span class="p">;</span>
 
-<span class="c1"># 6: solve the problem with IpOpt
-</span>
+<span class="c"># 6: solve the problem with IpOpt</span>
+
 <span class="n">option</span> <span class="n">solver</span> <span class="n">ipopt</span><span class="p">;</span>
 <span class="n">option</span> <span class="n">ipopt_options</span> <span class="s">"max_iter=100000 linear_solver=mumps hessian_approximation=exact halt_on_ampl_error yes"</span><span class="p">;</span>
 <span class="n">solve</span><span class="p">;</span>
 
-<span class="c1"># 7: print the results.
-</span>
+<span class="c"># 7: print the results.</span>
+
 <span class="n">printf</span><span class="p">:</span> <span class="s">"T  = </span><span class="si">%24.16</span><span class="s">e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">T</span><span class="p">;</span>
 <span class="n">printf</span><span class="p">:</span> <span class="s">"Nx = </span><span class="si">%</span><span class="s">d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">Nx</span><span class="p">;</span>
 <span class="n">printf</span><span class="p">:</span> <span class="s">"Nt = </span><span class="si">%</span><span class="s">d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">Nt</span><span class="p">;</span>
@@ -492,17 +494,18 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 <span class="n">printf</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="mf">0.</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">Nx</span><span class="p">}:</span> <span class="s">" </span><span class="si">%24.16</span><span class="s">e</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">];</span>
 
 <span class="n">end</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Once the minimization is concluded, we save the results in a file “data.txt” and we use <strong>Matlab</strong> to reshape the solution and the control so to obtain two $N_x\times(N_t+1)$ matrices for the plots.</p>
 
 <p>This can be done through the following script:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">close</span> <span class="nb">all</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">close</span> <span class="nb">all</span>
 <span class="c1">% Read the data from the external file data.txt</span>
 
 <span class="n">fid</span><span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="s1">'data.txt'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">);</span>
-<span class="n">C</span> <span class="o">=</span> <span class="nb">fscanf</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span><span class="s1">'%f'</span><span class="p">,</span><span class="nb">Inf</span><span class="p">);</span>
+<span class="n">C</span> <span class="o">=</span> <span class="nb">fscanf</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span><span class="s1">'%f'</span><span class="p">,</span><span class="n">Inf</span><span class="p">);</span>
 <span class="n">T</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">Nx</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">Nt</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
@@ -513,7 +516,8 @@ u\geq 0, & a.\,e.\;in\; \omega\times(0,T).
 <span class="c1">% Reshape the state y and the control u into two Nx times Nt+1 matrices</span>
 <span class="n">y</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">u</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">Nx</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>From the reshaped solution and control, we can generate the plots. For instance, the m-file plot_control.m is the one generating <strong>Figure 2</strong> below.</p>
 

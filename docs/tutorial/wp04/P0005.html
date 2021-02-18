@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -329,7 +328,7 @@ img:active{
 
 <p>The initialization parameters look as follows:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span><span class="o">=</span><span class="mi">30</span><span class="p">;</span> <span class="c1">%% space discretization points in y-direction</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">N</span><span class="o">=</span><span class="mi">30</span><span class="p">;</span> <span class="c1">%% space discretization points in y-direction</span>
 <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="p">/(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% mesh size</span>
 <span class="n">t0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">%% initial time</span>
 <span class="n">tf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span> <span class="c1">%% final time</span>
@@ -346,19 +345,22 @@ img:active{
 
 <span class="n">tau</span><span class="o">=</span><span class="n">dx</span><span class="o">^</span><span class="mi">4</span><span class="p">;</span> <span class="c1">%% regularization parameter</span>
 <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span> <span class="c1">%% stepsize of the gradient descent method</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We now compute the FE discretization matrices $M$, $A$ and $V$ that are respectively the mass matrix, the stiffness matrix and the advection matrix. For the FE discretization we assume equidistant structured meshes. In particular we use triangular elements and the classical pyramidal test functions are employed.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">]</span> <span class="o">=</span> <span class="n">computeFEmatrices</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">d1</span><span class="p">,</span><span class="n">d2</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">);</span> <span class="c1">%% Compute FE discretization matrices</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">]</span> <span class="o">=</span> <span class="n">computeFEmatrices</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">d1</span><span class="p">,</span><span class="n">d2</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">);</span> <span class="c1">%% Compute FE discretization matrices</span>
+</code></pre>
+</div>
 
 <p>A reference initial condition is chosen and we compute using the FE discretization specified above and implicit Euler in time its corresponding final state at time $T$. This final state will be considered the initial data of the inverse problem to be solved and we name it the target function $u^*$ as mentioned previously.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0_ref</span> <span class="o">=</span> <span class="n">initial_deltas</span><span class="p">(</span><span class="n">N</span><span class="p">);</span> <span class="c1">%% computes reference initial condition</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">U0_ref</span> <span class="o">=</span> <span class="n">initial_deltas</span><span class="p">(</span><span class="n">N</span><span class="p">);</span> <span class="c1">%% computes reference initial condition</span>
 
 <span class="p">[</span><span class="n">U_target</span><span class="p">,</span><span class="n">u_target</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0_ref</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span> <span class="c1">%% Compute target distribution</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We now call the algorithm that estimates the initial condition $u_0$ using as a initial data the target function $u^*$. As mentioned before, this algorithm consists of two steps.</p>
 
@@ -372,15 +374,17 @@ img:active{
 
 <p>Adjoint algorithm for sparse source identification (algorithm 4)</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">SparseIdentification</span><span class="p">(</span><span class="n">u_target</span><span class="p">,</span><span class="n">TOL</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">,</span><span class="n">epsilon</span><span class="p">,</span><span class="n">tau</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">SparseIdentification</span><span class="p">(</span><span class="n">u_target</span><span class="p">,</span><span class="n">TOL</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">,</span><span class="n">epsilon</span><span class="p">,</span><span class="n">tau</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>Finally, the final state at $T$ is computed using as a initial condition the estimated sparse sources identified with our algorithm.</p>
 
 <p>Compute final state with the recovered initial condition</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">UF</span><span class="p">,</span><span class="n">u_final</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">UF</span><span class="p">,</span><span class="n">u_final</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We can see the evolution recovered</p>
 
@@ -390,35 +394,36 @@ img:active{
 
 <p>One can observe the difference between the two models (the heat equation on $\Omega_1$ and the diffusion-advection on $\Omega_2$) in the two figures at the bottom where the initial sources on $\Omega_2$ move downwards at the same time as they dissipate while the initial sources on $\Omega_1$ only dissipate without displacement.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component x</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component x</span>
 <span class="n">yplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component y</span>
 <span class="c1">%%</span>
 <span class="nb">figure</span><span class="p">(</span><span class="s1">'unit'</span><span class="p">,</span><span class="s1">'norm'</span><span class="p">,</span><span class="s1">'pos'</span><span class="p">,[</span><span class="mf">0.25</span> <span class="mf">0.1</span> <span class="mf">0.5</span> <span class="mf">0.8</span><span class="p">])</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">surf</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0_ref</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Reference initial state (front view)'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">surf</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered initial state (front view)'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0_ref</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Reference initial state (above view)'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
 <span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered initial state (above view)'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 <span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U_target</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Given target u^*'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
 <span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">UF</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered final state'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0005/copiaRM_01.png" alt="" /></p>
 

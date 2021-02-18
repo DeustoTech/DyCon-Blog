@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -340,32 +339,36 @@ x=\begin{bmatrix} x_1 & x_2\end{bmatrix}\in\mathbb{R}^2 %]]></script>
 
 <p>First, you have to add to the path the toolbox Globtipoly</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">untar</span><span class="p">(</span><span class="s1">'http://homepages.laas.fr/henrion/software/gloptipoly3/gloptipoly3.tar.gz'</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">untar</span><span class="p">(</span><span class="s1">'http://homepages.laas.fr/henrion/software/gloptipoly3/gloptipoly3.tar.gz'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="s1">'gloptipoly3'</span><span class="p">))</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Second, you have also to add to the path the toolbox Sedumi.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/sqlp/sedumi/archive/master.zip'</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/sqlp/sedumi/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="s1">'sedumi-master'</span><span class="p">))</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Then, you are ready to define the optimization problem.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">;</span> <span class="mi">1</span><span class="p">];</span> <span class="n">u0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">%% initial conditions</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">;</span> <span class="mi">1</span><span class="p">];</span> <span class="n">u0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">%% initial conditions</span>
 <span class="n">d</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span> <span class="c1">%% maximum degree of test function.</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We compute the analytic minimum time. We want to know whether we are able to compute the good one with the toolbox Gloptipoly.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">x0</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="p">(</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="o">-</span><span class="mi">2</span><span class="p">)/</span><span class="mi">2</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="n">x0</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="p">(</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="o">-</span><span class="mi">2</span><span class="p">)/</span><span class="mi">2</span>
 <span class="n">tmin</span> <span class="o">=</span> <span class="mi">1</span><span class="o">+</span><span class="n">x0</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">/</span><span class="mi">2</span><span class="p">;</span>
 <span class="k">elseif</span> <span class="n">x0</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">/</span><span class="mi">2</span><span class="o">*</span><span class="nb">sign</span><span class="p">(</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="n">tmin</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">x0</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="k">else</span>
 <span class="n">tmin</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">x0</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">x0</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We define measures for constraints. In other words, we also define the vector field under consideration.</p>
 
@@ -373,33 +376,38 @@ x=\begin{bmatrix} x_1 & x_2\end{bmatrix}\in\mathbb{R}^2 %]]></script>
 
 <p>The command meas allows to define a measure depending on several variables. Hence, when writing meas([x_1;u_1]), one is defining a measure depending on the variables x_1 and u_1.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mpol</span> <span class="n">x1</span> <span class="mi">2</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">mpol</span> <span class="n">x1</span> <span class="mi">2</span>
 <span class="n">mpol</span> <span class="n">u1</span>
 <span class="n">m1</span> <span class="o">=</span> <span class="n">meas</span><span class="p">([</span><span class="n">x1</span><span class="p">;</span><span class="n">u1</span><span class="p">]);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We now define a measure associated to $x_2$, which will be related to some performance requirement. Indeed, we will impose that this variable is dissipative.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mpol</span> <span class="n">x2</span> <span class="mi">2</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">mpol</span> <span class="n">x2</span> <span class="mi">2</span>
 <span class="n">m2</span> <span class="o">=</span> <span class="n">meas</span><span class="p">(</span><span class="n">x2</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We then define the vector field.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="n">x1</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="n">u1</span><span class="p">];</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="n">x1</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="n">u1</span><span class="p">];</span>
+</code></pre>
+</div>
 
 <p>We now define the test functions as polynomials, with maximal degree $d$. The command mmon in Globtipoly allows to define monomials up to an order $d$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">g1</span> <span class="o">=</span> <span class="n">mmon</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">g1</span> <span class="o">=</span> <span class="n">mmon</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
 <span class="n">g2</span> <span class="o">=</span> <span class="n">mmon</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>It is also necessary to assign the initial conditions, for the states as well for the control.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">assign</span><span class="p">([</span><span class="n">x1</span><span class="p">;</span><span class="n">u1</span><span class="p">],[</span><span class="n">x0</span><span class="p">;</span><span class="n">u0</span><span class="p">]);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">assign</span><span class="p">([</span><span class="n">x1</span><span class="p">;</span><span class="n">u1</span><span class="p">],[</span><span class="n">x0</span><span class="p">;</span><span class="n">u0</span><span class="p">]);</span>
 <span class="n">g0</span> <span class="o">=</span> <span class="nb">double</span><span class="p">(</span><span class="n">g1</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We define $K_1$ and $K_2$. The set $K_1$ is defined as: $K_1= \lbrace x_1,u_1 \in \mathbb{R}^2\mid x_1(2)\geq -1,: u_1^2\leq 1\rbrace$ and $K_2$ is defined as: $K_2 =\lbrace x_2\in\mathbb{R}\mid x_2^2\leq 0\rbrace$.</p>
 
@@ -413,14 +421,15 @@ x=\begin{bmatrix} x_1 & x_2\end{bmatrix}\in\mathbb{R}^2 %]]></script>
 
 <p>Finally, we define also the differential equation with the polynomials truncated up to the order $d$. The command mom corresponds to the integral of polynomials against the suitable measure. For instance, for mom(g_2), one integrates the the polynomial g_2 against the measure $\mu_2$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="n">msdp</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">mass</span><span class="p">(</span><span class="n">m1</span><span class="p">)),</span><span class="k">...</span><span class="c"> %%Definition of the cost function</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="n">msdp</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">mass</span><span class="p">(</span><span class="n">m1</span><span class="p">)),</span><span class="k">...</span><span class="c"> %%Definition of the cost function</span>
 <span class="n">u1</span><span class="o">^</span><span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">,</span><span class="k">...</span><span class="c"> %% Definition of $K_1$</span>
 <span class="n">x1</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="k">...</span><span class="c"> %% Definition of $K_&amp;$</span>
 <span class="n">x2</span><span class="o">'*</span><span class="n">x2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">,</span><span class="k">...</span><span class="c"> %% Definition of $K_2</span>
 <span class="n">mom</span><span class="p">(</span><span class="n">g2</span><span class="p">)</span> <span class="o">-</span> <span class="n">g0</span> <span class="o">==</span> <span class="n">mom</span><span class="p">(</span><span class="nb">diff</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span><span class="n">x1</span><span class="p">)</span><span class="o">*</span><span class="n">f</span><span class="p">));</span> <span class="c1">%% Definition of the dynamics.</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GloptiPoly 3.8 of 15 December 2014
+<div class="highlighter-rouge"><pre class="highlight"><code>GloptiPoly 3.8 of 15 December 2014
 Define moment SDP problem
   Valid objective function
   Number of support constraints = 3
@@ -438,16 +447,18 @@ Total number of moments = 112
 Generate moment and support constraints
 Generate moment SDP problem
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The command msdp allows to define the problem and all the constraints. As written in [1], this means that you are transforming the problem on functions into a SDP (Semi-definite programming) problem.</p>
 
 <p>Once you do that, one has to solve this SDP problem. The command msol allows to do that.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">status</span><span class="p">,</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">msol</span><span class="p">(</span><span class="n">P</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">status</span><span class="p">,</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">msol</span><span class="p">(</span><span class="n">P</span><span class="p">);</span>
+</code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GloptiPoly 3.8 of 15 December 2014
+<div class="highlighter-rouge"><pre class="highlight"><code>GloptiPoly 3.8 of 15 December 2014
 Solve moment SDP problem
 *****************************************************
 Calling SeDuMi
@@ -520,18 +531,21 @@ Inconsistent number of solutions amongst respective measures
 No globally optimal solution could be extracted
 Global optimality cannot be ensured
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>You display the minimal time and the lower bound of the cost functional.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">disp</span><span class="p">([</span><span class="s1">'Minimum time = '</span> <span class="nb">num2str</span><span class="p">(</span><span class="n">tmin</span><span class="p">)]);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">disp</span><span class="p">([</span><span class="s1">'Minimum time = '</span> <span class="nb">num2str</span><span class="p">(</span><span class="n">tmin</span><span class="p">)]);</span>
 <span class="nb">disp</span><span class="p">([</span><span class="s1">'LMI '</span> <span class="nb">int2str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="s1">' lower bound = '</span> <span class="nb">num2str</span><span class="p">(</span><span class="n">obj</span><span class="p">)])</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Minimum time = 3.5
+<div class="highlighter-rouge"><pre class="highlight"><code>Minimum time = 3.5
 LMI 6 lower bound = 2.6557
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>For the initial condition x0 = [1 1] the exact minimum time is equal to 3.5. In table 1 of [2], a table is provided where you can see that when increasing $d$ the minimum time becomes closer and closer to the analytic one. We copy it in the note.</p>
 

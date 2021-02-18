@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -358,26 +357,29 @@ img:active{
 </center>
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/fig1.png" alt="" /> Location of the complex eigenvalues of the matrix $A_{1,n}$ with the finite element method</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">error</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">error</span>
 <span class="n">Nx</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
 <span class="n">stabexpsem</span><span class="p">(</span><span class="n">Nx</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error using error
+<div class="highlighter-rouge"><pre class="highlight"><code>Error using error
 Not enough input arguments.
 
 Error in tp1d0d1572_49d1_41a8_914f_f09a199a8ec3 (line 114)
 error
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>In Figure 2, conversely to Figure 1 where a uniform distance between the eigenvalues and the imaginary axis is preserved, we observe that, as the number of modes increases, an asymptotic behaviour appears in the neighborhood of the imaginary axis at $\pm\infty$. This property is mainly related to systems with polynomial decay, see \cite{BEPS2006}.</p>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0009/fig2.png" alt="" /> Location of the complex eigenvalues of the matrix $A_{2,n}$ with the finite</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nx</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Nx</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
 <span class="n">stabpolysem</span><span class="p">(</span><span class="n">Nx</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h2 id="uniform-and-polynomial-decay-of-the-energy">Uniform and polynomial decay of the energy</h2>
 
@@ -401,22 +403,24 @@ error
 
 <p>It has been shown theoretically, see [1,2], that the energy associated to system (\ref{eq2}) is very sensitive to the smoothness of its initial data. This fact, has been also observed numerically, see Figure 6. we use</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nx</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Nx</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
 <span class="n">FinalTime</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
 <span class="nb">mode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">Gamma</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">;</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
 <span class="n">k</span><span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>and we consider the following initial data</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">u0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
 <span class="n">x</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">pi</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
 <span class="n">v0</span><span class="o">=</span><span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">/</span><span class="nb">pi</span><span class="p">)</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
 <span class="n">teta0</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Through Figure 6, we notice that for $j = 1$, the approximate energy $E_{2,n}(t)$ decays to zero as the time $t$ increases. Moreover, we observe that the decay rate depends strongly on $j$. That is, when $j$ increases, initial data are very oscillating. We say in this case that the rate of decay of the discrete energy $E_{2,n}(t)$ is very sensitive to the choice of the initial data. However, the behavior of the energy assosiated to system (\ref{eq1}) remains indifferent to the smoothness of initial data when $n\to\infty$, see Figure 5.</p>
 

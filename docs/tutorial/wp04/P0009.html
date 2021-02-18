@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -328,15 +327,16 @@ routines for different parameters.</p>
 <p>Here is the start of the script that lists the modules on which the
 implementation bases on.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">dolfin</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">dolfin</span>
 
-<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="n">spla</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="kn">as</span> <span class="nn">spla</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
 <span class="kn">from</span> <span class="nn">spacetime_galerkin_pod.ldfnp_ext_cholmod</span> <span class="kn">import</span> <span class="n">SparseFactorMassmat</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The code uses <code class="highlighter-rouge">dolfin</code> which is the python interface to
 <a href="https://fenicsproject.org/">FEniCS</a> while the other modules <code class="highlighter-rouge">scipy</code>, <code class="highlighter-rouge">numpy</code>,
@@ -356,74 +356,77 @@ controlled by the parameter <code class="highlighter-rouge">N</code>. For the va
 and piecewise quadratic ansatz functions, the resulting dimension of the system
 is 51842.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># The mesh
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># The mesh</span>
+
 <span class="n">pone</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ptwo</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">mesh</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">RectangleMesh</span><span class="p">(</span><span class="n">pone</span><span class="p">,</span> <span class="n">ptwo</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
 
 <span class="n">V</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">VectorFunctionSpace</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="s">'CG'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-<span class="c1">### The FENICS FEM Discretization
-</span>
+<span class="c">### The FENICS FEM Discretization</span>
+
 <span class="n">v</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">TestFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">TrialFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Next, the discrete linear operators are defined and exported as a <em>SciPy</em> sparse
 matrix. Also, we factorize the mass matrix <code class="highlighter-rouge">mmat</code> for later use and define the
 norm that is weighted with the mass matrix as this is the discrete $L^2$ norm.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ## the mass matrix
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># ## the mass matrix</span>
+
 <span class="n">mform</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">dx</span>
 <span class="n">massm</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">assemble</span><span class="p">(</span><span class="n">mform</span><span class="p">)</span>
 <span class="n">mmat</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">as_backend_type</span><span class="p">(</span><span class="n">massm</span><span class="p">)</span><span class="o">.</span><span class="n">sparray</span><span class="p">()</span>
 <span class="n">mmat</span><span class="o">.</span><span class="n">eliminate_zeros</span><span class="p">()</span>
 
-<span class="c1"># factorize it for later
-</span>
+<span class="c"># factorize it for later</span>
+
 
 <span class="n">mfac</span> <span class="o">=</span> <span class="n">SparseFactorMassmat</span><span class="p">(</span><span class="n">mmat</span><span class="p">)</span>
 
-<span class="c1"># norm induced by the mass matrix == discrete L2-norm
-</span>
+<span class="c"># norm induced by the mass matrix == discrete L2-norm</span>
+
 <span class="k">def</span> <span class="nf">mnorm</span><span class="p">(</span><span class="n">uvec</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">uvec</span><span class="p">,</span> <span class="n">mmat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">uvec</span><span class="p">)))</span>
 
-<span class="c1"># ## the stiffness matrix
-# as a form in FEniCS
-</span>
+<span class="c"># ## the stiffness matrix</span>
+<span class="c"># as a form in FEniCS</span>
+
 <span class="n">aform</span> <span class="o">=</span> <span class="n">nu</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">dolfin</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">dx</span>
 <span class="n">aassm</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">assemble</span><span class="p">(</span><span class="n">aform</span><span class="p">)</span>
 
-<span class="c1"># as a sparse matrix
-</span>
+<span class="c"># as a sparse matrix</span>
+
 <span class="n">amat</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">as_backend_type</span><span class="p">(</span><span class="n">aassm</span><span class="p">)</span><span class="o">.</span><span class="n">sparray</span><span class="p">()</span>
 <span class="n">amat</span><span class="o">.</span><span class="n">eliminate_zeros</span><span class="p">()</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Then we define the convective term as function of the velocity <code class="highlighter-rouge">u</code> both in terms
 of an FE-function and as a function of the associated coefficient vector.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ## the convective term
-</span>
-<span class="c1"># as a function in FEniCS
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># ## the convective term</span>
+
+<span class="c"># as a function in FEniCS</span>
+
 <span class="k">def</span> <span class="nf">burgers_nonl_func</span><span class="p">(</span><span class="n">ufun</span><span class="p">):</span>
     <span class="n">cform</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">dolfin</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">ufun</span><span class="p">)</span><span class="o">*</span><span class="n">ufun</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="n">dolfin</span><span class="o">.</span><span class="n">dx</span>
     <span class="n">cass</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">assemble</span><span class="p">(</span><span class="n">cform</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cass</span>
 
-<span class="c1"># as a vector to form map
-</span>
+<span class="c"># as a vector to form map</span>
+
 <span class="k">def</span> <span class="nf">burgers_nonl_vec</span><span class="p">(</span><span class="n">uvec</span><span class="p">):</span>
     <span class="n">ufun</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
     <span class="n">ufun</span><span class="o">.</span><span class="n">vector</span><span class="p">()</span><span class="o">.</span><span class="n">set_local</span><span class="p">(</span><span class="n">uvec</span><span class="p">)</span>
     <span class="n">bnlform</span> <span class="o">=</span> <span class="n">burgers_nonl_func</span><span class="p">(</span><span class="n">ufun</span><span class="p">)</span>
     <span class="n">bnlvec</span> <span class="o">=</span> <span class="n">bnlform</span><span class="o">.</span><span class="n">get_local</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">bnlvec</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h2 id="the-runge-kutta-time-integration">The Runge-Kutta Time Integration</h2>
 
@@ -440,14 +443,15 @@ requires this parameter. Also, we define the initial value here. The time grid
 is used to store the solution for the snapshots needed later, but the time
 integrator uses his internal time grid.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inivstrg</span> <span class="o">=</span> <span class="s">'exp(-3.*(x[0]*x[0]+x[1]*x[1]))'</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">inivstrg</span> <span class="o">=</span> <span class="s">'exp(-3.*(x[0]*x[0]+x[1]*x[1]))'</span>
 <span class="n">inivexpr</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">Expression</span><span class="p">((</span><span class="n">inivstrg</span><span class="p">,</span> <span class="n">inivstrg</span><span class="p">),</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">inivfunc</span> <span class="o">=</span> <span class="n">dolfin</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">inivexpr</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
 <span class="n">inivvec</span> <span class="o">=</span> <span class="n">inivfunc</span><span class="o">.</span><span class="n">vector</span><span class="p">()</span><span class="o">.</span><span class="n">get_local</span><span class="p">()</span>
 
 <span class="n">burgsol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">brhs</span><span class="p">,</span> <span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">tE</span><span class="p">),</span> <span class="n">inivvec</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">timegrid</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'RK23'</span><span class="p">)</span>
 <span class="n">fullsol</span> <span class="o">=</span> <span class="n">burgsol</span><span class="o">.</span><span class="n">y</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Here is the result. Note the sharp front that develops towards the end of the time
 integration.</p>
@@ -480,11 +484,12 @@ optimally parametrizes the subspace of $L^2$ that is spanned by the solution
 snapshots<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>. In this example, we use the <code class="highlighter-rouge">poddim=25</code> leading singular vectors
 to define the reduced model.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">snapshotmat</span> <span class="o">=</span> <span class="n">mfac</span><span class="o">.</span><span class="n">Ft</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">burgsol</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">snapshotmat</span> <span class="o">=</span> <span class="n">mfac</span><span class="o">.</span><span class="n">Ft</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">burgsol</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
 <span class="n">podmodes</span><span class="p">,</span> <span class="n">svals</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">spla</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">snapshotmat</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="n">selected_podmodes</span> <span class="o">=</span> <span class="n">podmodes</span><span class="p">[:,</span> <span class="p">:</span><span class="n">poddim</span><span class="p">]</span>
 <span class="n">podvecs</span> <span class="o">=</span> <span class="n">mfac</span><span class="o">.</span><span class="n">solve_Ft</span><span class="p">(</span><span class="n">selected_podmodes</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>In this implementation we use a sparse factor of the mass matrix instead of the
 square root. The singular values (in particular those that correspond to the
 discarded directions) give an indication of how good the approximation is.</p>
@@ -500,13 +505,14 @@ u_h(t)$ where $V$ is the matrix of the POD modes (in the code $V$ denoted by
 <code class="highlighter-rouge">podvecs</code>), which gives a system in $\tilde u _ h$ with 25 degrees of freedom
 (as opposed to the 51842 of the full order model).</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">redamat</span> <span class="o">=</span> <span class="n">podvecs</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">amat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">podvecs</span><span class="p">))</span>  <span class="c1"># the projected stiffness
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">redamat</span> <span class="o">=</span> <span class="n">podvecs</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">amat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">podvecs</span><span class="p">))</span>  <span class="c"># the projected stiffness</span>
+
 <span class="k">def</span> <span class="nf">redbrhs</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">redvec</span><span class="p">):</span>
     <span class="n">inflatedv</span> <span class="o">=</span> <span class="n">podvecs</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">redvec</span><span class="p">)</span>
     <span class="n">redconv</span> <span class="o">=</span> <span class="n">podvecs</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">burgers_nonl_vec</span><span class="p">(</span><span class="n">inflatedv</span><span class="p">))</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">redamat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">redvec</span><span class="p">)</span> <span class="o">-</span> <span class="n">redconv</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Here we define the projected stiffness matrix and the reduced nonlinearity
 through</p>
@@ -526,10 +532,11 @@ matrix is the identity. Why?</p>
 <p>Finally, the initial value is projected into the reduced coordinates and the
 reduced system is integrated in time.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">redburgsol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">redbrhs</span><span class="p">,</span> <span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">tE</span><span class="p">),</span> <span class="n">prjinivvec</span><span class="p">,</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">redburgsol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">redbrhs</span><span class="p">,</span> <span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">tE</span><span class="p">),</span> <span class="n">prjinivvec</span><span class="p">,</span>
                        <span class="n">t_eval</span><span class="o">=</span><span class="n">timegrid</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'RK23'</span><span class="p">)</span>
 <span class="n">podredsol</span> <span class="o">=</span> <span class="n">redburgsol</span><span class="o">.</span><span class="n">y</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>In the solution we see that the reduced order model gives a decent approximation
 in the smooth regime in the beginning and has its troubles approximating the front as can be seen in the error (log) plot.</p>
@@ -578,32 +585,34 @@ regression problem is solved via SVD to compute the needed pseudo inverse since
 this naturally allows for a rank reduction and a factored representation of the
 DMD matrix.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ### dmd using truncated svd inverse
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># ### dmd using truncated svd inverse</span>
+
 <span class="n">fburgsol</span> <span class="o">=</span> <span class="n">burgsol</span><span class="o">.</span><span class="n">y</span>
 <span class="n">Xmat</span> <span class="o">=</span> <span class="n">fburgsol</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">Xdsh</span> <span class="o">=</span> <span class="n">fburgsol</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
 <span class="n">ux</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">vxh</span> <span class="o">=</span> <span class="n">spla</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">Xmat</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="n">uxr</span><span class="p">,</span> <span class="n">sxr</span><span class="p">,</span> <span class="n">vxhr</span> <span class="o">=</span> <span class="n">ux</span><span class="p">[:,</span> <span class="p">:</span><span class="n">poddim</span><span class="p">],</span> <span class="n">sx</span><span class="p">[:</span><span class="n">poddim</span><span class="p">],</span> <span class="n">vxh</span><span class="p">[:</span><span class="n">poddim</span><span class="p">,</span> <span class="p">:]</span>
 
-<span class="c1"># compute the dmd matrix in factored form: `dmda = dmdaone * dmdatwo`
-</span>
+<span class="c"># compute the dmd matrix in factored form: `dmda = dmdaone * dmdatwo`</span>
+
 <span class="n">dmdaone</span> <span class="o">=</span> <span class="n">Xdsh</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vxhr</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="n">dmdatwo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sxr</span><span class="p">),</span> <span class="n">uxr</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Once the DMD matrix $A$ is determined, the simulation of the DMD reduced model
 is only a repeated multiplication by $A$.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># simulation of the dmd reduced model
-</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># simulation of the dmd reduced model</span>
+
 <span class="n">dmdxo</span> <span class="o">=</span> <span class="n">inivvec</span>
 <span class="n">dmdsol</span> <span class="o">=</span> <span class="p">[</span><span class="n">dmdxo</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Nts</span><span class="p">):</span>
     <span class="n">dmdsol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dmdaone</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dmdatwo</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dmdsol</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
 
 <span class="n">dmdsol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dmdsol</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>As can be seen from the results and the error plots, DMD does a good job in the
 initial phase but fails in the region with the sharp front.</p>

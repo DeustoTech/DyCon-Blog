@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -379,7 +378,7 @@ img:active{
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0008/SIVend.png" alt="" /> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0008/Infectedend.png" alt="" /></p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span><span class="p">,</span><span class="nb">close</span> <span class="nb">all</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span><span class="p">,</span><span class="nb">close</span> <span class="nb">all</span>
 <span class="n">a1</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 <span class="n">a2</span><span class="o">=</span><span class="mi">60</span><span class="p">;</span>
 <span class="n">Tf</span><span class="o">=</span><span class="mi">300</span><span class="p">;</span>
@@ -401,22 +400,25 @@ img:active{
 <span class="n">lambda</span><span class="o">=</span><span class="n">k</span><span class="p">/</span><span class="n">h</span><span class="p">;</span>
 <span class="n">C</span><span class="o">=</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
 <span class="n">A</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">lambda</span><span class="p">)</span><span class="o">*</span><span class="n">C</span><span class="o">+</span><span class="n">lambda</span><span class="o">*</span><span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The reproduction number $R_0$</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R0</span><span class="o">=</span><span class="n">tauxR</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">delta</span><span class="p">,</span><span class="nb">beta</span><span class="p">,</span><span class="n">muc</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">A0</span><span class="p">,</span><span class="n">alpha1</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">R0</span><span class="o">=</span><span class="n">tauxR</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">delta</span><span class="p">,</span><span class="nb">beta</span><span class="p">,</span><span class="n">muc</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">A0</span><span class="p">,</span><span class="n">alpha1</span><span class="p">)</span>
+</code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>
 R0 =
 
     1.4216
 
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">T0</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">T0</span><span class="p">;</span>
 <span class="n">V</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">V0</span><span class="p">;</span>
 <span class="n">U</span><span class="o">=</span> <span class="n">I0</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">))</span><span class="o">'</span><span class="p">;</span>  <span class="c1">%% initial values</span>
 <span class="n">Up</span><span class="o">=</span><span class="p">[</span><span class="n">fct</span><span class="p">(</span><span class="n">T0</span><span class="p">,</span><span class="n">V0</span><span class="p">);</span> <span class="n">U</span><span class="p">];</span> <span class="c1">%% Initial value + Boundary condition</span>
@@ -426,25 +428,26 @@ R0 =
 
 <span class="n">UI</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">);;</span>
 
-<span class="k">for</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span>
+<span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span>
     <span class="n">Uold</span><span class="o">=</span><span class="n">U</span><span class="p">;</span>
-      <span class="n">UI</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">h</span><span class="o">*</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">));</span>
+      <span class="n">UI</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">=</span><span class="n">h</span><span class="o">*</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">));</span>
     <span class="k">for</span> <span class="n">o</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-    <span class="n">UI</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">UI</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="o">*</span><span class="n">Uold</span><span class="p">(</span><span class="n">o</span><span class="p">);</span>
+    <span class="n">UI</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">=</span><span class="n">UI</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="o">*</span><span class="n">Uold</span><span class="p">(</span><span class="n">o</span><span class="p">);</span>
     <span class="k">end</span>
-    <span class="n">B</span><span class="o">=</span><span class="p">[</span><span class="n">lambda</span><span class="o">*</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">))</span> <span class="p">;</span><span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)];</span>
+    <span class="n">B</span><span class="o">=</span><span class="p">[</span><span class="n">lambda</span><span class="o">*</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">))</span> <span class="p">;</span><span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)];</span>
     <span class="n">F</span><span class="o">=-</span> <span class="n">delta</span><span class="o">*</span><span class="n">Uold</span> <span class="p">;</span>
     <span class="n">U</span><span class="o">=</span><span class="n">A</span><span class="o">*</span><span class="n">Uold</span><span class="o">+</span><span class="n">B</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="n">F</span><span class="p">;</span>
     <span class="n">val</span><span class="o">=</span><span class="nb">feval</span><span class="p">(</span><span class="o">@</span><span class="n">int</span><span class="p">,</span><span class="n">Uold</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">a</span><span class="p">);</span>
-    <span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">A0</span><span class="o">-</span><span class="n">mu</span><span class="o">*</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">-</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">)));</span>
-    <span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">muc</span> <span class="o">*</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="p">));</span>
+    <span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">A0</span><span class="o">-</span><span class="n">mu</span><span class="o">*</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">-</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">)));</span>
+    <span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">muc</span> <span class="o">*</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="p">));</span>
     <span class="n">Up</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-    <span class="n">Up</span><span class="o">=</span><span class="p">[</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span> <span class="n">U</span><span class="p">];</span>
+    <span class="n">Up</span><span class="o">=</span><span class="p">[</span><span class="n">fct</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">V</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span> <span class="n">U</span><span class="p">];</span>
     <span class="n">Uf</span><span class="o">=</span><span class="p">[</span><span class="n">Uf</span><span class="p">,</span><span class="n">Up</span><span class="p">];</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code> <span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
     <span class="p">[</span><span class="n">X</span> <span class="p">,</span> <span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span> <span class="n">ap</span> <span class="p">,</span><span class="n">t</span><span class="p">);</span>
  <span class="nb">mesh</span> <span class="p">(</span><span class="n">X</span> <span class="p">,</span> <span class="n">Y</span> <span class="p">,</span> <span class="n">Uf</span><span class="o">'</span><span class="p">)</span>
  <span class="nb">title</span><span class="p">(</span><span class="s1">'The evolution of solution i(t,a)'</span><span class="p">)</span>
@@ -454,7 +457,8 @@ R0 =
  <span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">T</span><span class="s1">','</span><span class="n">b</span><span class="s1">',t,[UI UI(N+2)],'</span><span class="n">r</span><span class="s1">',t,V'</span><span class="p">,</span><span class="s1">'g'</span><span class="p">)</span>
  <span class="nb">legend</span><span class="p">(</span><span class="s1">'S(t)'</span><span class="p">,</span><span class="s1">'I(t)=\int i(t,a)da'</span><span class="p">,</span><span class="s1">'R(t)'</span><span class="p">)</span>
  <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0008/copiaRM_01.png" alt="" /></p>
 

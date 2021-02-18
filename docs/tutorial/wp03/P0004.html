@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -488,56 +487,64 @@ initial datum supported outside $B_{1.5}$.</p>
 
 <p>The <code class="highlighter-rouge">fenics</code> module [1] contains all of the necessary finite element tools for the space discretization of PDEs.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fenics</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fenics</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">obstacles</span> <span class="kn">import</span> <span class="n">dome</span>
 <span class="kn">from</span> <span class="nn">mshr</span> <span class="kn">import</span> <span class="n">mesh</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>It is advantageous to regularize the “kink” appearing in penalty function (the negative part of a function) in view of using a Newton method for solving the nonlinear problem</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">smoothmax</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span> 
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">smoothmax</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span> 
 	<span class="k">return</span> <span class="n">conditional</span><span class="p">(</span><span class="n">gt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eps</span><span class="p">),</span> <span class="n">r</span><span class="o">-</span><span class="n">eps</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">conditional</span><span class="p">(</span><span class="n">lt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">eps</span><span class="p">)))</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>We mesh the domain $B_2$.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mesh</span> <span class="o">=</span> <span class="n">generate_mesh</span><span class="p">(</span><span class="n">Circle</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">25</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">mesh</span> <span class="o">=</span> <span class="n">generate_mesh</span><span class="p">(</span><span class="n">Circle</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">25</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <p>$P1$ elements are used for the FEM spaces (but one may easily choose higher order in the definition of V).</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">V</span> <span class="o">=</span> <span class="n">FunctionSpace</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="s">"CG"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">V</span> <span class="o">=</span> <span class="n">FunctionSpace</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="s">"CG"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">w</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
 <span class="n">v</span> <span class="o">=</span> <span class="n">TestFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
 <span class="n">psi</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>		
 <span class="n">eps</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">))</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Using the symbolic expressions of <code class="highlighter-rouge">FEniCS</code>, we define the variational formulation of the penalized PDE, which we write in the form $F(w)=0$:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bc</span> <span class="o">=</span> <span class="n">DirichletBC</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s">"on_boundary"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">bc</span> <span class="o">=</span> <span class="n">DirichletBC</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s">"on_boundary"</span><span class="p">)</span>
 <span class="n">F</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">grad</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">eps</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">smoothmax</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="o">+</span><span class="n">psi</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">-</span> <span class="n">f</span><span class="o">*</span><span class="n">v</span><span class="o">*</span><span class="n">dx</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We solve the nonliner problem with the command <code class="highlighter-rouge">solve</code>, which makes use of a Newton method to solve the nonlinear equation $F(w)=0$.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">solve</span><span class="p">(</span><span class="n">F</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">bcs</span><span class="o">=</span><span class="n">bc</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">solve</span><span class="p">(</span><span class="n">F</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">bcs</span><span class="o">=</span><span class="n">bc</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <p>We visualise in <code class="highlighter-rouge">ParaView</code> by storing the solution in .vtk format using:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vtkel = File("output/el.pvd")
+<div class="highlighter-rouge"><pre class="highlight"><code>vtkel = File("output/el.pvd")
 vtkel &lt;&lt; w
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h4 id="ii-parabolic-problem">ii). Parabolic problem.</h4>
 
 <p>We set $T=2$, use $100$ subdivisions and set</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="mi">100</span>
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="mi">100</span>
+</code></pre>
+</div>
 
 <p>This part only differs by the presence of a time-loop. We define the initial datum in a separate class:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">indata</span><span class="p">(</span><span class="n">Expression</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">indata</span><span class="p">(</span><span class="n">Expression</span><span class="p">):</span>
 	<span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
 		<span class="k">if</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mf">1.95</span><span class="p">:</span>
 			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -545,22 +552,25 @@ vtkel &lt;&lt; w
 			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mf">1.95</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="mf">1.95</span><span class="p">)</span><span class="o">*</span><span class="mf">0.8</span>
 		<span class="k">else</span><span class="p">:</span>
 			<span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.8</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Repeating as in the elliptic case up to defining the variational form, we now set the inital datum (interpolating the expression onto the FEM space) and time:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">un</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">indata</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">V</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">un</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">indata</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">V</span><span class="p">)</span>
 <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>We set up the time loop:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vtksol = File("output/popsol.pvd")
+<div class="highlighter-rouge"><pre class="highlight"><code>vtksol = File("output/popsol.pvd")
 for n in range(num_steps):
     t+=dt
     solve(F==0, u, bcs=bc)
     vtksol &lt;&lt; (u, t)
     un.assign(u) 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h2 id="optimal-control"><em>Optimal Control</em></h2>
 
@@ -636,26 +646,30 @@ for n in range(num_steps):
 
 <p>Defining the objective functional to be minimized:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">delta</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">delta</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">)</span>
 <span class="n">j</span> <span class="o">=</span> <span class="n">assemble</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">w</span><span class="o">-</span><span class="n">wd</span><span class="p">,</span> <span class="n">w</span><span class="o">-</span><span class="n">wd</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span> <span class="o">+</span> <span class="n">delta</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">inner</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>	
 <span class="n">m</span> <span class="o">=</span> <span class="n">Control</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Writing the state $y$ as the output of the solution map corresponding to the input $m$, one sees that the objective functional depends only on the control:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">J</span> <span class="o">=</span> <span class="n">ReducedFunctional</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>									
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">J</span> <span class="o">=</span> <span class="n">ReducedFunctional</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>									
+</code></pre>
+</div>
 
 <p>We run the optimization, based on a conjugate-gradient method:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u_opt</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">"method"</span><span class="o">=</span><span class="s">"CG"</span><span class="p">})</span>
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">u_opt</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">"method"</span><span class="o">=</span><span class="s">"CG"</span><span class="p">})</span>
+</code></pre>
+</div>
 
 <p>The tape is modified such that the initial guess for y (to be used in the Newton solver in the forward problem) is set to y_opt.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_opt</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">block_variable</span><span class="o">.</span><span class="n">saved_output</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">y_opt</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">block_variable</span><span class="o">.</span><span class="n">saved_output</span>
 <span class="n">Control</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_opt</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The algorithm converged after 8 iterations, and the value of the functional at the final iteration is $0.0967$.</p>
 
@@ -693,57 +707,65 @@ For comparison, we recall that the uncontroled free dynamics have a very differe
 <center><strong>Figure 11.</strong> The uncontrolled free dynamics of the parabolic obstacle problem in 1 dimension, where the obstacle is zero. </center>
 
 <p>We begin by symbolically defining the time variable:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">t</span>
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">syms</span> <span class="n">t</span>
+</code></pre>
+</div>
 
 <p>We discretize the interval $[-2, 2]$:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
 <span class="n">xi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">xf</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="n">xline</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">xf</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">xline</span> <span class="o">=</span> <span class="n">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>We define symbolically (as in <code class="highlighter-rouge">FEniCS</code>) the state vector $Y$ and control vector $U$:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Y</span> <span class="o">=</span> <span class="n">SymsVector</span><span class="p">(</span><span class="s">'y'</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Y</span> <span class="o">=</span> <span class="n">SymsVector</span><span class="p">(</span><span class="s">'y'</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
 <span class="n">U</span> <span class="o">=</span> <span class="n">SymsVector</span><span class="p">(</span><span class="s">'u'</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>We discretize by finite differences, and define the semilinear penalty term:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">;</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">;</span>
 <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">;</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">FDLaplacian</span><span class="p">(</span><span class="n">xline</span><span class="p">);</span>
 
-<span class="n">F</span>  <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="n">NonLinearTerm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">alpha</span><span class="p">);</span>
-<span class="n">dF</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="n">DiffNonLinearTerm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">alpha</span><span class="p">);</span>
-</code></pre></div></div>
+<span class="n">F</span>  <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="n">NonLinearTerm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">alpha</span><span class="p">);</span>
+<span class="n">dF</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="n">DiffNonLinearTerm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">alpha</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We may define the parabolic problem to be solved.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dx</span> <span class="o">=</span> <span class="n">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">xline</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">Y_t</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">Y</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">F</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">U</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">[</span><span class="mf">0.8</span><span class="p">;</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="mf">0.8</span><span class="p">];</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">dx</span> <span class="o">=</span> <span class="n">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">xline</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">Y_t</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">Y</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">F</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">U</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">[</span><span class="mf">0.8</span><span class="p">;</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="mf">0.8</span><span class="p">];</span>
 <span class="n">Dyn</span> <span class="o">=</span> <span class="n">pde</span><span class="p">(</span><span class="n">Y_t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>We set the mesh, and other relevant parameters such as the final time and initial data. We consider the same data as in the free problem.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">mesh</span>   <span class="o">=</span> <span class="n">xline</span><span class="p">;</span>
-<span class="n">Dyn</span><span class="o">.</span><span class="n">Solver</span> <span class="o">=</span> <span class="o">@</span><span class="n">ode23</span><span class="p">;</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">mesh</span>   <span class="o">=</span> <span class="n">xline</span><span class="p">;</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">Solver</span> <span class="o">=</span> <span class="nd">@ode23</span><span class="p">;</span>
 <span class="n">Dyn</span><span class="o">.</span><span class="n">Nt</span>     <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
 <span class="n">Dyn</span><span class="o">.</span><span class="n">FinalTime</span>        <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
 <span class="n">Dyn</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">InitialConditionFcn</span><span class="p">(</span><span class="n">xline</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We now compute the necessary Jacobian matrices.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">Control</span><span class="o">.</span><span class="n">Num</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
-<span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">Num</span>   <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">dF</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">Control</span><span class="o">.</span><span class="n">Num</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="n">Dyn</span><span class="o">.</span><span class="n">Derivatives</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">Num</span>   <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">Params</span><span class="p">)</span> <span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="o">*</span><span class="n">dF</span><span class="p">(</span><span class="o">-</span><span class="n">Y</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We may solve the free problem over the given time interval. We recall that we have used finite differences to discretize in space (but finite elements can be used as well in more complicated settings), and the underlying solve command solves the system of ODEs by means of some Runge-Kutta scheme.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">tspan</span><span class="p">,</span><span class="n">Ysolution</span><span class="p">]</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">Dyn</span><span class="p">);</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">tspan</span><span class="p">,</span><span class="n">Ysolution</span><span class="p">]</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">Dyn</span><span class="p">);</span>
 <span class="n">figure</span>
 <span class="n">surf</span><span class="p">(</span><span class="n">Ysolution</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>Having solved the free dynamics, we are now in a position to solve the optimal control problem:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">YT</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">+</span> <span class="mi">0</span><span class="o">*</span><span class="nb">xline</span><span class="o">'</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">YT</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">+</span> <span class="mi">0</span><span class="o">*</span><span class="n">xline</span><span class="o">'</span><span class="p">;</span>
 <span class="nb">beta</span> <span class="o">=</span> <span class="n">dx</span><span class="o">^</span><span class="mi">4</span><span class="p">;</span>
 <span class="n">Psi</span>  <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span> <span class="n">dx</span><span class="o">*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">);</span>
 <span class="n">L</span>    <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">U</span><span class="p">)</span>  <span class="n">dx</span><span class="o">*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">YT</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="k">...</span>
@@ -751,7 +773,8 @@ For comparison, we recall that the uncontroled free dynamics have a very differe
 <span class="n">OCP</span> <span class="o">=</span> <span class="n">Pontryagin</span><span class="p">(</span><span class="n">Dyn</span><span class="p">,</span><span class="n">Psi</span><span class="p">,</span><span class="n">L</span><span class="p">);</span>
 <span class="n">U0</span> <span class="o">=</span> <span class="o">-</span><span class="nb">ones</span><span class="p">(</span><span class="n">Dyn</span><span class="o">.</span><span class="n">Nt</span><span class="p">,</span><span class="n">Dyn</span><span class="o">.</span><span class="n">ControlDimension</span><span class="p">);</span>
 <span class="n">U0</span> <span class="o">=</span> <span class="n">GradientMethod</span><span class="p">(</span><span class="n">OCP</span><span class="p">,</span><span class="n">U0</span><span class="p">,</span><span class="s1">'Graphs'</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="s1">'EachIter'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'DescentAlgorithm'</span><span class="p">,</span><span class="o">@</span><span class="n">AdaptativeDescent</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h2 id="references">References:</h2>
 

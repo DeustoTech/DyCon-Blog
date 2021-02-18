@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -501,10 +500,11 @@ img:active{
 
 <p>All the simulations in this tutorial have been performed using the DyCon Toolbox and CasADi. Since CasADi is incorporated into the DyCon toolbox, we can install it in the following way:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">))</span>
 <span class="n">StartDyconPlatform</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We shall now write the discrete version of equation (\ref{heatinterior_memory_z_all}):</p>
 
@@ -559,18 +559,19 @@ img:active{
 
 <p>Secondly, let us create the mesh variable</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% Create the mesh variables</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="c1">% Create the mesh variables</span>
 <span class="nb">clear</span><span class="p">;</span>
 <span class="n">Ns</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
 <span class="n">Nt</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
-<span class="nb">xline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="p">);</span>
-<span class="nb">yline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="p">);</span>
-<span class="p">[</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="nb">xline</span><span class="p">,</span><span class="nb">yline</span><span class="p">);</span>
-</code></pre></div></div>
+<span class="n">xline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="p">);</span>
+<span class="n">yline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="p">);</span>
+<span class="p">[</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">xline</span><span class="p">,</span><span class="n">yline</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>and the matrix $A$ containing the $2D$ Laplacian and the ODE dynamics</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span>  <span class="o">=</span> <span class="n">FDLaplacial2D</span><span class="p">(</span><span class="nb">xline</span><span class="p">,</span><span class="nb">yline</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">A</span>  <span class="o">=</span> <span class="n">FDLaplacial2D</span><span class="p">(</span><span class="n">xline</span><span class="p">,</span><span class="n">yline</span><span class="p">);</span>
 
 <span class="n">Atotal</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span><span class="p">);</span>
 <span class="c1">%</span>
@@ -586,20 +587,22 @@ img:active{
 
 <span class="n">Atotal</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">=</span> <span class="n">RumbaMatrixDynamics</span><span class="p">;</span>
 <span class="n">Atotal</span> <span class="o">=</span> <span class="nb">sparse</span><span class="p">(</span><span class="n">Atotal</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Finally, we create the function $B(\textbf{d}) = B(x_d,y_d)$ for the dynamics of the moving control</p>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%%</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="c1">%%</span>
 <span class="c1">% We create the B() function</span>
 <span class="n">xwidth</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
 <span class="n">ywidth</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
 <span class="n">B</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">,</span><span class="n">xs</span><span class="p">,</span><span class="n">ys</span><span class="p">)</span> <span class="n">WinWP05</span><span class="p">(</span><span class="n">xms</span><span class="p">,</span><span class="n">xs</span><span class="p">,</span><span class="n">xwidth</span><span class="p">)</span><span class="o">.*</span><span class="n">WinWP05</span><span class="p">(</span><span class="n">yms</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">ywidth</span><span class="p">);</span>
 <span class="n">Bmatrix</span> <span class="o">=</span>  <span class="o">@</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">ys</span><span class="p">)</span> <span class="p">[</span><span class="nb">diag</span><span class="p">(</span><span class="nb">reshape</span><span class="p">(</span><span class="n">B</span><span class="p">(</span><span class="n">xms</span><span class="p">,</span><span class="n">yms</span><span class="p">,</span><span class="n">xs</span><span class="p">,</span><span class="n">ys</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="p">))</span> <span class="p">;</span><span class="nb">zeros</span><span class="p">(</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="p">)];</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We now have everything we need to construct and solve the optimal control problem</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">opti</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Opti</span><span class="p">();</span>  <span class="c1">% CasADi optimization structure</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">opti</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Opti</span><span class="p">();</span>  <span class="c1">% CasADi optimization structure</span>
 
 <span class="c1">% ---- Input variables ---------</span>
 <span class="n">Ucas</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">^</span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span><span class="p">,</span><span class="n">Nt</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">% state trajectory</span>
@@ -637,7 +640,8 @@ img:active{
 <span class="nb">tic</span>
 <span class="n">sol</span> <span class="o">=</span> <span class="n">opti</span><span class="o">.</span><span class="n">solve</span><span class="p">();</span>   <span class="c1">% actual solve</span>
 <span class="nb">toc</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The following video shows the results of our simulations, which allowed to compute an effective moving control steering the dynamics to rest at time $T$.</p>
 

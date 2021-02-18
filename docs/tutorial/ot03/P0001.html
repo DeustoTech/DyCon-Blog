@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -298,13 +297,15 @@ img:active{
         <p>En esta entrada veremos como podremos estimar  el sistema dinámico apartir de datos sobre la evolución de este sistema.</p>
 
 <p>Lo primero que haremos es inspeccionar de que datos disponemos</p>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;</span> <span class="nb">whos</span>
-</code></pre></div></div>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">Name</span>               <span class="n">Size</span>                  <span class="n">Bytes</span>  <span class="n">Class</span>     <span class="n">Attributes</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;</span> <span class="nb">whos</span>
+</code></pre>
+</div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code>  <span class="n">Name</span>               <span class="n">Size</span>                  <span class="n">Bytes</span>  <span class="n">Class</span>     <span class="n">Attributes</span>
 
   <span class="n">solution</span>         <span class="mi">100</span><span class="n">x200x50</span>            <span class="mi">8000000</span>  <span class="nb">double</span>              
   <span class="n">tspan</span>              <span class="mi">1</span><span class="n">x200</span>                  <span class="mi">1600</span>  <span class="nb">double</span>    
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>En este caso tenemos 100 simulaciones de una ecuación diferencial</p>
 
         <hr>

@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -563,7 +562,7 @@ u\equiv 0, & x\in(-1,1)^c.
 
 <p>The solution of \eqref{poisson} in the case  $s=0.1$ and $N=50$ is computed with the following script which emploies the function <strong>FEFractionalLaplacian.m</strong> ginving the FE discretization of $(-d_x^2)^s$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
 <span class="n">L</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
@@ -576,16 +575,17 @@ u\equiv 0, & x\in(-1,1)^c.
 
 <span class="n">F</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 
-<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
     <span class="n">xx</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">xx</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">xx</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
-    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
-    <span class="n">F</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
+    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
+    <span class="n">F</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
 <span class="k">end</span>
 
 <span class="n">A</span> <span class="o">=</span> <span class="n">FEFractionalLaplacian</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
 <span class="n">sol</span> <span class="o">=</span> <span class="n">A</span><span class="p">\</span><span class="n">F</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>In <strong>Figure 5</strong>, we show a comparison for different values of $s$ between the exact solution \eqref{real_sol} and the computed numerical approximation.</p>
 
@@ -627,7 +627,7 @@ u\equiv 0, & x\in(-1,1)^c.
 
 <p>In <strong>Figure 6</strong>, we present the computational errors evaluated for different values of $s$ and $h$, which can be obtained with the following function.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="p">[</span><span class="n">h</span><span class="p">,</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_fl</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="k">function</span> <span class="p">[</span><span class="n">h</span><span class="p">,</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_fl</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
@@ -638,11 +638,11 @@ u\equiv 0, & x\in(-1,1)^c.
 
 <span class="n">F</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
     <span class="n">xx</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">xx</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">xx</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
-    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
-    <span class="n">F</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
+    <span class="n">B1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">.*</span><span class="p">(</span><span class="n">Phi</span><span class="p">((</span><span class="n">xx</span><span class="o">-</span><span class="n">x</span><span class="p">(</span><span class="nb">i</span><span class="p">))/</span><span class="n">h</span><span class="p">));</span>
+    <span class="n">F</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">B1</span><span class="p">);</span> 
 <span class="k">end</span>
 
 <span class="n">A</span> <span class="o">=</span> <span class="n">FEFractionalLaplacian</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
@@ -650,7 +650,8 @@ u\equiv 0, & x\in(-1,1)^c.
 <span class="n">val</span> <span class="o">=</span> <span class="nb">pi</span><span class="p">/(</span><span class="mi">2</span><span class="o">^</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">*</span><span class="nb">gamma</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="nb">gamma</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="mf">1.5</span><span class="p">));</span>
 <span class="n">valnum</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">sol</span><span class="p">);</span>
 <span class="n">e</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">val</span><span class="o">-</span><span class="n">valnum</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h2 id="-5"><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0009/error.png" alt="" /></h2>
 <p><strong>Figure 6</strong>. Computational error in logarithmic scale in terms for different values of $s$.</p>

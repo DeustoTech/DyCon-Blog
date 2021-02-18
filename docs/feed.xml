@@ -5,9 +5,9 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 23 Dec 2020 21:25:17 +0100</pubDate>
-    <lastBuildDate>Wed, 23 Dec 2020 21:25:17 +0100</lastBuildDate>
-    <generator>Jekyll v4.0.0</generator>
+    <pubDate>Thu, 18 Feb 2021 09:07:26 +0100</pubDate>
+    <lastBuildDate>Thu, 18 Feb 2021 09:07:26 +0100</lastBuildDate>
+    <generator>Jekyll v3.5.0</generator>
     
       <item>
         <title>Averaged dynamics and control for heat equations with random diffusion</title>
@@ -958,6 +958,7 @@ addpath(genpath(fullfile(cd,'DyCon-toolbox-master'))
 StartDyconPlatform
 
 
+
 We shall now write the discrete version of equation (\ref{heatinterior_memory_z_all}):
 
 
@@ -971,6 +972,7 @@ Nt = 15;
 xline = linspace(-1,1,Ns);
 yline = linspace(-1,1,Ns);
 [xms,yms] = meshgrid(xline,yline);
+
 
 
 and the matrix $A$ containing the $2D$ Laplacian and the ODE dynamics
@@ -993,6 +995,7 @@ Atotal(2*Ns^2+1:end,2*Ns^2+1:end) = RumbaMatrixDynamics;
 Atotal = sparse(Atotal);
 
 
+
 Finally, we create the function $B(\textbf{d}) = B(x_d,y_d)$ for the dynamics of the moving control
 %%
 % We create the B() function
@@ -1000,6 +1003,7 @@ xwidth = 0.3;
 ywidth = 0.3;
 B = @(xms,yms,xs,ys) WinWP05(xms,xs,xwidth).*WinWP05(yms,ys,ywidth);
 Bmatrix =  @(xs,ys) [diag(reshape(B(xms,yms,xs,ys),1,Ns^2)) ;zeros(Ns^2)];
+
 
 
 We now have everything we need to construct and solve the optimal control problem
@@ -1042,6 +1046,7 @@ opti.solver('ipopt',p_opts,s_opts); % set numerical backend
 tic
 sol = opti.solve();   % actual solve
 toc
+
 
 
 The following video shows the results of our simulations, which allowed to compute an effective moving control steering the dynamics to rest at time $T$.
@@ -1094,6 +1099,7 @@ N = 12;
 xdata = linspace(-1,1,N);
 ydata = [-1, -1, -1, -1, 1, 1, 1, 1, -1, -1, -1, -1];
 
+
 Podemos ver los datos generados
 f = figure(1)
 plot(xdata,ydata,'o-','LineWidth',2)
@@ -1101,6 +1107,7 @@ xlabel('x-data')
 ylabel('y-data')
 title('Data')
 print('data.png','-dpng')
+
 
 
 
@@ -1134,6 +1141,7 @@ us = [As(:);bs];
 % define the dynamic equation
 Fs = casadi.Function('F',{ts,zs,us},{Afull*sigma(zs) + bfull});
 
+
 Creamos el objeto ode
 Nt = 50; tspan = linspace(0,1,Nt);
 %
@@ -1144,6 +1152,7 @@ z0          = zeros(2*N,1);
 z0(1:2:2*N) = xdata';
 % put in idyn object 
 idyn.InitialCondition = z0;
+
 
 Optimal Control Definition
 
@@ -1156,8 +1165,10 @@ Psi = casadi.Function('Psi',{zs}      ,{ 1e5*(Pzminusy*Pzminusy') });
 iocp = ocp(idyn,L,Psi);
 
 
+
 Solve
 [Uopt,Zopt] = IpoptSolver(iocp,ZerosControl(idyn));
+
 
 
 %% Plot
@@ -1184,6 +1195,7 @@ plot(tspan,Uopt(5:end,:)')
 title('Optimal Control - b(t)')
 xlabel('time')
 legend({'b_1','b_2'},'Location','bestoutside')
+
 
 Animation
 fig = figure(2);
@@ -1213,6 +1225,7 @@ for it = 1:length(tspan)
    end
     pause(0.05)
 end
+
 
 </description>
         <pubDate>Mon, 27 Jul 2020 00:00:00 +0200</pubDate>
@@ -1632,6 +1645,7 @@ class Perceptron(nn.Module):
 		return self.projector(self.blocks(x))
 
 
+
 We can save this class in a file called model.py.
 Then one may create an instance of a Perceptron model for practical usage as follows:
 
@@ -1640,6 +1654,7 @@ device = torch.device('cpu')
 from model import Perceptron
 
 model = Perceptron(device, dimensions=[1,3,4,3,1], num_layers=5)
+
 
 
 
@@ -1741,6 +1756,7 @@ optimizer = torch.optim.SGD(perceptron.parameters(), lr=1e-3, weight_decay=1e-3)
 
 trainer = Trainer(perceptron, optimizer, device)
 trainer.train(data, epochs)
+
 
 
 

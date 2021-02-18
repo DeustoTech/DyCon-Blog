@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -350,38 +349,43 @@ B =   \left(\begin{array}{ccc} \frac{m_{1}}{\mathrm{Lf}_{1}} & 0 & 0\\ 0 & 0 & 0
 
 <p>The stability of the system is discussed by studying the evolution of the eigenvalues of $A$ in dependence of the aforementioned parameters. Due to the size of the system and to the large number of parameters involved, this stability analysis needs to be addressed by means of fine computational tools.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clear</span>
+</code></pre>
+</div>
 
 <h2 id="variables-composing-the-state-vector">Variables composing the state vector</h2>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Ii1</span> <span class="n">Vo1</span> <span class="n">Io1</span> <span class="n">Ii2</span> <span class="n">Vo2</span> <span class="n">Io2</span> <span class="n">Ig</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Ii1</span> <span class="n">Vo1</span> <span class="n">Io1</span> <span class="n">Ii2</span> <span class="n">Vo2</span> <span class="n">Io2</span> <span class="n">Ig</span>
+</code></pre>
+</div>
 
 <h2 id="parameters-entering-in-the-model">Parameters entering in the model</h2>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Ro1</span> <span class="n">Rf1</span> <span class="n">Lf1</span> <span class="n">Cf1</span> <span class="n">Lo1</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Ro1</span> <span class="n">Rf1</span> <span class="n">Lf1</span> <span class="n">Cf1</span> <span class="n">Lo1</span>
 <span class="n">syms</span> <span class="n">Ro2</span> <span class="n">Rf2</span> <span class="n">Lf2</span> <span class="n">Cf2</span> <span class="n">Lo2</span>
 <span class="n">syms</span> <span class="n">Rg</span> <span class="n">Lg</span> <span class="n">L</span>
 <span class="c1">%% sustituimos numericamente excepto nRo1 syms m1 m2</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Out of these parameters, we build the matrices $A$ and $B$ in symbolic form.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">Amatrix</span><span class="p">();</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">Amatrix</span><span class="p">();</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">Bmatrix</span><span class="p">();</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We now want to study the evolution of the eigenvalues with respect to $\mathrm{Ro}_{1}$. Thus, we assign some fix value to all the others parameters</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nRf1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nLf1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nCf1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nLo1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">nRf1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nLf1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nCf1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nLo1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">nRo2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nRf2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nLf2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nCf2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">nLo2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nRg</span>  <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nLg</span>  <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">nL</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/</span><span class="n">nLo1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">/</span><span class="n">nLo2</span> <span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>and we build the corresponding matrix $A$, which will depend only on $Ro_{1}$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">symbolic</span>  <span class="o">=</span> <span class="p">[</span><span class="n">Rf1</span><span class="p">,</span> <span class="n">Lf1</span><span class="p">,</span> <span class="n">Cf1</span><span class="p">,</span> <span class="n">Lo1</span><span class="p">,</span> <span class="k">...</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">symbolic</span>  <span class="o">=</span> <span class="p">[</span><span class="n">Rf1</span><span class="p">,</span> <span class="n">Lf1</span><span class="p">,</span> <span class="n">Cf1</span><span class="p">,</span> <span class="n">Lo1</span><span class="p">,</span> <span class="k">...</span>
              <span class="n">Ro2</span><span class="p">,</span>  <span class="n">Rf2</span><span class="p">,</span> <span class="n">Lf2</span><span class="p">,</span> <span class="n">Cf2</span><span class="p">,</span> <span class="n">Lo2</span><span class="p">,</span> <span class="k">...</span>
              <span class="n">Rg</span><span class="p">,</span>   <span class="n">Lg</span><span class="p">,</span>  <span class="n">L</span><span class="p">];</span>
 
@@ -389,9 +393,10 @@ B =   \left(\begin{array}{ccc} \frac{m_{1}}{\mathrm{Lf}_{1}} & 0 & 0\\ 0 & 0 & 0
              <span class="n">nRo2</span><span class="p">,</span>  <span class="n">nRf2</span><span class="p">,</span> <span class="n">nLf2</span><span class="p">,</span> <span class="n">nCf2</span><span class="p">,</span> <span class="n">nLo2</span><span class="p">,</span> <span class="k">...</span>
              <span class="n">nRg</span><span class="p">,</span>   <span class="n">nLg</span><span class="p">,</span>  <span class="n">nL</span><span class="p">];</span>
 <span class="n">nA</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">symbolic</span><span class="p">,</span><span class="n">numerical</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 
+<div class="highlighter-rouge"><pre class="highlight"><code> 
 nA =
  
 [ -1,   -1,      0,  0,     0,    0,    0]
@@ -403,16 +408,18 @@ nA =
 [  0,  1/2, -Ro1/2,  0, Ro1/2, -1/2, -1/2]
  
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Then, we convert it from symbolic to function_handle</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">funRo1</span> <span class="o">=</span> <span class="n">matlabFunction</span><span class="p">(</span><span class="nb">eig</span><span class="p">(</span><span class="n">nA</span><span class="p">));</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">funRo1</span> <span class="o">=</span> <span class="n">matlabFunction</span><span class="p">(</span><span class="nb">eig</span><span class="p">(</span><span class="n">nA</span><span class="p">));</span>
+</code></pre>
+</div>
 
 <p>Finally, we compute and plot the eigenvalues of this matrix $A$ and we analyze their evolution while varying $Ro_{1}$ in a given range.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nRo1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span><span class="mf">0.05</span><span class="p">:</span><span class="mi">5</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">nRo1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span><span class="mf">0.05</span><span class="p">:</span><span class="mi">5</span><span class="p">;</span>
 <span class="n">eigenvalues</span> <span class="o">=</span> <span class="nb">cell</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">length</span><span class="p">(</span><span class="n">nRo1</span><span class="p">));</span>
 <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">inRo1</span> <span class="o">=</span> <span class="n">nRo1</span>
@@ -420,14 +427,16 @@ nA =
     <span class="c1">%% in each iteration we replace in funRo1 a different value of the parameter</span>
     <span class="n">eigenvalues</span><span class="p">{</span><span class="n">index</span><span class="p">}</span> <span class="o">=</span> <span class="n">funRo1</span><span class="p">(</span><span class="n">inRo1</span><span class="p">);</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>For each value of $Ro_{1}$, the eigenvalues are stored in a cell. For instance, these are the eigenvalues corresponding to $Ro_{1}=-3$</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eigenvalues</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">eigenvalues</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span>
+</code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>
 ans =
 
   -1.0000 + 0.0000i
@@ -439,7 +448,8 @@ ans =
    0.2500 + 0.6614i
 
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We then use use the Matlab program “EingEvolution” that we specifically degsigned, in order to see the evolution of these eigenvalues. This is done through the command <code class="highlighter-rouge">EingEvolution(autovalues,nRo1,'R_{o1}','Gif_evo_eig.gif')</code>.</p>
 

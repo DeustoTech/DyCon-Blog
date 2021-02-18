@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -338,13 +337,15 @@ img:active{
 
 <p>The solver must be compiled in the terminal. It is advisable to first clean previous compilations with</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wclean
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>wclean
+</code></pre>
+</div>
 
 <p>and then use</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wmake
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>wmake
+</code></pre>
+</div>
 
 <h3 id="prerequisites">Prerequisites</h3>
 
@@ -356,10 +357,11 @@ img:active{
 
 <p>In order to run the solver move to the case folder <em>poissonAdjoinFoamCase</em> and type in the command line</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./Allprepare
+<div class="highlighter-rouge"><pre class="highlight"><code>./Allprepare
 
 poissonAdjointFoam
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The <em>poissonAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />. The target function is <img src="https://latex.codecogs.com/gif.latex?y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</p>
 
@@ -375,18 +377,21 @@ poissonAdjointFoam
 
 <p>It might be needed to use</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i -e 's/\r$//' filename
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>sed -i -e 's/\r$//' filename
+</code></pre>
+</div>
 
 <p>and</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x filename
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>chmod +x filename
+</code></pre>
+</div>
 
 <p>in order to be able to execute</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./filename
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>./filename
+</code></pre>
+</div>
 
 <h2 id="references">References</h2>
 

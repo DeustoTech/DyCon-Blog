@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -301,10 +300,10 @@ img:active{
 
 <p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
-<span>StartDyConToolbox</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <h3 id="problem-definition">Problem definition</h3>
 
 <p>The simultaneous control problem is defined as:</p>
@@ -331,11 +330,12 @@ x\left( 0 \right) = x^0.
 
 <p>First we import the CasAdi library in order to create symbolic variables</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
 <span class="c1">%% In this case $\nu_i$ are</span>
 <span class="n">M</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
 <span class="n">nu</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="n">M</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>Then we create the matrices of linear dynamics.</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
@@ -348,22 +348,24 @@ B_\nu = \begin{bmatrix}
 1 
 \end{bmatrix} %]]></script>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">]</span> <span class="o">=</span> <span class="n">GenMatSim</span><span class="p">(</span><span class="n">nu</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">]</span> <span class="o">=</span> <span class="n">GenMatSim</span><span class="p">(</span><span class="n">nu</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>With these matrices we create the <code class="highlighter-rouge">ode</code> object</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span><span class="n">T</span>  <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span><span class="n">T</span>  <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
 <span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
 <span class="c1">%% create linear dynamic</span>
 <span class="n">iode</span> <span class="o">=</span> <span class="n">linearode</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">tspan</span><span class="p">);</span>
 <span class="c1">%% set initial condition</span>
 <span class="n">Y0</span> <span class="o">=</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">iode</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">Y0</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>then we create the optimal control problem</p>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% Get Symbolical variable</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="c1">% Get Symbolical variable</span>
 <span class="n">Ys</span>  <span class="o">=</span> <span class="n">iode</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">sym</span><span class="p">;</span>
 <span class="n">Us</span>  <span class="o">=</span> <span class="n">iode</span><span class="o">.</span><span class="n">Control</span><span class="o">.</span><span class="n">sym</span><span class="p">;</span>
 <span class="n">ts</span>  <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span> <span class="c1">%% &lt;= Create a symbolical time</span>
@@ -374,15 +376,17 @@ B_\nu = \begin{bmatrix}
 <span class="n">FinalCost</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'Psi'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">}</span>      <span class="p">,{</span>  <span class="mf">1e7</span><span class="o">*</span><span class="p">((</span><span class="n">Ys</span><span class="o">-</span><span class="n">YT</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">Ys</span><span class="o">-</span><span class="n">YT</span><span class="p">))</span> <span class="p">});</span>
 <span class="c1">% Create the optimal control</span>
 <span class="n">iocp</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">PathCost</span><span class="p">,</span><span class="n">FinalCost</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Solve Optimal Control Problem with ipopt solver</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">ZerosControl</span><span class="p">(</span><span class="n">iode</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">ZerosControl</span><span class="p">(</span><span class="n">iode</span><span class="p">);</span>
 <span class="p">[</span><span class="n">Uopt</span> <span class="p">,</span><span class="n">Yopt</span><span class="p">]</span> <span class="o">=</span>  <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">iocp</span><span class="p">,</span><span class="n">U0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
+<div class="highlighter-rouge"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
 NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
 
 Number of nonzeros in equality constraint Jacobian...:   199700
@@ -433,21 +437,24 @@ EXIT: Optimal Solution Found.
       solver         1.48         1.36         1
 Elapsed time is 3.853462 seconds.
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Compute Free solution</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Yfree</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">U0</span><span class="o">*</span><span class="mi">0</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Yfree</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">U0</span><span class="o">*</span><span class="mi">0</span><span class="p">);</span>
 <span class="n">Yfree</span> <span class="o">=</span> <span class="nb">full</span><span class="p">(</span><span class="n">Yfree</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h3 id="visualization">Visualization</h3>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">Units</span> <span class="o">=</span> <span class="s1">'norm'</span><span class="p">;</span><span class="n">fig</span><span class="o">.</span><span class="n">Position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span> <span class="mf">0.1</span> <span class="mf">0.6</span> <span class="mf">0.5</span><span class="p">];</span>
 <span class="c1">%%</span>
 <span class="n">plotSimu</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">Yopt</span><span class="p">,</span><span class="n">Uopt</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0009/copiaRM_01.png" alt="" /></p>
 

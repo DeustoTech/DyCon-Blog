@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -295,15 +294,6 @@ img:active{
             <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0014/T0001_FractionalLaplacianDynamics.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
-            <h3 id="setup">Setup</h3>
-
-            <p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
-            
-            <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
-            <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
-            <span>StartDyConToolbox</span>
-            </code></pre></div></div>
-            
         <p>We use DyCon Toolbox for solving numerically the following control problem: given any $T&gt;0$, find a control function $g\in L^2( ( -1 , 1) \times (0,T))$ such that the corresponding solution to the parabolic problem</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
@@ -319,53 +309,59 @@ img:active{
 
 <p>As a first thing, we need to discretize \eqref{frac_heat}. Hence, let us consider a uniform N-points mesh on the interval $(-1,1)$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
 <span class="n">xi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">xf</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="nb">xline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">xf</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
-<span class="nb">xline</span> <span class="o">=</span> <span class="nb">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
+<span class="n">xline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">xf</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">xline</span> <span class="o">=</span> <span class="n">xline</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>Out of that, we can construct the FE approxiamtion of the fractional Lapalcian, using the program FEFractionalLaplacian developped by our team, which implements the methodology described in [1].</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
 <span class="n">A</span> <span class="o">=</span> <span class="o">-</span><span class="n">FEFractionalLaplacian</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-<span class="n">M</span> <span class="o">=</span> <span class="n">MassMatrix</span><span class="p">(</span><span class="nb">xline</span><span class="p">);</span>
-</code></pre></div></div>
+<span class="n">M</span> <span class="o">=</span> <span class="n">MassMatrix</span><span class="p">(</span><span class="n">xline</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>Moreover, we build the matrix $B$ defining the action of the control, by using the program “BInterior” (see below).</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">BInterior</span><span class="p">(</span><span class="nb">xline</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="s1">'Mass'</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">BInterior</span><span class="p">(</span><span class="n">xline</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="s1">'Mass'</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We can then define a final time and an initial datum</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">FinalTime</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-<span class="n">Y0</span> <span class="o">=</span><span class="nb">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="nb">xline</span><span class="o">'</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">FinalTime</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">Y0</span> <span class="o">=</span><span class="nb">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">xline</span><span class="o">'</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>and construct the system</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{equation}\label{abstract_syst}   \begin{cases}       Y'(t) = AY(t)+BU(t), & t\in(0,T)       Y(0) = Y0.   \end{cases} \end{equation} %]]></script>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">FinalTime</span><span class="p">,</span><span class="mi">200</span><span class="p">);</span>
-<span class="n">dynamics</span> <span class="o">=</span> <span class="n">linearpde1d</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="nb">xline</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">FinalTime</span><span class="p">,</span><span class="mi">200</span><span class="p">);</span>
+<span class="n">dynamics</span> <span class="o">=</span> <span class="n">linearpde1d</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">xline</span><span class="p">);</span>
 
 <span class="n">dynamics</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">Y0</span><span class="p">;</span>
 <span class="n">dynamics</span><span class="o">.</span><span class="n">MassMatrix</span> <span class="o">=</span> <span class="n">M</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Y0</span> <span class="o">=</span><span class="nb">cos</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="nb">xline</span><span class="o">'</span><span class="p">);</span>
-<span class="n">Y0</span><span class="p">(</span><span class="nb">xline</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">Y0</span><span class="p">(</span><span class="nb">xline</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Y0</span> <span class="o">=</span><span class="nb">cos</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">xline</span><span class="o">'</span><span class="p">);</span>
+<span class="n">Y0</span><span class="p">(</span><span class="n">xline</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">Y0</span><span class="p">(</span><span class="n">xline</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">dynamics</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">Y0</span><span class="p">;</span>
 
 <span class="n">U0</span> <span class="o">=</span> <span class="n">ZerosControl</span><span class="p">(</span><span class="n">dynamics</span><span class="p">);</span>
 <span class="n">solve</span><span class="p">(</span><span class="n">dynamics</span><span class="p">,</span><span class="n">U0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.99</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">ssline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.99</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
 
 <span class="n">iter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">s</span> <span class="o">=</span> <span class="n">ssline</span>
@@ -375,10 +371,12 @@ img:active{
     <span class="p">[</span><span class="n">Ysolution</span><span class="p">]</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">dynamics</span><span class="p">,</span><span class="n">U0</span><span class="p">);</span>
     <span class="n">Data</span><span class="p">(</span><span class="n">iter</span><span class="p">)</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">Ysolution</span><span class="o">'</span><span class="p">;</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">animation_FLD</span><span class="p">(</span><span class="n">ssline</span><span class="p">,</span><span class="n">Data</span><span class="p">,</span><span class="nb">xline</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">animation_FLD</span><span class="p">(</span><span class="n">ssline</span><span class="p">,</span><span class="n">Data</span><span class="p">,</span><span class="n">xline</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0014/ss.gif" /></p>
 

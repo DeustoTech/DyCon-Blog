@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -305,10 +304,10 @@ img:active{
 
 <p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
-<span>StartDyConToolbox</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <h3 id="methodology">Methodology</h3>
 <p>In order to do so we will frame the problem as a minimization of a functional and we will apply gradient descent to find it. Note that the convexity of the functional is not proven, therefore, we will obtain a local minima for the functional. The functional considered will be:</p>
 
@@ -322,98 +321,111 @@ img:active{
 
 <p>The goal will be to compute also the control $v$ thinking model \eqref{m1} as if it was a semidiscretization of a heat equation with diffusivity $\frac{1}{N^3}$. Furthermore we will also compute the control for model \eqref{m1} with the non-linearity being non-homogeneous on $N$ and a time horizon being $T_N=N^3T$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
 <span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Definition of the time</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ts</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">ts</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span>
 <span class="c1">%% Discretization of the space</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
 <span class="n">xi</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">xf</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="nb">xline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">xf</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-</code></pre></div></div>
+<span class="n">xline</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">xf</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>Interior Control region between 0.5 and 0.8</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">w1</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span> <span class="n">w2</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">w1</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span> <span class="n">w2</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
 <span class="n">D</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="nb">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">GetABmatrix</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">w1</span><span class="p">,</span><span class="n">w2</span><span class="p">,</span><span class="n">D</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">GetABmatrix</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">w1</span><span class="p">,</span><span class="n">w2</span><span class="p">,</span><span class="n">D</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>we define symbolically the vectors of the state and the control</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Ys</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'y'</span><span class="p">,[</span><span class="n">N</span> <span class="mi">1</span><span class="p">]);</span>
-<span class="n">Us</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'u'</span><span class="p">,[</span><span class="nb">count</span> <span class="mi">1</span><span class="p">]);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Ys</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'y'</span><span class="p">,[</span><span class="n">N</span> <span class="mi">1</span><span class="p">]);</span>
+<span class="n">Us</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'u'</span><span class="p">,[</span><span class="n">count</span> <span class="mi">1</span><span class="p">]);</span>
+</code></pre>
+</div>
 
 <p>We create the ODE object Our ODE object will have the semi-discretization of the semilinear heat equation. We set also initial conditions, define the non linearity and the interaction of the control to the dynamics.</p>
 
 <p>Initial condition</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Y0</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="nb">xline</span><span class="o">'</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Y0</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">xline</span><span class="o">'</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>Diffusion part: the discretization of the 1d Laplacian</p>
 
 <p>Definition of the non-linearity <script type="math/tex">\partial_y[-5\exp(-y^2)]</script></p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'NLT'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">},{</span><span class="mi">10</span><span class="o">*</span><span class="n">Ys</span><span class="o">.*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Ys</span><span class="o">.^</span><span class="mi">2</span><span class="p">)});</span><span class="c1">%%</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'NLT'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">},{</span><span class="mi">10</span><span class="o">*</span><span class="n">Ys</span><span class="o">.*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Ys</span><span class="o">.^</span><span class="mi">2</span><span class="p">)});</span><span class="c1">%%</span>
+</code></pre>
+</div>
 
 <p>and we define the part of the dynamics corresponding to the nonlinearity</p>
 
 <p>Putting all the things together</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'F'</span><span class="p">,{</span><span class="n">ts</span><span class="p">,</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">},{</span><span class="n">A</span><span class="o">*</span><span class="n">Ys</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">Us</span> <span class="o">+</span> <span class="n">G</span><span class="p">(</span><span class="n">Ys</span><span class="p">)});</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">F</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'F'</span><span class="p">,{</span><span class="n">ts</span><span class="p">,</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">},{</span><span class="n">A</span><span class="o">*</span><span class="n">Ys</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">Us</span> <span class="o">+</span> <span class="n">G</span><span class="p">(</span><span class="n">Ys</span><span class="p">)});</span>
 <span class="c1">%% Creation of the ODE object</span>
 <span class="c1">%% Time horizon</span>
 <span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We create the ODE-object and we change the resolution to $dt=0.01$ in order to see the variation in a small time scale. We will get the values of the solution in steps of size odeEqn.dt, if we do not care about modifying this parameter in the object, we might get the solution in certain time steps that will hide part of the dynamics.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
 <span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
-<span class="n">ipde</span> <span class="o">=</span> <span class="n">semilinearpde1d</span><span class="p">(</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="nb">xline</span><span class="p">);</span>
+<span class="n">ipde</span> <span class="o">=</span> <span class="n">semilinearpde1d</span><span class="p">(</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">xline</span><span class="p">);</span>
 <span class="n">ipde</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">Y0</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We solve the equation and we plot the free solution applying solve to odeEqn and we plot the free solution.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Yfree</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">ipde</span><span class="p">,</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">ipde</span><span class="p">));</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Yfree</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">ipde</span><span class="p">,</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">ipde</span><span class="p">));</span>
 <span class="n">Yfree</span> <span class="o">=</span> <span class="nb">full</span><span class="p">(</span><span class="n">Yfree</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
 <span class="nb">surf</span><span class="p">(</span><span class="n">Yfree</span><span class="s1">','</span><span class="n">EdgeColor</span><span class="s1">','</span><span class="n">none</span><span class="o">'</span><span class="p">);</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Free Dynamics'</span><span class="p">)</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'space discretization'</span><span class="p">)</span>
 <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
-<span class="nb">yticks</span><span class="p">([</span><span class="mi">1</span> <span class="n">Nt</span><span class="p">])</span>
-<span class="nb">yticklabels</span><span class="p">([</span><span class="n">tspan</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">tspan</span><span class="p">(</span><span class="k">end</span><span class="p">)])</span>
-</code></pre></div></div>
+<span class="n">yticks</span><span class="p">([</span><span class="mi">1</span> <span class="n">Nt</span><span class="p">])</span>
+<span class="n">yticklabels</span><span class="p">([</span><span class="n">tspan</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">tspan</span><span class="p">(</span><span class="k">end</span><span class="p">)])</span>
+</code></pre>
+</div>
 
 <p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP06/P0008/copiaRM_01.png" alt="" /></p>
 
 <p>We create the object that collects the formulation of an optimal control problem  by means of the object that describes the dynamics odeEqn, the functional to minimize Jfun and the time horizon T</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">L</span>   <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">'L'</span>  <span class="p">,{</span><span class="n">ts</span><span class="p">,</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">},{</span> <span class="n">Us</span><span class="o">.'*</span><span class="n">Us</span>  <span class="p">});</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">L</span>   <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">'L'</span>  <span class="p">,{</span><span class="n">ts</span><span class="p">,</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">},{</span> <span class="n">Us</span><span class="o">.'*</span><span class="n">Us</span>  <span class="p">});</span>
 <span class="n">Psi</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">'Psi'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">}</span>      <span class="p">,{</span> <span class="mf">1e6</span><span class="o">*</span><span class="p">(</span><span class="n">Ys</span><span class="o">.'*</span><span class="n">Ys</span><span class="p">)</span> <span class="p">});</span>
 
 <span class="n">iocp</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">ipde</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">Psi</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We apply the steepest descent method to obtain a local minimum (our functional might not be convex).</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">ipde</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">ipde</span><span class="p">);</span>
 <span class="p">[</span><span class="n">OptControl</span> <span class="p">,</span><span class="n">OptState</span><span class="p">]</span>  <span class="o">=</span> <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">iocp</span><span class="p">,</span><span class="n">U0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
+<div class="highlighter-rouge"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
 NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
 
 Number of nonzeros in equality constraint Jacobian...:    19236
@@ -477,10 +489,12 @@ EXIT: Optimal Solution Found.
       solver        0.507        0.501         1
 Elapsed time is 0.636870 seconds.
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSHE</span><span class="p">(</span><span class="n">OptState</span><span class="p">,</span><span class="n">OptControl</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">YT</span><span class="p">,</span><span class="nb">xline</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">Nt</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">plotSHE</span><span class="p">(</span><span class="n">OptState</span><span class="p">,</span><span class="n">OptControl</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">YT</span><span class="p">,</span><span class="n">xline</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">Nt</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <table>
     <tr>
@@ -499,19 +513,20 @@ Elapsed time is 0.636870 seconds.
 
 <p>For the simulation of the model in collective behavior we will employ a diffusivity $D=\frac{1}{N^3}$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">N</span><span class="o">^</span><span class="mi">3</span><span class="p">);</span>
-<span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="nb">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">GetABmatrix</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">w1</span><span class="p">,</span><span class="n">w2</span><span class="p">,</span><span class="n">D</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">N</span><span class="o">^</span><span class="mi">3</span><span class="p">);</span>
+<span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">GetABmatrix</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">w1</span><span class="p">,</span><span class="n">w2</span><span class="p">,</span><span class="n">D</span><span class="p">);</span>
 <span class="c1">%%</span>
 <span class="n">G</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'NLT'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">},{</span><span class="mi">10</span><span class="o">*</span><span class="n">Ys</span><span class="o">.*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Ys</span><span class="o">.^</span><span class="mi">2</span><span class="p">)});</span><span class="c1">%%</span>
 <span class="c1">%%</span>
 <span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
 <span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
 <span class="c1">%%</span>
-<span class="n">ipde</span> <span class="o">=</span> <span class="n">semilinearpde1d</span><span class="p">(</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="nb">xline</span><span class="p">);</span>
+<span class="n">ipde</span> <span class="o">=</span> <span class="n">semilinearpde1d</span><span class="p">(</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">xline</span><span class="p">);</span>
 <span class="n">ipde</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">Y0</span><span class="p">;</span>
 <span class="c1">%%</span>
 <span class="n">iocp</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">ipde</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">Psi</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <table>
     <tr>
@@ -524,12 +539,13 @@ Elapsed time is 0.636870 seconds.
     </tr>
 </table>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">ipde</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">ipde</span><span class="p">);</span>
 <span class="c1">%%[OptControl ,OptState]  = ArmijoGradient(iocp,U0,'MaxIter',200);</span>
 <span class="p">[</span><span class="n">OptControl</span> <span class="p">,</span><span class="n">OptState</span><span class="p">]</span>  <span class="o">=</span> <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">iocp</span><span class="p">,</span><span class="n">U0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">This</span> <span class="n">is</span> <span class="n">Ipopt</span> <span class="nb">version</span> <span class="mf">3.12</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="n">running</span> <span class="n">with</span> <span class="n">linear</span> <span class="n">solver</span> <span class="n">mumps</span><span class="o">.</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">This</span> <span class="nb">is</span> <span class="n">Ipopt</span> <span class="nb">version</span> <span class="mf">3.12</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="n">running</span> <span class="n">with</span> <span class="n">linear</span> <span class="n">solver</span> <span class="n">mumps</span><span class="o">.</span>
 <span class="n">NOTE</span><span class="p">:</span> <span class="n">Other</span> <span class="n">linear</span> <span class="n">solvers</span> <span class="n">might</span> <span class="n">be</span> <span class="nb">more</span> <span class="n">efficient</span> <span class="p">(</span><span class="n">see</span> <span class="n">Ipopt</span> <span class="n">documentation</span><span class="p">)</span><span class="o">.</span>
 
 <span class="n">Number</span> <span class="n">of</span> <span class="nb">nonzeros</span> <span class="n">in</span> <span class="n">equality</span> <span class="n">constraint</span> <span class="n">Jacobian</span><span class="k">...</span><span class="c">:    19236</span>
@@ -537,14 +553,14 @@ Elapsed time is 0.636870 seconds.
 <span class="n">Number</span> <span class="n">of</span> <span class="nb">nonzeros</span> <span class="n">in</span> <span class="n">Lagrangian</span> <span class="n">Hessian</span><span class="k">...</span><span class="c">..........:     3900</span>
 
 <span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">variables</span><span class="k">...</span><span class="c">.........................:     3900</span>
-                     <span class="n">variables</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">lower</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
-                <span class="n">variables</span> <span class="n">with</span> <span class="nb">lower</span> <span class="nb">and</span> <span class="nb">upper</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
-                     <span class="n">variables</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">upper</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+                     <span class="n">variables</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">lower</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+                <span class="n">variables</span> <span class="n">with</span> <span class="nb">lower</span> <span class="nb">and</span> <span class="nb">upper</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+                     <span class="n">variables</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">upper</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
 <span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">equality</span> <span class="n">constraints</span><span class="k">...</span><span class="c">..............:     3000</span>
 <span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">inequality</span> <span class="n">constraints</span><span class="k">...</span><span class="c">............:        0</span>
-        <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">lower</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
-   <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="nb">lower</span> <span class="nb">and</span> <span class="nb">upper</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
-        <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">upper</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+        <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">lower</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+   <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="nb">lower</span> <span class="nb">and</span> <span class="nb">upper</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+        <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">upper</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
 
 <span class="n">iter</span>    <span class="n">objective</span>    <span class="n">inf_pr</span>   <span class="n">inf_du</span> <span class="n">lg</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>  <span class="o">||</span><span class="n">d</span><span class="o">||</span>  <span class="n">lg</span><span class="p">(</span><span class="n">rg</span><span class="p">)</span> <span class="n">alpha_du</span> <span class="n">alpha_pr</span>  <span class="nb">ls</span>
    <span class="mi">0</span>  <span class="mf">3.0000000e+07</span> <span class="mf">1.00e+00</span> <span class="mf">9.72e-01</span>  <span class="o">-</span><span class="mf">1.0</span> <span class="mf">0.00e+00</span>    <span class="o">-</span>  <span class="mf">0.00e+00</span> <span class="mf">0.00e+00</span>   <span class="mi">0</span>
@@ -591,12 +607,14 @@ Elapsed time is 0.636870 seconds.
   <span class="n">nlp_hess_l</span>       <span class="mf">0.0868</span>       <span class="mf">0.0846</span>        <span class="mi">55</span>
    <span class="n">nlp_jac_g</span>        <span class="mf">0.149</span>        <span class="mf">0.149</span>        <span class="mi">57</span>
       <span class="n">solver</span>         <span class="mf">1.74</span>         <span class="mf">1.73</span>         <span class="mi">1</span>
-<span class="n">Elapsed</span> <span class="nb">time</span> <span class="n">is</span> <span class="mf">1.874814</span> <span class="nb">seconds</span><span class="o">.</span>
+<span class="n">Elapsed</span> <span class="n">time</span> <span class="nb">is</span> <span class="mf">1.874814</span> <span class="n">seconds</span><span class="o">.</span>
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSHE</span><span class="p">(</span><span class="n">OptState</span><span class="p">,</span><span class="n">OptControl</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">YT</span><span class="p">,</span><span class="nb">xline</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">Nt</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">plotSHE</span><span class="p">(</span><span class="n">OptState</span><span class="p">,</span><span class="n">OptControl</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">YT</span><span class="p">,</span><span class="n">xline</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">Nt</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <table>
     <tr>
@@ -611,25 +629,27 @@ Elapsed time is 0.636870 seconds.
 
 <p>Now we will change also the time horizon and we will incorporate a non-homogeneous non-linearity, we will just divide the non-linearity $G$ by $N^3$</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">N</span><span class="o">^</span><span class="mi">2</span><span class="p">);</span>
-<span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="nb">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">GetABmatrix</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">w1</span><span class="p">,</span><span class="n">w2</span><span class="p">,</span><span class="n">D</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">N</span><span class="o">^</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">GetABmatrix</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">w1</span><span class="p">,</span><span class="n">w2</span><span class="p">,</span><span class="n">D</span><span class="p">);</span>
 <span class="c1">%%</span>
 <span class="n">G</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'NLT'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">},{</span><span class="mi">10</span><span class="o">*</span><span class="n">Ys</span><span class="o">.*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Ys</span><span class="o">.^</span><span class="mi">2</span><span class="p">)/</span><span class="n">N</span><span class="o">^</span><span class="mi">2</span><span class="p">}</span> <span class="p">);</span><span class="c1">%%</span>
 <span class="c1">%%</span>
 <span class="n">T</span> <span class="o">=</span> <span class="n">N</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span>  <span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
 <span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
 <span class="c1">%%</span>
-<span class="n">ipde</span> <span class="o">=</span> <span class="n">semilinearpde1d</span><span class="p">(</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="nb">xline</span><span class="p">);</span>
+<span class="n">ipde</span> <span class="o">=</span> <span class="n">semilinearpde1d</span><span class="p">(</span><span class="n">Ys</span><span class="p">,</span><span class="n">Us</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">xline</span><span class="p">);</span>
 <span class="n">ipde</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">Y0</span><span class="p">;</span>
 <span class="c1">%%</span>
 <span class="n">iocp</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">ipde</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">Psi</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">ipde</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">ipde</span><span class="p">);</span>
 <span class="p">[</span><span class="n">OptControl</span> <span class="p">,</span><span class="n">OptState</span><span class="p">]</span>  <span class="o">=</span> <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">iocp</span><span class="p">,</span><span class="n">U0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">This</span> <span class="n">is</span> <span class="n">Ipopt</span> <span class="nb">version</span> <span class="mf">3.12</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="n">running</span> <span class="n">with</span> <span class="n">linear</span> <span class="n">solver</span> <span class="n">mumps</span><span class="o">.</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">This</span> <span class="nb">is</span> <span class="n">Ipopt</span> <span class="nb">version</span> <span class="mf">3.12</span><span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="n">running</span> <span class="n">with</span> <span class="n">linear</span> <span class="n">solver</span> <span class="n">mumps</span><span class="o">.</span>
 <span class="n">NOTE</span><span class="p">:</span> <span class="n">Other</span> <span class="n">linear</span> <span class="n">solvers</span> <span class="n">might</span> <span class="n">be</span> <span class="nb">more</span> <span class="n">efficient</span> <span class="p">(</span><span class="n">see</span> <span class="n">Ipopt</span> <span class="n">documentation</span><span class="p">)</span><span class="o">.</span>
 
 <span class="n">Number</span> <span class="n">of</span> <span class="nb">nonzeros</span> <span class="n">in</span> <span class="n">equality</span> <span class="n">constraint</span> <span class="n">Jacobian</span><span class="k">...</span><span class="c">:    19236</span>
@@ -637,14 +657,14 @@ Elapsed time is 0.636870 seconds.
 <span class="n">Number</span> <span class="n">of</span> <span class="nb">nonzeros</span> <span class="n">in</span> <span class="n">Lagrangian</span> <span class="n">Hessian</span><span class="k">...</span><span class="c">..........:     3900</span>
 
 <span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">variables</span><span class="k">...</span><span class="c">.........................:     3900</span>
-                     <span class="n">variables</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">lower</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
-                <span class="n">variables</span> <span class="n">with</span> <span class="nb">lower</span> <span class="nb">and</span> <span class="nb">upper</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
-                     <span class="n">variables</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">upper</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+                     <span class="n">variables</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">lower</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+                <span class="n">variables</span> <span class="n">with</span> <span class="nb">lower</span> <span class="nb">and</span> <span class="nb">upper</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+                     <span class="n">variables</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">upper</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
 <span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">equality</span> <span class="n">constraints</span><span class="k">...</span><span class="c">..............:     3000</span>
 <span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">inequality</span> <span class="n">constraints</span><span class="k">...</span><span class="c">............:        0</span>
-        <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">lower</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
-   <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="nb">lower</span> <span class="nb">and</span> <span class="nb">upper</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
-        <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">upper</span> <span class="nb">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+        <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">lower</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+   <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="nb">lower</span> <span class="nb">and</span> <span class="nb">upper</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
+        <span class="n">inequality</span> <span class="n">constraints</span> <span class="n">with</span> <span class="n">only</span> <span class="nb">upper</span> <span class="n">bounds</span><span class="p">:</span>        <span class="mi">0</span>
 
 <span class="n">iter</span>    <span class="n">objective</span>    <span class="n">inf_pr</span>   <span class="n">inf_du</span> <span class="n">lg</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>  <span class="o">||</span><span class="n">d</span><span class="o">||</span>  <span class="n">lg</span><span class="p">(</span><span class="n">rg</span><span class="p">)</span> <span class="n">alpha_du</span> <span class="n">alpha_pr</span>  <span class="nb">ls</span>
    <span class="mi">0</span>  <span class="mf">3.0000000e+07</span> <span class="mf">9.05e+00</span> <span class="mf">1.17e+02</span>  <span class="o">-</span><span class="mf">1.0</span> <span class="mf">0.00e+00</span>    <span class="o">-</span>  <span class="mf">0.00e+00</span> <span class="mf">0.00e+00</span>   <span class="mi">0</span>
@@ -692,12 +712,14 @@ Elapsed time is 0.636870 seconds.
   <span class="n">nlp_hess_l</span>       <span class="mf">0.0214</span>       <span class="mf">0.0214</span>        <span class="mi">14</span>
    <span class="n">nlp_jac_g</span>       <span class="mf">0.0354</span>        <span class="mf">0.035</span>        <span class="mi">16</span>
       <span class="n">solver</span>        <span class="mf">0.489</span>        <span class="mf">0.487</span>         <span class="mi">1</span>
-<span class="n">Elapsed</span> <span class="nb">time</span> <span class="n">is</span> <span class="mf">0.616536</span> <span class="nb">seconds</span><span class="o">.</span>
+<span class="n">Elapsed</span> <span class="n">time</span> <span class="nb">is</span> <span class="mf">0.616536</span> <span class="n">seconds</span><span class="o">.</span>
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSHE</span><span class="p">(</span><span class="n">OptState</span><span class="p">,</span><span class="n">OptControl</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">YT</span><span class="p">,</span><span class="nb">xline</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">Nt</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">plotSHE</span><span class="p">(</span><span class="n">OptState</span><span class="p">,</span><span class="n">OptControl</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">YT</span><span class="p">,</span><span class="n">xline</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span><span class="n">Nt</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <table>
     <tr>

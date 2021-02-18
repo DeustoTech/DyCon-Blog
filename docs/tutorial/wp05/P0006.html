@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -356,28 +355,31 @@ img:active{
 
 <p>The initialization parameters look as follows:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Ns</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>          <span class="c1">%% space discretization points in each dimension</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Ns</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>          <span class="c1">%% space discretization points in each dimension</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">Ns</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">%% mesh size</span>
 <span class="n">tf</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>   <span class="n">t0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">%% final time - initial time</span>
 <span class="n">Nt</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>           <span class="c1">%% time discretization points</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="p">(</span><span class="n">tf</span><span class="o">-</span><span class="n">t0</span><span class="p">)/</span><span class="n">Nt</span><span class="p">;</span>  <span class="c1">%% stepsize</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D1</span>      <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>    <span class="c1">%% thermal diffusivity of material on domain 1</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">D1</span>      <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>    <span class="c1">%% thermal diffusivity of material on domain 1</span>
 <span class="n">D2</span>      <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>      <span class="c1">%% thermal diffusivity of material on domain 2</span>
 <span class="n">lambda1</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>    <span class="c1">%% thermal conductivity material on domain 1</span>
 <span class="n">lambda2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>      <span class="c1">%% thermal conductivity material on domain 2</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">alpha1</span>  <span class="o">=</span> <span class="n">lambda1</span><span class="p">/</span><span class="n">D1</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">alpha1</span>  <span class="o">=</span> <span class="n">lambda1</span><span class="p">/</span><span class="n">D1</span><span class="p">;</span>
 <span class="n">alpha2</span>  <span class="o">=</span> <span class="n">lambda2</span><span class="p">/</span><span class="n">D2</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>In addition to the parameters above, other objects need to be specified before starting the iterative procedure. The space grids both in $x$-direction and $y$-direction are given to later plot the numerical solution, also the initial conditions $u_m^0(x)$, $x \in \Omega_m$ and the mass and stiffness matrices coming from the space discretization:</p>
 
 <p>space grid w.r.t component x</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span>
 <span class="c1">%% space grid w.r.t component y</span>
 <span class="n">yplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
 <span class="c1">%%</span>
@@ -386,11 +388,12 @@ img:active{
 <span class="c1">%%</span>
 <span class="c1">%% this function calculates the discretization matrices using finite differences</span>
 <span class="p">[</span><span class="n">A1</span><span class="p">,</span><span class="n">A2</span><span class="p">,</span><span class="n">A1g</span><span class="p">,</span><span class="n">A2g</span><span class="p">,</span><span class="n">Ag1</span><span class="p">,</span><span class="n">Ag2</span><span class="p">,</span><span class="n">Agg1</span><span class="p">,</span><span class="n">Agg2</span><span class="p">,</span><span class="n">M1</span><span class="p">,</span><span class="n">M2</span><span class="p">,</span><span class="n">M1g</span><span class="p">,</span><span class="n">M2g</span><span class="p">,</span><span class="n">Mg1</span><span class="p">,</span><span class="n">Mg2</span><span class="p">,</span><span class="n">Mgg1</span><span class="p">,</span><span class="n">Mgg2</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_matrices</span><span class="p">(</span><span class="n">Ns</span><span class="p">,</span><span class="n">lambda1</span><span class="p">,</span><span class="n">lambda2</span><span class="p">,</span><span class="n">alpha1</span><span class="p">,</span><span class="n">alpha2</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Then, the iterative procedure takes place where the equations (4) and (5) are solved alternatively on $\Omega_1$ and $\Omega_2$ respectively until convergence is achieved at each time step. The implementation is specified below:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UG_old</span> <span class="o">=</span> <span class="n">UG_0</span><span class="p">;</span> <span class="c1">%% UG_0 is fixed over the Dirichlet-Neumann iteration while UG_old is being updated</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">UG_old</span> <span class="o">=</span> <span class="n">UG_0</span><span class="p">;</span> <span class="c1">%% UG_0 is fixed over the Dirichlet-Neumann iteration while UG_old is being updated</span>
 <span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="c1">%% gif('2D_FDM.gif','frame',figure(1))</span>
 <span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">Nt</span> <span class="c1">%% time recursion</span>
@@ -429,7 +432,8 @@ img:active{
     <span class="n">U2_0</span> <span class="o">=</span> <span class="n">U2</span><span class="p">;</span>
     <span class="n">UG_0</span> <span class="o">=</span> <span class="n">UG_old</span><span class="p">;</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0006/2D_FDM.gif" alt="" /></p>
 

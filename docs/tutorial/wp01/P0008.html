@@ -184,15 +184,14 @@
                     
                         
                     
+                                   
                 <li>
                     <a href="/DyCon-Blog/projects/posts">Documentation</a>
                 </li>
                 
                     
-                <li>
-                    <a href="/DyCon-Blog/projects/authors">Authors</a>
-                </li>
                 
+                    
                 <li>
                         <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
@@ -308,10 +307,10 @@ img:active{
 
 <p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
-<span>StartDyConToolbox</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h3>Equations of motion</h3>
 
@@ -400,7 +399,7 @@ M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
 
 <p>We start by implementing the dynamical system defined in (1) as a MATLAB function. We fix the lengths $l_{i} = 1$, and the mass of the cart $M = 50$. The damping coefficients are set to $d_{i} = 0.1$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&gt;&gt;</span> <span class="nb">type</span> <span class="n">cartpole_dynamics</span><span class="o">.</span><span class="n">m</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code>  <span class="o">&gt;&gt;</span> <span class="nb">type</span> <span class="n">cartpole_dynamics</span><span class="o">.</span><span class="n">m</span>
 
 <span class="k">function</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">cartpole_dynamics</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
     <span class="n">L1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>    <span class="n">L2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">;</span>
@@ -430,13 +429,14 @@ M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
 
     <span class="n">ds</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">Mt</span><span class="p">\[</span><span class="n">f1</span><span class="p">;</span><span class="n">f2</span><span class="p">;</span><span class="n">f3</span><span class="p">];</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>This optimal control problem is solved using CasADi with the IPOPT solver. MATLAB’s symbolic toolbox has been used to implement the system dynamics in CasADi.</p>
 
 <p>The time horizon is set to $T = 10$ and the system (1) has been discretized using a Crank-Nicolson scheme. The use of an implicit discretization method with good behaviour with respect to the number of mesh points has been crucial to speed up the optimization process.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
 <span class="c1">% define optimal </span>
 
 <span class="n">Ss</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'x'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="n">As</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'u'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="n">ts</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span>
@@ -454,7 +454,8 @@ M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
 <span class="n">U0</span> <span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">tspan</span><span class="p">;</span>
 <span class="p">[</span><span class="n">OptControl</span> <span class="p">,</span><span class="n">OptState</span><span class="p">]</span> <span class="o">=</span> <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">ocp_obj</span><span class="p">,</span><span class="n">U0</span><span class="p">,</span><span class="s1">'integrator'</span><span class="p">,</span><span class="s1">'CrankNicolson'</span><span class="p">);</span>
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The following animation displays the resulting evolution of the system’s state:</p>
 
