@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 11 Mar 2021 12:34:34 +0100</pubDate>
-    <lastBuildDate>Thu, 11 Mar 2021 12:34:34 +0100</lastBuildDate>
+    <pubDate>Thu, 11 Mar 2021 12:53:36 +0100</pubDate>
+    <lastBuildDate>Thu, 11 Mar 2021 12:53:36 +0100</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -31,7 +31,7 @@ Mobility patterns of users have been studied intensively. The ubiquity of mobile
 In this project the main objective is to extract the useful data from different users trajectories in order to predict their next locations afterwards.
 
 Presentation of our data
-In this project we are working on a time series dataset \ref{fig1} that contains 288 user GPS coordinates of three month (March, April, May). These users lives in Spain.
+In this project we are working on a time series dataset (see Fig. 1) that contains 288 user GPS coordinates of three month (March, April, May). These users lives in Spain.
 The data was collected whenever the users are connected to their accounts.
 
 
@@ -81,6 +81,8 @@ For that the next algorithm we used was HDBSCAN [5] because in this algorithm th
 
 
   
+
+
   
 
 
@@ -127,6 +129,8 @@ To have one representative point per cluster, we calculate the medoid of the sto
 
 
   
+
+
   
 
 

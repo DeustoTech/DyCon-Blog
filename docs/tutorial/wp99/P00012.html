@@ -314,11 +314,11 @@ Mobility patterns of users have been studied intensively. The ubiquity of mobile
 <p>In this project the main objective is to extract the useful data from different users trajectories in order to predict their next locations afterwards.</p>
 
 <h2 id="presentation-of-our-data">Presentation of our data</h2>
-<p>In this project we are working on a time series dataset \ref{fig1} that contains 288 user GPS coordinates of three month (March, April, May). These users lives in Spain.
+<p>In this project we are working on a time series dataset (see Fig. 1) that contains 288 user GPS coordinates of three month (March, April, May). These users lives in Spain.
 The data was collected whenever the users are connected to their accounts.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Dataset.png" alt="Figure 1. Time series database of GPS coordinates." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Dataset.png" alt="Figure 1. Time series database of GPS coordinates." height="379" width="1106" /> 
 </figure>
 <center>
 <strong> Figure 1. </strong> Time series database of GPS coordinates.
@@ -327,14 +327,14 @@ The data was collected whenever the users are connected to their accounts.</p>
 <p>We can see in Figure 2 the representation of 10\% of the users on the map.  As we can notice the users are so active inside and outside of Spain. In Figure 3 we see the GPS representation of a user on the map.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Allusers.png" alt="Figure 2. Represantation of 10\% of the users population we have on the map." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Allusers.png" alt="Figure 2. Represantation of 10% of the users population we have on the map." height="300" width="640" /> 
 </figure>
 <center>
 <strong> Figure 2. </strong> Represantation of 10\% of the users population we have on the map.
 </center>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/oneuser.png" alt="Figure 3. Representation of one user GPS coordinates on the map." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/oneuser.png" alt="Figure 3. Representation of one user GPS coordinates on the map." height="303" width="643" /> 
 </figure>
 <center>
 <strong> Figure 3. </strong> Representation of one user GPS coordinates on the map.
@@ -345,14 +345,14 @@ The data was collected whenever the users are connected to their accounts.</p>
 Working on a real world data means the existence of noise the first two clustering algorithms (K-means and GMM) as we can see in Figures 4 y 5 they weren’t capable of eliminating the noise in our data, because in these algorithms each point must belong to one cluster which is not convenient for our data, not all the points are part of a location some points shows us only the trajectory that the user did to get to the desired place so we can say that these two approaches are not able to differentiate between a stop point and a trajectory. \</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Kmeans_GPS.png" alt="Figure 4. Graphic representation of a user GPS coordinations after k-means clustering." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Kmeans_GPS.png" alt="Figure 4. Graphic representation of a user GPS coordinations after k-means clustering." height="auto" width="1080" /> 
 </figure>
 <center>
 <strong> Figure 4. </strong> Graphic representation of a user GPS coordinations after k-means clustering.
 </center>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/EM_GPS.png" alt="Figure 5. Graphic representation of a user GPS coordinations after GMM clustering." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/EM_GPS.png" alt="Figure 5. Graphic representation of a user GPS coordinations after GMM clustering." height="auto" width="1080" /> 
 </figure>
 <center>
 <strong> Figure 5. </strong> Graphic representation of a user GPS coordinations after GMM clustering.
@@ -363,8 +363,10 @@ Working on a real world data means the existence of noise the first two clusteri
 <p>For that the next algorithm we used was HDBSCAN [5] because in this algorithm the threshold is not fixed so it’s capable of identifying clusters of different densities. This algorithm gives us some good results but after implementing the clusters on the map we can see that for some users the clusters didn’t include just the meaningful points but also some of the noise (the trajectory of the user) as we can see in Figure 4.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map1.png" alt="Map1." height="800" width="600" /> 
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map2.png" alt="Map2." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map1.png" alt="Map1." height="581" width="1139" /> 
+</figure>
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map2.png" alt="Map2." height="581" width="1139" /> 
 </figure>
 <center>
 <strong> Figure 6. </strong> Implementation of a user clusters on the map after removing the noise with HDBSCAN
@@ -377,14 +379,14 @@ The stop location extraction algorithm [7] has two parameters which are dependen
 $\bullet \quad $ <strong> Stay duration: </strong> specifies the minimum amount of time a user has to stay within the roaming distance for his position to be considered as being part of a particular stop location.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/output-stop-alg.png" alt="Map1." height="800" width="300" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/output-stop-alg.png" alt="Map1." height="184" width="692" /> 
  /figure&gt;
 <center>
 <strong> Figure 7. </strong> Output of the stop algorithm.
 </center> 
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/stoppoints.png" alt="Map1." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/stoppoints.png" alt="Map1." height="303" width="644" /> 
 </figure>
 <center>
 <strong> Figure 8. </strong> Representation of the stop points of the users on the map.
@@ -398,7 +400,7 @@ What we are actually interested in is the destination where a user has stopped a
 To aggregate the stop locations into destinations we use Scipy's hierarchical clustering functions \ref{fig8}. For our application there are two important parameters: \emph{The linkage parameter} defines how the clusters are formed. \emph{The distance parameter} specifies within what spatial distance stop locations are to be considered of the same cluster.
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/output-destination-alg.png" alt="Output of destination algorithm." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/output-destination-alg.png" alt="Output of destination algorithm." height="137" width="871" /> 
 </figure>
 <center>
 <strong> Figure 9. </strong> Output of destination algorithm
@@ -409,8 +411,10 @@ To get medoid for each destination, now that we have assigned each stop location
 To have one representative point per cluster, we calculate the medoid of the stop locations within each destination. We also calculate the number of stop locations at each destination, which is useful for ranking destinations based on visitation counts.
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/destinations1.png" alt="Map1." height="800" width="600" /> 
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/destinations2.png" alt="Map2." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/destinations1.png" alt="Map1." height="304" width="644" /> 
+</figure>
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/destinations2.png" alt="Map1." height="304" width="644" /> 
 </figure>
 <center>
 <strong> Figure 10. </strong> Representation of the users destinations on the map.
