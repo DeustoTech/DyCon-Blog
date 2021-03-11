@@ -22,6 +22,11 @@ CarlosE:
   description: '<p><a href="https://cmc.deusto.eus/Carlos-Esteve-Yague/"><strong>Carlos Esteve Yagüe</strong></a> holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (UAM and DeustoTech). He earned his PhD in analysis of nonlinear parabolic partial differential equations under the supervision of Prof. Philippe Souplet (Université Paris 13). His main research interests are singularity formation for parabolic PDE, Hamilton-Jacobi equations, optimal control theory and differential games.</p>'
   avatar: https://cmc.deusto.eus/wp-content/uploads/2019/11/team-carlos-esteve-yague-26nov2019_500x500.jpg
   active: "true"
+AichaK:
+  name: Aicha Karite
+  description: '<p><a href="https://cmc.deusto.eus/aicha-karite/"><strong>Aicha Karite</strong></a> is a MSc. in Big Data, with a research training internship position at the ERC- DyCon Project </p>'
+  avatar: https://cmc.deusto.eus/wp-content/uploads/2020/02/ccm-team-aicha-karite-500x500-1-300x300.jpg
+  active: "true"
 
 NoboruS:
   name: Noboru Sakamoto

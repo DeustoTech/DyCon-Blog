@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 11 Mar 2021 12:58:04 +0100</pubDate>
-    <lastBuildDate>Thu, 11 Mar 2021 12:58:04 +0100</lastBuildDate>
+    <pubDate>Thu, 11 Mar 2021 13:08:38 +0100</pubDate>
+    <lastBuildDate>Thu, 11 Mar 2021 13:08:38 +0100</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -89,39 +89,40 @@ For that the next algorithm we used was HDBSCAN [5] because in this algorithm th
  Figure 6.  Implementation of a user clusters on the map after removing the noise with HDBSCAN
 
 
-For that we needed to implement an algorithm that can identify the users stop points, which tells us where and when a user has stopped (stayed). It consists of a timestamp, a user identifier as well as longitude and latitude coordinates. It also has two additional variables: t_start and t_end indicating the start-time and end-time of the stop (see Figure~\ref{fig5}). 
+For that we needed to implement an algorithm that can identify the users stop points, which tells us where and when a user has stopped (stayed). It consists of a timestamp, a user identifier as well as longitude and latitude coordinates. It also has two additional variables: t_start and t_end indicating the start-time and end-time of the stop (see Figure 5). 
 The stop location extraction algorithm [7] has two parameters which are dependent on the application:
 
 $\bullet \quad $  Roaming distance:  defines how far a user is allowed to roam to still be considered part of the stop location (dashed orange line
+
 $\bullet \quad $  Stay duration:  specifies the minimum amount of time a user has to stay within the roaming distance for his position to be considered as being part of a particular stop location.
 
 
   
- /figure&amp;gt;
+
 
  Figure 7.  Output of the stop algorithm.
- 
+
 
 
   
 
 
  Figure 8.  Representation of the stop points of the users on the map.
- 
 
 
-The next step is to aggregates stop locations in close proximity of each other to know where and how often a user has stopped at a destination. The destination consists of a timestamp, a user identifier as well as latitude and longitude coordinates. In addition, the visitation count denotes the number of stops at a particular destination and cluster\_assignment identifies the destination itself.\\
+The next step is to aggregates stop locations in close proximity of each other to know where and how often a user has stopped at a destination. The destination consists of a timestamp, a user identifier as well as latitude and longitude coordinates. In addition, the visitation count denotes the number of stops at a particular destination and cluster_assignment identifies the destination itself.
 
 What we are actually interested in is the destination where a user has stopped and not necessarily the exact GPS position recorded. For instance, the group of stop locations surrounding a building should be regarded as one destination. In other words, we need to cluster or aggregate the stop locations into destinations (see Figure~\ref{fig7}).
 
-To aggregate the stop locations into destinations we use Scipy's hierarchical clustering functions \ref{fig8}. For our application there are two important parameters: \emph{The linkage parameter} defines how the clusters are formed. \emph{The distance parameter} specifies within what spatial distance stop locations are to be considered of the same cluster.
+To aggregate the stop locations into destinations we use Scipy’s hierarchical clustering functions \ref{fig8}. For our application there are two important parameters: \emph{The linkage parameter} defines how the clusters are formed. \emph{The distance parameter} specifies within what spatial distance stop locations are to be considered of the same cluster.
 
 
   
 
 
+
  Figure 9.  Output of destination algorithm
- 
+
 
 To get medoid for each destination, now that we have assigned each stop location to a destination, we want to have only one point representing each destination.
 
@@ -131,34 +132,47 @@ To have one representative point per cluster, we calculate the medoid of the sto
   
 
 
+
   
 
 
  Figure 10.  Representation of the users destinations on the map.
- 
+
 
 Next step is to predict n-next steps to do that we use two different approaches the markov chains and random forest. But before that we need to split our data into two parts train which we give 90\% of our data and the rest(10\%) to the test.
 
-After running the hidden markov chains model on our data we get to predict the next clusters of each user. We are predicting the clusters because each cluster represent a POI. 
+After running the hidden markov chains model on our data we get to predict the next clusters of each user. We are predicting the clusters because each cluster represent a POI.
+
 After training our model we calculate the accuracy of it for each user and to get the general accuracy score we get the mean score and it was 49\%. that means that our model is not that good at predicting the next location.
 
 So the next approach we used is random forest which is a supervised learning algorithm that can be used for class classification or regression (prediction).
+
 The accuracy of Random forest model is 94\% which shows that the model is doing well at predicting the users next locations.
 
-### References
+References
 [1] S. Gambs and M.O. Killijian, Next Place Prediction using Mobility Markov Chains, MPM’12, April 10, 2012, Bern, Switzerland.
-[2] Z. Fu, Z. Tian, Y. Xu and C. Qiao, A Two-Step Clustering Approach to Extract Locations from Indi- vidual GPS Trajectory Data, ISPRS Int. J. Geo-Inf. Vol. 5, 166, 1–17, 2016. doi:10.3390/ijgi5100166
-[3] N. Palmius and A. Tsanas and K. E. A. Saunders and A. C. Bilderbeck and J. R. Geddes and G. M. Goodwin and M. De Vos, Detecting Bipolar Depression From Geographic Location Data, IEEE Trans Biomed Eng., Vol. 64, No. 8, 1761–1771, 2017. doi: 10.1109/TBME.2016 2611862
-[4] J. Busk and M. Faurholt-Jepsen and M. Frost and J. E. Bardram and L. Vedel Kessing and O. Winther, Forecasting Mood in Bipolar Disorder From Smartphone Self-assessments: Hierarchical Bayesian Approach, JMIR Mhealth Uhealth, Vol. 8, No. 4, 1–14, 2020
-[5] P. Widhalm and P. Nitsche and N. Brandie, Transport mode detection with realistic Smartphone sensor data. In Proceedings of the International Conference on Pattern Recognition, Tsukuba, Japan, 11–15 November 2015; IEEE: Piscataway, NJ, USA, 2012; 573–576.
-[6] A. Bogomolov and B. Lepri and J. Staiano and N. Oliver and F. Pianesi and A. Pentland, Once Upon a Crime: Towards Crime Prediction from Demographics and Mobile Data. In Proceedings of the 16th International Conference on Multimodal Interaction, Istanbul, Turkey, 12–16 November 2014; ACM: New York, NY, USA, 2014; 427–434.
-[7] V. Bogorny, C. Renso, A.R. de Aquino, F. de Lucca Siqueira and L.O. Alvares, Constant–A Con- ceptual Data Model for Semantic Trajectories of Moving Objects, Trans. GIS Vol. 18, 66–88, 2014.
-[8] L. Xiang, M. Gao and T. Wu, Extracting Stops from Noisy Trajectories: A Sequence Oriented Clustering Approach, ISPRS Int. J. Geo-Inf. Vol. 5, 29, 1–18, 2016. doi:10.3390/ijgi5030029
-[9] Ester M., Kriegel H.P., Sander J. and Xu X. A density-based algorithm for discovering clusters in large spatial databases with noise. KDD-96 Proceedings, 226–231, 1996
-[10] Campello R.J.G.B., Moulavi D., Sander J. Density-Based Clustering Based on Hierarchical Density Estimates. In: Pei J., Tseng V.S., Cao L., Motoda H., Xu G. (eds) Advances in Knowledge Discovery and Data Mining. PAKDD 2013. Lecture Notes in Computer Science, Vol. 7819. Springer, Berlin, Heidelberg, 2013.
-[11] R. Hariharan and K. Toyama. Project Lachesis: Parsing and Modeling Location Histories. KDD- 96 Proceedings, In: Egenhofer M.J., Freksa C., Miller H.J. (eds) Geographic Information Science. GIScience 2004. Lecture Notes in Computer Science, Springer, Berlin, Heidelberg, Vol. 3234, 106– 124, 2004
-[12] Camacho-Lara, S. Current and Future GNSS and Their Augmentation Systems In: Handbook of Satellite Applications; Springer Science and Business Media LLC: Berlin, Germany, 2013, pp. 617?654.
 
+[2] Z. Fu, Z. Tian, Y. Xu and C. Qiao, A Two-Step Clustering Approach to Extract Locations from Indi- vidual GPS Trajectory Data, ISPRS Int. J. Geo-Inf. Vol. 5, 166, 1–17, 2016. doi:10.3390/ijgi5100166
+
+[3] N. Palmius and A. Tsanas and K. E. A. Saunders and A. C. Bilderbeck and J. R. Geddes and G. M. Goodwin and M. De Vos, Detecting Bipolar Depression From Geographic Location Data, IEEE Trans Biomed Eng., Vol. 64, No. 8, 1761–1771, 2017. doi: 10.1109/TBME.2016 2611862
+
+[4] J. Busk and M. Faurholt-Jepsen and M. Frost and J. E. Bardram and L. Vedel Kessing and O. Winther, Forecasting Mood in Bipolar Disorder From Smartphone Self-assessments: Hierarchical Bayesian Approach, JMIR Mhealth Uhealth, Vol. 8, No. 4, 1–14, 2020
+
+[5] P. Widhalm and P. Nitsche and N. Brandie, Transport mode detection with realistic Smartphone sensor data. In Proceedings of the International Conference on Pattern Recognition, Tsukuba, Japan, 11–15 November 2015; IEEE: Piscataway, NJ, USA, 2012; 573–576.
+
+[6] A. Bogomolov and B. Lepri and J. Staiano and N. Oliver and F. Pianesi and A. Pentland, Once Upon a Crime: Towards Crime Prediction from Demographics and Mobile Data. In Proceedings of the 16th International Conference on Multimodal Interaction, Istanbul, Turkey, 12–16 November 2014; ACM: New York, NY, USA, 2014; 427–434.
+
+[7] V. Bogorny, C. Renso, A.R. de Aquino, F. de Lucca Siqueira and L.O. Alvares, Constant–A Con- ceptual Data Model for Semantic Trajectories of Moving Objects, Trans. GIS Vol. 18, 66–88, 2014.
+
+[8] L. Xiang, M. Gao and T. Wu, Extracting Stops from Noisy Trajectories: A Sequence Oriented Clustering Approach, ISPRS Int. J. Geo-Inf. Vol. 5, 29, 1–18, 2016. doi:10.3390/ijgi5030029
+
+[9] Ester M., Kriegel H.P., Sander J. and Xu X. A density-based algorithm for discovering clusters in large spatial databases with noise. KDD-96 Proceedings, 226–231, 1996
+
+[10] Campello R.J.G.B., Moulavi D., Sander J. Density-Based Clustering Based on Hierarchical Density Estimates. In: Pei J., Tseng V.S., Cao L., Motoda H., Xu G. (eds) Advances in Knowledge Discovery and Data Mining. PAKDD 2013. Lecture Notes in Computer Science, Vol. 7819. Springer, Berlin, Heidelberg, 2013.
+
+[11] R. Hariharan and K. Toyama. Project Lachesis: Parsing and Modeling Location Histories. KDD- 96 Proceedings, In: Egenhofer M.J., Freksa C., Miller H.J. (eds) Geographic Information Science. GIScience 2004. Lecture Notes in Computer Science, Springer, Berlin, Heidelberg, Vol. 3234, 106– 124, 2004
+
+[12] Camacho-Lara, S. Current and Future GNSS and Their Augmentation Systems In: Handbook of Satellite Applications; Springer Science and Business Media LLC: Berlin, Germany, 2013, pp. 617?654.
 
 </description>
         <pubDate>Wed, 10 Mar 2021 00:00:00 +0100</pubDate>
