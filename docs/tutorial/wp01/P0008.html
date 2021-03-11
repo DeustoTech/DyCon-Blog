@@ -307,16 +307,14 @@ img:active{
 
 <p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
 <span class="n">StartDyConToolbox</span>    
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>You can see the code of this tutorial write the following line:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">open</span> <span class="n">T06ODET0006_Double_pend</span>   
-</code></pre>
-</div>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">open</span> <span class="n">T06ODET0006_Double_pend</span>   
+</code></pre></div></div>
 <h3>Equations of motion</h3>
 
 <p><img width="50%" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/sch.png" /></p>
@@ -335,36 +333,35 @@ img:active{
 
 <p>The equations of motion of the system can be derived using the Lagrangian formalism of classical mechanics and are given by:</p>
 
-<script type="math/tex; mode=display">(1)
+<p>[(1)
   \begin{cases}
-  \dot{x}(t) = v(t) \\
-  \dot{\theta}_{1}(t) = \omega_{1}(t) \\
-  \dot{\theta}_{2}(t) = \omega_{2}(t) \\
+  \dot{x}(t) = v(t) <br />
+  \dot{\theta}<em>{1}(t) = \omega</em>{1}(t) <br />
+  \dot{\theta}<em>{2}(t) = \omega</em>{2}(t) <br />
   M(\theta_1(t),\theta_2(t)) \cdot \begin{bmatrix} 
-         \dot{v}(t) \\ \dot{\omega}_1(t) \\ \dot{\omega}_2(t) 
+         \dot{v}(t) \ \dot{\omega}_1(t) \ \dot{\omega}_2(t) 
     \end{bmatrix} = G(\theta_1(t),\theta_2(t),\omega_1(t),\omega_2(t))  -  \begin{bmatrix}
-      d_1 \cdot v(t) \\ d_2 \cdot \omega_1(t) \\ d_3 \cdot \omega_2(t)
+      d_1 \cdot v(t) \ d_2 \cdot \omega_1(t) \ d_3 \cdot \omega_2(t)
     \end{bmatrix} + \begin{bmatrix}
-      u(t) \\ 0 \\ 0
+      u(t) \ 0 \ 0
     \end{bmatrix}
-    \end{cases}</script>
+    \end{cases}]</p>
 
 <p>where, for each $t \geq 0$, we define:</p>
 
-<script type="math/tex; mode=display">G(\theta_1(t),\theta_2(t),\omega_1(t),\omega_2(t)) = \begin{bmatrix}
-    l_1(m_1+m_2) \cdot \omega_1(t)^2 \sin(\theta_1(t)) + m_2l_2\cdot \omega_2(t)^2 \sin(\omega_2(t)) \\
-    -l_1l_2m_2\cdot\omega_2(t)^2 \sin(\theta_1(t)-\theta_2(t)) + g(m_1+m_2)l_1 \cdot \sin(\theta_1(t)) \\
+<p>[G(\theta_1(t),\theta_2(t),\omega_1(t),\omega_2(t)) = \begin{bmatrix}
+    l_1(m_1+m_2) \cdot \omega_1(t)^2 \sin(\theta_1(t)) + m_2l_2\cdot \omega_2(t)^2 \sin(\omega_2(t)) <br />
+    -l_1l_2m_2\cdot\omega_2(t)^2 \sin(\theta_1(t)-\theta_2(t)) + g(m_1+m_2)l_1 \cdot \sin(\theta_1(t)) <br />
     l_1l_2m_2 \cdot \omega_1(t)^2\sin(\theta_1(t)-\theta_2(t)) + g l_2 m_2 \cdot \sin(\theta_2(t))
-  \end{bmatrix}</script>
+  \end{bmatrix}]</p>
 
 <p>and</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
-      m+m_1+m_2 & l_1(m_1 +m_2 )\cdot\cos(\theta_1(t)) & m_2l_2\cdot\cos(\theta_2(t)) \\
-      l_1(m_1+m_2)\cdot\cos(\theta_1(t)) & l_1^2(m_1+m_2) & l_1l_2m_2\cdot \cos(\theta_1(t)-\theta_2(t)) \\
-      l2 m_2\cdot\cos(\theta_2(t)) & l_1 l_2 m_2 \cos(\theta_1(t)-\theta_2(t)) & l_2^2 m_2
-    \end{bmatrix} %]]></script>
+<p>[M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
+      m+m_1+m_2 &amp; l_1(m_1 +m_2 )\cdot\cos(\theta_1(t)) &amp; m_2l_2\cdot\cos(\theta_2(t)) <br />
+      l_1(m_1+m_2)\cdot\cos(\theta_1(t)) &amp; l_1^2(m_1+m_2) &amp; l_1l_2m_2\cdot \cos(\theta_1(t)-\theta_2(t)) <br />
+      l2 m_2\cdot\cos(\theta_2(t)) &amp; l_1 l_2 m_2 \cos(\theta_1(t)-\theta_2(t)) &amp; l_2^2 m_2
+    \end{bmatrix}]</p>
 
 <p>We have the fixed parameters:</p>
 
@@ -378,9 +375,9 @@ M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
 
 <p>This dynamical system shows chaotic behaviour. The following animation displays the evolution of the double pendulum on a cart with control $u = 0$ and starting at the two different initial conditions</p>
 
-<script type="math/tex; mode=display">y_{0,1} = (0, 0, 0.1, 0, 0.5, 0.5)</script>
+<p>[y_{0,1} = (0, 0, 0.1, 0, 0.5, 0.5)]</p>
 
-<script type="math/tex; mode=display">y_{0,2} = (0, 0, 0.05, 0, 0.5, 0.5)</script>
+<p>[y_{0,2} = (0, 0, 0.05, 0, 0.5, 0.5)]</p>
 
 <center>
 <video controls="" src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0008/doble_pendulum_thetadiff.mp4">
@@ -396,7 +393,25 @@ M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
 
 <p>One way to look for solutions to this problem is to minimize the following functional:</p>
 
-<script type="math/tex; mode=display">J(u) =  \int_0^T ||y(t)||^2 dt +  ||y(T)||^2  + \alpha \int_0^T ||u(t)||^2dt</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[J(u) =  \int_0^T</td>
+      <td> </td>
+      <td>y(t)</td>
+      <td> </td>
+      <td>^2 dt +</td>
+      <td> </td>
+      <td>y(T)</td>
+      <td> </td>
+      <td>^2  + \alpha \int_0^T</td>
+      <td> </td>
+      <td>u(t)</td>
+      <td> </td>
+      <td>^2dt]</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Where $\alpha &gt;0$ is a fixed parameter, the state vector $y(t)$ is subject to the system of differential equations (1) and $y(0) = y_0$.</p>
 
@@ -404,7 +419,7 @@ M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
 
 <p>We start by implementing the dynamical system defined in (1) as a MATLAB function. We fix the lengths $l_{i} = 1$, and the mass of the cart $M = 50$. The damping coefficients are set to $d_{i} = 0.1$.</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code>  <span class="o">&gt;&gt;</span> <span class="nb">type</span> <span class="n">cartpole_dynamics</span><span class="o">.</span><span class="n">m</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&gt;&gt;</span> <span class="nb">type</span> <span class="n">cartpole_dynamics</span><span class="o">.</span><span class="n">m</span>
 
 <span class="k">function</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">cartpole_dynamics</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
     <span class="n">L1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>    <span class="n">L2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">;</span>
@@ -434,14 +449,13 @@ M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
 
     <span class="n">ds</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">Mt</span><span class="p">\[</span><span class="n">f1</span><span class="p">;</span><span class="n">f2</span><span class="p">;</span><span class="n">f3</span><span class="p">];</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>This optimal control problem is solved using CasADi with the IPOPT solver. MATLAB’s symbolic toolbox has been used to implement the system dynamics in CasADi.</p>
 
 <p>The time horizon is set to $T = 10$ and the system (1) has been discretized using a Crank-Nicolson scheme. The use of an implicit discretization method with good behaviour with respect to the number of mesh points has been crucial to speed up the optimization process.</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
 <span class="c1">% define optimal </span>
 
 <span class="n">Ss</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'x'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="n">As</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'u'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="n">ts</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span>
@@ -459,8 +473,7 @@ M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
 <span class="n">U0</span> <span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">tspan</span><span class="p">;</span>
 <span class="p">[</span><span class="n">OptControl</span> <span class="p">,</span><span class="n">OptState</span><span class="p">]</span> <span class="o">=</span> <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">ocp_obj</span><span class="p">,</span><span class="n">U0</span><span class="p">,</span><span class="s1">'integrator'</span><span class="p">,</span><span class="s1">'CrankNicolson'</span><span class="p">);</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The following animation displays the resulting evolution of the system’s state:</p>
 
@@ -499,6 +512,15 @@ M(\theta_1(t),\theta_2(t)) = \begin{bmatrix}
     
 
     
+    
+        
+        
+    
+        
+    
+        
+    
+      
     
         
         

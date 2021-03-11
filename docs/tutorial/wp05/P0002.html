@@ -305,19 +305,19 @@ img:active{
 
 <p>We obtain a finite element (FE) scheme for the numerical approximation of the solution to the following non-local Poisson equation</p>
 
-<script type="math/tex; mode=display">\begin{align}
+<p>[\begin{align}
 \begin{cases}
 \ffl{s}{u} = f, \quad  x\in(-L,L)
-\\
+<br />
 u\equiv 0,  x\in\RR\setminus(-L,L).
 \end{cases}
-\end{align}</script>
+\end{align}]</p>
 
 <p>In (1), $f$ is a given function and, for all $s\in(0,1)$, $\ffl{s}{}$ denotes the one-dimensional fractional Laplace operator, which is defined as the following singular integral</p>
 
-<script type="math/tex; mode=display">\begin{align}\label{fl}
+<p>[\begin{align}\label{fl}
 \ffl{s}{u}(x) = \ccs\,P.V.\,\int_{\RR}\frac{u(x)-u(y)}{|x-y|^{1+2s} }\,dy.
-\end{align}</script>
+\end{align}]</p>
 
 <p>Here, $\ccs$ is an explicit normalization constant.</p>
 
@@ -325,15 +325,15 @@ u\equiv 0,  x\in\RR\setminus(-L,L).
 
 <p>A natural example is given by the numerical resolution of the following control problem: given any $T&gt;0$, find a control function $g\in L^2((-1,1)\times(0,T))$ such that the corresponding solution to the parabolic problem</p>
 
-<script type="math/tex; mode=display">\begin{align}
+<p>[\begin{align}
 \begin{cases}
 z_t + \ffl{s}{z} = g\mathbf{1}_{\omega},\quad  (x,t)\in (-1,1)\times(0,T)
-\\
+<br />
 z=0,  (x,t)\in[\,\RR\setminus (-1,1)\,]\times(0,T)
-\\
+<br />
 z(x,0)=z_0(x),  x\in (-1,1)
 \end{cases}
-\end{align}</script>
+\end{align}]</p>
 
 <p>satisfies $z(x,T)=0$.</p>
 
@@ -342,33 +342,32 @@ z(x,0)=z_0(x),  x\in (-1,1)
 <h4>Variational formulation of the elliptic problem</h4>
 <p>Find $u\in H^s_0(-L,L)$ such that</p>
 
-<script type="math/tex; mode=display">\begin{align*}
+<p>[\begin{align<em>}
 \frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s} }\,dxdy = \int_{-L}^L fv\,dx,
-\end{align*}</script>
+\end{align</em>}]</p>
 
 <p>for all $v\in H_0^s(-L,L)$. Here, $H^s_0(-L,L)$ denotes the space</p>
 
-<script type="math/tex; mode=display">\begin{align*}
-H^s_0(-L,L) :=\Big\{\, u\in H^s(\RR)\,:\,u=0 \textrm{ in } \RR\setminus(-L,L)\,\Big\},
-\end{align*}</script>
+<p>[\begin{align<em>}
+H^s_0(-L,L) :=\Big{\, u\in H^s(\RR)\,:\,u=0 \textrm{ in } \RR\setminus(-L,L)\,\Big},
+\end{align</em>}]</p>
 
 <p>while $H^s(\RR)$ is the classical fractional Sobolev space of order <em>s</em>. Since the bilinear form <em>a</em> is continuous and coercive, Lax-Milgram Theorem immediately implies that, if $f\in H^{-s}(-L,L)$, the dual space of $H^s_0(-L,L)$, then (1) admits a unique weak solution $u\in H_0^s(-L,L)$.</p>
 <h4>Parabolic problem</h4>
 <p><strong>Definition 1.</strong> <em>System (3) is said to be <u>null-controllable</u> at time $T$ if, for any $z_0\in L^2(-1,1)$, there exists $g\in L^2((-1,1)\times(0,T))$ such that the corresponding solution $z$ satisfies</em></p>
 
-<script type="math/tex; mode=display">\begin{align*}
+<p>[\begin{align<em>}
 z(x,T)=0.
-\end{align*}</script>
+\end{align</em>}]</p>
 
 <p><strong>Definition 2.</strong> <em>System (3) is said to be <u>approximately controllable</u> at time $T$ if, for any $z_0,z_T\in L^2(-1,1)$ and any $\delta&gt;0$, there exists $g\in L^2((-1,1)\times(0,T))$ such that the corresponding solution $z$ satisfies </em></p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align*}
+<p>[\begin{align*}</p>
 
-\renewcommand{\norm}[2]{ {\left\|#1\right\|}_{#2} }
+<p>\renewcommand{\norm}[2]{ {\left|#1\right|}_{#2} }</p>
 
-\norm{z(x,T)-z_T}{L^2(-1,1)}<\delta.
-\end{align*} %]]></script>
+<p>\norm{z(x,T)-z_T}{L^2(-1,1)}&lt;\delta.
+\end{align*}]</p>
 
 <p>There are few results in the literature on the null-controllability of the fractional heat equation, and they all deal with the <em>spectral</em> definition of the fractional Laplace operator, which is introduced, e.g., in <a href="#micu2006controllability">[3]</a>,<a href="#miller2006controllability">[4]</a>. In this framework, it is known that the fractional heat equation is null-controllable, provided that $s&gt;1/2$. For $s\leq 1/2$, instead, null controllability does not hold, not even for $T$ large.</p>
 
@@ -385,101 +384,100 @@ z(x,T)=0.
 <h4>Finite element approximation of the elliptic problem</h4>
 <p>Let us introduce a partition of the interval $(-L,L)$ as follows:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align*}
--L = x_0<x_1<\ldots <x_i<x_{i+1}<\ldots<x_{N+1}=L\,, 
-\end{align*} %]]></script>
+<p>[\begin{align<em>}
+-L = x_0&lt;x_1&lt;\ldots &lt;x_i&lt;x_{i+1}&lt;\ldots&lt;x_{N+1}=L\,, 
+\end{align</em>}]</p>
 
 <p>with $x_{i+1}=x_i+h$, $i=0,\ldots N$, $h&gt;0$. Having defined $K_i:=[x_i,x_{i+1}]$ we consider the discrete space</p>
 
-<script type="math/tex; mode=display">\begin{align*}
-V_h :=\Big\{v\in H_0^s(-L,L)\,\big|\, \left. v\,\right|_{K_i}\in \mathcal{P}^1\Big\},
-\end{align*}</script>
+<p>[\begin{align<em>}
+V_h :=\Big{v\in H_0^s(-L,L)\,\big|\, \left. v\,\right|_{K_i}\in \mathcal{P}^1\Big},
+\end{align</em>}]</p>
 
 <p>where $\mathcal{P}^1$ is the space of the continuous and piece-wise linear functions. If we indicate with</p>
 
-<script type="math/tex; mode=display">\big\{\phi_i\big\}_{i=1}^N</script>
+<p>[\big{\phi_i\big}_{i=1}^N]</p>
 
 <p>the classical basis of $V_h$ in which each $\phi_i$ is the tent function with $supp(\phi_i)=(x_{i-1},x_{i+1})$ and verifying $\phi_i(x_j)=\delta_{i,j}$, at the end we are reduced to solve the linear system</p>
 
-<script type="math/tex; mode=display">\begin{align*}
+<p>[\begin{align<em>}
 \mathcal A_h u=F,
-\end{align*}</script>
+\end{align</em>}]</p>
 
 <p>where the stiffness matrix $\mathcal A_h\in \RR^{N\times N}$ has components</p>
 
-<script type="math/tex; mode=display">\begin{align}\label{stiffness_nc}
+<p>[\begin{align}\label{stiffness_nc}
 a_{i,j}=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(\phi_i(x)-\phi_i(y))(\phi_j(x)-\phi_j(y))}{|x-y|^{1+2s} }\,dxdy, \;\;\; i,j = 1,\ldots,N,
-\end{align}</script>
+\end{align}]</p>
 
 <p>while the vector $F\in\RR^N$ is given by $F=(F_1,\ldots,F_N)$ with</p>
 
-<script type="math/tex; mode=display">\begin{align*}
+<p>[\begin{align<em>}
 F_i = \langle f,\phi_i\rangle = \int_{-L}^L f\phi_i\,dx,\;\;\; i=1,\ldots,N.
-\end{align*}</script>
+\end{align</em>}]</p>
 
 <p>The construction of the stiffness matrix $\mathcal A_h$ is done in three steps, since its elements can be computed differentiating among three well defined regions: the upper triangle, corresponding to indices $j\geq i+2$, the upper diagonal corresponding to $j=i+1$, and the diagonal corresponding to $j=i$. In each of these regions, the intersections among the support of the basis functions are different, thus generating different values of the bilinear form.</p>
 
 <p>After several computations, we obtain the following expressions for the elements of the stiffness matrix $\mathcal{A}_h$: for $s\neq 1/2$</p>
 
-<script type="math/tex; mode=display">\begin{align*}
+<p>[\begin{align<em>}
 a_{i,j} = -h^{1-2s} \begin{cases}
 \displaystyle \,\frac{4(k+1)^{3-2s} + 4(k-1)^{3-2s}-6k^{3-2s}-(k+2)^{3-2s}-(k-2)^{3-2s} }{2s(1-2s)(1-s)(3-2s)},  \displaystyle k=j-i,\,k\geq 2
-\\
-\\
+<br />
+<br />
 \displaystyle\frac{3^{3-2s}-2^{5-2s}+7}{2s(1-2s)(1-s)(3-2s)},  \displaystyle j=i+1
-\\
-\\
+<br />
+<br />
 \displaystyle\frac{2^{3-2s}-4}{s(1-2s)(1-s)(3-2s)},  \displaystyle j=i.
 \end{cases}
-\end{align*}</script>
+\end{align</em>}]</p>
 
 <p>For $s=1/2$, instead, we have</p>
 
-<script type="math/tex; mode=display">\begin{align*}
+<p>[\begin{align<em>}
 a_{i,j} = \begin{cases}
 -4(j-i+1)^2\log(j-i+1)-4(j-i-1)^2\log(j-i-1)
-\\
-\;\;\;+6(j-i)^2\log(j-i)+(j-i+2)^2\log(j-i+2)+(j-i-2)^2\log(j-i-2),  \displaystyle j> i+2
-\\
-\\
+<br />
+\;\;\;+6(j-i)^2\log(j-i)+(j-i+2)^2\log(j-i+2)+(j-i-2)^2\log(j-i-2),  \displaystyle j&gt; i+2
+<br />
+<br />
 56\ln(2)-36\ln(3),  \displaystyle j= i+2.
-\\
-\\
+<br />
+<br />
 \displaystyle 9\ln 3-16\ln 2,  \displaystyle j=i+1
-\\
-\\
+<br />
+<br />
 \displaystyle 8\ln 2,  \displaystyle j=i.
 \end{cases}
-\end{align*}</script>
+\end{align</em>}]</p>
 
 <h4>Control problem for the fractional heat equation</h4>
 <p>We employ the so called penalised Hilbert Uniqueness Method (HUM) that deals with the resolution of the following minimization problem: find</p>
 
-<script type="math/tex; mode=display">\begin{align}\label{min_je}
+<p>[\begin{align}\label{min_je}
 \varphi^T_\varepsilon=\min_{\varphi\in L^2(-1,1)} J_\varepsilon (\varphi^T)
-\end{align}</script>
+\end{align}]</p>
 
 <p>where</p>
 
-<script type="math/tex; mode=display">\begin{align}\label{penalized_fun}
+<p>[\begin{align}\label{penalized_fun}</p>
 
-\renewcommand{\norm}[2]{ {\left\|#1\right\|}_{#2} }
+<p>\renewcommand{\norm}[2]{ {\left|#1\right|}_{#2} }</p>
 
-J_\varepsilon(\phi^T):=\frac{1}{2}\int_0^T\int_{\omega}|\varphi|^2\,dxdt + \frac{\varepsilon}{2}\norm{\varphi^T}{L^2(-1,1)}^2 + \int_{\Omega} z_0\varphi(0)\,dx,
-\end{align}</script>
+<p>J_\varepsilon(\phi^T):=\frac{1}{2}\int_0^T\int_{\omega}|\varphi|^2\,dxdt + \frac{\varepsilon}{2}\norm{\varphi^T}{L^2(-1,1)}^2 + \int_{\Omega} z_0\varphi(0)\,dx,
+\end{align}]</p>
 
 <p>where $\varphi$ is the solution to the adjoint problem</p>
 
-<script type="math/tex; mode=display">\begin{align*}
+<p>[\begin{align<em>}
 \begin{cases}
 -\varphi_t+\ffl{s}{\varphi}=0,  (x,t)\in (-1,1)\times(0,T)
-\\
+<br />
 \varphi = 0,  (x,t)\in\big[\RR\setminus(-1,1)\big]\times(0,T)
-\\
+<br />
 \varphi(x,T)=\varphi^T(x),  x\in (-1,1).
 \end{cases}
-\end{align*}</script>
+\end{align</em>}]</p>
 
 <p>Then, the approximate and null controllability properties of the system, for a given initial datum $z_0$, can be expressed in terms of the behavior of the penalized HUM approach.</p>
 
@@ -493,9 +491,9 @@ J_\varepsilon(\phi^T):=\frac{1}{2}\int_0^T\int_{\omega}|\varphi|^2\,dxdt + \frac
 </li>
 </ul>
 
-<script type="math/tex; mode=display">\begin{align*}
+<p>[\begin{align<em>}
 \varphi_\varepsilon^T\rightarrow 0,\;\;\;\textrm{ as }\;\varepsilon\to 0.
-\end{align*}</script>
+\end{align</em>}]</p>
 
 <ul>
  	<li style="list-style-type: none;">
@@ -505,40 +503,39 @@ J_\varepsilon(\phi^T):=\frac{1}{2}\int_0^T\int_{\omega}|\varphi|^2\,dxdt + \frac
 </li>
 </ul>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align*}
-M_{z_0}^2:=2\sup_{\varepsilon>0}\left( \inf_{L^2(0,T;L^2(\omega))}J_\varepsilon\right)<+\infty.
-\end{align*} %]]></script>
+<p>[\begin{align<em>}
+M_{z_0}^2:=2\sup_{\varepsilon&gt;0}\left( \inf_{L^2(0,T;L^2(\omega))}J_\varepsilon\right)&lt;+\infty.
+\end{align</em>}]</p>
 
 <p>In this case, we have</p>
 
-<script type="math/tex; mode=display">\begin{align*}
+<p>[\begin{align*}</p>
 
-\renewcommand{\norm}[2]{ {\left\|#1\right\|}_{#2} }
+<p>\renewcommand{\norm}[2]{ {\left|#1\right|}_{#2} }</p>
 
-\norm{g}{L^2(0,T;L^2(\omega))}\leq M_{z_0},\nonumber
-\\
+<p>\norm{g}{L^2(0,T;L^2(\omega))}\leq M_{z_0},\nonumber
+<br />
 \norm{\varphi_\varepsilon^T}{L^2(-L,L)}\leq M_{z_0}\sqrt{\varepsilon}.
-\end{align*}</script>
+\end{align*}]</p>
 
 <h3>Numerical results</h3>
 <p>Here, we present the numerical simulations corresponding to our algorithms. We provide a complete discussion of the results obtained.</p>
 
 <p>First of all, in order to test numerically the accuracy of our method for the discretization of the elliptic equation (1) we use the following problem</p>
 
-<script type="math/tex; mode=display">\begin{align}\label{PE_real}
-\left\{\begin{array}{ll}
+<p>[\begin{align}\label{PE_real}
+\left{\begin{array}{ll}
 \ffl{s}{u} = 1,  x\in(-L,L)
-\\
+<br />
 u\equiv 0,  x\in\RR\setminus(-L,L).
 \end{array}\right.
-\end{align}</script>
+\end{align}]</p>
 
 <p>In this particular case, the solution can be expressed as follows</p>
 
-<script type="math/tex; mode=display">\begin{align}\label{real_sol}
+<p>[\begin{align}\label{real_sol}
 u(x)=\frac{2^{-2s}\sqrt{\pi} }{\Gamma\left(\frac{1+2s}{2}\right)\Gamma(1+s)}\Big(L^2-x^2\Big)^s.
-\end{align}</script>
+\end{align}]</p>
 
 <p>In figure 1 and figure 2, we show a comparison for different values of $s$ between the exact solution (8) and the computed numerical approximation. Here we consider $L=1$ and $N=50$. One can notice that, when $s=0.1$, the computed solution is to a certain extent different from the exact solution. However, one should be careful with such result and a more precise analysis of the error should be carried.</p>
 
@@ -559,9 +556,9 @@ In figure 4, we observe the time evolution of the uncontrolled solution as well 
 
 <p>In figure 5, for $s=0.8$ we present the computed values of various quantities of interest when the mesh size goes to zero. More precisely, we observe that the control cost and the optimal energy remain bounded as $h\to 0$. On the other hand, we see that</p>
 
-<script type="math/tex; mode=display">\begin{align}\label{control_norm_behavior}
+<p>[\begin{align}\label{control_norm_behavior}
 |y(T)|_{L^2(-1,1)}\,\sim\,C\sqrt{\phi(h)}=Ch^{1/2}.
-\end{align}</script>
+\end{align}]</p>
 
 <p>We know that, for $s=0.8$, system (3) is null controllable. This is now confirmed by (9), according to <a href="#boyer2013penalised">[2,Theorem 1.7]</a>. In fact, the same experiment can be repeated for different values of $s&gt;1/2$, obtaining the same conclusions.</p>
 

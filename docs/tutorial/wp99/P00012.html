@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Points of Interest Extraction and Prediction of Next Locations - DyCon Blog
+    
+  </title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00012">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+
+
+  
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                                   
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                
+                    
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+                
+            </ul>
+
+        
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">
+            Other Topics</a> &#8827;</small>
+          </h2>
+          <h1>Points of Interest Extraction and Prediction of Next Locations</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Author:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/AichaK"></a>
+                  </span>
+                </span>
+              
+              - 10 March 2021
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+          
+            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/P0012_Points.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+          
+        
+        <h2 id="introduction">Introduction</h2>
+<p>GPS enabled devices, such as smart phones, have gained large popularity in the last few years. It allows people to record their outdoor activities through GPS trajectories, which enables researchers to infer further knowledge about the moving behavior of mobile users [8]. An important topic in analyzing GPS data is the identification of significant or interesting places visited by users [1] because if we extract them, we can know each user well and this will allow us to have a better prediction on the user’s next location.<br />
+Generally, a prediction problem involves using past observations to predict or forecast one or more possible future observations. The goal is to guess about what might happen in the future. Knowing the future can impact our decisions today so we have a great interest in predicting it.
+In this project we tried first working on finding an algorithm that can help us define the points of interest of the users we have in the dataset. For that we implement an algorithm that can identify the users stop points. <br />
+Next step was predicting the next location of the users to do that we used different approaches (Markov chains, Random forest and Recurrent neural network).</p>
+
+<p>KEYWORDS: GPS Trajectory; Clustering algorithm; Points of interests (POI); Prediction; Markov chain; Random Forest; DBSCAN; HDBSCAN.</p>
+
+<h2 id="motivation">Motivation</h2>
+<p>With the popularity of smartphones and other equipment that can be used to record locations via the Global Navigation Satellite System (GNSS) [8], capturing and recording trajectory data based on such equipment becomes more convenient. The smartphone for exemple combines different sophisticated features. It allows users to keep pictures, memories, personal info, health [9,10] etc. And with each use to some application we can get the user GPS coordinates at a period of time [11].<br />
+So why don’t we use this data to better understand the users? If we get to know the next step of each individual we can for example suggest some near restaurants, shops and places they used to go to, or notify them if someone they know is close to where they are.
+It could be also beneficial for the police department [12], it can help them identify criminals’ places or finding missing people and more likely it can also help people with Alzheimer’s, by notifying their relatives about their places.</p>
+
+<h2 id="problem-statement">Problem statement</h2>
+<p>Mobility is part of human’s daily life. We move from one place to another for different reasons. For example we go to a certain place to work and to another place to meet people.
+Mobility patterns of users have been studied intensively. The ubiquity of mobile phones with their embedded sensors and available applications opened new possibilities both for academia and industry to study human mobility patterns [2,3].</p>
+
+<p>In this project the main objective is to extract the useful data from different users trajectories in order to predict their next locations afterwards.</p>
+
+<h2 id="presentation-of-our-data">Presentation of our data</h2>
+<p>In this project we are working on a time series dataset \ref{fig1} that contains 288 user GPS coordinates of three month (March, April, May). These users lives in Spain.
+The data was collected whenever the users are connected to their accounts.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Dataset.png" alt="Figure 1. Time series database of GPS coordinates." height="800" width="600" /> 
+</figure>
+<center>
+<strong> Figure 1. </strong> Time series database of GPS coordinates.
+</center>
+
+<p>We can see in Figure 2 the representation of 10\% of the users on the map.  As we can notice the users are so active inside and outside of Spain. In Figure 3 we see the GPS representation of a user on the map.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Allusers.png" alt="Figure 2. Represantation of 10\% of the users population we have on the map." height="800" width="600" /> 
+</figure>
+<center>
+<strong> Figure 2. </strong> Represantation of 10\% of the users population we have on the map.
+</center>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/oneuser.png" alt="Figure 3. Representation of one user GPS coordinates on the map." height="800" width="600" /> 
+</figure>
+<center>
+<strong> Figure 3. </strong> Representation of one user GPS coordinates on the map.
+</center>
+
+<h2 id="methodology">Methodology</h2>
+<p>The first objective is to extract the points of interest (POIs) which represent the locations that the individual visit frequently (Home, Place of work, gym \dots, etc), of the different users we have in the dataset after grouping  it by users so that it would be easy to analyse them separately.<br />
+Working on a real world data means the existence of noise the first two clustering algorithms (K-means and GMM) as we can see in Figures 4 y 5 they weren’t capable of eliminating the noise in our data, because in these algorithms each point must belong to one cluster which is not convenient for our data, not all the points are part of a location some points shows us only the trajectory that the user did to get to the desired place so we can say that these two approaches are not able to differentiate between a stop point and a trajectory. \</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Kmeans_GPS.png" alt="Figure 4. Graphic representation of a user GPS coordinations after k-means clustering." height="800" width="600" /> 
+</figure>
+<center>
+<strong> Figure 4. </strong> Graphic representation of a user GPS coordinations after k-means clustering.
+</center>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/EM_GPS.png" alt="Figure 5. Graphic representation of a user GPS coordinations after GMM clustering." height="800" width="600" /> 
+</figure>
+<center>
+<strong> Figure 5. </strong> Graphic representation of a user GPS coordinations after GMM clustering.
+</center>
+
+<p>So we had to look for other approaches that can eliminate the noise. The first algorithm we tried was DBSCAN [6], but it wasn’t easy for us to estimate the best parameters, especially that each user has it’s proper trajectory and also the density of the points wasn’t unified for the same user, some group of points are so close to each other then others..\</p>
+
+<p>For that the next algorithm we used was HDBSCAN [5] because in this algorithm the threshold is not fixed so it’s capable of identifying clusters of different densities. This algorithm gives us some good results but after implementing the clusters on the map we can see that for some users the clusters didn’t include just the meaningful points but also some of the noise (the trajectory of the user) as we can see in Figure 4.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map1.png" alt="Map1." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map2.png" alt="Map2." height="800" width="600" /> 
+</figure>
+<center>
+<strong> Figure 6. </strong> Implementation of a user clusters on the map after removing the noise with HDBSCAN
+</center>
+
+<p>For that we needed to implement an algorithm that can identify the users stop points, which tells us where and when a user has stopped (stayed). It consists of a timestamp, a user identifier as well as longitude and latitude coordinates. It also has two additional variables: t_start and t_end indicating the start-time and end-time of the stop (see Figure~\ref{fig5}). 
+The stop location extraction algorithm [7] has two parameters which are dependent on the application:</p>
+
+<p>$\bullet \quad $ <strong> Roaming distance:</strong>  defines how far a user is allowed to roam to still be considered part of the stop location (dashed orange line
+$\bullet \quad $ <strong> Stay duration: </strong> specifies the minimum amount of time a user has to stay within the roaming distance for his position to be considered as being part of a particular stop location.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/output-stop-alg.png" alt="Map1." height="800" width="300" /> 
+ /figure&gt;
+<center>
+<strong> Figure 7. </strong> Output of the stop algorithm.
+</center> 
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/stoppoints.png" alt="Map1." height="800" width="600" /> 
+</figure>
+<center>
+<strong> Figure 8. </strong> Representation of the stop points of the users on the map.
+</center> 
+
+
+The next step is to aggregates stop locations in close proximity of each other to know where and how often a user has stopped at a destination. The destination consists of a timestamp, a user identifier as well as latitude and longitude coordinates. In addition, the visitation count denotes the number of stops at a particular destination and cluster\_assignment identifies the destination itself.\\
+
+What we are actually interested in is the destination where a user has stopped and not necessarily the exact GPS position recorded. For instance, the group of stop locations surrounding a building should be regarded as one destination. In other words, we need to cluster or aggregate the stop locations into destinations (see Figure~\ref{fig7}).
+
+To aggregate the stop locations into destinations we use Scipy's hierarchical clustering functions \ref{fig8}. For our application there are two important parameters: \emph{The linkage parameter} defines how the clusters are formed. \emph{The distance parameter} specifies within what spatial distance stop locations are to be considered of the same cluster.
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/output-destination-alg.png" alt="Output of destination algorithm." height="800" width="600" /> 
+</figure>
+<center>
+<strong> Figure 9. </strong> Output of destination algorithm
+</center> 
+
+To get medoid for each destination, now that we have assigned each stop location to a destination, we want to have only one point representing each destination.
+
+To have one representative point per cluster, we calculate the medoid of the stop locations within each destination. We also calculate the number of stop locations at each destination, which is useful for ranking destinations based on visitation counts.
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/destinations1.png" alt="Map1." height="800" width="600" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/destinations2.png" alt="Map2." height="800" width="600" /> 
+</figure>
+<center>
+<strong> Figure 10. </strong> Representation of the users destinations on the map.
+</center> 
+
+Next step is to predict n-next steps to do that we use two different approaches the markov chains and random forest. But before that we need to split our data into two parts train which we give 90\% of our data and the rest(10\%) to the test.
+
+After running the hidden markov chains model on our data we get to predict the next clusters of each user. We are predicting the clusters because each cluster represent a POI. 
+After training our model we calculate the accuracy of it for each user and to get the general accuracy score we get the mean score and it was 49\%. that means that our model is not that good at predicting the next location.
+
+So the next approach we used is random forest which is a supervised learning algorithm that can be used for class classification or regression (prediction).
+The accuracy of Random forest model is 94\% which shows that the model is doing well at predicting the users next locations.
+
+### References
+[1] S. Gambs and M.O. Killijian, Next Place Prediction using Mobility Markov Chains, MPM’12, April 10, 2012, Bern, Switzerland.
+[2] Z. Fu, Z. Tian, Y. Xu and C. Qiao, A Two-Step Clustering Approach to Extract Locations from Indi- vidual GPS Trajectory Data, ISPRS Int. J. Geo-Inf. Vol. 5, 166, 1–17, 2016. doi:10.3390/ijgi5100166
+[3] N. Palmius and A. Tsanas and K. E. A. Saunders and A. C. Bilderbeck and J. R. Geddes and G. M. Goodwin and M. De Vos, Detecting Bipolar Depression From Geographic Location Data, IEEE Trans Biomed Eng., Vol. 64, No. 8, 1761–1771, 2017. doi: 10.1109/TBME.2016 2611862
+[4] J. Busk and M. Faurholt-Jepsen and M. Frost and J. E. Bardram and L. Vedel Kessing and O. Winther, Forecasting Mood in Bipolar Disorder From Smartphone Self-assessments: Hierarchical Bayesian Approach, JMIR Mhealth Uhealth, Vol. 8, No. 4, 1–14, 2020
+[5] P. Widhalm and P. Nitsche and N. Brandie, Transport mode detection with realistic Smartphone sensor data. In Proceedings of the International Conference on Pattern Recognition, Tsukuba, Japan, 11–15 November 2015; IEEE: Piscataway, NJ, USA, 2012; 573–576.
+[6] A. Bogomolov and B. Lepri and J. Staiano and N. Oliver and F. Pianesi and A. Pentland, Once Upon a Crime: Towards Crime Prediction from Demographics and Mobile Data. In Proceedings of the 16th International Conference on Multimodal Interaction, Istanbul, Turkey, 12–16 November 2014; ACM: New York, NY, USA, 2014; 427–434.
+[7] V. Bogorny, C. Renso, A.R. de Aquino, F. de Lucca Siqueira and L.O. Alvares, Constant–A Con- ceptual Data Model for Semantic Trajectories of Moving Objects, Trans. GIS Vol. 18, 66–88, 2014.
+[8] L. Xiang, M. Gao and T. Wu, Extracting Stops from Noisy Trajectories: A Sequence Oriented Clustering Approach, ISPRS Int. J. Geo-Inf. Vol. 5, 29, 1–18, 2016. doi:10.3390/ijgi5030029
+[9] Ester M., Kriegel H.P., Sander J. and Xu X. A density-based algorithm for discovering clusters in large spatial databases with noise. KDD-96 Proceedings, 226–231, 1996
+[10] Campello R.J.G.B., Moulavi D., Sander J. Density-Based Clustering Based on Hierarchical Density Estimates. In: Pei J., Tseng V.S., Cao L., Motoda H., Xu G. (eds) Advances in Knowledge Discovery and Data Mining. PAKDD 2013. Lecture Notes in Computer Science, Vol. 7819. Springer, Berlin, Heidelberg, 2013.
+[11] R. Hariharan and K. Toyama. Project Lachesis: Parsing and Modeling Location Histories. KDD- 96 Proceedings, In: Egenhofer M.J., Freksa C., Miller H.J. (eds) Geographic Information Science. GIScience 2004. Lecture Notes in Computer Science, Springer, Berlin, Heidelberg, Vol. 3234, 106– 124, 2004
+[12] Camacho-Lara, S. Current and Future GNSS and Their Augmentation Systems In: Handbook of Satellite Applications; Springer Science and Business Media LLC: Berlin, Germany, 2013, pp. 617?654.
+
+</figure>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div id="content" class="container">
+
+  <div class="relatedPosts">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+    <h2>Related Posts</h2>
+    
+    
+    
+    
+    
+
+    
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/MEMSgif2.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P0010" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Touchdown localization for the MEMS problem with variable dielectric permittivity </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial we study the localization of touchdown points in a mathematical model for micro-electro-mechanical systems (MEMS) with variable dielectric permittivity. We consider a device consisting of two conducting plates, connected to an electric circuit. The upper plate is rigid and fixed while the lower one is elastic and fixed only at the boundary. When a voltage (difference of potential between the two plates) is applied, the lower plate starts to bend and, if the voltage is large enough, the lower plate eventually touches the upper one. This is called touchdown phenomenon and our aim is to control the localization of touchdown points in the device by a suitable choice of the dielectric permittivity of the material.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+          
+          - 30 September 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0008/animation.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P0008" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Propagation of one and two-dimensional discrete waves under finite difference approximation </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      We analyze the propagation properties of the numerical versions of one and two-dimensional wave equations, semi-discretized in space by finite difference schemes, and we illustrate that numerical solutions may have unexpected behaviours with respect to the analytic ones.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+          
+          - 26 June 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0007/p0018_50.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P0007" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Structured deformations of continua </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      A Multiscale Geometrical Basis for Variational Problems in Mechanics
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/MarcoM">Marco Morandotti</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JoseM">Jose Matias</a>
+          
+          - 26 March 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn  btn-sm" style="margin-left: auto;"></button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://cmc.deusto.eus/wp-content/uploads/2019/02/levet-set.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P0006" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> An introduction to the moment method for optimal control problems for polynomial ODEs </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      The aim of this note is to explain how one can solve an optimal control problem with the moment method
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/SwannM">Swann MARX</a>
+          
+          - 04 February 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+            
+    </div>
+  </div> 
+    </div>
+  </div>
+
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

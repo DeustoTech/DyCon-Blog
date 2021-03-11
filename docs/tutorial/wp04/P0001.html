@@ -311,16 +311,16 @@ img:active{
         <h3>Introduction</h3>
 <p>In this work, we analyze the numerical approximation of the inverse design problem for the Burgers equation, both in the viscous and in the inviscid case:</p>
 
-<script type="math/tex; mode=display">\begin{equation}
-\min_{u_0} \mathcal{J}_\nu(u_0) =\min_{u_0} \frac12\int_\mathbb{R} \left(u^\nu(x,T)-u^\ast(x)\right)^2 dx,
-\end{equation}</script>
+<p>[\begin{equation}
+\min_{u_0} \mathcal{J}<em>\nu(u_0) =\min</em>{u_0} \frac12\int_\mathbb{R} \left(u^\nu(x,T)-u^\ast(x)\right)^2 dx,
+\end{equation}]</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 \mbox{subject to} \begin{cases}
-\partial_t u^\nu+\partial_x \left(\frac{(u^\nu)^2}{2}\right)=\nu \partial_{xx} u^\nu, x\in\mathbb{R},\,t>0,\\[15pt]
+\partial_t u^\nu+\partial_x \left(\frac{(u^\nu)^2}{2}\right)=\nu \partial_{xx} u^\nu, x\in\mathbb{R},\,t&gt;0,\[15pt]
 u^\nu(x,0)=u_0(x), x\in\mathbb{R},
 \end{cases}
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>distinguishing the viscous, $\nu &gt;0$, and the inviscid case, $\nu=0$. Given a time $T&gt;0$ and a target function $u^\ast$ the aim is to identify the initial datum $u_0$ so that the solution, at time $t=T$, reaches the target $u^\ast$ or gets as close as possible to it. In particular, we focus on problems with large values of $T$, for which convergence of the numerical schemes in the classical sense of numerical analysis might not suffice to obtain accurate results.</p>
 
@@ -329,53 +329,53 @@ u^\nu(x,0)=u_0(x), x\in\mathbb{R},
 <h3>Description of the numerical algorithms</h3>
 <p>To implement the problem numerically, we opt for a discretization of (2) using classical conservative schemes. Let us denote spatial nodes $x_{j+1/2}={\Delta x}(j+1/2)$, $j\in\mathbb{Z}$, and time instants $t_n=n{\Delta t}$, $n\in n \cup{0}$, where ${\Delta x},{\Delta t}&gt;0$ are the mesh size and time-step respectively. We approximate the solution $u$ of (2) by a piecewise constant function $u_\Delta$ such that</p>
 
-<script type="math/tex; mode=display">u_\Delta(x,t)=u^n_j, x\in[x_{j-1/2},x_{j+1/2}),\,t\in[t_n,t_{n+1}),</script>
+<p>[u_\Delta(x,t)=u^n_j, x\in[x_{j-1/2},x_{j+1/2}),\,t\in[t_n,t_{n+1}),]</p>
 
 <p>where</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:scheme}
+<p>[\begin{equation}\label{eq:scheme}
 \begin{cases}
-\displaystyle u^{n+1}_j=u^n_j-\frac{ {\Delta t} }{ {\Delta x} }(g^n_{j+1/2}-g^n_{j-1/2}) \\[15pt]
-\displaystyle +\frac{\nu{\Delta t} }{ {\Delta x}^2}(u^n_{j-1}-2u^n_j+u^n_{j+1}),\ j\in\mathbb{Z},n=0,\dots,N, \\[20pt]
-\displaystyle u^0_j=\frac{1}{ {\Delta x} }\int_{x_{j-1/2} }^{x_{j+1/2} } u_0(x)dx,\ j\in\mathbb{Z}.
+\displaystyle u^{n+1}<em>j=u^n_j-\frac{ {\Delta t} }{ {\Delta x} }(g^n</em>{j+1/2}-g^n_{j-1/2}) \[15pt]
+\displaystyle +\frac{\nu{\Delta t} }{ {\Delta x}^2}(u^n_{j-1}-2u^n_j+u^n_{j+1}),\ j\in\mathbb{Z},n=0,\dots,N, \[20pt]
+\displaystyle u^0<em>j=\frac{1}{ {\Delta x} }\int</em>{x_{j-1/2} }^{x_{j+1/2} } u_0(x)dx,\ j\in\mathbb{Z}.
 \end{cases}
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>Here, $N=\lceil T/{ {\Delta t} }\rceil$ is the number of time-steps needed to reach $T$. We denote $g^n_{j+1/2}=g(u^n_j,u^n_{j+1})$, where the function $g$ is the numerical flux. In this paper we compare two fluxes:</p>
 
-<script type="math/tex; mode=display">\mbox{Engquist-Osher (EO): } g^{EO}(v,w)=\dfrac{v(v+|v|)}{4}+\dfrac{w(w-|w|)}{4}, \\[10pt]
-\mbox{Modified Lax-Friedrichs (MLF): } g^{MLF}(v,w)=\dfrac{v^2+w^2}{4}-\dfrac{ {\Delta x} }{ {\Delta t} }\left(\dfrac{w-v}{4}\right)</script>
+<p>[\mbox{Engquist-Osher (EO): } g^{EO}(v,w)=\dfrac{v(v+|v|)}{4}+\dfrac{w(w-|w|)}{4}, \[10pt]
+\mbox{Modified Lax-Friedrichs (MLF): } g^{MLF}(v,w)=\dfrac{v^2+w^2}{4}-\dfrac{ {\Delta x} }{ {\Delta t} }\left(\dfrac{w-v}{4}\right)]</p>
 
 <p>In the simulations we follow the discrete approach to optimization. For the discretization of (1), we consider a simple quadrature rule:</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:funcdiscr}
-\mathcal{J}_{\Delta}(u_\Delta^0)=\frac{ {\Delta x} }{2} \sum_\mathbb{Z} (u_j^N-u^\ast_j)^2,
-\end{equation}</script>
+<p>[\begin{equation}\label{eq:funcdiscr}
+\mathcal{J}<em>{\Delta}(u</em>\Delta^0)=\frac{ {\Delta x} }{2} \sum_\mathbb{Z} (u_j^N-u^\ast_j)^2,
+\end{equation}]</p>
 
 <p>where the target function $u^\ast$ has been discretized in the same manner as the initial data $u_0$ in (3).</p>
 
 <p>Regarding the optimization technique, we use the classical gradient descent method based on the adjoint methodology. Following the discrete approach, it is easy to obtain the corresponding discrete adjoint system for (3):</p>
 
-<script type="math/tex; mode=display">\begin{equation}\label{eq:adjscheme}
+<p>[\begin{equation}\label{eq:adjscheme}
 \begin{cases}
-\rho^{n}_j=\rho^{n+1}_j+\frac{ {\Delta t} }{ {\Delta x} }\Big(\partial_v g(u^n_j,u^n_{j+1}) \left(\rho^{n+1}_{j+1}-\rho^{n+1}_j\right) \\[15pt]
- +\partial_w g(u^n_{j-1},u^n_{j})\left(\rho^{n+1}_j-\rho^{n+1}_{j-1}\right)\Big) \\[15pt]
- +\frac{\nu{\Delta t} }{ {\Delta x}^2}(\rho^{n+1}_{j-1}-2\rho^{n+1}_j+\rho^{n+1}_{j+1}),  j\in\mathbb{Z},n=N-1\dots,0, \\[15pt]
+\rho^{n}<em>j=\rho^{n+1}_j+\frac{ {\Delta t} }{ {\Delta x} }\Big(\partial_v g(u^n_j,u^n</em>{j+1}) \left(\rho^{n+1}<em>{j+1}-\rho^{n+1}_j\right) \[15pt]
+ +\partial_w g(u^n</em>{j-1},u^n_{j})\left(\rho^{n+1}<em>j-\rho^{n+1}</em>{j-1}\right)\Big) \[15pt]
+ +\frac{\nu{\Delta t} }{ {\Delta x}^2}(\rho^{n+1}<em>{j-1}-2\rho^{n+1}_j+\rho^{n+1}</em>{j+1}),  j\in\mathbb{Z},n=N-1\dots,0, \[15pt]
 \rho^N_j=u^N_j-u^\ast_j,  j\in\mathbb{Z},
 \end{cases}
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>To minimize (4), we will take the descent direction given by:</p>
 
-<script type="math/tex; mode=display">\begin{equation*}
+<p>[\begin{equation<em>}
 \delta u_j^0=-\rho^0_j,  j\in\mathbb{Z}.
-\end{equation*}</script>
+\end{equation</em>}]</p>
 
 <p>This direction is straightforwardly obtained following the same arguments as for the continuous level. Thus, the new initial data $u_\Delta^{0,\varepsilon}$ will be given by</p>
 
-<script type="math/tex; mode=display">\begin{equation*}
+<p>[\begin{equation<em>}
 u^{0,\varepsilon}_j = u^0_j-\varepsilon \rho^0_j,  j\in\mathbb{Z}
-\end{equation*}</script>
+\end{equation</em>}]</p>
 
 <p>for some $\varepsilon&gt;0$ small enough.</p>
 
@@ -384,7 +384,7 @@ u^{0,\varepsilon}_j = u^0_j-\varepsilon \rho^0_j,  j\in\mathbb{Z}
 <h3>Algorithm 1: Solve discrete optimization problem</h3>
 <p><strong>Input:</strong></p>
 
-<script type="math/tex; mode=display">\Delta x,\Delta t,N,\{u^0_j\}_{j=0,...,M},\{u^\ast_j\}_{j=0,...,M}</script>
+<p>[\Delta x,\Delta t,N,{u^0<em>j}</em>{j=0,…,M},{u^\ast_j}_{j=0,…,M}]</p>
 
 <p><br /></p>
 <ol>
@@ -412,31 +412,31 @@ u^{0,\varepsilon}_j = u^0_j-\varepsilon \rho^0_j,  j\in\mathbb{Z}
 </ol>
 <p><strong>Output:</strong> Optimal solution</p>
 
-<script type="math/tex; mode=display">\{u^{*,0}_j\}_{j=0,...,M}</script>
+<p>[{u^{*,0}<em>j}</em>{j=0,…,M}]</p>
 
 <h3>Numerical viscosity</h3>
 <p>It is well known that (3) can be rewritten in its viscous form in the following manner:</p>
 
-<script type="math/tex; mode=display">\begin{equation*}
+<p>[\begin{equation<em>}
 \frac{u_{j}^{n+1}-u_j^n}{\Delta t}+\frac{(u_{j+1}^n)^2-(u_{j-1}^n)^2}{4\Delta x}=R(u_j^n,u_{j+1}^n)-R(u_{j-1}^n,u_{j}^n)+\frac{\nu}{ {\Delta x}^2}(u^n_{j-1}-2u^n_j+u^n_{j+1}),
-\end{equation*}</script>
+\end{equation</em>}]</p>
 
 <p>where $R$ is uniquely defined by</p>
 
-<script type="math/tex; mode=display">\begin{equation*}
+<p>[\begin{equation<em>}
 R(u,v)=\frac{1}{2{\Delta x} } \Big(\frac{u^2}{2}+\frac{v^2}{2}-2g(u,v)\Big).
-\end{equation*}</script>
+\end{equation</em>}]</p>
 
 <p>In the case of the numerical fluxes that we consider in this paper, we have:</p>
 
-<script type="math/tex; mode=display">R^{MLF}(u,v)=\frac{v-u}{4{\Delta t} }, \\
- R^{EO}(u,v)=\frac{1}{4{\Delta x} }(v|v|-u|u|).</script>
+<p>[R^{MLF}(u,v)=\frac{v-u}{4{\Delta t} }, <br />
+ R^{EO}(u,v)=\frac{1}{4{\Delta x} }(v|v|-u|u|).]</p>
 
 <p>Both schemes are convergent in the classical sense of the numerical analysis. However, the large-time behavior of $u_\Delta$ depends on the degree of homogeneity of the term $R$. In other words, let us assume that there exists $\alpha\in R$ such that</p>
 
-<script type="math/tex; mode=display">\begin{equation*}
-R(\mu u, \mu v)=\mu^\alpha R(u,v), \forall u,v\in\mathbb{R} \mbox{ and } \forall \mu>0.
-\end{equation*}</script>
+<p>[\begin{equation<em>}
+R(\mu u, \mu v)=\mu^\alpha R(u,v), \forall u,v\in\mathbb{R} \mbox{ and } \forall \mu&gt;0.
+\end{equation</em>}]</p>
 
 <p>It is clear that $\alpha=2$ for Engquist-Osher and $\alpha=1$ for modified Lax-Friedrichs. Thus, the numerical viscosity inherent in MLF drives the system into a diffusive wave too early and, consequently, continuous metastable states are not reproduced numerically.</p>
 
@@ -461,6 +461,15 @@ R(\mu u, \mu v)=\mu^\alpha R(u,v), \forall u,v\in\mathbb{R} \mbox{ and } \forall
     
 
     
+    
+        
+        
+    
+        
+    
+        
+    
+      
     
         
         

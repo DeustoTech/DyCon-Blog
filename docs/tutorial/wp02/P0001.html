@@ -308,45 +308,45 @@ The turnpike property is very useful, since it gives us an idea of the nature of
 <h4>The Turnpike property in the Linear Case</h4>
 <p>Consider the finite-dimensional dynamical system</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 \begin{cases}
 \label{linearproblem}
- x_t + Ax = Bu\\
+ x_t + Ax = Bu<br />
  x(0)=x_0 \in \mathbb{R}^{N}
 \end{cases}
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>where $A \in M(N,N)$, $B\in M(N,M)$, with control $u \in L^2 (0,T;\mathbb{R}^{N})$. Given a matrix $C \in M(N,N)$, and some $x^\ast  \in \mathbb{R}^{N}$, consider the optimal control problem</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 \min_{u} J^T (u) = \frac{1}{2} \int_0^T \left( |u(t)|^2 + |C(x(t)-x^\ast )|^2 \right)dt.
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>There exists a unique optimal control $u(t)$ in $ L^2 (0,T;\mathbb{R}^{M})$, characterized by the optimality condition</p>
 
-<script type="math/tex; mode=display">u = - B^\ast p =
+<p>[u = - B^\ast p =
     \begin{cases}
-    -p_t + A^\ast  p = C^\ast C( x-x^\ast ) \\
+    -p_t + A^\ast  p = C^\ast C( x-x^\ast ) <br />
     p(T)=0 \in \mathbb{R}^N
-    \end{cases}</script>
+    \end{cases}]</p>
 
 <p>Let formulate the same problem for the steady-state model</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 Ax=Bu
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>Then, there exists a unique minimum $\bar{u}$, and a unique optimal state $\bar{x}$, of the stationary optimal control problem</p>
 
-<script type="math/tex; mode=display">\begin{equation}
+<p>[\begin{equation}
 %\nonumber
 \left\lbrace
 \begin{array}{clc}
- \min_{u} J_s (u) = \frac{1}{2} \left( |u|^2 + |C(x -x^\ast )|^2 \right). \
-\\  subject \,\,\, to\,\,\, Ax=Bu
+ \min_{u} J_s (u) = \frac{1}{2} \left( |u|^2 + |C(x -x^\ast )|^2 \right). <br />
+\  subject \,\,\, to\,\,\, Ax=Bu
 \end{array}
 \right.
-\end{equation}</script>
+\end{equation}]</p>
 
 <p>Let assume that:</p>
 <ol>
@@ -356,7 +356,17 @@ Ax=Bu
 <p>Then, we have the following result (proved in [<a href="porretta2013long">2</a>])
 <strong>Theorem:</strong> <em>there exist positive constants $\lambda$ and $K$, independent on $T$, such that $ \forall t \in [0,T]$</em></p>
 
-<script type="math/tex; mode=display">|u(t) -\bar{u}| + |x(t) - \bar{x}| \leq K \left( e^{-\lambda t} + e{-\lambda (T-t)} \right) .</script>
+<table>
+  <tbody>
+    <tr>
+      <td>[</td>
+      <td>u(t) -\bar{u}</td>
+      <td>+</td>
+      <td>x(t) - \bar{x}</td>
+      <td>\leq K \left( e^{-\lambda t} + e{-\lambda (T-t)} \right) .]</td>
+    </tr>
+  </tbody>
+</table>
 
 <h4>Some results and extensions on the turnpike property</h4>
 <ul>
@@ -415,6 +425,15 @@ Ax=Bu
     
 
     
+    
+        
+        
+    
+        
+    
+        
+    
+      
     
         
         

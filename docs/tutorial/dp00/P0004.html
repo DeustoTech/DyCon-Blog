@@ -300,13 +300,12 @@ img:active{
 
 <p>From a mathematical viewpoint, we can see RL as an optimal control problem. The environment is described through a dynamical system of the form</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\tag{1}
-\left\{ \begin{array}{ll}
-x_{t+1} =  f(x_t,u_t) & t= 0,1,2,\ldots \\
+<p>[\tag{1}
+\left{ \begin{array}{ll}
+x_{t+1} =  f(x_t,u_t) &amp; t= 0,1,2,\ldots <br />
 x_0 = x
 \end{array}
-\right. %]]></script>
+\right.]</p>
 
 <p>At each time-step, $x_t$ represents the state of the environment, which evolves according to the function $f: \mathbb{R}^n\times \mathcal{U} \to \mathbb{R}^n$. This function might be unknown by the agent, and depends on the current state $x_t$ and the control $u_t$ chosen by the agent. This choice is then evaluated by a reward $r_t = r(x_t,u_t)$.</p>
 
@@ -314,8 +313,8 @@ x_0 = x
 
 <p>The optimal control problem that we are considering consists in maximizing, over the control strategy, the rewards accumulated during a process of infinite length</p>
 
-<script type="math/tex; mode=display">\tag{2}
-\max_{\{u_t\}_t} \sum_{t=0}^\infty \gamma^t r(x_t,u_t) \qquad \text{subject to (1)}.</script>
+<p>[\tag{2}
+\max_{{u_t}<em>t} \sum</em>{t=0}^\infty \gamma^t r(x_t,u_t) \qquad \text{subject to (1)}.]</p>
 
 <p>The parameter $\gamma \in (0,1)$ is called a discount factor, and ensures that the sum of rewards over the time-steps is finite. This is the so-called discounted <em>infinite-horizon</em> problem. In many applications, the introduction of the discount factor is also motivated by the fact that the rewards obtained in the near future are considered to be more important than those obtained with a bigger delay.</p>
 
@@ -325,16 +324,16 @@ x_0 = x
 
 <p>The probably most important element in Reinforcement Learning is the <strong>optimal value function</strong>, defined as</p>
 
-<script type="math/tex; mode=display">V^\ast (x) := \max_{\{u_t\}_t} \left\{ \sum_{t=0}^\infty \gamma^t r(x_t,u_t); \quad \text{s.t. (1) with $x_0 = x$} \right\}</script>
+<p>[V^\ast (x) := \max_{{u_t}<em>t} \left{ \sum</em>{t=0}^\infty \gamma^t r(x_t,u_t); \quad \text{s.t. (1) with $x_0 = x$} \right}]</p>
 
 <p>It represents the best total reward that one can expect if the initial state is $x$. The value function satisfies the following Dynamic Programming Principle, also known as Bellman equation.</p>
 
-<script type="math/tex; mode=display">V^\ast (x) = \max_{u\in \mathcal{U}} \left\{ r(x,u) + \gamma V^\ast (f(x,u)) \right\}</script>
+<p>[V^\ast (x) = \max_{u\in \mathcal{U}} \left{ r(x,u) + \gamma V^\ast (f(x,u)) \right}]</p>
 
 <p>It allows the design of an optimal control in a feedback form.</p>
 
-<script type="math/tex; mode=display">\tag{3}
-u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} \left\{ r(x,u) + \gamma V^\ast (f(x,u)) \right\}</script>
+<p>[\tag{3}
+u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} \left{ r(x,u) + \gamma V^\ast (f(x,u)) \right}]</p>
 
 <h3 id="the-q-function">The $Q$-function</h3>
 
@@ -342,7 +341,7 @@ u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} \left\{ r(x,u) + \gamma V^\ast (f(
 
 <p>Therefore, rather than approximating the value function, we may concentrate our efforts on approximating the $Q$-function, defined as</p>
 
-<script type="math/tex; mode=display">Q(x,u) := r(x,u) + \gamma V^\ast (f(x,u))</script>
+<p>[Q(x,u) := r(x,u) + \gamma V^\ast (f(x,u))]</p>
 
 <p>It represents the best total reward that we can expect if the initial state is $x$ and the first control taken is $u$.</p>
 
@@ -350,12 +349,12 @@ u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} \left\{ r(x,u) + \gamma V^\ast (f(
 
 <p>The $Q$-function allows the design of an optimal feedback control without using the dynamics $f$.</p>
 
-<script type="math/tex; mode=display">u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} Q(x,u)</script>
+<p>[u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} Q(x,u)]</p>
 
 <p>Using the identity $V^\ast (x) = \max_{u\in \mathcal{U}} Q(x,u)$, we can deduce the Bellman equation for the $Q$-function.</p>
 
-<script type="math/tex; mode=display">\tag{4}
-Q(x,u) = r(x,u) + \gamma \max_{u\in \mathcal{U}} Q(x,u)</script>
+<p>[\tag{4}
+Q(x,u) = r(x,u) + \gamma \max_{u\in \mathcal{U}} Q(x,u)]</p>
 
 <h2 id="q-learning">$Q$-learning</h2>
 
@@ -369,7 +368,7 @@ Q(x,u) = r(x,u) + \gamma \max_{u\in \mathcal{U}} Q(x,u)</script>
   <li><strong>$\varepsilon$-greedy policy:</strong></li>
 </ol>
 
-<script type="math/tex; mode=display">u_t = \max_{u\in\mathcal{U}}  \widehat{Q}_k(x_t,\, u)\quad \text{with probability $1-\varepsilon$}</script>
+<p>[u_t = \max_{u\in\mathcal{U}}  \widehat{Q}_k(x_t,\, u)\quad \text{with probability $1-\varepsilon$}]</p>
 
 <p>and $u_k$ is chosen randomly with probability $\varepsilon$ (exploration vs exploitation).</p>
 
@@ -377,7 +376,7 @@ Q(x,u) = r(x,u) + \gamma \max_{u\in \mathcal{U}} Q(x,u)</script>
   <li><strong>Improvement of $\widehat{Q}(x_t, u_t)$:</strong> after each time-step, we use the observed $(x_{t+1}, r_t)$ to improve the approximation of $Q(x_t,u_t)$ in the following way</li>
 </ol>
 
-<script type="math/tex; mode=display">\widehat{Q}_{k+1} (x_t,u_t) = (1-\alpha) \widehat{Q}_k(x_t,u_t) + \alpha \big(  r_t + \gamma \max_{u\in\mathcal{U}} \widehat{Q}_k(x_{t+1}, u) \big)</script>
+<p>[\widehat{Q}<em>{k+1} (x_t,u_t) = (1-\alpha) \widehat{Q}_k(x_t,u_t) + \alpha \big(  r_t + \gamma \max</em>{u\in\mathcal{U}} \widehat{Q}<em>k(x</em>{t+1}, u) \big)]</p>
 
 <p>here, $\alpha&gt;0$ is called the learning rate.</p>
 
@@ -400,35 +399,34 @@ Q(x,u) = r(x,u) + \gamma \max_{u\in \mathcal{U}} Q(x,u)</script>
 
 <p>Let us first define the environment. We consider a discretized rectangular domain:</p>
 
-<script type="math/tex; mode=display">\Omega := \{ 1,2,3, \ldots, 40 \}^2</script>
+<p>[\Omega := { 1,2,3, \ldots, 40 }^2]</p>
 
 <p>We want to find the shortest path between any starting position in the domain and the top center of the domain, white area in the video below. The position can be moved, at each time-step, one unit up, down, right or left, i.e. the underlying dynamics are given by</p>
 
-<script type="math/tex; mode=display">\left\{ \begin{array}{l}
-x_{t+1} = x_t + u_t \quad t = 0,1,2, \ldots ,\tau \\
+<p>[\left{ \begin{array}{l}
+x_{t+1} = x_t + u_t \quad t = 0,1,2, \ldots ,\tau <br />
 x_0 = x
-\end{array} \right.</script>
+\end{array} \right.]</p>
 
 <p>where $\tau$ is the first time the state reaches the limits of the domain. The experiment is considered a success if the terminal position is in the target area, and a defeat otherwise. The possible controls are</p>
 
-<script type="math/tex; mode=display">\mathcal{U}:= \{ (0,1), -(0,1), (1,0), -(1,0)  \}</script>
+<p>[\mathcal{U}:= { (0,1), -(0,1), (1,0), -(1,0)  }]</p>
 
 <p>We denote by $\partial \Omega$ the limits of the domain (blue squares in the video), i.e.</p>
 
-<script type="math/tex; mode=display">\partial \Omega := \{ (i,j) \in \Omega\, ;  \text{with} \ \{ i, j\} \cap \{1,40\} \neq \emptyset \}</script>
+<p>[\partial \Omega := { (i,j) \in \Omega\, ;  \text{with} \ { i, j} \cap {1,40} \neq \emptyset }]</p>
 
 <p>We denote by $\mathcal{T}$ the target area (white squares)</p>
 
-<script type="math/tex; mode=display">\mathcal{T} := \{ (1,j) \in \Omega\, ;  j\in [18,22] \}</script>
+<p>[\mathcal{T} := { (1,j) \in \Omega\, ;  j\in [18,22] }]</p>
 
 <p>Now we need to define a reward that makes the agent move the position from the initial one $x$ to the target area in the minimum number of steps, without reaching the limits of the domain.</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-r(x_t,u_t):= \left\{ \begin{array}{ll}
--1 & \text{if} \ x_t \in \Omega \\
-100 & \text{if} \ x_t \in \mathcal{T} \\
--100 & \text{if} \ x_t \in \partial\Omega \setminus \mathcal{T}
-\end{array} \right. %]]></script>
+<p>[r(x_t,u_t):= \left{ \begin{array}{ll}
+-1 &amp; \text{if} \ x_t \in \Omega <br />
+100 &amp; \text{if} \ x_t \in \mathcal{T} <br />
+-100 &amp; \text{if} \ x_t \in \partial\Omega \setminus \mathcal{T}
+\end{array} \right.]</p>
 
 <p>Giving a negative reward when $x_t\in \Omega$ stimulates the agent to take the minimum possible number of steps until the target area.</p>
 
@@ -452,17 +450,16 @@ The plot represents the evolution of the success rate with the number of experim
 
 <p>We can change the environment by adding a potential that moves the position to the right when it is in a certain region (dark green area)</p>
 
-<script type="math/tex; mode=display">P: = \{ (i,j)\in \Omega \, ; j\in [5,15]  \}</script>
+<p>[P: = { (i,j)\in \Omega \, ; j\in [5,15]  }]</p>
 
 <p>In the new environment, the agent do not know how to get to the target area.</p>
 
 <p>In the following video, the agent uses the $Q$-function obtained in the original environment. However, the new dynamics are given by</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-x_{t+1} = \left\{ \begin{array}{ll}
-x_t + u_t & \text{if} \ x_t\in \Omega\setminus P \\
-x_t +3+ u_t & \text{if} \ x_t\in P
-\end{array} \right. %]]></script>
+<p>[x_{t+1} = \left{ \begin{array}{ll}
+x_t + u_t &amp; \text{if} \ x_t\in \Omega\setminus P <br />
+x_t +3+ u_t &amp; \text{if} \ x_t\in P
+\end{array} \right.]</p>
 
 <center>
 <table>
@@ -523,6 +520,15 @@ x_t +3+ u_t & \text{if} \ x_t\in P
     
 
     
+    
+        
+        
+    
+        
+    
+        
+    
+      
     
         
         

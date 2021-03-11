@@ -296,15 +296,13 @@ img:active{
         
         <p>We consider the semilinear hyperbolic system</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases} \partial_t y + \lambda \partial_x y = c_1 v + yv \quad & (x,t)\in (0,L)\times (0,T) \\ \partial_t v + \lambda \partial_x v = c_2 y + yv  & (x,t)\in (0,L)\times (0,T) \\ y(0,t) = v(0,t) & t \in (0,T) \\ v(L,t) = u(t) & t \in (0,T) \\ y(x,0) = y^0(x) & x \in (0,L) \\ v(x,0) = v^0(x) & x \in (0,L), \end{cases} %]]></script>
+<p>[\begin{cases} \partial_t y + \lambda \partial_x y = c_1 v + yv \quad &amp; (x,t)\in (0,L)\times (0,T) \ \partial_t v + \lambda \partial_x v = c_2 y + yv  &amp; (x,t)\in (0,L)\times (0,T) \ y(0,t) = v(0,t) &amp; t \in (0,T) \ v(L,t) = u(t) &amp; t \in (0,T) \ y(x,0) = y^0(x) &amp; x \in (0,L) \ v(x,0) = v^0(x) &amp; x \in (0,L), \end{cases}]</p>
 
 <p>where $\lambda &gt; 0$ and $u$ is the control. The stability and boundary stabilization of such 1D hyperbolic systems is studied in [1]. The aim of this tutorial is to semi-discretize in space this system of equations and design a stabilizing control by using the LQR method.</p>
 
 <p>The above system linearized around $(y,v) = (0,0)$ has the form</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{cases} \partial_t y + \lambda \partial_x y = c_1 v  \quad & (x,t)\in (0,L)\times (0,T) \\ \partial_t v + \lambda \partial_x v = c_2 y  & (x,t)\in (0,L)\times (0,T) \\ y(0,t) = v(0,t) & t \in (0,T) \\ v(L,t) = u(t) & t \in (0,T) \\ y(x,0) = y^0(x) & x \in (0,L) \\ v(x,0) = v^0(x) & x \in (0,L). \end{cases} %]]></script>
+<p>[\begin{cases} \partial_t y + \lambda \partial_x y = c_1 v  \quad &amp; (x,t)\in (0,L)\times (0,T) \ \partial_t v + \lambda \partial_x v = c_2 y  &amp; (x,t)\in (0,L)\times (0,T) \ y(0,t) = v(0,t) &amp; t \in (0,T) \ v(L,t) = u(t) &amp; t \in (0,T) \ y(x,0) = y^0(x) &amp; x \in (0,L) \ v(x,0) = v^0(x) &amp; x \in (0,L). \end{cases}]</p>
 
 <p>We will first use the LQR method to design a stabilizing control for the semi-discretized linear system, and then this control will be applied to the semi-discretized semilinear system.</p>
 
@@ -312,90 +310,79 @@ img:active{
 
 <p>The intervall $(0,L)$ is divided in $n+1$ subintervals, of size $h_x := \frac{L}{n+1}$, by $n+2$ evenly spaced points $x_k = kh_x$. Hence, $x_0 = 0$ and $x_{n+1} = L$. We set $y_k(t) = y(x_k,t), \quad v_k(t) := v(x_k,t)$ and similarly for the inital conditions $y_k^0(t) = y^0(x_k)$ and $v_k^0(t) := v(x_k)$.</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clear</span><span class="p">;</span> <span class="nb">clc</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span><span class="p">;</span> <span class="nb">clc</span><span class="p">;</span>
 <span class="n">L</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
 <span class="n">x</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">hx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The points where y and v are unknown are contained in x1 and x2 respectively, where x1 and x2 are defined below.</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Finite differences for the space derivative give</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\partial_x y(x_k,t) \approx \begin{cases} \frac{y_1(t)}{h_x} - \frac{v_0(t)}{h_x} \quad & k=1\\ \frac{y_k(t)-y_{k-1}(t)}{h_x} \quad  &\forall k \in \{2, \ldots, n+1 \} \end{cases} %]]></script>
+<p>[\partial_x y(x_k,t) \approx \begin{cases} \frac{y_1(t)}{h_x} - \frac{v_0(t)}{h_x} \quad &amp; k=1\ \frac{y_k(t)-y_{k-1}(t)}{h_x} \quad  &amp;\forall k \in {2, \ldots, n+1 } \end{cases}]</p>
 
 <p>and</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\partial_x v(x_k,t) \approx \begin{cases} \frac{v_{k+1}(t)-v_{k}(t)}{h_x} &\forall k \in \{0, \ldots, n-1 \} \\ \frac{-v_n(t)}{h_x} + \frac{u(t)}{h_x} \quad &k=n. \end{cases} %]]></script>
+<p>[\partial_x v(x_k,t) \approx \begin{cases} \frac{v_{k+1}(t)-v_{k}(t)}{h_x} &amp;\forall k \in {0, \ldots, n-1 } \ \frac{-v_n(t)}{h_x} + \frac{u(t)}{h_x} \quad &amp;k=n. \end{cases}]</p>
 
 <p>The sign of $\lambda$ in each equation must be taken into account to choose the approximation of $\partial_x y$ and $\partial_x v$.</p>
 
 <p>Let $d = 2(n+1)$ represent the dimension of the state space for the semi-discretized systems. Defining the state variable $z \colon (0,T) \mapsto \mathbb{R}^d$ by</p>
 
-<script type="math/tex; mode=display">z = \big(y_1, y_2, \ldots, y_{n+1}, v_0, v_1, \ldots, v_n \big)^\mathrm{T},</script>
+<p>[z = \big(y_1, y_2, \ldots, y_{n+1}, v_0, v_1, \ldots, v_n \big)^\mathrm{T},]</p>
 
 <p>the semilinear system writes as</p>
 
-<script type="math/tex; mode=display">\begin{cases} \dot{z} = Az+ Bu + f(z,u) \qquad t \in (0,T)\\ z(0) = z_0, \end{cases}</script>
+<p>[\begin{cases} \dot{z} = Az+ Bu + f(z,u) \qquad t \in (0,T)\ z(0) = z_0, \end{cases}]</p>
 
 <p>and the linearized system writes as</p>
 
-<script type="math/tex; mode=display">\begin{cases} \dot{z} = Az+ Bu \qquad t \in (0,T)\\ z(0) = z^0. \end{cases}</script>
+<p>[\begin{cases} \dot{z} = Az+ Bu \qquad t \in (0,T)\ z(0) = z^0. \end{cases}]</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">d</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-</code></pre>
-</div>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">d</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
 
 <p>We pick the initial condition</p>
 
-<script type="math/tex; mode=display">z^0 := \big(y^0_1, y^0_2, \ldots, y^0_{n+1}, v^0_0, v^0_1, \ldots, v^0_n \big)^\mathrm{T}.</script>
+<p>[z^0 := \big(y^0<em>1, y^0_2, \ldots, y^0</em>{n+1}, v^0_0, v^0_1, \ldots, v^0_n \big)^\mathrm{T}.]</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">y0</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x1</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y0</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x1</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
 <span class="n">v0</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x2</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
 <span class="n">z0</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="n">z0</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">y0</span><span class="p">;</span> <span class="n">z0</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">v0</span><span class="p">;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>We set values for $\lambda$, $c_1$ and $c_2$:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">lambda</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">c1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">c2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</code></pre>
-</div>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lambda</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">c1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">c2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
 
 <p>We consider the time parameters</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">T</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="n">nT</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
-<span class="n">time</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">nT</span><span class="p">);</span>
-</code></pre>
-</div>
+<span class="nb">time</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">nT</span><span class="p">);</span>
+</code></pre></div></div>
 
 <p>The matrix $A$ of size $d \times d$ is given by</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-A = \begin{pmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{pmatrix}, %]]></script>
+<p>[A = \begin{pmatrix} A_{11} &amp; A_{12} \ A_{21} &amp; A_{22} \end{pmatrix},]</p>
 
 <p>where $A_{11}, A_{12}, A_{21}, A_{22}$, of size $(n+1)\times(n+1)$, are defined by</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-A_{11} = \begin{pmatrix} \frac{-\lambda}{h_x} & & & \\ \frac{\lambda}{h_x} & \ddots & & & \\  & \ddots & \ddots &  \\  & & \frac{\lambda}{h_x} & \frac{-\lambda}{h_x} \end{pmatrix}, \quad A_{12} = \begin{pmatrix} \frac{\lambda}{h_x} & c_1 & & \\  & 0 & \ddots & \\  & & \ddots & c_1 \\  & & & 0 \\ \end{pmatrix} %]]></script>
+<p>[A_{11} = \begin{pmatrix} \frac{-\lambda}{h_x} &amp; &amp; &amp; \ \frac{\lambda}{h_x} &amp; \ddots &amp; &amp; &amp; \  &amp; \ddots &amp; \ddots &amp;  \  &amp; &amp; \frac{\lambda}{h_x} &amp; \frac{-\lambda}{h_x} \end{pmatrix}, \quad A_{12} = \begin{pmatrix} \frac{\lambda}{h_x} &amp; c_1 &amp; &amp; \  &amp; 0 &amp; \ddots &amp; \  &amp; &amp; \ddots &amp; c_1 \  &amp; &amp; &amp; 0 \ \end{pmatrix}]</p>
 
 <p>and</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-A_{21} = \begin{pmatrix} 0 & & & \\ c_2 & \ddots & & \\  & \ddots & \ddots & \\  & & c_2 & 0 \end{pmatrix}, \quad A_{22}= \begin{pmatrix}  \big(\frac{-\lambda}{h_x}+c_2\big) & \frac{\lambda}{h_x} & & \\  & \frac{-\lambda}{h_x} & \ddots & \\  & & \ddots & \frac{\lambda}{h_x} \\  & & & \frac{-\lambda}{h_x} \end{pmatrix}. %]]></script>
+<p>[A_{21} = \begin{pmatrix} 0 &amp; &amp; &amp; \ c_2 &amp; \ddots &amp; &amp; \  &amp; \ddots &amp; \ddots &amp; \  &amp; &amp; c_2 &amp; 0 \end{pmatrix}, \quad A_{22}= \begin{pmatrix}  \big(\frac{-\lambda}{h_x}+c_2\big) &amp; \frac{\lambda}{h_x} &amp; &amp; \  &amp; \frac{-\lambda}{h_x} &amp; \ddots &amp; \  &amp; &amp; \ddots &amp; \frac{\lambda}{h_x} \  &amp; &amp; &amp; \frac{-\lambda}{h_x} \end{pmatrix}.]</p>
 
 <p>They are constructed as follows.</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
 <span class="c1">%% Lower and upper extradiagonals:</span>
 <span class="n">ext_down_1</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="n">ext_down_1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">lambda</span><span class="p">/</span><span class="n">hx</span><span class="o">*</span><span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
 <span class="n">ext_down_2</span> <span class="o">=</span> <span class="n">c2</span><span class="o">*</span><span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
@@ -406,27 +393,25 @@ A_{21} = \begin{pmatrix} 0 & & & \\ c_2 & \ddots & & \\  & \ddots & \ddots & \\ 
 <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">-</span> <span class="n">lambda</span><span class="p">/</span><span class="n">hx</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">d</span><span class="p">);</span> <span class="n">A</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">c2</span><span class="p">;</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="n">ext_up_1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="n">ext_up_2</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="n">ext_up_3</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="n">ext_down_1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="n">ext_down_2</span><span class="p">,</span> <span class="o">-</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The matrix $B$ is of size $d \times 1$ and is given by</p>
 
-<script type="math/tex; mode=display">B = \begin{pmatrix} B_1 \\ B_2 \end{pmatrix},</script>
+<p>[B = \begin{pmatrix} B_1 \ B_2 \end{pmatrix},]</p>
 
 <p>where $B_1, B_2$, of size $(n+1)\times 1$, are defined by</p>
 
-<script type="math/tex; mode=display">B_1 = \begin{pmatrix} 0 \\ \vdots \\ 0 \\ c_1 \end{pmatrix}, \quad B_2 = \begin{pmatrix} 0 \\ \vdots \\ 0 \\ \frac{\lambda}{h_x} \end{pmatrix}.</script>
+<p>[B_1 = \begin{pmatrix} 0 \ \vdots \ 0 \ c_1 \end{pmatrix}, \quad B_2 = \begin{pmatrix} 0 \ \vdots \ 0 \ \frac{\lambda}{h_x} \end{pmatrix}.]</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">B</span><span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span><span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">B</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">c1</span><span class="p">;</span> <span class="n">B</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">lambda</span><span class="p">/</span><span class="n">hx</span><span class="p">;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="the-lqr-method">The LQR method</h2>
 
 <p>We check that a LQR control can be computed for the semi-descretize linear system. To begin, we verify that $ (A,BB^\ast) $ is stabilizable (where $B^\ast$ denotes the transpose of $B$), meaning that $\text{rank}((sI-A) BB^\ast) = d$ for any eigenvalue $s$ of $A$ with a nonnegative real part.</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">disp</span><span class="p">(</span><span class="s1">'Stabilizability of (A, BB*):'</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">disp</span><span class="p">(</span><span class="s1">'Stabilizability of (A, BB*):'</span><span class="p">);</span>
 <span class="n">eA</span><span class="o">=</span><span class="nb">eig</span><span class="p">(</span><span class="n">A</span><span class="p">);</span>
 <span class="n">not_stabilizable</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">cpt</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">d</span>
@@ -448,27 +433,24 @@ A_{21} = \begin{pmatrix} 0 & & & \\ c_2 & \ddots & & \\  & \ddots & \ddots & \\ 
 <span class="k">else</span>
     <span class="nb">disp</span><span class="p">(</span><span class="s1">'not stabilizable.'</span><span class="p">);</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Stabilizability of (A, BB*):
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Stabilizability of (A, BB*):
     18
 
     0.3047
 
 stabilizable.
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Then, we verify that the eigenvalues of the Hamiltonian matrix</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-H = \begin{pmatrix} A & -BB^* \\ -Q & -A^* \end{pmatrix} %]]></script>
+<p>[H = \begin{pmatrix} A &amp; -BB^* \ -Q &amp; -A^* \end{pmatrix}]</p>
 
 <p>are not purely imzginary. Here, $Q$ is a matrix of size $d \times d$ to be chosen.</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
 <span class="n">H</span> <span class="o">=</span> <span class="nb">blkdiag</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="o">-</span><span class="n">A</span><span class="o">'</span><span class="p">);</span>
 <span class="n">H</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="n">d</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="n">Q</span><span class="p">;</span>
 <span class="n">H</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="n">B</span><span class="o">*</span><span class="p">(</span><span class="n">B</span><span class="o">'</span><span class="p">);</span>
@@ -476,23 +458,21 @@ H = \begin{pmatrix} A & -BB^* \\ -Q & -A^* \end{pmatrix} %]]></script>
 <span class="n">nb_imaginary_eig_val_hamiltonian</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">real</span><span class="p">(</span><span class="n">eH</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
 <span class="nb">disp</span><span class="p">(</span><span class="s1">'Number of eigenvalues of H on the imaginary axis:'</span><span class="p">)</span>
 <span class="nb">disp</span><span class="p">(</span><span class="n">nb_imaginary_eig_val_hamiltonian</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Number of eigenvalues of H on the imaginary axis:
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number of eigenvalues of H on the imaginary axis:
      0
 
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>To finish, we verify that $(Q, A)$ is stabilizable, meaning that the rank of</p>
 
-<script type="math/tex; mode=display">\begin{pmatrix} Q \\ sI-A \end{pmatrix}</script>
+<p>[\begin{pmatrix} Q \ sI-A \end{pmatrix}]</p>
 
 <p>is equal to $d$, for any eigenvalue $s$ of $A$ with a nonnegative real part.</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">disp</span><span class="p">(</span><span class="s1">'Detectability of (Q, A):'</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">disp</span><span class="p">(</span><span class="s1">'Detectability of (Q, A):'</span><span class="p">);</span>
 <span class="n">not_detectable</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">cpt</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">d</span>
     <span class="k">if</span> <span class="nb">real</span><span class="p">(</span><span class="n">eA</span><span class="p">(</span><span class="n">cpt</span><span class="p">))</span><span class="o">&gt;=</span><span class="mi">0</span>
@@ -513,50 +493,44 @@ H = \begin{pmatrix} A & -BB^* \\ -Q & -A^* \end{pmatrix} %]]></script>
 <span class="k">else</span>
     <span class="nb">disp</span><span class="p">(</span><span class="s1">'not detectable.'</span><span class="p">);</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Detectability of (Q, A):
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Detectability of (Q, A):
     18
 
     0.3047
 
 detectable.
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The LQR control is given by the matlab routine care(), as the application $t \mapsto -Kz(t)$. The matrix $K$, of size $m \times d$ is an output of care(), where $m$ is the dimention of the input space and is equal to one.</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">ricsol</span><span class="p">,</span> <span class="n">cleig</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">ricsol</span><span class="p">,</span> <span class="n">cleig</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">);</span>
 <span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">z</span><span class="p">;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="unstable-and-stabilized-systems-solutions">Unstable and stabilized system’s solutions</h2>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">u</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre>
-</div>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div>
 
 <p>We compute the solution to the linear system with a control equal to zero:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">F1</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">u</span><span class="p">;</span>
-<span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">Z1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">F1</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">z0</span><span class="p">);</span>
-</code></pre>
-</div>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F1</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">u</span><span class="p">;</span>
+<span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">Z1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">F1</span><span class="p">,</span> <span class="nb">time</span><span class="p">,</span> <span class="n">z0</span><span class="p">);</span>
+</code></pre></div></div>
 
 <p>The corresponding solutions $y$ and $v$ are displayed:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">x1</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">x1</span><span class="p">);</span>
 <span class="nb">figure</span><span class="p">;</span> <span class="nb">surf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z1</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">'</span><span class="p">);</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'time'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Solution y for unstable linear system'</span><span class="p">);</span>
 
 <span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">x2</span><span class="p">);</span>
 <span class="nb">figure</span><span class="p">;</span> <span class="nb">surf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z1</span><span class="p">(:,</span> <span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">'</span><span class="p">);</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'time'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Solution v for unstable linear system'</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0004/copiaRM_01.png" alt="" /></p>
 
@@ -564,22 +538,20 @@ detectable.
 
 <p>We compute the solution to the linear system with the feedback control:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">F2</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">z</span><span class="p">);</span>
-<span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">Z2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">F2</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">z0</span><span class="p">);</span>
-</code></pre>
-</div>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F2</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">z</span><span class="p">);</span>
+<span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">Z2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">F2</span><span class="p">,</span> <span class="nb">time</span><span class="p">,</span> <span class="n">z0</span><span class="p">);</span>
+</code></pre></div></div>
 
 <p>The corresponding solutions $y$ and $v$ are displayed:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">x1</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">x1</span><span class="p">);</span>
 <span class="nb">figure</span><span class="p">;</span> <span class="nb">surf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z2</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">'</span><span class="p">);</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'time'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Solution y for stabilized linear system'</span><span class="p">);</span>
 
 <span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">x2</span><span class="p">);</span>
 <span class="nb">figure</span><span class="p">;</span> <span class="nb">surf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z2</span><span class="p">(:,</span> <span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">'</span><span class="p">);</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'time'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Solution v for stabilized linear system'</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0004/copiaRM_03.png" alt="" /></p>
 
@@ -587,22 +559,20 @@ detectable.
 
 <p>We compute the solution to the semilinear system with the same feedback control as the one found for the linear system:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">F3</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">z</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.*</span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">3</span><span class="p">:</span><span class="n">d</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">z</span><span class="p">);</span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="p">;</span> <span class="n">z</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.*</span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">3</span><span class="p">:</span><span class="n">d</span><span class="p">,</span><span class="mi">1</span><span class="p">)];</span>
-<span class="p">[</span><span class="n">t3</span><span class="p">,</span> <span class="n">Z3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">F3</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">z0</span><span class="p">);</span>
-</code></pre>
-</div>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F3</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">z</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.*</span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">3</span><span class="p">:</span><span class="n">d</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">z</span><span class="p">);</span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="p">;</span> <span class="n">z</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.*</span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">3</span><span class="p">:</span><span class="n">d</span><span class="p">,</span><span class="mi">1</span><span class="p">)];</span>
+<span class="p">[</span><span class="n">t3</span><span class="p">,</span> <span class="n">Z3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">F3</span><span class="p">,</span> <span class="nb">time</span><span class="p">,</span> <span class="n">z0</span><span class="p">);</span>
+</code></pre></div></div>
 
 <p>The corresponding solutions $y$ and $v$ are displayed:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t3</span><span class="p">,</span> <span class="n">x1</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t3</span><span class="p">,</span> <span class="n">x1</span><span class="p">);</span>
 <span class="nb">figure</span><span class="p">;</span> <span class="nb">surf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z3</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">'</span><span class="p">);</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'time'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Solution y for stabilized semilinear system'</span><span class="p">);</span>
 
 <span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t3</span><span class="p">,</span> <span class="n">x2</span><span class="p">);</span>
 <span class="nb">figure</span><span class="p">;</span> <span class="nb">surf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z3</span><span class="p">(:,</span> <span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">'</span><span class="p">);</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'time'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'space'</span><span class="p">);</span> <span class="nb">title</span><span class="p">(</span><span class="s1">'Solution v for stabilized semilinear system'</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0004/copiaRM_05.png" alt="" /></p>
 
@@ -610,7 +580,7 @@ detectable.
 
 <p>We compare the euclidean norm of the preceding solutions:</p>
 
-<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">y1_norm</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z1</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y1_norm</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z1</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="n">y2_norm</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z2</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="n">v1_norm</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z1</span><span class="p">(:,</span> <span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="n">v2_norm</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z2</span><span class="p">(:,</span> <span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
@@ -628,8 +598,7 @@ detectable.
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'time'</span><span class="p">);</span>
 <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'euclidean norm of z'</span><span class="p">);</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Euclidean norm of solutions across time'</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0004/copiaRM_07.png" alt="" /></p>
 
@@ -655,6 +624,15 @@ detectable.
     
 
     
+    
+        
+        
+    
+        
+    
+        
+    
+      
     
         
         

@@ -5,9 +5,168 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 18 Feb 2021 11:18:34 +0100</pubDate>
-    <lastBuildDate>Thu, 18 Feb 2021 11:18:34 +0100</lastBuildDate>
-    <generator>Jekyll v3.5.0</generator>
+    <pubDate>Thu, 11 Mar 2021 12:34:34 +0100</pubDate>
+    <lastBuildDate>Thu, 11 Mar 2021 12:34:34 +0100</lastBuildDate>
+    <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>Points of Interest Extraction and Prediction of Next Locations</title>
+        <description>Introduction
+GPS enabled devices, such as smart phones, have gained large popularity in the last few years. It allows people to record their outdoor activities through GPS trajectories, which enables researchers to infer further knowledge about the moving behavior of mobile users [8]. An important topic in analyzing GPS data is the identification of significant or interesting places visited by users [1] because if we extract them, we can know each user well and this will allow us to have a better prediction on the user’s next location.
+Generally, a prediction problem involves using past observations to predict or forecast one or more possible future observations. The goal is to guess about what might happen in the future. Knowing the future can impact our decisions today so we have a great interest in predicting it.
+In this project we tried first working on finding an algorithm that can help us define the points of interest of the users we have in the dataset. For that we implement an algorithm that can identify the users stop points. 
+Next step was predicting the next location of the users to do that we used different approaches (Markov chains, Random forest and Recurrent neural network).
+
+KEYWORDS: GPS Trajectory; Clustering algorithm; Points of interests (POI); Prediction; Markov chain; Random Forest; DBSCAN; HDBSCAN.
+
+Motivation
+With the popularity of smartphones and other equipment that can be used to record locations via the Global Navigation Satellite System (GNSS) [8], capturing and recording trajectory data based on such equipment becomes more convenient. The smartphone for exemple combines different sophisticated features. It allows users to keep pictures, memories, personal info, health [9,10] etc. And with each use to some application we can get the user GPS coordinates at a period of time [11].
+So why don’t we use this data to better understand the users? If we get to know the next step of each individual we can for example suggest some near restaurants, shops and places they used to go to, or notify them if someone they know is close to where they are.
+It could be also beneficial for the police department [12], it can help them identify criminals’ places or finding missing people and more likely it can also help people with Alzheimer’s, by notifying their relatives about their places.
+
+Problem statement
+Mobility is part of human’s daily life. We move from one place to another for different reasons. For example we go to a certain place to work and to another place to meet people.
+Mobility patterns of users have been studied intensively. The ubiquity of mobile phones with their embedded sensors and available applications opened new possibilities both for academia and industry to study human mobility patterns [2,3].
+
+In this project the main objective is to extract the useful data from different users trajectories in order to predict their next locations afterwards.
+
+Presentation of our data
+In this project we are working on a time series dataset \ref{fig1} that contains 288 user GPS coordinates of three month (March, April, May). These users lives in Spain.
+The data was collected whenever the users are connected to their accounts.
+
+
+  
+
+
+ Figure 1.  Time series database of GPS coordinates.
+
+
+We can see in Figure 2 the representation of 10\% of the users on the map.  As we can notice the users are so active inside and outside of Spain. In Figure 3 we see the GPS representation of a user on the map.
+
+
+  
+
+
+ Figure 2.  Represantation of 10\% of the users population we have on the map.
+
+
+
+  
+
+
+ Figure 3.  Representation of one user GPS coordinates on the map.
+
+
+Methodology
+The first objective is to extract the points of interest (POIs) which represent the locations that the individual visit frequently (Home, Place of work, gym \dots, etc), of the different users we have in the dataset after grouping  it by users so that it would be easy to analyse them separately.
+Working on a real world data means the existence of noise the first two clustering algorithms (K-means and GMM) as we can see in Figures 4 y 5 they weren’t capable of eliminating the noise in our data, because in these algorithms each point must belong to one cluster which is not convenient for our data, not all the points are part of a location some points shows us only the trajectory that the user did to get to the desired place so we can say that these two approaches are not able to differentiate between a stop point and a trajectory. \
+
+
+  
+
+
+ Figure 4.  Graphic representation of a user GPS coordinations after k-means clustering.
+
+
+
+  
+
+
+ Figure 5.  Graphic representation of a user GPS coordinations after GMM clustering.
+
+
+So we had to look for other approaches that can eliminate the noise. The first algorithm we tried was DBSCAN [6], but it wasn’t easy for us to estimate the best parameters, especially that each user has it’s proper trajectory and also the density of the points wasn’t unified for the same user, some group of points are so close to each other then others..\
+
+For that the next algorithm we used was HDBSCAN [5] because in this algorithm the threshold is not fixed so it’s capable of identifying clusters of different densities. This algorithm gives us some good results but after implementing the clusters on the map we can see that for some users the clusters didn’t include just the meaningful points but also some of the noise (the trajectory of the user) as we can see in Figure 4.
+
+
+  
+  
+
+
+ Figure 6.  Implementation of a user clusters on the map after removing the noise with HDBSCAN
+
+
+For that we needed to implement an algorithm that can identify the users stop points, which tells us where and when a user has stopped (stayed). It consists of a timestamp, a user identifier as well as longitude and latitude coordinates. It also has two additional variables: t_start and t_end indicating the start-time and end-time of the stop (see Figure~\ref{fig5}). 
+The stop location extraction algorithm [7] has two parameters which are dependent on the application:
+
+$\bullet \quad $  Roaming distance:  defines how far a user is allowed to roam to still be considered part of the stop location (dashed orange line
+$\bullet \quad $  Stay duration:  specifies the minimum amount of time a user has to stay within the roaming distance for his position to be considered as being part of a particular stop location.
+
+
+  
+ /figure&amp;gt;
+
+ Figure 7.  Output of the stop algorithm.
+ 
+
+
+  
+
+
+ Figure 8.  Representation of the stop points of the users on the map.
+ 
+
+
+The next step is to aggregates stop locations in close proximity of each other to know where and how often a user has stopped at a destination. The destination consists of a timestamp, a user identifier as well as latitude and longitude coordinates. In addition, the visitation count denotes the number of stops at a particular destination and cluster\_assignment identifies the destination itself.\\
+
+What we are actually interested in is the destination where a user has stopped and not necessarily the exact GPS position recorded. For instance, the group of stop locations surrounding a building should be regarded as one destination. In other words, we need to cluster or aggregate the stop locations into destinations (see Figure~\ref{fig7}).
+
+To aggregate the stop locations into destinations we use Scipy's hierarchical clustering functions \ref{fig8}. For our application there are two important parameters: \emph{The linkage parameter} defines how the clusters are formed. \emph{The distance parameter} specifies within what spatial distance stop locations are to be considered of the same cluster.
+
+
+  
+
+
+ Figure 9.  Output of destination algorithm
+ 
+
+To get medoid for each destination, now that we have assigned each stop location to a destination, we want to have only one point representing each destination.
+
+To have one representative point per cluster, we calculate the medoid of the stop locations within each destination. We also calculate the number of stop locations at each destination, which is useful for ranking destinations based on visitation counts.
+
+
+  
+  
+
+
+ Figure 10.  Representation of the users destinations on the map.
+ 
+
+Next step is to predict n-next steps to do that we use two different approaches the markov chains and random forest. But before that we need to split our data into two parts train which we give 90\% of our data and the rest(10\%) to the test.
+
+After running the hidden markov chains model on our data we get to predict the next clusters of each user. We are predicting the clusters because each cluster represent a POI. 
+After training our model we calculate the accuracy of it for each user and to get the general accuracy score we get the mean score and it was 49\%. that means that our model is not that good at predicting the next location.
+
+So the next approach we used is random forest which is a supervised learning algorithm that can be used for class classification or regression (prediction).
+The accuracy of Random forest model is 94\% which shows that the model is doing well at predicting the users next locations.
+
+### References
+[1] S. Gambs and M.O. Killijian, Next Place Prediction using Mobility Markov Chains, MPM’12, April 10, 2012, Bern, Switzerland.
+[2] Z. Fu, Z. Tian, Y. Xu and C. Qiao, A Two-Step Clustering Approach to Extract Locations from Indi- vidual GPS Trajectory Data, ISPRS Int. J. Geo-Inf. Vol. 5, 166, 1–17, 2016. doi:10.3390/ijgi5100166
+[3] N. Palmius and A. Tsanas and K. E. A. Saunders and A. C. Bilderbeck and J. R. Geddes and G. M. Goodwin and M. De Vos, Detecting Bipolar Depression From Geographic Location Data, IEEE Trans Biomed Eng., Vol. 64, No. 8, 1761–1771, 2017. doi: 10.1109/TBME.2016 2611862
+[4] J. Busk and M. Faurholt-Jepsen and M. Frost and J. E. Bardram and L. Vedel Kessing and O. Winther, Forecasting Mood in Bipolar Disorder From Smartphone Self-assessments: Hierarchical Bayesian Approach, JMIR Mhealth Uhealth, Vol. 8, No. 4, 1–14, 2020
+[5] P. Widhalm and P. Nitsche and N. Brandie, Transport mode detection with realistic Smartphone sensor data. In Proceedings of the International Conference on Pattern Recognition, Tsukuba, Japan, 11–15 November 2015; IEEE: Piscataway, NJ, USA, 2012; 573–576.
+[6] A. Bogomolov and B. Lepri and J. Staiano and N. Oliver and F. Pianesi and A. Pentland, Once Upon a Crime: Towards Crime Prediction from Demographics and Mobile Data. In Proceedings of the 16th International Conference on Multimodal Interaction, Istanbul, Turkey, 12–16 November 2014; ACM: New York, NY, USA, 2014; 427–434.
+[7] V. Bogorny, C. Renso, A.R. de Aquino, F. de Lucca Siqueira and L.O. Alvares, Constant–A Con- ceptual Data Model for Semantic Trajectories of Moving Objects, Trans. GIS Vol. 18, 66–88, 2014.
+[8] L. Xiang, M. Gao and T. Wu, Extracting Stops from Noisy Trajectories: A Sequence Oriented Clustering Approach, ISPRS Int. J. Geo-Inf. Vol. 5, 29, 1–18, 2016. doi:10.3390/ijgi5030029
+[9] Ester M., Kriegel H.P., Sander J. and Xu X. A density-based algorithm for discovering clusters in large spatial databases with noise. KDD-96 Proceedings, 226–231, 1996
+[10] Campello R.J.G.B., Moulavi D., Sander J. Density-Based Clustering Based on Hierarchical Density Estimates. In: Pei J., Tseng V.S., Cao L., Motoda H., Xu G. (eds) Advances in Knowledge Discovery and Data Mining. PAKDD 2013. Lecture Notes in Computer Science, Vol. 7819. Springer, Berlin, Heidelberg, 2013.
+[11] R. Hariharan and K. Toyama. Project Lachesis: Parsing and Modeling Location Histories. KDD- 96 Proceedings, In: Egenhofer M.J., Freksa C., Miller H.J. (eds) Geographic Information Science. GIScience 2004. Lecture Notes in Computer Science, Springer, Berlin, Heidelberg, Vol. 3234, 106– 124, 2004
+[12] Camacho-Lara, S. Current and Future GNSS and Their Augmentation Systems In: Handbook of Satellite Applications; Springer Science and Business Media LLC: Berlin, Germany, 2013, pp. 617?654.
+
+
+</description>
+        <pubDate>Wed, 10 Mar 2021 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00012</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00012</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
     
       <item>
         <title>Averaged dynamics and control for heat equations with random diffusion</title>
@@ -16,7 +175,11 @@
 Let us consider the random heat equation described 
 by the following system:
 
-
+\[\begin{cases}\tag{1}
+y_t-\alpha \Delta y =f1_{G_0}, &amp;amp;\text{ in } (0,T)\times G,\\
+y=0, &amp;amp; \text{ on } (0,T)\times \partial G,\\
+y(0,\cdot)=y^0,  &amp;amp; \text{ on } G,
+\end{cases}\]
 
 for $G$  a domain, $G_0\subset G$ a subdomain, 
 $f$ a control,  $y^0$  the initial configuration 
@@ -25,7 +188,7 @@ random variable with density function $\rho$.
 We have that the averaged solution of (1)
 is given by:
 
-
+\[\tilde y(t,x;y^0,f):=\int_0^{+\infty} y(t,x;\alpha,y^0,f)\rho(\alpha)d\alpha.\]
 
 We want to determine if, given a positive random variable 
 $\alpha$ and an initial configuration $y^0\in L^2(G)$, there 
@@ -38,18 +201,19 @@ As averaging and the Fourier transform commute, we work on the
 Fourier transform of the fundamental solution of the
 heat equation, which is given by:
 
-
+\[\exp(-\alpha |\xi|^2t).\]
 
 Consequently, the Fourier transform of the average
 of the fundamental solutions is given by:
 
-
+\[\int_0^{+\infty} \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha;\]
 
 i.e. the Laplace transform of $\rho$ evaluated in $|\xi|^2t$. 
 In particular, for $r\in(0,1)$ if $\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-\frac{r}{1-r}}}$
 we have that:
 
-
+\[\tag{2}
+\int \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha\sim \exp(-C|\xi|^{2r}t^r)\]
 
 when $|\xi|^2t\to+\infty$, which can be proved by the Laplace method.
 Thus, for those density functions 
@@ -62,7 +226,7 @@ but (2) preserves the null averaged observability
 if and only if $r&amp;gt;1/2$, being the threshold density functions  those
 which satisfy:
 
-
+\[\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-1}}.\]
 
 Some numerical simulations
 
@@ -70,11 +234,17 @@ Let us now illustrate the difference between several probability distributions f
 the optimal control is given by $\varphi(t,x;\phi)1_{G_0}$, for $\varphi$ the 
 averaged solution of
 
-
+\[\begin{cases}
+-\varphi_t-\alpha \Delta \varphi=0, &amp;amp;\text{ in } (0,T)\times G,\\
+\varphi=0, &amp;amp; \text{ on } (0,T)\times\partial G,\\
+\varphi(T,\cdot)=\phi,  &amp;amp; \text{ on } G.
+\end{cases}\]
 
 and $\phi$ the state which minimizes the functional:
 
-
+\[J(\phi)= \frac{1}{2}\int_0^T\int_{G_0}
+\left|\int_0^{+\infty}\varphi(t,x;\alpha,\phi)\rho(\alpha)d\alpha\right|^2dxdt 
+ \\+\left\langle  y^0, \int_0^{+\infty}\varphi(0;\alpha,\phi)\rho(\alpha)d\alpha\right\rangle.\]
 
 Due to the hardness of the numerical computations in higher dimensions and to get
 better illustrations we work in $d=1$, and in particular in $G=(0,\pi)$.
@@ -229,9 +399,9 @@ Supervised Learning
 
 Consider a dataset $\mathcal{D}$ consisting on $S$ distinct points ${x_i}_{i=1}^{S}$, each of them with a corresponding value $y_i$ such that
 
+\[\mathcal{D} = \{(x_i , y_i)\}_{i=1}^S\]
 
-
-
+\[y_i = \mathcal{F} (x_i) + \epsilon _i \quad \forall i \in \{1, ... S\}\]
 
 where $\epsilon _i$ is included so as to consider, in principle, noisy data.
 
@@ -239,11 +409,11 @@ The aim of supervised learning is to recover the function $\mathcal{F}(\cdot)$ s
 
 That is, it is inferred the existence of
 
-
+\[\tilde{\mathcal{D}} = \{ (\tilde{x}_i , \tilde{y}_i) \}_{i=1}^{\infty}\]
 
 where
 
-
+\[\tilde{y}_i \approx \mathcal{F}(\tilde{x}_i) \quad \forall i\]
 
 being $\mathcal{F} (\cdot)$ the desired previous application, and $\mathcal{D} \subset \tilde{\mathcal{D}}$.
 
@@ -301,20 +471,20 @@ The problem is now how to obtain the functions $\mathcal{F}$.
 
 In classical settings, an hypothesis space is often proposed as
 
-
+\[\mathcal{H} = \left\{  f (\cdot \, ; \mathbf{\theta }) \; \bigg\vert  f(\cdot ; \theta ) = \phi \left(\sum_{i=1}^{m} a_i \psi _i (\cdot) \right) \right\}\]
 
 where $\theta = { a_i }_{i=1}^{m}$ are the coefficients, ${ \psi _i}$ are the proposed functions (for example, they would be monomials if we are doing polynomial regression, sine and cosines if using Fourier, …) and the function $\phi$ is the terminal loss function, that is used to match the dimensionality of $f(x_i \; ;  \theta)$ with $y_i$; for example, in the case of binary classification, $\phi (  \cdot )$ can be chosen to be the function $sign ( \cdot )$, and so $\phi (\cdot ) : \mathbb{R} \to {0,1 }$.
 
 The function $\mathcal{F}$ correspondent to the dataset $\mathcal{D}$ is then defined as
 
-
+\[\mathcal{F}(\cdot ) \equiv f(\cdot \, ; \theta ^*) \in \mathcal{H} \quad s.t. \quad \theta ^* = \arg \min \sum_{i=1}^{S} d(\phi (f(x_i \, ; \theta )) , y_i)\]
 
 where $d ( , )$ is a distance defined by a loss function. 
 That is, it is the function in the hypothesis space that minimizes the “distance” with the target function, which connects the datapoints $x_i$ with their correspondent labels $y_i$.
 
 When using Neural Networks, the hypothesis space $\mathcal{H}$ is generated by the composition of functions, such that
 
-
+\[\mathcal{H} =  \left\{  \text{NN}(\cdot \, ; \Theta ) \; \bigg\vert  \text{NN}(\cdot ; \Theta ) = \phi \circ f_{\theta_L}^L \circ f_{\theta_{L-1}}^{L-1} \circ ... \circ f_{\theta_1}^1 (\cdot) \right\}\]
 
 where $\Theta = { \theta_k }_{k=1}^{L}$ are the training weights of the network and $L$ the number of hidden layers.
 
@@ -322,7 +492,7 @@ Multilayer perceptrons
 
 In the case of the so-called multilayer perceptrons, the functions $f^k_{\theta_k}$ are constructed as
 
-
+\[f^k_{\theta_k} (\cdot) = \sigma (A^k  (\cdot) +  b^k)\]
 
 being $A^k$ a matrix,$b^k$ a vector and $\sigma \in C^{0,1}(\mathbb{R})$ a fixed nondecreasing function.
 
@@ -333,13 +503,13 @@ Since we restrict to the case in which the number of neurons is constant through
 Residual Neural Networks
 In the simple case of a Residual Neural Network (often referred to as ResNets) the functions $f_{\theta_k}^{k} (\cdot)$ are constructed as
 
-
+\[f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + \sigma (A^k  (\cdot) +  b^k)\]
 
 where $\mathbb{I}$ is the identity function. The parameters $\sigma$, $A^k$ and $b^k$ are equivalent to those of the multilayer perceptrons.
 
 It is sometimes convenient to numerically add a parameter $h$ to the residual block, such that
 
-
+\[f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + h  \, \sigma (A^k  (\cdot) +  b^k)\]
 
 being $h \in \mathbb{R}$ a scalar.
 
@@ -391,29 +561,29 @@ These come trivially from the fact that the composite of continuous functions is
 Theorem 1 (Sufficient condition for invertible ResNets [1]):
 
 Let $\hat{\mathcal{F}} \, : \, \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ with $\hat{\mathcal{F}} (\cdot ) = ( L^{1}_{\theta} \, \circ … \circ \, L^{T}_{\theta}  )$ denote a ResNet with blocks defined by 
-
+\(L^{t} _{ \theta } = \mathbb{I} + h \cdot g_{\theta _t}\)
 
 Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 
-
+\[h \cdot \text{Lip} (g_{\theta_t}) &amp;lt; 1 \text{ for all } t = 1, ..., T\]
 
 Proof 
 Consider that each block of the ResNet is given by
 
-
+\[Z(x) =  x + h\cdot G(x)\]
 
 where $x$ is the input of the block, and $G(x)$ given by the residual block.
 That can be rewritten as
 
-
+\[x_{t+1} = x_t + g(x)\]
 
 We can construct the inverse function of the block as
 
-
+\[x_t = x_{t+1} - g(x)\]
 
 Which is not an explicit inverse, since $g(x)$ depends on $x$. Approximating the solution as an interation,
 
-
+\[x^{0}_{t}  \doteq x_{t+1} \quad \text{and} \quad x_t ^{k+1} \doteq x_{t+1} - g (x_{t}^{k})\]
 
 where $\lim_{k \to \infty} x_t ^{k} = x_t$ if the iteration converges. 
 Since $g(\cdot) : \mathbb{R}^{d} \to \mathbb{R}^{d}$ is an operator on a Banach space, due to the Banach fixed point theorem is it enough that $Lip(g) &amp;lt; 1$, or equally that $Lip(h\cdot G) &amp;lt;1$ for the iteration to converge, and so for the block of the ResNet to be invertible. [1]
@@ -422,33 +592,33 @@ Comment: In the limit $h \to 0$, and $G(x)$ Lipschitz, we have a trivial explici
 
 Consider the ResNet as generated by the iteration of blocks
 
-
+\[Z(x) =  x + h\cdot G(x)\]
 
 where $G(x)$ is generated by a residual block . We consider $G(x)$ Lipschitz.
 
 Then,
 
-
+\[Z^{-1} (x) \equiv x - h\cdot G(x)\]
 
 is an second order approximation of the inverse function of $Z$ in terms of $h$, since
 
+\[Z^{-1} (Z(x)) = Z^{-1}  (x + h\cdot G(x) ) =\]
 
+\[= x + h\cdot G(x) - h \cdot G(x + h \cdot G(x)) =\]
 
-
-
-
+\[= x + \mathcal{o}(h^2)\]
 
 Indeed, if we express the residual blocks as
 
-
+\[x_{t+1} = x_{t} + h\cdot G(x_t)\]
 
 the limit $h\to 0$ can be recasted as
 
-
+\[\lim_{h \to 0} \frac{x_{t+1}-x_{t}}{h} = \dot{x}_t = G(x_t)\]
 
 and, since the discrete index $t$ becomes continuous in this limit, it is useful to express it as
 
-
+\[\dot{x}(t) = G(x(t), t)\]
 
 where in this case we make explicit the dependence of $G$ on $t$, that was hidden in the previous notation.
 
@@ -465,9 +635,9 @@ Setup
 
 Consider a binary classification problem with noisless data, such that
 
+\[\mathcal{D} =  \{ ( x_i , y_i = \mathcal{F}(x_i) )\} _{i=1}^{S}\]
 
-
-
+\[x_i \in [-1,+1]^{n} , \; \; y_i \in \{0,1\} \quad \forall i \in \{1, ... , S\}\]
 
 
   
@@ -567,7 +737,11 @@ Figura 1. Distintos datos de entrada $x \in \mathcal{M}_{28 \times 28}(\mathbb{R
 2. Modelo
 Buscamos una función $f_{\Omega}: \mathcal{M}_{28 \times 28}(\mathbb{R}) \rightarrow \mathbb{R}^{10}$ que sea capaz de reproducir el comportamiento que vemos en los datos. Consideraremos el modelo $\color{red}{y} = f_\Omega (\color{green}{x})$ como:
 
-
+\[\begin{equation}\label{sys}
+\color{red}{y} = \mathcal{P} z_T \leftarrow \begin{cases}z_{t+1} = z_{t} + dt \ \sigma(A_t z_t+ b_t) &amp;amp; t \in \{1,2,\dots,T\} \\
+z_0 = A_0 \color{green}{x}
+\end{cases}
+\end{equation}\]
 
 Donde:
 
@@ -583,7 +757,8 @@ Figura 2. Arquitectura de la red
 3. Problema de Control
 Si llamamos $M$ al número total de datos de entrenamiento y considerando los datos de entrenamiento $\{ x_m,y_m\}_{m=1}^M$, podemos plantear el siguiente problema de control.
 
-
+\[\min_{\Omega} \Big[ \frac{1}{M}\sum_{m=1}^M\sum_{t=0}^T || \mathcal{P}z_t(x_m,\Omega) - y_m ||^2 + \beta || \Omega||^2 \Big] \\
+suject \ to: (\ref{sys})\]
 
 4. Resultados numéricos
 
@@ -617,7 +792,12 @@ An optimal control problem
 
 From a mathematical viewpoint, we can see RL as an optimal control problem. The environment is described through a dynamical system of the form
 
-
+\[\tag{1}
+\left\{ \begin{array}{ll}
+x_{t+1} =  f(x_t,u_t) &amp;amp; t= 0,1,2,\ldots \\
+x_0 = x
+\end{array}
+\right.\]
 
 At each time-step, $x_t$ represents the state of the environment, which evolves according to the function $f: \mathbb{R}^n\times \mathcal{U} \to \mathbb{R}^n$. This function might be unknown by the agent, and depends on the current state $x_t$ and the control $u_t$ chosen by the agent. This choice is then evaluated by a reward $r_t = r(x_t,u_t)$.
 
@@ -625,7 +805,8 @@ The reward function $r: \mathbb{R}^n\times \mathcal{U}\to \mathbb{R}$ has to be 
 
 The optimal control problem that we are considering consists in maximizing, over the control strategy, the rewards accumulated during a process of infinite length
 
-
+\[\tag{2}
+\max_{\{u_t\}_t} \sum_{t=0}^\infty \gamma^t r(x_t,u_t) \qquad \text{subject to (1)}.\]
 
 The parameter $\gamma \in (0,1)$ is called a discount factor, and ensures that the sum of rewards over the time-steps is finite. This is the so-called discounted infinite-horizon problem. In many applications, the introduction of the discount factor is also motivated by the fact that the rewards obtained in the near future are considered to be more important than those obtained with a bigger delay.
 
@@ -635,15 +816,16 @@ The value function
 
 The probably most important element in Reinforcement Learning is the optimal value function, defined as
 
-
+\[V^\ast (x) := \max_{\{u_t\}_t} \left\{ \sum_{t=0}^\infty \gamma^t r(x_t,u_t); \quad \text{s.t. (1) with $x_0 = x$} \right\}\]
 
 It represents the best total reward that one can expect if the initial state is $x$. The value function satisfies the following Dynamic Programming Principle, also known as Bellman equation.
 
-
+\[V^\ast (x) = \max_{u\in \mathcal{U}} \left\{ r(x,u) + \gamma V^\ast (f(x,u)) \right\}\]
 
 It allows the design of an optimal control in a feedback form.
 
-
+\[\tag{3}
+u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} \left\{ r(x,u) + \gamma V^\ast (f(x,u)) \right\}\]
 
 The $Q$-function
 
@@ -651,7 +833,7 @@ In view of (3), we can construct a nearly optimal feedback control by approximat
 
 Therefore, rather than approximating the value function, we may concentrate our efforts on approximating the $Q$-function, defined as
 
-
+\[Q(x,u) := r(x,u) + \gamma V^\ast (f(x,u))\]
 
 It represents the best total reward that we can expect if the initial state is $x$ and the first control taken is $u$.
 
@@ -659,11 +841,12 @@ Observe that the optimal value function $V^\ast(x)$ determines how good is to be
 
 The $Q$-function allows the design of an optimal feedback control without using the dynamics $f$.
 
-
+\[u^\ast (x) = \text{argmax}_{u\in \mathcal{U}} Q(x,u)\]
 
 Using the identity $V^\ast (x) = \max_{u\in \mathcal{U}} Q(x,u)$, we can deduce the Bellman equation for the $Q$-function.
 
-
+\[\tag{4}
+Q(x,u) = r(x,u) + \gamma \max_{u\in \mathcal{U}} Q(x,u)\]
 
 $Q$-learning
 
@@ -677,7 +860,7 @@ These are the main steps in the $Q$-learning algorithm.
   $\varepsilon$-greedy policy:
 
 
-
+\[u_t = \max_{u\in\mathcal{U}}  \widehat{Q}_k(x_t,\, u)\quad \text{with probability $1-\varepsilon$}\]
 
 and $u_k$ is chosen randomly with probability $\varepsilon$ (exploration vs exploitation).
 
@@ -685,7 +868,7 @@ and $u_k$ is chosen randomly with probability $\varepsilon$ (exploration vs expl
   Improvement of $\widehat{Q}(x_t, u_t)$: after each time-step, we use the observed $(x_{t+1}, r_t)$ to improve the approximation of $Q(x_t,u_t)$ in the following way
 
 
-
+\[\widehat{Q}_{k+1} (x_t,u_t) = (1-\alpha) \widehat{Q}_k(x_t,u_t) + \alpha \big(  r_t + \gamma \max_{u\in\mathcal{U}} \widehat{Q}_k(x_{t+1}, u) \big)\]
 
 here, $\alpha&amp;gt;0$ is called the learning rate.
 
@@ -708,27 +891,34 @@ We illustrate the $Q$-learning algorithm through a simple example. In a given tw
 
 Let us first define the environment. We consider a discretized rectangular domain:
 
-
+\[\Omega := \{ 1,2,3, \ldots, 40 \}^2\]
 
 We want to find the shortest path between any starting position in the domain and the top center of the domain, white area in the video below. The position can be moved, at each time-step, one unit up, down, right or left, i.e. the underlying dynamics are given by
 
-
+\[\left\{ \begin{array}{l}
+x_{t+1} = x_t + u_t \quad t = 0,1,2, \ldots ,\tau \\
+x_0 = x
+\end{array} \right.\]
 
 where $\tau$ is the first time the state reaches the limits of the domain. The experiment is considered a success if the terminal position is in the target area, and a defeat otherwise. The possible controls are
 
-
+\[\mathcal{U}:= \{ (0,1), -(0,1), (1,0), -(1,0)  \}\]
 
 We denote by $\partial \Omega$ the limits of the domain (blue squares in the video), i.e.
 
-
+\[\partial \Omega := \{ (i,j) \in \Omega\, ;  \text{with} \ \{ i, j\} \cap \{1,40\} \neq \emptyset \}\]
 
 We denote by $\mathcal{T}$ the target area (white squares)
 
-
+\[\mathcal{T} := \{ (1,j) \in \Omega\, ;  j\in [18,22] \}\]
 
 Now we need to define a reward that makes the agent move the position from the initial one $x$ to the target area in the minimum number of steps, without reaching the limits of the domain.
 
-
+\[r(x_t,u_t):= \left\{ \begin{array}{ll}
+-1 &amp;amp; \text{if} \ x_t \in \Omega \\
+100 &amp;amp; \text{if} \ x_t \in \mathcal{T} \\
+-100 &amp;amp; \text{if} \ x_t \in \partial\Omega \setminus \mathcal{T}
+\end{array} \right.\]
 
 Giving a negative reward when $x_t\in \Omega$ stimulates the agent to take the minimum possible number of steps until the target area.
 
@@ -752,13 +942,16 @@ Figure 2b.
 
 We can change the environment by adding a potential that moves the position to the right when it is in a certain region (dark green area)
 
-
+\[P: = \{ (i,j)\in \Omega \, ; j\in [5,15]  \}\]
 
 In the new environment, the agent do not know how to get to the target area.
 
 In the following video, the agent uses the $Q$-function obtained in the original environment. However, the new dynamics are given by
 
-
+\[x_{t+1} = \left\{ \begin{array}{ll}
+x_t + u_t &amp;amp; \text{if} \ x_t\in \Omega\setminus P \\
+x_t +3+ u_t &amp;amp; \text{if} \ x_t\in P
+\end{array} \right.\]
 
 
 
@@ -819,13 +1012,31 @@ Figure 5b.
 
 The standard null controllability problem for the heat equation reads as follows
 
-
+\[\label{heatinterior}
+\begin{equation}
+\begin{cases}
+\begin{matrix}
+  u_t = \Delta u + f(x,t) \chi_{\omega} \ &amp;amp; \ x \in \Omega &amp;amp; t \in [0,T] \\
+  u(x,t) = 0    &amp;amp; x \in \partial \Omega  &amp;amp;  t \in [0,T] \\
+  u(x,0) = u_0  &amp;amp; x \in \Omega
+\end{matrix}
+\end{cases},
+\end{equation}\]
 
 where $\Omega$ is a bounded domain, $u_0\in L^2(\Omega)$ and the control $f$ acts on the subdomain $\omega\subset\Omega$. The objective is to steer the system from $u_0$ to zero in time $T$,
 
 It is known that the null controllability of the heat equation holds in any positive time $T&amp;gt;0$ and for any open control region $\omega$. Nevertheless, the situation changes when in the model appears a memory term:
 
-
+\[\label{heatinterior_memory}
+\begin{equation}
+\begin{cases}
+\begin{matrix}
+  \displaystyle u_t = \Delta u + f(x,t) \chi_{\omega} + \int_0^t u(x,\tau) d\tau \ &amp;amp; \ x \in \Omega &amp;amp; t \in [0,T] \\
+  u(x,t) = 0    &amp;amp; x \in \partial \Omega  &amp;amp;  t \in [0,T] \\
+  u(x,0) = u_0  &amp;amp; x \in \Omega
+\end{matrix}
+\end{cases}
+\end{equation}\]
 
 As a matter of fact, when the equation involes a memory term, it is impossible to achive null controllability in the classical sense, unless the control region coincides with the entire domain ($\omega=\Omega$).
 
@@ -869,17 +1080,35 @@ This fact can be easily seen when applying a LQR control on both systems (\ref{h
 
 To understand the reason behind the lack of null controllability for the memory-type equation (\ref{heatinterior_memory}), we can introduce the new variable
 
-
+\[z(x,t) = \int_0^t u(x,\tau) d\tau \Rightarrow z_t(x,t) = u(x,t)\]
 
 In this way, (\ref{heatinterior_memory}) is transformed into a coupled PDE/ODE system:
 
-
+\[\label{heatinterior_memory_z}
+\begin{equation}
+\begin{cases}
+\begin{matrix}
+  u_t = \Delta u + f(x,t) \chi_{\omega} + z,  &amp;amp;     z_t = u        &amp;amp; x \in \Omega &amp;amp; t \in [0,T] \\
+  u(x,t) = 0,                        &amp;amp;  z(x,t) = 0   &amp;amp; x \in \partial \Omega  &amp;amp;  t \in [0,T] \\
+  u(x,0) = 0                      &amp;amp;  z(x,0) = 0   &amp;amp; x \in \Omega
+  \end{matrix}
+\end{cases}
+\end{equation}\]
 
 In (\ref{heatinterior_memory_z}), the equation $z_t = u$ is an infinte-dimensional ODE which, since it has no diffusion term, introduces non-propagation phenomena in the system. The non propagating components corresponding to this ODE are unable to reach the control region $\omega$ and, therefore, cannot be controlled.
 
 A natural remedy to this issue is to operate with a moving control strategy. If the ODE components of the system cannot reach the control region $\omega$, then is the control region who needs to reach these components. Hence, our control region would be  function of the time variable, $\omega = \omega(t)$, and the corresponding model will be
 
-
+\[\label{heatinterior_memory_z_moving}
+\begin{equation}
+\begin{cases}
+\begin{matrix}
+  u_t = \Delta u + f(x,t) \chi_{\omega(t)} + z,  &amp;amp;     z_t = u        &amp;amp; x \in \Omega &amp;amp; t \in [0,T] \\
+  u(x,t) = 0,                        &amp;amp;  z(x,t) = 0   &amp;amp; x \in \partial \Omega  &amp;amp;  t \in [0,T] \\
+  u(x,0) = 0                      &amp;amp;  z(x,0) = 0   &amp;amp; x \in \Omega
+  \end{matrix}
+\end{cases}
+\end{equation}\]
 
 This moving control strategy has been proposed and succesfully applied in several contributions of our team [1,2,3,4].
 
@@ -895,7 +1124,7 @@ The first step is to construct the moving control region $\omega(t)$, which requ
 
 In this simulation, we create the control region as a square which moves in the domain $\Omega$. This square can be constructed with a function $W(x)$ defined as
 
-
+\[W(x,a,b) = H(x-a) + H(x-b) \\  \{ a,b,x  \}\in \mathbb{R}, \quad a&amp;gt;b \\\]
 
 where $H(x)$ is the Heaviside function. Nevertheless, the function $W$ constructed in this way would be non-differentialbe at the points $x=a$ and $x=b$. This would represent a problem when implementing the gradient method to compute the control. To bypass this issue, in the definition of $W(x,a,b)$ we will use a smooth approximation of $H$ (See Figure 1).
 
@@ -914,7 +1143,7 @@ where $H(x)$ is the Heaviside function. Nevertheless, the function $W$ construct
 
 Moreover, the generalization of this function to dimension two is immediate
 
-
+\[W_{2D}(x,y,x_{min},x_{max},y_{min},y_{max}) = W(x,x_{min},x_{max})*W(x,y_{min},y_{max})\]
 
 In this way, given $(x_{min}, x_{max}, y_{min}, y_{max})$, we obtain the corresponding characteristic function which only depends on the position of a single point.
 
@@ -939,15 +1168,34 @@ Besides, we will add a control $\textbf{g}(t) = (g_x(t),g_y(t))$ which will act 
 
 In this way, our model takes the final form
 
-
+\[\label{heatinterior_memory_z_all}
+\begin{equation}
+\begin{cases}
+\begin{matrix}
+  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z,  &amp;amp;     z_t = u        &amp;amp; x \in \Omega &amp;amp; t \in [0,T] \\
+  u(x,t) = 0,                        &amp;amp;  z(x,t) = 0   &amp;amp; x \in \partial \Omega  &amp;amp;  t \in [0,T] \\
+  u(x,0) = 0,                      &amp;amp;  z(x,0) = 0   &amp;amp; x \in \Omega \\
+    \dot{\textbf{d}} = \textbf{v} &amp;amp; \textbf{d}(0) = \textbf{d}_0    &amp;amp; t \in [0,T]\\
+  \dot{\textbf{v}} = \textbf{g}(t)  &amp;amp; \textbf{v}(0) = \textbf{v}_0  &amp;amp; t \in [0,T]\\
+  \end{matrix}
+\end{cases}
+\end{equation}\]
 
 STEP 3: optimal control problem
 
 Following a standard optimal control strategy, the control function for our memory-type equation will be computed throught the minimization problem
 
+\[\min_{f(x,t),g(t)}  \|u(x,T)\|^2_{L^2(\Omega)} \\\]
 
-
-
+\[\text{subject to: }\quad \begin{cases}
+\begin{matrix}
+  u_t = \Delta u + f(x,t) \chi_{\omega(\textbf{d})} + z,  &amp;amp;     z_t = u        &amp;amp; x \in \Omega &amp;amp; t \in [0,T] \\
+  u(x,t) = 0,                        &amp;amp;  z(x,t) = 0   &amp;amp; x \in \partial \Omega  &amp;amp;  t \in [0,T] \\
+  u(x,0) = 0,                      &amp;amp;  z(x,0) = 0   &amp;amp; x \in \Omega \\
+    \dot{\textbf{d}} = \textbf{v} &amp;amp; \textbf{d}(0) = \textbf{d}_0    &amp;amp; t \in [0,T]\\
+  \dot{\textbf{v}} = \textbf{g}(t)  &amp;amp; \textbf{v}(0) = \textbf{v}_0  &amp;amp; t \in [0,T]\\
+  \end{matrix}
+\end{cases}\]
 
 Simulations
 
@@ -958,10 +1206,55 @@ addpath(genpath(fullfile(cd,'DyCon-toolbox-master'))
 StartDyconPlatform
 
 
-
 We shall now write the discrete version of equation (\ref{heatinterior_memory_z_all}):
 
-
+\[\label{heatinterior_memory_z_all_discr}
+\begin{equation}
+\frac{d}{dt} \begin{bmatrix}\begin{array}{c|c}
+\textbf{U} \\
+\hline
+\textbf{Z} \\
+\hline
+\textbf{D} \\
+\hline
+\textbf{V} \\
+\end{array}
+\end{bmatrix}
+=
+\begin{bmatrix}\begin{array}{c|c|c}
+\mathcal{A} &amp;amp; \textbf{1} &amp;amp; \textbf{0} &amp;amp; \textbf{0} \\
+\hline
+\textbf{1} &amp;amp; \textbf{0}  &amp;amp; \textbf{0} &amp;amp; \textbf{0} \\
+\hline
+\textbf{0} &amp;amp; \textbf{0}  &amp;amp; \textbf{0} &amp;amp; \textbf{1} \\
+\hline
+\textbf{0} &amp;amp; \textbf{0}  &amp;amp; \textbf{0} &amp;amp; \textbf{0} \\
+\end{array}
+\end{bmatrix}
+%%
+\begin{bmatrix}\begin{array}{c|c}
+\textbf{U} \\
+\hline
+\textbf{Z} \\
+\hline
+\textbf{D} \\
+\hline
+\textbf{V} \\
+\end{array}
+\end{bmatrix}
++
+%%
+\begin{bmatrix}\begin{array}{c|c}
+\textbf{B}(\textbf{D})*\textbf{F}(t) \\
+\hline
+\textbf{0} \\
+\hline
+\textbf{0} \\
+\hline
+\textbf{G}(t) \\
+\end{array}
+\end{bmatrix}
+\end{equation}\]
 
 Secondly, let us create the mesh variable
 
@@ -972,7 +1265,6 @@ Nt = 15;
 xline = linspace(-1,1,Ns);
 yline = linspace(-1,1,Ns);
 [xms,yms] = meshgrid(xline,yline);
-
 
 
 and the matrix $A$ containing the $2D$ Laplacian and the ODE dynamics
@@ -995,7 +1287,6 @@ Atotal(2*Ns^2+1:end,2*Ns^2+1:end) = RumbaMatrixDynamics;
 Atotal = sparse(Atotal);
 
 
-
 Finally, we create the function $B(\textbf{d}) = B(x_d,y_d)$ for the dynamics of the moving control
 %%
 % We create the B() function
@@ -1003,7 +1294,6 @@ xwidth = 0.3;
 ywidth = 0.3;
 B = @(xms,yms,xs,ys) WinWP05(xms,xs,xwidth).*WinWP05(yms,ys,ywidth);
 Bmatrix =  @(xs,ys) [diag(reshape(B(xms,yms,xs,ys),1,Ns^2)) ;zeros(Ns^2)];
-
 
 
 We now have everything we need to construct and solve the optimal control problem
@@ -1046,7 +1336,6 @@ opti.solver('ipopt',p_opts,s_opts); % set numerical backend
 tic
 sol = opti.solve();   % actual solve
 toc
-
 
 
 The following video shows the results of our simulations, which allowed to compute an effective moving control steering the dynamics to rest at time $T$.
@@ -1099,7 +1388,6 @@ N = 12;
 xdata = linspace(-1,1,N);
 ydata = [-1, -1, -1, -1, 1, 1, 1, 1, -1, -1, -1, -1];
 
-
 Podemos ver los datos generados
 f = figure(1)
 plot(xdata,ydata,'o-','LineWidth',2)
@@ -1111,12 +1399,19 @@ print('data.png','-dpng')
 
 
 
-
 Ahora queremos una ecuación diferencial controlada para una variable $z(t)$ tal que cuando reciba una condición inicial $z(0) = x_i$ evolucione durante $t=1$, y devuelva $z(t)=y_i$, esto para $\forall i \in {1,\dots,N}$.
 
 Es decir una ecuación diferencial, tal que
 
-
+\[\begin{gather*}
+    \forall \{x_i,y_i\}
+    \rightarrow
+    \begin{cases}
+        \dot{z(t)} = f(z(t),u(t)) \\
+        z(0) = x_i \\
+        z(1) = \mathcal{P} y_i 
+    \end{cases}
+\end{gather*}\]
 
 Donde $\mathcal{P}$ es una proyección del 
 Es decir es una
@@ -1141,7 +1436,6 @@ us = [As(:);bs];
 % define the dynamic equation
 Fs = casadi.Function('F',{ts,zs,us},{Afull*sigma(zs) + bfull});
 
-
 Creamos el objeto ode
 Nt = 50; tspan = linspace(0,1,Nt);
 %
@@ -1152,7 +1446,6 @@ z0          = zeros(2*N,1);
 z0(1:2:2*N) = xdata';
 % put in idyn object 
 idyn.InitialCondition = z0;
-
 
 Optimal Control Definition
 
@@ -1165,10 +1458,8 @@ Psi = casadi.Function('Psi',{zs}      ,{ 1e5*(Pzminusy*Pzminusy') });
 iocp = ocp(idyn,L,Psi);
 
 
-
 Solve
 [Uopt,Zopt] = IpoptSolver(iocp,ZerosControl(idyn));
-
 
 
 %% Plot
@@ -1195,7 +1486,6 @@ plot(tspan,Uopt(5:end,:)')
 title('Optimal Control - b(t)')
 xlabel('time')
 legend({'b_1','b_2'},'Location','bestoutside')
-
 
 Animation
 fig = figure(2);
@@ -1226,7 +1516,6 @@ for it = 1:length(tspan)
     pause(0.05)
 end
 
-
 </description>
         <pubDate>Mon, 27 Jul 2020 00:00:00 +0200</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/pretutorial/wp01/P0012</link>
@@ -1245,25 +1534,39 @@ end
 
 Consider the following parameter-dependent linear control system
 
-
+\[\left\{\begin{array}{ll}
+\displaystyle x'_\nu(t) = \mathbf{A}_\nu x_\nu(t)+\mathbf{B} u(t), &amp;amp; 0&amp;lt;t&amp;lt;T,
+\\[10pt]
+x_\nu(0) = x^0,
+\end{array}\right.\quad (1)\]
 
 with
 
-
+\[\mathbf{A}_\nu=\left(\begin{array}{cccccc}
+0 &amp;amp; 1 &amp;amp; 0 &amp;amp; \ldots &amp;amp; \ldots &amp;amp; 0
+\\
+0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 &amp;amp; \ldots &amp;amp; 0
+\\
+\vdots &amp;amp; &amp;amp; &amp;amp; \ddots &amp;amp; \ddots &amp;amp; \vdots
+\\
+0 &amp;amp; \ldots &amp;amp; \ldots &amp;amp; \ldots &amp;amp; 1 &amp;amp; 0
+\\
+-\nu &amp;amp; 0 &amp;amp; \ldots &amp;amp; \ldots &amp;amp; \ldots &amp;amp; 0
+\end{array}\right)\in \mathbb{R}^{N\times N}, \quad \mathbf{B} = \left(\begin{array}{c} 1 \\ 1 \\ \vdots \\ \vdots \\ 1\end{array}\right)\in \mathbb{R}^{N}. \quad(2)\]
 
 The matrix $\mathbf{A}_\nu$ is associated with the Brunovsky canonical form of the linear ODE
 
-
+\[x^{(N)}_\nu(t) + \nu x_\nu(t) = 0,\]
 
 where $x^{(N)}_\nu(t)$ denotes the $N$-th derivative of the function $x(t)$.
 
 In (1)-(2), $x_\nu(t)\in L^2(0,T;\mathbf{R}^N)$, $N\geq 1$, denotes the state, the $N\times N$ matrix $\mathbf{A}_\nu$ describes the dynamics, and the function $u(t)\in L^2(0,T;\mathbb{R}^M)$, $1\leq M\leq N$, is the $M$-component control acting on the system through the $N\times M$ matrix $\mathbf{B}$. Here 
-
+\(\nu\in \{ \nu_1,\nu_2,\ldots,\nu_{|\mathcal K|} \}=:\mathcal K\)
  is a random parameter following a probability law $\mu$, with $(\mathcal K,\mathcal F,\mu)$ the corresponding complete probability space.
 
 With simultaneous controllability we refer to the problem of designing a unique parameter-independent control function capable to steer all the different realizations of (1) to some prescribed final target in time $T$, that is (see Figure 1 and Figure 2):
 
-
+\[x_\nu(T)=x^T\in\mathbb{R}^N, \quad \nu\in \mathcal{K} \;\;\;\;\mu-\text{a. e.}\]
 
 
 
@@ -1277,7 +1580,11 @@ How can we solve a simultaneous controllability problem?
 
 The computation of a simultaneous control for (1)-(2) can be carried out through a standard optimal control methodology by solving the following minimization problem
 
-
+\[\begin{array}{l}
+\displaystyle\widehat{u}=\min_{u\in L^2(0,T;\mathbb{R}^M)} F_{\nu}(u)
+\\[10pt]
+\displaystyle F_{\nu}(u):= \frac{1}{2} \mathbb{E}\left[\|x_\nu(T)-x^T\|_{\mathbb{R}^N}^2\right]+\frac{\beta}{2}\|u\|_{L^2(0,T;\mathbb{R}^M)}^2,
+\end{array} \quad (3)\]
 
 subject to the dynamics given by (1)-(2). Here $\mathbb{E}[\cdot]$ denotes the expectation operator.
 
@@ -1287,25 +1594,49 @@ Typical approaches to solve the optimization problem (3) are (see [3]):
   The Gradient Descent (GD) algorithm: we find the minimizer $\widehat{u}$ as the limit $k\to +\infty$ of the following iterative process
 
 
-
+\[\textbf{GD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \frac{1}{|\mathcal K|}\sum_{\nu\in\mathcal K}\mathbf{B}^\top p_\nu^k\right),\]
 
 where for all $\nu\in\mathcal K$ the pair $(x_\nu,p_\nu)$ solves the coupled system
 
-
+\[\left\{\begin{array}{ll}
+\displaystyle x'_\nu(t) = \mathbf{A}_\nu x_\nu(t)+\mathbf{B}u, &amp;amp; 0&amp;lt;t&amp;lt;T,
+\\[6pt]
+\displaystyle  p'_\nu(t) = -\mathbf{A}_\nu^\top p_\nu(t), &amp;amp; 0&amp;lt;t&amp;lt;T,
+\\[6pt]
+\displaystyle  x_\nu(0) = x^0, \quad p_\nu(T) = -(x_\nu(T)-x^T).
+\end{array}\right. \quad(4)\]
 
 
   The Conjugate Gradient (CG) algorithm: the gradient $\nabla F_\nu$ is rewritten in the form
 
 
-
+\[\displaystyle\nabla F_\nu(u) = \underbrace{(\beta I + \mathbb{E}[\mathcal L_{T,\nu}^\ast\mathcal L_{T,\nu}])}_{\mathbb{A}}u + \underbrace{\mathbb{E}[\mathcal L_{T,\nu}^\ast(y_\nu(T)-x^T)]}_{-b},\]
 
 where the operators $\mathcal L_{T,\nu}$ and $\mathcal L_{T,\nu}^\ast$ are defined as
 
-
+\[\begin{array}{cccc}
+\mathcal L_{T,\nu}: &amp;amp; U &amp;amp;\longrightarrow &amp;amp;\mathbb{R}^N
+\\
+&amp;amp; u &amp;amp; \longmapsto &amp;amp; z_\nu(T)
+\end{array}, \quad \quad \quad
+\begin{array}{cccc}
+\mathcal L_{T,\nu}^\ast: &amp;amp; \mathbb{R}^N &amp;amp;\longrightarrow &amp;amp; U
+\\
+&amp;amp; p_{T,\nu} &amp;amp; \longmapsto &amp;amp; \mathbf{B}^\top p_\nu,
+\end{array}\]
 
 with $U:=L^2(0,T;\mathbb{R}^M)$ and
 
-
+\[\left\{\begin{array}{ll}
+y'_\nu(t) = \mathbf{A}_\nu y_\nu(t), &amp;amp; 0&amp;lt;t&amp;lt;T,
+\\[10pt]
+y_\nu(0) = x_0
+\end{array}\right. \quad
+\begin{cases}
+z'_\nu(t) = \mathbf{A}_\nu z_\nu(t) +\mathbf{B} u(t), &amp;amp; 0&amp;lt;t&amp;lt;T,
+\\[10pt]
+z_\nu(0) = 0.
+\end{cases}\]
 
 We then use the conjugate gradient algorithm to solve the linear system $\mathbb{A}u = b$.
 
@@ -1317,23 +1648,23 @@ This issue can be bypassed by employing a stochastic optimization method. In par
   The Stochastic Gradient Descent (SGD) algorithm (see [2]): it is a drastic simplification of the classical GD in which, instead of computing the gradient of the functional for all parameters $\nu\in\mathcal K$, in each iteration this gradient is estimated on the basis of a single randomly picked configuration. This translates in the following recursion process
 
 
-
+\[\textbf{SGD:} \quad u^{k+1} = u^k-\eta_k \left(\beta u^k - \mathbf{B}^\top p_{\nu_k}^k\right). \quad (5)\]
 
 with $\nu_k$ selected i.i.d. from $\mathcal K$.
 
   The Continuous Stochastic Gradient (CSG) algorithm: it is a variant of SGD, based on the idea of reusing previously obtained information to improve the efficiency. The CSG recursion process for optimizing $F_\nu$ is given by
 
 
-
+\[\textbf{CSG:} \quad u^{k+1} = u^k-\eta_k \sum_{\ell = 1}^k \alpha_\ell\left(\beta u^\ell - \mathbf{B}^\top p_{\nu_\ell}^\ell\right), \quad (6)\]
 
 where the weights ${\alpha_\ell}_{\ell = 1}^k$ are obtained through the methodology presented in [4].
 
 Experimental Results: comparison of the algorithms
 
 We can test the efficiency of each one of the four aforementioned algorithms by performing simulations for increasing values of 
-.
+\(|\mathcal K|\).
  In these simulations, we have chosen the initial state $x^0 =(1,1,1,1)^\top$ and the final target $x^T=(0,0,0,0)^\top$. The time horizon is set to be $T=1s$. The parameter set is a $|\mathcal K|$ points partition of the interval $[1,6]$: 
-
+\(\mathcal K=\{\nu_1,\ldots,\nu_{|\mathcal K|}\}\)
  with $\nu_1=1$ and $\nu_{|\mathcal K|}=6$.
 
 Figure 3 displays the computational times (in logarithmic scale) the four algorithms need to compute a simultaneous control for (1)-(2).
@@ -1385,31 +1716,39 @@ Bibliography
         <title>Synchronized Oscillators</title>
         <description>Consider the Kuramoto model for the synchronization of coupled oscillators
 
-
+\[\begin{cases}
+\displaystyle \dot{\theta}_i(t) = \omega_i + \frac{Ku(t)}{N}\sum_{j=1}^N \sin \big(\theta_j(t)-\theta_i(t)\big),\quad i = 1,\ldots,N,\quad t&amp;gt;0
+\\
+\theta_i(0) = \theta_i^0.
+\end{cases}\quad (1)\]
 
 Here $\theta_i(t)$, $i = 1,\ldots,N$, is the phase of the $i$-th oscillator, $\omega_i$ is its natural frequency and $K$ is the coupling strength. The frequencies $\omega_i$ are distributed with a given probability density $f(\omega)$, unimodal and symmetric around the mean frequency
 
-
+\[\Omega = \frac 1N \sum_{i=1}^N \omega_i,\]
 
 that is, $f(\Omega+\omega) = f(\Omega-\omega)$.
 
 It is known that, if the coupling $K$ is sufficiently strong, the oscillators will synchronize asymptotically, i.e.
 
-
+\[\lim_{t\to +\infty} |\dot{\theta}_i(t)-\dot{\theta}_j(t)| = 0, \quad \textrm{ for all }\; i,j = 1,\ldots,N,\]
 
 We want to design a control capable to ensure synchronization in a final time horizon $T$, that is
 
-
+\[|\dot{\theta}_i(T)-\dot{\theta}_j(T)| = 0, \quad \textrm{ for all } i,j = 1,\ldots,N. \quad\quad\quad(2)\]
 
 To compute this optimal control allowing us to reach the synchronized configuration (3) we can adopt a classical approach based on the resolution of the following optimization problem
 
-
+\[\begin{array}{l}
+\displaystyle\widehat{u} = \min_{u\in L^2(0,T;\mathbb{R})} J(u)
+\\[10pt]
+\displaystyle J(u) = \frac{1}{2} \sum_{i,j=1}^N \sin^2\big(\theta_j(T)-\theta_i(T)\big) + \frac \beta2 \|u\|^2_{L^2(0,T;\mathbb{R})},
+\end{array}\quad (3)\]
 
 subject to the dynamics (1).
 
 For the resolution of (3), we use the standard GD method, which looks for the minimum $u$ as the limit $k\to +\infty$ of the following iterative process
 
-
+\[u^{k+1} = u^k - \eta_k\nabla J(u^k). \quad (4)\]
 
 This gradient technique is most often chosen because it is very easy to be implemented.
 
@@ -1417,37 +1756,55 @@ In order to fully define the iterative scheme (4), we need to compute the gradie
 
 To this end, let us first rewrite the dynamics (1) in a vectorial form as follows
 
-
+\[\begin{cases}
+\dot{\Theta}(t) = \Omega + F\big(\Theta(t),u(t)\big), \quad t&amp;gt;0
+\\
+\Theta(0) = \Theta^0,
+\end{cases}\]
 
 with $\Theta :=(\theta_1,\ldots,\theta_N)^\top$, $\Theta^0:=(\theta_1^0,\ldots,\theta_N^0)^\top$ and $\Omega :=(\omega_1,\ldots,\omega_N)^\top$, and where $F$ is the vector field given by
 
-
+\[F = (F_1,\ldots,F_N), \quad F_i:= \frac{Ku(t)}{N}\sum_{j=1}^N\sin\big(\theta_j(t)-\theta_i(t)\big), \quad i=1,\ldots,N.\]
 
 Using the notation just introduced, we obtain the following expression for the gradient of $J(u)$
 
-
+\[\nabla J(u) = \beta u + (\mathcal D_uF)^\top p, \quad(5)\]
 
 where $\mathcal D_uF$ indicates the Jacobian of the vector field $F$, computed with respect to the variable $u$.
 
 In (5), we denoted with $p = (p_1,\ldots,p_N)$ the solution of the adjoint equation associated with (1), which is given by
 
-
+\[\begin{cases}
+-\dot{p} = (\mathcal D_{\Theta}F)^\top p
+\\
+p(T) = \nabla_{\Theta(T)}\phi(\Theta(T)),
+\end{cases}\]
 
 where $\mathcal D_\Theta F$ stands again for the Jacobian of the vector field $F$, this time computed with respect to the variable $\Theta$.
 
 Taking into account the expression of the vector field $F$, we can then see that the iterative scheme (4) becomes
 
-
+\[u^{k+1} = u^k -\eta_k\left[\beta u^k + \frac KN\sum_{i=1}^N p_i\left(\sum_{j=1}^N \sin(\theta_j-\theta_i)\right)\right], \quad (6)\]
 
 with
 
-
+\[\begin{cases}
+\displaystyle-\dot{p}_i = -\frac{Kup_i}{N}\sum_{i\neq j=1}^N \cos\big(\theta_j-\theta_i\big) + \frac{Ku}{N}\sum_{i\neq j=1}^N p_j \cos\big(\theta_j-\theta_i\big),\quad i = 1,\ldots,N,\quad t&amp;gt;0
+\\[20pt]
+\displaystyle p_i(T) = \frac 12\sum_{i\neq j=1}^N \sin\big(2\theta_i(T)-2\theta_j(T)\big).
+\end{cases}\]
 
 We then see that, at each iteration $k$ the optimization scheme (6) requires to solve a $N$-dimensional non-linear dynamical system. This may rapidly become computationally very expensive, especially when the number $N$ of oscillators in our system is large.
 
 In order to reduce this computational burden, we can combine the standard GD algorithm with the so-called Random Batch Method (RBM), which is a recently developed approach (see [2]) allowing for an efficient numerical simulation of high-dimensional collective behavior problems. This technique is based on the following simple idea: at each time step $t_m = m\cdot dt$ in the mesh we employ to solve the dynamics, we divide randomly the $N$ particles into $n$ small batches with size $2\leq P&amp;lt;N$, denoted by $C_q$, $q = 1,\ldots,n$, that is
 
-
+\[\begin{array}{l}
+C_q = \{i_{q_1},\ldots,i_{q_P}\}\subset \{1,\ldots,N\}, &amp;amp; &amp;amp; for\; all\; q = 1,\ldots,n
+\\[8pt]
+C_q\cap C_r = \emptyset, &amp;amp; &amp;amp; for\; all\; q,r = 1,\ldots,n
+\\[8pt]
+\bigcup_{q = 1}^n C_q = \{1,\ldots,N\}.
+\end{array}\]
 
 Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics by interacting only particles within the same batch. In this way, we are now dealing with systems of lower dimension and the computational cost of the GD algorithm is reduced.
 
@@ -1516,16 +1873,17 @@ Bibliography
 
 When formulated mathematically, deep supervised learning roughly consists in solving an optimal control problem subject to a nonlinear discrete-time dynamical system, called an artificial neural network.
 
-
+\[\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}\]
 
 
 
 1. Setup
 
 Deep supervised learning [1, 3] (and more generally, supervised machine learning), can be summarized by the following scheme. 
-We are interested in approximating a function $f: \R^d \rightarrow \R^m$, of some class, which is unknown a priori. We have data: its values 
-at $S$ distinct points  (possibly noisy).
-We generally split the $S$ data points into training  data  and testing data . In practice, $N\gg S-N-1$.
+We are interested in approximating a function $f: \R^d \rightarrow \R^m$, of some class, which is unknown a priori. We have data: its values \(\{ \vec{y}_i \}_{i=1}^S \in \R^{m\times S}\)
+at $S$ distinct points \(\{ \vec{x}_i \}_{i=1}^S \in \R^{d\times S}\) (possibly noisy).
+We generally split the $S$ data points into training  data \(\{ \vec{x}_i, \vec{y}_i \}_{i=1}^N\) and testing data \(\{ \vec{x}_i, \vec{y}_i \}_{i=N+1}^S\). In practice, $N\gg S-N-1$.
 
 “Learning” generally consists in:
 
@@ -1533,10 +1891,10 @@ We generally split the $S$ data points into training  data  and testing data . I
   Proposing a candidate approximation 
  $f_\Theta( \cdot): \R^d \rightarrow \R^m$, depending on tunable parameters $\Theta$ and fixed hyper-parameters $L\geq 1$, ${ d_k}$;
   
-    Tune $\Theta$ as to minimize the empirical risk: 
+    Tune $\Theta$ as to minimize the empirical risk: \(\sum_{i=1}^N \ell(f_\Theta(\vec{x}_i), \vec{y}_i),\)
 where $\ell \geq 0$, $\ell(x, x) = 0$ (e.g. $\ell(x, y) = |x-y|^2$). This is called training.
   
-  A posteriori analysis: check if test error  is small. 
+  A posteriori analysis: check if test error \(\sum_{i=N+1}^{S} \ell(f_\Theta(\vec{x}_i), \vec{y}_i)\) is small. 
 This is called generalization.
 
 
@@ -1575,19 +1933,22 @@ For the sake of presentation, we will discuss two of the most simple examples.
 2.1. Multi-layer perceptron
 
 We henceforth assume that we are given a training dataset 
-.
+\(\{\vec{x}_i, \vec{y}_i\}_{i=1}^N \subset \R^{d\times N}\times \R^{m\times N}\).
 
 
-Definition (Neural network):  Let  and  be given. Set $d_0 := d$ and $d_{L+1} :=m$.
+Definition (Neural network):  Let \(L\geq 1\) and \(\{ d_k \}_{k=1}^L \in \N^L\) be given. Set $d_0 := d$ and $d_{L+1} :=m$.
 A neural network with $L$ hidden layers is a map
 
-
+\[f_\Theta(\vec{x}) = \varphi(A^L z^L + b^L)\]
 
 where $z^L = z^L_i \in \R^m$ being given by the scheme
 
+\[\begin{cases}
+z^{k+1} = \sigma(A^k z^k + b^k) &amp;amp;\text{ for } k = 0, \ldots, L-1 \\
+z^0 = \vec{x}_i \in \R^d.
+\end{cases}\]
 
-
-Here  are given parameters such that $A^k \in \R^{d_{k+1}\times d_k}$ and $b^k \in \R^{d_k}$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.
+Here \(\Theta = \{A^k, b^k\}_{k=0}^{L}\) are given parameters such that $A^k \in \R^{d_{k+1}\times d_k}$ and $b^k \in \R^{d_k}$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.
 
 
 
@@ -1595,7 +1956,7 @@ Remark: Several remarks are in order:
 
 
   The above-defined neural network is usually referred to as the multi-layer perceptron (see Multilayer_perceptron)
-  Observe that $z^k \in \R^{d_k}$ for .
+  Observe that $z^k \in \R^{d_k}$ for \(k \in \{0, \ldots, L\}\).
   The function $\sigma$ is always nonlinear in practice (as otherwise the optimisation problem roughly coincides with least squares for a linear regression). It is called the activation function.
   Generally, $\sigma(x) = \max(x, 0)$ or $\sigma(x) = \tanh(x)$ (but others work too).
   Deep learning means optimisation subject to a multi-layered neural net: $L\geq 2$ at least.
@@ -1645,7 +2006,6 @@ class Perceptron(nn.Module):
 		return self.projector(self.blocks(x))
 
 
-
 We can save this class in a file called model.py.
 Then one may create an instance of a Perceptron model for practical usage as follows:
 
@@ -1654,7 +2014,6 @@ device = torch.device('cpu')
 from model import Perceptron
 
 model = Perceptron(device, dimensions=[1,3,4,3,1], num_layers=5)
-
 
 
 
@@ -1687,14 +2046,17 @@ We now impose that the dimensions of the iterations and the parameters stay fixe
 This will allow us to add an addendum term in the scheme.
 
 
-Definition (Residual neural network [2]):  Let  and  be given. Set $d_0 := d$ and $d_{L+1} :=m$.
+Definition (Residual neural network [2]):  Let \(L\geq 1\) and \(\{ d_k \}_{k=1}^L \in \N^L\) be given. Set $d_0 := d$ and $d_{L+1} :=m$.
 A residual neural network (ResNet) with $L$ hidden layers is a map
 
-
+\[f_\Theta(\vec{x}) = \varphi(A^L z^L + b^L)\]
 
 where $z^L = z^L_i \in \R^d$ being given by the scheme
 
-
+\[\begin{cases}
+z^{k+1} = z^k + \sigma(A^k z^k + b^k) &amp;amp;\text{ for } k = 0, \ldots, L-1 \\
+z^0 = \vec{x}_i \in \R^d.
+\end{cases}\]
 
 Here $\Theta = {A^k, b^k}_{k=0}^{L}$ are given parameters such that $A^k \in \R^{d\times d}$ and $b^k \in \R^{d}$ for $k&amp;lt;L$ and $A^L \in \R^{m\times d}, b^L \in \R^m$, and $\sigma \in C^{0, 1}(\R)$ is a fixed, non-decreasing function.
 
@@ -1704,7 +2066,7 @@ Here $\Theta = {A^k, b^k}_{k=0}^{L}$ are given parameters such that $A^k \in \R^
 
 Training consists in solving the optimization problem:
 
-
+\[\min_{\Theta = \{ (A^k, b^k) \}_{k=0}^L } \sum_{i=1}^N | \vec{y}_i - f_\Theta(\vec{x}_i)|^2 + \frac{\epsilon}{2} |\Theta|^2;\]
 
 
   $\epsilon&amp;gt;0$ is a penalization parameter.
@@ -1718,11 +2080,11 @@ Once training is done, and we have a minimizer $\widehat{\Theta}$, we consider $
 
 The functional to be minimized is of the form
 
-
+\[J(\Theta) = \sum_{i=1}^N J_i(\Theta).\]
 
 We could do gradient descent:
 
-
+\[\Theta^{n+1} := \Theta^n - \eta \nabla J(\Theta^n),\]
 
 $\eta$ is step-size. But often $N \gg 1$ ($N=10^3$ or much more).
 
@@ -1759,7 +2121,6 @@ trainer.train(data, epochs)
 
 
 
-
 3.2. Continuous-time optimal control problem
 
 We begin by visualising how the flow map of a continuous-time neural net separates the training data in a linear fashion at time $1$ (even before in fact).
@@ -1783,11 +2144,14 @@ Recall that often $\varphi \equiv \sigma$ (classification)  or $\varphi(x) = x$ 
 
 It can be advantageous to consider the continuous-time optimal control problem:
 
-
+\[\inf_{u(t) \in U,\, (\alpha, \beta)} \sum_{i=1}^N |\vec{y}_i - \varphi(\alpha \, z(1)+\beta)|^2 + \frac{\epsilon}{2} \int_0^1 |(A(t), b(t))|^2 dt\]
 
 where $z = z_i$ solves
 
-
+\[\begin{cases}
+	z'(t) &amp;amp;= \sigma(A(t)z(t)+b(t)) \quad \text{ in } (0, 1) \\
+	z(0) &amp;amp;= \vec{x}_i \in \R^d.
+\end{cases}\]
 
 
 Remark:
@@ -1863,147 +2227,6 @@ for deep learning. The Journal of Machine Learning Research, 18(1):5998–6026.
         <category>tutorial</category>
         
         <category>WP01</category>
-        
-      </item>
-    
-      <item>
-        <title>Control of reaction-diffusion under state constraints - Heterogeneous setting: Gene-flow.</title>
-        <description>
-    
-    Control of reaction-diffusion
-    This is a post in a collection of several on control of reaction-diffusion under state constraints
-    See more ...
-    
-
-
-Equation and drift effect
-
-The equation under concern is:
-
-
-
-where $N$ is a positive regular function.
-
-The physical meaning of the equation is a reaction-diffusion process on the proportion $u$ of individuals along a static heterogeneous distribution $N$.
-
-The effect of this heterogeneous drift can be qualitatively understood in Figure 1. The blue line in the figure is the distribution $N$ and the orange one the term $-2\frac{N_x}{N}$. In the picture in the left we have the Gaussian with variance $\sigma$, leading to a drift effect that is pushing $u$ towards the boundary. At the right, we have the function $e^{x^2/\sigma}$ leading to the contrary effect, the population in the boundary is pushed inside the domain.
-
-From the discussion above we expect the boundary control to be enhanced in the case of $N(x)=e^{x^2/\sigma}$ while diminished in the case of $N(x)=e^{-x^2/\sigma}$.
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-Figure 1. In blue the curves $N(x)=e^{\mp x^2/\sigma}$ and in orange the term $-2\frac{N_x}{N}$.
-
-Slowly varying drifts: Perturbed Stair-case method
-
-Whenever the drift term $-2\frac{N_x}{N}$ is small enough, one can consider the already developed path in the homogeneous setting (see Blog staircaise), taka a sequence and apply the implicit function theorem to obtain a sequence close enough to guarantee the controllability (see [1] for details). This guarantees the controllability from the steady state $0$ to the target $\theta$.
-
-In Figure 2 an intuitive sketch of this procedure is represented.
-
-
-
-
-Figure 2. Perturbed staircase method.
-
-Large drifts: New Barriers
-
-One of the main concerns when state-constraints are present is whether or not barriers exist (see Blog Barriers). If $\theta&amp;lt;\frac{1}{2}$ then, for large $L&amp;gt;L_{\sigma}(0)&amp;gt;0$ we will have obstructions to reach $\theta$ and $0$ from $1$.
-
-In the homogeneous case, nontrivial elliptic solutions with boundary value $1$ do not exist. However, in the case of heterogeneous drift this is no longer true in general.
-
-If we set $N(x)=e^{-x^2/\sigma}$ then for every $\sigma$ one can find an $L_{\sigma}(1)&amp;gt;0$ big enough such that for every $L&amp;gt;L_{\sigma}$ there is a nontrivial solution with boundary value $1$. This nontrivial solution does not correspond to a global minima of the associated energy functional since the trivial solution $u=1$ is the global minimizer.
-
-In order to understand how this barrier can exist we have to study the following non-autonomous dynamics in the phase-plane:
-
-
-
-Any solution of the ODE above is an elliptic solution for some boundary condition. What we want to find is that there exist an $L_{\sigma}(1)$ such that the solution of the ODE at $L_{\sigma}(1)$ is $1$.
-
-Making use of the energy of the ODE
-
-
-
-and seting $a$ small one can see that the trajectory of the dynamics will eventually cross $1$. See Figure 3.
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-
-Figure 3. At the left, the trajectory in the phase-plane associated with the elliptic solution. At the right, the resulting nontrivial solution.
-
-In Figure 4 one can see the effect of the nontrivial solution in a simulation. The red lines are snapshots of the controlled trajectory, getting darker when advancing the time, the dotted blue line is the profile $N(x)$.
-
-
-
-
-Figure 4. Simulation of the equation with control $a=1$ with $N(x)=e^{-x^2/\sigma}$.
-
-Minimal controllability time depending on the drift
-
-We have seen that the influence of the drift is key. Figure 5 shows the minimal controllability time for a fixed $L$ depending on the parameter $\frac{1}{\sigma}$. The initial state is the $0$ configuration and the target the constant steady state $\theta$.
-
-When the variance is very big we tend to the homogeneous case, while when the variance decreases the opposite phenomena is observed; when the drift enhances the control the minimal controllability time is reduced making it tend to zero while, when the drift is pushing the population outside the minimal controllability time increases and eventually blows up with the emergence of the barrier.
-
-
-
-    
-        
-            
-        
-         
-            
-               
-    
-
-
-
-Figure 5. Minimal controllability time depending on the variance. At the left for $N(x)=e^{x^2/\sigma}$ and at the right for $N(x)=e^{-x^2/\sigma}$. 
-
-References:
-[1] I. Mazari, D. Ruiz-Balet, and E. Zuazua, Constrained control of bistable reaction-diffusion equations: Gene-flow and spatially heterogeneous models, preprint: https://hal.archives-ouvertes.fr/hal-02373668/document (2019).
-
-[2] D. Pighin, E. Zuazua, Controllability under positivity constraints of multi-d wave equations, in:
-Trends in Control Theory and Partial Differential Equations, Springer, 2019, pp. 195–232.
-
-[3] J.-M. Coron, E. Trélat, Global steady-state controllability of one-dimensional semilinear heat equa-
-tions, SIAM J. Control. Optim. 43 (2) (2004) 549–569.
-
-[4] C. Pouchol, E. Trélat, E. Zuazua, Phase portrait control for 1d monostable and bistable reac-
-635
-tion–diffusion equations, Nonlinearity 32 (3) (2019) 884–909.
-
-[5]   D.  Ruiz-Balet  and  E.  Zuazua. Controllability  under  constraints  for  reaction-diffusionequations:   The  multi-dimensional  case.   Preprint  available  athttps://cmc.deusto.eus/domenec-ruiz-balet/.
-
-[6] D.  Ruiz-Balet  and  E.  Zuazua. Control of certain parabolic models from biology and social sciences.   Preprint  available  at https://cmc.deusto.eus/domenec-ruiz-balet/.
-
-</description>
-        <pubDate>Sun, 19 Apr 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0008</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp03/P0008</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP03</category>
         
       </item>
     

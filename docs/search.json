@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Points of Interest Extraction and Prediction of Next Locations",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P00012",
+      "date"            : "2021-03-10",
+      "author"          : ["AichaK"],
+      "description"     : "In this project we tried first working on finding an algorithm that can help us define the points of interest of the users we have in the dataset. For that we implement an algorithm that can identify the users stop points.",
+      "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/destinations2.png"
+    } ,
+  
+    {
       "title"           : "Averaged dynamics and control for heat equations with random diffusion",
       "categories"      : ["tutorial", "WP01"],
       "url"             : "/tutorial/wp01/P0013",

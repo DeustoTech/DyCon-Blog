@@ -304,16 +304,15 @@ img:active{
         <p>In [1], we discuss several aspects of wave propagation in a computational
 framework. In particular, we consider the following one-dimensional wave equation</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\label{main_eq_1d}
+<p>[\begin{equation}\label{main_eq_1d}
 \begin{cases}
-\partial_t^2u - \partial_x^2u = 0, & (x,t)\in (-1,1)\times (0,T)
-\\
-u(-1,t)=0=u(1,t), & t\in(0,T)
-\\
-u(x,0) = u^0(x), \quad \partial_t u(x,0) = u^1(x), & x\in(-1,1),
+\partial_t^2u - \partial_x^2u = 0, &amp; (x,t)\in (-1,1)\times (0,T)
+<br />
+u(-1,t)=0=u(1,t), &amp; t\in(0,T)
+<br />
+u(x,0) = u^0(x), \quad \partial_t u(x,0) = u^1(x), &amp; x\in(-1,1),
 \end{cases}
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>and we discuss the propagation properties of its finite-difference solutions on uniform and non-uniform grids, by establishing comparisons with the usual behavior of the continuos waves.</p>
 
@@ -332,15 +331,15 @@ reflections</em>, meaning that the waves change direction without hitting the bo
 
 <p>In order to illustrate these mentioned pathological phenomena, we perform simulations on a uniform space-mesh of $N$ points and mesh-size $h=2/(N+1)$</p>
 
-<script type="math/tex; mode=display">\mathcal G_h :=\Big\{x_j:= − 1 + jh, \; \; j = 0,\ldots,N + 1\Big\}</script>
+<p>[\mathcal G_h :=\Big{x_j:= − 1 + jh, \; \; j = 0,\ldots,N + 1\Big}]</p>
 
 <p>and on two non-uniform ones produced by applying to $\mathcal G_h$ the transformations</p>
 
-<script type="math/tex; mode=display">g_1(x):=\tan\left(\frac \pi4 x\right) \quad \text{or} \quad g_2(x):=2\sin\left(\frac \pi6 x\right).</script>
+<p>[g_1(x):=\tan\left(\frac \pi4 x\right) \quad \text{or} \quad g_2(x):=2\sin\left(\frac \pi6 x\right).]</p>
 
 <p>Moreover, the initial data are constructed starting from the following Gaussian profile</p>
 
-<script type="math/tex; mode=display">G_\gamma(x):= e^{-\frac \gamma2(x-x_0)^2}e^{i\frac{\xi_0x}{h}}, \quad x_0\in(-1,1),\;\xi_0\in(0,2\pi),\;\gamma>0.</script>
+<p>[G_\gamma(x):= e^{-\frac \gamma2(x-x_0)^2}e^{i\frac{\xi_0x}{h}}, \quad x_0\in(-1,1),\;\xi_0\in(0,2\pi),\;\gamma&gt;0.]</p>
 
 <h2 id="low-frequency-simulations">Low frequency simulations</h2>
 
@@ -367,7 +366,7 @@ reflections</em>, meaning that the waves change direction without hitting the bo
 
 <p>These phenomena are related with the particular nature of the discrete group velocity which, in the finite difference setting, is given by</p>
 
-<script type="math/tex; mode=display">\omega(\xi) = \cos\left(\frac \xi2\right)</script>
+<p>[\omega(\xi) = \cos\left(\frac \xi2\right)]</p>
 
 <p>and vanishes for $\xi = (2k+1)\pi$, $k\in\mathbb{Z}$. Moreover, they can be understood by looking at the phase portrait of the hamiltonian system associated to the finite difference semi-discretization of \eqref{main_eq_1d} (see <strong>Figure 4</strong>).</p>
 
@@ -383,28 +382,27 @@ trajectories which remain always in the red area of these phase portraits, while
 
 <p>Analogous phenomena can be detected also in the case of the finite-difference semi-discretization of the two-dimensional wave equation</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{equation}\label{main_eq_2d}
+<p>[\begin{equation}\label{main_eq_2d}
 \begin{cases}
-\partial_t^2u - \Delta u = 0, & (x,y,t)\in (-1,1)^2\times (0,T)
-\\
-u(-1,y,t)=0=u(1,y,t), & (y,t)\in(-1,1)\times(0,T)
-\\
-u(x,-1,t)=0=u(x,1,t), & (x,t)\in(-1,1)\times(0,T)
-\\
-u(x,y,0) = u^0(x,y), \quad \partial_t u(x,y,0) = u^1(x,y), & (x,y)\in(-1,1)^2.
+\partial_t^2u - \Delta u = 0, &amp; (x,y,t)\in (-1,1)^2\times (0,T)
+<br />
+u(-1,y,t)=0=u(1,y,t), &amp; (y,t)\in(-1,1)\times(0,T)
+<br />
+u(x,-1,t)=0=u(x,1,t), &amp; (x,t)\in(-1,1)\times(0,T)
+<br />
+u(x,y,0) = u^0(x,y), \quad \partial_t u(x,y,0) = u^1(x,y), &amp; (x,y)\in(-1,1)^2.
 \end{cases}
-\end{equation} %]]></script>
+\end{equation}]</p>
 
 <p>Also in this case, we perform simulations on  a uniform mesh of $N$ points both in the $x$ and $y$ direction and mesh-sizes $h_x=2/(N+1)=h_y$</p>
 
-<script type="math/tex; mode=display">\mathcal G_h :=\Big\{(x_j,y_k):= (- 1 + jh_x,-1+kh_y) \; \; j,k = 0,\ldots,N + 1\Big\}</script>
+<p>[\mathcal G_h :=\Big{(x_j,y_k):= (- 1 + jh_x,-1+kh_y) \; \; j,k = 0,\ldots,N + 1\Big}]</p>
 
 <p>and on two non-uniform ones produced by applying to $\mathcal G_h$ the transformations $g_1$ and $g_2$ above introduced.</p>
 
 <p>Moreover, the initial data are constructed once again starting from a Gaussian profile:</p>
 
-<script type="math/tex; mode=display">G_\gamma(x,y):= e^{-\frac \gamma2\big[(x-x_0)^2+(y-y_0)^2\big]}e^{i\big(\frac{\xi_0x}{h_x}+\frac{\eta_0y}{h_y}\big)}, \quad (x_0,y_0)\in(-1,1)^2,\;(\xi_0,\eta_0)\in(0,2\pi)^2,\;\gamma>0.</script>
+<p>[G_\gamma(x,y):= e^{-\frac \gamma2\big[(x-x_0)^2+(y-y_0)^2\big]}e^{i\big(\frac{\xi_0x}{h_x}+\frac{\eta_0y}{h_y}\big)}, \quad (x_0,y_0)\in(-1,1)^2,\;(\xi_0,\eta_0)\in(0,2\pi)^2,\;\gamma&gt;0.]</p>
 
 <p>Then, it can be observed in <strong>Video 1</strong> that, as for the one-dimensional case, at low frequencies the solution remains concentrated and propagates along straight characteristics which reach the boundary, where there is reflection according to the Descartes-Snell’s law. This independently on whether we use a uniform or a non-uniform mesh.</p>
 
@@ -464,6 +462,55 @@ order to prove convergence in the context of controllability, stabilization or i
     
 
     
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/destinations2.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P00012" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Points of Interest Extraction and Prediction of Next Locations </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this project we tried first working on finding an algorithm that can help us define the points of interest of the users we have in the dataset. For that we implement an algorithm that can identify the users stop points.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/AichaK"></a>
+          
+          - 10 March 2021
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
     
         
         
@@ -922,64 +969,6 @@ order to prove convergence in the context of controllability, stabilization or i
               <a href="https://deustotech.github.io/DyCon-Blog/author/SwannM">Swann MARX</a>
           
           - 04 February 2019
-        </div>
-        
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
-    
-    </div>
-
-  </div>
-</div>
-
-
-          </div>
-          
-          
-        
-    
-      
-    
-        
-        
-    
-        
-    
-        
-    
-      
-    
-        
-        
-    
-        
-    
-        
-          <div>
-          
-            <div class="post-preview shadowbox">
-  <div class="post-avatar-wp">
-  
-    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0005/copiaRM_02.png">
-  
-  </div>
-  <div class="post-info">
-    <a href="/DyCon-Blog/tutorial/wp99/P0005" class="display-block">
-      <h4 class="post-preview-title ellipsis-two-lines"> Two Grids Filter Method for RPS Semi-Discretization </h4>
-    </a>
-
-    <div class="post-preview-subtitle ellipsis-two-lines">
-      This work is regarding solving 1-d wave equation using RPS semi-discretization method and analysis corresponding dispersion relation.
-    </div>
-
-    <div style="display: flex;margin-top: 10px;">
-        <div class="post-preview-authors ellipsis-one-line">
-          Author:
-          
-          
-            
-              <a href="https://deustotech.github.io/DyCon-Blog/author/XinliangL">Xinliang Liu</a>
-          
-          - 07 January 2019
         </div>
         
         <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
