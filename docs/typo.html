@@ -231,9 +231,8 @@ One of the most succesful mathematical theories in recent years has been connect
 
 <p>A formal description of our problem is the following.</p>
 
-<p>Consider a dataset $\mathcal{D}$ consisting on $S$ distinct points ${x_i}_{i=1}^{S}$, each of them with a corresponding value $y_i$ such that</p>
-
-<p>[\mathcal{D} = {(x_i , y_i})_{i=1}^S]</p>
+<p>Consider a dataset $\mathcal{D}$ consisting on $S$ distinct points ${x_i}_{i=1}^{S}$, each of them with a corresponding value $y_i$ such that 
+\(\mathcal{D} = { x_i , y_i }_{i=1}^S\)</p>
 
 <p>we expect that the labels $y_i$ are a function of $x$, such that
 \(y_i = \mathcal{F} (x_i) + \epsilon _i \quad \forall i \in \{1, ... S\}\)</p>
@@ -269,11 +268,11 @@ where
 
 <p>In this case, the input images consist on a value in $[0,1]$ for each pixel and Red / Green / Blue color. Since the resolution is $32 \times 32$ pixels, the input space would be $[0,1]^d$ with $d=32 \times 32 \times 3 = 3072$. Each image has a correspondent label (airplane, automobile, …).</p>
 
-<p>The dataset is then given by ${ x_j, y_j = f^<em>(x_j)}$ where the inputs $x_j \in [0,1]^{3072}$, and the labelling function acts as $f^</em> : [0,1]^{3072} \to  { \text{airplane, automobile, … } }$.</p>
+<p>The dataset is then given by $ { x_j, y_j = f^{\star(x_j)} } $ where the inputs $ x_j \in [0,1]^{3072} $, and the labelling function acts as $f^* : [0,1]^{3072} \to  { \text{airplane, automobile, … } }$.</p>
 
-<p>We want that $f^*( \text{each image} ) = \text{correct label of that image}$.</p>
+<p>We want that $ f^*( \text{each image} ) = \text{correct label of that image} $.</p>
 
-<p>Note that the function $f^<em>$ we are talking about is not the same as the function $\mathcal{F}$ that we used when defining the notion of dataset. This is because the function $f^</em>$ is the application that connects the images with their given labels, whereas the function $\mathcal{F}$ is the function that connects any feasible input image with its <em>true</em> label. We have access to $f^*$, but not $\mathcal{F}$.</p>
+<p>Note that the function $ f^* $ we are talking about is not the same as the function $\mathcal{F}$ that we used when defining the notion of dataset. This is because the function $ f^* $ is the application that connects the images with their given labels, whereas the function $\mathcal{F}$ is the function that connects any feasible input image with its <em>true</em> label. We have access to $f^*$, but not $\mathcal{F}$.</p>
 
 <p><br /></p>
 
@@ -353,7 +352,11 @@ If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with th
 
 <p>Our algorithm consists on <em>initializing</em> the process by choosing a function $f( \cdot , \theta) \in \mathcal{H}$. In <em>Deep Learning</em>, this is done by <em>randomly choosing some parameters</em> $\theta _0$, and initializing the function as $f( \cdot ; \theta_0)$.</p>
 
-<p>In  <em>Deep Learning</em>, the <em>loss function</em> is given by the <em>empirical risk</em>. That is, we choose a subset of the dataset, $ {x_j , y_j}<em>{j=1}^{s} $ and compute the loss as $\frac{1}{s} \sum</em>{j=1}^{s} l_j ( \theta)$, where $l_j$ could be simply given by $l_j = | f(x_j, \theta) - y_j |_2^2$.</p>
+<p>In  <em>Deep Learning</em>, the <em>loss function</em> is given by the <em>empirical risk</em>. That is, we choose a subset of the dataset, 
+\(\{ x_j , y_j \}_{j=1}^s\) and compute the loss as 
+\(\frac{1}{s} \sum_{j=1}^{s} l_j ( \theta)\), where 
+\(l_j\) could be simply given by 
+\(l_j = \| f(x_j, \theta) - y_j \|_2^2\).</p>
 
 <p>The <em>optimization algorithms</em> used in <em>Deep Learning</em> are mainly based in <em>Gradient Descent</em>, such as</p>
 
@@ -399,17 +402,15 @@ If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with th
 
 <p>where $\theta = { a_i }_{i=1}^{m}$ are the coefficients, ${ \psi _i}$ are the proposed functions (for example, they would be monomials if we are doing polynomial regression).</p>
 
-<p>The function $\mathcal{F}$ correspondent to the dataset $\mathcal{D}$ is then defined as</p>
-
-<p>[\mathcal{F}(\cdot ) \equiv f(\cdot \, ; \theta ^<em>) \in \mathcal{H} \quad \text{such that} \quad \theta ^</em> = \argmin \sum_{i=1}^{S} d(\phi (f(x_i \, ; \theta )) , y_i)]</p>
+<p>The function $\mathcal{F}$ correspondent to the dataset $\mathcal{D}$ is then defined as
+\(\mathcal{F}(\cdot ) \equiv f(\cdot \, ; \theta ^*) \in \mathcal{H} \quad \text{such that} \quad \theta ^* = \argmin \sum_{i=1}^{S} d(\phi (f(x_i \, ; \theta )) , y_i)\)</p>
 
 <p>where $d$ is a distance defined by a loss function, and $\phi$ is a function that transforms $f(x_i; \theta)$ such that we can compare it with $y_i$. For example, if we want to do binary classification, we would use $\phi$ as a function that divides the space into two hiperplanes, and assigns $0$ to one of the parts of the divided space, and $1$ to the other.</p>
 
 <p>This means hat $f(\cdot ; \theta^<em>)$ it is the function in the hypothesis space that *minimizes the distance</em> with the <em>target function</em>, which connects the datapoints $x_i$ with their correspondent labels $y_i$.</p>
 
-<p>When using <em>Deep Neural Networks</em>, the hypothesis space $\mathcal{H}$ is generated by the composition of simple functions $f$ such that</p>
-
-<p>[\mathcal{H} =  \left{  f(x \, ; \theta ) \; \bigg\vert  f(x ; \theta ) = \phi \circ f_{\theta_L}^L \circ f_{\theta_{L-1}}^{L-1} \circ … \circ f_{\theta_1}^1 (x) \right}]</p>
+<p>When using <em>Deep Neural Networks</em>, the hypothesis space $\mathcal{H}$ is generated by the composition of simple functions $f$ such that
+\(\mathcal{H} =  \left\{  f(x \, ; \theta ) \; \bigg\vert  f(x ; \theta ) = \phi \circ f_{\theta_L}^L \circ f_{\theta_{L-1}}^{L-1} \circ ... \circ f_{\theta_1}^1 (x) \right\}\)</p>
 
 <p>where $\theta = { \theta_k }_{k=1}^{L}$ are the training weights of the network and $L$ the number of hidden layers.</p>
 
@@ -439,15 +440,13 @@ being $A^k$ a matrix, $b^k$ a vector, $\theta _k =
 <p>This is one of the reasons for introduction the <em>Residual Neural Networks</em>.</p>
 
 <h3 id="residual-neural-networks">Residual Neural Networks</h3>
-<p>In the simple case of a <em>Residual Neural Network</em> (often referred to as <em>ResNets</em>) the functions $f_{\theta_k}^{k} (\cdot)$ are constructed as</p>
-
-<p>[f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + \sigma (A^k  (\cdot) +  b^k)]</p>
+<p>In the simple case of a <em>Residual Neural Network</em> (often referred to as <em>ResNets</em>) the functions $f_{\theta_k}^{k} (\cdot)$ are constructed as
+\(f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + \sigma (A^k  (\cdot) +  b^k)\)</p>
 
 <p>where $\mathbb{I}$ is the identity function. The parameters $\sigma$, $A^k$ and $b^k$ are equivalent to those of the multilayer perceptrons.</p>
 
-<p>We will see that it is sometimes convenient to numerically add a parameter $h$ to the residual block, such that</p>
-
-<p>[f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + h  \, \sigma (A^k  (\cdot) +  b^k)]</p>
+<p>We will see that it is sometimes convenient to numerically add a parameter $h$ to the residual block, such that
+\(f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + h  \, \sigma (A^k  (\cdot) +  b^k)\)</p>
 
 <p>being $h \in \mathbb{R}$ a scalar.</p>
 
@@ -483,7 +482,9 @@ Then the function $\phi$ would divide the space by an hyperplane, associate $0$ 
 
 <p>So, while it may be difficult to classificate the datapoints in the initial space $X$, the <em>Neural Networks</em> should make things simpler and just <em>propagate the data</em> so as to make it <em>linearly separable</em> (and we would see this in real action!).</p>
 
-<p>Our aim is therefore to transform the initial space $X$ in such a way that $M^0$ and $M^1$ are linearly separable. That is, $(M^<em>)^0 = F(M^0) = f^L \circ f^{L-1} \circ … \circ f^1 (M^0)$ is linearly separable from $(M^</em>)^1 = F(M^1) = f^L \circ f^{L-1} \circ … \circ f^1 (X^1)$.</p>
+<p>Our aim is therefore to transform the initial space $X$ in such a way that $M^0$ and $M^1$ are linearly separable. That is, 
+\((M^*)^0 = F(M^0) = f^L \circ f^{L-1} \circ ... \circ f^1 (M^0)\) is linearly separable from 
+\((M^*)^1 = F(M^1) = f^L \circ f^{L-1} \circ ... \circ f^1 (X^1)\).</p>
 
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/scheme.png" alt="Example of the transformation of a regular grid by a perceptron" width="1080" height="auto" /> 
@@ -513,7 +514,9 @@ should be homeomorphisms. But in this case is more tricky than in the multilayer
 
 <p><strong><em>Theorem 1</em></strong> <strong>(Sufficient condition for invertible ResNets [1]):</strong></p>
 
-<p>Let $\hat{\mathcal{F}} \, : \, \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ with $\hat{\mathcal{F}} (\cdot )= ( L^{1}<em>{\theta} \, \circ … \circ \, L^{T}</em>{\theta} )$ denote a ResNet with blocks defined by 
+<p>Let 
+$\hat{\mathcal{F}} \, : \, \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ with 
+\(\hat{\mathcal{F}} (\cdot )= ( L^{1}_{\theta} \, \circ ... \circ \, L^{T}_{\theta} )\) denote a ResNet with blocks defined by 
 \(L^{t} _{ \theta } = \mathbb{I} + h \cdot g_{\theta _t}\)
 Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if 
 \(h \cdot \text{Lip} (g_{\theta_t}) &lt; 1 \text{ for all } t = 1, ..., T\)</p>
@@ -544,17 +547,15 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
   </li>
 </ul>
 
-<p>Defining the function $G(x, t) =  (A^t (x) + b^t)/h$, we can rewrite our equation as</p>
-
-<p>[x_{t+1} = x_{t} + h\cdot G(x_t, t)]</p>
+<p>Defining the function $G(x, t) =  (A^t (x) + b^t)/h$, we can rewrite our equation as
+\(x_{t+1} = x_{t} + h\cdot G(x_t, t)\)</p>
 
 <p>with the initial condition given by our input data (the ones given by the dataset).</p>
 
 <p>Remember that the index $t$ refers to the index of the layer, but can be now easily interpreted as a time.</p>
 
-<p>In the limit $h\to 0$ it can be recasted as</p>
-
-<p>[\lim_{h \to 0} \frac{x_{t+1}-x_{t}}{h} = \dot{x}_t = G(x_t, t)]</p>
+<p>In the limit $h\to 0$ it can be recasted as
+\(\lim_{h \to 0} \frac{x_{t+1}-x_{t}}{h} = \dot{x}_t = G(x_t, t)\)</p>
 
 <p>and, since the discrete index $t$ becomes continuous in this limit, it is useful to express it as
 \(\dot{x}(t) = G(x(t), t)\)</p>
@@ -637,7 +638,6 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 
 <p>Consider two neurons per layer. That is, we would be working with $x(t)$ in $\mathbb{R}^2$.</p>
 
-<p><img src="/figures/2dbending2.gif" alt="Layertransformation" /></p>
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/2dbending2.gif" alt="2dbending2" width="349" height="247" /> 
 </figure>
