@@ -438,7 +438,7 @@ If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with th
 
 <p>Our algorithm consists on <em>initializing</em> the process by choosing a function $f( \cdot , \theta) \in \mathcal{H}$. In <em>Deep Learning</em>, this is done by <em>randomly choosing some parameters</em> $\theta _0$, and initializing the function as $f( \cdot ; \theta_0)$.</p>
 
-<p>In  <em>Deep Learning</em>, the <em>loss function</em> is given by the <em>empirical risk</em>. That is, we choose a subset of the dataset, ${x_j , y_j}<em>{j=1}^{s}$ and compute the loss as $\frac{1}{s} \sum</em>{j=1}^{s} l_j ( \theta)$, where $l_j$ could be simply given by $l_j = | f(x_j, \theta) - y_j |_2^2$.</p>
+<p>In  <em>Deep Learning</em>, the <em>loss function</em> is given by the <em>empirical risk</em>. That is, we choose a subset of the dataset, $ {x_j , y_j}<em>{j=1}^{s} $ and compute the loss as $\frac{1}{s} \sum</em>{j=1}^{s} l_j ( \theta)$, where $l_j$ could be simply given by $l_j = | f(x_j, \theta) - y_j |_2^2$.</p>
 
 <p>The <em>optimization algorithms</em> used in <em>Deep Learning</em> are mainly based in <em>Gradient Descent</em>, such as</p>
 
@@ -454,12 +454,12 @@ If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with th
 
 <ul>
   <li><strong><em>Optimization</em></strong>: How to go from the initial function, $F_0$, to a better function $\tilde{F}$? This has to do with our optimization algorithm, but also depends on how do we choose the initialization, $F_0$.</li>
-  <li><strong><em>Approximation</em></strong>: Is the <em>ideal solution</em> $F^<em>$ in our hypothesis space $\mathcal{H}$? Is $\mathcal{H}$ at least dense in the space of feasible ideal solutions $F^</em>$? This is done by characterizing the function spaces $\mathcal{H}$.</li>
+  <li><strong><em>Approximation</em></strong>: Is the <em>ideal solution</em> $ F^* $ in our hypothesis space $\mathcal{H}$? Is $\mathcal{H}$ at least dense in the space of feasible ideal solutions $ F^* $ ? This is done by characterizing the function spaces $\mathcal{H}$.</li>
   <li><strong><em>Generalization</em></strong>: How does our function $\tilde{F}$ generalise to previously unseen data? This is done by studying the <em>stochastic properties</em> of the <em>whole distribution</em>, given by the <em>generalised dataset</em>.</li>
 </ul>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/diagram_drawing.png" alt="Diagram of the three main paradigms of Deep Learning" width="321" height="168" /> 
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/Diagram_drawing.png" alt="Diagram of the three main paradigms of Deep Learning" width="321" height="168" /> 
 </figure>
 <center>
 <strong> Diagram of the three main paradigms of Deep Learning. The function $F_0$ is the initial one, $\tilde{F}$ is the final solution as updated by the optimization algorithm, $\hat{F}$ is the closest function in $\mathcal{H}$ to $F^*$, and $F^*$ is the best ideal solution.</strong>
