@@ -208,6 +208,561 @@
 </nav>
 
     
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h1 id="opening-the-black-box-of-deep-learning"&gt;Opening the black box of Deep Learning&lt;/h1&gt;
+</code></pre></div></div>
+
+<p><em>Deep Learning</em> is one of the three main paradigms of <em>Machine Learning</em>, and roughly consists on extracting patterns from data using <em>neural networks</em>.</p>
+
+<p>Its impact in modern technologies is huge. However, there is not a clear high-level description of what these algorithms are actually doing.</p>
+
+<p>In this sense, <em>Deep Learning</em> models are sometimes referred to as <em>“black box”</em> models”; that is, we can characterize the models by its inputs and outputs, but with any knowledge of its internal workings.</p>
+
+<p>The aim is then to open the <em>black box</em> of <em>Deep Learning</em>, and try to gain an intuition of what are these models doing. 
+One of the most succesful mathematical theories in recent years has been connecting <em>Deep Learning</em> with <em>Dynamical Systems</em>.</p>
+
+<p>The aim of this post is to introduce to some of those exciting ideas.</p>
+
+<h2 id="data-and-classification">Data and classification</h2>
+<h3 id="supervised-learning">Supervised Learning</h3>
+
+<p><em>Deep Learning</em> essentially wants to solve the problem of <em>Supervised Learning</em>. That is, we want to learn a function that maps an input to an output, based on examples of input-output pairs.</p>
+
+<p>A classical <em>Deep Learning</em> problem would be the following: we have some pictures of cats and dogs, and want to make an algorithm that learns when the input image shows a dog and when it shows a cat. Note that we could give the algorithm pictures that it has not previously seen, and the algorithm should label the pictures correctly.</p>
+
+<p>A formal description of our problem is the following.</p>
+
+<p>Consider a dataset $\mathcal{D}$ consisting on $S$ distinct points ${x_i}_{i=1}^{S}$, each of them with a corresponding value $y_i$ such that</p>
+
+<p>[\mathcal{D} = {(x_i , y_i)}_{i=1}^S]</p>
+
+<p>we expect that the labels $y_i$ are a function of $x$, such that
+\(y_i = \mathcal{F} (x_i) + \epsilon _i \quad \forall i \in \{1, ... S\}\)</p>
+
+<p>where $\epsilon _i$ is included so as to consider, in principle, noisy data.</p>
+
+<p>The aim of <em>supervised learning</em> is to recover the function $\mathcal{F}(\cdot)$ such that not only fits well in the database $\mathcal{D}$ but also generalises to previously unseen data.</p>
+
+<p>That is, it is inferred the existence of 
+\(\tilde{\mathcal{D}} = \{ (\tilde{x}_i , \tilde{y}_i) \}_{i=1}^{\infty}\) 
+where 
+\(\tilde{y}_i \approx \mathcal{F}(\tilde{x}_i) \quad \forall i\)</p>
+
+<p>being $\mathcal{F} (\cdot)$ the desired previous application, and $\mathcal{D} \subset \tilde{\mathcal{D}}$.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/generaliseddataset.jpg" alt="Figure 1. a finite set of points in (x,y)" width="365" height="243" /> 
+</figure>
+<center>
+<strong> Figure 1. </strong> *The figure in the left represents a finite set of points in $(x,y)$, where $x$ represents the input and $y$ the output. The figure on the right is the expected distribution from which we are sampling the input-output examples. The whole distribution can be understood by $\tilde{\mathcal{D}}$.*
+</center>
+
+<p><br /></p>
+
+<p>A well-known dataset in which to use <em>Deep Learning</em> algorithm is the <em>CIFAR-10</em> dataset.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/CIFAR-dataset.png" alt="Figure 2. Scheme of the CIFAR-10 dataset" width="364" height="280" /> 
+</figure>
+<center>
+<strong> Figure 2. </strong> Scheme of the CIFAR-10 dataset.
+</center>
+
+<p>In this case, the input images consist on a value in $[0,1]$ for each pixel and Red / Green / Blue color. Since the resolution is $32 \times 32$ pixels, the input space would be $[0,1]^d$ with $d=32 \times 32 \times 3 = 3072$. Each image has a correspondent label (airplane, automobile, …).</p>
+
+<p>The dataset is then given by ${ x_j, y_j = f^<em>(x_j)}$ where the inputs $x_j \in [0,1]^{3072}$, and the labelling function acts as $f^</em> : [0,1]^{3072} \to  { \text{airplane, automobile, … } }$.</p>
+
+<p>We want that $f^*( \text{each image} ) = \text{correct label of that image}$.</p>
+
+<p>Note that the function $f^<em>$ we are talking about is not the same as the function $\mathcal{F}$ that we used when defining the notion of dataset. This is because the function $f^</em>$ is the application that connects the images with their given labels, whereas the function $\mathcal{F}$ is the function that connects any feasible input image with its <em>true</em> label. We have access to $f^*$, but not $\mathcal{F}$.</p>
+
+<p><br /></p>
+
+<h3 id="noisy-vs-noisless-data">Noisy vs. noisless data</h3>
+
+<p>What are the <em>true labels</em> of a dataset? We have no <em>a priori</em> idea. What is the mathematical definition of “pictures of airplanes”? Our best guess is to learn the definition by seing examples.</p>
+
+<p>However, those examples may be mistakenly labelled, since the datasets are in general <em>noisy</em>. What does a <em>noisy dataset</em> mean?</p>
+
+<ul>
+  <li>
+    <p>We refer to <strong><em>noisy data</em></strong> when the samples in our dataset $\tilde{\mathcal{D}}$ actually comes from a random vector $(\mathbf{x}, \mathbf{y})$ with a non-deterministic joint distribution, such that it is not possible to find a function $\mathcal{F}$ such that $\mathcal{F}(\mathbf{x}) = \mathbf{y}$.</p>
+
+    <p>The aim of <em>supervised learning</em>, in this case, would be to find a function such that
+  $\mathcal{F}(\mathbf{x}) \approx \mathbf{y}$. For example, $\mathcal{F}(\tilde{x}_i) = \tilde{y}_i$ for almost every sample $i$.</p>
+  </li>
+  <li>
+    <p>In the case of <strong><em>noisless data</em></strong> (which does not happen in most practical situations, but it makes things far simpler) then it is possible to find a function $\mathcal{F}$ such that $\mathcal{F}(\tilde{x}_i) = \tilde{y}_i \; \forall i$, or equivalently $\mathcal{F}(\mathbf{x}) = \mathbf{y}$.</p>
+  </li>
+</ul>
+
+<p>Note that, given that the probability of a collision (of having two different data-points such that $x_i = x_j$ for $i \neq j$) is practically $0$, it is in principle possible to find a function $\mathcal{F}$ such that $\mathcal{F}(x_i)=y_i$ for all of our samples <em>i</em>, even in the noisy case (for example, we may use interpolation). 
+However, the aim of <em>supervised learning</em> is to be able to generalise well to previously unseen data, $\tilde{\mathcal{D}}$, and so interpolation is not effective, and may not be well-defined, since the same input $x_i$ can be labelled differently, due to <em>noise</em>.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/generalnoisy.gif" alt="Representation of the optimal function F as the number of samples increases, in the case of noisy data" width="363" height="242" /> 
+</figure>
+<p><strong>Representation of the optimal function $\mathcal{F}$ as the number of samples increases, in the case of noisy data. Note that the function “stabilizes” at a certain point, and thus it is expected to behave properly in the limit of infinitely many samples.</strong></p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/generalnoisless.gif" alt="Representation of the optimal function F as the number of samples increases, in the case of noisless data" width="365" height="243" /> 
+</figure>
+<center>
+<strong> Representation of the optimal function $\mathcal{F}$ as the number of samples increases, in the case of noisless data. In this case the function could have been obtained by interpolation, and would stabilize fast. </strong>
+</center>
+
+<p><br /></p>
+
+<h3 id="binary-classification">Binary classification</h3>
+<p>In most cases, the data points $x_i$ are in $\mathbb{R}^{n}$. In general, we may restrict to a subspace of feasible images $X \in \mathbb{R}^{n}$.
+So as to ease the training of the models, the inputs are usually normalized, and it is considered $X = [-1,+1]^{n}$, with $n$ the input dimension.</p>
+
+<p>There are different <em>supervised learning</em> problems depending on the space $Y$ of the labels.
+If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with the problem of classification. In the case of CIFAR-10 we have $10$ classes, and so $L=10$.
+ If $L=2$, then it is a binary classification problem, such as in the case of classifying images of cats and dogs (in this case, dog may be represented by “0” and cat by “1”).</p>
+
+<p>In the particular setting of binary classification, the aim is to find a function $\mathcal{F} (x)$ such that it returns $0$ whenever the corresponding data point $x$ is of class $0$, and $1$ conversely.</p>
+
+<h3 id="data-subspaces-and-manifolds">Data, subspaces and manifolds</h3>
+
+<p>Consider $M^0$ the subset of $X$ such that $F( \tilde{x} _i) =0$  for all the points $\tilde{x}_i$ in $M^0$. And consider $M^1$ such that  $\, F(\tilde{x}_i)=1$ for all the points in $M^1$.</p>
+
+<p>It is useful to consider $d(M^0 , M^1) &gt; \delta$. That is, we want the subspace of images of cats and the subspace of images of dogs to have a nonzero distance in the input space. This makes sense physically, since we do not expect the pictures of dogs and cats to overlap.</p>
+
+<p>An interesting hypothesis is to consider that $M^0$ and $M^1$ are indeed manifolds in a low-dimensional space. This is called the <strong><em>manifold hypothesis</em></strong>.</p>
+
+<p>That is, out of the whole input space of all possible images, only a low-dimensional subspace of those would correspond to the images of cats, and one could go from one picture of a cat to any other picture of a cat by a path in which all the point are also pictures of cats. This has been widely hypothesized in many datasets, and there are some experimental results in that direction [9].</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/scheme_binary.png" alt="Example of the input space in a binary classification setting" width="364" height="306" /> 
+</figure>
+<center>
+<strong> Example of the input space in a binary classification setting. The axis $\mathbf{x}^1$ and $\mathbf{x}^2$ represent the components of the vectors $x$ the input space (we are considering $[0,1]^2$). The points in the subspace $M_0$ are labelled as $0$, and the points in $M_1$ as $1$. The points that are not in $M_0$ or $M_1$ do not have a well-defined label</strong>
+</center>
+
+<h2 id="deep-learning">Deep Learning</h2>
+
+<p>Now that we have some inuition about the data, it’s time to focus on how to approximate the functions $f$ that would fit that data.</p>
+
+<p>When doing <em>supervised learning</em>, we need three basic ingredients:</p>
+
+<ul>
+  <li>An <strong><em>hypothesis space</em></strong>, $\mathcal{H}$, consisting on a set of trial functions. All the functions in the hypothesis space can be determined by some parameters $\theta$. That is, all the functions $f \in \mathcal{H}$ are given by $f ( \cdot ; \theta )$. We therefore want to find the best parameters $\theta ^*$.</li>
+  <li>A <strong><em>loss function</em></strong>, that tells us how close we are from our desired function.</li>
+  <li>An <strong><em>optimization algorithm</em></strong>, that allows us to update our parameters at each step.</li>
+</ul>
+
+<p>Our algorithm consists on <em>initializing</em> the process by choosing a function $f( \cdot , \theta) \in \mathcal{H}$. In <em>Deep Learning</em>, this is done by <em>randomly choosing some parameters</em> $\theta _0$, and initializing the function as $f( \cdot ; \theta_0)$.</p>
+
+<p>In  <em>Deep Learning</em>, the <em>loss function</em> is given by the <em>empirical risk</em>. That is, we choose a subset of the dataset, ${x_j , y_j}<em>{j=1}^{s}$ and compute the loss as $\frac{1}{s} \sum</em>{j=1}^{s} l_j ( \theta)$, where $l_j$ could be simply given by $l_j = | f(x_j, \theta) - y_j |_2^2$.</p>
+
+<p>The <em>optimization algorithms</em> used in <em>Deep Learning</em> are mainly based in <em>Gradient Descent</em>, such as</p>
+
+<p>[\theta_{k+1} = \theta_k - \epsilon \frac{1}{n} \nabla l_j ( \theta _k)]</p>
+
+<p>Where the subindex denotes the parameters at each iteration.</p>
+
+<p>We expect our algorithm to converge; that is, we want that, as $k \to \infty$, we would have $\theta_{k}$ close to $\theta^*$, where the notion of “closeness” is given by the chosen loss function.</p>
+
+<h3 id="paradigms-of-deep-learning">Paradigms of Deep Learning</h3>
+
+<p>There are many questions about <em>Deep Learning</em> that are not yet solved. Three of that paradigms, that woud be convenient to treat mathematically, are:</p>
+
+<ul>
+  <li><strong><em>Optimization</em></strong>: How to go from the initial function, $F_0$, to a better function $\tilde{F}$? This has to do with our optimization algorithm, but also depends on how do we choose the initialization, $F_0$.</li>
+  <li><strong><em>Approximation</em></strong>: Is the <em>ideal solution</em> $F^<em>$ in our hypothesis space $\mathcal{H}$? Is $\mathcal{H}$ at least dense in the space of feasible ideal solutions $F^</em>$? This is done by characterizing the function spaces $\mathcal{H}$.</li>
+  <li><strong><em>Generalization</em></strong>: How does our function $\tilde{F}$ generalise to previously unseen data? This is done by studying the <em>stochastic properties</em> of the <em>whole distribution</em>, given by the <em>generalised dataset</em>.</li>
+</ul>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/diagram_drawing.png" alt="Diagram of the three main paradigms of Deep Learning" width="321" height="168" /> 
+</figure>
+<center>
+<strong> Diagram of the three main paradigms of Deep Learning. The function $F_0$ is the initial one, $\tilde{F}$ is the final solution as updated by the optimization algorithm, $\hat{F}$ is the closest function in $\mathcal{H}$ to $F^*$, and $F^*$ is the best ideal solution.</strong>
+</center>
+
+<p>The problem of <strong><em>approximation</em></strong> is somehow resolved by the so-called <em>Universal Approximation Theorems</em> (look, for example, at the results by Cybenko [11]). This results state that the functions generated by <em>Neural Networks</em> are dense in the space of continuous functions. However, in principle it is not clear what do we gain by increasing the number of layers (using <em>deeper Neural Networks</em>), that seem to give better results in practuce.</p>
+
+<p>Regarding <strong><em>optimization</em></strong>, altough algorithms based in Gradient Descent are widely used, it is not clear whether the solution gets stucked in local minima, if convergence is guaranteed, how to initialize the functions…</p>
+
+<p>When dealing with <strong><em>generalization</em></strong>, everything gets more complicated, because we have to derive some properties of the <em>generalised dataset</em>, from which we do not have access. It is probably the less understood of those three paradigms.</p>
+
+<p>Indeed, those three paradigms are very connected. For example, if the problem of <em>optimization</em> is completely solved, we would know that our final solution given by the algorithm, $\tilde{F}$, would be the best possible solution in the hypothesis space, $\hat{F}$; and if <em>approximation</em> is solved, we would also end up getting the ideal solution $F^*$.</p>
+
+<p>One of the main problems regarding those questions is that the hypothesis space $\mathcal{H}$ is generated by a <em>Neural Network</em>, and so it is quite difficult to characterize mathematically. That is, we do not know much about the shape of $\mathcal{H}$ (although the <em>Universal Approximation Theorems</em> give valuable insight here), nor how to “move” in the space $\mathcal{H}$ by tuning $\theta$.</p>
+
+<p>Let’s take a look at how the hypothesis spaces look like.</p>
+
+<h3 id="hypothesis-spaces">Hypothesis spaces</h3>
+
+<p>In classical settings, an hypothesis space is often proposed as 
+\(\mathcal{H} = \left\{  f (x\, ; \mathbf{\theta }) \; \bigg\vert  f(x ; \theta ) = \sum_{i=1}^{m} a_i \psi _i (x)  \right\}\)</p>
+
+<p>where $\theta = { a_i }_{i=1}^{m}$ are the coefficients, ${ \psi _i}$ are the proposed functions (for example, they would be monomials if we are doing polynomial regression).</p>
+
+<p>The function $\mathcal{F}$ correspondent to the dataset $\mathcal{D}$ is then defined as</p>
+
+<p>[\mathcal{F}(\cdot ) \equiv f(\cdot \, ; \theta ^<em>) \in \mathcal{H} \quad \text{such that} \quad \theta ^</em> = \argmin \sum_{i=1}^{S} d(\phi (f(x_i \, ; \theta )) , y_i)]</p>
+
+<p>where $d$ is a distance defined by a loss function, and $\phi$ is a function that transforms $f(x_i; \theta)$ such that we can compare it with $y_i$. For example, if we want to do binary classification, we would use $\phi$ as a function that divides the space into two hiperplanes, and assigns $0$ to one of the parts of the divided space, and $1$ to the other.</p>
+
+<p>This means hat $f(\cdot ; \theta^<em>)$ it is the function in the hypothesis space that *minimizes the distance</em> with the <em>target function</em>, which connects the datapoints $x_i$ with their correspondent labels $y_i$.</p>
+
+<p>When using <em>Deep Neural Networks</em>, the hypothesis space $\mathcal{H}$ is generated by the composition of simple functions $f$ such that</p>
+
+<p>[\mathcal{H} =  \left{  f(x \, ; \theta ) \; \bigg\vert  f(x ; \theta ) = \phi \circ f_{\theta_L}^L \circ f_{\theta_{L-1}}^{L-1} \circ … \circ f_{\theta_1}^1 (x) \right}]</p>
+
+<p>where $\theta = { \theta_k }_{k=1}^{L}$ are the training weights of the network and $L$ the number of hidden layers.</p>
+
+<h4 id="multilayer-perceptrons">Multilayer perceptrons</h4>
+
+<p>In the case of the so-called <em>multilayer perceptrons</em>, the functions $f^k_{\theta_k}$ are constructed as</p>
+
+<p>\(f^k_{\theta_k} (\cdot) = \sigma (A^k  (\cdot) +  b^k)\)
+being $A^k$ a matrix, $b^k$ a vector, $\theta _k = 
+{A^k , b^k}$ and $\sigma \in C^{0,1}(\mathbb{R})$ a fixed nondecreasing function, called the <em>activation function</em>.</p>
+
+<p>Since we restrict to the case in which the number of neurons is constant through the layers, we have that $A^k \in \mathbb{R}^{d \times d}$ and $b^k \in \mathbb{R}^d$.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/multilayerdiagram.jpg" alt="Diagram of a multilayer perceptron" width="326" height="150" /> 
+</figure>
+<center>
+<strong>Diagram of a multilayer perceptron, also called fully-connected neural network. However, this graph representation seems a bit difficult to treat, so we use an algebraic representation instead</strong>
+</center>
+
+<p>That is, shematically, one has that $\mathcal{H} = { F : F(x) = F_T \circ F_{T-1} \circ … \circ F_0 (x) }$, the hypothesis space is generated by the discrete composition of functions.</p>
+
+<p>It can be seen that the <em>complexity</em> of the <em>hypothesis spaces</em> in <em>Deep Learning</em> is generated by the <em>composition of functions</em>. Unfortunately, the tools regarding the understanding of the discrete composition of functions are quite limited.</p>
+
+<p>Moreover, considering $b^k=0$, we have that $F(x) = \sigma \circ A_T \circ \sigma \circ A_{T-1}  \circ … \circ \sigma A_0 \circ x$. The gradient would then go as $\nabla_\theta F \sim A_T \cdot A_{T-1} \cdot … \cdot A_0 \sim k^L$. For $L$ large, the gradients would become very large or very small, and so training would not be feasible by gradient descent.</p>
+
+<p>This is one of the reasons for introduction the <em>Residual Neural Networks</em>.</p>
+
+<h3 id="residual-neural-networks">Residual Neural Networks</h3>
+<p>In the simple case of a <em>Residual Neural Network</em> (often referred to as <em>ResNets</em>) the functions $f_{\theta_k}^{k} (\cdot)$ are constructed as</p>
+
+<p>[f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + \sigma (A^k  (\cdot) +  b^k)]</p>
+
+<p>where $\mathbb{I}$ is the identity function. The parameters $\sigma$, $A^k$ and $b^k$ are equivalent to those of the multilayer perceptrons.</p>
+
+<p>We will see that it is sometimes convenient to numerically add a parameter $h$ to the residual block, such that</p>
+
+<p>[f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + h  \, \sigma (A^k  (\cdot) +  b^k)]</p>
+
+<p>being $h \in \mathbb{R}$ a scalar.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/resnetsdiagram.jpg" alt="Diagram of a ResNet" width="340" height="145" /> 
+</figure>
+<center>
+<strong> Diagram of a ResNet, in a graph manner. Again, an algebraic representation is preferred.</strong>
+</center>
+
+<p><br /></p>
+
+<h3 id="visualizing-perceptrons">Visualizing Perceptrons</h3>
+
+<p>The <em>Neural Networks</em> then represent the compositions of functions $f$, which consist on an affine transformation plus a nonlinearity.</p>
+
+<p>If we use the <em>activation function</em> $\sigma ( \cdot ) = tanh (\cdot)$, then each function $f$ (and so each layer of the Neural Network) is first rotating and translating the original space, and then “squeezing” it.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/layertransformation0.gif" alt="Example of the transformation of a regular grid by a perceptron" width="1080" height="auto" /> 
+</figure>
+<center>
+<strong> Example of the transformation of a regular grid by a perceptron.</strong>
+</center>
+
+<h2 id="binary-classification-with-neural-networks">Binary classification with Neural Networks</h2>
+
+<p>When dealing with data classification, it is very useful to just assign a color / shape to every label, and so be able to visualize data in a lower-dimensional plot.</p>
+
+<p>The aim of classification is to associate different classes to different regions of the initial space,
+When using <em>Neural Networks</em>, the initial space $X$ is propagated by the <em>Neural Network</em> as $F = f ^L \circ  f^{L-1} \circ … \circ f^1 (X)$. 
+Then the function $\phi$ would divide the space by an hyperplane, associate $0$ to one region and $1$ to the other.</p>
+
+<p>So, while it may be difficult to classificate the datapoints in the initial space $X$, the <em>Neural Networks</em> should make things simpler and just <em>propagate the data</em> so as to make it <em>linearly separable</em> (and we would see this in real action!).</p>
+
+<p>Our aim is therefore to transform the initial space $X$ in such a way that $M^0$ and $M^1$ are linearly separable. That is, $(M^<em>)^0 = F(M^0) = f^L \circ f^{L-1} \circ … \circ f^1 (M^0)$ is linearly separable from $(M^</em>)^1 = F(M^1) = f^L \circ f^{L-1} \circ … \circ f^1 (X^1)$.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/scheme.png" alt="Example of the transformation of a regular grid by a perceptron" width="1080" height="auto" /> 
+</figure>
+<center>
+<strong> Example of the transformation of a regular grid by a perceptron.</strong>
+</center>
+
+<h2 id="neural-networks-as-homeomorphisms">Neural Networks as homeomorphisms</h2>
+
+<p>We know that the composite of continuous functions is continuous, and that the composite of bijections is a bijection. Then, a *Neural Network would represent a bijection if and only if all of its layers represent bijections. And, if the inverse is continuous, it would also be an homeomorphism.</p>
+
+<p>In the case of multilayer perceptrons, since they are given by $f^L \circ f^{L-1} \circ … \circ f^1 (\cdot)$, they will represent an homeomorphism iff each $f$ is an homeomorphism [5] [6].</p>
+
+<p>$f = \sigma (A (\cdot) + b)$</p>
+
+<p>In the case $\sigma = tanh$, restricting to our domain, we have a continous inverse.</p>
+
+<p>Then it is enough that $A (\cdot) + b$ is homeomorphic. If $A$ is nonsingular, we know that there is an inverse function. Therefore, in the case of multilayer perceptrons, it is enough that all the matrices $A^k$ are nonsingular for the <em>Neural Network</em> to represent an homeomorphism.</p>
+
+<p>Indeed, since the matrices $A^k$ are initialized at random, it is possible that some of them are singular, and so that the <em>Neural Network</em> does not represent an homeomorphism, but rather a function in which we <em>“lose information”</em>  in the way by setting some directions to $0$. This has to do with the fact that arbitrarily large multilayer perceptrons are difficult to use in practice, and this is another reason why <em>ResNets</em> were introduced.</p>
+
+<p>In the case of ResNets, all the functions</p>
+
+<p>\(f = \mathbb{I} + A(\cdot) + b\)
+should be homeomorphisms. But in this case is more tricky than in the multilayer perceptrons case.</p>
+
+<p><strong><em>Theorem 1</em></strong> <strong>(Sufficient condition for invertible ResNets [1]):</strong></p>
+
+<p>Let $\hat{\mathcal{F}} \, : \, \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ with $\hat{\mathcal{F}} (\cdot )= ( L^{1}<em>{\theta} \, \circ … \circ \, L^{T}</em>{\theta} )$ denote a ResNet with blocks defined by 
+\(L^{t} _{ \theta } = \mathbb{I} + h \cdot g_{\theta _t}\)
+Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if 
+\(h \cdot \text{Lip} (g_{\theta_t}) &lt; 1 \text{ for all } t = 1, ..., T\)</p>
+
+<p>We expect the lipschitz constant of $g_\theta$ to be bounded, and so $h\to 0$ would make our ResNets invertible.</p>
+
+<h2 id="neural-networks-and-dynamical-systems">Neural Networks and Dynamical Systems</h2>
+
+<p>From what we have seen, now the relation between <em>Neural Networks</em> and <em>Dynamical Systems</em> is just a matter of notation!</p>
+
+<ul>
+  <li>
+    <p>Consider the <strong><em>multilayer perceptron</em></strong>, given by 
+\(F(x) = f^L \circ f^{L-1} \circ ... \circ f^0 (x)\)</p>
+
+    <p>Simply renaming the index $l$ by the index $t-1$, and $L$ by $T-1$, we see that</p>
+
+\[F(x) = f^T \circ ... \circ f^t \circ ... \circ f^1 (x)\]
+
+    <p>If we define $x_t = f^t \circ … \circ f^0 (x)$, we see that what the neural network is doing is defining a <em>dynamical system</em> in which our initial values, denoted by $x$, evolve in a time defined by the index of the layers.</p>
+
+    <p>However, this general discrete maps are not easy to characterize. We can see that we are more lucky with <em>ResNets</em>.</p>
+  </li>
+  <li>
+    <p>In the case of <strong><em>Residual Neural Networks</em></strong>, the residual blocks are given by
+  \(f^t (x_{t-1}) = x_{t-1} + A^{t} x_{t-1} + b^t\) 
+  where the supindex in $A$ and $b$ denote that $A$ and $b$, in general, change in each layer.</p>
+  </li>
+</ul>
+
+<p>Defining the function $G(x, t) =  (A^t (x) + b^t)/h$, we can rewrite our equation as</p>
+
+<p>[x_{t+1} = x_{t} + h\cdot G(x_t, t)]</p>
+
+<p>with the initial condition given by our input data (the ones given by the dataset).</p>
+
+<p>Remember that the index $t$ refers to the index of the layer, but can be now easily interpreted as a time.</p>
+
+<p>In the limit $h\to 0$ it can be recasted as</p>
+
+<p>[\lim_{h \to 0} \frac{x_{t+1}-x_{t}}{h} = \dot{x}_t = G(x_t, t)]</p>
+
+<p>and, since the discrete index $t$ becomes continuous in this limit, it is useful to express it as
+\(\dot{x}(t) = G(x(t), t)\)</p>
+
+<p>This dynamic should be such that $x(0)$ is the initial data, and $x(T)$ is a distribution such that the points that were in $M^0$ and $M^1$ are now <em>linearly separable</em>.</p>
+
+<p>Therefore the <em>ResNet</em> architecture can be seen as the discretization of an <em>ODE</em>, and so the input points $x$ are expected to follow a smooth dynamics layer-to-layer, if the <em>residual part</em> is sufficiently small.</p>
+
+<p>The question is: is the <em>residual part</em> sufficiently small? Is $h$ indeed small? There are empirical evidence showing that, as the number of layers ($T$) incresases, the value $h$ gets smaller and smaller.</p>
+
+<p>But we do not need to worry too much, since we can easily define a general kind of <em>ResNets</em> in which the <em>residual blocks</em> are given by</p>
+
+<p>[f^t (x_{t-1}) = x_{t-1} + h (A^{t} x_{t-1} + b^t)]</p>
+
+<p>in which $h$ could be absorbed easily by $A$ and $b$.</p>
+
+<h3 id="deep-learning-and-control">Deep Learning and Control</h3>
+
+<p>Recovering the fact that $f^t$ are indeed $f^t( \cdot ;\theta ^t)$, where $\theta^t$ are the parameters $A^t$ and $b^t$, we can express our dynamical equations, in the case of resnets as</p>
+
+<p>[\dot{x}(t) = G(x(t), t; \theta (t))]</p>
+
+<p>where $x(0)$ is our initial data point, and we want to control our entire distribution of initial datapoints into a final suitable distribution, given by $x(T)$. In the case of binary classification, that “<em>suitable distribution</em>” would for example consist in one in which the datapoints labelled as $0$ move further away from the datapoints labelled as $1$, yielding a final space that could be separated by an hyperplane.</p>
+
+<p>Exploiting this idea, we have the <em>Neural Ordinary Differential Equations</em> [10].</p>
+
+<h2 id="visualizing-deep-learning">Visualizing Deep Learning</h2>
+
+<p>In a binary classification problem using <em>Deep Learning</em>, we essentially apply the functions $f\in \mathcal{H}$, where $\mathcal{H}$ has been previously defined, to our input points $x$, and then the space $f(x)$ is divided by two by an hyperplane: one of the resulting subspaces would be classified as $0$, and the other as $1$.</p>
+
+<p>Therefore, our problem consists on making an initial dataset linearly separable.</p>
+
+<p>Consider a binary classification problem with <em>noisless data</em>, such that</p>
+
+<p>\(\mathcal{D} =  \{ ( x_i , y_i = \mathcal{F}(x_i) )\} _{i=1}^{S}\)
+\(x_i \in [-1,+1]^{n} , \; \; y_i \in \{0,1\} \quad \forall i \in \{1, ... , S\}\)</p>
+
+<p>We consider two distributions, the <em>ring distribution</em> and the <em>spiral distribution</em>.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/RingDistribution.jpg" alt="RingDistribution" width="264" height="277" /> 
+</figure>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/SpiralDistribution.jpg" alt="SpiralDistribution" width="269" height="277" /> 
+</figure>
+<center>
+<strong> Plot of the ring and spiral distribution.</strong>
+</center>
+
+<p>And let’s put into practice what we have learned! For that, we use the library <em>TensorFlow</em> [14], in which we can easy implement the <em>Multilayer Perceptrons</em> and <em>Residual Neural Networks</em> that we have defined.</p>
+
+<p>We are going to look at the evolution of $x(t)$, with $x(0)$ the initial datapoint of the dataset. Remember that we have two cases</p>
+<ul>
+  <li>In a multilayer perceptron, $x(t) = x_t = f^t \circ f^{t-1} \circ … \circ f^1(x)$.</li>
+  <li>In a ResNet, $x(t)$ would be given by $x(t+1) = x(t) + f(x(t))$  that is, approximately, $\dot{x}(t) = G(x(t), t)$.</li>
+</ul>
+
+<h3 id="multilayer-perceptrons-1">Multilayer Perceptrons</h3>
+
+<p>In the case of multilayer perceptrons, we choose $3$ neurons per layer. This means that we are working with points $x(t)$ in $\mathbb{R}^3$.</p>
+
+<p>We train the networks, and after lots of <em>iterations</em> of the <em>gradient descent method</em>, this is what we obtain.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/3dmultilayer_.gif" alt="3dmultilayer_" width="349" height="231" /> 
+</figure>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/3dmultilayer_spiral.gif" alt="3dmultilayer_spiral" width="349" height="231" /> 
+</figure>
+
+<p>We see that in the final space (<em>hidden layer 5</em>) the blue and <em>yellow</em> points can be linearly separable.</p>
+
+<p>However, the dynamics is far from smooth, and we see that in the final layers we seem to occupy a $2-$dimensional space rather than a $3-$dimensional one. This is because <em>multilayer perceptrons</em> tend to <em>“lose information”</em>. This type of behaviour causes that if we had increased the number of layers this architectures would be super difficult to train (we would have to try lots of times, since each time we initialize the parameters at random).</p>
+
+<h3 id="visualizing-resnets">Visualizing ResNets</h3>
+
+<p>With <em>ResNets</em> we are far luckier!</p>
+
+<p>Consider two neurons per layer. That is, we would be working with $x(t)$ in $\mathbb{R}^2$.</p>
+
+<p><img src="/figures/2dbending2.gif" alt="Layertransformation" /></p>
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/2dbending2.gif" alt="2dbending2" width="349" height="247" /> 
+</figure>
+
+<p><br /></p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/2dbendingspiral1.gif" alt="2dbendingspiral1" width="349" height="247" /> 
+</figure>
+
+<p>We observe that altough the <em>spiral distribution</em> can be classified by this neurons (the transformed space, in hidden layer $49$, makes the distribution linearly separable) this does not happen with the <em>ring distribution</em>!</p>
+
+<p>We should be able to respond why this happens with what we have learned: since the <em>ResNets</em> are homeomorphisms, we would not be able to untie the tie in the <em>ring distribution</em>!</p>
+
+<p>However, we should be able to untie it if going to a third dimension. Let’s try that.</p>
+
+<p>Now we consider $3$ neurons per layer, i.e. $x(t) \in \mathbb{R}^3$.</p>
+
+<p><br /></p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/3dbendingspiral2.gif" alt="3dbendingspiral2" width="349" height="231" /> 
+</figure>
+
+<p><br /></p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/bending0.gif" alt="bending0" width="349" height="231" /> 
+</figure>
+
+<p><br /></p>
+
+<p>Now both distributions can be classified. Indeed, every distribution in a plane could be in principle classified by a <em>ResNet</em>, since at most we would have ties of order $2$, that can be untied in a dimension $3$.</p>
+
+<p>But could indeed all distributions be classified? Are the <em>ResNets</em> indeed such powerful approximators that we could recreate almost any dynamics out of them? Are we able to find the parameters $\theta$ (that can be seen as controls) such that all distributions can be classified? What do we gain by increasing $T$ (having more and more layers)?</p>
+
+<p>Those and far more other questions arise out of this approach. And those cannot be answered easily without further research.</p>
+
+<h2 id="results-open-questions-and-perspectives">Results, open questions and perspectives</h2>
+
+<h3 id="noisy-vs-noisless-data-1">Noisy vs noisless data</h3>
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/NoisyRing.gif" alt="Representation of a more natural distribution" width="575" height="261" /> 
+</figure>
+<center>
+<strong> Representation of a more natural distribution at the left, and examples of realisations of that distribution in the right.</strong>
+</center>
+
+<p>It seems like we almost forgot that the data is (always) noisy! What happens in that case?</p>
+
+<p>Considering the distribution in the figure (that can be seen as a more “natural” <em>ring distribution</em>), if we only cared about moving the blue points to the top, and the yellow points to the bottom, we would have an <em>inecessary complex</em> dynamics, since we expect some points to be mislabelled.</p>
+
+<p>We should stick to <em>“simple dynamics”</em>, that are the ones we expect would generalise well. But how to define <em>“simple dynamics”</em>?
+ In an <em>optimal control</em> approach, this has to do with adding <em>regularization terms</em>.</p>
+
+<p>Moreover, Weinan E. et al [2] propose the approach of considering, instead of our points $x(t)$ as objects of study for the dynamics, the <em>probabilty distribution</em>, and so recasting the control as a <em>mean field optimal control</em>. With this approach, some we gain some insight into the problem of <em>generalization</em>.</p>
+
+<p>This has to do with the idea that indeed what the <em>Neural Networks</em> take as inputs are <em>probabilty distributions</em>, and the <em>dynamics</em> should be focused on those. In here theories such as <em>transportation theory</em> try to give some insight into happens when consider the more general problem of <em>Deep Learning</em>: one in which we have noise.</p>
+
+<h3 id="complexity-and-control-of-neural-networks">Complexity and control of Neural Networks</h3>
+
+<p>We also do not know what happens when increasing the number of layers. Why increasing the number of layers is better?</p>
+
+<p>In practice, having more layers (working in the so called <em>overparametrization regime</em>) seems to perform better in training. Our group indeed gave some insight in that direction [15] by connecting this problems with the <em>turnpike phenomenon</em> [16].</p>
+
+<p>Regarding <em>optimality</em>, it is not easy to define, since we have multiple possible solutions to the same problem. That is, there are multiple dynamics that can make an initial distribution linearly separable.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/bending1.gif" alt="bending1" width="349" height="231" /> 
+</figure>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/bending2.gif" alt="bending2" width="349" height="231" /> 
+</figure>
+<center>
+<strong> Dynamics given by a ResNet with 3 neurons per layer, with two different initializations.</strong>
+</center>
+
+<p>The question is again: if there is a family of dynamics that solve the <em>classification problem</em>, which ones out of that family are <em>optimal</em>?</p>
+
+<p>It also seems that one should take into account some problem of <em>stochastic control</em>, since the parameters $\theta$ are initialized at random, and different initializations give different results in practice. Moreover, the <em>stochastic gradient descent</em>, which is widely used, introduces some <em>randomness</em> to our problem. This indicates that <em>Deep Learning</em> is by no means a classical control problem.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>Altough the problem of <em>Deep Learning</em> is not yet resolved, we have made a some very interesting equivalences:</p>
+<ul>
+  <li>The problem of <strong><em>approximation</em></strong> in <em>Deep Learning</em> is now the problem of <em>how is the space of possible dynamics?</em> In the case of <em>multilayer perceptrons</em>, we can make use of <em>discrete dynamical systems</em> to solve that, or characterize their complexity; and in the case of <em>ResNets</em>, papers such at the one by Q. Li et. deals with that question [7].</li>
+  <li>The problem of <strong><em>optimization</em></strong> is the problem of finding the best weights $\theta$, that can be recasted as controls. That is, is a problem of <em>optimal control</em>, and we should be able to use our knowledge of <em>optimal control</em> (for example, the <em>method of succesive approximations</em>) in this direction.</li>
+  <li>The <strong><em>generalization</em></strong> problem can be understood by consdering the control of the <em>whole probability distribution</em>, instead of the <em>risk minimization problem</em> [2].</li>
+</ul>
+
+<p>All in all, there is still lot of work to do to understand <em>Deep Learning</em>.</p>
+
+<p>However, the presented approaches have been giving very interesting results in the recent years, and everything indicates that they will continue to do so.</p>
+
+<h2 id="references">References</h2>
+
+<p>[1] J. Behrmann, W. Grathwohl, R. T. Q. Chen, D. Duvenaud, J. Jacobsen (2018). <i> Invertible Residual Networks</i> <a href="https://arxiv.org/abs/1811.00995">arxiv</a></p>
+
+<p>[2] Weinan E, Jiequn Han, Qianxiao Li, (2018). <i> A Mean-Field Optimal Control Formulation of Deep Learning</i>. volume 6. Research in the Mathematical Sciences. <a href="https://doi.org/10.1007/s40687-018-0172-y">paper</a></p>
+
+<p>[4] B. Hanin, (2018). <i> Which Neural Net Architectures Give Rise to Exploding and Vanishing Gradients? </i>  <a href="https://arxiv.org/abs/1801.03744">arxiv</a></p>
+
+<p>[5] C. Olah, <i> Neural Networks, Manifolds and Topology </i>. <a href="https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/">blog post</a></p>
+
+<p>[6] G. Naitzat, A. Zhitnikov, L-H. Lim, (2020). <i> Topology of Deep Neural Networks </i> <a href="https://arxiv.org/abs/2004.06093">arxiv</a></p>
+
+<p>[7] Q. Li, T. Lin, Z. Shen, (2019). <i> Deep Learning via Dynamical Systems: An Approximation Perspective </i><a href="https://arxiv.org/abs/1912.10382">arxiv</a></p>
+
+<p>[8] B. Geshkovski, <i> The interplay of control and deep learning </i>. <a href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0010">blog post</a></p>
+
+<p>[9] C. Fefferman, S. Mitter, H. Narayanan, <i> Testing the manifold hypothesis </i>. <a href="http://www.mit.edu/~mitter/publications/121_Testing_Manifold.pdf">pdf</a></p>
+
+<p>[10] R. T. Q. Chen, Y. Rubanova, J. Bettencourt, D. Duvenaud, (2018). <i> Neural Ordinary Differential Equations </i> <a href="https://arxiv.org/abs/1806.07366">arxiv</a></p>
+
+<p>[11] G. Cybenko. <i> Approximation by Superpositions of a Sigmoidal Function </i> <a href="https://web.njit.edu/~usman/courses/cs675_fall18/10.1.1.441.7873.pdf">pdf</a></p>
+
+<p>[12] Weinan E, Chao Ma, S. Wojtowytsch, L. Wu. <i> Towards a Mathematical Understanding of Neural Network-Based Machine Learning_ what we know and what we don’t. </i> <a href="https://arxiv.org/abs/2009.10713">arxiv</a></p>
+
+<p>[14] <i> Introduction to TensorFlow </i>. <a href="https://www.tensorflow.org/tutorials">tutorial</a></p>
+
+<p>[15] C. Esteve, B. Geshkovski, D. Pighin, E. Zuazua <i> Large-time asymptotics in deep learning </i>. <a href="https://arxiv.org/abs/2008.02491">arxiv</a></p>
+
+<p>[16] <i> Turnpike in a Nutshell </i>. <a href="https://www.math.fau.de/2019/09/10/turnpike-theory-and-applications/">Collection of talks</a></p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 </code></pre></div></div>
 <p>GPS enabled devices, such as smart phones, have gained large popularity in the last few years. It allows people to record their outdoor activities through GPS trajectories, which enables researchers to infer further knowledge about the moving behavior of mobile users [8]. An important topic in analyzing GPS data is the identification of significant or interesting places visited by users [1] because if we extract them, we can know each user well and this will allow us to have a better prediction on the user’s next location.<br />
@@ -256,8 +811,9 @@ The data was collected whenever the users are connected to their accounts.</p>
 </center>
 
 <h2 id="methodology">Methodology</h2>
-<p>The first objective is to extract the points of interest (POIs) which represent the locations that the individual visit frequently (Home, Place of work, gym \dots, etc), of the different users we have in the dataset after grouping  it by users so that it would be easy to analyse them separately.<br />
-Working on a real world data means the existence of noise the first two clustering algorithms (K-means and GMM) as we can see in Figures 4 y 5 they weren’t capable of eliminating the noise in our data, because in these algorithms each point must belong to one cluster which is not convenient for our data, not all the points are part of a location some points shows us only the trajectory that the user did to get to the desired place so we can say that these two approaches are not able to differentiate between a stop point and a trajectory. \</p>
+<p>The first objective is to extract the points of interest (POIs) which represent the locations that the individual visit frequently (Home, Place of work, gym \dots, etc), of the different users we have in the dataset after grouping  it by users so that it would be easy to analyse them separately.</p>
+
+<p>Working on a real world data means the existence of noise the first two clustering algorithms (K-means and GMM) as we can see in Figures 4 y 5 they weren’t capable of eliminating the noise in our data, because in these algorithms each point must belong to one cluster which is not convenient for our data, not all the points are part of a location some points shows us only the trajectory that the user did to get to the desired place so we can say that these two approaches are not able to differentiate between a stop point and a trajectory.</p>
 
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Kmeans_GPS.png" alt="Figure 4. Graphic representation of a user GPS coordinations after k-means clustering." height="auto" width="1080" /> 
@@ -273,13 +829,14 @@ Working on a real world data means the existence of noise the first two clusteri
 <strong> Figure 5. </strong> Graphic representation of a user GPS coordinations after GMM clustering.
 </center>
 
-<p>So we had to look for other approaches that can eliminate the noise. The first algorithm we tried was DBSCAN [6], but it wasn’t easy for us to estimate the best parameters, especially that each user has it’s proper trajectory and also the density of the points wasn’t unified for the same user, some group of points are so close to each other then others..\</p>
+<p>So we had to look for other approaches that can eliminate the noise. The first algorithm we tried was DBSCAN [6], but it wasn’t easy for us to estimate the best parameters, especially that each user has it’s proper trajectory and also the density of the points wasn’t unified for the same user, some group of points are so close to each other then others.</p>
 
 <p>For that the next algorithm we used was HDBSCAN [5] because in this algorithm the threshold is not fixed so it’s capable of identifying clusters of different densities. This algorithm gives us some good results but after implementing the clusters on the map we can see that for some users the clusters didn’t include just the meaningful points but also some of the noise (the trajectory of the user) as we can see in Figure 4.</p>
 
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map1.png" alt="Map1." height="581" width="1139" /> 
 </figure>
+
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map2.png" alt="Map2." height="581" width="1139" /> 
 </figure>
@@ -310,9 +867,9 @@ The stop location extraction algorithm [7] has two parameters which are dependen
 
 <p>The next step is to aggregates stop locations in close proximity of each other to know where and how often a user has stopped at a destination. The destination consists of a timestamp, a user identifier as well as latitude and longitude coordinates. In addition, the visitation count denotes the number of stops at a particular destination and cluster_assignment identifies the destination itself.</p>
 
-<p>What we are actually interested in is the destination where a user has stopped and not necessarily the exact GPS position recorded. For instance, the group of stop locations surrounding a building should be regarded as one destination. In other words, we need to cluster or aggregate the stop locations into destinations (see Figure~\ref{fig7}).</p>
+<p>What we are actually interested in is the destination where a user has stopped and not necessarily the exact GPS position recorded. For instance, the group of stop locations surrounding a building should be regarded as one destination. In other words, we need to cluster or aggregate the stop locations into destinations (see Figure 7).</p>
 
-<p>To aggregate the stop locations into destinations we use Scipy’s hierarchical clustering functions \ref{fig8}. For our application there are two important parameters: \emph{The linkage parameter} defines how the clusters are formed. \emph{The distance parameter} specifies within what spatial distance stop locations are to be considered of the same cluster.</p>
+<p>To aggregate the stop locations into destinations we use Scipy’s hierarchical clustering functions (see Figure 8). For our application there are two important parameters: \emph{The linkage parameter} defines how the clusters are formed. \emph{The distance parameter} specifies within what spatial distance stop locations are to be considered of the same cluster.</p>
 
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/output-destination-alg.png" alt="Output of destination algorithm." height="137" width="871" /> 
@@ -18690,6 +19247,8 @@ Alexandre Santos Francisco holds a degree in Mechanical Engineering and a PhD de
 &lt;p&gt;&lt;a href="https://cmc.deusto.eus/Carlos-Esteve-Yague/"&gt;&lt;strong&gt;Carlos Esteve Yagüe&lt;/strong&gt;&lt;/a&gt; holds a Postdoctoral position at the ERC Advanced Grant project DyCon under the supervision of Prof. Enrique Zuazua (UAM and DeustoTech). He earned his PhD in analysis of nonlinear parabolic partial differential equations under the supervision of Prof. Philippe Souplet (Université Paris 13). His main research interests are singularity formation for parabolic PDE, Hamilton-Jacobi equations, optimal control theory and differential games.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href="https://cmc.deusto.eus/aicha-karite/"&gt;&lt;strong&gt;Aicha Karite&lt;/strong&gt;&lt;/a&gt; is a MSc. in Big Data, with a research training internship position at the ERC- DyCon Project &lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://cmc.deusto.eus/sergi-andreu/"&gt;&lt;strong&gt;Sergi Andreu&lt;/strong&gt;&lt;/a&gt; is a MSc. in Mathematics, with specialization in Applied Mathematics at UAM collaborating with the ERC- DyCon Project &lt;/p&gt;
 
 &lt;a name="NoburuSakamoto"&gt;&lt;/a&gt;Noboru Sakamoto&lt;/strong&gt; received the B.Sc. degree in mathematics from Hokkaido University and M.Sc. and Ph.D. degrees in aerospace engineering from Nagoya University, in 1991, 1993, and 1996, respectively. From 1996 until 2015, he held positions in the Graduate School of Engineering in Nagoya University. Currently, he is a Professor with the Science and Engineering of &lt;a href="http;//www.nanzan-u.ac.jp/English/index.html" target="_blank"&gt;Nanzan University&lt;/a&gt; in Nagoya, Japan. He has held a visiting research position at University of Groningen, The Netherlands, in 2005 and 2006. He received the SICE Best Paper Prizes in 1997, 2006, 2008 and 2011 and SICE Kimura Prize in 2016. His research interests include nonlinear control theory, control of chaotic systems, dynamical system theory and control applications for aerospace engineering.
 

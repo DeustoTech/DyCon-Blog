@@ -341,8 +341,9 @@ The data was collected whenever the users are connected to their accounts.</p>
 </center>
 
 <h2 id="methodology">Methodology</h2>
-<p>The first objective is to extract the points of interest (POIs) which represent the locations that the individual visit frequently (Home, Place of work, gym \dots, etc), of the different users we have in the dataset after grouping  it by users so that it would be easy to analyse them separately.<br />
-Working on a real world data means the existence of noise the first two clustering algorithms (K-means and GMM) as we can see in Figures 4 y 5 they weren’t capable of eliminating the noise in our data, because in these algorithms each point must belong to one cluster which is not convenient for our data, not all the points are part of a location some points shows us only the trajectory that the user did to get to the desired place so we can say that these two approaches are not able to differentiate between a stop point and a trajectory. \</p>
+<p>The first objective is to extract the points of interest (POIs) which represent the locations that the individual visit frequently (Home, Place of work, gym \dots, etc), of the different users we have in the dataset after grouping  it by users so that it would be easy to analyse them separately.</p>
+
+<p>Working on a real world data means the existence of noise the first two clustering algorithms (K-means and GMM) as we can see in Figures 4 y 5 they weren’t capable of eliminating the noise in our data, because in these algorithms each point must belong to one cluster which is not convenient for our data, not all the points are part of a location some points shows us only the trajectory that the user did to get to the desired place so we can say that these two approaches are not able to differentiate between a stop point and a trajectory.</p>
 
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/Kmeans_GPS.png" alt="Figure 4. Graphic representation of a user GPS coordinations after k-means clustering." height="auto" width="1080" /> 
@@ -358,13 +359,14 @@ Working on a real world data means the existence of noise the first two clusteri
 <strong> Figure 5. </strong> Graphic representation of a user GPS coordinations after GMM clustering.
 </center>
 
-<p>So we had to look for other approaches that can eliminate the noise. The first algorithm we tried was DBSCAN [6], but it wasn’t easy for us to estimate the best parameters, especially that each user has it’s proper trajectory and also the density of the points wasn’t unified for the same user, some group of points are so close to each other then others..\</p>
+<p>So we had to look for other approaches that can eliminate the noise. The first algorithm we tried was DBSCAN [6], but it wasn’t easy for us to estimate the best parameters, especially that each user has it’s proper trajectory and also the density of the points wasn’t unified for the same user, some group of points are so close to each other then others.</p>
 
 <p>For that the next algorithm we used was HDBSCAN [5] because in this algorithm the threshold is not fixed so it’s capable of identifying clusters of different densities. This algorithm gives us some good results but after implementing the clusters on the map we can see that for some users the clusters didn’t include just the meaningful points but also some of the noise (the trajectory of the user) as we can see in Figure 4.</p>
 
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map1.png" alt="Map1." height="581" width="1139" /> 
 </figure>
+
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/HDBSCAN-map2.png" alt="Map2." height="581" width="1139" /> 
 </figure>
@@ -395,9 +397,9 @@ The stop location extraction algorithm [7] has two parameters which are dependen
 
 <p>The next step is to aggregates stop locations in close proximity of each other to know where and how often a user has stopped at a destination. The destination consists of a timestamp, a user identifier as well as latitude and longitude coordinates. In addition, the visitation count denotes the number of stops at a particular destination and cluster_assignment identifies the destination itself.</p>
 
-<p>What we are actually interested in is the destination where a user has stopped and not necessarily the exact GPS position recorded. For instance, the group of stop locations surrounding a building should be regarded as one destination. In other words, we need to cluster or aggregate the stop locations into destinations (see Figure~\ref{fig7}).</p>
+<p>What we are actually interested in is the destination where a user has stopped and not necessarily the exact GPS position recorded. For instance, the group of stop locations surrounding a building should be regarded as one destination. In other words, we need to cluster or aggregate the stop locations into destinations (see Figure 7).</p>
 
-<p>To aggregate the stop locations into destinations we use Scipy’s hierarchical clustering functions \ref{fig8}. For our application there are two important parameters: \emph{The linkage parameter} defines how the clusters are formed. \emph{The distance parameter} specifies within what spatial distance stop locations are to be considered of the same cluster.</p>
+<p>To aggregate the stop locations into destinations we use Scipy’s hierarchical clustering functions (see Figure 8). For our application there are two important parameters: \emph{The linkage parameter} defines how the clusters are formed. \emph{The distance parameter} specifies within what spatial distance stop locations are to be considered of the same cluster.</p>
 
 <figure>
  <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/output-destination-alg.png" alt="Output of destination algorithm." height="137" width="871" /> 
@@ -475,6 +477,55 @@ The stop location extraction algorithm [7] has two parameters which are dependen
     
 
     
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/CIFAR-dataset.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P00013" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Points of Interest Extraction and Prediction of Next Locations </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this project we tried first working on finding an algorithm that can help us define the points of interest of the users we have in the dataset. For that we implement an algorithm that can identify the users stop points.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/SergiA">Sergi Andreu</a>
+          
+          - 22 March 2021
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
     
         
         
@@ -930,64 +981,6 @@ The stop location extraction algorithm [7] has two parameters which are dependen
         </div>
         
         <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn  btn-sm" style="margin-left: auto;"></button>
-    
-    </div>
-
-  </div>
-</div>
-
-
-          </div>
-          
-          
-        
-    
-      
-    
-        
-        
-    
-        
-    
-        
-    
-      
-    
-        
-        
-    
-        
-    
-        
-          <div>
-          
-            <div class="post-preview shadowbox">
-  <div class="post-avatar-wp">
-  
-    <img src="https://cmc.deusto.eus/wp-content/uploads/2019/02/levet-set.png">
-  
-  </div>
-  <div class="post-info">
-    <a href="/DyCon-Blog/tutorial/wp99/P0006" class="display-block">
-      <h4 class="post-preview-title ellipsis-two-lines"> An introduction to the moment method for optimal control problems for polynomial ODEs </h4>
-    </a>
-
-    <div class="post-preview-subtitle ellipsis-two-lines">
-      The aim of this note is to explain how one can solve an optimal control problem with the moment method
-    </div>
-
-    <div style="display: flex;margin-top: 10px;">
-        <div class="post-preview-authors ellipsis-one-line">
-          Author:
-          
-          
-            
-              <a href="https://deustotech.github.io/DyCon-Blog/author/SwannM">Swann MARX</a>
-          
-          - 04 February 2019
-        </div>
-        
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 

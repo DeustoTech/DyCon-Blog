@@ -27,6 +27,11 @@ AichaK:
   description: '<p><a href="https://cmc.deusto.eus/aicha-karite/"><strong>Aicha Karite</strong></a> is a MSc. in Big Data, with a research training internship position at the ERC- DyCon Project </p>'
   avatar: https://cmc.deusto.eus/wp-content/uploads/2020/02/ccm-team-aicha-karite-500x500-1-300x300.jpg
   active: "true"
+SergiA:
+  name: Sergi Andreu
+  description: '<p><a href="https://cmc.deusto.eus/sergi-andreu/"><strong>Sergi Andreu</strong></a> is a MSc. in Mathematics, with specialization in Applied Mathematics at UAM collaborating with the ERC- DyCon Project </p>'
+  avatar: https://cmc.deusto.eus/wp-content/uploads/2020/06/team-sergi-andreu_500x500-300x300.png
+  active: "true"
 
 NoboruS:
   name: Noboru Sakamoto
@@ -67,7 +72,7 @@ JesusO:
 EnriqueZ:
   name: Enrique Zuazua
   description: <a href='http://deus.to/zuazua'><strong>Enrique Zuazua</strong></a> is the Director of the Chair of Computational Mathematics at <a class='rsst' href='http://deustotech.deusto.es/' target='_blank'>DeustoTech</a> Laboratory in the University of Deusto, Bilbao (Basque Country-Spain) where he leads the research team funded by the European Research Council Advanced Grant “<a class='rsst' href='http://enzuazua.net/dycon/' target='_blank'>DYCON; Dynamic Control</a>”. He is also a Professor of the <a class='rsst' href='http://verso.mat.uam.es/web/index.php/es/' target='_blank'>Department of Mathematics</a> Universidad Autónoma de Madrid where he holds a Chair in Applied Mathematics since 2001.
-  avatar: https://cmc.deusto.eus/wp-content/uploads/2018/12/equipo_DyCon_014.jpg
+  avatar: https://cmc.deusto.eus/wp-content/uploads/2019/11/team-enrique-zuazua-26nov2019_500x500-300x300.jpg
   active: "false"
 
 AlejandroA:
