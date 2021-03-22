@@ -2,12 +2,12 @@
     
     
     {
-      "title"           : "Points of Interest Extraction and Prediction of Next Locations",
+      "title"           : "Opening the black box of Deep Learning",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/P00013",
       "date"            : "2021-03-22",
       "author"          : ["SergiA"],
-      "description"     : "In this project we tried first working on finding an algorithm that can help us define the points of interest of the users we have in the dataset. For that we implement an algorithm that can identify the users stop points.",
+      "description"     : "The aim is then to open the black box of Deep Learning, and try to gain an intuition of what are these models doing. One of the most succesful mathematical theories in recent years has been connecting Deep Learning with Dynamical Systems.",
       "avatar"          : "https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/CIFAR-dataset.png"
     } ,
   

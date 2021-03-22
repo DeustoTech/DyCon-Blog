@@ -5,12 +5,12 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 22 Mar 2021 18:14:52 +0100</pubDate>
-    <lastBuildDate>Mon, 22 Mar 2021 18:14:52 +0100</lastBuildDate>
+    <pubDate>Mon, 22 Mar 2021 18:58:34 +0100</pubDate>
+    <lastBuildDate>Mon, 22 Mar 2021 18:58:34 +0100</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
-        <title>Points of Interest Extraction and Prediction of Next Locations</title>
+        <title>Opening the black box of Deep Learning</title>
         <description>Opening the black box of Deep Learning
 
 Deep Learning is one of the three main paradigms of Machine Learning, and roughly consists on extracting patterns from data using neural networks.
@@ -35,7 +35,7 @@ A formal description of our problem is the following.
 
 Consider a dataset $\mathcal{D}$ consisting on $S$ distinct points ${x_i}_{i=1}^{S}$, each of them with a corresponding value $y_i$ such that
 
-\[\mathcal{D} = \{(x_i , y_i)\}_{i=1}^S\]
+\[\mathcal{D} = {(x_i , y_i})_{i=1}^S\]
 
 we expect that the labels $y_i$ are a function of $x$, such that
 \(y_i = \mathcal{F} (x_i) + \epsilon _i \quad \forall i \in \{1, ... S\}\)
