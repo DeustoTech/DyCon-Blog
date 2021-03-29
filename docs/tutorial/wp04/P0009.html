@@ -475,7 +475,7 @@ measurements $X$ and to compute the POD modes as $M^{-1/2}v _ k$, where $v _ k$
 is the $k$-th leading left singular vector of $M^{1/2}X$. This procedure gives a
 low-dimensional orthogonal (in the discrete $L^2$ inner product) basis that
 optimally parametrizes the subspace of $L^2$ that is spanned by the solution
-snapshots<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup>. In this example, we use the <code class="language-plaintext highlighter-rouge">poddim=25</code> leading singular vectors
+snapshots<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. In this example, we use the <code class="language-plaintext highlighter-rouge">poddim=25</code> leading singular vectors
 to define the reduced model.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">snapshotmat</span> <span class="o">=</span> <span class="n">mfac</span><span class="p">.</span><span class="n">Ft</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">burgsol</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
@@ -544,7 +544,7 @@ in the smooth regime in the beginning and has its troubles approximating the fro
 
 <p>POD is partially data driven – it uses data to create a basis but still
 uses (a projection of) the model. If only snapshots but no model is given, one
-may use the method of <em>Dynamic Mode Decomposition</em><sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote">2</a></sup> (DMD) that tries to identify
+may use the method of <em>Dynamic Mode Decomposition</em><sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> (DMD) that tries to identify
 a matrix $A$ that evolves the state like</p>
 
 <p>[A v _ h (t_i) = v _ h (t _ {i+1})]</p>
@@ -654,6 +654,15 @@ choices, the performance severely deteriorated.</p>
     
 
     
+    
+        
+        
+    
+        
+    
+        
+    
+      
     
         
         

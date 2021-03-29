@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Welcome to the web interface of DyCon Toolbox, the computational platform developed within the <a href='https://cmc.deusto.eus/dycon/' target='_blank'>ERC DyCon - Dynamic Control</a> project.">
+	<link rel='shortcut icon' type='image/png' href='/DyCon-Blog/favicon.png' />
+
+  <title>
+    Multilevel Selective Harmonic Modulation via Optimal Control - DyCon Blog
+    
+  </title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00014">
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+
+   <!-- Adjust Colors -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+
+  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+
+
+  
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+
+
+  <!-- Google Fonts Raleway -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+	<!-- MathJax -->
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+		TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      },
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      Macros:{
+        norm: ["|| #1 ||",1],
+        abs: ["| #1 |",1],
+        hdots: "...",
+        RR: "\\mathbb{R}",
+        ffl: ["(d_x^2)^{#1}",1],
+        ccs: "c_{1,s}",
+        kernel: ["|x-y|^{#1}",1],
+        ue: ["#1^{\\epsilon}",1]
+      }
+    },
+    CommonHTML: {
+      styles: {
+        "@font-face /* vec */ ": {
+          "font-family": "MJX-VEC",
+          src: [
+            "url(data:application/x-font-woff;charset=utf-8;base64,",
+            "d09GRgABAAAAAARMAA0AAAAABiQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEMAAAABwA",
+            "AAAccRGLqUdERUYAAAQMAAAAJAAAACgANAAmT1MvMgAAAaAAAABJAAAAYFc5gfFjbWFwAAACAAAA",
+            "AEYAAAFKQxjlbWdhc3AAAAQEAAAACAAAAAj//wADZ2x5ZgAAAlQAAACUAAAAlIQU9HBoZWFkAAAB",
+            "MAAAADAAAAA2C748e2hoZWEAAAFgAAAAHgAAACQFXQDqaG10eAAAAewAAAAUAAAAFAYvAE9sb2Nh",
+            "AAACSAAAAAwAAAAMACgAcm1heHAAAAGAAAAAHQAAACAASQAmbmFtZQAAAugAAADxAAAB5uwlD0hw",
+            "b3N0AAAD3AAAACgAAAA34M9aEXjaY2BkYGAA4uOfgq7G89t8ZeBmfgEUYbga+icNTssClVxnOgXk",
+            "cjAwgUQBdqEMW3jaY2BkYGBu+feBgYHxCwMQMF5nYGRABawAcaQESgAAeNpjYGRgYGBlUGZgYgAB",
+            "EMnIABJzAPMZAAZZAHAAAAB42mNgYSxn/MLAysDA1MW0h4GBoQdCMz5gMGRkAooysDEzwAAjECvA",
+            "OAFprikMBxgUFCcxt/z7wMDA3MIoAFUDAwoMjACD8Qv5AAAAAfQAMgAAAAABTQAAAPoAAAH0AB14",
+            "2mNgYGBmgGAZBkYGEHAB8hjBfBYGDSDNBqQZGZgYFBQn/f8P5IPp/4/vFUHVAwEjGwOcw8gEJJgY",
+            "UAEjxIrhDACLGwmnAAAAAAAUABQAFAAUAEoAAgAyAAABwgIVAAMABwAAMxEhESUhESEyAZD+ogEs",
+            "/tQCFf3rMgGxAAEAHQIEAdcCygAiAAABNDYzMhcWFxYXFhUUBgcGBw4DIyImNTQ3IycmNTQ3ISYB",
+            "eQsJBwUFBQofCwYLKyACBwMGBAcNL6urDQ0BZxgCtggMBQQPJRQHCwkGBhYpAgkCAgsJEygBCQoH",
+            "DSYAeNqVjrGKwkAURe/EGBBUrG12CishMrFQcDuLsAi26YMOmsIMxAh+hN8i+CF+gd+y4B3zttjC",
+            "woHhncu7774HoI8rFP5eIKzQw5dwgAjfwi2McBEO6bkLtzHAr3CEnhrTqcKOpDasMCQ1HKCLWLiF",
+            "HyyFQ3puwm1oPIQjDFXfR62Ro8YeK9YzMlhsqB0qtvJ6v8rPmd3Uzkv2tihwwoHCbosTa0pryYH0",
+            "NbKjRWPB/z626Se8dsY/hSHPGeTKOnXVzuqF/reYOoln8dQk80+u9b0KR97rD9Rc4xdNXtVQI7PV",
+            "sXClNiaZGGP0B+FPMN1KMAAAAHjaY2BiAIP/zQxGDNgAKxAzMjAxMDMycSUWFeWXF2WmZ5QAAGh5",
+            "BhgAAAAB//8AAnjaY2BkYGDgA2IJBgUgycTAyMDMwAIkWcA8BgZGCAYACgIAWwAAAAEAAAAAxmW3",
+            "ygAAAADVVeemAAAAANVV7Dg=) format('woff')"
+          ].join('')
+        },
+        ".MJX-VEC": {
+          "font-family": "MJX-VEC"
+        }
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+    var MML = MathJax.ElementJax.mml;
+    var fixCombiningChar = MML.mo.prototype.CHTMLfixCombiningChar;
+    MML.mo.Augment({
+      CHTMLfixCombiningChar: function (node) {
+        if (node.textContent === '\u20D7') {
+          //
+          //  Safari makes combining characters into non-combining ones when
+          //  they don't have anything to combine with; replace \vec arrow
+          //  with a non-combining one so all browsers get the same thing
+          //
+          node = node.firstChild;
+          node.firstChild.nodeValue = "\u2192";
+          node.className = "mjx-char MJX-VEC";
+          node.style.marginLeft = "-.5em";
+          node.style.paddingTop = ".45em";
+        } else {
+          fixCombiningChar.call(this,node);
+        }
+      }
+    });
+  });
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" type="text/javascript"></script>-->
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-128123935-3');
+  </script>
+  <!-- End Google Analytics -->
+
+
+
+  <!-- marKdown editor -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="/DyCon-Blog/">
+                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+            </a> -->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/DyCon-Blog/">Home</a>
+                </li>
+                
+                
+                    
+                        
+                    
+                                   
+                <li>
+                    <a href="/DyCon-Blog/projects/posts">Documentation</a>
+                </li>
+                
+                    
+                
+                    
+                <li>
+                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                </li>
+                <li>
+                        <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
+                </li>
+                
+            </ul>
+
+        
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Post Header -->
+<header class="intro-header">
+  <div class="container" style="padding-top: 70px;">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 col-md-offset-1">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">
+            Other Topics</a> &#8827;</small>
+          </h2>
+          <h1>Multilevel Selective Harmonic Modulation via Optimal Control</h1>
+					<p class="meta">
+            <div class="post-preview-authors ellipsis-one-line">
+              Authors:
+              
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>,
+                  </span>
+                </span>
+              
+                
+                <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">
+                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+                  </span>
+                </span>
+              
+              - 25 March 2021
+            </div>
+					</p>
+        </div>
+      </div>
+		</div>
+	</div>
+</header>
+<!-- Post Content -->
+<style>
+img {
+	display:block;
+	max-width:  100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.2); 
+	-webkit-transform:scale(1.2);
+	-o-transform:scale(1.2);
+}
+}
+
+@media only screen and (min-width: 1250px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(1.5); 
+	-webkit-transform:scale(1.5);
+	-o-transform:scale(1.5);
+}
+}
+
+@media only screen and (min-width: 1500px) {
+img {
+	-moz-transition:-moz-transform 0.5s ease-in; 
+	-webkit-transition:-webkit-transform 0.5s ease-in; 
+	-o-transition:-o-transform 0.5s ease-in;
+}
+img:active{
+	-moz-transform:scale(2); 
+	-webkit-transform:scale(2);
+	-o-transform:scale(2);
+}
+}
+</style>
+<article>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        <p>Selective Harmonic Modulation (SHM) [<a href="#sun1996optimal">1</a>,<a href="#sun1992solving">2</a>] is a well-known methodology in power electronics engineering, employed to improve the performance of a converter by controlling the phase and amplitude of the harmonics in its output voltage. As a matter of fact, this technique allows to increase the power of the converter and, at the same time, to reduce its losses.</p>
+
+<p>In broad terms, SHM consists in generating a control signal with a desired harmonic spectrum by modulating some specific lower-order Fourier coefficients. In practice, the signal is constructed as a step function with a finite number of switches, taking values only in a given finite set. Such a signal can be fully characterized by two features (see Fig. \ref{fig:exampleSHE}):</p>
+
+<ol>
+	<li>The <strong>waveform</strong>, i.e. the sequence of values that the function takes in its domain.</li>
+	<li>The <strong>switching angles</strong>, i.e. the sequence of points where the signal switches from one value to following one. </li>
+</ol>
+
+<p>In mathematical terms, the SHM problem can be formulated as follows. Let</p>
+
+<p>[\begin{equation}\label{eq:Udef}
+	\mathcal{U} = {u_1, \ldots, u_L}
+\end{equation}]</p>
+
+<p>be a given set of $L\geq 2$ real numbers satisfying $u_1 = -1$, $u_L = 1$ and $u_k&lt;u_{k+1}$ for all $k\in {1,\ldots, L}$.</p>
+
+<p>The goal is to construct a step function $u(t):[0,2\pi)\to\mathcal U$ with a finite number of switches, such that some of its lower-order Fourier coefficients take specific values prescribed a priori.</p>
+
+<p>Due to applications in power converters, it is typical to only consider functions with <strong>half-wave symmetry</strong>, i.e. satisfying $u(t + \pi) = -u(t)$ for all $t \in [0,\pi)$.</p>
+
+<p>In view of this symmetry, the Fourier series of $u$ only involves the odd terms (as the even terms just vanish), i.e.</p>
+
+<p>[u(t) = \sum_{\underset{j\, odd}{j \in \mathbb{N}}} a_j \cos(jt)+ \sum_{\underset{k\, odd}{j \in \mathbb{N}}}  b_j \sin(jt),]</p>
+
+<p>with</p>
+
+<p>[a_j = \frac{2}{\pi} \int_0^\pi u(\tau ) \cos(j \tau)\,d\tau \quad]</p>
+
+<p>and</p>
+
+<p>[b_j = \frac{2}{\pi} \int_0^\pi u(\tau)  \sin(j \tau)\,d\tau.]</p>
+
+<p>Moreover, the functions we are considering are piecewise constant with a finite number of switches, taking values only in $\mathcal{U}$, i.e. of the form</p>
+
+<p>[\begin{equation}\label{eq:uExpl}
+	u (t)= \sum_{m=0}^M s_m\chi_{[\phi_m,\phi_{m+1})} (t), \quad M\in\mathbb{N} 
+\end{equation}]</p>
+
+<p>for some $\mathcal S = {s_m}_{m=0}^M$ satisfying</p>
+
+<p>[s_m\in \mathcal{U} \; \text{ and } \; s_m\neq s_{m+1}, \quad \forall\, m\in {0,\ldots, M}]</p>
+
+<p>and $\Phi = {\phi_m}_{m=1}^{M}$ such that</p>
+
+<p>[0= \phi_0 &lt; \phi_1 &lt;\ldots &lt; \phi_M &lt; \phi_{M+1} = \pi .]</p>
+
+<p>Here $\mathcal S$ and $\Phi$ are the waveform and the switching angles that we mentioned above.</p>
+
+<p>Observe that any function $u$ of the form \eqref{eq:uExpl} is fully characterized by its waveform $\mathcal S$ and switching angles $\Phi$. An example of such a function is displayed in Fig. \ref{fig:exampleSHE}.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00014/fig01.pdf" alt="Figure 1. a finite set of points in (x,y)" width="365" height="243" /> 
+</figure>
+<center>
+<strong> Figure 1:</strong> a possible solution to the SHM Problem, where we considered the control-set $\mathcal{U} = \{-1, -1/2, 0, 1/2, 1\}$. We show the switching angles $\Phi$ and the waveform $\mathcal S$. The function $u(t)$ is displayed on the whole interval $[0,2\pi)$ to highlight the half-wave symmetry.
+</center>
+
+<p>In practical engineering applications, due to technical limitations, it is preferable to employ signals taking consecutive values in $\mathcal{U}$. This property of the waveform, to which we shall refer as the <strong>staircase property</strong>, can be rigorously formulated as follows:</p>
+
+<p><strong>Definition:</strong> We say that a signal $u$ of the form \eqref{eq:uExpl} fulfills the staircase property if its waveform $\mathcal S$ satisfies</p>
+
+<p>[\begin{equation}\label{eq:staircase prop}
+	\begin{array}{l}
+		(s_m^{min},s_{m}^{max}) \cap \mathcal{U} = \emptyset, \quad\forall\, m\in { 0, \ldots, M-1 },
+		\[10pt]
+		s^{min}<em>m = s_m\wedge s</em>{m+1}
+		\[10pt]
+		s^{max}<em>m = s_m \vee s</em>{m+1}	
+	\end{array}
+	\end{equation}]</p>
+
+<p>We can now formulate the SHM problem as follows.</p>
+
+<p><strong> SHM problem:</strong> let $\mathcal{U}$ be given as in \eqref{eq:Udef}, and let $\mathcal E_a$ and $\mathcal E_b$ be finite sets of odd numbers of cardinality $\vert\mathcal{E}_a\vert=N_a$ and $\vert\mathcal{E}_b\vert=N_b$ respectively. For any two given vectors $a^T\in\mathbb{R}^{N_a}$ and $b^T\in\mathbb{R}^{N_b}$, construct a function $u:[0,\pi)\to\mathcal{U}$ of the form \eqref{eq:uExpl}, satisfying \eqref{eq:staircase prop}, such that the vectors</p>
+
+<p>[a=(a_j)<em>{j\in\mathcal{E}_a} \quad\quad b=(b_j)</em>{j\in\mathcal{E}_b}]</p>
+
+<p>satisfy $a = a^T$ and $b = b^T$.</p>
+
+<h2 id="shm-as-an-optimal-control-problem">SHM as an optimal control problem</h2>
+
+<p>To solve the SHM problem, in [<a href="#oroya2021multilevel">3</a>] we propose an optimal control-based approach in which the Fourier coefficients of the signal $u(t)$ are identified with the terminal state of a controlled dynamical system of $N_a+N_b$ components defined in the time-interval $[0,\pi)$.  The control of the system is precisely the signal $u(t)$, defined as a function $[0,\pi)\to \mathcal{U}$, which has to steer the state from the origin to the desired values of the prescribed Fourier coefficients.</p>
+
+<p>The starting point of this approach is to rewrite the Fourier coefficients of the function $u(t)$ as the final state of a dynamical system controlled by $u(t)$. To this end, let us first note that, by definition, for all $u\in L^\infty ([0,\pi);\mathbb{R})$ any Fourier coefficient $a_j$ satisfies $a_j = y(\pi)$, with $y\in C([0,\pi);\mathbb{R})$ defined as</p>
+
+<p>[y(t) = \dfrac{2}{\pi} \int_0^t u(\tau) \cos(j\, \tau) d\tau.]</p>
+
+<p>Besides, as a consequence of the fundamental theorem of calculus, $y(\cdot)$ is the unique solution to the differential equation</p>
+
+<p>[\begin{cases}
+		\dot{y} (t) = \dfrac{2}{\pi} \cos(j\, t) u(t), \qquad  t\in [0,\pi)
+		\[5pt]
+		y(0) = 0.
+	\end{cases}]</p>
+
+<p>Analogously, we can also write the Fourier coefficients $b_j$ as the solution at time $t=\pi$ of a similar differential equation.</p>
+
+<p>Hence, for $\mathcal{E}_a$, $\mathcal{E}_b$, $a^T$, and $b^T$ given, the SHM Problem can be reduced to finding a control function $u$ of the form \eqref{eq:uExpl}, satisfying \eqref{eq:staircase prop}, such that the corresponding solution $\textbf{y}\in C([0,\pi);\mathbb{R}^{N_a+N_b})$ to the dynamical system</p>
+
+<p>[\begin{cases}
+		\dot{\textbf{y}}(t) = \dfrac{2}{\pi} \mathcal{D}(t) u(t), \qquad  t\in [0,\pi)
+		\[5pt]
+		\textbf{y}(0) = 0
+	\end{cases}]</p>
+
+<p>satisfies $\textbf{y}(\pi) = [a^T;b^T]^\top$, where</p>
+
+<p>[\mathcal{D}(t) = \left[\mathcal{D}^a(t);\mathcal{D}^b(t) \right]^\top,]</p>
+
+<p>with $\mathcal{D}^a(t) \in \mathbb{R}^{N_a}$ and $\mathcal{D}^b(t) \in \mathbb{R}^{N_b}$ given by</p>
+
+<p>[\mathcal{D}^a(t) = 
+		\begin{bmatrix} 
+			\cos(e_a^1t) \ \cos(e_a^2t) \ \vdots \ \cos(e_a^{N_a}t) 
+		\end{bmatrix},
+		\quad \mathcal{D}^b(t) = 
+		\begin{bmatrix} 
+			\sin(e_b^1t) \ \sin(e_b^2t) \ \vdots \ \sin(e_b^{N_b}t)
+		\end{bmatrix}]</p>
+
+<p>Here, $e_a^i$ and $e_b^i$  denote the elements in $\mathcal{E}_a$ and $\mathcal{E}_b$, i.e.
+\(\mathcal{E}_a = \{e_a^1,e_a^2,e_a^3,\dots,e_a^{N_a}\}, \quad \mathcal{E}_b = \{e_b^1,e_b^2,e_b^3,\dots,e_b^{N_b}\}.\)</p>
+
+<p>Moreover, we can reverse the time using the transformation $\textbf{x} (t) = \textbf{y}(\pi - t)$, so that the SHM problem turns into the following null controllability one, for a dynamical system with initial condition $\textbf{x}(0) = [a^T;b^T]^\top$.</p>
+
+<p><strong> SHM problem via null controllability:</strong> let $\mathcal{U}$ be given as in \eqref{eq:Udef}. Let $\mathcal{E}_a$, $\mathcal{E}_b$ and the targets $a^T$ and $b^T$ be given. We look for a function $u: [0,\pi)\to [-1,1]$ of the form \eqref{eq:uExpl}, satisfying \eqref{eq:staircase prop}, such that the solution to the initial-value problem</p>
+
+<p>[\begin{equation}\label{eq:CauchyReversed}
+	\begin{cases}
+		\displaystyle\dot{\textbf{x}}(t) = -\frac 2\pi\mathcal{D}(t)u(t),  &amp; t \in [0,\pi)
+		\[5pt]
+		\textbf{x}(0) = \textbf{x}_0 := [a^T; b^T]
+	\end{cases}
+	\end{equation}]</p>
+
+<p>satisfies $\textbf{x} (\pi) = 0$.</p>
+
+<p>A natural approach for null controllability problems is to formulate them as optimal control ones. In the case of the SHM problem just presented, in [<a href="#oroya2021multilevel">3</a>] we proposed to obtain the optimal control $u$ in the following way.</p>
+
+<p><strong>Penalized OCP for SHM:</strong> fix $\varepsilon&gt;0$ and a convex function $\mathcal{L}\in C([-1,1];\mathbb{R})$. Let $\mathcal{E}_a$, $\mathcal{E}_b$ and the targets $a^T$ and $b^T$ be given, and denote</p>
+
+<p>[\mathcal A:=\big{ u:[0,\pi)\to [-1,1]\;\text{measurable}\,\big}.]</p>
+
+<p>We look for a control $u\in \mathcal A$ solution to the following optimal control problem:</p>
+
+<p>[\begin{array}{l}
+	\displaystyle\min_{u \in \mathcal A}\;\left(\dfrac{1}{2} |\textbf{x}(\pi)|^2 + \varepsilon \displaystyle\int_0^\pi \mathcal{L}(u(t)) dt\right) 
+	\[20pt] 
+	\text{subject to the dynamics \eqref{eq:CauchyReversed}}.
+	\end{array}]</p>
+
+<p>Observe that in the above formulation we do not impose the constraint that the control has to be of the form \eqref{eq:uExpl}, satisfying the staircase property \eqref{eq:staircase prop}. These features of $u$ will arise naturally from a suitable choice of the penalization term $\mathcal{L}$, as we describe below.</p>
+
+<h3 id="bi-level-shm-problem-via-ocp-bang-bang-control">Bi-level SHM problem via OCP (Bang-Bang Control)</h3>
+
+<p>In this case, the control set $\mathcal{U}$ defined in \eqref{eq:Udef} has only two elements, i.e. $\mathcal{U}={-1,1}$. In the control theory literature, a control taking only two values is known as <strong>bang-bang control</strong>. In the SHM literature, this kind of solution are called <strong>bi-level solutions</strong>. 
+Moreover, in [<a href="#oroya2021multilevel">3</a>], we proved that bi-level controls are obtained through our optimal control approach when selecting $\mathcal L(u)=\alpha u$ with $\alpha\neq 0$.</p>
+
+<p><strong>Theorem 1:</strong> let $\mathcal{U}={ -1, 1}$, and $\textbf{x}_0$ be given. For some $\alpha\in \mathbb{R}$ with $\alpha\neq 0$, consider the penalization $\mathcal{L} (u) = \alpha\, u$. Then, the optimal control $u^\ast$ is unique and has a bang-bang structure, i.e. it is of the form \eqref{eq:uExpl}. In addition to that, the solution $u^\ast$ is continuous with respect to $\textbf{x}_0$ in the strong topology of $L^1(0,\pi)$.</p>
+
+<p>We point out that the continuity of the solution with respect to the target frequencies is a highly desirable property in real applications of SHM, and sometimes, difficult to achieve.</p>
+
+<h3 id="multilevel-shm-problem-via-ocp">Multilevel SHM problem via OCP</h3>
+
+<p>Another typical situation, known in the power electronics literature as the <strong>multilevel SHM problem</strong>, is the case when $\mathcal{U}$ contains more than two elements.</p>
+
+<p>In [<a href="#oroya2021multilevel">3</a>], we proved that multilevel controls are obtained when selecting $\mathcal L(u)$ as the interpolate a parabola in $[-1,1]$ by affine functions, considering the elements in $\mathcal{U}$ as the interpolating points.</p>
+
+<p><strong>Theorem 2:</strong> let $\textbf{x}_0$ be given, and let $\mathcal{U}$ be a given set as in \eqref{eq:Udef}. For any $\alpha&gt;0$ and $\beta\in \mathbb{R}$, set the function</p>
+
+<p>[\mathcal{P}(u) = \alpha (u-\beta)^2.]</p>
+
+<p>Consider the penalization</p>
+
+<p>[\mathcal{L}(u) = \begin{cases}
+			\lambda_k(u) &amp; \text{if }  u \in [u_k,u_{k+1}) \ \mathcal{P}(1) &amp; \text{if } u = u_{L} 
+		\end{cases} \quad \forall\, k \in {1,\dots,L-1},]</p>
+
+<p>where</p>
+
+<p>[\lambda_k(u):= \dfrac{ (u-u_k)\mathcal{P}(u_{k+1}) + (u_{k+1}- u) \mathcal{P}(u_k)}{u_{k+1} - u_k}.]</p>
+
+<p>Assume in addition that the function $\mathcal{L}$ has a unique minimum in $[-1,1]$. Then, the optimal control $u^\ast$ is unique and has the form \eqref{eq:uExpl} satisfying \eqref{eq:staircase prop}. Moreover, the solution $u^\ast$ is continuous with respect to $\textbf{x}_0$ in the strong topology of $L^1(0,\pi)$.</p>
+
+<p>The assumption of $\mathcal L$ having a unique minimum in $[-1,1]$ is
+actually necessary to ensure the staircase form for the solution.
+Not assuming this hypothesis would entail the possibility of having
+continuous solutions for specific targets. Nevertheless, this assumption can be easily ensured by choosing, for instance, $\beta = \pm1$.</p>
+
+<p>We illustrate in Fig. \ref{fig:examples_penalizations} different examples of penalization functions $\mathcal{L}$ giving rise to multilevel solutions to the SHM problem. We point out that, by varying the values of $\alpha$ and $\beta$ in $\mathcal P$, we can obtain solutions with different waveforms.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00014/fig02.pdf" alt="Figure 1. a finite set of points in (x,y)" width="365" height="243" /> 
+</figure>
+<center> 
+<strong> Figure 1:</strong> some examples of convex piecewise affine penalization functions $\mathcal{L}$. The examples $\mathcal {L}_1$, $\mathcal{L}_2$ and $\mathcal{L}_3$ satisfy the hypotheses of Theorem 2. On the contrary, the function $\mathcal{L}_4$ has not a unique minimizer, and then, we cannot ensure that the solution has staircase form.
+</center>
+
+<h2 id="numerical-simulations">Numerical simulations</h2>
+
+<p>Let us now present several examples in which we implement the optimal control strategy we proposed to solve the SHM problem.</p>
+
+<p>To solve our optimal control problem, we employ the <strong>direct method</strong> which, in broad terms, consists in discretizing the cost functional and the dynamics, and then apply some optimization algorithm. The dynamics is approximated with the Euler method, while for solving the discrete minimization problem we employ the nonlinear constrained optimization tool <strong>CasADi</strong>. CasADi is an open-source tool for nonlinear optimization and algorithmic differentiation which implements the interior point method via the optimization software <strong>IPOPT</strong>. To be efficiently applied to solve an optimal control problem, we then need the functional we aim to minimize to be smooth. While this is clearly true in the bi-level case, for the multilevel one the functional, due to the piecewise affine penalization, is not differentiable at the points $u_k\in\mathcal U$. For this reason, when treating the multilevel case, we will first need to build a smooth approximation of the  function $\mathcal L$.</p>
+
+<h3 id="smooth-approximation-of-mathcal-l-for-multilevel-control">Smooth approximation of $\mathcal L$ for multilevel control</h3>
+
+<p>The piecewise affine function defining the penalization $\mathcal L$ in case of multilevel controls can be regularized as follows.</p>
+
+<p>First of all, for all real parameter $\theta&gt;0$, we define the $C^\infty(\mathbb{R})$ function</p>
+
+<p>[\displaystyle h^\theta(x) := \frac{1 + \tanh(\theta x)}{2}.]</p>
+
+<p>and observe that, for almost every $x\in \mathbb{R}$,  we have that $h^\theta(x)\to h(x)$ as $\theta\to +\infty$, where $h$ is the Heaviside function</p>
+
+<p>[h(x) = \begin{cases}
+		1 &amp; \text{ if } x &gt; 0 
+		<br />
+		0 &amp; \text{ if } x \leq 0.
+	\end{cases}]</p>
+
+<p>Secondly, for all $k \in {1,\dots,N_u-1}$ we define the (smooth) function $\chi_{[u_k,u_{k+1})}^\theta:\mathbb{R} \rightarrow \mathbb{R}$ given by</p>
+
+<p>[\chi_{[u_k,u_{k+1})}^\theta(x) := - 1 + h^\theta(x-u_k) + h^\theta(-x+u_{k+1})]</p>
+
+<p>which, as $\theta\to +\infty$, converges in $L^\infty(\mathbb{R})$ to the characteristic function $\chi_{[u_k,u_{k+1})}$. Finally, we employ $\chi_{[u_k,u_{k+1})}^\theta$ to define</p>
+
+<p>[\mathcal{L}^\theta(u) = \sum_{k = 1}^{N_u-1} \lambda_k \chi^\theta_{[u_k,u_{k+1})}(u)]</p>
+
+<p>which, as $\theta\to +\infty$, converges in $L^\infty(\mathbb{R})$ to the penalization function $\mathcal L$ we defined for multilevel control.</p>
+
+<h3 id="direct-method--for-ocp-she">Direct method  for OCP-SHE</h3>
+
+<p>The starting point for employing a direct method to solve the optimal control problem we are considering is to discretize the cost functional and the dynamics. To this end, let us consider a $N_t$-points partition of the interval $[0,\pi]$, $\mathcal{T} = {t_k}_{k=1}^{N_t}$, and denote by $\textbf{u} \in \mathbb{R}^{N_t}$ the vector with components $u_k = u(t_k)$, $k=1,\ldots,N_t$.</p>
+
+<p>Then the optimal control problem can then be approximated by a finite-dimensional optimization one with variable $\textbf{u} \in \mathbb{R}^{N_t}$.</p>
+
+<p><strong>Numerical OCP:</strong> given two sets of odd numbers $\mathcal{E}_a$ and $\mathcal{E}_b$ with cardinalities $\vert\mathcal{E}_a\vert=N_a$ and $\vert\mathcal{E}_b\vert=N_b$, respectively, the target vectors $a^T\in\mathbb{R}^{N_a}$ and $b^T\in\mathbb{R}^{N_b}$, 
+and the partition $\mathcal{T}$ of the interval $[0,\pi]$, we look for $\textbf{u}\in\mathbb{R}^{N_t}$ that solves the following minimization problem:</p>
+
+<p>[\begin{equation<em>}
+	\begin{array}{l}
+	\min_{\textbf{u}\in\mathbb{R}^{N_t}} \Bigg[| \textbf{x}_{N_t}|^2 + \varepsilon \sum_{k=1}^{N_t-1} \bigg[\frac{\mathcal{L}^\theta(u_{t_k}) + \mathcal{L}^\theta(u_{t_{k+1}})}{2}\Delta t_k \bigg]  \Bigg]<br />
+	\[25pt]
+	\text{subject to: } \begin{cases}
+			\textbf{x}_{t_{k+1}} = \textbf{x}_{t_k} - \Delta t_{k} (2/\pi) \mathcal{D}(t_k)\[5pt]
+			\textbf{x}_{t_1} = \textbf{x}_0:= [a^T,b^T]^\top
+		\end{cases} 
+	\end{array}
+	\end{equation</em>}]</p>
+
+<p>where</p>
+
+<p>[\Delta t_{k} = t_{k+1} - t_{k}, \hspace{1em} \forall\, k \in {1,\dots,N_t-1}.]</p>
+
+<h3 id="numerical-experiments">Numerical experiments</h3>
+
+<p>We now present several numerical experiments to show the effectiveness of our optimal control approach to solve SHM problems. All the examples share the following common parameters 
+\(\varepsilon = 10^{-5},  \quad \theta = 10^5, \quad \text{and} \quad\mathcal{P}_t = \{0,0.1,0.2,\dots,\pi\}.\)
+We consider the frequencies 
+\(\mathcal{E}_a = \mathcal{E}_b = \{1,5,7,11,13\},\)
+and the target vectors 
+\(a^T = b^T = (m,0,0,0,0,0)^\top, \quad \forall\, m \in [-0.8,0.8].\)</p>
+
+<p>We shall consider three different control sets $\mathcal{U}$ which correspond to different types of control:</p>
+
+<ul>
+	<li>Bang-bang control: $\mathcal{U} = \{-1,1\}$.</li>
+	<li>Bang-off-bang control:  $\mathcal{U} = \{-1,0,1\}$.</li>
+	<li>5-multilevel control: $\mathcal{U} = \{-1,-1/2,0,1/2,1\}$.</li>
+</ul>
+
+<p>The results of our simulations are displayed in Fig. \ref{fig:sim-bang-bang}, \ref{fig:sim-bang-off-bang} and \ref{fig:sim-multi-level}. We have plotted the function</p>
+
+<p>[\begin{array}{cccc}
+		\Phi: &amp; [-0.8, 0.8]\times [0,\pi] &amp; \longrightarrow &amp; \mathcal{U} 
+		<br />
+ 		&amp; (m, t )  &amp;\longmapsto &amp; u_m^\ast (t),
+	\end{array}]</p>
+
+<p>where, for each $m \in [-0.8,0.8]$, $u_m^\ast (\cdot)$ represents the solution to the SHM problem with the target frequencies we are considering.</p>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00014/fig03.pdf" alt="Figure 1. a finite set of points in (x,y)" width="365" height="243" /> 
+</figure>
+<center> 
+<strong> Figure 3:</strong> bang-bang control for the SHM problem.
+</center>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00014/fig04.pdf" alt="Figure 1. a finite set of points in (x,y)" width="365" height="243" /> 
+</figure>
+<center> 
+<strong> Figure 4:</strong> bang-off-bang control for the SHM problem.
+</center>
+
+<figure>
+ <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00014/fig05.pdf" alt="Figure 1. a finite set of points in (x,y)" width="365" height="243" /> 
+</figure>
+<center> 
+<strong> Figure 5:</strong> multilevel control for the SHM problem.
+</center>
+
+<p>In Fig. \ref{fig:sim-bang-bang},\ref{fig:sim-bang-off-bang} and \ref{fig:sim-multi-level}, for each value of the parameter $m$ in the horizontal axis, we observe that the optimal control has the staircase structure. The controls take values only in $\mathcal U$, which are represented by the different colors displayed at the right. For instance, in Fig. \ref{fig:sim-bang-bang}, the control is $u=-1$ in the blue region and $u=1$ in the red one.</p>
+
+<h4>References</h4>
+
+<p><strong>[1]</strong> J. Sun, S. Beineke and H. Grotstollen <a name="sun1996optimal" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=506127"><em>Optimal PWM based on real-time solution of harmonic elimination equaations</em></a>, IEEE Trans. Power Electron., 11(4): 612-621, 1996.</p>
+
+<p><strong>[2]</strong> J. Sun and H. Grotstollen <a name="sun1992solving" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=254623"><em>Solving nonlinear equations for selective harmonic eliminated PWM using predicted initial values</em></a>, Proceedings of the 1992 intrenational conference on industrial electronics, control, instrumentation and automation, 1: 259-264.</p>
+
+<p><strong>[3]</strong> D. J. Oroya-Villalta, C. Esteve and U. Biccari. <a name="oroya2021multilevel" href="https://arxiv.org/abs/2103.10266"><em>Multilevel Selective Harmonic Modulation via Optimal Control</em></a>, preprint.</p>
+
+
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div id="content" class="container">
+
+  <div class="relatedPosts">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+    <h2>Related Posts</h2>
+    
+    
+    
+    
+    
+
+    
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/CIFAR-dataset.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P00013" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Opening the black box of Deep Learning </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      The aim is then to open the black box of Deep Learning, and try to gain an intuition of what are these models doing. One of the most succesful mathematical theories in recent years has been connecting Deep Learning with Dynamical Systems.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/SergiA">Sergi Andreu</a>
+          
+          - 22 March 2021
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00012/destinations1.png">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P00012" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Points of Interest Extraction and Prediction of Next Locations </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this project we tried first working on finding an algorithm that can help us define the points of interest of the users we have in the dataset. For that we implement an algorithm that can identify the users stop points.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/AichaK">Aicha Karite</a>
+          
+          - 10 March 2021
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0010/MEMSgif2.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P0010" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Touchdown localization for the MEMS problem with variable dielectric permittivity </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      In this tutorial we study the localization of touchdown points in a mathematical model for micro-electro-mechanical systems (MEMS) with variable dielectric permittivity. We consider a device consisting of two conducting plates, connected to an electric circuit. The upper plate is rigid and fixed while the lower one is elastic and fixed only at the boundary. When a voltage (difference of potential between the two plates) is applied, the lower plate starts to bend and, if the voltage is large enough, the lower plate eventually touches the upper one. This is called touchdown phenomenon and our aim is to control the localization of touchdown points in the device by a suitable choice of the dielectric permittivity of the material.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Author:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+          
+          - 30 September 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+    
+      
+    
+        
+        
+    
+        
+    
+        
+          <div>
+          
+            <div class="post-preview shadowbox">
+  <div class="post-avatar-wp">
+  
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P0008/animation.gif">
+  
+  </div>
+  <div class="post-info">
+    <a href="/DyCon-Blog/tutorial/wp99/P0008" class="display-block">
+      <h4 class="post-preview-title ellipsis-two-lines"> Propagation of one and two-dimensional discrete waves under finite difference approximation </h4>
+    </a>
+
+    <div class="post-preview-subtitle ellipsis-two-lines">
+      We analyze the propagation properties of the numerical versions of one and two-dimensional wave equations, semi-discretized in space by finite difference schemes, and we illustrate that numerical solutions may have unexpected behaviours with respect to the analytic ones.
+    </div>
+
+    <div style="display: flex;margin-top: 10px;">
+        <div class="post-preview-authors ellipsis-one-line">
+          Authors:
+          
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+          
+            
+              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+          
+          - 26 June 2019
+        </div>
+        
+        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+    
+    </div>
+
+  </div>
+</div>
+
+
+          </div>
+          
+          
+            
+    </div>
+  </div> 
+    </div>
+  </div>
+
+</article>
+<hr>
+
+    <!-- Footer -->
+<footer>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <ul class="list-inline text-center">
+        <li style="margin-right: 50px;">
+          <img style="width: 250px;" src="/DyCon-Blog/img/logos/logo_DyCon.png " alt="">
+        </li>
+        <li style="padding-bottom: 5px;">
+          <img style="width: 230px;" src="/DyCon-Blog/img/logos/logo_CCM_subDerecha_v002.png " alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

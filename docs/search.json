@@ -2,6 +2,16 @@
     
     
     {
+      "title"           : "Multilevel Selective Harmonic Modulation via Optimal Control",
+      "categories"      : ["tutorial", "WP99"],
+      "url"             : "/tutorial/wp99/P00014",
+      "date"            : "2021-03-25",
+      "author"          : ["JesusO","CarlosE","UmbertoB"],
+      "description"     : "The Multilevel Selective Harmonic Modulation problem is recast under the perspective of optimal control",
+      "avatar"          : "https://cmc.deusto.eus/wp-content/uploads/2017/03/dibujo4.png"
+    } ,
+  
+    {
       "title"           : "Opening the black box of Deep Learning",
       "categories"      : ["tutorial", "WP99"],
       "url"             : "/tutorial/wp99/P00013",

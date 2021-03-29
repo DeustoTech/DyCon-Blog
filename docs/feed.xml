@@ -5,9 +5,336 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>https://deustotech.github.io/DyCon-Blog/</link>
     <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 23 Mar 2021 17:17:05 +0100</pubDate>
-    <lastBuildDate>Tue, 23 Mar 2021 17:17:05 +0100</lastBuildDate>
+    <pubDate>Mon, 29 Mar 2021 15:53:23 +0200</pubDate>
+    <lastBuildDate>Mon, 29 Mar 2021 15:53:23 +0200</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>Multilevel Selective Harmonic Modulation via Optimal Control</title>
+        <description>Selective Harmonic Modulation (SHM) [1,2] is a well-known methodology in power electronics engineering, employed to improve the performance of a converter by controlling the phase and amplitude of the harmonics in its output voltage. As a matter of fact, this technique allows to increase the power of the converter and, at the same time, to reduce its losses.
+
+In broad terms, SHM consists in generating a control signal with a desired harmonic spectrum by modulating some specific lower-order Fourier coefficients. In practice, the signal is constructed as a step function with a finite number of switches, taking values only in a given finite set. Such a signal can be fully characterized by two features (see Fig. \ref{fig:exampleSHE}):
+
+
+	The waveform, i.e. the sequence of values that the function takes in its domain.
+	The switching angles, i.e. the sequence of points where the signal switches from one value to following one. 
+
+
+In mathematical terms, the SHM problem can be formulated as follows. Let
+
+\[\begin{equation}\label{eq:Udef}
+	\mathcal{U} = \{u_1, \ldots, u_L\}
+\end{equation}\]
+
+be a given set of $L\geq 2$ real numbers satisfying $u_1 = -1$, $u_L = 1$ and $u_k&amp;lt;u_{k+1}$ for all $k\in {1,\ldots, L}$.
+
+The goal is to construct a step function $u(t):[0,2\pi)\to\mathcal U$ with a finite number of switches, such that some of its lower-order Fourier coefficients take specific values prescribed a priori.
+
+Due to applications in power converters, it is typical to only consider functions with half-wave symmetry, i.e. satisfying $u(t + \pi) = -u(t)$ for all $t \in [0,\pi)$.
+
+In view of this symmetry, the Fourier series of $u$ only involves the odd terms (as the even terms just vanish), i.e.
+
+\[u(t) = \sum_{\underset{j\, odd}{j \in \mathbb{N}}} a_j \cos(jt)+ \sum_{\underset{k\, odd}{j \in \mathbb{N}}}  b_j \sin(jt),\]
+
+with
+
+\[a_j = \frac{2}{\pi} \int_0^\pi u(\tau ) \cos(j \tau)\,d\tau \quad\]
+
+and
+
+\[b_j = \frac{2}{\pi} \int_0^\pi u(\tau)  \sin(j \tau)\,d\tau.\]
+
+Moreover, the functions we are considering are piecewise constant with a finite number of switches, taking values only in $\mathcal{U}$, i.e. of the form
+
+\[\begin{equation}\label{eq:uExpl}
+	u (t)= \sum_{m=0}^M s_m\chi_{[\phi_m,\phi_{m+1})} (t), \quad M\in\mathbb{N} 
+\end{equation}\]
+
+for some $\mathcal S = {s_m}_{m=0}^M$ satisfying
+
+\[s_m\in \mathcal{U} \; \text{ and } \; s_m\neq s_{m+1}, \quad \forall\, m\in \{0,\ldots, M\}\]
+
+and $\Phi = {\phi_m}_{m=1}^{M}$ such that
+
+\[0= \phi_0 &amp;lt; \phi_1 &amp;lt;\ldots &amp;lt; \phi_M &amp;lt; \phi_{M+1} = \pi .\]
+
+Here $\mathcal S$ and $\Phi$ are the waveform and the switching angles that we mentioned above.
+
+Observe that any function $u$ of the form \eqref{eq:uExpl} is fully characterized by its waveform $\mathcal S$ and switching angles $\Phi$. An example of such a function is displayed in Fig. \ref{fig:exampleSHE}.
+
+
+  
+
+
+ Figure 1: a possible solution to the SHM Problem, where we considered the control-set $\mathcal{U} = \{-1, -1/2, 0, 1/2, 1\}$. We show the switching angles $\Phi$ and the waveform $\mathcal S$. The function $u(t)$ is displayed on the whole interval $[0,2\pi)$ to highlight the half-wave symmetry.
+
+
+In practical engineering applications, due to technical limitations, it is preferable to employ signals taking consecutive values in $\mathcal{U}$. This property of the waveform, to which we shall refer as the staircase property, can be rigorously formulated as follows:
+
+Definition: We say that a signal $u$ of the form \eqref{eq:uExpl} fulfills the staircase property if its waveform $\mathcal S$ satisfies
+
+\[\begin{equation}\label{eq:staircase prop}
+	\begin{array}{l}
+		(s_m^{min},s_{m}^{max}) \cap \mathcal{U} = \emptyset, \quad\forall\, m\in \{ 0, \ldots, M-1 \},
+		\\[10pt]
+		s^{min}_m = s_m\wedge s_{m+1}
+		\\[10pt]
+		s^{max}_m = s_m \vee s_{m+1}	
+	\end{array}
+	\end{equation}\]
+
+We can now formulate the SHM problem as follows.
+
+ SHM problem: let $\mathcal{U}$ be given as in \eqref{eq:Udef}, and let $\mathcal E_a$ and $\mathcal E_b$ be finite sets of odd numbers of cardinality $\vert\mathcal{E}_a\vert=N_a$ and $\vert\mathcal{E}_b\vert=N_b$ respectively. For any two given vectors $a^T\in\mathbb{R}^{N_a}$ and $b^T\in\mathbb{R}^{N_b}$, construct a function $u:[0,\pi)\to\mathcal{U}$ of the form \eqref{eq:uExpl}, satisfying \eqref{eq:staircase prop}, such that the vectors
+
+\[a=(a_j)_{j\in\mathcal{E}_a} \quad\quad b=(b_j)_{j\in\mathcal{E}_b}\]
+
+satisfy $a = a^T$ and $b = b^T$.
+
+SHM as an optimal control problem
+
+To solve the SHM problem, in [3] we propose an optimal control-based approach in which the Fourier coefficients of the signal $u(t)$ are identified with the terminal state of a controlled dynamical system of $N_a+N_b$ components defined in the time-interval $[0,\pi)$.  The control of the system is precisely the signal $u(t)$, defined as a function $[0,\pi)\to \mathcal{U}$, which has to steer the state from the origin to the desired values of the prescribed Fourier coefficients.
+
+The starting point of this approach is to rewrite the Fourier coefficients of the function $u(t)$ as the final state of a dynamical system controlled by $u(t)$. To this end, let us first note that, by definition, for all $u\in L^\infty ([0,\pi);\mathbb{R})$ any Fourier coefficient $a_j$ satisfies $a_j = y(\pi)$, with $y\in C([0,\pi);\mathbb{R})$ defined as
+
+\[y(t) = \dfrac{2}{\pi} \int_0^t u(\tau) \cos(j\, \tau) d\tau.\]
+
+Besides, as a consequence of the fundamental theorem of calculus, $y(\cdot)$ is the unique solution to the differential equation
+
+\[\begin{cases}
+		\dot{y} (t) = \dfrac{2}{\pi} \cos(j\, t) u(t), \qquad  t\in [0,\pi)
+		\\[5pt]
+		y(0) = 0.
+	\end{cases}\]
+
+Analogously, we can also write the Fourier coefficients $b_j$ as the solution at time $t=\pi$ of a similar differential equation.
+
+Hence, for $\mathcal{E}_a$, $\mathcal{E}_b$, $a^T$, and $b^T$ given, the SHM Problem can be reduced to finding a control function $u$ of the form \eqref{eq:uExpl}, satisfying \eqref{eq:staircase prop}, such that the corresponding solution $\textbf{y}\in C([0,\pi);\mathbb{R}^{N_a+N_b})$ to the dynamical system
+
+\[\begin{cases}
+		\dot{\textbf{y}}(t) = \dfrac{2}{\pi} \mathcal{D}(t) u(t), \qquad  t\in [0,\pi)
+		\\[5pt]
+		\textbf{y}(0) = 0
+	\end{cases}\]
+
+satisfies $\textbf{y}(\pi) = [a^T;b^T]^\top$, where
+
+\[\mathcal{D}(t) = \left[\mathcal{D}^a(t);\mathcal{D}^b(t) \right]^\top,\]
+
+with $\mathcal{D}^a(t) \in \mathbb{R}^{N_a}$ and $\mathcal{D}^b(t) \in \mathbb{R}^{N_b}$ given by
+
+\[\mathcal{D}^a(t) = 
+		\begin{bmatrix} 
+			\cos(e_a^1t) \\ \cos(e_a^2t) \\ \vdots \\ \cos(e_a^{N_a}t) 
+		\end{bmatrix},
+		\quad \mathcal{D}^b(t) = 
+		\begin{bmatrix} 
+			\sin(e_b^1t) \\ \sin(e_b^2t) \\ \vdots \\ \sin(e_b^{N_b}t)
+		\end{bmatrix}\]
+
+Here, $e_a^i$ and $e_b^i$  denote the elements in $\mathcal{E}_a$ and $\mathcal{E}_b$, i.e.
+\(\mathcal{E}_a = \{e_a^1,e_a^2,e_a^3,\dots,e_a^{N_a}\}, \quad \mathcal{E}_b = \{e_b^1,e_b^2,e_b^3,\dots,e_b^{N_b}\}.\)
+
+Moreover, we can reverse the time using the transformation $\textbf{x} (t) = \textbf{y}(\pi - t)$, so that the SHM problem turns into the following null controllability one, for a dynamical system with initial condition $\textbf{x}(0) = [a^T;b^T]^\top$.
+
+ SHM problem via null controllability: let $\mathcal{U}$ be given as in \eqref{eq:Udef}. Let $\mathcal{E}_a$, $\mathcal{E}_b$ and the targets $a^T$ and $b^T$ be given. We look for a function $u: [0,\pi)\to [-1,1]$ of the form \eqref{eq:uExpl}, satisfying \eqref{eq:staircase prop}, such that the solution to the initial-value problem
+
+\[\begin{equation}\label{eq:CauchyReversed}
+	\begin{cases}
+		\displaystyle\dot{\textbf{x}}(t) = -\frac 2\pi\mathcal{D}(t)u(t),  &amp;amp; t \in [0,\pi)
+		\\[5pt]
+		\textbf{x}(0) = \textbf{x}_0 := [a^T; b^T]
+	\end{cases}
+	\end{equation}\]
+
+satisfies $\textbf{x} (\pi) = 0$.
+
+A natural approach for null controllability problems is to formulate them as optimal control ones. In the case of the SHM problem just presented, in [3] we proposed to obtain the optimal control $u$ in the following way.
+
+Penalized OCP for SHM: fix $\varepsilon&amp;gt;0$ and a convex function $\mathcal{L}\in C([-1,1];\mathbb{R})$. Let $\mathcal{E}_a$, $\mathcal{E}_b$ and the targets $a^T$ and $b^T$ be given, and denote
+
+\[\mathcal A:=\big\{ u:[0,\pi)\to [-1,1]\;\text{measurable}\,\big\}.\]
+
+We look for a control $u\in \mathcal A$ solution to the following optimal control problem:
+
+\[\begin{array}{l}
+	\displaystyle\min_{u \in \mathcal A}\;\left(\dfrac{1}{2} \|\textbf{x}(\pi)\|^2 + \varepsilon \displaystyle\int_0^\pi \mathcal{L}(u(t)) dt\right) 
+	\\[20pt] 
+	\text{subject to the dynamics \eqref{eq:CauchyReversed}}.
+	\end{array}\]
+
+Observe that in the above formulation we do not impose the constraint that the control has to be of the form \eqref{eq:uExpl}, satisfying the staircase property \eqref{eq:staircase prop}. These features of $u$ will arise naturally from a suitable choice of the penalization term $\mathcal{L}$, as we describe below.
+
+Bi-level SHM problem via OCP (Bang-Bang Control)
+
+In this case, the control set $\mathcal{U}$ defined in \eqref{eq:Udef} has only two elements, i.e. $\mathcal{U}={-1,1}$. In the control theory literature, a control taking only two values is known as bang-bang control. In the SHM literature, this kind of solution are called bi-level solutions. 
+Moreover, in [3], we proved that bi-level controls are obtained through our optimal control approach when selecting $\mathcal L(u)=\alpha u$ with $\alpha\neq 0$.
+
+Theorem 1: let $\mathcal{U}={ -1, 1}$, and $\textbf{x}_0$ be given. For some $\alpha\in \mathbb{R}$ with $\alpha\neq 0$, consider the penalization $\mathcal{L} (u) = \alpha\, u$. Then, the optimal control $u^\ast$ is unique and has a bang-bang structure, i.e. it is of the form \eqref{eq:uExpl}. In addition to that, the solution $u^\ast$ is continuous with respect to $\textbf{x}_0$ in the strong topology of $L^1(0,\pi)$.
+
+We point out that the continuity of the solution with respect to the target frequencies is a highly desirable property in real applications of SHM, and sometimes, difficult to achieve.
+
+Multilevel SHM problem via OCP
+
+Another typical situation, known in the power electronics literature as the multilevel SHM problem, is the case when $\mathcal{U}$ contains more than two elements.
+
+In [3], we proved that multilevel controls are obtained when selecting $\mathcal L(u)$ as the interpolate a parabola in $[-1,1]$ by affine functions, considering the elements in $\mathcal{U}$ as the interpolating points.
+
+Theorem 2: let $\textbf{x}_0$ be given, and let $\mathcal{U}$ be a given set as in \eqref{eq:Udef}. For any $\alpha&amp;gt;0$ and $\beta\in \mathbb{R}$, set the function
+
+\[\mathcal{P}(u) = \alpha (u-\beta)^2.\]
+
+Consider the penalization
+
+\[\mathcal{L}(u) = \begin{cases}
+			\lambda_k(u) &amp;amp; \text{if }  u \in [u_k,u_{k+1}) \\ \mathcal{P}(1) &amp;amp; \text{if } u = u_{L} 
+		\end{cases} \quad \forall\, k \in \{1,\dots,L-1\},\]
+
+where
+
+\[\lambda_k(u):= \dfrac{ (u-u_k)\mathcal{P}(u_{k+1}) + (u_{k+1}- u) \mathcal{P}(u_k)}{u_{k+1} - u_k}.\]
+
+Assume in addition that the function $\mathcal{L}$ has a unique minimum in $[-1,1]$. Then, the optimal control $u^\ast$ is unique and has the form \eqref{eq:uExpl} satisfying \eqref{eq:staircase prop}. Moreover, the solution $u^\ast$ is continuous with respect to $\textbf{x}_0$ in the strong topology of $L^1(0,\pi)$.
+
+The assumption of $\mathcal L$ having a unique minimum in $[-1,1]$ is
+actually necessary to ensure the staircase form for the solution.
+Not assuming this hypothesis would entail the possibility of having
+continuous solutions for specific targets. Nevertheless, this assumption can be easily ensured by choosing, for instance, $\beta = \pm1$.
+
+We illustrate in Fig. \ref{fig:examples_penalizations} different examples of penalization functions $\mathcal{L}$ giving rise to multilevel solutions to the SHM problem. We point out that, by varying the values of $\alpha$ and $\beta$ in $\mathcal P$, we can obtain solutions with different waveforms.
+
+
+  
+
+ 
+ Figure 1: some examples of convex piecewise affine penalization functions $\mathcal{L}$. The examples $\mathcal {L}_1$, $\mathcal{L}_2$ and $\mathcal{L}_3$ satisfy the hypotheses of Theorem 2. On the contrary, the function $\mathcal{L}_4$ has not a unique minimizer, and then, we cannot ensure that the solution has staircase form.
+
+
+Numerical simulations
+
+Let us now present several examples in which we implement the optimal control strategy we proposed to solve the SHM problem.
+
+To solve our optimal control problem, we employ the direct method which, in broad terms, consists in discretizing the cost functional and the dynamics, and then apply some optimization algorithm. The dynamics is approximated with the Euler method, while for solving the discrete minimization problem we employ the nonlinear constrained optimization tool CasADi. CasADi is an open-source tool for nonlinear optimization and algorithmic differentiation which implements the interior point method via the optimization software IPOPT. To be efficiently applied to solve an optimal control problem, we then need the functional we aim to minimize to be smooth. While this is clearly true in the bi-level case, for the multilevel one the functional, due to the piecewise affine penalization, is not differentiable at the points $u_k\in\mathcal U$. For this reason, when treating the multilevel case, we will first need to build a smooth approximation of the  function $\mathcal L$.
+
+Smooth approximation of $\mathcal L$ for multilevel control
+
+The piecewise affine function defining the penalization $\mathcal L$ in case of multilevel controls can be regularized as follows.
+
+First of all, for all real parameter $\theta&amp;gt;0$, we define the $C^\infty(\mathbb{R})$ function
+
+\[\displaystyle h^\theta(x) := \frac{1 + \tanh(\theta x)}{2}.\]
+
+and observe that, for almost every $x\in \mathbb{R}$,  we have that $h^\theta(x)\to h(x)$ as $\theta\to +\infty$, where $h$ is the Heaviside function
+
+\[h(x) = \begin{cases}
+		1 &amp;amp; \text{ if } x &amp;gt; 0 
+		\\
+		0 &amp;amp; \text{ if } x \leq 0.
+	\end{cases}\]
+
+Secondly, for all $k \in {1,\dots,N_u-1}$ we define the (smooth) function $\chi_{[u_k,u_{k+1})}^\theta:\mathbb{R} \rightarrow \mathbb{R}$ given by
+
+\[\chi_{[u_k,u_{k+1})}^\theta(x) := - 1 + h^\theta(x-u_k) + h^\theta(-x+u_{k+1})\]
+
+which, as $\theta\to +\infty$, converges in $L^\infty(\mathbb{R})$ to the characteristic function $\chi_{[u_k,u_{k+1})}$. Finally, we employ $\chi_{[u_k,u_{k+1})}^\theta$ to define
+
+\[\mathcal{L}^\theta(u) = \sum_{k = 1}^{N_u-1} \lambda_k \chi^\theta_{[u_k,u_{k+1})}(u)\]
+
+which, as $\theta\to +\infty$, converges in $L^\infty(\mathbb{R})$ to the penalization function $\mathcal L$ we defined for multilevel control.
+
+Direct method  for OCP-SHE
+
+The starting point for employing a direct method to solve the optimal control problem we are considering is to discretize the cost functional and the dynamics. To this end, let us consider a $N_t$-points partition of the interval $[0,\pi]$, $\mathcal{T} = {t_k}_{k=1}^{N_t}$, and denote by $\textbf{u} \in \mathbb{R}^{N_t}$ the vector with components $u_k = u(t_k)$, $k=1,\ldots,N_t$.
+
+Then the optimal control problem can then be approximated by a finite-dimensional optimization one with variable $\textbf{u} \in \mathbb{R}^{N_t}$.
+
+Numerical OCP: given two sets of odd numbers $\mathcal{E}_a$ and $\mathcal{E}_b$ with cardinalities $\vert\mathcal{E}_a\vert=N_a$ and $\vert\mathcal{E}_b\vert=N_b$, respectively, the target vectors $a^T\in\mathbb{R}^{N_a}$ and $b^T\in\mathbb{R}^{N_b}$, 
+and the partition $\mathcal{T}$ of the interval $[0,\pi]$, we look for $\textbf{u}\in\mathbb{R}^{N_t}$ that solves the following minimization problem:
+
+\[\begin{equation*}
+	\begin{array}{l}
+	\min_{\textbf{u}\in\mathbb{R}^{N_t}} \Bigg[\| \textbf{x}_{N_t}\|^2 + \varepsilon \sum_{k=1}^{N_t-1} \bigg[\frac{\mathcal{L}^\theta(u_{t_k}) + \mathcal{L}^\theta(u_{t_{k+1}})}{2}\Delta t_k \bigg]  \Bigg]  
+	\\[25pt]
+	\text{subject to: } \begin{cases}
+			\textbf{x}_{t_{k+1}} = \textbf{x}_{t_k} - \Delta t_{k} (2/\pi) \mathcal{D}(t_k)\\[5pt]
+			\textbf{x}_{t_1} = \textbf{x}_0:= [a^T,b^T]^\top
+		\end{cases} 
+	\end{array}
+	\end{equation*}\]
+
+where
+
+\[\Delta t_{k} = t_{k+1} - t_{k}, \hspace{1em} \forall\, k \in \{1,\dots,N_t-1\}.\]
+
+Numerical experiments
+
+We now present several numerical experiments to show the effectiveness of our optimal control approach to solve SHM problems. All the examples share the following common parameters 
+\(\varepsilon = 10^{-5},  \quad \theta = 10^5, \quad \text{and} \quad\mathcal{P}_t = \{0,0.1,0.2,\dots,\pi\}.\)
+We consider the frequencies 
+\(\mathcal{E}_a = \mathcal{E}_b = \{1,5,7,11,13\},\)
+and the target vectors 
+\(a^T = b^T = (m,0,0,0,0,0)^\top, \quad \forall\, m \in [-0.8,0.8].\)
+
+We shall consider three different control sets $\mathcal{U}$ which correspond to different types of control:
+
+
+	Bang-bang control: $\mathcal{U} = \{-1,1\}$.
+	Bang-off-bang control:  $\mathcal{U} = \{-1,0,1\}$.
+	5-multilevel control: $\mathcal{U} = \{-1,-1/2,0,1/2,1\}$.
+
+
+The results of our simulations are displayed in Fig. \ref{fig:sim-bang-bang}, \ref{fig:sim-bang-off-bang} and \ref{fig:sim-multi-level}. We have plotted the function
+
+\[\begin{array}{cccc}
+		\Phi: &amp;amp; [-0.8, 0.8]\times [0,\pi] &amp;amp; \longrightarrow &amp;amp; \mathcal{U} 
+		\\
+ 		&amp;amp; (m, t )  &amp;amp;\longmapsto &amp;amp; u_m^\ast (t),
+	\end{array}\]
+
+where, for each $m \in [-0.8,0.8]$, $u_m^\ast (\cdot)$ represents the solution to the SHM problem with the target frequencies we are considering.
+
+
+  
+
+ 
+ Figure 3: bang-bang control for the SHM problem.
+
+
+
+  
+
+ 
+ Figure 4: bang-off-bang control for the SHM problem.
+
+
+
+  
+
+ 
+ Figure 5: multilevel control for the SHM problem.
+
+
+In Fig. \ref{fig:sim-bang-bang},\ref{fig:sim-bang-off-bang} and \ref{fig:sim-multi-level}, for each value of the parameter $m$ in the horizontal axis, we observe that the optimal control has the staircase structure. The controls take values only in $\mathcal U$, which are represented by the different colors displayed at the right. For instance, in Fig. \ref{fig:sim-bang-bang}, the control is $u=-1$ in the blue region and $u=1$ in the red one.
+
+References
+
+[1] J. Sun, S. Beineke and H. Grotstollen Optimal PWM based on real-time solution of harmonic elimination equaations, IEEE Trans. Power Electron., 11(4): 612-621, 1996.
+
+[2] J. Sun and H. Grotstollen Solving nonlinear equations for selective harmonic eliminated PWM using predicted initial values, Proceedings of the 1992 intrenational conference on industrial electronics, control, instrumentation and automation, 1: 259-264.
+
+[3] D. J. Oroya-Villalta, C. Esteve and U. Biccari. Multilevel Selective Harmonic Modulation via Optimal Control, preprint.
+
+</description>
+        <pubDate>Thu, 25 Mar 2021 00:00:00 +0100</pubDate>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00014</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00014</guid>
+        
+        
+        <category>tutorial</category>
+        
+        <category>WP99</category>
+        
+      </item>
     
       <item>
         <title>Opening the black box of Deep Learning</title>
@@ -2290,161 +2617,6 @@ Bibliography
         <pubDate>Wed, 03 Jun 2020 00:00:00 +0200</pubDate>
         <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0011</link>
         <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0011</guid>
-        
-        
-        <category>tutorial</category>
-        
-        <category>WP01</category>
-        
-      </item>
-    
-      <item>
-        <title>Synchronized Oscillators</title>
-        <description>Consider the Kuramoto model for the synchronization of coupled oscillators
-
-\[\begin{cases}
-\displaystyle \dot{\theta}_i(t) = \omega_i + \frac{Ku(t)}{N}\sum_{j=1}^N \sin \big(\theta_j(t)-\theta_i(t)\big),\quad i = 1,\ldots,N,\quad t&amp;gt;0
-\\
-\theta_i(0) = \theta_i^0.
-\end{cases}\quad (1)\]
-
-Here $\theta_i(t)$, $i = 1,\ldots,N$, is the phase of the $i$-th oscillator, $\omega_i$ is its natural frequency and $K$ is the coupling strength. The frequencies $\omega_i$ are distributed with a given probability density $f(\omega)$, unimodal and symmetric around the mean frequency
-
-\[\Omega = \frac 1N \sum_{i=1}^N \omega_i,\]
-
-that is, $f(\Omega+\omega) = f(\Omega-\omega)$.
-
-It is known that, if the coupling $K$ is sufficiently strong, the oscillators will synchronize asymptotically, i.e.
-
-\[\lim_{t\to +\infty} |\dot{\theta}_i(t)-\dot{\theta}_j(t)| = 0, \quad \textrm{ for all }\; i,j = 1,\ldots,N,\]
-
-We want to design a control capable to ensure synchronization in a final time horizon $T$, that is
-
-\[|\dot{\theta}_i(T)-\dot{\theta}_j(T)| = 0, \quad \textrm{ for all } i,j = 1,\ldots,N. \quad\quad\quad(2)\]
-
-To compute this optimal control allowing us to reach the synchronized configuration (3) we can adopt a classical approach based on the resolution of the following optimization problem
-
-\[\begin{array}{l}
-\displaystyle\widehat{u} = \min_{u\in L^2(0,T;\mathbb{R})} J(u)
-\\[10pt]
-\displaystyle J(u) = \frac{1}{2} \sum_{i,j=1}^N \sin^2\big(\theta_j(T)-\theta_i(T)\big) + \frac \beta2 \|u\|^2_{L^2(0,T;\mathbb{R})},
-\end{array}\quad (3)\]
-
-subject to the dynamics (1).
-
-For the resolution of (3), we use the standard GD method, which looks for the minimum $u$ as the limit $k\to +\infty$ of the following iterative process
-
-\[u^{k+1} = u^k - \eta_k\nabla J(u^k). \quad (4)\]
-
-This gradient technique is most often chosen because it is very easy to be implemented.
-
-In order to fully define the iterative scheme (4), we need to compute the gradient $\nabla J(u)$. This can be done via the Pontryagin maximum principle.
-
-To this end, let us first rewrite the dynamics (1) in a vectorial form as follows
-
-\[\begin{cases}
-\dot{\Theta}(t) = \Omega + F\big(\Theta(t),u(t)\big), \quad t&amp;gt;0
-\\
-\Theta(0) = \Theta^0,
-\end{cases}\]
-
-with $\Theta :=(\theta_1,\ldots,\theta_N)^\top$, $\Theta^0:=(\theta_1^0,\ldots,\theta_N^0)^\top$ and $\Omega :=(\omega_1,\ldots,\omega_N)^\top$, and where $F$ is the vector field given by
-
-\[F = (F_1,\ldots,F_N), \quad F_i:= \frac{Ku(t)}{N}\sum_{j=1}^N\sin\big(\theta_j(t)-\theta_i(t)\big), \quad i=1,\ldots,N.\]
-
-Using the notation just introduced, we obtain the following expression for the gradient of $J(u)$
-
-\[\nabla J(u) = \beta u + (\mathcal D_uF)^\top p, \quad(5)\]
-
-where $\mathcal D_uF$ indicates the Jacobian of the vector field $F$, computed with respect to the variable $u$.
-
-In (5), we denoted with $p = (p_1,\ldots,p_N)$ the solution of the adjoint equation associated with (1), which is given by
-
-\[\begin{cases}
--\dot{p} = (\mathcal D_{\Theta}F)^\top p
-\\
-p(T) = \nabla_{\Theta(T)}\phi(\Theta(T)),
-\end{cases}\]
-
-where $\mathcal D_\Theta F$ stands again for the Jacobian of the vector field $F$, this time computed with respect to the variable $\Theta$.
-
-Taking into account the expression of the vector field $F$, we can then see that the iterative scheme (4) becomes
-
-\[u^{k+1} = u^k -\eta_k\left[\beta u^k + \frac KN\sum_{i=1}^N p_i\left(\sum_{j=1}^N \sin(\theta_j-\theta_i)\right)\right], \quad (6)\]
-
-with
-
-\[\begin{cases}
-\displaystyle-\dot{p}_i = -\frac{Kup_i}{N}\sum_{i\neq j=1}^N \cos\big(\theta_j-\theta_i\big) + \frac{Ku}{N}\sum_{i\neq j=1}^N p_j \cos\big(\theta_j-\theta_i\big),\quad i = 1,\ldots,N,\quad t&amp;gt;0
-\\[20pt]
-\displaystyle p_i(T) = \frac 12\sum_{i\neq j=1}^N \sin\big(2\theta_i(T)-2\theta_j(T)\big).
-\end{cases}\]
-
-We then see that, at each iteration $k$ the optimization scheme (6) requires to solve a $N$-dimensional non-linear dynamical system. This may rapidly become computationally very expensive, especially when the number $N$ of oscillators in our system is large.
-
-In order to reduce this computational burden, we can combine the standard GD algorithm with the so-called Random Batch Method (RBM), which is a recently developed approach (see [2]) allowing for an efficient numerical simulation of high-dimensional collective behavior problems. This technique is based on the following simple idea: at each time step $t_m = m\cdot dt$ in the mesh we employ to solve the dynamics, we divide randomly the $N$ particles into $n$ small batches with size $2\leq P&amp;lt;N$, denoted by $C_q$, $q = 1,\ldots,n$, that is
-
-\[\begin{array}{l}
-C_q = \{i_{q_1},\ldots,i_{q_P}\}\subset \{1,\ldots,N\}, &amp;amp; &amp;amp; for\; all\; q = 1,\ldots,n
-\\[8pt]
-C_q\cap C_r = \emptyset, &amp;amp; &amp;amp; for\; all\; q,r = 1,\ldots,n
-\\[8pt]
-\bigcup_{q = 1}^n C_q = \{1,\ldots,N\}.
-\end{array}\]
-
-Once this partition of ${1,\ldots,N}$ has been performed, we solve the dynamics by interacting only particles within the same batch. In this way, we are now dealing with systems of lower dimension and the computational cost of the GD algorithm is reduced.
-
-Numerical simulations
-
-We can check the effectiveness of the proposed approach through some numerical simulations for the computation of the optimal control $\widehat{u}$.
-
-Firstly, we can show that the optimization problem (3) indeed allows to compute an effective control function which is capable to steer the Kuramoto model (1) to a synchronized configuration.
-
-In Figure 1-top, we show the evolution of the uncontrolled dynamics, which corresponds to taking $u\equiv 1$ in (1). As we can see, the oscillators are evolving towards a synchronized configuration, but synchronization is not reached in the short time horizon we are providing. In Figure 1-bottom, we show the evolution of the same dynamics, this time under the action of the control function $u$ computed through the minimization of $J(u)$. The subplot on the left corresponds to the simulations done with the GD approach, while the one on the right is done employing GD-RBM. We can clearly see how, in both cases, the oscillators are all synchronized at the final time $T=3s$. This means that both algorithms managed to compute an effective control.
-
-
-
-  Figure 1. Top - evolution of the free dynamics of the Kuramoto model (1) with $N=10$ oscillators. Bottom - evolution of the controlled dynamics of the Kuramoto model (1) with $N=10$ oscillators. The control function $\widehat{u}$ is obtained with the GD (left) and the GD-RBM (right) approach.
-
-
-In Figure 2, we display the behavior of the control function $\widehat{u}$ computed via the GD-RBM algorithm. We can see how, at the beginning of the time interval we are considering, this control is close to one and it is increasing with a small slope. On the other hand, this growth becomes more pronounced as we get closer to the final time $T=3s$.
-
-
-
-  Figure 2. control function $\widehat{u}$ obtained through the GD-RBM algorithm applied to the Kuramoto model (1) with $N=10$ oscillators.
-
-
-Notice that, in (1), $\widehat{u}$ enters as a multiplicative control which modifies the strength of the coupling $K$. Hence, according to the profile displayed in Figure 2, the control function $\widehat{u}$ we computed is initially letting the system evolving following its natural dynamics. Then, as the time evolves towards the horizon $T=3s$, $\widehat{u}$ enhances the coupling strength $K$ in order to reach the desired synchronized configuration (2).
-
-We can now compare the performances of the GD and GD-RBM algorithms for the computation of the optimal control $\widehat{u}$. To this end, we can run simulations for increasing values of $N$, namely $N=10,50,100,250,1000$.
-
-Figure Figure 3 shows the computational times required by the two methodologies to solve the optimization problem (3).
-
-
-
-  Figure 3. computational times required by the GD and GD-RBM algorithm to compute the optimal control $\widehat{u}$ with increasing values of $N$.
-
-
-Our simulations show how, for low values of $N$, the two approaches show similar behaviors. Nevertheless, when increasing the number of oscillators in our system, the advantages of the GD-RBM methodology with respect to GD become evident. In particular, the growth of the computational time for GD-RBM is significantly less pronounced than for GD. As a matter of fact, Figure 3 is not considering the case of $N=1000$ oscillators with GD, since the behavior with smaller values of $N$ already suggested that this experiment would be computationally too expensive.
-
-On the other hand, even with $N=1000$ oscillators in the system, the GD-RBM approach turns out to be able to compute an effective control for the Kuramoto model (1) in about $29$ seconds (see Figure 4).
-
-
-
-  Figure 4. evolution of the controlled dynamics of the Kuramoto model (1) with $N=1000$ oscillators. The control has been computed with the GD-RBM algorithm.
-
-
-More details on the contents of this post can be found in [1].
-
-Bibliography
-
-[1] U. Biccari and E. Zuazua, A stochastic approach to the synchronization of coupled oscillators, to appear in Front. Energy Res.
-
-[2] S. Jin, L. Li and J.-G. Liu, Random Batch Methods (RBM) for nteracting particle systems, J. Comput. Phys. 400 (2020), 108877.
-</description>
-        <pubDate>Wed, 03 Jun 2020 00:00:00 +0200</pubDate>
-        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0006</link>
-        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0006</guid>
         
         
         <category>tutorial</category>
