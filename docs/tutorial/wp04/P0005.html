@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0005">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp04/P0005">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP04">
             Inverse design of time-irreversible models</a> &#8827;</small>
           </h2>
           <h1>Sparse sources identification through adjoint localization algorithm</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/AzaharM">Azahar Monge</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/AzaharM">Azahar Monge</a>
                   </span>
                 </span>
               
@@ -291,34 +291,34 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0005/mainSparseSourceIdentification.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0005/mainSparseSourceIdentification.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <h2 id="model-problem">Model Problem</h2>
 
 <p>We consider the numerical approximation of the inverse problem for the linear advection-diffusion equation,</p>
 
-<p>[\begin{equation}\label{modeleq} \begin{cases} \partial_t u - d \Delta u + v \nabla \cdot u = 0, \  \  \textbf{x}  \in \Omega, t \in [0,T],\ u(\textbf{x},t) = 0,  \  \  \textbf{x}  \in \partial \Omega, t \in [0,T],\ u(\textbf{x},0) = u_0(\textbf{x}), \  \  \textbf{x}  \in \Omega,\ \end{cases} \end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation}\label{modeleq} \begin{cases} \partial_t u - d \Delta u + v \nabla \cdot u = 0, \  \  \textbf{x}  \in \Omega, t \in [0,T],\\ u(\textbf{x},t) = 0,  \  \  \textbf{x}  \in \partial \Omega, t \in [0,T],\\ u(\textbf{x},0) = u_0(\textbf{x}), \  \  \textbf{x}  \in \Omega,\\ \end{cases} \end{equation}</script>
 
 <p>with $d$ being the diffusivity of the material and $v$ the direction of the advection.</p>
 
 <p>Given a final time $T&gt;0$ and a target function $u^\ast$ the aim is to identify the initial condition $u_0$ such that the solution, at time $t=T$, reaches the target $u^*$ or gets as close as possible to it. We assume that the initial condition $u_0$ is characterized as a combined set of sparse sources. This means that $u_0$ is a linear combination of unitary deltas with certain and possibly different weights, i.e:</p>
 
-<p>[\begin{align} u_0 = \sum_{i=1}^{l} \alpha_i \delta(x_i). \end{align}]</p>
+<script type="math/tex; mode=display">\begin{align} u_0 = \sum_{i=1}^{l} \alpha_i \delta(x_i). \end{align}</script>
 
 <p>We formulate the inverse problem using optimal control techniques. In particular, we consider the minimization of the following functional:</p>
 
-<p>[\begin{align} J(u_0) := J(u(\cdot,0)) = \frac{1}{2} \int_{\Omega} (u(\cdot, T) - u^*)^2 d \Omega + \tau \int_{\Omega} \vert u(\cdot,0) \vert d \Omega. \end{align}]</p>
+<script type="math/tex; mode=display">\begin{align} J(u_0) := J(u(\cdot,0)) = \frac{1}{2} \int_{\Omega} (u(\cdot, T) - u^*)^2 d \Omega + \tau \int_{\Omega} \vert u(\cdot,0) \vert d \Omega. \end{align}</script>
 
 <h2 id="space-and-time-discretization">Space and time discretization</h2>
 
 <p>Letting $\textbf{u} : [0, T] \rightarrow \mathbb{R}^s$ where $s$ is the number of grid points on $\Omega$, we can write a general finite element (FE) discretization of the diffusion–advection equation in \eqref{modeleq} in a compact form as:</p>
 
-<p>[\begin{align} \textbf{M} \dot{\textbf{u}}(t) + d \textbf{A} \textbf{u}(t) + v \textbf{V} \textbf{u}(t) = 0. \end{align}]</p>
+<script type="math/tex; mode=display">\begin{align} \textbf{M} \dot{\textbf{u}}(t) + d \textbf{A} \textbf{u}(t) + v \textbf{V} \textbf{u}(t) = 0. \end{align}</script>
 
 <p>In order to get a time discretized version of the previous equation, we apply implicit Euler method with stepsize $\Delta t := T/N$ where $N$ is the total number of time steps. The numerical approximations to the solution are given by the vectors $\textbf{u}^n \approx \textbf{u}(t_n) \in \mathbb{R}^s$ with respect to the index $n=i\Delta t$ for $i=1,2,..,N$. Therefore, the fully discrete version of model equation is as follows,</p>
 
-<p>[\begin{align} (\textbf{M} + d \Delta t \textbf{A} + v \Delta t \textbf{V}) \textbf{u}^{n+1} = \textbf{M} \textbf{u}^n. \end{align}]</p>
+<script type="math/tex; mode=display">\begin{align} (\textbf{M} + d \Delta t \textbf{A} + v \Delta t \textbf{V}) \textbf{u}^{n+1} = \textbf{M} \textbf{u}^n. \end{align}</script>
 
 <h2 id="adjoint-algorithm-for-sparse-source-identification">Adjoint Algorithm for sparse source identification</h2>
 
@@ -328,7 +328,7 @@ img:active{
 
 <p>The initialization parameters look as follows:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span><span class="o">=</span><span class="mi">30</span><span class="p">;</span> <span class="c1">%% space discretization points in y-direction</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">N</span><span class="o">=</span><span class="mi">30</span><span class="p">;</span> <span class="c1">%% space discretization points in y-direction</span>
 <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="p">/(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">%% mesh size</span>
 <span class="n">t0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">%% initial time</span>
 <span class="n">tf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span> <span class="c1">%% final time</span>
@@ -345,19 +345,22 @@ img:active{
 
 <span class="n">tau</span><span class="o">=</span><span class="n">dx</span><span class="o">^</span><span class="mi">4</span><span class="p">;</span> <span class="c1">%% regularization parameter</span>
 <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span> <span class="c1">%% stepsize of the gradient descent method</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We now compute the FE discretization matrices $M$, $A$ and $V$ that are respectively the mass matrix, the stiffness matrix and the advection matrix. For the FE discretization we assume equidistant structured meshes. In particular we use triangular elements and the classical pyramidal test functions are employed.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">]</span> <span class="o">=</span> <span class="n">computeFEmatrices</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">d1</span><span class="p">,</span><span class="n">d2</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">);</span> <span class="c1">%% Compute FE discretization matrices</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">]</span> <span class="o">=</span> <span class="n">computeFEmatrices</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">d1</span><span class="p">,</span><span class="n">d2</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">);</span> <span class="c1">%% Compute FE discretization matrices</span>
+</code></pre>
+</div>
 
 <p>A reference initial condition is chosen and we compute using the FE discretization specified above and implicit Euler in time its corresponding final state at time $T$. This final state will be considered the initial data of the inverse problem to be solved and we name it the target function $u^*$ as mentioned previously.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0_ref</span> <span class="o">=</span> <span class="n">initial_deltas</span><span class="p">(</span><span class="n">N</span><span class="p">);</span> <span class="c1">%% computes reference initial condition</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">U0_ref</span> <span class="o">=</span> <span class="n">initial_deltas</span><span class="p">(</span><span class="n">N</span><span class="p">);</span> <span class="c1">%% computes reference initial condition</span>
 
 <span class="p">[</span><span class="n">U_target</span><span class="p">,</span><span class="n">u_target</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0_ref</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span> <span class="c1">%% Compute target distribution</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We now call the algorithm that estimates the initial condition $u_0$ using as a initial data the target function $u^*$. As mentioned before, this algorithm consists of two steps.</p>
 
@@ -365,61 +368,64 @@ img:active{
 
 <p>As the initial condition $u_0$ is assumed to be a linear combination between the locations and the intensities, once we have fixed the locations using the adjoint methodology we can solve a least squares problem to get the remaining intensities. We assemble a matrix $\textbf{L} \in \mathbb{R}^{s \times l}$ where at each column we have the forward solution for a single unitary delta placed at each of the locations already identified. We then solve the following linear system of equations for the vector of unknowns $\alpha = (\alpha_1, \alpha_2, …, \alpha_l)^T$:</p>
 
-<p>[\begin{align} \textbf{L}^T \textbf{L} \alpha = \textbf{L}^T u^*, \end{align}]</p>
+<script type="math/tex; mode=display">\begin{align} \textbf{L}^T \textbf{L} \alpha = \textbf{L}^T u^*, \end{align}</script>
 
 <p>to find the intensities vector $\alpha$.</p>
 
 <p>Adjoint algorithm for sparse source identification (algorithm 4)</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">SparseIdentification</span><span class="p">(</span><span class="n">u_target</span><span class="p">,</span><span class="n">TOL</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">,</span><span class="n">epsilon</span><span class="p">,</span><span class="n">tau</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">SparseIdentification</span><span class="p">(</span><span class="n">u_target</span><span class="p">,</span><span class="n">TOL</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">,</span><span class="n">epsilon</span><span class="p">,</span><span class="n">tau</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>Finally, the final state at $T$ is computed using as a initial condition the estimated sparse sources identified with our algorithm.</p>
 
 <p>Compute final state with the recovered initial condition</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">UF</span><span class="p">,</span><span class="n">u_final</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">UF</span><span class="p">,</span><span class="n">u_final</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_target</span><span class="p">(</span><span class="n">U0</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">V</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We can see the evolution recovered</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0005/evolution.gif" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0005/evolution.gif" alt="" /></p>
 
 <p>We now visualize the numerical results. Plots on the left side show the reference initial solution and the given target. Similarly, plots on the right side show the recovered initial condition and the distribution at the final time $T$ produced by the recovered initial sources.</p>
 
 <p>One can observe the difference between the two models (the heat equation on $\Omega_1$ and the diffusion-advection on $\Omega_2$) in the two figures at the bottom where the initial sources on $\Omega_2$ move downwards at the same time as they dissipate while the initial sources on $\Omega_1$ only dissipate without displacement.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component x</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component x</span>
 <span class="n">yplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span> <span class="c1">%% space grid w.r.t component y</span>
 <span class="c1">%%</span>
 <span class="nb">figure</span><span class="p">(</span><span class="s1">'unit'</span><span class="p">,</span><span class="s1">'norm'</span><span class="p">,</span><span class="s1">'pos'</span><span class="p">,[</span><span class="mf">0.25</span> <span class="mf">0.1</span> <span class="mf">0.5</span> <span class="mf">0.8</span><span class="p">])</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">surf</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0_ref</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Reference initial state (front view)'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">surf</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered initial state (front view)'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0_ref</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Reference initial state (above view)'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
 <span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U0</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered initial state (above view)'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 <span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">U_target</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Given target u^*'</span><span class="p">)</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
 <span class="nb">pcolor</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot</span><span class="p">,</span><span class="n">UF</span><span class="p">)</span>
-<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="nb">jet</span>
+<span class="nb">shading</span> <span class="n">interp</span><span class="p">;</span><span class="nb">colorbar</span><span class="p">;</span><span class="nb">colormap</span> <span class="n">jet</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Recovered final state'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0005/copiaRM_01.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0005/copiaRM_01.png" alt="" /></p>
 
         <hr>
       </div>
@@ -567,12 +573,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
           
           - 03 April 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -670,12 +676,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JanH">Jan Heiland</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/JanH">Jan Heiland</a>,
           
           - 07 March 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
     
     </div>
 
@@ -719,18 +725,18 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/AlexandreS">Alexandre Francisco</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/AlexandreS">Alexandre Francisco</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 18 February 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -801,15 +807,15 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/ThibaultL">Liard Thibault</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/ThibaultL">Liard Thibault</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 12 December 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 

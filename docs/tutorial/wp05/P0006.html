@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0006">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp05/P0006">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP05">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP05">
             Models involving memory terms and hybrid PDE+ODE systems</a> &#8827;</small>
           </h2>
           <h1>The Dirichlet-Neumann iteration for two coupled heterogeneous heat equations</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/AzaharM">Azahar Monge</a>,
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/AzaharM">Azahar Monge</a>,
                   </span>
                 </span>
               
@@ -291,18 +291,19 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0006/a2D_FDM_DN_heateq.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/WP05/P0006/a2D_FDM_DN_heateq.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <p>The time dependent transmission problem is as follows, where we consider a domain $\Omega \subset \mathbb{R}^2$ which is cut into two subdomains $\Omega_1 \cup \Omega_2 = \Omega$ with transmission conditions at the interface $\Gamma = \Omega_1 \cap \Omega_2$:</p>
 
-<p>[\begin{align} \begin{split} &amp; \alpha_m \frac{\partial u_m(\textbf{x},t)}{\partial t} - \nabla \cdot (\lambda_m  \nabla u_m(\textbf{x},t)) = 0,\  \  t \in [t_0, t_f],  \  \  \textbf{x} \in \Omega_m \subset \mathbb{R}^2, \ &amp; u_m(\textbf{x},t) = 0, \  \  t \in [t_0, t_f], \  \  \textbf{x} \in \partial \Omega_m \backslash \Gamma, \ &amp; u_1(\textbf{x},t) = u_2(\textbf{x},t), \  \  \textbf{x} \in \Gamma, \ &amp; \lambda_2 \frac{\partial u_2(\textbf{x},t)}{\partial \textbf{n}_2} = -\lambda_1 \frac{\partial u_1(\textbf{x},t)}{\partial \textbf{n}_1}, \  \  \textbf{x} \in \Gamma, \ &amp; u_m(\textbf{x},0) = u_m^0(\textbf{x}), \  \  \textbf{x} \in \Omega_m, \end{split} \end{align}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} \begin{split} & \alpha_m \frac{\partial u_m(\textbf{x},t)}{\partial t} - \nabla \cdot (\lambda_m  \nabla u_m(\textbf{x},t)) = 0,\  \  t \in [t_0, t_f],  \  \  \textbf{x} \in \Omega_m \subset \mathbb{R}^2, \\ & u_m(\textbf{x},t) = 0, \  \  t \in [t_0, t_f], \  \  \textbf{x} \in \partial \Omega_m \backslash \Gamma, \\ & u_1(\textbf{x},t) = u_2(\textbf{x},t), \  \  \textbf{x} \in \Gamma, \\ & \lambda_2 \frac{\partial u_2(\textbf{x},t)}{\partial \textbf{n}_2} = -\lambda_1 \frac{\partial u_1(\textbf{x},t)}{\partial \textbf{n}_1}, \  \  \textbf{x} \in \Gamma, \\ & u_m(\textbf{x},0) = u_m^0(\textbf{x}), \  \  \textbf{x} \in \Omega_m, \end{split} \end{align} %]]></script>
 
 <p>where $\textbf{n}_m$ is the outward normal to $\Omega_m$ for $m=1,2$.</p>
 
 <p>The constants $\lambda_1$ and $\lambda_2$ describe the thermal conductivities of the materials on $\Omega_1$ and $\Omega_2$ respectively. $D_1$ and $D_2$ represent the thermal diffusivities of the materials and they are defined by</p>
 
-<p>[\begin{align} D_m = \frac{\lambda_m}{\alpha_m}, \  \  \mbox{with} \  \  \alpha_m = \rho_m c_{p_m} \end{align}]</p>
+<script type="math/tex; mode=display">\begin{align} D_m = \frac{\lambda_m}{\alpha_m}, \  \  \mbox{with} \  \  \alpha_m = \rho_m c_{p_m} \end{align}</script>
 
 <p>where $\rho_m$ represents the density and $c_{p_m}$ the heat capacity of the material placed in $\Omega_m$, $m=1,2$.</p>
 
@@ -310,39 +311,41 @@ img:active{
 
 <p>Let $u_I^{(1)}$ and $u_I^{(2)}$ correspond to the unknowns on $\Omega_1$ and $\Omega_2$ respectively and $u_{\Gamma}$ correspond to the unknows at the interface $\Gamma$, then the compact 2D finite difference (FD) formulation on equidistant meshes of (1) for the vector of unknowns</p>
 
-<p>[\textbf{u} = (\textbf{u}<em>I^{(1)}, \textbf{u}_I^{(2)}, \textbf{u}</em>{\Gamma})^T]</p>
+<script type="math/tex; mode=display">\textbf{u} = (\textbf{u}_I^{(1)}, \textbf{u}_I^{(2)}, \textbf{u}_{\Gamma})^T</script>
 
 <p>will be</p>
 
-<p>[\begin{equation} \tilde{\textbf{M}} \dot{\textbf{u}} - \tilde{\textbf{A}} \textbf{u} = 0 \  \  \mbox{where} \  \  \tilde{\textbf{M}} = \left( \begin{array}{ccc} \textbf{M}<em>1 &amp; \textbf{0} &amp; \textbf{M}</em>{I \Gamma}^{(1)} \ \textbf{0} &amp; \textbf{M}<em>2 &amp; \textbf{M}</em>{I \Gamma}^{(2)} \ \textbf{M}<em>{\Gamma I}^{(1)} &amp; \textbf{M}</em>{\Gamma I}^{(2)} &amp; \textbf{M}<em>{\Gamma \Gamma}^{(1)} + \textbf{M}</em>{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \tilde{\textbf{A}} = \left( \begin{array}{ccc} \textbf{A}<em>1 &amp; \textbf{0} &amp; \textbf{A}</em>{I \Gamma}^{(1)} \ \textbf{0} &amp; \textbf{A}<em>2 &amp; \textbf{A}</em>{I \Gamma}^{(2)} \ \textbf{A}<em>{\Gamma I}^{(1)} &amp; \textbf{A}</em>{\Gamma I}^{(2)} &amp; -\textbf{A}<em>{\Gamma \Gamma}^{(1)} - \textbf{A}</em>{\Gamma \Gamma}^{(2)} \end{array} \right), \end{equation}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \tilde{\textbf{M}} \dot{\textbf{u}} - \tilde{\textbf{A}} \textbf{u} = 0 \  \  \mbox{where} \  \  \tilde{\textbf{M}} = \left( \begin{array}{ccc} \textbf{M}_1 & \textbf{0} & \textbf{M}_{I \Gamma}^{(1)} \\ \textbf{0} & \textbf{M}_2 & \textbf{M}_{I \Gamma}^{(2)} \\ \textbf{M}_{\Gamma I}^{(1)} & \textbf{M}_{\Gamma I}^{(2)} & \textbf{M}_{\Gamma \Gamma}^{(1)} + \textbf{M}_{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \tilde{\textbf{A}} = \left( \begin{array}{ccc} \textbf{A}_1 & \textbf{0} & \textbf{A}_{I \Gamma}^{(1)} \\ \textbf{0} & \textbf{A}_2 & \textbf{A}_{I \Gamma}^{(2)} \\ \textbf{A}_{\Gamma I}^{(1)} & \textbf{A}_{\Gamma I}^{(2)} & -\textbf{A}_{\Gamma \Gamma}^{(1)} - \textbf{A}_{\Gamma \Gamma}^{(2)} \end{array} \right), \end{equation} %]]></script>
 
 <p>for the mass matrices $M_m$, $M_{\Gamma \Gamma}^{(m)}$, $M_{I \Gamma}^{(m)}$, $M_{\Gamma I}^{(m)}$ and the stiffness matrices</p>
 
-<p>[\textbf{A}<em>m, \textbf{A}</em>{\Gamma \Gamma}^{(m)}, \textbf{A}<em>{I \Gamma}^{(m)}, \textbf{A}</em>{\Gamma I}^{(m)}]</p>
+<script type="math/tex; mode=display">\textbf{A}_m, \textbf{A}_{\Gamma \Gamma}^{(m)}, \textbf{A}_{I \Gamma}^{(m)}, \textbf{A}_{\Gamma I}^{(m)}</script>
 
 <p>for $m=1,2$.</p>
 
 <p>Applying the implicit Euler method with time step $\Delta t$ to the system (3), we get for the vector of unknowns</p>
 
-<p>[u^{n+1} = (u_I^{(1),n+1}, u_I^{(2),n+1}, u_{\Gamma}^{n+1})^T]</p>
+<script type="math/tex; mode=display">u^{n+1} = (u_I^{(1),n+1}, u_I^{(2),n+1}, u_{\Gamma}^{n+1})^T</script>
 
-<p>[\begin{equation} \textbf{A} \textbf{u}^{n+1} = \tilde{\textbf{M}} \textbf{u}^n \  \  \mbox{where} \  \  \textbf{A} = \tilde{\textbf{M}} - \Delta t \tilde{\textbf{A}}. \end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation} \textbf{A} \textbf{u}^{n+1} = \tilde{\textbf{M}} \textbf{u}^n \  \  \mbox{where} \  \  \textbf{A} = \tilde{\textbf{M}} - \Delta t \tilde{\textbf{A}}. \end{equation}</script>
 
 <h2 id="dirichlet-neumann-iteration">DIRICHLET-NEUMANN ITERATION</h2>
 
 <p>We now employ a standard Dirichlet-Neumann iteration to solve the discrete system (4), getting in the $k$-th iteration the two equation systems</p>
 
-<p>[\begin{equation} (\textbf{M}<em>1 - \Delta t \textbf{A}_1) \textbf{u}_I^{(1),n+1,k+1} = -(\textbf{M}</em>{I \Gamma}^{(1)} - \Delta t \textbf{A}<em>{I \Gamma}^{(1)}) \textbf{u}</em>{\Gamma}^{n+1,k} + \textbf{M}<em>1 \textbf{u}_I^{(1),n} + \textbf{M}</em>{I \Gamma}^{(1)} \textbf{u}_{\Gamma}^n, \end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation} (\textbf{M}_1 - \Delta t \textbf{A}_1) \textbf{u}_I^{(1),n+1,k+1} = -(\textbf{M}_{I \Gamma}^{(1)} - \Delta t \textbf{A}_{I \Gamma}^{(1)}) \textbf{u}_{\Gamma}^{n+1,k} + \textbf{M}_1 \textbf{u}_I^{(1),n} + \textbf{M}_{I \Gamma}^{(1)} \textbf{u}_{\Gamma}^n, \end{equation}</script>
 
-<p>[\begin{equation} \hat{\textbf{A}} \hat{\textbf{u}}^{k+1} = \hat{\textbf{M}} \textbf{u}^n - \textbf{b}^k, \end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation} \hat{\textbf{A}} \hat{\textbf{u}}^{k+1} = \hat{\textbf{M}} \textbf{u}^n - \textbf{b}^k, \end{equation}</script>
 
 <p>to be solved in succession. Here,</p>
 
-<p>[\begin{equation} \begin{split} \hat{\textbf{A}} = \left( \begin{array}{cc} \textbf{M}<em>2 - \Delta t \textbf{A}_2 &amp; \textbf{M}</em>{I \Gamma}^{(2)} - \Delta t \textbf{A}<em>{I \Gamma}^{(2)} \ \textbf{M}</em>{\Gamma I}^{(2)} - \Delta t \textbf{A}<em>{\Gamma I}^{(2)} &amp; \textbf{M}</em>{\Gamma \Gamma}^{(2)} + \Delta t \textbf{A}<em>{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \hat{\textbf{M}} = \left( \begin{array}{ccc} \textbf{0} &amp; \textbf{M}_2 &amp; \textbf{M}</em>{I \Gamma}^{(2)} \ \textbf{M}<em>{\Gamma I}^{(1)} &amp; \textbf{M}</em>{\Gamma I}^{(2)} &amp; \textbf{M}<em>{\Gamma \Gamma}^{(1)} + \textbf{M}</em>{\Gamma \Gamma}^{(2)} \end{array} \right) \  \  \mbox{and} \ \textbf{b}^k = \left( \begin{array}{c} \textbf{0} \ (\textbf{M}<em>{\Gamma I}^{(1)} - \Delta t \textbf{A}</em>{\Gamma I}^{(1)}) \textbf{u}<em>I^{(1),n+1,k+1} + (\textbf{M}</em>{\Gamma \Gamma}^{(1)} + \Delta t \textbf{A}<em>{\Gamma \Gamma}^{(1)}) \textbf{u}</em>{\Gamma}^{n+1,k} \end{array} \right),  \  \  \hat{\textbf{u}}^{k+1} = \left( \begin{array}{c} \textbf{u}<em>I^{(2),n+1,k+1} \ \textbf{u}</em>{\Gamma}^{n+1,k+1} \end{array} \right) \nonumber \end{split} \end{equation}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation} \begin{split} \hat{\textbf{A}} = \left( \begin{array}{cc} \textbf{M}_2 - \Delta t \textbf{A}_2 & \textbf{M}_{I \Gamma}^{(2)} - \Delta t \textbf{A}_{I \Gamma}^{(2)} \\ \textbf{M}_{\Gamma I}^{(2)} - \Delta t \textbf{A}_{\Gamma I}^{(2)} & \textbf{M}_{\Gamma \Gamma}^{(2)} + \Delta t \textbf{A}_{\Gamma \Gamma}^{(2)} \end{array} \right), \  \  \hat{\textbf{M}} = \left( \begin{array}{ccc} \textbf{0} & \textbf{M}_2 & \textbf{M}_{I \Gamma}^{(2)} \\ \textbf{M}_{\Gamma I}^{(1)} & \textbf{M}_{\Gamma I}^{(2)} & \textbf{M}_{\Gamma \Gamma}^{(1)} + \textbf{M}_{\Gamma \Gamma}^{(2)} \end{array} \right) \  \  \mbox{and} \\ \textbf{b}^k = \left( \begin{array}{c} \textbf{0} \\ (\textbf{M}_{\Gamma I}^{(1)} - \Delta t \textbf{A}_{\Gamma I}^{(1)}) \textbf{u}_I^{(1),n+1,k+1} + (\textbf{M}_{\Gamma \Gamma}^{(1)} + \Delta t \textbf{A}_{\Gamma \Gamma}^{(1)}) \textbf{u}_{\Gamma}^{n+1,k} \end{array} \right),  \  \  \hat{\textbf{u}}^{k+1} = \left( \begin{array}{c} \textbf{u}_I^{(2),n+1,k+1} \\ \textbf{u}_{\Gamma}^{n+1,k+1} \end{array} \right) \nonumber \end{split} \end{equation} %]]></script>
 
 <p>with some initial condition, here $u_{\Gamma}^{n+1,0} = u_{\Gamma}^{n}$. The iteration is terminated according to the standard criterion</p>
 
-<p>[\vert \textbf{u}<em>{\Gamma}^{k+1} - \textbf{u}</em>{\Gamma}^k \vert \leq \tau]</p>
+<script type="math/tex; mode=display">\vert \textbf{u}_{\Gamma}^{k+1} - \textbf{u}_{\Gamma}^k \vert \leq \tau</script>
 
 <p>where $\tau$ is a user defined tolerance.</p>
 
@@ -352,28 +355,31 @@ img:active{
 
 <p>The initialization parameters look as follows:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Ns</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>          <span class="c1">%% space discretization points in each dimension</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Ns</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>          <span class="c1">%% space discretization points in each dimension</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">Ns</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">%% mesh size</span>
 <span class="n">tf</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>   <span class="n">t0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">%% final time - initial time</span>
 <span class="n">Nt</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>           <span class="c1">%% time discretization points</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="p">(</span><span class="n">tf</span><span class="o">-</span><span class="n">t0</span><span class="p">)/</span><span class="n">Nt</span><span class="p">;</span>  <span class="c1">%% stepsize</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D1</span>      <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>    <span class="c1">%% thermal diffusivity of material on domain 1</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">D1</span>      <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>    <span class="c1">%% thermal diffusivity of material on domain 1</span>
 <span class="n">D2</span>      <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>      <span class="c1">%% thermal diffusivity of material on domain 2</span>
 <span class="n">lambda1</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>    <span class="c1">%% thermal conductivity material on domain 1</span>
 <span class="n">lambda2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>      <span class="c1">%% thermal conductivity material on domain 2</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">alpha1</span>  <span class="o">=</span> <span class="n">lambda1</span><span class="p">/</span><span class="n">D1</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">alpha1</span>  <span class="o">=</span> <span class="n">lambda1</span><span class="p">/</span><span class="n">D1</span><span class="p">;</span>
 <span class="n">alpha2</span>  <span class="o">=</span> <span class="n">lambda2</span><span class="p">/</span><span class="n">D2</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>In addition to the parameters above, other objects need to be specified before starting the iterative procedure. The space grids both in $x$-direction and $y$-direction are given to later plot the numerical solution, also the initial conditions $u_m^0(x)$, $x \in \Omega_m$ and the mass and stiffness matrices coming from the space discretization:</p>
 
 <p>space grid w.r.t component x</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">xplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">+</span><span class="mi">3</span><span class="p">);</span>
 <span class="c1">%% space grid w.r.t component y</span>
 <span class="n">yplot</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
 <span class="c1">%%</span>
@@ -382,11 +388,12 @@ img:active{
 <span class="c1">%%</span>
 <span class="c1">%% this function calculates the discretization matrices using finite differences</span>
 <span class="p">[</span><span class="n">A1</span><span class="p">,</span><span class="n">A2</span><span class="p">,</span><span class="n">A1g</span><span class="p">,</span><span class="n">A2g</span><span class="p">,</span><span class="n">Ag1</span><span class="p">,</span><span class="n">Ag2</span><span class="p">,</span><span class="n">Agg1</span><span class="p">,</span><span class="n">Agg2</span><span class="p">,</span><span class="n">M1</span><span class="p">,</span><span class="n">M2</span><span class="p">,</span><span class="n">M1g</span><span class="p">,</span><span class="n">M2g</span><span class="p">,</span><span class="n">Mg1</span><span class="p">,</span><span class="n">Mg2</span><span class="p">,</span><span class="n">Mgg1</span><span class="p">,</span><span class="n">Mgg2</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_matrices</span><span class="p">(</span><span class="n">Ns</span><span class="p">,</span><span class="n">lambda1</span><span class="p">,</span><span class="n">lambda2</span><span class="p">,</span><span class="n">alpha1</span><span class="p">,</span><span class="n">alpha2</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Then, the iterative procedure takes place where the equations (4) and (5) are solved alternatively on $\Omega_1$ and $\Omega_2$ respectively until convergence is achieved at each time step. The implementation is specified below:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UG_old</span> <span class="o">=</span> <span class="n">UG_0</span><span class="p">;</span> <span class="c1">%% UG_0 is fixed over the Dirichlet-Neumann iteration while UG_old is being updated</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">UG_old</span> <span class="o">=</span> <span class="n">UG_0</span><span class="p">;</span> <span class="c1">%% UG_0 is fixed over the Dirichlet-Neumann iteration while UG_old is being updated</span>
 <span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="c1">%% gif('2D_FDM.gif','frame',figure(1))</span>
 <span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">Nt</span> <span class="c1">%% time recursion</span>
@@ -425,9 +432,10 @@ img:active{
     <span class="n">U2_0</span> <span class="o">=</span> <span class="n">U2</span><span class="p">;</span>
     <span class="n">UG_0</span> <span class="o">=</span> <span class="n">UG_old</span><span class="p">;</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0006/2D_FDM.gif" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP05/P0006/2D_FDM.gif" alt="" /></p>
 
 
         <hr>
@@ -522,15 +530,15 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
           
           - 20 October 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -709,12 +717,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
           
           - 01 February 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
     
     </div>
 
@@ -758,12 +766,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
           
           - 19 December 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 
@@ -825,12 +833,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a>
           
           - 30 October 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 

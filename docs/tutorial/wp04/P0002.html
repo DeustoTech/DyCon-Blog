@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0002">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp04/P0002">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP04">
             Inverse design of time-irreversible models</a> &#8827;</small>
           </h2>
           <h1>Conservation laws in the presence of shocks</h1>
@@ -225,14 +225,14 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/RodrigoL">Rodrigo Lecaros</a>,
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/RodrigoL">Rodrigo Lecaros</a>,
                   </span>
                 </span>
               
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
                   </span>
                 </span>
               
@@ -300,21 +300,21 @@ img:active{
         <h3>The problem</h3>
 <p>We analyze a model tracking problem for a 1D scalar conservation law. It consists in optimizing the initial datum so to minimize a weighted distance to a given target during a given finite time horizon. To be more precise, given a finite time $T &gt; 0$,  a target function $u^d\in L^2(\mathbb R\times(0,T))$, and a positive weight  function $\rho\in L^\infty(\mathbb R\times(0,T))$ with compact support in $\mathbb R\times(0,T)$, we consider the functional cost  to be minimized $J$, over a suitable class of initial data $\mathcal{U}_{ad}$, defined by</p>
 
-<p>[\begin{equation}\label{FunctionalJ}
+<script type="math/tex; mode=display">\begin{equation}\label{FunctionalJ}
 J(u^0)=\frac 1 2\int_0^T\int_{\mathbb{R}}\rho(x,t)|u(x,t)-u^d(x,t)|^2dxdt,
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>where  $u:\mathbb R_x\times\mathbb R_t\to \mathbb R$ is the unique entropy solution of the scalar conservation law</p>
 
-<p>[\begin{equation}\label{conservativeEquation}
+<script type="math/tex; mode=display">\begin{equation}\label{conservativeEquation}
 \partial_t u+\partial_x(f(u))=0,\; \textrm{in }\mathbb R \times(0,T); \;\;\; u(x,0)=u^0(x),\; x\in\mathbb R.
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>Thus, the problem under consideration reads: To find $u^{0,min}\in\mathcal{U}_{ad}$ such that</p>
 
-<p>[\begin{equation}\label{optimalProblem}
+<script type="math/tex; mode=display">\begin{equation}\label{optimalProblem}
 J(u^{0,min})=\min_{u^0\in\mathcal{U}_{ab}}J(u^0).
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>Here the flux $f:\mathbb R\to\mathbb R$ is assumed to be  smooth:  $f\in C^1(\mathbb R,\mathbb R)$. The initial datum $u^0$ will be assumed to belong to a suitable admissible class $\mathcal{U}_{ad}$ to ensure the existence of a minimizer.</p>
 <h5>Sensitivity of the state in the presence of shocks</h5>
@@ -323,11 +323,11 @@ J(u^{0,min})=\min_{u^0\in\mathcal{U}_{ab}}J(u^0).
 <p><strong>Hypothesis 1.1:</strong>
 <i>Assume that $u(x,t)$ is a weak entropy solution of (\ref{conservativeEquation}) with a discontinuity along a regular curve $\Sigma={(\varphi(t),t),\;t\in(0,T)}$, which is Lipschitz continuous outside $\Sigma$. In particular, it satisfies the Rankine-Hugoniot condition on $\Sigma$</i></p>
 
-<p>[\varphi’(t)[u]<em>{\Sigma^t}=[f(u)]</em>{\Sigma^t}.]</p>
+<script type="math/tex; mode=display">\varphi'(t)[u]_{\Sigma^t}=[f(u)]_{\Sigma^t}.</script>
 
 <p><i>Here we have used the notation: </i></p>
 
-<p>[[v]<em>{\Sigma^t}=\lim\limits</em>{\varepsilon\searrow 0}v(\varphi(t)+\varepsilon,t) -v(\varphi(t)-\varepsilon,t)]</p>
+<script type="math/tex; mode=display">[v]_{\Sigma^t}=\lim\limits_{\varepsilon\searrow 0}v(\varphi(t)+\varepsilon,t) -v(\varphi(t)-\varepsilon,t)</script>
 
 <p><i>for the jump at $\Sigma^t=(\varphi(t),t)$ of any piecewise continuous function $v$ with a discontinuity at $\Sigma^t$.
 </i></p>
@@ -337,23 +337,24 @@ As we will see, in the presence of shocks, to deal correctly with optimal contro
 We adopt the functional framework based on the generalized tangent vectors (see [<a href="#BressanMarson1995">7</a>] and Definition 4.1 in [<a href="#castro2008alternating">8</a>]).
 Let $u^0$ be the initial datum,  that we assume to be Lipschitz continuous to both sides of a single discontinuity located at $x = \varphi^0$, and consider a generalized tangent vector $(\delta u^0,\delta \varphi^0) \in L^1(\mathbb R) \times \mathbb R$ for all $0 \leq T$. Let $u^{0,\varepsilon}$ be a path which generates $(\delta u^0,\delta \varphi^0)$. For $\varepsilon$ sufficiently small, the solution $u^\varepsilon(\cdot,t)$ of (\ref{conservativeEquation}) is Lipschitz continuous with a single discontinuity at $x = \varphi^{\varepsilon}(t)$, for all $t \in [0,T]$. Therefore, $u^{\varepsilon}(\cdot, t)$ generates a generalized tangent vector $(\delta u(, t), \delta\varphi(t)) \in L^1(\mathbb R) \times \mathbb R$. Moreover, in [<a href="#castro2008alternating">8</a>] it is proved that it satisfies the following linearized system:</p>
 
-<p>[\begin{eqnarray}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{eqnarray}
 \label{1DlinearizedSystem01}
-\partial_t \delta u+\partial_x(f’(u)\delta u)&amp;=&amp;0,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\text{in } Q_-\cup Q_+<br />
+\partial_t \delta u+\partial_x(f'(u)\delta u)&=&0,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\text{in } Q_-\cup Q_+\\
 \label{1DlinearizedSystem03}
-\frac{d}{dt}\left([u]<em>{\Sigma^t}\delta\varphi\right)&amp;=&amp;[f’(u)\delta u]</em>{\Sigma^t}-[\delta u]_{\Sigma^t}\frac{d}{dt}\varphi,\;\; t\in(0,T)<br />
+\frac{d}{dt}\left([u]_{\Sigma^t}\delta\varphi\right)&=&[f'(u)\delta u]_{\Sigma^t}-[\delta u]_{\Sigma^t}\frac{d}{dt}\varphi,\;\; t\in(0,T)\\
 \label{1DlinearizedSystem02}
-\delta u(x,0)&amp;=&amp;\delta u^0(x),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;{x&lt;\varphi^0}\cup{x&gt;\varphi^0}<br />
+\delta u(x,0)&=&\delta u^0(x),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\{x<\varphi^0\}\cup\{x>\varphi^0\}\\
 \label{1DlinearizedSystem04}
-\delta\varphi(0)&amp;=&amp;\delta\varphi^0.
-\end{eqnarray}]</p>
+\delta\varphi(0)&=&\delta\varphi^0.
+\end{eqnarray} %]]></script>
 
 <h5>Sensitivity of the cost in the presence of shocks</h5>
 <p>In this section we study  the sensitivity of the functional $J$ with respect to variations associated with the generalized tangent vectors defined in the previous section. We first define an appropriate generalization of the Gateaux derivative of $J$.</p>
 
 <p><strong>Definition 1.2:</strong> <i>Let $J : L^1(\mathbb R) \to \mathbb R$ be a functional and $u^0 \in L^1(\mathbb R)$ be Lipschitz continuous with a discontinuity in  $\Sigma^0$, an initial datum for which the solution of (\ref{conservativeEquation}) satisfies hypothesis (1.1). $J$ is Gateaux differentiable at $u^0$ in a generalized sense if for any generalized tangent vector $(\delta u^0,\delta \varphi^0)$ and any family $u^{0,\varepsilon}$	associated to $(\delta u^0, \delta \varphi^0)$ the following limit exists,</i></p>
 
-<p>[\delta J=\lim_{\varepsilon\to 0}\frac{J(u^{0,\varepsilon})-J(u^0)}{\varepsilon},]</p>
+<script type="math/tex; mode=display">\delta J=\lim_{\varepsilon\to 0}\frac{J(u^{0,\varepsilon})-J(u^0)}{\varepsilon},</script>
 
 <p>and it depends only on $(u^0,\varphi^0)$ and $(\delta u^0,\delta\varphi^0)$, i.e. it does not depend on the particular family $u^{0,\varepsilon}$ which generates $(\delta u^0,\delta\varphi^0)$. The limit is the generalized Gateux derivative of $J$ in the direction $(\delta u^0,\delta\varphi^0)$.
 &lt;/i&gt;</p>
@@ -362,22 +363,23 @@ Let $u^0$ be the initial datum,  that we assume to be Lipschitz continuous to bo
 
 <p><strong>Proposition 1.3:</strong> <em>The Gateaux derivative of $J$ can be written as follows</em></p>
 
-<p>[\begin{equation}
+<script type="math/tex; mode=display">\begin{equation}
 \label{GateauxDerivativeJ02}
 \delta J(u^0)[\delta u^0,\delta\varphi^0]=\int_{\RR}p(x,0)\delta u^0(x) dx-q(0)[u]_{\Sigma^0}\delta\varphi^0,
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>where the adjoint state pair $(p,q)$ satisfies the system</p>
 
-<p>[\begin{eqnarray}
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{eqnarray}
 \label{1DSystemAdj}
--\partial_t p-f’(u)\partial_x p&amp;=&amp;\rho\,(u-u^d),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \text{in } Q_-\cup Q_+\<br />
-\,[p]<em>{\Sigma^t}&amp;=&amp;0,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; t\in(0,T) \label{1Dadjoint0202}<br />
-q(t)&amp;=&amp;p(\varphi(t),t),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; t\in (0,T)\label{1Dadjoint0203}<br />
--\frac{d}{dt}q&amp;=&amp;\frac{(1+(\dot{\varphi})^2)^{1/2}[\rho\,(u-u^d)^2]</em>{\Sigma^t}}{2[u]_{\Sigma^t}},\;\;\;\;\;\;\;\;\; t\in (0,T) \label{1Dadjoint03} <br />
-p(x,T)&amp;=&amp;0,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;{x&lt;\varphi(T)}\cup{x&gt;\varphi(T)} \label{1Dadjoint02}<br />
-q(T)&amp;=&amp;0. \label{1Dadjoint04}
-\end{eqnarray}]</p>
+-\partial_t p-f'(u)\partial_x p&=&\rho\,(u-u^d),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \text{in } Q_-\cup Q_+\\  
+\,[p]_{\Sigma^t}&=&0,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; t\in(0,T) \label{1Dadjoint0202}\\
+q(t)&=&p(\varphi(t),t),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; t\in (0,T)\label{1Dadjoint0203}\\
+-\frac{d}{dt}q&=&\frac{(1+(\dot{\varphi})^2)^{1/2}[\rho\,(u-u^d)^2]_{\Sigma^t}}{2[u]_{\Sigma^t}},\;\;\;\;\;\;\;\;\; t\in (0,T) \label{1Dadjoint03} \\
+p(x,T)&=&0,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\{x<\varphi(T)\}\cup\{x>\varphi(T)\} \label{1Dadjoint02}\\
+q(T)&=&0. \label{1Dadjoint04}
+\end{eqnarray} %]]></script>
 
 <p>Let us briefly comment the result of Proposition 1.3 before giving its proof.
 System (\ref{1DSystemAdj}) has a unique solution. In fact, to solve the backward system (\ref{1DSystemAdj}) we first define the solution $q$ on the shock $\Sigma$ from the conditions for $q$. This determines the value of $p$ along the shock. We then propagate this information to both sides of $\Sigma$, by characteristics (see Figure 1 where we illustrate this construction).</p>
@@ -386,9 +388,9 @@ System (\ref{1DSystemAdj}) has a unique solution. In fact, to solve the backward
 
 <p>Formula (\ref{GateauxDerivativeJ02}) provides an obvious way to compute a first descent direction of $J$ at $u^0$. We just take</p>
 
-<p>[\begin{equation}\label{descentDirection01}
+<script type="math/tex; mode=display">\begin{equation}\label{descentDirection01}
 (\delta u^0,\delta \varphi^0)=(-p(\cdot,0),q(0)[u]_{\Sigma^0}).
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>Here, the value of $\delta \varphi^0$ must be interpreted as the optimal infinitesimal displacement of the discontinuity of $u^0$.</p>
 
@@ -400,18 +402,19 @@ We have chosen as computational domain the interval $(-4, 4)$ and we have taken 
 We underline once more that the solutions obtained with each method may correspond to global minima or local ones since the gradient algorithm does not distinguish them.
 In the experiments we consider the Burgers’ equation, i.e. $f(z)=z^2/2$,</p>
 
-<p>[\begin{equation}\label{BurgerNumerica}
+<script type="math/tex; mode=display">\begin{equation}\label{BurgerNumerica}
 \partial_tu+\partial_x\left(\frac{u^2}{2}\right)=0,\;\;\; u(x,0)=u^0(x).
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>The weight function $\rho$, under consideration in the experiments is given by</p>
 
-<p>[\rho(x,t)=\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\rho(x,t)=\left\{
 \begin{array}{cl}
-1 &amp; t\in ( T/2,T)<br />
-0 &amp; \text{otherwise.}
+1 & t\in ( T/2,T)\\
+0 & \text{otherwise.}
 \end{array}
-\right.]</p>
+\right. %]]></script>
 
 <p>And the  time horizon $T=1$.
 To compare the efficiency of the different methods we consider a fixed $\Delta x = 1/20, \lambda = \Delta t /\Delta x = 2/3$ (which satisfies the CFL condition). We then analyze the number of  iterations that each method needs  to attain a prescribed value of the functional.</p>
@@ -419,26 +422,28 @@ To compare the efficiency of the different methods we consider a fixed $\Delta x
 <h5>Experiment 1</h5>
 <p>We first consider a piecewise constant target profile $u^d$ given by the solution of \ref{BurgerNumerica} with the initial condition $(u^d)^0$ given by</p>
 
-<p>[\begin{equation}\label{E1u0minimoa}
-(u^d)^0(x)=\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{E1u0minimoa}
+(u^d)^0(x)=\left\{
 \begin{array}{cl}
-0.7 &amp; x\in[-2,1]<br />
-0 &amp; \text{otherwise.}
+0.7 & x\in[-2,1]\\
+0 & \text{otherwise.}
 \end{array}
 \right.
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <p>Note that, in this case,  \ref{E1u0minimoa} yields a particular solution of the optimization problem and the minimum value of $J$ vanishes.
 We solve the optimization problem \ref{optimalProblem} with the above described different methods starting from the following initialization for $u^0$:</p>
 
-<p>[\begin{equation}\label{Ep1u^0}
-u^0(x)=\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{Ep1u^0}
+u^0(x)=\left\{
 \begin{array}{cl}
-0.5 &amp; x\leq 0<br />
--0.1 &amp; x&gt;0,
+0.5 & x\leq 0\\
+-0.1 & x>0,
 \end{array}
 \right.
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <p>which also has a discontinuity but located on a different point.</p>
 
@@ -452,14 +457,15 @@ The initial datum $u^0$ obtained by the alternating descent method (Figures 4) i
 <h5>Experiment 2</h5>
 <p>The previous experiment indicates that the alternating descent method performs significantly better. In order to show that this is a systematic fact, which arises independently of the initialization of the method, we consider the target $u^d$ given by the solution of \ref{BurgerNumerica} with the initial condition $(u^d)^0$ given by</p>
 
-<p>[\begin{equation}\label{E2u0minimo}
-(u^d)^0(x)=\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}\label{E2u0minimo}
+(u^d)^0(x)=\left\{
 \begin{array}{cl}
-0.5 &amp; x\leq 0.5<br />
-0 &amp; \text{otherwise,}
+0.5 & x\leq 0.5\\
+0 & \text{otherwise,}
 \end{array}
 \right.
-\end{equation}]</p>
+\end{equation} %]]></script>
 
 <p>but this time we compare the performance of both methods starting from different initializations.
 The obtained numerical results are presented in Figure 7.
@@ -653,12 +659,12 @@ Note also  that the discrete method, rather than yielding discontinuous approxim
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
           
           - 03 April 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -756,12 +762,12 @@ Note also  that the discrete method, rather than yielding discontinuous approxim
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JanH">Jan Heiland</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/JanH">Jan Heiland</a>,
           
           - 07 March 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
     
     </div>
 
@@ -805,18 +811,18 @@ Note also  that the discrete method, rather than yielding discontinuous approxim
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/AlexandreS">Alexandre Francisco</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/AlexandreS">Alexandre Francisco</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 18 February 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -887,15 +893,15 @@ Note also  that the discrete method, rather than yielding discontinuous approxim
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/ThibaultL">Liard Thibault</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/ThibaultL">Liard Thibault</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 12 December 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 

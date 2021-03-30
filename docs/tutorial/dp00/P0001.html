@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/dp00/P0001">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/dp00/P0001">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/DP00">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/DP00">
             Dynamic Programming and Feedback Optimal Control</a> &#8827;</small>
           </h2>
           <h1>LQR control of a fractional reaction diffusion equation</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
                   </span>
                 </span>
               
@@ -291,16 +291,17 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0001/LQR_stabilization_fractional_reaction_diffusion.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0001/LQR_stabilization_fractional_reaction_diffusion.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <p>We design a LQR controller for stabilyzing the fractional reaction diffusion equation</p>
 
-<p>[\begin{cases} y_t + (-d_x^2)^s y-\delta y = u\chi_\omega, &amp; (x,t) \in(-L,L)\times(0,T) \ y = 0, &amp; (x,t)\in [\mathbb{R}\setminus(-L,L)]\times(0,T) \ y(x,0) = y_0(x), &amp; x\in(-L,L), \end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases} y_t + (-d_x^2)^s y-\delta y = u\chi_\omega, & (x,t) \in(-L,L)\times(0,T) \\ y = 0, & (x,t)\in [\mathbb{R}\setminus(-L,L)]\times(0,T) \\ y(x,0) = y_0(x), & x\in(-L,L), \end{cases} %]]></script>
 
 <p>where $\delta&gt;0$ is a given constant, $\omega = (a,b)\subset(-L,L)$ and $(-d_x^2)^s$, $s\in(0,1)$ denotes the one-dimensional fractional Laplacian defined as</p>
 
-<p>[(-d_x^2)^s y(x) = c(s) P.V. \int_{\mathbb{R}} \frac{y(x)-y(z)}{\vert x-z\vert^{1+2s}}dz,]</p>
+<script type="math/tex; mode=display">(-d_x^2)^s y(x) = c(s) P.V. \int_{\mathbb{R}} \frac{y(x)-y(z)}{\vert x-z\vert^{1+2s}}dz,</script>
 
 <p>with $c(s)$ an explicit normalization constant.</p>
 
@@ -312,7 +313,7 @@ img:active{
 
 <p>We start by discretizing our original system on a uniform mesh $x_i$, $i=1,\ldots,N$, thus obtaining a N-dimensional system of the type</p>
 
-<p>[\begin{cases} \dot{y} = Ay+Bu \ y(0) = y_0 \end{cases}]</p>
+<script type="math/tex; mode=display">\begin{cases} \dot{y} = Ay+Bu \\ y(0) = y_0 \end{cases}</script>
 
 <p>where:</p>
 
@@ -373,64 +374,72 @@ img:active{
 
 <p>Once we have the semi-discretization of our original problem, the control we are looking for is computed by minimizing the following cost functional</p>
 
-<p>[J_{\infty} = \int_{0}^{+\infty} \Big(y^TQy + u^TRu\Big)dt,]</p>
+<script type="math/tex; mode=display">J_{\infty} = \int_{0}^{+\infty} \Big(y^TQy + u^TRu\Big)dt,</script>
 
 <p>where $Q\geq 0$ and $R&gt;0$ are given matrices. Moreover, we know that this control is given in a feedback form by $u^*=-R^{-1}B^TPy$, where $P$ is the solution of the algebraic Riccati equation</p>
 
-<p>[PA + A^TP-PBB^TP+Q = 0.]</p>
+<script type="math/tex; mode=display">PA + A^TP-PBB^TP+Q = 0.</script>
 
 <h2 id="implementation">Implementation</h2>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clear</span> <span class="nb">all</span>
 <span class="nb">clc</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We start by defining the parameter $s\in(0,1)$ (order of the fractional Laplacian), the size of the interval $(-L,L)$, the constant $\delta&gt; \lambda_1$ and the number $N$ of discretization points in our mesh.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
 <span class="n">L</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">pi</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="mf">0.1</span><span class="p">;</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>and we compute the corresponding approximation of the fractional Laplacian</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">FL</span><span class="p">]</span> <span class="o">=</span> <span class="n">fl_rigidity</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">FL</span><span class="p">]</span> <span class="o">=</span> <span class="n">fl_rigidity</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We then use it for building the matrix $A$ describing the dynamics</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
 <span class="n">A</span> <span class="o">=</span> <span class="o">-</span><span class="n">FL</span><span class="o">+</span><span class="n">D</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Secondly, we use the function “construction_matrix_B” for computing the control operator $B$ on the interval $\omega=(-0.3,0.5)$</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">matrix_B</span> <span class="o">=</span>  <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">matrix_B</span> <span class="o">=</span>  <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">construction_matrix_B</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">matrix_B</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Out of the matrices $A$ and $B$, we solve the algebraic Riccati equation by employing the specific function from the control systems toolbox of Matlab. For simplicity, we choose both $R$ and $Q$ as the identity, but other choices are possible in order to improve the efficiency of the method.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
 <span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
 <span class="p">[</span><span class="n">P</span><span class="p">,</span><span class="n">cleig</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">));</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The output matrix $K=-R^{-1}B^TP$ is used for defining the action of the control and include it in our system</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
 <span class="n">eq_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Finally, we choose an initial datum</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y0</span> <span class="o">=</span> <span class="nb">cos</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">y0</span> <span class="o">=</span> <span class="nb">cos</span><span class="p">(</span><span class="nb">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
+</code></pre>
+</div>
 
 <p>and we solve our equation with and without control employing the “ode45” function of Matlab. For the equation without control we choose a relatively short time horizon, since we know that the unstable dynamics will rapidly diverge. For the equation with control, instead, we choose a longer time horizon in order to have enough time for stabilyzing the system.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T1</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">T1</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="n">T2</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
 <span class="n">Nt</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
 <span class="n">tspan1</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T1</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
@@ -438,37 +447,40 @@ img:active{
 <span class="n">eq_free</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
 <span class="p">[</span><span class="n">time1</span><span class="p">,</span> <span class="n">sol_free</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">eq_free</span><span class="p">,</span><span class="n">tspan1</span><span class="p">,</span><span class="n">y0</span><span class="p">);</span>
 <span class="p">[</span><span class="n">time2</span><span class="p">,</span> <span class="n">sol_ctr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">eq_ctr</span><span class="p">,</span><span class="n">tspan2</span><span class="p">,</span><span class="n">y0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We then plot our results and compare them. Firstly, the free dynamics.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time1</span><span class="p">,</span><span class="n">sol_free</span><span class="p">)</span>
-<span class="nb">colormap</span> <span class="nb">jet</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time1</span><span class="p">,</span><span class="n">sol_free</span><span class="p">)</span>
+<span class="nb">colormap</span> <span class="n">jet</span>
 <span class="n">msol_free</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">sol_free</span><span class="p">)));</span>
 <span class="n">Msol_free</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sol_free</span><span class="p">)));</span>
-<span class="nb">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span> <span class="n">L</span><span class="p">])</span>
-<span class="nb">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T1</span><span class="p">])</span>
-<span class="nb">zticks</span><span class="p">([</span><span class="n">msol_free</span> <span class="n">Msol_free</span><span class="p">])</span>
+<span class="n">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span> <span class="n">L</span><span class="p">])</span>
+<span class="n">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T1</span><span class="p">])</span>
+<span class="n">zticks</span><span class="p">([</span><span class="n">msol_free</span> <span class="n">Msol_free</span><span class="p">])</span>
 <span class="nb">view</span><span class="p">(</span><span class="mi">135</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Free unstable dynamics'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0001/copiaRM_01.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0001/copiaRM_01.png" alt="" /></p>
 
 <p>We clearly see the growth of the solution, already in the short time horizon [0,4]. When introducing the LQR control, instead, the problem is corrected and the equation is stabilyzed in time $T_2$</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time2</span><span class="p">,</span><span class="n">sol_ctr</span><span class="p">)</span>
-<span class="nb">colormap</span> <span class="nb">jet</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">surf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">time2</span><span class="p">,</span><span class="n">sol_ctr</span><span class="p">)</span>
+<span class="nb">colormap</span> <span class="n">jet</span>
 <span class="n">msol_ctr</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">sol_ctr</span><span class="p">)));</span>
 <span class="n">Msol_ctr</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sol_ctr</span><span class="p">)));</span>
-<span class="nb">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="n">L</span><span class="p">])</span>
-<span class="nb">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T2</span><span class="p">])</span>
-<span class="nb">zticks</span><span class="p">([</span><span class="n">msol_ctr</span> <span class="n">Msol_ctr</span><span class="p">])</span>
+<span class="n">xticks</span><span class="p">([</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="n">L</span><span class="p">])</span>
+<span class="n">yticks</span><span class="p">([</span><span class="mi">0</span> <span class="n">T2</span><span class="p">])</span>
+<span class="n">zticks</span><span class="p">([</span><span class="n">msol_ctr</span> <span class="n">Msol_ctr</span><span class="p">])</span>
 <span class="nb">view</span><span class="p">(</span><span class="mi">135</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Controlled dynamics'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0001/copiaRM_02.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0001/copiaRM_02.png" alt="" /></p>
 
 <h2 id="references">References</h2>
 
@@ -557,12 +569,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
           
           - 22 October 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
     
     </div>
 
@@ -939,12 +951,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
           
           - 04 February 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -1042,12 +1054,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/AlejandroC">Alejandro Cunillera</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/AlejandroC">Alejandro Cunillera</a>
           
           - 26 October 2018
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 

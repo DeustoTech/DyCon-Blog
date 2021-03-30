@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp04/P0010">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp04/P0010">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP04">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP04">
             Inverse design of time-irreversible models</a> &#8827;</small>
           </h2>
           <h1>Inverse problem for Hamilton-Jacobi equations</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
                   </span>
                 </span>
               
@@ -291,24 +291,25 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/CodesHJ.rar""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/CodesHJ.rar""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <h3 id="background-and-motivation">Background and motivation</h3>
 
 <p>We consider the initial-value problem for a Hamilton-Jacobi equation of the form</p>
 
-<p>[\tag{HJ}
-\left{ \begin{array}{ll}
-\partial_t u + H(D_x u) = 0, &amp; \text{in} \ [0,T]\times \mathbb{R}^n, <br />
-u(0,x) = u_0(x), &amp; \text{in} \ \mathbb{R}^n,
-\end{array}\right.]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\tag{HJ}
+\left\{ \begin{array}{ll}
+\partial_t u + H(D_x u) = 0, & \text{in} \ [0,T]\times \mathbb{R}^n, \\
+u(0,x) = u_0(x), & \text{in} \ \mathbb{R}^n,
+\end{array}\right. %]]></script>
 
 <p>where $u_0\in C^{0,1}(\mathbb{R}^n)$ and the Hamiltonian $H: \mathbb{R}^n\rightarrow\mathbb{R}$ is assumed to satisfy the following hypotheses:</p>
 
-<p>[\tag{2}
-H\in C^2(\mathbb{R}^n), \quad H_{pp}(p) &gt;0, \ \forall p\in\mathbb{R}^n, \quad \text{and} \quad 
-\lim_{|p|\to\infty} \dfrac{H(p)}{|p|} = +\infty.]</p>
+<script type="math/tex; mode=display">\tag{2}
+H\in C^2(\mathbb{R}^n), \quad H_{pp}(p) >0, \ \forall p\in\mathbb{R}^n, \quad \text{and} \quad 
+\lim_{|p|\to\infty} \dfrac{H(p)}{|p|} = +\infty.</script>
 
 <p>Here, the unknown $u$ is a function $[0,T]\times\mathbb{R}^n\longrightarrow\mathbb{R}$,
 and the inequality $H_{pp}(p)&gt;0$ means that the Hessian matrix of $H$ at $p$ is positive definite.
@@ -330,10 +331,11 @@ we want to construct all the <strong>initial conditions</strong> $u_0$ such that
 we define the following nonlinear operator, which associates to any initial condition $u_0$, the function
 $u(T,\cdot)$, where $u$ is the viscosity solution of (HJ):</p>
 
-<p>[\begin{array}{cccl}
-S^+_T : &amp; C^{0,1}(\mathbb{R}^n) &amp; \longrightarrow &amp; C^{0,1}(\mathbb{R}^n) <br />
- &amp; u_0 &amp; \longmapsto &amp; S^+_T u_0 := u(T,\cdot)
-\end{array}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{cccl}
+S^+_T : & C^{0,1}(\mathbb{R}^n) & \longrightarrow & C^{0,1}(\mathbb{R}^n) \\
+ & u_0 & \longmapsto & S^+_T u_0 := u(T,\cdot)
+\end{array} %]]></script>
 
 <p>The inverse design problem that we are considering is then reduced to, for $u_T$ and $T&gt;0$ given,
 characterize all the initial conditions $u_0$ satisfying $S_T^+ u_0 =u_T$.</p>
@@ -347,7 +349,7 @@ See Figures 1 and 2 for some examples of unreachable targets in dimension 1 and 
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/01_Fig11.png" alt="1D unreachable targets" height="250" width="650" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/01_Fig11.png" alt="1D unreachable targets" height="250" width="650" /> 
 </figure>
 </center>
 
@@ -361,17 +363,18 @@ The natural candidate is the one obtained by reversing the time in the equation,
 
 <p>We then define the <strong>backward operator</strong> as follows:</p>
 
-<p>[\begin{array}{cccl}
-S^-_T : &amp; C^{0,1}(\mathbb{R}^n) &amp; \longrightarrow &amp; C^{0,1}(\mathbb{R}^n) <br />
- &amp; u_T &amp; \longmapsto &amp; S^-_T u_T := w(0,\cdot)
-\end{array}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{cccl}
+S^-_T : & C^{0,1}(\mathbb{R}^n) & \longrightarrow & C^{0,1}(\mathbb{R}^n) \\
+ & u_T & \longmapsto & S^-_T u_T := w(0,\cdot)
+\end{array} %]]></script>
 
 <p>which associates to any terminal condition $u_T$, the function $w(0,\cdot)$,
 i.e. the unique backward viscosity solution at time $0$, with terminal condition $u_T$.</p>
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/07_Fig21.png" alt="2D unreachable targets" height="200" width="600" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/07_Fig21.png" alt="2D unreachable targets" height="200" width="600" /> 
 </figure>
 </center>
 
@@ -381,7 +384,7 @@ i.e. the unique backward viscosity solution at time $0$, with terminal condition
 
 <p>Let us introduce, for a target $u_T$ and a time horizon $T&gt;0$, the set</p>
 
-<p>[I_T (u_T) := \left{ u_0\in C^{0,1}(\mathbb{R}^n) \, ; \ S_T^+ u_0 = u_T\right}]</p>
+<script type="math/tex; mode=display">I_T (u_T) := \left\{ u_0\in C^{0,1}(\mathbb{R}^n) \, ; \ S_T^+ u_0 = u_T\right\}</script>
 
 <p>of initial conditions $u_0$ satisfying $S_T^+ u_0 = u_T$.
 We say that a target $u_T$ is <strong>reachable</strong> for the time horizon $T$ if $I_T(u_T)\neq \emptyset$.
@@ -404,16 +407,16 @@ Or equivalently, an observation $u_T$ at time $T$ is admissible if and only if $
 
 <p>In the case the observation $u_T$ at time $T$ is <strong>not admissible</strong>, maybe due to noise effects or to errors in the measurements, we can actually project it on the set of admissible observations by applying the operator $S_T^+\circ S_T^-$. For a given $u_T\in C^{0,1}(\mathbb{R}^n)$, we define this projection as follows:</p>
 
-<p>[u_T^\ast := S_T^+(S_T^- u_T).]</p>
+<script type="math/tex; mode=display">u_T^\ast := S_T^+(S_T^- u_T).</script>
 
 <p>Observe that $I_T(u_T^\ast)\neq \emptyset$ for any $u_T\in C^{0,1}(\mathbb{R}^n)$. 
 Indeed, $\tilde{u}_0:=S_T^- u_T\in I_T (u_T^\ast)$ by definition.</p>
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/02_Vid11.gif" alt="1D backward-forward" height="450" width="450" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/02_Vid11.gif" alt="1D backward-forward" height="450" width="450" /> 
 
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/02_Vid12.gif" alt="1D backward-forward" height="450" width="450" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/02_Vid12.gif" alt="1D backward-forward" height="450" width="450" /> 
 </figure>
 </center>
 
@@ -427,9 +430,9 @@ Observe that, when the time goes backward, the solution is semiconvex, while in 
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/08_Vid41.gif" alt="2D backward-forward" height="300" width="400" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/08_Vid41.gif" alt="2D backward-forward" height="300" width="400" /> 
 
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/08_Vid42.gif" alt="2D backward-forward" height="300" width="400" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/08_Vid42.gif" alt="2D backward-forward" height="300" width="400" /> 
 </figure>
 </center>
 
@@ -447,7 +450,7 @@ This construction is contained in the recent work [3], and reads as follows:</p>
 <p><strong>Theorem 2:</strong> Let $H$ satisfy (2) and $T&gt;0$.
 Let $u_T\in C^{0,1}(\mathbb{R}^n)$ and define the functions</p>
 
-<p>[u_T^\ast := S_T^+(S_T^- u_T) \qquad \text{and} \qquad \tilde{u}_0 := S_T^- u^\ast_T.]</p>
+<script type="math/tex; mode=display">u_T^\ast := S_T^+(S_T^- u_T) \qquad \text{and} \qquad \tilde{u}_0 := S_T^- u^\ast_T.</script>
 
 <p>Then, for any $u_0\in C^{0,1} (\mathbb{R}^n)$, the two following statements are equivalent:</p>
 <ol>
@@ -457,8 +460,8 @@ Let $u_T\in C^{0,1}(\mathbb{R}^n)$ and define the functions</p>
 
 <p>where $X_T(u_T^\ast)$ is the subset of $\mathbb{R}^n$ given by</p>
 
-<p>[X_T(u_T^\ast) : = \left{ z- T\, H_p (\nabla u_T^\ast(z)); \ \forall z\in\mathbb{R}^n \ \text{such that} \ 
-u_T^\ast(\cdot) \ \text{is differentiable at} \ z\right}.]</p>
+<script type="math/tex; mode=display">X_T(u_T^\ast) : = \left\{ z- T\, H_p (\nabla u_T^\ast(z)); \ \forall z\in\mathbb{R}^n \ \text{such that} \ 
+u_T^\ast(\cdot) \ \text{is differentiable at} \ z\right\}.</script>
 
 <hr />
 
@@ -474,7 +477,7 @@ Observe that all the initial data in $I_T(u_T^\ast)$ must coincide with $\tilde{
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/03_Fig12.png" alt="1D reconstruction 1" height="250" width="550" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/03_Fig12.png" alt="1D reconstruction 1" height="250" width="550" /> 
 </figure>
 </center>
 
@@ -484,7 +487,7 @@ Observe that all the initial data in $I_T(u_T^\ast)$ must coincide with $\tilde{
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/04_Fig13.png" alt="1D reconstruction 2" height="220" width="550" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/04_Fig13.png" alt="1D reconstruction 2" height="220" width="550" /> 
 </figure>
 </center>
 
@@ -495,8 +498,8 @@ Observe that all the initial data in $I_T(u_T^\ast)$ must coincide with $\tilde{
 <p>An important consequence of Theorem 2 is that the initial data in $I_T(u_T^\ast)$ are not unique whenever $X_T(u_T^\ast) \neq \mathbb{R}^n$.
 Indeed, the set $I_T(u_T^\ast)$ can be given in the following way:</p>
 
-<p>[I_T(u_T) = \left{ \tilde{u}_0 + \varphi \, ; \, \varphi\in C^{0,1}(\mathbb{R}^n)\ 
-\text{such that} \ \varphi\geq 0\ \text{and}\ \text{supp} (\varphi) \subset \mathbb{R}^n\setminus X_T(u_T)\right}.]</p>
+<script type="math/tex; mode=display">I_T(u_T) = \left\{ \tilde{u}_0 + \varphi \, ; \, \varphi\in C^{0,1}(\mathbb{R}^n)\ 
+\text{such that} \ \varphi\geq 0\ \text{and}\ \text{supp} (\varphi) \subset \mathbb{R}^n\setminus X_T(u_T)\right\}.</script>
 
 <p>In the case of the examples illustrated in Figures 3 and 4,
 we can see in the videos 3 below, examples of different initial conditions whose solution coincides with $u_T^\ast$ at time $T$.
@@ -504,8 +507,8 @@ These exmaples have been generated randomly by adding to $\tilde{u}_0$ a nonegat
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/05_Vid2.gif" alt="1D random examples" height="300" width="400" /> 
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/06_Vid3.gif" alt="1D random examples 2" height="300" width="400" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/05_Vid2.gif" alt="1D random examples" height="300" width="400" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/06_Vid3.gif" alt="1D random examples 2" height="300" width="400" /> 
 </figure>
 </center>
 
@@ -529,7 +532,7 @@ in the surrounding area of bumps and wells of $u_T^\ast$.</p>
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/09_Fig22.png" alt="2D reconstruction 1" height="200" width="700" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/09_Fig22.png" alt="2D reconstruction 1" height="200" width="700" /> 
 </figure>
 </center>
 
@@ -539,7 +542,7 @@ in the surrounding area of bumps and wells of $u_T^\ast$.</p>
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/10_Fig23.png" alt="2D reconstruction 2" height="200" width="700" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/10_Fig23.png" alt="2D reconstruction 2" height="200" width="700" /> 
 </figure>
 </center>
 
@@ -563,7 +566,7 @@ As we see in the following videos, $X_T(u_T)$ becomes smaller as we increase $T$
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/11_Fig31.png" alt="1D initial data" height="200" width="700" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/11_Fig31.png" alt="1D initial data" height="200" width="700" /> 
 </figure>
 </center>
 
@@ -576,7 +579,7 @@ For $T$ small, very little information is lost, however, for $T$ large, $X_T(u_T
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/12_Vid5Gif.gif" alt="1D reconstruction evolution" height="200" width="700" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/12_Vid5Gif.gif" alt="1D reconstruction evolution" height="200" width="700" /> 
 </figure>
 </center>
 
@@ -589,7 +592,7 @@ In this case, $u_0$ is constituted of two wells, however, if the observation is 
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/13_Vid6Gif.gif" alt="1D reconstruction evolution2" height="200" width="700" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/13_Vid6Gif.gif" alt="1D reconstruction evolution2" height="200" width="700" /> 
 </figure>
 </center>
 
@@ -602,7 +605,7 @@ Here we have the three examples of initial data that we have considered.</p>
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/14_Fig41.png" alt="2D initial data" height="200" width="700" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/14_Fig41.png" alt="2D initial data" height="200" width="700" /> 
 </figure>
 </center>
 
@@ -618,7 +621,7 @@ This implies that after a long time-interval, the bump cannot be reconstructed.<
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/15_Vid7Gif.gif" alt="2D reconstruction evolution 1" height="250" width="750" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/15_Vid7Gif.gif" alt="2D reconstruction evolution 1" height="250" width="750" /> 
 </figure>
 </center>
 
@@ -632,7 +635,7 @@ Observe that, when $T$ is large enough, both bumps look the same, and therefore 
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/16_Vid8Gif.gif" alt="2D reconstruction evolution 2" height="250" width="750" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/16_Vid8Gif.gif" alt="2D reconstruction evolution 2" height="250" width="750" /> 
 </figure>
 </center>
 
@@ -646,7 +649,7 @@ We observe the same behaviour as in Video 5, where only the information of the d
 
 <center>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP04/P0010/17_Vid9Gif.gif" alt="2D reconstruction evolution 3" height="250" width="750" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP04/P0010/17_Vid9Gif.gif" alt="2D reconstruction evolution 3" height="250" width="750" /> 
 </figure>
 </center>
 
@@ -873,12 +876,12 @@ We observe the same behaviour as in Video 5, where only the information of the d
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JanH">Jan Heiland</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/JanH">Jan Heiland</a>,
           
           - 07 March 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
     
     </div>
 
@@ -922,18 +925,18 @@ We observe the same behaviour as in Video 5, where only the information of the d
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/AlexandreS">Alexandre Francisco</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/AlexandreS">Alexandre Francisco</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 18 February 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -1004,15 +1007,15 @@ We observe the same behaviour as in Video 5, where only the information of the d
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/ThibaultL">Liard Thibault</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/ThibaultL">Liard Thibault</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 12 December 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -1110,12 +1113,12 @@ We observe the same behaviour as in Video 5, where only the information of the d
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/AzaharM">Azahar Monge</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/AzaharM">Azahar Monge</a>
           
           - 14 June 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 

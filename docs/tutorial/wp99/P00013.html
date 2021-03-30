@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00013">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp99/P00013">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP99">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP99">
             Other Topics</a> &#8827;</small>
           </h2>
           <h1>Opening the black box of Deep Learning</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/SergiA">Sergi Andreu</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/SergiA">Sergi Andreu</a>
                   </span>
                 </span>
               
@@ -313,24 +313,24 @@ One of the most succesful mathematical theories in recent years has been connect
 <p>A formal description of our problem is the following.</p>
 
 <p>Consider a dataset $\mathcal{D}$ consisting on $S$ distinct points ${x_i}_{i=1}^{S}$, each of them with a corresponding value $y_i$ such that 
-\(\mathcal{D} = { x_i , y_i }_{i=1}^S\)</p>
+<script type="math/tex">\mathcal{D} = { x_i , y_i }_{i=1}^S</script></p>
 
 <p>we expect that the labels $y_i$ are a function of $x$, such that
-\(y_i = \mathcal{F} (x_i) + \epsilon _i \quad \forall i \in \{1, ... S\}\)</p>
+<script type="math/tex">y_i = \mathcal{F} (x_i) + \epsilon _i \quad \forall i \in \{1, ... S\}</script></p>
 
 <p>where $\epsilon _i$ is included so as to consider, in principle, noisy data.</p>
 
 <p>The aim of <em>supervised learning</em> is to recover the function $\mathcal{F}(\cdot)$ such that not only fits well in the database $\mathcal{D}$ but also generalises to previously unseen data.</p>
 
 <p>That is, it is inferred the existence of 
-\(\tilde{\mathcal{D}} = \{ (\tilde{x}_i , \tilde{y}_i) \}_{i=1}^{\infty}\) 
+<script type="math/tex">\tilde{\mathcal{D}} = \{ (\tilde{x}_i , \tilde{y}_i) \}_{i=1}^{\infty}</script> 
 where 
-\(\tilde{y}_i \approx \mathcal{F}(\tilde{x}_i) \quad \forall i\)</p>
+<script type="math/tex">\tilde{y}_i \approx \mathcal{F}(\tilde{x}_i) \quad \forall i</script></p>
 
 <p>being $\mathcal{F} (\cdot)$ the desired previous application, and $\mathcal{D} \subset \tilde{\mathcal{D}}$.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/generaliseddataset.jpg" alt="Figure 1. a finite set of points in (x,y)" width="365" height="243" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/generaliseddataset.jpg" alt="Figure 1. a finite set of points in (x,y)" width="365" height="243" /> 
 </figure>
 <center>
 <strong> Figure 1. </strong> *The figure in the left represents a finite set of points in $(x,y)$, where $x$ represents the input and $y$ the output. The figure on the right is the expected distribution from which we are sampling the input-output examples. The whole distribution can be understood by $\tilde{\mathcal{D}}$.*
@@ -341,7 +341,7 @@ where
 <p>A well-known dataset in which to use <em>Deep Learning</em> algorithm is the <em>CIFAR-10</em> dataset.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/CIFAR-dataset.png" alt="Figure 2. Scheme of the CIFAR-10 dataset" width="364" height="280" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/CIFAR-dataset.png" alt="Figure 2. Scheme of the CIFAR-10 dataset" width="364" height="280" /> 
 </figure>
 <center>
 <strong> Figure 2. </strong> Scheme of the CIFAR-10 dataset.
@@ -379,12 +379,12 @@ where
 However, the aim of <em>supervised learning</em> is to be able to generalise well to previously unseen data, $\tilde{\mathcal{D}}$, and so interpolation is not effective, and may not be well-defined, since the same input $x_i$ can be labelled differently, due to <em>noise</em>.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/generalnoisy.gif" alt="Representation of the optimal function F as the number of samples increases, in the case of noisy data" width="363" height="242" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/generalnoisy.gif" alt="Representation of the optimal function F as the number of samples increases, in the case of noisy data" width="363" height="242" /> 
 </figure>
 <p><strong>Representation of the optimal function $\mathcal{F}$ as the number of samples increases, in the case of noisy data. Note that the function “stabilizes” at a certain point, and thus it is expected to behave properly in the limit of infinitely many samples.</strong></p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/generalnoisless.gif" alt="Representation of the optimal function F as the number of samples increases, in the case of noisless data" width="365" height="243" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/generalnoisless.gif" alt="Representation of the optimal function F as the number of samples increases, in the case of noisless data" width="365" height="243" /> 
 </figure>
 <center>
 <strong> Representation of the optimal function $\mathcal{F}$ as the number of samples increases, in the case of noisless data. In this case the function could have been obtained by interpolation, and would stabilize fast. </strong>
@@ -413,7 +413,7 @@ If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with th
 <p>That is, out of the whole input space of all possible images, only a low-dimensional subspace of those would correspond to the images of cats, and one could go from one picture of a cat to any other picture of a cat by a path in which all the point are also pictures of cats. This has been widely hypothesized in many datasets, and there are some experimental results in that direction [9].</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/scheme_binary.png" alt="Example of the input space in a binary classification setting" width="364" height="306" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/scheme_binary.png" alt="Example of the input space in a binary classification setting" width="364" height="306" /> 
 </figure>
 <center>
 <strong> Example of the input space in a binary classification setting. The axis $\mathbf{x}^1$ and $\mathbf{x}^2$ represent the components of the vectors $x$ the input space (we are considering $[0,1]^2$). The points in the subspace $M_0$ are labelled as $0$, and the points in $M_1$ as $1$. The points that are not in $M_0$ or $M_1$ do not have a well-defined label</strong>
@@ -434,13 +434,13 @@ If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with th
 <p>Our algorithm consists on <em>initializing</em> the process by choosing a function $f( \cdot , \theta) \in \mathcal{H}$. In <em>Deep Learning</em>, this is done by <em>randomly choosing some parameters</em> $\theta _0$, and initializing the function as $f( \cdot ; \theta_0)$.</p>
 
 <p>In  <em>Deep Learning</em>, the <em>loss function</em> is given by the <em>empirical risk</em>. That is, we choose a subset of the dataset, 
-\(\{ x_j , y_j \}_{j=1}^s\) and compute the loss as 
-\(\frac{1}{s} \sum_{j=1}^{s} l_j ( \theta)\), where 
-\(l_j\) could be simply given by 
-\(l_j = \| f(x_j, \theta) - y_j \|_2^2\).</p>
+<script type="math/tex">\{ x_j , y_j \}_{j=1}^s</script> and compute the loss as 
+<script type="math/tex">\frac{1}{s} \sum_{j=1}^{s} l_j ( \theta)</script>, where 
+<script type="math/tex">l_j</script> could be simply given by 
+<script type="math/tex">l_j = \| f(x_j, \theta) - y_j \|_2^2</script>.</p>
 
 <p>The <em>optimization algorithms</em> used in <em>Deep Learning</em> are mainly based in <em>Gradient Descent</em>, such as
-\(\theta_{k+1} = \theta_k - \epsilon \frac{1}{n} \nabla l_j ( \theta _k)\)</p>
+<script type="math/tex">\theta_{k+1} = \theta_k - \epsilon \frac{1}{n} \nabla l_j ( \theta _k)</script></p>
 
 <p>Where the subindex denotes the parameters at each iteration.</p>
 
@@ -457,7 +457,7 @@ If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with th
 </ul>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/Diagram_drawing.png" alt="Diagram of the three main paradigms of Deep Learning" width="321" height="168" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/Diagram_drawing.png" alt="Diagram of the three main paradigms of Deep Learning" width="321" height="168" /> 
 </figure>
 <center>
 <strong> Diagram of the three main paradigms of Deep Learning. The function $F_0$ is the initial one, $\tilde{F}$ is the final solution as updated by the optimization algorithm, $\hat{F}$ is the closest function in $\mathcal{H}$ to $F^*$, and $F^*$ is the best ideal solution.</strong>
@@ -478,19 +478,19 @@ If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with th
 <h3 id="hypothesis-spaces">Hypothesis spaces</h3>
 
 <p>In classical settings, an hypothesis space is often proposed as 
-\(\mathcal{H} = \left\{  f (x\, ; \mathbf{\theta }) \; \bigg\vert  f(x ; \theta ) = \sum_{i=1}^{m} a_i \psi _i (x)  \right\}\)</p>
+<script type="math/tex">\mathcal{H} = \left\{  f (x\, ; \mathbf{\theta }) \; \bigg\vert  f(x ; \theta ) = \sum_{i=1}^{m} a_i \psi _i (x)  \right\}</script></p>
 
 <p>where $\theta = { a_i }_{i=1}^{m}$ are the coefficients, ${ \psi _i}$ are the proposed functions (for example, they would be monomials if we are doing polynomial regression).</p>
 
 <p>The function $\mathcal{F}$ correspondent to the dataset $\mathcal{D}$ is then defined as
-\(\mathcal{F}(\cdot ) \equiv f(\cdot \, ; \theta ^*) \in \mathcal{H} \quad \text{such that} \quad \theta ^* = argmin \sum_{i=1}^{S} d(\phi (f(x_i \, ; \theta )) , y_i)\)</p>
+<script type="math/tex">\mathcal{F}(\cdot ) \equiv f(\cdot \, ; \theta ^*) \in \mathcal{H} \quad \text{such that} \quad \theta ^* = argmin \sum_{i=1}^{S} d(\phi (f(x_i \, ; \theta )) , y_i)</script></p>
 
 <p>where $d$ is a distance defined by a loss function, and $\phi$ is a function that transforms $f(x_i; \theta)$ such that we can compare it with $y_i$. For example, if we want to do binary classification, we would use $\phi$ as a function that divides the space into two hiperplanes, and assigns $0$ to one of the parts of the divided space, and $1$ to the other.</p>
 
-<p>This means that \(f(\cdot ; \theta^*)\) it is the function in the hypothesis space that <em>minimizes the distance</em> with the <em>target function</em>, which connects the datapoints $x_i$ with their correspondent labels $y_i$.</p>
+<p>This means that <script type="math/tex">f(\cdot ; \theta^*)</script> it is the function in the hypothesis space that <em>minimizes the distance</em> with the <em>target function</em>, which connects the datapoints $x_i$ with their correspondent labels $y_i$.</p>
 
 <p>When using <em>Deep Neural Networks</em>, the hypothesis space $\mathcal{H}$ is generated by the composition of simple functions $f$ such that
-\(\mathcal{H} =  \left\{  f(x \, ; \theta ) \; \bigg\vert  f(x ; \theta ) = \phi \circ f_{\theta_L}^L \circ f_{\theta_{L-1}}^{L-1} \circ ... \circ f_{\theta_1}^1 (x) \right\}\)</p>
+<script type="math/tex">\mathcal{H} =  \left\{  f(x \, ; \theta ) \; \bigg\vert  f(x ; \theta ) = \phi \circ f_{\theta_L}^L \circ f_{\theta_{L-1}}^{L-1} \circ ... \circ f_{\theta_1}^1 (x) \right\}</script></p>
 
 <p>where $\theta = { \theta_k }_{k=1}^{L}$ are the training weights of the network and $L$ the number of hidden layers.</p>
 
@@ -498,14 +498,14 @@ If $Y$ is discrete, such that $Y = { 0, … , L-1}$, then we are dealing with th
 
 <p>In the case of the so-called <em>multilayer perceptrons</em>, the functions $f^k_{\theta_k}$ are constructed as</p>
 
-<p>\(f^k_{\theta_k} (\cdot) = \sigma (A^k  (\cdot) +  b^k)\)
+<p><script type="math/tex">f^k_{\theta_k} (\cdot) = \sigma (A^k  (\cdot) +  b^k)</script>
 being $A^k$ a matrix, $b^k$ a vector, $\theta _k = 
 {A^k , b^k}$ and $\sigma \in C^{0,1}(\mathbb{R})$ a fixed nondecreasing function, called the <em>activation function</em>.</p>
 
 <p>Since we restrict to the case in which the number of neurons is constant through the layers, we have that $A^k \in \mathbb{R}^{d \times d}$ and $b^k \in \mathbb{R}^d$.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/multilayerdiagram.jpg" alt="Diagram of a multilayer perceptron" width="326" height="150" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/multilayerdiagram.jpg" alt="Diagram of a multilayer perceptron" width="326" height="150" /> 
 </figure>
 <center>
 <strong>Diagram of a multilayer perceptron, also called fully-connected neural network. However, this graph representation seems a bit difficult to treat, so we use an algebraic representation instead</strong>
@@ -521,17 +521,17 @@ being $A^k$ a matrix, $b^k$ a vector, $\theta _k =
 
 <h3 id="residual-neural-networks">Residual Neural Networks</h3>
 <p>In the simple case of a <em>Residual Neural Network</em> (often referred to as <em>ResNets</em>) the functions $f_{\theta_k}^{k} (\cdot)$ are constructed as
-\(f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + \sigma (A^k  (\cdot) +  b^k)\)</p>
+<script type="math/tex">f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + \sigma (A^k  (\cdot) +  b^k)</script></p>
 
 <p>where $\mathbb{I}$ is the identity function. The parameters $\sigma$, $A^k$ and $b^k$ are equivalent to those of the multilayer perceptrons.</p>
 
 <p>We will see that it is sometimes convenient to numerically add a parameter $h$ to the residual block, such that
-\(f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + h  \, \sigma (A^k  (\cdot) +  b^k)\)</p>
+<script type="math/tex">f_{\theta_k}^{k} (\cdot) = \mathbb{I} (\cdot) + h  \, \sigma (A^k  (\cdot) +  b^k)</script></p>
 
 <p>being $h \in \mathbb{R}$ a scalar.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/resnetsdiagram.jpg" alt="Diagram of a ResNet" width="500" height="145" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/resnetsdiagram.jpg" alt="Diagram of a ResNet" width="500" height="145" /> 
 </figure>
 <center>
 <strong> Diagram of a ResNet, in a graph manner. Again, an algebraic representation is preferred.</strong>
@@ -546,7 +546,7 @@ being $A^k$ a matrix, $b^k$ a vector, $\theta _k =
 <p>If we use the <em>activation function</em> $\sigma ( \cdot ) = tanh (\cdot)$, then each function $f$ (and so each layer of the Neural Network) is first rotating and translating the original space, and then “squeezing” it.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/layertransformation0.gif" alt="Example of the transformation of a regular grid by a perceptron" width="500" height="auto" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/layertransformation0.gif" alt="Example of the transformation of a regular grid by a perceptron" width="500" height="auto" /> 
 </figure>
 <center>
 <strong> Example of the transformation of a regular grid by a perceptron.</strong>
@@ -563,11 +563,11 @@ Then the function $\phi$ would divide the space by an hyperplane, associate $0$ 
 <p>So, while it may be difficult to classificate the datapoints in the initial space $X$, the <em>Neural Networks</em> should make things simpler and just <em>propagate the data</em> so as to make it <em>linearly separable</em> (and we would see this in real action!).</p>
 
 <p>Our aim is therefore to transform the initial space $X$ in such a way that $M^0$ and $M^1$ are linearly separable. That is, 
-\((M^*)^0 = F(M^0) = f^L \circ f^{L-1} \circ ... \circ f^1 (M^0)\) is linearly separable from 
-\((M^*)^1 = F(M^1) = f^L \circ f^{L-1} \circ ... \circ f^1 (X^1)\).</p>
+<script type="math/tex">(M^*)^0 = F(M^0) = f^L \circ f^{L-1} \circ ... \circ f^1 (M^0)</script> is linearly separable from 
+<script type="math/tex">(M^*)^1 = F(M^1) = f^L \circ f^{L-1} \circ ... \circ f^1 (X^1)</script>.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/scheme.png" alt="Example of the transformation of a regular grid by a perceptron" width="1080" height="auto" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/scheme.png" alt="Example of the transformation of a regular grid by a perceptron" width="1080" height="auto" /> 
 </figure>
 <center>
 <strong> Example of the transformation of a regular grid by a perceptron.</strong>
@@ -589,17 +589,18 @@ Then the function $\phi$ would divide the space by an hyperplane, associate $0$ 
 
 <p>In the case of ResNets, all the functions</p>
 
-<p>\(f = \mathbb{I} + A(\cdot) + b\)
+<p><script type="math/tex">f = \mathbb{I} + A(\cdot) + b</script>
 should be homeomorphisms. But in this case is more tricky than in the multilayer perceptrons case.</p>
 
 <p><strong><em>Theorem 1</em></strong> <strong>(Sufficient condition for invertible ResNets [1]):</strong></p>
 
 <p>Let 
 $\hat{\mathcal{F}} \, : \, \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ with 
-\(\hat{\mathcal{F}} (\cdot )= ( L^{1}_{\theta} \, \circ ... \circ \, L^{T}_{\theta} )\) denote a ResNet with blocks defined by 
-\(L^{t} _{ \theta } = \mathbb{I} + h \cdot g_{\theta _t}\)
+<script type="math/tex">\hat{\mathcal{F}} (\cdot )= ( L^{1}_{\theta} \, \circ ... \circ \, L^{T}_{\theta} )</script> denote a ResNet with blocks defined by 
+<script type="math/tex">L^{t} _{ \theta } = \mathbb{I} + h \cdot g_{\theta _t}</script>
 Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if 
-\(h \cdot \text{Lip} (g_{\theta_t}) &lt; 1 \text{ for all } t = 1, ..., T\)</p>
+<script type="math/tex">% <![CDATA[
+h \cdot \text{Lip} (g_{\theta_t}) < 1 \text{ for all } t = 1, ..., T %]]></script></p>
 
 <p>We expect the lipschitz constant of $g_\theta$ to be bounded, and so $h\to 0$ would make our ResNets invertible.</p>
 
@@ -610,11 +611,11 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 <ul>
   <li>
     <p>Consider the <strong><em>multilayer perceptron</em></strong>, given by 
-\(F(x) = f^L \circ f^{L-1} \circ ... \circ f^0 (x)\)</p>
+<script type="math/tex">F(x) = f^L \circ f^{L-1} \circ ... \circ f^0 (x)</script></p>
 
     <p>Simply renaming the index $l$ by the index $t-1$, and $L$ by $T-1$, we see that</p>
 
-\[F(x) = f^T \circ ... \circ f^t \circ ... \circ f^1 (x)\]
+    <script type="math/tex; mode=display">F(x) = f^T \circ ... \circ f^t \circ ... \circ f^1 (x)</script>
 
     <p>If we define $x_t = f^t \circ … \circ f^0 (x)$, we see that what the neural network is doing is defining a <em>dynamical system</em> in which our initial values, denoted by $x$, evolve in a time defined by the index of the layers.</p>
 
@@ -622,23 +623,23 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
   </li>
   <li>
     <p>In the case of <strong><em>Residual Neural Networks</em></strong>, the residual blocks are given by
-  \(f^t (x_{t-1}) = x_{t-1} + A^{t} x_{t-1} + b^t\) 
+  <script type="math/tex">f^t (x_{t-1}) = x_{t-1} + A^{t} x_{t-1} + b^t</script> 
   where the supindex in $A$ and $b$ denote that $A$ and $b$, in general, change in each layer.</p>
   </li>
 </ul>
 
 <p>Defining the function $G(x, t) =  (A^t (x) + b^t)/h$, we can rewrite our equation as
-\(x_{t+1} = x_{t} + h\cdot G(x_t, t)\)</p>
+<script type="math/tex">x_{t+1} = x_{t} + h\cdot G(x_t, t)</script></p>
 
 <p>with the initial condition given by our input data (the ones given by the dataset).</p>
 
 <p>Remember that the index $t$ refers to the index of the layer, but can be now easily interpreted as a time.</p>
 
 <p>In the limit $h\to 0$ it can be recasted as
-\(\lim_{h \to 0} \frac{x_{t+1}-x_{t}}{h} = \dot{x}_t = G(x_t, t)\)</p>
+<script type="math/tex">\lim_{h \to 0} \frac{x_{t+1}-x_{t}}{h} = \dot{x}_t = G(x_t, t)</script></p>
 
 <p>and, since the discrete index $t$ becomes continuous in this limit, it is useful to express it as
-\(\dot{x}(t) = G(x(t), t)\)</p>
+<script type="math/tex">\dot{x}(t) = G(x(t), t)</script></p>
 
 <p>This dynamic should be such that $x(0)$ is the initial data, and $x(T)$ is a distribution such that the points that were in $M^0$ and $M^1$ are now <em>linearly separable</em>.</p>
 
@@ -647,7 +648,7 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 <p>The question is: is the <em>residual part</em> sufficiently small? Is $h$ indeed small? There are empirical evidence showing that, as the number of layers ($T$) incresases, the value $h$ gets smaller and smaller.</p>
 
 <p>But we do not need to worry too much, since we can easily define a general kind of <em>ResNets</em> in which the <em>residual blocks</em> are given by
-\(f^t (x_{t-1}) = x_{t-1} + h (A^{t} x_{t-1} + b^t)\)</p>
+<script type="math/tex">f^t (x_{t-1}) = x_{t-1} + h (A^{t} x_{t-1} + b^t)</script></p>
 
 <p>in which $h$ could be absorbed easily by $A$ and $b$.</p>
 
@@ -655,7 +656,7 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 
 <p>Recovering the fact that $f^t$ are indeed $f^t( \cdot ;\theta ^t)$, where $\theta^t$ are the parameters $A^t$ and $b^t$, we can express our dynamical equations, in the case of resnets as</p>
 
-<p>[\dot{x}(t) = G(x(t), t; \theta (t))]</p>
+<script type="math/tex; mode=display">\dot{x}(t) = G(x(t), t; \theta (t))</script>
 
 <p>where $x(0)$ is our initial data point, and we want to control our entire distribution of initial datapoints into a final suitable distribution, given by $x(T)$. In the case of binary classification, that “<em>suitable distribution</em>” would for example consist in one in which the datapoints labelled as $0$ move further away from the datapoints labelled as $1$, yielding a final space that could be separated by an hyperplane.</p>
 
@@ -669,17 +670,17 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 
 <p>Consider a binary classification problem with <em>noisless data</em>, such that</p>
 
-<p>\(\mathcal{D} =  \{ ( x_i , y_i = \mathcal{F}(x_i) )\} _{i=1}^{S}\)
-\(x_i \in [-1,+1]^{n} , \; \; y_i \in \{0,1\} \quad \forall i \in \{1, ... , S\}\)</p>
+<p><script type="math/tex">\mathcal{D} =  \{ ( x_i , y_i = \mathcal{F}(x_i) )\} _{i=1}^{S}</script>
+<script type="math/tex">x_i \in [-1,+1]^{n} , \; \; y_i \in \{0,1\} \quad \forall i \in \{1, ... , S\}</script></p>
 
 <p>We consider two distributions, the <em>ring distribution</em> and the <em>spiral distribution</em>.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/RingDistribution.jpg" alt="RingDistribution" width="264" height="277" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/RingDistribution.jpg" alt="RingDistribution" width="264" height="277" /> 
 </figure>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/SpiralDistribution.jpg" alt="SpiralDistribution" width="269" height="277" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/SpiralDistribution.jpg" alt="SpiralDistribution" width="269" height="277" /> 
 </figure>
 <center>
 <strong> Plot of the ring and spiral distribution.</strong>
@@ -700,11 +701,11 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 <p>We train the networks, and after lots of <em>iterations</em> of the <em>gradient descent method</em>, this is what we obtain.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/3dmultilayer_.gif" alt="3dmultilayer_" width="349" height="231" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/3dmultilayer_.gif" alt="3dmultilayer_" width="349" height="231" /> 
 </figure>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/3dmultilayer_spiral.gif" alt="3dmultilayer_spiral" width="349" height="231" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/3dmultilayer_spiral.gif" alt="3dmultilayer_spiral" width="349" height="231" /> 
 </figure>
 
 <p>We see that in the final space (<em>hidden layer 5</em>) the blue and <em>yellow</em> points can be linearly separable.</p>
@@ -718,13 +719,13 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 <p>Consider two neurons per layer. That is, we would be working with $x(t)$ in $\mathbb{R}^2$.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/2dbending2.gif" alt="2dbending2" width="349" height="247" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/2dbending2.gif" alt="2dbending2" width="349" height="247" /> 
 </figure>
 
 <p><br /></p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/2dbendingspiral1.gif" alt="2dbendingspiral1" width="349" height="247" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/2dbendingspiral1.gif" alt="2dbendingspiral1" width="349" height="247" /> 
 </figure>
 
 <p>We observe that altough the <em>spiral distribution</em> can be classified by this neurons (the transformed space, in hidden layer $49$, makes the distribution linearly separable) this does not happen with the <em>ring distribution</em>!</p>
@@ -738,13 +739,13 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 <p><br /></p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/3dbendingspiral2.gif" alt="3dbendingspiral2" width="349" height="231" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/3dbendingspiral2.gif" alt="3dbendingspiral2" width="349" height="231" /> 
 </figure>
 
 <p><br /></p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/bending0.gif" alt="bending0" width="349" height="231" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/bending0.gif" alt="bending0" width="349" height="231" /> 
 </figure>
 
 <p><br /></p>
@@ -759,7 +760,7 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 
 <h3 id="noisy-vs-noisless-data-1">Noisy vs noisless data</h3>
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/NoisyRing.gif" alt="Representation of a more natural distribution" width="575" height="261" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/NoisyRing.gif" alt="Representation of a more natural distribution" width="575" height="261" /> 
 </figure>
 <center>
 <strong> Representation of a more natural distribution at the left, and examples of realisations of that distribution in the right.</strong>
@@ -785,11 +786,11 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
 <p>Regarding <em>optimality</em>, it is not easy to define, since we have multiple possible solutions to the same problem. That is, there are multiple dynamics that can make an initial distribution linearly separable.</p>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/bending1.gif" alt="bending1" width="349" height="231" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/bending1.gif" alt="bending1" width="349" height="231" /> 
 </figure>
 
 <figure>
- <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00013/bending2.gif" alt="bending2" width="349" height="231" /> 
+ <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP99/P00013/bending2.gif" alt="bending2" width="349" height="231" /> 
 </figure>
 <center>
 <strong> Dynamics given by a ResNet with 3 neurons per layer, with two different initializations.</strong>
@@ -872,7 +873,7 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
             <div class="post-preview shadowbox">
   <div class="post-avatar-wp">
   
-    <img src="https://cmc.deusto.eus/wp-content/uploads/2017/03/dibujo4.png">
+    <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP99/P00014/fig01.png">
   
   </div>
   <div class="post-info">
@@ -890,18 +891,18 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/CarlosE">Carlos Esteve</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
           
           - 25 March 2021
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn  btn-sm" style="margin-left: auto;"></button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn  btn-sm" style="margin-left: auto;"></button>
     
     </div>
 
@@ -954,12 +955,12 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/AichaK">Aicha Karite</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/AichaK">Aicha Karite</a>
           
           - 10 March 2021
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -1210,12 +1211,12 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
           
           - 30 September 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -1277,15 +1278,15 @@ Then, the ResNet $\hat{\mathcal{F}}_{\theta}$ is invertible if
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/JesusO">Jesus Oroya</a>
           
           - 26 June 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 

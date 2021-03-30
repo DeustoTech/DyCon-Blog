@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0003">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp05/P0003">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP05">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP05">
             Models involving memory terms and hybrid PDE+ODE systems</a> &#8827;</small>
           </h2>
           <h1>LQR optimal control design for a coupled PDE-ODE system.</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
                   </span>
                 </span>
               
@@ -291,12 +291,13 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/coupled_lqr.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/WP05/P0003/coupled_lqr.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <p>In this tutorial, we will demonstrate how to design a LQR controller in order to stabilize the following linear coupled (hybrid) PDE-ODE system:</p>
 
-<p>[\begin{cases}       y_t = \alpha y_{xx} + \beta y &amp; (x, t) \in (0, 1) \times (0, T) \       \dot{s}(t) = -y_x(0,t) &amp; t \in (0, T) \       y(0, t) = u(t), y(1, t) = 0 &amp; t \in (0, T) \       y(x, 0) = y_0(x), s(0) = s_0 &amp; x \in (0, 1).   \end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}       y_t = \alpha y_{xx} + \beta y & (x, t) \in (0, 1) \times (0, T) \\       \dot{s}(t) = -y_x(0,t) & t \in (0, T) \\       y(0, t) = u(t), y(1, t) = 0 & t \in (0, T) \\       y(x, 0) = y_0(x), s(0) = s_0 & x \in (0, 1).   \end{cases} %]]></script>
 
 <p>Similar systems may appear in the modelling of a variety physical phenomena, such as the melting of ice in a body of water [1] or fluid-structure interaction [2]. This particular system may be seen as a simplification of the well known one-phase Stefan problem. The stabilization and control of the former has been investigated in recent works by Krstic et al. (see [1] for example). The relationship between the considered system and the Stefan problem, as well as the control of the latter will be considered in a future tutorial.</p>
 
@@ -304,56 +305,60 @@ img:active{
 
 <p>We first need to reduce the PDE-ODE system  to a finite dimensional system of the form</p>
 
-<p>[\dot{z} = Az + Bu,]</p>
+<script type="math/tex; mode=display">\dot{z} = Az + Bu,</script>
 
 <p>where $A$ and $B$ are matrices, and</p>
 
-<p>[z(t) = \begin{pmatrix} y(t) \ s(t) \end{pmatrix}]</p>
+<script type="math/tex; mode=display">z(t) = \begin{pmatrix} y(t) \\ s(t) \end{pmatrix}</script>
 
 <p>is the finite dimensional state vector.</p>
 
 <p>We fix the parameters as follows: $T=1$, $\alpha=1$ and $\beta = 10$:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clc</span><span class="p">;</span> <span class="nb">clear</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clc</span><span class="p">;</span> <span class="nb">clear</span><span class="p">;</span>
 <span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">nT</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="n">nX</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="p">/</span><span class="n">nT</span><span class="p">;</span> <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">x</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">nX</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">Dir0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Dir1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="nb">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nb">beta</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We begin the code by discretizing in space the parabolic PDE; this is done by finite differences:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Id</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">nX</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Id</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">nX</span><span class="p">);</span>
 <span class="n">Lapl</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">Id</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">nX</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">diag</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">nX</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">A0</span> <span class="o">=</span> <span class="nb">alpha</span><span class="o">*</span><span class="mi">1</span><span class="p">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="n">Lapl</span> <span class="o">+</span> <span class="nb">beta</span><span class="o">*</span><span class="n">Id</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p>In fact, the finite difference discretization of the Dirichlet laplacian may also be done using the MATLAB routine <code class="language-plaintext highlighter-rouge">delsq</code>. We proceed similarly for the term $y_x(1,t)$ in the ODE, and assemble the complete matrix $A$:</p>
+<p>In fact, the finite difference discretization of the Dirichlet laplacian may also be done using the MATLAB routine <code class="highlighter-rouge">delsq</code>. We proceed similarly for the term $y_x(1,t)$ in the ODE, and assemble the complete matrix $A$:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="n">A</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">A0</span><span class="p">;</span> <span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">=-</span><span class="mi">1</span><span class="p">/</span><span class="n">dx</span><span class="p">;</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="n">A</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">A0</span><span class="p">;</span> <span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">=-</span><span class="mi">1</span><span class="p">/</span><span class="n">dx</span><span class="p">;</span>
+</code></pre>
+</div>
 
 <p>The control matrix B is constructed as follows:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">b</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">alpha</span><span class="o">*</span><span class="n">Dir0</span><span class="p">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span> <span class="n">b</span><span class="p">(</span><span class="n">nX</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">alpha</span><span class="o">*</span><span class="n">Dir1</span><span class="p">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">b</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">alpha</span><span class="o">*</span><span class="n">Dir0</span><span class="p">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span> <span class="n">b</span><span class="p">(</span><span class="n">nX</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nb">alpha</span><span class="o">*</span><span class="n">Dir1</span><span class="p">/</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span>
 <span class="n">B</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">Dir0</span><span class="p">/</span><span class="n">dx</span><span class="p">;</span>
 <span class="n">B</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We may now proceed with the optimal control strategy. For a continuous time linear system generated by the matrices $(A,B)$ and an infinite time horizon cost functional defined as</p>
 
-<p>[J = \int_0^\infty \langle Q z(t), z(t) \rangle + \langle R u(t), u(t)   \rangle dt,]</p>
+<script type="math/tex; mode=display">J = \int_0^\infty \langle Q z(t), z(t) \rangle + \langle R u(t), u(t)   \rangle dt,</script>
 
 <p>the feedback control law that minimizes the value of the cost is $u = -Kz$, where $K = R^{-1}B*P$ and $P$ is found by solving the continuous time algebraic Ricatti equation</p>
 
-<p>[A<em>P+PA-(PB)R^1(B</em>P)+Q=0.]</p>
+<script type="math/tex; mode=display">A*P+PA-(PB)R^1(B*P)+Q=0.</script>
 
 <p>We check whether the constructed matrices fit in the framework of LQR. Namely, we first verify that the couple $(A, BB*)$ is stabilizable. This is done by checking if $\text{rank}[\lambda I - A, B] = d$ for any $\lambda \in \sigma(A)\cap \mathbb{R}_+$, where $d$ is the dimension of the state space.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eigs</span> <span class="o">=</span> <span class="nb">eig</span><span class="p">(</span><span class="n">A</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">eigs</span> <span class="o">=</span> <span class="nb">eig</span><span class="p">(</span><span class="n">A</span><span class="p">);</span>
 <span class="k">for</span> <span class="n">iter</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span>
     <span class="k">if</span> <span class="nb">real</span><span class="p">(</span><span class="nb">eigs</span><span class="p">(</span><span class="n">iter</span><span class="p">))</span><span class="o">&gt;=</span><span class="mi">0</span>
         <span class="n">M</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
@@ -362,20 +367,22 @@ img:active{
         <span class="n">stabilizable</span> <span class="o">=</span> <span class="p">(</span><span class="n">r_</span> <span class="o">==</span> <span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Secondly, we check that the eigenvalues of the associated Hamiltonian matrix do not lie on the imaginary axis.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">H</span> <span class="o">=</span> <span class="nb">blkdiag</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="o">-</span><span class="n">A</span><span class="o">'</span><span class="p">);</span>
 <span class="n">H</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="n">Q</span><span class="p">;</span> <span class="n">H</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">nX</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="o">-</span><span class="n">B</span><span class="o">*</span><span class="p">(</span><span class="n">B</span><span class="o">'</span><span class="p">);</span>
 <span class="n">eigH</span> <span class="o">=</span> <span class="nb">real</span><span class="p">(</span><span class="nb">eig</span><span class="p">(</span><span class="n">H</span><span class="p">));</span>
 <span class="n">nb_im_eig</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">eigH</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p>Finally, we check if the pair $(Q, A)$ is detectable; the variable <code class="language-plaintext highlighter-rouge">not_det</code> should equal $0$ after the loop.</p>
+<p>Finally, we check if the pair $(Q, A)$ is detectable; the variable <code class="highlighter-rouge">not_det</code> should equal $0$ after the loop.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">not_det</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">not_det</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">iter_</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span>
     <span class="k">if</span> <span class="nb">real</span><span class="p">(</span><span class="nb">eigs</span><span class="p">(</span><span class="n">iter_</span><span class="p">))</span><span class="o">&gt;=</span><span class="mi">0</span>
         <span class="n">M_</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
@@ -386,37 +393,41 @@ img:active{
         <span class="k">end</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p>We are now in a position to construct the LQR feedback control by solving the algebraic Ricatti equation. This is done by using the MATLAB Control Toolbox routine <code class="language-plaintext highlighter-rouge">care</code>:</p>
+<p>We are now in a position to construct the LQR feedback control by solving the algebraic Ricatti equation. This is done by using the MATLAB Control Toolbox routine <code class="highlighter-rouge">care</code>:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">ricsol</span><span class="p">,</span> <span class="n">cleig</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">ricsol</span><span class="p">,</span> <span class="n">cleig</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">);</span>
 <span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">z</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We now compare the uncontrolled (thence unstable) dynamics with the dynamics stabilized by the LQR feedback control. As initial datum for both systems, we pick $u_0(x) = \cos(\pi*x)$ and $s_0 = 0.1$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_int</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">x_int</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nX</span><span class="p">);</span>
 <span class="n">y0</span> <span class="o">=</span> <span class="nb">cos</span><span class="p">(</span><span class="n">x_int</span><span class="o">*</span><span class="nb">pi</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
 <span class="n">z0</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="n">z0</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span> <span class="n">z0</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">y0</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The free system is solved with the Dirichlet boundary condition $u(0,t) = 0.15$:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f1</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">v</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="mf">0.15</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">f1</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">v</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="mf">0.15</span><span class="p">;</span>
 <span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">z_free</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">nT</span><span class="p">),</span> <span class="n">z0</span><span class="p">);</span>
 <span class="p">[</span><span class="n">X1</span><span class="p">,</span><span class="n">Y1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">x_int</span><span class="p">);</span>
 <span class="nb">surf</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">Y1</span><span class="p">,</span> <span class="n">z_free</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="n">nX</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">'</span><span class="p">);</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">);</span>
 <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Space'</span><span class="p">);</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Unstable state y_{un} = y_{un}(t,x)'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_01.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_01.png" alt="" /></p>
 
 <p>Now we solve and visualize the controlled problem:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f2</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">z</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">f2</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="n">A</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">B</span><span class="o">*</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">z</span><span class="p">);</span>
 <span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">z_ctr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">nT</span><span class="p">),</span> <span class="n">z0</span><span class="p">);</span>
 <span class="nb">figure</span><span class="p">;</span>
 <span class="p">[</span><span class="n">X2</span><span class="p">,</span><span class="n">Y2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span><span class="n">x_int</span><span class="p">);</span>
@@ -424,26 +435,28 @@ img:active{
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">);</span>
 <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Space'</span><span class="p">);</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Stablilized state y_{st} = y_{st}(t,x)'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_02.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_02.png" alt="" /></p>
 
 <p>We also plot the corresponding solutions to the ODE:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">figure</span><span class="p">;</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">z_free</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.8500</span><span class="p">,</span> <span class="mf">0.3250</span><span class="p">,</span> <span class="mf">0.0980</span><span class="p">],</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">);</span>
 <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">z_ctr</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4470</span><span class="p">,</span> <span class="mf">0.7410</span><span class="p">],</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">);</span>
 <span class="nb">legend</span><span class="p">(</span><span class="s1">'Unstable'</span><span class="p">,</span> <span class="s1">'Stabilized'</span><span class="p">,</span> <span class="s1">'Location'</span><span class="p">,</span> <span class="s1">'SouthWest'</span><span class="p">);</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'The state s'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_03.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_03.png" alt="" /></p>
 
 <p>As a final test of our results, we compare the $L^2(0,1)$-norms of both the controlled and uncontrolled state with respect to time.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">norm_free</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/</span><span class="n">nX</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">z_free</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.^</span><span class="mf">0.5</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">norm_free</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/</span><span class="n">nX</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">z_free</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.^</span><span class="mf">0.5</span><span class="p">;</span>
 <span class="n">norm_ctr</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/</span><span class="n">nX</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">z_ctr</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.^</span><span class="mf">0.5</span><span class="p">;</span>
 <span class="nb">figure</span><span class="p">;</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">norm_free</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.8500</span><span class="p">,</span> <span class="mf">0.3250</span><span class="p">,</span> <span class="mf">0.0980</span><span class="p">],</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">);</span>
@@ -452,9 +465,10 @@ img:active{
 <span class="nb">legend</span><span class="p">(</span><span class="s1">'Unstable state'</span><span class="p">,</span> <span class="s1">'Stabilized state'</span><span class="p">,</span> <span class="s1">'Location'</span><span class="p">,</span> <span class="s1">'NorthWest'</span><span class="p">);</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">);</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'L^2 Norm'</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_04.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP05/P0003/copiaRM_04.png" alt="" /></p>
 
 <h2 id="references">References:</h2>
 
@@ -555,15 +569,15 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
           
           - 20 October 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -742,12 +756,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
           
           - 01 February 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
     
     </div>
 
@@ -791,12 +805,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
           
           - 19 December 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 
@@ -858,12 +872,12 @@ img:active{
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a>
           
           - 30 October 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 

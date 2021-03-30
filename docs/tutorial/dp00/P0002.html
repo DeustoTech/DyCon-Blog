@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/dp00/P0002">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/dp00/P0002">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/DP00">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/DP00">
             Dynamic Programming and Feedback Optimal Control</a> &#8827;</small>
           </h2>
           <h1>Optimal control of a  graph evolving in discrete time</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/AlejandroC">Alejandro Cunillera</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/AlejandroC">Alejandro Cunillera</a>
                   </span>
                 </span>
               
@@ -291,30 +291,30 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0002/Optimal_control_Acunillera.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0002/Optimal_control_Acunillera.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <p>In this tutorial we are going to show how to use MATLAB to control a discrete-time dynamical system that models the interactions between the nodes of a graph. The control policy will minimize a discrete linear quadratic regulator.</p>
 
 <p>Let us consider a graph G that consists on $N$ nodes $x_i\in\mathbb{R}$, $i={1,2,…,N}$ that evolve in discrete time steps according to the following equation:</p>
 
-<p>[x_i[k+1] = x_i[k] + \gamma\sum_{j\neq i}(x_j[k]-x_i[k]),\ k\in\mathbb{N}\cup {0},\ \forall i=1,2,…N \ x_i[0] = x_{i,0},\ \forall i=1,2,…N]</p>
+<script type="math/tex; mode=display">x_i[k+1] = x_i[k] + \gamma\sum_{j\neq i}(x_j[k]-x_i[k]),\ k\in\mathbb{N}\cup \{0\},\ \forall i=1,2,...N \\ x_i[0] = x_{i,0},\ \forall i=1,2,...N</script>
 
 <p>where $\gamma &gt; 0$ is a coupling parameter.</p>
 
 <p>We can simplify this equation by using the Perron matrix $P$ of the graph, this matrix is defined as $P = I - \gamma L$, where $L$ is the Laplacian of the graph and $I$ is the identity matrix. Let $x$ be $[x_1,…,x_N]^T$, the vector of states of the nodes. Moreover, we may add a control</p>
 
-<p>[{u[k]}_{k=0,1,…}, u\in\mathbb{R}^M, 1\leq M \leq N]</p>
+<script type="math/tex; mode=display">\{u[k]\}_{k=0,1,...}, u\in\mathbb{R}^M, 1\leq M \leq N</script>
 
 <p>to drive the states of the nodes to a desired state.</p>
 
-<p>[x[k+1]=Px[k]+Bu[k] \    y[k] = Cx[k]        \    x[0] = x_0 = [x_{1,0},…,x_{N,0}]^T]</p>
+<script type="math/tex; mode=display">x[k+1]=Px[k]+Bu[k] \\    y[k] = Cx[k]        \\    x[0] = x_0 = [x_{1,0},...,x_{N,0}]^T</script>
 
 <p>were $B$ and $C$ are two fixed matrices and $y\in\mathbb{R}^S$ are the observed states of $1\leq S\leq N$ nodes.</p>
 
 <p>We aim to design a control policy ${u[k]}_{k=0,1,…}$ such that minimizes the following functional $J(x,u)$ while stabilizing the system.</p>
 
-<p>[J(x,u) = \sum_{k=0}^\infty\left(x[k]^TQx[k]+u[k]^TRu[k]\right)]</p>
+<script type="math/tex; mode=display">J(x,u) = \sum_{k=0}^\infty\left(x[k]^TQx[k]+u[k]^TRu[k]\right)</script>
 
 <p>where $Q$ and $R$ are semidefinite positive and definite positive matrices respectively. We can choose these two matrices in order to penalize aggressive or slow controls. To do so, we will use MATLAB’s control system toolbox.</p>
 
@@ -322,79 +322,90 @@ img:active{
 
 <p>For instance, let us consider the coupling parameter</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">gamma</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">gamma</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+</code></pre>
+</div>
 
 <p>We define now a connected and bidirected graph G. Let E be the edges of the graph. We will define this set as a 2-column matrix and then we create the graph G.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">E</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">;</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">;</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">;</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">;</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">;</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">];</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">E</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">;</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">;</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">;</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">;</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">;</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">];</span>
 <span class="n">E</span> <span class="o">=</span> <span class="nb">table</span><span class="p">(</span><span class="n">E</span><span class="p">,</span><span class="s1">'VariableNames'</span><span class="p">,{</span><span class="s1">'EndNodes'</span><span class="p">});</span>
-<span class="n">G</span> <span class="o">=</span> <span class="nb">graph</span><span class="p">(</span><span class="n">E</span><span class="p">);</span>
-</code></pre></div></div>
+<span class="n">G</span> <span class="o">=</span> <span class="n">graph</span><span class="p">(</span><span class="n">E</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>This is our graph</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">plot</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'EdgeColor'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">,</span> <span class="s1">'MarkerSize'</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">plot</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'EdgeColor'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">,</span> <span class="s1">'MarkerSize'</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Graph representation'</span><span class="p">,</span> <span class="s1">'FontSize'</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_01.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_01.png" alt="" /></p>
 
 <p>N is the size of the graph, that is to say, the number of nodes.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="nb">numnodes</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="n">numnodes</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We compute the number of neighbours of each node</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">connectivities</span> <span class="o">=</span> <span class="nb">degree</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">connectivities</span> <span class="o">=</span> <span class="n">degree</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We check whether the graph is connected or not, if not, we must choose a different graph.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="nb">conncomp</span><span class="p">(</span><span class="n">G</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">conncomp</span><span class="p">(</span><span class="n">G</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Generate a new graph'</span><span class="p">)</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>In this example the considered graph is connected.</p>
 
 <p>We compute the Perron matrix of $G$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="nb">gamma</span> <span class="o">*</span> <span class="nb">laplacian</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="nb">gamma</span> <span class="o">*</span> <span class="n">laplacian</span><span class="p">(</span><span class="n">G</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We can see that the system tends to reach a consensus, that is to say, if no control is applied to the system, it evolves to a steady state in which all the nodes have the same state.</p>
 
 <p>We define the initial state $x_0$</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="o">'</span><span class="p">;</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">x_0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="o">'</span><span class="p">;</span>
+</code></pre>
+</div>
 
 <p>The mean of $x_0$ is 3</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mean</span><span class="p">(</span><span class="n">x_0</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">mean</span><span class="p">(</span><span class="n">x_0</span><span class="p">)</span>
+</code></pre>
+</div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>
 ans =
 
      3
 
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>The states of the nodes will evolve to the mean of the states at the initial time. We let the system evolve for 150 iterations.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">itmax</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">itmax</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
 <span class="n">x</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">itmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">x</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">x_0</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">itmax</span>
     <span class="n">x</span><span class="p">(:,</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">P</span> <span class="o">*</span> <span class="n">x</span><span class="p">(:,</span><span class="n">k</span><span class="p">);</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clf</span>
 <span class="nb">hold</span> <span class="n">on</span>
 <span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
     <span class="nb">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">itmax</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="n">k</span><span class="p">,:),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -403,15 +414,16 @@ ans =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Graph evolution without control'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Iterations'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
 <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'States of the nodes'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_02.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_02.png" alt="" /></p>
 
 <p>As stated before, we can see in this figure that the system naturally reaches consensus.</p>
 
 <p>Recall that the system dynamics can be written as</p>
 
-<p>[x[k+1] = Px[k]+Bu[k] \    y[k] = Cx[k]]</p>
+<script type="math/tex; mode=display">x[k+1] = Px[k]+Bu[k] \\    y[k] = Cx[k]</script>
 
 <p>for any $k =0,1,…$.</p>
 
@@ -419,39 +431,43 @@ ans =
 
 <p>We proceed to define matrices B and C:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">B</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
 <span class="n">C</span> <span class="o">=</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
 <span class="c1">%% We can check whether the system is controllable</span>
 <span class="k">if</span> <span class="nb">rank</span><span class="p">(</span><span class="n">ctrb</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">B</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">N</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'it is not controllable!'</span><span class="p">)</span>
 <span class="k">end</span>
 <span class="c1">%% In this case, it is controllable.</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We choose the matrices $Q$ and $R$ by using Bryson and Ho’s criterium.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Q_diag</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_0</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Q_diag</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_0</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
 <span class="n">R_diag</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">/</span> <span class="mi">5</span><span class="o">^</span><span class="mi">2</span> <span class="o">*</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
 <span class="n">Q</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">(</span><span class="n">Q_diag</span><span class="p">);</span>
 <span class="n">R</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">(</span><span class="n">R_diag</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We can use now the function dlqr (discrete linear quadratic regulator) to find the feedback control $u = -K_{f} x[k]$ that minimizes the functional $J(x,u)$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Kf</span><span class="p">,</span> <span class="o">~</span><span class="p">]</span> <span class="o">=</span> <span class="n">dlqr</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">Kf</span><span class="p">,</span> <span class="o">~</span><span class="p">]</span> <span class="o">=</span> <span class="n">dlqr</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>Now we can stabilize the system by using the feedback control that we have just computed</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">itmax</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">itmax</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
 <span class="n">x</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">itmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">x</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">x_0</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">itmax</span>
     <span class="n">x</span><span class="p">(:,</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">P</span> <span class="o">-</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Kf</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">(:,</span><span class="n">k</span><span class="p">);</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clf</span>
 <span class="nb">hold</span> <span class="n">on</span>
 
 <span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
@@ -461,33 +477,37 @@ ans =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Graph stabilization'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Iterations'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
 <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'States of the nodes'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_03.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_03.png" alt="" /></p>
 
 <p>We can see that the system is stabilized fast. One can tune the stabilization speed by choosing matrices $Q$ and $R$ in a smart way.</p>
 
 <p>Now, we are about to add a reference term to the control to drive the system to a desired state. For instance, we can drive the system into the reference state</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
+</code></pre>
+</div>
 
 <p>We add a reference term to the control that is proportional to the reference r, $u[k] = -K_{f}x[k] + K_{r}r$. We can use linear algebra to compute the matrix $K_{r}$ in terms of the system matrices.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Kr</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">C</span> <span class="o">*</span> <span class="p">(</span><span class="n">P</span> <span class="o">-</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Kf</span> <span class="o">-</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">^</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Kr</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">C</span> <span class="o">*</span> <span class="p">(</span><span class="n">P</span> <span class="o">-</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Kf</span> <span class="o">-</span> <span class="nb">eye</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">^</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</code></pre>
+</div>
 
 <p>We drive the system to the reference state.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">itmax</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">itmax</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
 <span class="n">x</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">itmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">x</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">x_0</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">itmax</span>
     <span class="n">x</span><span class="p">(:,</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">P</span> <span class="o">-</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Kf</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">(:,</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Kr</span> <span class="o">*</span> <span class="n">r</span><span class="p">;</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clf</span>
 <span class="nb">hold</span> <span class="n">on</span>
 <span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
     <span class="nb">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">itmax</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="n">k</span><span class="p">,:),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -496,24 +516,26 @@ ans =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Controlled graph'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Iterations'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
 <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'States of the nodes'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_04.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_04.png" alt="" /></p>
 
 <p>Assume now that we can control only the node 1 and we want to drive the node 8 to the reference state r = 1. Can we do it? Let’s see.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">B</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">C</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
 <span class="n">C</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="k">if</span> <span class="nb">rank</span><span class="p">(</span><span class="n">ctrb</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">B</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">N</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'it is not controllable!'</span><span class="p">)</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>It is controllable.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Q_diag</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_0</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Q_diag</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_0</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
 <span class="n">R_diag</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">/</span> <span class="mi">5</span><span class="o">^</span><span class="mi">2</span><span class="p">;</span>
 <span class="n">Q</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">(</span><span class="n">Q_diag</span><span class="p">);</span>
 <span class="n">R</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">(</span><span class="n">R_diag</span><span class="p">);</span>
@@ -526,9 +548,10 @@ ans =
 <span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">itmax</span>
     <span class="n">x</span><span class="p">(:,</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">P</span> <span class="o">-</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Kf</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">(:,</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Kr</span> <span class="o">*</span> <span class="n">r</span><span class="p">;</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clf</span>
 <span class="nb">hold</span> <span class="n">on</span>
 <span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
     <span class="nb">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">itmax</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="n">k</span><span class="p">,:),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -537,9 +560,10 @@ ans =
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Driving node 8 to the state 1'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Iterations'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
 <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'States of the nodes'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_05.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0002/copiaRM_05.png" alt="" /></p>
 
 <p>As we can see, the node 8 is driven to the state 1 by achieving consensus in all the states of the graph.</p>
 
@@ -631,12 +655,12 @@ ans =
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
           
           - 22 October 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
     
     </div>
 
@@ -1013,12 +1037,12 @@ ans =
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
           
           - 04 February 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -1296,12 +1320,12 @@ ans =
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
           
           - 18 September 2017
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 

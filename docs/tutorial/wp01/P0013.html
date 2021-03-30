@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0013">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp01/P0013">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP01">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP01">
             Control of parameter dependent problems</a> &#8827;</small>
           </h2>
           <h1>Averaged dynamics and control for heat equations with random diffusion</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JBarcena">Jon Asier Bárcena-Petisco</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/JBarcena">Jon Asier Bárcena-Petisco</a>
                   </span>
                 </span>
               
@@ -291,7 +291,7 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/ControlsobtainV3.m""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/ControlsobtainV3.m""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <h3 id="background-and-motivation">Background and motivation</h3>
@@ -299,11 +299,12 @@ img:active{
 <p>Let us consider the random heat equation described 
 by the following system:</p>
 
-<p>[\begin{cases}\tag{1}
-y_t-\alpha \Delta y =f1_{G_0}, &amp;\text{ in } (0,T)\times G,<br />
-y=0, &amp; \text{ on } (0,T)\times \partial G,<br />
-y(0,\cdot)=y^0,  &amp; \text{ on } G,
-\end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}\tag{1}
+y_t-\alpha \Delta y =f1_{G_0}, &\text{ in } (0,T)\times G,\\
+y=0, & \text{ on } (0,T)\times \partial G,\\
+y(0,\cdot)=y^0,  & \text{ on } G,
+\end{cases} %]]></script>
 
 <p>for $G$  a domain, $G_0\subset G$ a subdomain, 
 $f$ a control,  $y^0$  the initial configuration 
@@ -312,7 +313,7 @@ random variable with density function $\rho$.
 We have that the averaged solution of (1)
 is given by:</p>
 
-<p>[\tilde y(t,x;y^0,f):=\int_0^{+\infty} y(t,x;\alpha,y^0,f)\rho(\alpha)d\alpha.]</p>
+<script type="math/tex; mode=display">\tilde y(t,x;y^0,f):=\int_0^{+\infty} y(t,x;\alpha,y^0,f)\rho(\alpha)d\alpha.</script>
 
 <p>We want to determine if, given a positive random variable 
 $\alpha$ and an initial configuration $y^0\in L^2(G)$, there 
@@ -325,35 +326,19 @@ As averaging and the Fourier transform commute, we work on the
 Fourier transform of the fundamental solution of the
 heat equation, which is given by:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[\exp(-\alpha</td>
-      <td>\xi</td>
-      <td>^2t).]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">\exp(-\alpha |\xi|^2t).</script>
 
 <p>Consequently, the Fourier transform of the average
 of the fundamental solutions is given by:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[\int_0^{+\infty} \exp (-\alpha</td>
-      <td>\xi</td>
-      <td>^2t)\rho(\alpha)d\alpha;]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">\int_0^{+\infty} \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha;</script>
 
 <p>i.e. the Laplace transform of $\rho$ evaluated in $|\xi|^2t$. 
 In particular, for $r\in(0,1)$ if $\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-\frac{r}{1-r}}}$
 we have that:</p>
 
-<p>[\tag{2}
-\int \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha\sim \exp(-C|\xi|^{2r}t^r)]</p>
+<script type="math/tex; mode=display">\tag{2}
+\int \exp (-\alpha |\xi|^2t)\rho(\alpha)d\alpha\sim \exp(-C|\xi|^{2r}t^r)</script>
 
 <p>when $|\xi|^2t\to+\infty$, which can be proved by the Laplace method.
 Thus, for those density functions 
@@ -366,7 +351,7 @@ but (2) preserves the null averaged observability
 if and only if $r&gt;1/2$, being the threshold density functions  those
 which satisfy:</p>
 
-<p>[\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-1}}.]</p>
+<script type="math/tex; mode=display">\rho(\alpha)\sim_{0^+} e^{-C\alpha^{-1}}.</script>
 
 <h3 id="some-numerical-simulations">Some numerical simulations</h3>
 
@@ -374,17 +359,18 @@ which satisfy:</p>
 the optimal control is given by $\varphi(t,x;\phi)1_{G_0}$, for $\varphi$ the 
 averaged solution of</p>
 
-<p>[\begin{cases}
--\varphi_t-\alpha \Delta \varphi=0, &amp;\text{ in } (0,T)\times G,<br />
-\varphi=0, &amp; \text{ on } (0,T)\times\partial G,<br />
-\varphi(T,\cdot)=\phi,  &amp; \text{ on } G.
-\end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{cases}
+-\varphi_t-\alpha \Delta \varphi=0, &\text{ in } (0,T)\times G,\\
+\varphi=0, & \text{ on } (0,T)\times\partial G,\\
+\varphi(T,\cdot)=\phi,  & \text{ on } G.
+\end{cases} %]]></script>
 
 <p>and $\phi$ the state which minimizes the functional:</p>
 
-<p>[J(\phi)= \frac{1}{2}\int_0^T\int_{G_0}
+<script type="math/tex; mode=display">J(\phi)= \frac{1}{2}\int_0^T\int_{G_0}
 \left|\int_0^{+\infty}\varphi(t,x;\alpha,\phi)\rho(\alpha)d\alpha\right|^2dxdt 
- \+\left\langle  y^0, \int_0^{+\infty}\varphi(0;\alpha,\phi)\rho(\alpha)d\alpha\right\rangle.]</p>
+ \\+\left\langle  y^0, \int_0^{+\infty}\varphi(0;\alpha,\phi)\rho(\alpha)d\alpha\right\rangle.</script>
 
 <p>Due to the hardness of the numerical computations in higher dimensions and to get
 better illustrations we work in $d=1$, and in particular in $G=(0,\pi)$.
@@ -421,16 +407,16 @@ detailed way when $t\in[0,1/2]$.</p>
 <center>
 <table>
 <tr>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V40.jpg" width="100%" /></th>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V40t05.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V40.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V40t05.jpg" width="100%" /></th>
 </tr>
 <tr>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V50.jpg" width="100%" /></th>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V50t05.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V50.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V50t05.jpg" width="100%" /></th>
 </tr>
 <tr>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V60.jpg" width="100%" /></th>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V60t05.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V60.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph12V60t05.jpg" width="100%" /></th>
 </tr>
 </table>
 
@@ -446,16 +432,16 @@ column we illustrate the controls with the time variable zoomed in $[0,1/2]$.
 <center>
 <table>
 <tr>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V40.jpg" width="100%" /></th>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V40t05.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V40.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V40t05.jpg" width="100%" /></th>
 </tr>
 <tr>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V50.jpg" width="100%" /></th>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V50t05.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V50.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V50t05.jpg" width="100%" /></th>
 </tr>
 <tr>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V60.jpg" width="100%" /></th>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V60t05.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V60.jpg" width="100%" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph01V60t05.jpg" width="100%" /></th>
 </tr>
 </table>
 
@@ -476,8 +462,8 @@ whereas for $\rho=1_{(0,1)}$  it diverges.</p>
 <center>
 <table>
 <tr>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12t0.jpg" /></th>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01t0.jpg" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph12t0.jpg" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph01t0.jpg" /></th>
 </tr>
 </table>
 
@@ -497,8 +483,8 @@ whereas for $\rho=1_{(0,1)}$ the solution diverges.</p>
 <center>
 <table>
 <tr>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph12t1.jpg" /></th>
-<th> <img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0013/Graph01t1.jpg" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph12t1.jpg" /></th>
+<th> <img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0013/Graph01t1.jpg" /></th>
 </tr>
 </table>
 
@@ -622,18 +608,18 @@ and remedies.</i> Inverse Probl., 26(8):085018, 2010.</p>
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/AnaN">Ana Navarro</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 03 June 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -677,15 +663,15 @@ and remedies.</i> Inverse Probl., 26(8):085018, 2010.</p>
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 03 June 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -729,12 +715,12 @@ and remedies.</i> Inverse Probl., 26(8):085018, 2010.</p>
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
           
           - 30 April 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
     
     </div>
 
@@ -823,12 +809,12 @@ and remedies.</i> Inverse Probl., 26(8):085018, 2010.</p>
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/JesusO">Jesus Oroya</a>
           
           - 01 April 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
     
     </div>
 

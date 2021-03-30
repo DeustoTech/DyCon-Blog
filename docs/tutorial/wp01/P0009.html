@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0009">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp01/P0009">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP01">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP01">
             Control of parameter dependent problems</a> &#8827;</small>
           </h2>
           <h1>Simultaneous Control with DyCon Toolbox</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/JesusO">Jesus Oroya</a>
                   </span>
                 </span>
               
@@ -291,7 +291,7 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0009/T06ODET0002_Simultaneous.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0009/T06ODET0002_Simultaneous.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <p>In this tutorial we will present a simultaneous control problem in a linear system dependent on parameters. We will use the MATLAb DyCon Toolbox library.</p>
@@ -300,71 +300,78 @@ img:active{
 
 <p>In this tutorial we need <a href="https://deustotech.github.io/dycon-toolbox-documentation/">DyCon Toolbox</a>, to install it we will have to write the following in our MATLAB console:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">unzip</span><span class="p">(</span><span class="s1">'https://github.com/DeustoTech/DyCon-Computational-Platform/archive/master.zip'</span><span class="p">)</span>
 <span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">cd</span><span class="p">,</span><span class="s1">'DyCon-toolbox-master'</span><span class="p">)))</span>
 <span class="n">StartDyConToolbox</span>    
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>You can see the code of this tutorial write the following line:</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">open</span> <span class="n">T06ODET0002_Simultaneous</span>   
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">open</span> <span class="n">T06ODET0002_Simultaneous</span>   
+</code></pre>
+</div>
 <h3 id="problem-definition">Problem definition</h3>
 
 <p>The simultaneous control problem is defined as:</p>
 
-<p>[\min <em>{u \in L^2(0,T)} \mathcal{J}\left( u\right) = 
-\min _{u \in L^2(0,T)} \frac{1}{2}  \sum</em>{\nu \in \mathcal{K}}  || x\left( T, \nu \right) - x_T ||_{\mathbb{R}^ N}^2  + 
-\frac{\beta}{2} \int_0^T u^2 \mathrm{d}t \quad \beta \in \mathbb{R}^+]</p>
+<script type="math/tex; mode=display">\min _{u \in L^2(0,T)} \mathcal{J}\left( u\right) = 
+\min _{u \in L^2(0,T)} \frac{1}{2}  \sum_{\nu \in \mathcal{K}}  || x\left( T, \nu \right) - x_T ||_{\mathbb{R}^ N}^2  + 
+\frac{\beta}{2} \int_0^T u^2 \mathrm{d}t \quad \beta \in \mathbb{R}^+</script>
 
 <p>subject to:</p>
 
-<p>[\left{
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{
 \begin{array}{ll}
-x^\prime \left( t \right) = A \left( \nu \right) x \left( t \right) + B \left( \nu \right) u \left( t \right), \quad 0 &lt; t &lt;T, <br />
+x^\prime \left( t \right) = A \left( \nu \right) x \left( t \right) + B \left( \nu \right) u \left( t \right), \quad 0 < t <T, \\
 x\left( 0 \right) = x^0.
 \end{array}
-\right.]</p>
+\right. %]]></script>
 
 <p>where:</p>
 
-<p>[\mathcal{K}= \left{ \nu_i \in \mathbb{R}, \enspace 1\leq i \leq K \right}]</p>
+<script type="math/tex; mode=display">\mathcal{K}= \left\{ \nu_i \in \mathbb{R}, \enspace 1\leq i \leq K \right\}</script>
 
 <h3 id="numerical-implementation">Numerical Implementation</h3>
 
 <p>First we import the CasAdi library in order to create symbolic variables</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
 <span class="c1">%% In this case $\nu_i$ are</span>
 <span class="n">M</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
 <span class="n">nu</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="n">M</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>Then we create the matrices of linear dynamics.</p>
 
-<p>[A_\nu = \begin{bmatrix}
-  -\nu &amp; 1 <br />
-  0    &amp; -\nu
+<script type="math/tex; mode=display">% <![CDATA[
+A_\nu = \begin{bmatrix}
+  -\nu & 1 \\
+  0    & -\nu
 \end{bmatrix} \ \ \ 
 B_\nu = \begin{bmatrix}
-0 <br />
+0 \\
 1 
-\end{bmatrix}]</p>
+\end{bmatrix} %]]></script>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">]</span> <span class="o">=</span> <span class="n">GenMatSim</span><span class="p">(</span><span class="n">nu</span><span class="p">);</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">]</span> <span class="o">=</span> <span class="n">GenMatSim</span><span class="p">(</span><span class="n">nu</span><span class="p">);</span>
+</code></pre>
+</div>
 
-<p>With these matrices we create the <code class="language-plaintext highlighter-rouge">ode</code> object</p>
+<p>With these matrices we create the <code class="highlighter-rouge">ode</code> object</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span><span class="n">T</span>  <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span><span class="n">T</span>  <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span>
 <span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
 <span class="c1">%% create linear dynamic</span>
 <span class="n">iode</span> <span class="o">=</span> <span class="n">linearode</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">tspan</span><span class="p">);</span>
 <span class="c1">%% set initial condition</span>
 <span class="n">Y0</span> <span class="o">=</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">iode</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">Y0</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>then we create the optimal control problem</p>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% Get Symbolical variable</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="c1">% Get Symbolical variable</span>
 <span class="n">Ys</span>  <span class="o">=</span> <span class="n">iode</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">sym</span><span class="p">;</span>
 <span class="n">Us</span>  <span class="o">=</span> <span class="n">iode</span><span class="o">.</span><span class="n">Control</span><span class="o">.</span><span class="n">sym</span><span class="p">;</span>
 <span class="n">ts</span>  <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'t'</span><span class="p">);</span> <span class="c1">%% &lt;= Create a symbolical time</span>
@@ -375,15 +382,17 @@ B_\nu = \begin{bmatrix}
 <span class="n">FinalCost</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'Psi'</span><span class="p">,{</span><span class="n">Ys</span><span class="p">}</span>      <span class="p">,{</span>  <span class="mf">1e7</span><span class="o">*</span><span class="p">((</span><span class="n">Ys</span><span class="o">-</span><span class="n">YT</span><span class="p">)</span><span class="o">.'*</span><span class="p">(</span><span class="n">Ys</span><span class="o">-</span><span class="n">YT</span><span class="p">))</span> <span class="p">});</span>
 <span class="c1">% Create the optimal control</span>
 <span class="n">iocp</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">PathCost</span><span class="p">,</span><span class="n">FinalCost</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Solve Optimal Control Problem with ipopt solver</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">ZerosControl</span><span class="p">(</span><span class="n">iode</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">U0</span> <span class="o">=</span> <span class="n">ZerosControl</span><span class="p">(</span><span class="n">iode</span><span class="p">);</span>
 <span class="p">[</span><span class="n">Uopt</span> <span class="p">,</span><span class="n">Yopt</span><span class="p">]</span> <span class="o">=</span>  <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">iocp</span><span class="p">,</span><span class="n">U0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
+<div class="highlighter-rouge"><pre class="highlight"><code>This is Ipopt version 3.12.3, running with linear solver mumps.
 NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
 
 Number of nonzeros in equality constraint Jacobian...:   199700
@@ -434,23 +443,26 @@ EXIT: Optimal Solution Found.
       solver         1.48         1.36         1
 Elapsed time is 3.853462 seconds.
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Compute Free solution</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Yfree</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">U0</span><span class="o">*</span><span class="mi">0</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Yfree</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">iode</span><span class="p">,</span><span class="n">U0</span><span class="o">*</span><span class="mi">0</span><span class="p">);</span>
 <span class="n">Yfree</span> <span class="o">=</span> <span class="nb">full</span><span class="p">(</span><span class="n">Yfree</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h3 id="visualization">Visualization</h3>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">;</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">Units</span> <span class="o">=</span> <span class="s1">'norm'</span><span class="p">;</span><span class="n">fig</span><span class="o">.</span><span class="n">Position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span> <span class="mf">0.1</span> <span class="mf">0.6</span> <span class="mf">0.5</span><span class="p">];</span>
 <span class="c1">%%</span>
 <span class="n">plotSimu</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="n">Yfree</span><span class="p">,</span><span class="n">Yopt</span><span class="p">,</span><span class="n">Uopt</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io//DyCon-Blog/assets/imgs/WP01/P0009/copiaRM_01.png" alt="" /></p>
+<p><img src="http://localhost:4000//DyCon-Blog/assets/imgs/WP01/P0009/copiaRM_01.png" alt="" /></p>
 
 <center><b>Figure 1. </b>The different colors represent the dynamic system under different parameters. It can be seen how the same control is obtained acting for all the dynamic systems is capable of driving the systems to the target.</center>
 
@@ -528,12 +540,12 @@ Elapsed time is 3.853462 seconds.
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JBarcena">Jon Asier Bárcena-Petisco</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/JBarcena">Jon Asier Bárcena-Petisco</a>
           
           - 23 November 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -595,18 +607,18 @@ Elapsed time is 3.853462 seconds.
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/AnaN">Ana Navarro</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/AnaN">Ana Navarro</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 03 June 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -650,15 +662,15 @@ Elapsed time is 3.853462 seconds.
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
           
           - 03 June 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -702,12 +714,12 @@ Elapsed time is 3.853462 seconds.
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/BorjanG">Borjan Geshkovski</a>
           
           - 30 April 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
     
     </div>
 

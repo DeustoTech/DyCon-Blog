@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/dp00/P0003">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/dp00/P0003">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/DP00">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/DP00">
             Dynamic Programming and Feedback Optimal Control</a> &#8827;</small>
           </h2>
           <h1>Optimal control for inverted pendulum</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/NoboruS">Noboru Sakamoto</a>
                   </span>
                 </span>
               
@@ -291,34 +291,36 @@ img:active{
       <div class="col-md-10 col-md-offset-1">
         
           
-            <a href="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/LQ_control_InvertedPend.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
+            <a href="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0003/LQ_control_InvertedPend.zip""><i class="fa fa-download fa-lg"></i>Download Code</a>
           
         
         <p>This tutorial aims to show how to build equations of motion, control system model and optimally stabilizing controllers for the inverted pendulum. This tutorial is a standard material in control engineering education. We first derive the equations of motion via Lagrange’s method using Symbolic Math Toolbox. Then, a linear control model is derived. The optimal controller is designed using linear quadratic regulator theory. Simulations are carried out for the inverted pendulum nonlinear model. In Appendix, finite horizon linear optimal control is shown by solving a differential Riccati equation.</p>
 
 <p>A schematic of an inverted pendulum is shown below.</p>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/Pendulum_pic.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0003/Pendulum_pic.png" alt="" /></p>
 
 <p>A pendulum is attached with a cart that moves horizontally due to the force $u$ without friction. The pendulum freely rotates around the pivot on the cart. It is assumed that the cart and pendulum move in the vertical plane. The masses of the pendulum and cart are $m$ and $M$, respectively, and the length of the pendulum is $2l$. The position of the cart is denoted by $x$ and the angle of the pendulum from the vertical axis is $\theta$.</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">t</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">syms</span> <span class="n">t</span><span class="p">;</span>
 <span class="n">syms</span> <span class="n">x</span> <span class="n">dx</span> <span class="n">theta</span> <span class="n">dtheta</span><span class="p">;</span>
 <span class="n">syms</span> <span class="n">M</span> <span class="n">m</span> <span class="n">l</span> <span class="n">g</span><span class="p">;</span>
 <span class="n">syms</span> <span class="n">Lgr</span> <span class="n">Lgr_x</span> <span class="n">Lgr_dx</span> <span class="n">Lgr_theta</span> <span class="n">Lgr_dtheta</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h2 id="derivation-of-equations-of-motion">Derivation of equations of motion</h2>
 
 <p>The Lagrangian $L$ consists of the kinetic energy and potential energy, which is given by</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Lgr</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="o">*</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">m</span><span class="o">*</span><span class="n">l</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="n">dtheta</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">m</span><span class="o">*</span><span class="n">l</span><span class="o">*</span><span class="n">dx</span><span class="o">*</span><span class="n">dtheta</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="k">...</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Lgr</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="o">*</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">m</span><span class="o">*</span><span class="n">l</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="n">dtheta</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">m</span><span class="o">*</span><span class="n">l</span><span class="o">*</span><span class="n">dx</span><span class="o">*</span><span class="n">dtheta</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="k">...</span>
         <span class="o">+</span> <span class="mi">1</span><span class="p">/</span><span class="mi">2</span> <span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">m</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">l</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Compute derivatives of Lagrangian</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Lgr_x</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">Lgr</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Lgr_x</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">Lgr</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
 <span class="n">Lgr_dx</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">Lgr</span><span class="p">,</span><span class="n">dx</span><span class="p">);</span>
 <span class="n">Lgr_theta</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">Lgr</span><span class="p">,</span><span class="n">theta</span><span class="p">);</span>
 <span class="n">Lgr_dtheta</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">Lgr</span><span class="p">,</span><span class="n">dtheta</span><span class="p">);</span>
@@ -330,9 +332,10 @@ img:active{
 <span class="n">Lgr_dx_f</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Lgr_dx</span><span class="p">,[</span><span class="n">x</span> <span class="n">dx</span> <span class="n">theta</span> <span class="n">dtheta</span><span class="p">],[</span><span class="n">x_f</span> <span class="n">dx_f</span> <span class="n">theta_f</span> <span class="n">dtheta_f</span><span class="p">])</span>
 <span class="n">Lgr_theta_f</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Lgr_theta</span><span class="p">,[</span><span class="n">x</span> <span class="n">dx</span> <span class="n">theta</span> <span class="n">dtheta</span><span class="p">],[</span><span class="n">x_f</span> <span class="n">dx_f</span> <span class="n">theta_f</span> <span class="n">dtheta_f</span><span class="p">])</span>
 <span class="n">Lgr_dtheta_f</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Lgr_dtheta</span><span class="p">,[</span><span class="n">x</span> <span class="n">dx</span> <span class="n">theta</span> <span class="n">dtheta</span><span class="p">],[</span><span class="n">x_f</span> <span class="n">dx_f</span> <span class="n">theta_f</span> <span class="n">dtheta_f</span><span class="p">])</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>
 Lgr_dx_f =
 
 M*diff(x_f(t), t) + m*diff(x_f(t), t) + l*m*cos(theta_f(t))*diff(theta_f(t), t)
@@ -348,20 +351,22 @@ Lgr_dtheta_f =
 (4*m*diff(theta_f(t), t)*l^2)/3 + m*cos(theta_f(t))*diff(x_f(t), t)*l
 
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Coumpute Lagrange’s equations of motion with external force $u$</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Leq</span> <span class="n">Eqn</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Leq</span> <span class="n">Eqn</span><span class="p">;</span>
 <span class="n">Leq</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">([</span><span class="n">Lgr_dx_f</span><span class="p">;</span> <span class="n">Lgr_dtheta_f</span><span class="p">],</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="p">[</span><span class="n">Lgr_x</span><span class="p">;</span> <span class="n">Lgr_theta_f</span><span class="p">];</span>
 <span class="n">syms</span> <span class="n">Ddx</span> <span class="n">Ddtheta</span> <span class="n">u</span><span class="p">;</span>
 <span class="n">Leq</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Leq</span><span class="p">,[</span><span class="nb">diff</span><span class="p">(</span><span class="n">x_f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="p">,</span> <span class="nb">diff</span><span class="p">(</span><span class="n">theta_f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="p">],[</span><span class="n">Ddx</span><span class="p">,</span> <span class="n">Ddtheta</span><span class="p">])</span><span class="o">-</span><span class="p">[</span><span class="n">u</span><span class="p">;</span> <span class="mi">0</span><span class="p">];</span>
 <span class="n">Eqn</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">Leq</span><span class="o">==</span><span class="mi">0</span><span class="p">,[</span><span class="n">Ddx</span><span class="p">,</span><span class="n">Ddtheta</span><span class="p">]);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Construct state space equations of the first order equation</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">x1</span> <span class="n">x2</span> <span class="n">x3</span> <span class="n">x4</span> <span class="n">X</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">syms</span> <span class="n">x1</span> <span class="n">x2</span> <span class="n">x3</span> <span class="n">x4</span> <span class="n">X</span><span class="p">;</span>
 <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">x1</span><span class="p">;</span><span class="n">x2</span><span class="p">;</span><span class="n">x3</span><span class="p">;</span><span class="n">x4</span><span class="p">];</span>
 <span class="n">subs</span><span class="p">(</span><span class="n">Eqn</span><span class="o">.</span><span class="n">Ddx</span><span class="p">,</span> <span class="p">[</span><span class="n">x_f</span><span class="p">,</span> <span class="nb">diff</span><span class="p">(</span><span class="n">x_f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="n">t</span><span class="p">),</span> <span class="n">theta_f</span><span class="p">,</span> <span class="nb">diff</span><span class="p">(</span><span class="n">theta_f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="n">t</span><span class="p">)],</span> <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">]);</span>
 <span class="n">subs</span><span class="p">(</span><span class="n">Eqn</span><span class="o">.</span><span class="n">Ddtheta</span><span class="p">,</span> <span class="p">[</span><span class="n">x_f</span><span class="p">,</span> <span class="nb">diff</span><span class="p">(</span><span class="n">x_f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="n">t</span><span class="p">),</span> <span class="n">theta_f</span><span class="p">,</span> <span class="nb">diff</span><span class="p">(</span><span class="n">theta_f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="n">t</span><span class="p">)],</span> <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">]);</span>
@@ -374,16 +379,18 @@ Lgr_dtheta_f =
 
 <span class="n">syms</span> <span class="n">F</span><span class="p">;</span>
 <span class="n">F</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">Nsys</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Construct linear model $\dot{x} = Ax+Bu$</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Amat</span> <span class="n">Bmat</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">syms</span> <span class="n">Amat</span> <span class="n">Bmat</span>
 <span class="n">Amat</span> <span class="o">=</span> <span class="n">subs</span><span class="p">(</span><span class="n">jacobian</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">X</span><span class="p">),[</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">,</span><span class="n">x4</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">Bmat</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">subs</span><span class="p">(</span><span class="n">Nsys</span><span class="p">,[</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">,</span><span class="n">x4</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]),</span><span class="n">u</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>
 Amat =
 
 [ 0, 1,                             0, 0]
@@ -400,21 +407,23 @@ Bmat =
  -3/(l*(4*M + m))
 
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>We will use the following physical parameters m = 0.3 [kg]; M = 0.8 [kg]; l = 0.25 [m]; g = 9.8 [m/s^2];</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="nb">double</span><span class="p">(</span><span class="n">subs</span><span class="p">(</span><span class="n">Amat</span><span class="p">,[</span><span class="n">m</span> <span class="n">M</span> <span class="n">l</span> <span class="n">g</span><span class="p">],[</span><span class="mf">0.3</span> <span class="mf">0.8</span> <span class="mf">0.25</span> <span class="mf">9.8</span><span class="p">]));</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="nb">double</span><span class="p">(</span><span class="n">subs</span><span class="p">(</span><span class="n">Amat</span><span class="p">,[</span><span class="n">m</span> <span class="n">M</span> <span class="n">l</span> <span class="n">g</span><span class="p">],[</span><span class="mf">0.3</span> <span class="mf">0.8</span> <span class="mf">0.25</span> <span class="mf">9.8</span><span class="p">]));</span>
 <span class="n">B</span> <span class="o">=</span> <span class="nb">double</span><span class="p">(</span><span class="n">subs</span><span class="p">(</span><span class="n">Bmat</span><span class="p">,[</span><span class="n">m</span> <span class="n">M</span> <span class="n">l</span> <span class="n">g</span><span class="p">],[</span><span class="mf">0.3</span> <span class="mf">0.8</span> <span class="mf">0.25</span> <span class="mf">9.8</span><span class="p">]));</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h2 id="lqr-controller-design">LQR controller design</h2>
 
 <p>We design a linear feedback controller that minimizes the cost function</p>
 
-<p>[J =\int_0^{\infty} x^TQx + u^2\,dt]</p>
+<script type="math/tex; mode=display">J =\int_0^{\infty} x^TQx + u^2\,dt</script>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">Q</span> <span class="o">=</span> <span class="nb">diag</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]);</span>
 <span class="p">[</span><span class="n">ricsol</span><span class="p">,</span><span class="n">cleig</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">report</span><span class="p">]</span> <span class="o">=</span> <span class="n">care</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">Q</span><span class="p">);</span>
 
 <span class="n">f_ctr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">K</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
@@ -422,68 +431,75 @@ Bmat =
 
 <span class="n">tspan</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">];</span>
 <span class="n">ini</span> <span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.91</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span> <span class="c1">%%1.1894299</span>
-<span class="p">[</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_linear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
+<span class="p">[</span><span class="n">time</span><span class="p">,</span> <span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_linear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
 <span class="n">input_linear</span> <span class="o">=</span> <span class="n">f_ctr</span><span class="p">(</span><span class="n">state</span><span class="o">'</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Simulations with linear and nonlinear models</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nsys_f</span> <span class="o">=</span> <span class="n">matlabFunction</span><span class="p">(</span><span class="n">Nsys</span><span class="p">);</span> <span class="c1">%% function of M,g,l,m,u,x2,x3,x4</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Nsys_f</span> <span class="o">=</span> <span class="n">matlabFunction</span><span class="p">(</span><span class="n">Nsys</span><span class="p">);</span> <span class="c1">%% function of M,g,l,m,u,x2,x3,x4</span>
 <span class="n">i_nonlinear</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">Nsys_f</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">9.8</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="n">f_ctr</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
 
 <span class="p">[</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_nonlinear</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span>
 <span class="n">input_nonlinear</span> <span class="o">=</span> <span class="n">f_ctr</span><span class="p">(</span><span class="n">staten</span><span class="o">'</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
-<span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clf</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">hold</span> <span class="n">on</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">grid</span> <span class="n">on</span>
 <span class="nb">legend</span><span class="p">(</span><span class="s1">'Linear model'</span><span class="p">,</span> <span class="s1">'Nonlinear model'</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Cart position [m]'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_01.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_01.png" alt="" /></p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
-<span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">3</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clf</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">state</span><span class="p">(:,</span><span class="mi">3</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">hold</span> <span class="n">on</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">staten</span><span class="p">(:,</span><span class="mi">3</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">grid</span> <span class="n">on</span>
 <span class="nb">legend</span><span class="p">(</span><span class="s1">'Linear model'</span><span class="p">,</span> <span class="s1">'Nonlinear model'</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Pendulum angle [rad]'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_02.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_02.png" alt="" /></p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
-<span class="nb">plot</span><span class="p">(</span><span class="nb">time</span><span class="p">,</span> <span class="n">input_linear</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clf</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">input_linear</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span><span class="nb">grid</span> <span class="n">on</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span> <span class="n">input_nonlinear</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">legend</span><span class="p">(</span><span class="s1">'Linear model'</span><span class="p">,</span><span class="s1">'Nonlinear model'</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Input response'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_03.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_03.png" alt="" /></p>
 
 <h2 id="appendix-finite-interval-optimal-control-with-dre-">Appendix (finite interval optimal control with DRE )</h2>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rho</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">rho</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">S</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">*</span> <span class="nb">eye</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h2 id="solve--dxdt--xa--ax---xbr-1bx-q-xt--s-dre">Solve -dX/dt = XA + A’X - X<em>B</em>R^{-1}<em>B’</em>X +Q, X(T) = S (DRE)</h2>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tspan_ric</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span> <span class="c1">%% change horizon!</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">tspan_ric</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span> <span class="c1">%% change horizon!</span>
 <span class="n">iniric</span> <span class="o">=</span> <span class="n">S</span><span class="p">(:);</span>
 <span class="n">i_ric</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">f_dric</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span> <span class="o">*</span> <span class="n">B</span><span class="o">.'</span><span class="p">,</span> <span class="n">Q</span><span class="p">);</span>
 <span class="n">opts</span> <span class="o">=</span> <span class="nb">odeset</span><span class="p">(</span><span class="s1">'RelTol'</span><span class="p">,</span><span class="mf">1e-10</span><span class="p">,</span><span class="s1">'AbsTol'</span><span class="p">,</span><span class="mf">1e-10</span><span class="p">);</span>
 <span class="p">[</span><span class="n">time_ric</span><span class="p">,</span> <span class="n">X</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_ric</span><span class="p">,</span> <span class="n">tspan_ric</span><span class="p">,</span> <span class="n">iniric</span><span class="p">,</span> <span class="n">opts</span><span class="p">);</span>
 <span class="nb">reshape</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="k">end</span><span class="p">,:),</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">-</span><span class="n">ricsol</span> <span class="c1">%% Convergence check with sol of ARE</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>
 ans =
 
    1.0e-04 *
@@ -494,13 +510,14 @@ ans =
    -0.0065   -0.0099   -0.0295   -0.0053
 
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Construct feedback controller using interpolation of DRE sol</p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gain</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="nb">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
-<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="n">gain</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span> <span class="o">=</span> <span class="n">B</span><span class="o">'</span> <span class="o">*</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">,:),</span><span class="nb">size</span><span class="p">(</span><span class="n">A</span><span class="p">));</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">gain</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="nb">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">gain</span><span class="p">(</span><span class="nb">i</span><span class="p">,:)</span> <span class="o">=</span> <span class="n">B</span><span class="o">'</span> <span class="o">*</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="nb">i</span><span class="p">,:),</span><span class="nb">size</span><span class="p">(</span><span class="n">A</span><span class="p">));</span>
 <span class="k">end</span>
 <span class="n">gain_t</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="nb">interp1</span><span class="p">(</span><span class="n">time_ric</span><span class="p">,</span><span class="n">gain</span><span class="p">,</span><span class="n">t</span><span class="p">);</span>
 <span class="n">u_dr</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span><span class="n">gain_t</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
@@ -509,12 +526,13 @@ ans =
 <span class="n">i_nonlinear_dre</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">Nsys_f</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">9.8</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="n">u_dr</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
 <span class="p">[</span><span class="n">timedn</span><span class="p">,</span> <span class="n">statedn</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ode45</span><span class="p">(</span><span class="n">i_nonlinear_dre</span><span class="p">,</span><span class="n">tspan</span><span class="p">,</span> <span class="n">ini</span><span class="p">);</span><span class="c1">%%</span>
 <span class="n">input_dric</span><span class="o">=</span><span class="p">[];</span>
-<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">timedn</span><span class="p">)</span>
-    <span class="n">input_dric</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">u_dr</span><span class="p">(</span><span class="n">timedn</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">statedn</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="o">'</span><span class="p">);</span>
+<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">timedn</span><span class="p">)</span>
+    <span class="n">input_dric</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">u_dr</span><span class="p">(</span><span class="n">timedn</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="n">statedn</span><span class="p">(</span><span class="nb">i</span><span class="p">,:)</span><span class="o">'</span><span class="p">);</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clf</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clf</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">timedn</span><span class="p">,</span> <span class="n">statedn</span><span class="p">(:,</span><span class="mi">3</span><span class="p">),</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">grid</span> <span class="n">on</span>
 <span class="nb">hold</span> <span class="n">on</span>
@@ -522,19 +540,21 @@ ans =
 <span class="nb">legend</span><span class="p">(</span><span class="s1">'control with DRE [10,0]'</span><span class="p">,</span> <span class="s1">'control with ARE'</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Pendulum responses with nonlinear model'</span><span class="p">)</span>
 <span class="nb">hold</span> <span class="n">off</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_04.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_04.png" alt="" /></p>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">plot</span><span class="p">(</span><span class="n">timedn</span><span class="p">,</span><span class="n">input_dric</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">plot</span><span class="p">(</span><span class="n">timedn</span><span class="p">,</span><span class="n">input_dric</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">hold</span> <span class="n">on</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">timen</span><span class="p">,</span><span class="n">input_nonlinear</span><span class="p">,</span><span class="s1">'ro'</span><span class="p">)</span>
 <span class="nb">grid</span> <span class="n">on</span>
 <span class="nb">legend</span><span class="p">(</span><span class="s1">'input with ARE'</span><span class="p">,</span><span class="s1">'input with DRE [10,0]'</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'input responses with nonlinear model'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_05.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/DP00/P0003/copiaRM_05.png" alt="" /></p>
 
         <hr>
       </div>
@@ -619,12 +639,12 @@ ans =
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/CarlosE">Carlos Esteve</a>
           
           - 22 October 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">python</button>
     
     </div>
 
@@ -1064,12 +1084,12 @@ ans =
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/AlejandroC">Alejandro Cunillera</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/AlejandroC">Alejandro Cunillera</a>
           
           - 26 October 2018
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -1284,12 +1304,12 @@ ans =
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
           
           - 18 September 2017
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 

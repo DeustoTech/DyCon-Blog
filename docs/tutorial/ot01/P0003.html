@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/ot01/P0003">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/ot01/P0003">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/OT01">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/OT01">
             Optimal Control in OpenFOAM</a> &#8827;</small>
           </h2>
           <h1>Interior Control of the Heat Equation with the Steepest Descent Method and OpenFOAM</h1>
@@ -225,14 +225,14 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JoseV">José Vicente</a>,
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/JoseV">José Vicente</a>,
                   </span>
                 </span>
               
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/VictorH">Victor Hernández</a>
                   </span>
                 </span>
               
@@ -339,13 +339,15 @@ img:active{
 
 <p>The solver must be compiled in the terminal. It is advisable to first clean previous compilations with</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wclean
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>wclean
+</code></pre>
+</div>
 
 <p>and then use</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wmake
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>wmake
+</code></pre>
+</div>
 
 <h3 id="prerequisites">Prerequisites</h3>
 
@@ -357,10 +359,11 @@ img:active{
 
 <p>In order to run the solver move to the case folder <em>heatAdjoinFoamCase</em> and type in the command line</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./Allprepare
+<div class="highlighter-rouge"><pre class="highlight"><code>./Allprepare
 
 heatAdjointFoam
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>The <em>heatAdjointFoam</em> solver has been tested in a square domain <img src="https://latex.codecogs.com/gif.latex?%5B0%2C%201%5D%20%5Ctimes%20%5B0%2C%201%5D" /> with zero Dirichlet boundary conditions, <img src="https://latex.codecogs.com/gif.latex?%5Cepsilon%3D100" />, and <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_1%20%3D%2010%5E%7B-3%7D%2C10%5E%7B-4%7D%2C10%5E%7B-5%7D%2C10%5E%7B-6%7D" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_2%20%3D%201" />, <img src="https://latex.codecogs.com/gif.latex?%5Cbeta_3%20%3D%200" />. The target function is <img src="https://latex.codecogs.com/gif.latex?y_d%20%3D%20xy%20%5Csin%20%5Cleft%28%20%5Cpi%20x%20%5Cright%29%20%5Csin%20%5Cleft%28%20%5Cpi%20y%20%5Cright%29" />.</li>
@@ -398,18 +401,21 @@ heatAdjointFoam
 
 <p>It might be needed to use</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i -e 's/\r$//' filename
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>sed -i -e 's/\r$//' filename
+</code></pre>
+</div>
 
 <p>and</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x filename
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>chmod +x filename
+</code></pre>
+</div>
 
 <p>in order to be able to execute</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./filename
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>./filename
+</code></pre>
+</div>
 
         <hr>
       </div>
@@ -908,12 +914,12 @@ heatAdjointFoam
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JoseV">José Vicente</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/JoseV">José Vicente</a>
           
           - 23 July 2018
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">Open Foam</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">Open Foam</button>
     
     </div>
 
@@ -957,15 +963,15 @@ heatAdjointFoam
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JoseV">José Vicente</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/JoseV">José Vicente</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/VictorH">Victor Hernández</a>
           
           - 03 July 2018
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">Open Foam</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">Open Foam</button>
     
     </div>
 
@@ -1009,12 +1015,12 @@ heatAdjointFoam
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JoseV">José Vicente</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/JoseV">José Vicente</a>
           
           - 30 June 2018
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">Open Foam</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">Open Foam</button>
     
     </div>
 
@@ -1076,15 +1082,15 @@ heatAdjointFoam
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JoseV">José Vicente</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/JoseV">José Vicente</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/VictorH">Victor Hernández</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/VictorH">Victor Hernández</a>
           
           - 29 June 2018
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">Open Foam</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn btn-secondary btn-sm" style="margin-left: auto;">Open Foam</button>
     
     </div>
 

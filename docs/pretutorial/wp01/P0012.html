@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/pretutorial/wp01/P0012">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/pretutorial/wp01/P0012">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP01">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP01">
             Control of parameter dependent problems</a> &#8827;</small>
           </h2>
           <h1>Optimal Control Problem vs  Classification Problem in DyCon Toolbox</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/JesusO">Jesus Oroya</a>
                   </span>
                 </span>
               
@@ -299,39 +299,41 @@ img:active{
 <h2 id="generación-de-datos">Generación de datos</h2>
 
 <p>Para resolver un problema de clasificación supervisada necesitamos datos de entrada ${ \vec{x}<em>{i} }</em>{i=1}^N$ y de salida ${ \vec{y}<em>{i} }</em>{i=1}^N$. Eso lo generaremos de manera sintéctica con las siguientes lineas de código</p>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">clear</span><span class="p">;</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="nb">clear</span><span class="p">;</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
 <span class="n">xdata</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
 <span class="n">ydata</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">];</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>Podemos ver los datos generados</p>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">plot</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span><span class="n">ydata</span><span class="p">,</span><span class="s1">'o-'</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'x-data'</span><span class="p">)</span>
 <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'y-data'</span><span class="p">)</span>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Data'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'data.png'</span><span class="p">,</span><span class="s1">'-dpng'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<p><img src="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP01/P0012/data.png" alt="" /></p>
+<p><img src="http://localhost:4000/DyCon-Blog/assets/imgs/WP01/P0012/data.png" alt="" /></p>
 
 <p>Ahora queremos una ecuación diferencial controlada para una variable $z(t)$ tal que cuando reciba una condición inicial $z(0) = x_i$ evolucione durante $t=1$, y devuelva $z(t)=y_i$, esto para $\forall i \in {1,\dots,N}$.</p>
 
 <p>Es decir una ecuación diferencial, tal que</p>
 
-<p>[\begin{gather<em>}
-    \forall {x_i,y_i}
+<script type="math/tex; mode=display">\begin{gather*}
+    \forall \{x_i,y_i\}
     \rightarrow
     \begin{cases}
-        \dot{z(t)} = f(z(t),u(t)) <br />
-        z(0) = x_i <br />
+        \dot{z(t)} = f(z(t),u(t)) \\
+        z(0) = x_i \\
         z(1) = \mathcal{P} y_i 
     \end{cases}
-\end{gather</em>}]</p>
+\end{gather*}</script>
 
 <p>Donde $\mathcal{P}$ es una proyección del 
 Es decir es una</p>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sigma</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nb">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">sigma</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nb">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 <span class="c1">%% Dynamic definition</span>
 <span class="nb">import</span> <span class="n">casadi</span><span class="o">.*</span>
 <span class="n">As</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'A'</span><span class="p">,[</span><span class="mi">2</span> <span class="mi">2</span><span class="p">]);</span>
@@ -339,8 +341,8 @@ Es decir es una</p>
 <span class="n">zs</span> <span class="o">=</span> <span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s1">'z'</span><span class="p">,[</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span> <span class="mi">1</span><span class="p">]);</span>
 <span class="c1">% Create a Big matrices</span>
 <span class="n">Afull</span> <span class="o">=</span>  <span class="n">SX</span><span class="o">.</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">);</span>
-<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-   <span class="n">ind</span> <span class="o">=</span> <span class="p">((</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">):(</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">);</span>
+<span class="k">for</span> <span class="nb">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+   <span class="n">ind</span> <span class="o">=</span> <span class="p">((</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">):(</span><span class="nb">i</span><span class="o">*</span><span class="mi">2</span><span class="p">);</span>
    <span class="n">Afull</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span><span class="n">ind</span><span class="p">)</span> <span class="o">=</span> <span class="n">As</span><span class="p">;</span> 
 <span class="k">end</span>
 <span class="c1">%</span>
@@ -351,9 +353,10 @@ Es decir es una</p>
 <span class="n">us</span> <span class="o">=</span> <span class="p">[</span><span class="n">As</span><span class="p">(:);</span><span class="n">bs</span><span class="p">];</span>
 <span class="c1">% define the dynamic equation</span>
 <span class="n">Fs</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'F'</span><span class="p">,{</span><span class="n">ts</span><span class="p">,</span><span class="n">zs</span><span class="p">,</span><span class="n">us</span><span class="p">},{</span><span class="n">Afull</span><span class="o">*</span><span class="n">sigma</span><span class="p">(</span><span class="n">zs</span><span class="p">)</span> <span class="o">+</span> <span class="n">bfull</span><span class="p">});</span>
-</code></pre></div></div>
-<p>Creamos el objeto <code class="language-plaintext highlighter-rouge">ode</code></p>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span> <span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Creamos el objeto <code class="highlighter-rouge">ode</code></p>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">Nt</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span> <span class="n">tspan</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">Nt</span><span class="p">);</span>
 <span class="c1">%</span>
 <span class="n">idyn</span> <span class="o">=</span> <span class="n">ode</span><span class="p">(</span><span class="n">Fs</span><span class="p">,</span><span class="n">zs</span><span class="p">,</span><span class="n">us</span><span class="p">,</span><span class="n">tspan</span><span class="p">);</span> <span class="c1">% &lt;- idyn is a ode object of DyCon Toolbox</span>
 <span class="n">SetIntegrator</span><span class="p">(</span><span class="n">idyn</span><span class="p">,</span><span class="s1">'RK4'</span><span class="p">)</span> <span class="c1">% &lt;- For solve you need choose a numerical squeme</span>
@@ -362,23 +365,26 @@ Es decir es una</p>
 <span class="n">z0</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">)</span> <span class="o">=</span> <span class="n">xdata</span><span class="o">'</span><span class="p">;</span>
 <span class="c1">% put in idyn object </span>
 <span class="n">idyn</span><span class="o">.</span><span class="n">InitialCondition</span> <span class="o">=</span> <span class="n">z0</span><span class="p">;</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <h2 id="optimal-control-definition">Optimal Control Definition</h2>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span><span class="p">];</span> <span class="c1">% no optimize P</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">P</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span><span class="p">];</span> <span class="c1">% no optimize P</span>
 <span class="n">Pfull</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">Pzminusy</span> <span class="o">=</span> <span class="n">P</span><span class="o">*</span><span class="nb">reshape</span><span class="p">(</span><span class="n">zs</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="o">-</span><span class="n">ydata</span><span class="p">;</span> <span class="c1">% &lt;-- (P*z_i - y_i)</span>
 <span class="n">L</span>   <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'L'</span><span class="p">,</span>  <span class="p">{</span><span class="n">ts</span><span class="p">,</span><span class="n">zs</span><span class="p">,</span><span class="n">us</span><span class="p">},{</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">As</span><span class="o">.^</span><span class="mi">2</span><span class="p">))</span>  <span class="o">+</span> <span class="n">bs</span><span class="o">'*</span><span class="n">bs</span>  <span class="p">});</span>
 <span class="n">Psi</span> <span class="o">=</span> <span class="n">casadi</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">'Psi'</span><span class="p">,{</span><span class="n">zs</span><span class="p">}</span>      <span class="p">,{</span> <span class="mf">1e5</span><span class="o">*</span><span class="p">(</span><span class="n">Pzminusy</span><span class="o">*</span><span class="n">Pzminusy</span><span class="o">'</span><span class="p">)</span> <span class="p">});</span>
 <span class="c1">%</span>
 <span class="n">iocp</span> <span class="o">=</span> <span class="n">ocp</span><span class="p">(</span><span class="n">idyn</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">Psi</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h2 id="solve">Solve</h2>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Uopt</span><span class="p">,</span><span class="n">Zopt</span><span class="p">]</span> <span class="o">=</span> <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">iocp</span><span class="p">,</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">idyn</span><span class="p">));</span>
-</code></pre></div></div>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="n">Uopt</span><span class="p">,</span><span class="n">Zopt</span><span class="p">]</span> <span class="o">=</span> <span class="n">IpoptSolver</span><span class="p">(</span><span class="n">iocp</span><span class="p">,</span><span class="n">ZerosControl</span><span class="p">(</span><span class="n">idyn</span><span class="p">));</span>
+</code></pre>
+</div>
 
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%% Plot</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="c1">%% Plot</span>
 <span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">clf</span>
 <span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
@@ -402,9 +408,10 @@ Es decir es una</p>
 <span class="nb">title</span><span class="p">(</span><span class="s1">'Optimal Control - b(t)'</span><span class="p">)</span>
 <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'time'</span><span class="p">)</span>
 <span class="nb">legend</span><span class="p">({</span><span class="s1">'b_1'</span><span class="p">,</span><span class="s1">'b_2'</span><span class="p">},</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'bestoutside'</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>Animation</p>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="nb">clf</span>
 <span class="nb">hold</span> <span class="n">on</span>
 
@@ -431,7 +438,8 @@ Es decir es una</p>
    <span class="k">end</span>
     <span class="nb">pause</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
 <span class="k">end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
         <hr>
       </div>

@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0001">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/tutorial/wp05/P0001">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP05">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP05">
             Models involving memory terms and hybrid PDE+ODE systems</a> &#8827;</small>
           </h2>
           <h1>Solving an optimal control problem arisen in ecology with AMPL</h1>
@@ -225,14 +225,14 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/JiaminZ">Jiamin Zhu</a>,
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/JiaminZ">Jiamin Zhu</a>,
                   </span>
                 </span>
               
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/EnriqueZ">Enrique Zuazua</a>
                   </span>
                 </span>
               
@@ -305,15 +305,15 @@ img:active{
 
 <p>We are interested in optimal control problems subject to a class of diffusion-reaction systems that describes the growth and spread of an introduced population of organisms</p>
 
-<p>[\begin{equation}  \label{pde}
-y_t - y_{xx} = f(y), \quad x\in \mathbb{R}, \quad t \in \mathbb{R}^+,<br />
-\end{equation}]</p>
+<script type="math/tex; mode=display">\begin{equation}  \label{pde}
+y_t - y_{xx} = f(y), \quad x\in \mathbb{R}, \quad t \in \mathbb{R}^+,  
+\end{equation}</script>
 
 <p>where</p>
 
-<p>[\begin{equation}  \label{fyatet}
+<script type="math/tex; mode=display">\begin{equation}  \label{fyatet}
 f(y)=a y(1-y)(\theta-y),
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>is the reaction term that represents local reactions, and $y(t, x) : \mathbb{R}^+ \times \mathbb{R} \rightarrow \mathbb{R}$ is the state of the system. Here $a&lt;0$ and $\theta \in [0,1]$ are two real parameters.</p>
 
@@ -325,9 +325,9 @@ f(y)=a y(1-y)(\theta-y),
 For system (\ref{pde}), there is a propagation phenomenon: one of the state $y=0$, or $y=1$, or $y=\theta$, propagates in the space.
 This phenomenon is generally described by <i>traveling wave solution</i> of the form,</p>
 
-<p>[\begin{equation} \label{tw}
+<script type="math/tex; mode=display">\begin{equation} \label{tw}
 y(t,x) = Y(x - ct), \quad x \in \mathbb{R}
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>which connects two of the three constant solutions of the system (\ref{pde}). Here the constant $c \in \mathbb{R}$ is the wave speed, and $Y$ is called the wave profile. Typically, the wave speed and the wave profile depend on the parameters $a$ and $\theta$.</p>
 
@@ -339,17 +339,17 @@ y(t,x) = Y(x - ct), \quad x \in \mathbb{R}
 
 <p>Let $\Omega=[-L,L]\subset\mathbb{ {R} }$ and $T\in\mathbb{ {R}^{+} }$ be the given domain and final time, respectively. Find $u=(a,\theta)$ that minimizes the cost functional</p>
 
-<p>[\begin{equation}
+<script type="math/tex; mode=display">\begin{equation}
 \label{costfun}
 J(u)=\int_{\Omega}|y(T,x)-y^{d}(x)|^{2}dx+K\int_{0}^{T}|\dot{ {a} }(t)|^{2}+|\dot{ {\theta} }(t)|^{2}dt,
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>such that the state $y$ satisfies</p>
 
-<p>[\begin{equation}
+<script type="math/tex; mode=display">\begin{equation}
 \label{eqn_difreac}
 y_{t}(t,x)-\triangle y(t,x)=f(x,u(t)),\quad (t,x)\in[0,T]\times\Omega,
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>$\partial_{x}y(t,x)=0,\quad t\in[0,T],\quad x\in\partial\Omega$ , where $f(x,u(t))=a(t)y(t,x)(1-y(t,x))(\theta(t)-y(t,x))$, and the control $u=(a,\theta)$ satisfies $a(t)\in[a_{min},a_{max}],\quad,\theta(t)\in[\theta_{min},\theta_{max}]\quad t\in[0,T]$, where $y^{d}$ is a desired traveling wave solution of the form (\ref{tw}),
 $a_{min},a_{max}$ are non positive constants, and $\theta_{max},\theta_{min}$ are constants between $0$ and $1$.</p>
@@ -360,17 +360,17 @@ $a_{min},a_{max}$ are non positive constants, and $\theta_{max},\theta_{min}$ ar
 
 <p>We can now write the discrete version of the cost functional (\ref{costfun}) by</p>
 
-<p>[\begin{equation}
+<script type="math/tex; mode=display">\begin{equation}
 \label{pb_ocp_dist2}
 J^D(u)=\sum_{j=0}^{N_x}|y_{j}^{N_t}-y^d(x^j)|^2 \Delta x^2+\frac{K}{\Delta t^2}\sum_{k=1}^{N_t}\left(|a^{k}-a^{k-1}|^2+|\theta^{k}-\theta^{k-1}|^2 \right)
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>Then, we need to discretize the state equation (\ref{eqn_difreac}). For the stability of numerical calculations, we use implicit finite difference schemes. Recall that the basic idea of finite difference schemes is to replace derivatives by finite differences. Here, we use Crank-Nicolson Scheme, which is second-order accurate, and thus we approximate equation (\ref{eqn_difreac}) by</p>
 
-<p>[\begin{equation}
+<script type="math/tex; mode=display">\begin{equation}
 \label{pb_disc_cn}
 \frac{y_j^{k+1} - y_j^k}{\Delta t} = \frac{1}{2} \big( \frac{y_{j+1}^{k+1} - 2 y_{j}^{k+1} + y_{j-1}^{k+1} }{| \Delta x|^2} + \frac{y_{j+1}^{k} - 2 y_{j}^{k+1}+ y_{j-1}^{k+1} }{| \Delta x|^2} \big) + \frac{ f(y_j^{k+1},u^{k+1}) + f(y_j^k,u^k)}{2},
-\end{equation}]</p>
+\end{equation}</script>
 
 <p>for $j=1,\cdots,N_{x}-1,\quad k=1,\cdots,N_{t}-1$.</p>
 
@@ -382,11 +382,11 @@ y_i^0 = y_0(x^i),\quad i= 1,\cdots, N_x,</p>
 <p>$$
 boundary conditions</p>
 
-<p>[y_{0}^k = y_{1}^k, \quad y_{N_x}^k = y_{N_x-1}^k, \quad k=0,\cdots,N_t,]</p>
+<script type="math/tex; mode=display">y_{0}^k = y_{1}^k, \quad y_{N_x}^k = y_{N_x-1}^k, \quad k=0,\cdots,N_t,</script>
 
 <p>and control constraints</p>
 
-<p>[a^k \in [a_{min},a_{max}], \quad \theta^k \in [\theta_{min},\theta_{max}],\quad k=0,\cdots,N_t.]</p>
+<script type="math/tex; mode=display">a^k \in [a_{min},a_{max}], \quad \theta^k \in [\theta_{min},\theta_{max}],\quad k=0,\cdots,N_t.</script>
 
 <p>are all satisfied.</p>
 
@@ -397,22 +397,15 @@ into a nonlinear finite-dimensional optimization problem $P_{D}$. Note that in p
 
 <p>Let $K=0.01$, $\delta=0.001$, and the initial data to be a step function,</p>
 
-<p>[y_{0}(x)=\begin{cases}
-\theta_{0}-\delta &amp; x&gt;0<br />
-0 &amp; x&lt;0
-\end{cases}]</p>
+<script type="math/tex; mode=display">% <![CDATA[
+y_{0}(x)=\begin{cases}
+\theta_{0}-\delta & x>0\\
+0 & x<0
+\end{cases} %]]></script>
 
 <p>Let us set, moreover, $a\in[-5,0]$. The optimal solution can then be obtained within $10\,s$, and the final cost $J(u)$ is about $5\times10^{-4}$, with its first term</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[J_{0}(u):=\int_{\Omega}</td>
-      <td>y(T,x)-y^{d}(x)</td>
-      <td>^{2}dx=1\times10^{-4}]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">J_{0}(u):=\int_{\Omega}|y(T,x)-y^{d}(x)|^{2}dx=1\times10^{-4}</script>
 
 <p>The obtained optimal solution is illustrated in the Figure 1. In the right subfigure, $u_{1}=a$ and $u_{2}=\theta$.</p>
 
@@ -638,15 +631,15 @@ obj &gt;&gt;\textcompwordmark{}$ out.txt;
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/JesusO">Jesus Oroya</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
           
           - 20 October 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-primary btn-sm" style="margin-left: auto;">MATLAB</button>
     
     </div>
 
@@ -825,12 +818,12 @@ obj &gt;&gt;\textcompwordmark{}$ out.txt;
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/UmbertoB">Umberto Biccari</a>
           
           - 01 February 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-success btn-sm" style="margin-left: auto;">DyCon Toolbox</button>
     
     </div>
 
@@ -874,12 +867,12 @@ obj &gt;&gt;\textcompwordmark{}$ out.txt;
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/JorgeM">Jorge Mallo</a>
           
           - 19 December 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 
@@ -941,12 +934,12 @@ obj &gt;&gt;\textcompwordmark{}$ out.txt;
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/YacoubaS">Yacouba Simpore</a>
           
           - 30 October 2019
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 

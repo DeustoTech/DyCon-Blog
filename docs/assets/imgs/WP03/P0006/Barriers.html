@@ -14,26 +14,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="canonical" href="https://deustotech.github.io/DyCon-Blog/assets/imgs/WP03/P0006/Barriers">
+  <link rel="canonical" href="http://localhost:4000/DyCon-Blog/assets/imgs/WP03/P0006/Barriers">
 
   <!-- Bootstrap Core CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/clean-blog.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/clean-blog.css">
 
    <!-- Adjust Colors -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/colorscheme.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/colorscheme.css">
 
   <!-- Pygments Github CSS -->
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/syntax.css">
 
-  <link rel="stylesheet" href="https://deustotech.github.io/DyCon-Blog/css/google-search.css">
+  <link rel="stylesheet" href="http://localhost:4000/DyCon-Blog/css/google-search.css">
 
 
   
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/libgif.js "></script>
-  <script src="https://deustotech.github.io/DyCon-Blog/lib/js/rubbable.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/libgif.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/lib/js/rubbable.js "></script>
 
 
   <!-- Google Fonts Raleway -->
@@ -135,7 +135,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-  <script src="https://deustotech.github.io/DyCon-Blog/js/clean-blog.min.js "></script>
+  <script src="http://localhost:4000/DyCon-Blog/js/clean-blog.min.js "></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128123935-3"></script>
@@ -169,7 +169,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- <a class="navbar-brand" href="/DyCon-Blog/">
-                 <img src="https://deustotech.github.io//DyCon-Blog//assets/logo_DyCon.png">
+                 <img src="http://localhost:4000//DyCon-Blog//assets/logo_DyCon.png">
             </a> -->
         </div>
 
@@ -193,7 +193,7 @@
                 
                     
                 <li>
-                        <a href="https://deustotech.github.io/DyCon-Blog/projects/search.byWP">Sitemap</a>
+                        <a href="http://localhost:4000/DyCon-Blog/projects/search.byWP">Sitemap</a>
                 </li>
                 <li>
                         <a href="http://cmc.deusto.eus/">Chair of Computational Mathematics</a>
@@ -212,8 +212,8 @@
   <div class="container" style="padding-top: 70px;">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-md-offset-1">
-        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="https://deustotech.github.io//DyCon-Blog/projects/posts">Work Packages</a>
-            &#8827;<a href="https://deustotech.github.io//DyCon-Blog/workpackage/WP03">
+        <div class="post-heading" style="padding: 0px 0"><h2><small class="light-grey"><a href="http://localhost:4000//DyCon-Blog/projects/posts">Work Packages</a>
+            &#8827;<a href="http://localhost:4000//DyCon-Blog/workpackage/WP03">
             Control under constraints</a> &#8827;</small>
           </h2>
           <h1>Control of reaction-diffusion under state constraints - Barriers</h1>
@@ -225,7 +225,7 @@
                 
                 <span style="text-decoration: none;" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <span itemprop="name">
-                    <a style="text-decoration: none;" href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+                    <a style="text-decoration: none;" href="http://localhost:4000/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
                   </span>
                 </span>
               
@@ -294,16 +294,17 @@ img:active{
 
 <p>This tutorial is focused on the understanding of of the problem</p>
 
-<p>\(-\Delta u=f(u) \qquad x\in\Omega\)
-\(0&lt; u&lt; 1 \qquad x\in\Omega\)
-\(u=a\in\{0,\theta\} \qquad x\in\partial\Omega\)</p>
+<p><script type="math/tex">-\Delta u=f(u) \qquad x\in\Omega</script>
+<script type="math/tex">% <![CDATA[
+0< u< 1 \qquad x\in\Omega %]]></script>
+<script type="math/tex">u=a\in\{0,\theta\} \qquad x\in\partial\Omega</script></p>
 
 <p>The solutions for $a=0$ constitute an instrisic obstruction to the controllability with state-constraints due to the comparison principle [1]. Indeed, for any control function $0\leq a(x,t)\leq 1$
 the solution of the problem:</p>
 
-<p>\(v_t-\Delta v=f(v) \qquad x\in\Omega\times(0,T)\)
-\(v=a(x,t) \qquad x\in\partial\Omega\times(0,T)\)
-\(v(x,0)\geq u \qquad x\in\Omega\)</p>
+<p><script type="math/tex">v_t-\Delta v=f(v) \qquad x\in\Omega\times(0,T)</script>
+<script type="math/tex">v=a(x,t) \qquad x\in\partial\Omega\times(0,T)</script>
+<script type="math/tex">v(x,0)\geq u \qquad x\in\Omega</script></p>
 
 <p>where $u$ is an elliptic nontrivial solution satisfies that $v(x,t)\geq u(x)$. Therefore, we cannot expect to control to any function below $u$.</p>
 
@@ -317,8 +318,8 @@ the solution of the problem:</p>
 
 <p>Any critical point of the functional:</p>
 
-<p>\(J: H^1_0\to  \mathbb{R}\)
-\(J(u)=\int_\Omega \frac{1}{2}|\nabla u|^2-\int_0^uf(s)ds dx\)</p>
+<p><script type="math/tex">J: H^1_0\to  \mathbb{R}</script>
+<script type="math/tex">J(u)=\int_\Omega \frac{1}{2}|\nabla u|^2-\int_0^uf(s)ds dx</script></p>
 
 <p>is a weak solution of the main equation.</p>
 
@@ -326,15 +327,7 @@ the solution of the problem:</p>
 
 <p>Restricting ourselves in the one dimensional case (the argument also holds in several dimensions) and making the spatial change fo variables $x\to \frac{x}{L}$, where $L$ is the length of the domain the functional reads:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>[J(u)=\int_0^1 \frac{1}{2}</td>
-      <td>u_x</td>
-      <td>^2-L^2\int_0^uf(s)ds dx]</td>
-    </tr>
-  </tbody>
-</table>
+<script type="math/tex; mode=display">J(u)=\int_0^1 \frac{1}{2}| u_x|^2-L^2\int_0^uf(s)ds dx</script>
 
 <p>In the expresion above we see that if $L$ is small the convex part dominates while if $L$ is large and $\int_0^1f(s)ds&gt;0$ it might not be convex.</p>
 
@@ -507,15 +500,15 @@ the solution of the problem:</p>
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>,
+              <a href="http://localhost:4000/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>,
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/IdrissM">Idriss Mazari</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/IdrissM">Idriss Mazari</a>
           
           - 19 April 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 
@@ -559,12 +552,12 @@ the solution of the problem:</p>
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
           
           - 04 April 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 
@@ -617,12 +610,12 @@ the solution of the problem:</p>
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
           
           - 03 April 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 
@@ -684,12 +677,12 @@ the solution of the problem:</p>
           
           
             
-              <a href="https://deustotech.github.io/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
+              <a href="http://localhost:4000/DyCon-Blog/author/DomenecR">Domenec Ruiz</a>
           
           - 31 March 2020
         </div>
         
-        <button onclick="window.location.href='https://deustotech.github.io/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
+        <button onclick="window.location.href='http://localhost:4000/DyCon-Blog/projects/search.bycode'" type="button" class="btn btn-danger btn-sm" style="margin-left: auto;">MATLAB-CasADi</button>
     
     </div>
 
