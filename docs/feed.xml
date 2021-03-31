@@ -5,8 +5,8 @@
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
     <link>http://localhost:4000/DyCon-Blog/</link>
     <atom:link href="http://localhost:4000/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 30 Mar 2021 13:37:41 +0200</pubDate>
-    <lastBuildDate>Tue, 30 Mar 2021 13:37:41 +0200</lastBuildDate>
+    <pubDate>Wed, 31 Mar 2021 09:44:33 +0200</pubDate>
+    <lastBuildDate>Wed, 31 Mar 2021 09:44:33 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -238,17 +238,25 @@ The results of our simulations are displayed in Fig. 3, 4 and 5. We have plotted
 where, for each $m \in [-0.8,0.8]$, $u_m^\ast (\cdot)$ represents the solution to the SHM problem with the target frequencies we are considering.
 
 
+
+  
+  	
+	 
+	
+	 
+	 Figure 3: bang-bang control for the SHM problem.
+	 
   
 
- 
- Figure 3: bang-bang control for the SHM problem.
-
-
-
+  
+  
   
 
  
  Figure 4: bang-off-bang control for the SHM problem.
+ 
+
+
 
 
 
