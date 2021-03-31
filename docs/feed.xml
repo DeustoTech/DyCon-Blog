@@ -3,10 +3,10 @@
   <channel>
     <title>DyCon Blog</title>
     <description>Welcome to the web interface of DyCon Toolbox, the computational platform developed within the &lt;a href='https://cmc.deusto.eus/dycon/' target='_blank'&gt;ERC DyCon - Dynamic Control&lt;/a&gt; project.</description>
-    <link>http://localhost:4000/DyCon-Blog/</link>
-    <atom:link href="http://localhost:4000/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 31 Mar 2021 09:44:33 +0200</pubDate>
-    <lastBuildDate>Wed, 31 Mar 2021 09:44:33 +0200</lastBuildDate>
+    <link>https://deustotech.github.io/DyCon-Blog/</link>
+    <atom:link href="https://deustotech.github.io/DyCon-Blog/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Wed, 31 Mar 2021 09:47:13 +0200</pubDate>
+    <lastBuildDate>Wed, 31 Mar 2021 09:47:13 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -278,8 +278,8 @@ References
 
 </description>
         <pubDate>Thu, 25 Mar 2021 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P00014</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P00014</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00014</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00014</guid>
         
         
         <category>tutorial</category>
@@ -844,8 +844,8 @@ References
 
 </description>
         <pubDate>Mon, 22 Mar 2021 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P00013</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P00013</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00013</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00013</guid>
         
         
         <category>tutorial</category>
@@ -1023,8 +1023,8 @@ References
 
 </description>
         <pubDate>Wed, 10 Mar 2021 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp99/P00012</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp99/P00012</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00012</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp99/P00012</guid>
         
         
         <category>tutorial</category>
@@ -1236,8 +1236,8 @@ systems.  Acta Numer., 1:269-378, 1994.
 and remedies. Inverse Probl., 26(8):085018, 2010.
 </description>
         <pubDate>Mon, 23 Nov 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp01/P0013</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp01/P0013</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0013</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0013</guid>
         
         
         <category>tutorial</category>
@@ -1569,8 +1569,8 @@ References
 
 </description>
         <pubDate>Sun, 01 Nov 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/pretutorial/wp99/P0011</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/pretutorial/wp99/P0011</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/pretutorial/wp99/P0011</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/pretutorial/wp99/P0011</guid>
         
         
         <category>pretutorial</category>
@@ -1619,8 +1619,8 @@ Figura 4. Evolución  $||\mathcal{P}z_t||_{L^2}^2$ para los distintos datos de e
 
 </description>
         <pubDate>Thu, 29 Oct 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp02/P0005</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp02/P0005</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0005</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp02/P0005</guid>
         
         
         <category>tutorial</category>
@@ -1827,8 +1827,8 @@ Figure 5b.
 
 </description>
         <pubDate>Thu, 22 Oct 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/dp00/P0004</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/dp00/P0004</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/dp00/P0004</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/dp00/P0004</guid>
         
         
         <category>tutorial</category>
@@ -2101,8 +2101,8 @@ Bibliography
 [4] Q. Lü, X. Zhang and E. Zuazua, Null controllability for wave equations with memory, J. Math. Pures Appl., 108 (4), 2017, 500-531.
 </description>
         <pubDate>Tue, 20 Oct 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp05/P0011</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp05/P0011</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp05/P0011</guid>
         
         
         <category>tutorial</category>
@@ -2253,8 +2253,8 @@ end
 
 </description>
         <pubDate>Mon, 27 Jul 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/pretutorial/wp01/P0012</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/pretutorial/wp01/P0012</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/pretutorial/wp01/P0012</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/pretutorial/wp01/P0012</guid>
         
         
         <category>pretutorial</category>
@@ -2395,8 +2395,8 @@ Bibliography
 [4] L. Pflug, N. Bernhardt, M. Grieshammer and M. Stingl, A new stochastic gradient method for the efficient solution of structural optimization problems with infinitely many state problems, preprint (2020).
 </description>
         <pubDate>Wed, 03 Jun 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/DyCon-Blog/tutorial/wp01/P0011</link>
-        <guid isPermaLink="true">http://localhost:4000/DyCon-Blog/tutorial/wp01/P0011</guid>
+        <link>https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0011</link>
+        <guid isPermaLink="true">https://deustotech.github.io/DyCon-Blog/tutorial/wp01/P0011</guid>
         
         
         <category>tutorial</category>
